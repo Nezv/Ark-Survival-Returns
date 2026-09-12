@@ -667,7 +667,7 @@
   ],
   "refinement": {
     "mesh_only": true,
-    "previous_cubes": 307,
+    "previous_cubes": 6172,
     "new_cubes": 307,
     "skeleton_sha256": "4e59555f51328c3bb997b82a5c6d938375434d846df458846a2c81224b9df9d5",
     "animation_sha256": "ae67845b474d8c4ad014a09476f33c2b85711d167eacbf6e5e0e41203273dda1"
