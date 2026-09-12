@@ -1,6 +1,6 @@
 # Unicorn
 
-ARK asset: `Equus`. 77 original mesh bones, 6172 fitted cubes, 42 original animation clips.
+ARK asset: `Equus`. 77 original mesh bones, 307 fitted cubes, 42 original animation clips.
 
 Open `Unicorn_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 
