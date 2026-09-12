@@ -1,0 +1,646 @@
+{
+  "asset" : {
+    "generator" : "UE Viewer (umodel) build 1612-floxay",
+    "version" : "2.0"
+  },
+  "scene" : 0,
+  "scenes" : [
+    {
+      "nodes" : [ 0 ]
+    }
+  ],
+  "nodes" : [
+    {
+      "name" : "Tusoteuthis",
+      "mesh" : 0,
+      "skin" : 0,
+      "children" : [ 1 ]
+    },
+    {
+      "name" : "root",
+      "children" : [ 2 ],
+      "translation" : [ 0, 0, -0 ],
+      "rotation" : [ -0.707107, -0, 0, -0.707107 ]
+    },
+    {
+      "name" : "c_main",
+      "children" : [ 3, 74 ],
+      "translation" : [ 7.01611e-24, 0.0371878, -0.0144593 ],
+      "rotation" : [ 0.00130999, -0, -0, -0.999999 ]
+    },
+    {
+      "name" : "c_head",
+      "children" : [ 4, 12, 18, 27, 33, 38, 43, 51, 57, 66, 72, 73 ],
+      "translation" : [ -1.44707e-16, 0.368392, 0.101486 ],
+      "rotation" : [ 0.356679, 0.600534, -0.392743, -0.59824 ]
+    },
+    {
+      "name" : "l_tentacleB1",
+      "children" : [ 5 ],
+      "translation" : [ 0.478055, 0.163658, -0.266839 ],
+      "rotation" : [ -0.344526, -0.0567824, -0.0142929, -0.936949 ]
+    },
+    {
+      "name" : "l_tentacleB2",
+      "children" : [ 6 ],
+      "translation" : [ 1.0755, -9.34073e-10, -9.57182e-10 ],
+      "rotation" : [ -0.9262, -1.8086e-17, 7.62123e-18, -0.377033 ]
+    },
+    {
+      "name" : "l_tentacleB3",
+      "children" : [ 7 ],
+      "translation" : [ 1.0755, -1.20792e-15, 2.06692e-09 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleB4",
+      "children" : [ 8 ],
+      "translation" : [ 1.0755, -1.13687e-15, 7.90292e-10 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleB5",
+      "children" : [ 9 ],
+      "translation" : [ 1.0755, -1.13687e-15, 2.06692e-09 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleB6",
+      "children" : [ 10 ],
+      "translation" : [ 1.0755, 2.84217e-16, 1.33742e-09 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleB7",
+      "children" : [ 11 ],
+      "translation" : [ 0.298647, -0.053, -1.42109e-16 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleB8",
+      "translation" : [ 0.362647, -1.7053e-15, -2.84217e-16 ],
+      "rotation" : [ -1.07994e-18, -2.77715e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleC1",
+      "children" : [ 13 ],
+      "translation" : [ 0.426208, 0.026801, -0.287553 ],
+      "rotation" : [ -0.998579, -0.0155851, 0.0397409, -0.0319064 ]
+    },
+    {
+      "name" : "l_tentacleC2",
+      "children" : [ 14 ],
+      "translation" : [ 0.65, -3.55271e-17, -1.06581e-16 ],
+      "rotation" : [ 4.45036e-19, 3.05162e-18, 1.35808e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleC3",
+      "children" : [ 15 ],
+      "translation" : [ 0.65, -5.68434e-16, -2.13163e-16 ],
+      "rotation" : [ 4.45036e-19, 3.05162e-18, 1.35808e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleC4",
+      "children" : [ 16 ],
+      "translation" : [ 0.65, 1.42109e-16, -1.42109e-16 ],
+      "rotation" : [ 4.45036e-19, 3.05162e-18, 1.35808e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleC5",
+      "children" : [ 17 ],
+      "translation" : [ 0.65, 0, -0 ],
+      "rotation" : [ 4.45036e-19, 3.05162e-18, 1.35808e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleC6",
+      "translation" : [ 0.65, -7.10543e-16, -1.77636e-16 ],
+      "rotation" : [ 4.45036e-19, 3.05162e-18, 1.35808e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD1",
+      "children" : [ 19 ],
+      "translation" : [ 0.407458, -0.109314, -0.270805 ],
+      "rotation" : [ -0.998767, -0.0060207, 0.0378587, -0.0315375 ]
+    },
+    {
+      "name" : "l_tentacleD2",
+      "children" : [ 20 ],
+      "translation" : [ 0.733333, 1.42109e-16, -2.13163e-16 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD3",
+      "children" : [ 21 ],
+      "translation" : [ 0.733333, -7.81597e-16, -3.55271e-16 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD4",
+      "children" : [ 22 ],
+      "translation" : [ 0.733333, -1.42109e-16, -0 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD5",
+      "children" : [ 23 ],
+      "translation" : [ 0.733333, 4.26326e-16, -2.84217e-16 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD6",
+      "children" : [ 24 ],
+      "translation" : [ 0.733333, -8.52651e-16, -4.26326e-16 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD7",
+      "children" : [ 25 ],
+      "translation" : [ 0.733333, 0, -2.84217e-16 ],
+      "rotation" : [ 1.0585e-18, -1.25692e-18, -1.33045e-36, -1 ]
+    },
+    {
+      "name" : "l_tentacleD8",
+      "children" : [ 26 ],
+      "translation" : [ 0.24, -0.03, 0.011 ],
+      "rotation" : [ 5.81269e-19, 0.0209424, -2.77495e-17, -0.999781 ]
+    },
+    {
+      "name" : "l_tentacleD9",
+      "translation" : [ 0.24, -0.025, -5.50671e-16 ],
+      "rotation" : [ 3.46945e-18, 4.77049e-18, 1.6551e-35, -1 ]
+    },
+    {
+      "name" : "l_tentacleE1",
+      "children" : [ 28 ],
+      "translation" : [ 0.443553, -0.174712, -0.0952472 ],
+      "rotation" : [ -0.999304, 0.0164487, 0.0223403, -0.0249315 ]
+    },
+    {
+      "name" : "l_tentacleE2",
+      "children" : [ 29 ],
+      "translation" : [ 0.45, -3.55271e-16, -5.32907e-17 ],
+      "rotation" : [ -6.48142e-19, 5.75926e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleE3",
+      "children" : [ 30 ],
+      "translation" : [ 0.45, 4.26326e-16, -4.44089e-17 ],
+      "rotation" : [ 7.29927e-19, 2.31065e-18, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleE4",
+      "children" : [ 31 ],
+      "translation" : [ 0.45, -2.84217e-16, -7.10543e-17 ],
+      "rotation" : [ -1.37434e-19, -2.91435e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleE5",
+      "children" : [ 32 ],
+      "translation" : [ 0.45, 0, -3.10862e-16 ],
+      "rotation" : [ 2.06076e-19, -2.06076e-19, 0.707107, -0.707107 ]
+    },
+    {
+      "name" : "l_tentacleE6",
+      "translation" : [ 4.26326e-16, 0.22085, 1.33227e-16 ],
+      "rotation" : [ -4.91427e-18, 6.83461e-17, 1.94289e-16, -1 ]
+    },
+    {
+      "name" : "l_tentacleA1",
+      "children" : [ 34 ],
+      "translation" : [ 0.523718, 0.201915, -0.112279 ],
+      "rotation" : [ -0.999416, -0.0158646, 0.0199691, -0.0227279 ]
+    },
+    {
+      "name" : "l_tentacleA2",
+      "children" : [ 35 ],
+      "translation" : [ 0.666667, -3.55271e-16, -2.4869e-16 ],
+      "rotation" : [ -7.41215e-20, 6.37742e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleA3",
+      "children" : [ 36 ],
+      "translation" : [ 0.666667, -3.55271e-16, -1.59872e-16 ],
+      "rotation" : [ -7.41215e-20, 6.37742e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleA4",
+      "children" : [ 37 ],
+      "translation" : [ 0.666667, -3.55271e-16, -1.5099e-16 ],
+      "rotation" : [ -7.41215e-20, 6.37742e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "l_tentacleA5",
+      "translation" : [ 0.289543, 0, 0.000109677 ],
+      "rotation" : [ -2.62103e-17, 2.62103e-17, 0.707107, -0.707107 ]
+    },
+    {
+      "name" : "r_tentacleA1",
+      "children" : [ 39 ],
+      "translation" : [ 0.530487, 0.209231, 0.0637117 ],
+      "rotation" : [ 0.0159961, -0.999649, 0.0183181, 0.0104747 ]
+    },
+    {
+      "name" : "r_tentacleA2",
+      "children" : [ 40 ],
+      "translation" : [ -0.666667, 2.4869e-16, -3.4639e-16 ],
+      "rotation" : [ 4.67746e-19, -4.2828e-19, 2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleA3",
+      "children" : [ 41 ],
+      "translation" : [ -0.666667, 2.13163e-16, -3.81917e-16 ],
+      "rotation" : [ 4.67746e-19, -4.2828e-19, 2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleA4",
+      "children" : [ 42 ],
+      "translation" : [ -0.666667, 4.9738e-16, -3.37508e-16 ],
+      "rotation" : [ -2.77556e-17, -1, 2.66903e-19, -6.12323e-17 ]
+    },
+    {
+      "name" : "r_tentacleA5",
+      "translation" : [ -0.28954, -2.84217e-16, -0.000109975 ],
+      "rotation" : [ 9.37709e-18, -9.37709e-18, 0.707107, -0.707107 ]
+    },
+    {
+      "name" : "r_tentacleB1",
+      "children" : [ 44 ],
+      "translation" : [ 0.491151, 0.184037, 0.223444 ],
+      "rotation" : [ -0.0260986, 0.311548, 0.949431, -0.0289496 ]
+    },
+    {
+      "name" : "r_tentacleB2",
+      "children" : [ 45 ],
+      "translation" : [ -1.0755, 3.73035e-16, 9.23706e-16 ],
+      "rotation" : [ -0.95209, 3.06699e-17, -4.72478e-18, -0.305817 ]
+    },
+    {
+      "name" : "r_tentacleB3",
+      "children" : [ 46 ],
+      "translation" : [ -1.0755, 2.13163e-16, -9.23706e-16 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleB4",
+      "children" : [ 47 ],
+      "translation" : [ -1.0755, 1.42109e-16, -6.03961e-16 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleB5",
+      "children" : [ 48 ],
+      "translation" : [ -1.0755, 4.26326e-16, -1.27898e-15 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleB6",
+      "children" : [ 49 ],
+      "translation" : [ -1.0755, -5.73875e-08, 3.10614e-08 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleB7",
+      "children" : [ 50 ],
+      "translation" : [ -0.29865, 0.053, 6.75016e-16 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleB8",
+      "translation" : [ -0.36265, -5.68434e-16, 1.77636e-16 ],
+      "rotation" : [ -3.73627e-18, 4.40136e-18, -1.64447e-35, -1 ]
+    },
+    {
+      "name" : "r_tentacleC1",
+      "children" : [ 52 ],
+      "translation" : [ 0.444008, 0.0494944, 0.25839 ],
+      "rotation" : [ 0.0162645, -0.999783, 0.00912515, -0.00930774 ]
+    },
+    {
+      "name" : "r_tentacleC2",
+      "children" : [ 53 ],
+      "translation" : [ -0.65, -7.10543e-17, -1.77636e-16 ],
+      "rotation" : [ -3.14614e-19, 5.71102e-19, -1.79677e-37, -1 ]
+    },
+    {
+      "name" : "r_tentacleC3",
+      "children" : [ 54 ],
+      "translation" : [ -0.65, 7.10543e-17, -1.77636e-16 ],
+      "rotation" : [ -3.14614e-19, 5.71102e-19, -1.79677e-37, -1 ]
+    },
+    {
+      "name" : "r_tentacleC4",
+      "children" : [ 55 ],
+      "translation" : [ -0.65, 1.42109e-16, -7.10543e-17 ],
+      "rotation" : [ -3.14614e-19, 5.71102e-19, -1.79677e-37, -1 ]
+    },
+    {
+      "name" : "r_tentacleC5",
+      "children" : [ 56 ],
+      "translation" : [ -0.65, -4.26326e-16, -3.55271e-16 ],
+      "rotation" : [ -3.14614e-19, 5.71102e-19, -1.79677e-37, -1 ]
+    },
+    {
+      "name" : "r_tentacleC6",
+      "translation" : [ -0.65, 2.84217e-16, -2.4869e-16 ],
+      "rotation" : [ -3.14614e-19, 5.71102e-19, -1.79677e-37, -1 ]
+    },
+    {
+      "name" : "r_tentacleD1",
+      "children" : [ 58 ],
+      "translation" : [ 0.424631, -0.0874935, 0.254131 ],
+      "rotation" : [ 0.00664538, -0.999899, 0.00978619, -0.00781948 ]
+    },
+    {
+      "name" : "r_tentacleD2",
+      "children" : [ 59 ],
+      "translation" : [ -0.733333, -2.13163e-16, 1.06581e-16 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD3",
+      "children" : [ 60 ],
+      "translation" : [ -0.733333, 4.26326e-16, -3.55271e-17 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD4",
+      "children" : [ 61 ],
+      "translation" : [ -0.733333, 1.42109e-16, -7.10543e-17 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD5",
+      "children" : [ 62 ],
+      "translation" : [ -0.733333, -4.26326e-16, -3.55271e-17 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD6",
+      "children" : [ 63 ],
+      "translation" : [ -0.733333, 1.7053e-15, 1.77636e-16 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD7",
+      "children" : [ 64 ],
+      "translation" : [ -0.733333, -5.68434e-16, -1.77636e-16 ],
+      "rotation" : [ 2.75954e-18, 1.25199e-18, 3.45493e-36, -1 ]
+    },
+    {
+      "name" : "r_tentacleD8",
+      "children" : [ 65 ],
+      "translation" : [ -0.24, 0.03, -0.011 ],
+      "rotation" : [ -0, 0.0209424, -0, -0.999781 ]
+    },
+    {
+      "name" : "r_tentacleD9",
+      "translation" : [ -0.24, 0.025, 1.33227e-16 ],
+      "rotation" : [ -5.20417e-18, 4.33681e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleE1",
+      "children" : [ 67 ],
+      "translation" : [ 0.450383, -0.167312, 0.0827657 ],
+      "rotation" : [ -0.0162422, -0.999699, 0.0170749, 0.00676192 ]
+    },
+    {
+      "name" : "r_tentacleE2",
+      "children" : [ 68 ],
+      "translation" : [ -0.45, 2.84217e-16, 3.55271e-17 ],
+      "rotation" : [ 5.73305e-19, -9.22859e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleE3",
+      "children" : [ 69 ],
+      "translation" : [ -0.45, -2.84217e-16, -7.99361e-17 ],
+      "rotation" : [ 1.26368e-18, -5.54969e-20, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleE4",
+      "children" : [ 70 ],
+      "translation" : [ -0.45, 4.26326e-16, -1.86517e-16 ],
+      "rotation" : [ 1.26368e-18, 1.46096e-19, -2.77556e-17, -1 ]
+    },
+    {
+      "name" : "r_tentacleE5",
+      "children" : [ 71 ],
+      "translation" : [ -0.45, 0, 9.76996e-17 ],
+      "rotation" : [ -1.03306e-19, 1.03306e-19, 0.707107, -0.707107 ]
+    },
+    {
+      "name" : "r_tentacleE6",
+      "translation" : [ -7.10543e-16, -0.22085, 1.24345e-16 ],
+      "rotation" : [ -1.4296e-18, -2.3483e-17, 1.94289e-16, -1 ]
+    },
+    {
+      "name" : "upper_beak",
+      "translation" : [ 0.569389, 0.0291707, -0.0181892 ],
+      "rotation" : [ -0.68825, 0.0562793, 0.074534, -0.719437 ]
+    },
+    {
+      "name" : "lower_beak",
+      "translation" : [ 0.564555, -0.00596501, -0.0165845 ],
+      "rotation" : [ 0.719437, -0.074534, 0.0562793, -0.68825 ]
+    },
+    {
+      "name" : "c_body1",
+      "children" : [ 75, 79 ],
+      "translation" : [ -1.62702e-19, 0.0183596, -0.0108474 ],
+      "rotation" : [ -0.529031, 0.505799, 0.494133, -0.469175 ]
+    },
+    {
+      "name" : "c_body2",
+      "children" : [ 76 ],
+      "translation" : [ 0.446212, 9.85677e-10, 7.41074e-17 ],
+      "rotation" : [ 3.65154e-19, 6.96755e-18, -0.0523359, -0.998629 ]
+    },
+    {
+      "name" : "c_body3",
+      "children" : [ 77 ],
+      "translation" : [ 0.650459, -2.53925e-09, 2.27081e-09 ],
+      "rotation" : [ 1.30664e-19, 6.50915e-18, -0.0200699, -0.999798 ]
+    },
+    {
+      "name" : "c_body4",
+      "children" : [ 78 ],
+      "translation" : [ 0.57557, 3.5498e-09, 2.64102e-09 ],
+      "rotation" : [ -2.88209e-20, -8.68795e-19, -0.0331552, -0.99945 ]
+    },
+    {
+      "name" : "c_body5",
+      "translation" : [ 0.47323, 1.38053e-09, 1.43811e-08 ],
+      "rotation" : [ 6.93889e-18, -1.73472e-18, 1.38778e-17, -1 ]
+    },
+    {
+      "name" : "ric_c_saddle",
+      "translation" : [ 0.392471, -0.503642, 0.0361015 ],
+      "rotation" : [ 1.19167e-33, 2.14672e-17, -5.55111e-17, -1 ]
+    }
+  ],
+  "skins" : [
+    {
+      "inverseBindMatrices" : 0,
+      "skeleton" : 1,
+      "joints" : [
+        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,
+        33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,
+        65,66,67,68,69,70,71,72,73,74,75,76,77,78,79
+      ]
+    }
+  ],
+  "materials" : [
+    {
+      "name" : "dummy_material_0",
+      "pbrMetallicRoughness" : {
+        "baseColorFactor" : [ 0.3, 0.3, 0.3, 1.0 ],
+        "metallicFactor" : 0.1,
+        "roughnessFactor" : 0.5
+      }
+    }
+  ],
+  "meshes" : [
+    {
+      "primitives" : [
+        {
+          "attributes" : {
+            "POSITION" : 2,
+            "NORMAL" : 3,
+            "TANGENT" : 4,
+            "COLOR_0" : 5,
+            "JOINTS_0" : 6,
+            "WEIGHTS_0" : 7,
+            "TEXCOORD_0" : 8,
+            "TEXCOORD_1" : 9
+          },
+          "indices" : 1,
+          "material" : 0
+        }
+      ],
+      "name" : "Tusoteuthis"
+    }
+  ],
+  "buffers" : [
+    {
+      "uri" : "Tusoteuthis.bin",
+      "byteLength" : 1408588
+    }
+  ],
+  "bufferViews" : [
+    {
+      "buffer" : 0,
+      "byteOffset" : 0,
+      "byteLength" : 5056
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 5056,
+      "byteLength" : 134388
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 139444,
+      "byteLength" : 211524
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 350968,
+      "byteLength" : 211524
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 562492,
+      "byteLength" : 282032
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 844524,
+      "byteLength" : 70508
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 915032,
+      "byteLength" : 141016
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 1056048,
+      "byteLength" : 70508
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 1126556,
+      "byteLength" : 141016
+    },
+    {
+      "buffer" : 0,
+      "byteOffset" : 1267572,
+      "byteLength" : 141016
+    }
+  ],
+  "accessors" : [
+    {
+      "bufferView" : 0,
+      "componentType" : 5126,
+      "count" : 79,
+      "type" : "MAT4"
+    },
+    {
+      "bufferView" : 1,
+      "componentType" : 5123,
+      "count" : 67194,
+      "type" : "SCALAR"
+    },
+    {
+      "bufferView" : 2,
+      "min" : [ -0.819537, -2.69832, -2.51971 ],
+      "max" : [ 0.819537, 0.572987, 6.80768 ],
+      "componentType" : 5126,
+      "count" : 17627,
+      "type" : "VEC3"
+    },
+    {
+      "bufferView" : 3,
+      "componentType" : 5126,
+      "count" : 17627,
+      "type" : "VEC3"
+    },
+    {
+      "bufferView" : 4,
+      "componentType" : 5126,
+      "count" : 17627,
+      "type" : "VEC4"
+    },
+    {
+      "bufferView" : 5,
+      "normalized" : true,
+      "componentType" : 5121,
+      "count" : 17627,
+      "type" : "VEC4"
+    },
+    {
+      "bufferView" : 6,
+      "componentType" : 5123,
+      "count" : 17627,
+      "type" : "VEC4"
+    },
+    {
+      "bufferView" : 7,
+      "normalized" : true,
+      "componentType" : 5121,
+      "count" : 17627,
+      "type" : "VEC4"
+    },
+    {
+      "bufferView" : 8,
+      "componentType" : 5126,
+      "count" : 17627,
+      "type" : "VEC2"
+    },
+    {
+      "bufferView" : 9,
+      "componentType" : 5126,
+      "count" : 17627,
+      "type" : "VEC2"
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Dilo.uasset",
+    "sha256": "525e9890ed2ce10b875f45bf62c1faa2406a12a2c09e1bbf1f382d824cab2033",
+    "size": 3954984,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Dilo_Skeleton.uasset",
+    "sha256": "fff0177e3e256042f79a0797bfdc5a5627d6b5ed87e630dc1cd702c1356adb7e",
+    "size": 24143,
+    "export_count": 16
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Center.uasset",
+    "sha256": "6582eb2fab7787860b0be8fd594da6c5f84b6d7ffc5dfe7f09f706480d15f32c",
+    "size": 8188,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Dwn-Lft.uasset",
+    "sha256": "6d84817ead313916ac26052af8a10bfb113e8bdbda4d17c1039b87a1297bb5ae",
+    "size": 8230,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Dwn-Rit.uasset",
+    "sha256": "987836f98054c33302a0cd8c04b1f5a26613a7c010a1ee0ab6a775b29391a114",
+    "size": 8234,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Dwn.uasset",
+    "sha256": "dd57b96500ff6bc7f619d1428004080ffc502f2105b8af422fb4ea446ab895dc",
+    "size": 8230,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Lft.uasset",
+    "sha256": "898aba936fbeb15e50c176db7a1680f5ac7b6bf913a06ec70d34f1d02da77cd2",
+    "size": 8206,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Rit.uasset",
+    "sha256": "87bddbf5650f9680458b530db237234b79b79ba08cd274805f21247b58dc4e08",
+    "size": 8218,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Up-Lft.uasset",
+    "sha256": "8fdcd8dd59fa58282fd2898b6e699aef8f6986fa29f64c3ec2a1180b775c71ab",
+    "size": 8216,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Up-Rit.uasset",
+    "sha256": "05357634f92de310672c9c56a693d8dcb2c3881d0850285d2b4518a5b89fdba7",
+    "size": 8192,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Aim-Up.uasset",
+    "sha256": "7262ece9479127d0d41d643cd8e2f54172b76303565e215e2036fa8af6950433",
+    "size": 8192,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Attack-Bite.uasset",
+    "sha256": "59f36b82d5d6320a5fbf29dfaddfc6c98cee8419f84efddd2bc3bc981721541d",
+    "size": 21243,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Attack-Bite_Montage.uasset",
+    "sha256": "ab5160f2ec2d41250bf78bae1055bc68d02a10d2fc96e545bb37dc49767e58fa",
+    "size": 3645,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Attack-Spit.uasset",
+    "sha256": "353e94fd746dfb12e705696d5dc919688aed41d75a3a1575e602552aff420798",
+    "size": 28710,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Attack-Spit_Montage.uasset",
+    "sha256": "16cf6138aadbcf12ff88562710428a49ba3c69337f9cfe548e7c3a0132aef4a6",
+    "size": 3528,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Blink.uasset",
+    "sha256": "2923c341490f24cca40774fa745f5ed60e1f792bcae2c60594ea127620281a7e",
+    "size": 9599,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Charge-Fwd.uasset",
+    "sha256": "96de76a0fd9d03c74b5f605994e095c36b0b4bd20398f3065a1f2b994dda4134",
+    "size": 18329,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Charge-Lft.uasset",
+    "sha256": "e954c96100e029c9cb39b0a35f483901c438a732a5d807038d7596641a449343",
+    "size": 18521,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Charge-Rit.uasset",
+    "sha256": "b246a7191c99437ba31e29a3ca688540438a80922815164c26bc80bc4bc21338",
+    "size": 18645,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Cuddle.uasset",
+    "sha256": "ff98de63d69289834d0eca4488363dac820d781b2506c8d1f3aa11954ffe36ff",
+    "size": 100769,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Cuddle_Montage.uasset",
+    "sha256": "3294ee1d8b49d5e81ac916e1d644affcafc660ba1576734f9cb9348ee4299d35",
+    "size": 1707,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Eat.uasset",
+    "sha256": "9bb876ae9d7f9044bdd094c8980288dc066eb622bd0d434c40bd5719e1602ed0",
+    "size": 33665,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Eat_Montage.uasset",
+    "sha256": "057ac6e9af5b6cc5234807dcc2fe3a8a9e34e5e5562285ee30f9ed4f4259ef46",
+    "size": 1695,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Hurt-Big-Rit.uasset",
+    "sha256": "d50a63577d0eb5ad49a35f6baf9e3a969ba911c7f872451140a099eaf70990ea",
+    "size": 18383,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "011216e0f800c271588c660e685c406dfa71ae34efb544e1f948605de5072562",
+    "size": 1827,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Idle.uasset",
+    "sha256": "9c83202cc2669af0311b8f662450e9db78217108a5c4c9d432a74fc73a6cc12c",
+    "size": 45889,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Lay-Egg-Montage.uasset",
+    "sha256": "f2b9a4f2c289a10c98601a271f4b05d033f2ac982015d6f0435d9b41c3bdb514",
+    "size": 3190,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Lay-Egg.uasset",
+    "sha256": "fc88c78b1fa310a8c9db6a62eb6a0eef88e0a0a58efe15ceacfe38475acf40d6",
+    "size": 24047,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Move-Fwd.uasset",
+    "sha256": "89ee19bf9647e4bab227fade63316bc95437db3c8eb15a873b248b38d02f880b",
+    "size": 20221,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Startled.uasset",
+    "sha256": "7a77c994ed8e14f3b6d0973b1cbd76fa04259962d56df66f77871f3966bf0362",
+    "size": 26337,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Startled_Montage.uasset",
+    "sha256": "173468e1d612cb663f30da5cf1720895c4cd784cbdc1af1c550d1ed2eba84caf",
+    "size": 1802,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Swim-Fwd.uasset",
+    "sha256": "4a3901810cb22ea904e25faa87c767dfe4de8f8554ac549d962ca6dff36f7871",
+    "size": 19369,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Swim-Idle.uasset",
+    "sha256": "43498279b20c863da83373d895a1147276af297d97129924eb2970b6284cc2c3",
+    "size": 36047,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Eat.uasset",
+    "sha256": "3f6b0bd4d78678109c0df15b29c832fc2aa00837be866c9e948d60918111df87",
+    "size": 28225,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Eat_Montage.uasset",
+    "sha256": "3861b2cd7c0823d6979976b2f188beb236313327447576c1416dcde61f5bb20c",
+    "size": 1885,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-In.uasset",
+    "sha256": "ef4b74250357117760f0b3d331986ab260435472fe6e12be06d485ab1b374210",
+    "size": 27076,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-In_Montage.uasset",
+    "sha256": "6fae131157799a98eeb58066e57794486dfef0b073d56bcd74b3339ebef3195d",
+    "size": 1881,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Out-Tamed.uasset",
+    "sha256": "00c1d27d5020e5579e098b0c9e4a2cb9e347044fbe0dc873df212db5afea571a",
+    "size": 46857,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "0e8e40fb96b6a0d0286e01ee5d7a09c511311ebcd76ef93220d0115055bcaaa4",
+    "size": 1909,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Out-Wild.uasset",
+    "sha256": "5b87b43d915edff8bbdaf58ec1224f8fd5378054a622c1518f6c68d24814c158",
+    "size": 28765,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "43806dcdb557abcb07ab467c09597cc2bcbd62250934bb1ac422bdcf4a60e3b2",
+    "size": 1905,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid.uasset",
+    "sha256": "a56b52b4b2efa1f51b474d7201fd32ac3538d7e05a3d5ff3f094f475627fb5d4",
+    "size": 25811,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Torpid_Idle_Montage.uasset",
+    "sha256": "adcb20abf48b34b49f7ad4d0e29d67de8efe987126db0e34111b83ead6e22098",
+    "size": 1717,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Turn-Lft.uasset",
+    "sha256": "e82292a66188bdd3a3ae4f92d7d0a5b964612bcf7d8978525d4333dcf0e13b76",
+    "size": 18209,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo-Turn-Rit.uasset",
+    "sha256": "6a6da9fcdd76389cef502423c983ece8377cbb33167aa05e43b14af45385a909",
+    "size": 18209,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dilo\\Anims\\Dilo_AimOffset.uasset",
+    "sha256": "95f403b56b3c6d3f26a1523182b8f5e59629e2db6eb0f58144fad1ec848ce4bb",
+    "size": 7748,
+    "export_count": 1
+  }
+]

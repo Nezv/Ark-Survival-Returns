@@ -1,0 +1,1630 @@
+Found 1826 game files (0 skipped) in 69 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 2005 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Center.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Attack-Bite.uasset Ver: 405/10 Engine: 0 Names: 58 Exports: 2 Imports: 10 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Attack-Bite_Montage.uasset Ver: 405/10 Engine: 0 Names: 55 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Fwd.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Lft.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Rit.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Eat.uasset Ver: 405/10 Engine: 0 Names: 58 Exports: 2 Imports: 10 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Eat_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Hurt-Big-Lft.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Hurt-Big-Lft_Montage.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Fwd.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Lft.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Rit.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Eat.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Eat_Montage.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Idle.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Idle_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-In.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-In_Montage.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Tamed.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Tamed_Montage.uasset Ver: 405/10 Engine: 0 Names: 41 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Wild.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Wild_Montage.uasset Ver: 405/10 Engine: 0 Names: 41 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus_AimOffset.uasset Ver: 405/10 Engine: 0 Names: 49 Exports: 1 Imports: 22 Game: 1000051
+Loaded in 0.2 sec, 674 allocs, 0.11 MBytes serialized in 33 calls.
+Loading AnimSequence4 Mosasaurus-Aim-Center from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Center.uasset
+Loading package: PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 89 Exports: 19 Imports: 3 Game: 1000051
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Center to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Center.psa
+Exporting AnimSequence4 Mosasaurus-Idle to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.psa
+Memory: allocated 481289 bytes in 390 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Dwn-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Lft.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Dwn-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Lft.psa
+Memory: allocated 493577 bytes in 393 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Dwn-Rit from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Rit.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Dwn-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn-Rit.psa
+Memory: allocated 505865 bytes in 396 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Dwn from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Dwn to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Dwn.psa
+Memory: allocated 518153 bytes in 399 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Lft.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Lft.psa
+Memory: allocated 530441 bytes in 402 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Rit from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Rit.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Rit.psa
+Memory: allocated 542729 bytes in 405 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Up-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Lft.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Up-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Lft.psa
+Memory: allocated 555017 bytes in 408 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Up-Rit from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Rit.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Up-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up-Rit.psa
+Memory: allocated 567305 bytes in 411 blocks
+Loading AnimSequence4 Mosasaurus-Aim-Up from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up.uasset
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Aim-Up to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Aim-Up.psa
+Memory: allocated 579593 bytes in 414 blocks
+Loading AnimSequence4 Mosasaurus-Attack-Bite from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Attack-Bite.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Attack-Bite to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Attack-Bite.psa
+Memory: allocated 591881 bytes in 417 blocks
+Loading AnimSequence4 Mosasaurus-Charge-Fwd from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Fwd.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Charge-Fwd to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Fwd.psa
+Memory: allocated 604169 bytes in 420 blocks
+Loading AnimSequence4 Mosasaurus-Charge-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Lft.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Charge-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Lft.psa
+Memory: allocated 616457 bytes in 423 blocks
+Loading AnimSequence4 Mosasaurus-Charge-Rit from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Rit.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Charge-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Charge-Rit.psa
+Memory: allocated 628745 bytes in 426 blocks
+Loading AnimSequence4 Mosasaurus-Eat from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Eat.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Eat to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Eat.psa
+Memory: allocated 641033 bytes in 429 blocks
+Loading AnimSequence4 Mosasaurus-Hurt-Big-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Hurt-Big-Lft.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Hurt-Big-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Hurt-Big-Lft.psa
+Memory: allocated 653321 bytes in 432 blocks
+Loading AnimSequence4 Mosasaurus-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Loading AnimSequence4 Mosasaurus-Swim-Fwd from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Fwd.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Swim-Fwd to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Fwd.psa
+Memory: allocated 665609 bytes in 435 blocks
+Loading AnimSequence4 Mosasaurus-Swim-Lft from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Lft.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Swim-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Lft.psa
+Memory: allocated 677897 bytes in 438 blocks
+Loading AnimSequence4 Mosasaurus-Swim-Rit from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Rit.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Swim-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Swim-Rit.psa
+Memory: allocated 690185 bytes in 441 blocks
+Loading AnimSequence4 Mosasaurus-Torpid-Eat from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Eat.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Torpid-Eat to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Eat.psa
+Memory: allocated 702473 bytes in 444 blocks
+Loading AnimSequence4 Mosasaurus-Torpid-Idle from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Idle.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Torpid-Idle to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Idle.psa
+Memory: allocated 714761 bytes in 447 blocks
+Loading AnimSequence4 Mosasaurus-Torpid-In from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-In.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Torpid-In to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-In.psa
+Memory: allocated 727049 bytes in 450 blocks
+Loading AnimSequence4 Mosasaurus-Torpid-Out-Tamed from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Tamed.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Torpid-Out-Tamed to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Tamed.psa
+Memory: allocated 739337 bytes in 453 blocks
+Loading AnimSequence4 Mosasaurus-Torpid-Out-Wild from package PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Wild.uasset
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Mosasaurus-Torpid-Out-Wild to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Animations/Mosasaurus-Torpid-Out-Wild.psa
+Memory: allocated 751625 bytes in 456 blocks
+Exported 24/24 objects in 0.1 sec

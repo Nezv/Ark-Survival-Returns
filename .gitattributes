@@ -1,0 +1,2 @@
+# Preserve the exact exported inputs used by the recorded SHA-256 checks.
+Creatures/**/source/** -text

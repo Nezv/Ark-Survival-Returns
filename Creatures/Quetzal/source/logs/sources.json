@@ -1,0 +1,314 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Quetzalcoatlus.uasset",
+    "sha256": "f0e84126c7aeefa8b46a6f440e26227c181a05dbe6e0477668e941adeebf1c4e",
+    "size": 4168891,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Quetzalcoatlus_Skeleton.uasset",
+    "sha256": "ab41726f83ab10c3f1b2d6d4d6d8060851beeb086f86584900ef029733455ca3",
+    "size": 34068,
+    "export_count": 39
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Blink.uasset",
+    "sha256": "0e706544ae067a51d3699d3188280a1e990c99f32effc326d8461e5ec300622d",
+    "size": 11841,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Cuddle.uasset",
+    "sha256": "864b5ec0a45a9c9190e009168017cc444416fc70dbda7f3f6809f1b9aaeeab90",
+    "size": 127426,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Cuddle_Montage.uasset",
+    "sha256": "2277879511428d3c3f72faf5684a3b460f879cd91816281b798c9d022e3a2351",
+    "size": 1807,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Center.uasset",
+    "sha256": "1326cf5a46b1b7f89081049b9f62adc9913aae0b9314d71a279cdeddf8d5b54a",
+    "size": 10656,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Dwn-Lft.uasset",
+    "sha256": "3aba105f39bd9164ab0845dd9c0951fdb907d551e46433e6a30bb65366148431",
+    "size": 10674,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Dwn-Rit.uasset",
+    "sha256": "7d8c2a51d615613e2782ff089e300b4ca2c2bc4302ee538cb9eebc1b7a3837ea",
+    "size": 10674,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Dwn.uasset",
+    "sha256": "65419fffd56492d69716ef56b8ebda4c4c1ac373199ac71e9600adff35a4e57f",
+    "size": 10650,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Lft.uasset",
+    "sha256": "a7f3ef09dbe3f664cfd4c66d18f9301c57a64d7f75841faf17c80232289cd470",
+    "size": 10666,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Rit.uasset",
+    "sha256": "8fcf2d2c655855bfa877ae851229f2b36e4c41edc1c3b67c956364af7501c55c",
+    "size": 10666,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Up-Lft.uasset",
+    "sha256": "8481c1966ed2a28b5196e7cd25632c8092127231ada721969f022e2661cf9a24",
+    "size": 10672,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Up-Rit.uasset",
+    "sha256": "4f4449b3b2204d0c7a575afb7d3b962ec48385359969720a72fda376e42f7090",
+    "size": 10672,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Aim-Up.uasset",
+    "sha256": "ea483e1106cb4eacbbf599bc3ba3f0fd57b1583d5a3e0aca743dba5f1ef889cd",
+    "size": 10648,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Bite.uasset",
+    "sha256": "c1b1fa919a8baa3c22f6dc0826e968d0441b7a559f69ff7163e8dcee11595260",
+    "size": 29340,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Bite2.uasset",
+    "sha256": "5be8e4f28d70c14d4d8ee83adb6add2c2c46adcd0a0d59ceeea7a99111d120b2",
+    "size": 27121,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Bite_Montage.uasset",
+    "sha256": "f494523762c5b52b1f54171ba3b121ea60ae143caa6f353918a4b730cb792514",
+    "size": 2741,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Bite_Montage2.uasset",
+    "sha256": "3fa3cebf01fe13c4c7eaa73c04dcdb411a8ad88d9541083285753d7a9a9a420a",
+    "size": 1845,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Feet-Out.uasset",
+    "sha256": "ef26059d42215a50c34f191a676ed25e8d7addddbf02600a4548923d03b310c8",
+    "size": 127142,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Attack-Feet-Out_Montage.uasset",
+    "sha256": "7b064679e0e2efc9414fe150a18e65f42a94fc5abdf3fe2683f9d5cc91e833c0",
+    "size": 2669,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Flap-Fwd.uasset",
+    "sha256": "958a4bd2d9fe97603dd8ea680794a839c52263c92e0f98f7756ef68d64e9bd62",
+    "size": 72544,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Flap-Lft.uasset",
+    "sha256": "d7dfeebea2c8c0056fba699ed8825abebf504877b28168b2a4ba761d8c116fb5",
+    "size": 72748,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Fwd.uasset",
+    "sha256": "2504e1288ba7d0b61b59d2ced198a640d0e19427f0fa08c623219394b75363ee",
+    "size": 31375,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Idle.uasset",
+    "sha256": "bc14a1e1adbd2c7d8f94f469e75809f3e20f81a7a028d8103e580a8a2eef5ba9",
+    "size": 59246,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Platform-Lft.uasset",
+    "sha256": "651d4cad9db5b17dada87927785d8860b9f4e3515c105f8f8a55ed0eea2bbb6f",
+    "size": 31687,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Fly-Platform-Rit.uasset",
+    "sha256": "161e7d37ae4216b73942ff17fe95cf5039a2f7e4e1c977de37bcc0044f291a0f",
+    "size": 31687,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Eat.uasset",
+    "sha256": "b8746f6d0e9bb1ce0e7b927658f3ee8db135e4c2f72f013e65971cde5cf67ca5",
+    "size": 54988,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Hurt-Rit.uasset",
+    "sha256": "65bee9d11eb25b6875e9be8a52da82610cfefb661b4e05f819ed751fad09c506",
+    "size": 25431,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Hurt-Rit_Montage.uasset",
+    "sha256": "98e864fedd9bd5146b2b94b861d96d58a2220809ed37983b09e5c0c82799113a",
+    "size": 1941,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Idle-Platform.uasset",
+    "sha256": "78dc4fc967c06606cd53a00ccdd98b88bb46ce10e7d92dec9d00bea4578eb602",
+    "size": 52782,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Idle.uasset",
+    "sha256": "becb8256c7d17f8cf2f04bb27a049c55098fe132c58ef0ced7d58ffa65a85e39",
+    "size": 54060,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Platform-Move-Fwd.uasset",
+    "sha256": "4b49531748512a63ba75334cbe045a7d36f114600a72cd42c3fd555968574121",
+    "size": 36592,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Startled.uasset",
+    "sha256": "02ba1b19b6f2affeec2ab23fe7ec0ff24847bdcef8ebe6d0586db84f471e4a07",
+    "size": 55060,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-Startled_Montage.uasset",
+    "sha256": "3b8451f494345674ed16cc7a71069d75742315d43448819449d8ebc3ce0864a2",
+    "size": 1843,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Ground-StartledEat_Montage.uasset",
+    "sha256": "dc11e6b62c6124d7545ae4284b0be808fd5ed22c58983890b29842af483ffd16",
+    "size": 1881,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Land-Platform.uasset",
+    "sha256": "a110521de1d4e6605e1f0ce3a07bc9a01aa49f7745539aaeeb2bdf1eb5f2d047",
+    "size": 64824,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Land_Montage.uasset",
+    "sha256": "4fc2cdde6388a799ba2411a35862cb02749febbc8bc847fdb4fa21fc79f28eea",
+    "size": 1862,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Lay-Egg.uasset",
+    "sha256": "e0aa9dab92cb9df7c36177d43d7f7dbe4744fc9ec3db2234f76377f5a34c87cc",
+    "size": 34491,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Lay-Egg_Montage.uasset",
+    "sha256": "c483edbb128b8a746d2e31b11d8e2e33aaec988c0b110af352966b2276d1bd04",
+    "size": 2570,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Take-Off-Platform.uasset",
+    "sha256": "6697d7ff16e457874d598b170225a3a3c5e28c1ad0bd635fed6b6f9533d0a2a3",
+    "size": 68422,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Take-Off_Montage.uasset",
+    "sha256": "66b69230bb74bd5e94c8fd75618e5633b2739a7308558dbd343dbf2fb75862e3",
+    "size": 2889,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Eat.uasset",
+    "sha256": "fd6e621e82d14d33e9037f7f1279d31b878f85d6ef24205e7d7d5aef0d455339",
+    "size": 61062,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Eat_Montage.uasset",
+    "sha256": "d5ee1f1f58732c377580e4c8db65a35ab16455d079d3d7a6f546b80c7e680ae4",
+    "size": 1985,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Idle.uasset",
+    "sha256": "d23486fa2edf3ce0159d73a562bc5ce3722e0d643b4f8465c51e9220a6f0259d",
+    "size": 36318,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Idle_Montage.uasset",
+    "sha256": "d3df0a3a7c32df45cbb1f00b537fd937e97adb9a80e8ecc2c8978c89b417f78f",
+    "size": 1827,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-In.uasset",
+    "sha256": "a6640925c48319afda9ef71618718b51312edea6a30b93dbf57a53bd41b8cf09",
+    "size": 44586,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-In_Montage.uasset",
+    "sha256": "c719d3136f1a17a6a1e4356c67d234937046ccca0412e304936086acbd212b1b",
+    "size": 1981,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Out-Tamed.uasset",
+    "sha256": "6a55691c8d62789215113abab40a02f149b821c1ee8ef787c533c15c7f495031",
+    "size": 90534,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "2afe22af85790e8a15a14c4c35e4042c99786fb0a0725ffc84f747f13f44f758",
+    "size": 2009,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Out-Wild.uasset",
+    "sha256": "6fbf215c658426c3b73a2deae83c02b60c35fbf29f53d0b18218727977402344",
+    "size": 50778,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "eb0d7897ec6045ee9ea283b2dc29e7f7174e7f526c46ac5f77c99c1d0f7a036f",
+    "size": 2005,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Quetzalcoatlus\\Animations\\Quetzalcoatlus_Fly_AimOffset.uasset",
+    "sha256": "8c4216a2c835660287cdb2959ff3adc8a00a9feff915676a3179483ff0fd95fa",
+    "size": 8208,
+    "export_count": 1
+  }
+]

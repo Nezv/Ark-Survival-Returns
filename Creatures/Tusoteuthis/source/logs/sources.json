@@ -1,0 +1,290 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Tusoteuthis.uasset",
+    "sha256": "5b5ac56f111cdc01761fe9d3882c573039d9bdc256917743610eac0aa09ac37f",
+    "size": 2242172,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Tusoteuthis_Skeleton.uasset",
+    "sha256": "39a8476379558fa5150c9ee0e6d07762df34e0c2cb139d6c0d94f196761e4413",
+    "size": 21893,
+    "export_count": 27
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Center.uasset",
+    "sha256": "e9574691757a8ed8b6608892492e9e471623add403b28f2ac8185ed2bcb9a1a4",
+    "size": 8282,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Dwn-Lft.uasset",
+    "sha256": "ddf3fdd2512cc8257742fdff946bde24e42b249f9d70971ae288da6fecacdedd",
+    "size": 8288,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Dwn-Rit.uasset",
+    "sha256": "e52f48730cd16458999e4b01c0138c987051237c12d2b6782d42a7e02aa6710a",
+    "size": 8300,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Dwn.uasset",
+    "sha256": "129c5b9f8f8d9ab91538f362b99a382a07141f2f529aeaca460dcd39aa61a6c9",
+    "size": 8276,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Lft.uasset",
+    "sha256": "e389db033ce651b5b04bdde2549020fa21e07055eaaccd5ce97e7e1448b47607",
+    "size": 8272,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Rit.uasset",
+    "sha256": "88072de224e29b684d255e03184dbf727175f34a1bf2b33d37df4f7ad6446acf",
+    "size": 8276,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Up-Lft.uasset",
+    "sha256": "8e47dc1855955fac56b930d78009421955696a655837bb4ad6f5cf3428db5a04",
+    "size": 8298,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Up-Rit.uasset",
+    "sha256": "85bdf6902dc6ba82ba5deb909dd35c27b5c86712a96599a229c17acc0a2b78cc",
+    "size": 8290,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Aim-Up.uasset",
+    "sha256": "48f80cdcc21b06484234641455ebf2e6e444e824bc240a112a527c8f0ce4723f",
+    "size": 8266,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Bite.uasset",
+    "sha256": "e97eec49c270ba3a7df4908ece48478bd959d7bbe651f5617ca098f4216e6f9c",
+    "size": 26645,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Crush-Loop.uasset",
+    "sha256": "ee08a0a2fa3d77a61e9999617b40b201c8d74dc156550f6a0347196e9c6ee0ef",
+    "size": 32124,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Crush_Montage.uasset",
+    "sha256": "9dc1e5295ed23d5e2957294cfd83e5aae8bad5935b81bd8cd5168e7484be591e",
+    "size": 7753,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Eat.uasset",
+    "sha256": "ae546e4b41c15963bb4448f57bc22a0fb70a1e0e8c8eefcd6ee24a83f8490d11",
+    "size": 9859,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Eat_Montage.uasset",
+    "sha256": "966913b888047af674389b2fbb9a5e939466a717332e9388717fd694042ae5ae",
+    "size": 1825,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-In.uasset",
+    "sha256": "986faf76418cbcfefe68766ec41ea89dda4b21510ea0d1def455d00897928992",
+    "size": 26723,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-In_Montage.uasset",
+    "sha256": "ecd422e76b6e19c845802c96133202221d96885581f36d8914f9cbde1621a4c3",
+    "size": 9395,
+    "export_count": 15
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Loop.uasset",
+    "sha256": "94c7f021134551c496006111efd8a722c7ed0acfc3f154158cb1aa752e787352",
+    "size": 20331,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Loop_Montage.uasset",
+    "sha256": "db8efc6ba067b5d1465f3659e88303e0ea92f3ac0f5ed57bcd040c71d8f61fd6",
+    "size": 2483,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Out.uasset",
+    "sha256": "5089d9804b3fad24d279d40742b2aedeb973fbb19de3ab6a38e5d9d2db7c2619",
+    "size": 26797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack-Grab-Out_Montage.uasset",
+    "sha256": "0e081aeb457de8344763e80d8f52f4e518f3ec1cbc58df70b8e7ad05c3bf03ac",
+    "size": 1861,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack.uasset",
+    "sha256": "2ba0dea33056533b9ca251082dd6c3bb34d2b2e409b0a8e2bcc73306864d1589",
+    "size": 21286,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Attack_Montage.uasset",
+    "sha256": "36b0970838b5ce53c80af7b2a343e89f6dd2a535a321451400d75bc70ed04a8d",
+    "size": 9683,
+    "export_count": 17
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Eat.uasset",
+    "sha256": "4d0f9d4b424613a7daacc1db372c6c2f7dfd6692f6f73992cc018ca401dd7df2",
+    "size": 132389,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Eat_Montage.uasset",
+    "sha256": "f9f25e30279273423035918884b8a23204df1b422044e378498c659ca1cc759e",
+    "size": 1857,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Hurt-Big.uasset",
+    "sha256": "5becaf58501b95f1e7cf55e28522d182b0f929279dba0a352da5dcdddb173b3b",
+    "size": 24979,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Hurt-Big_Montage.uasset",
+    "sha256": "60ef2878873af056b0e60a136125d8f22783504234ef29775ea343e69b151aeb",
+    "size": 1797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Idle.uasset",
+    "sha256": "7e623d2f42e548f04f044e83a4fcb19753c78386500b79ec9e1a1c4949dce7c4",
+    "size": 124822,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-InkAttack_Montage.uasset",
+    "sha256": "a3c5fb719fb1ec323a2a86cf76a7541245612d1e1893cd15af03dbfa664208df",
+    "size": 8346,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Lay-Egg.uasset",
+    "sha256": "1c0475c4064890c1e8f7a975ccb962144725dca22b72bc562e64f958f2b5b13d",
+    "size": 26846,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Lay-Egg_Montage.uasset",
+    "sha256": "7eb0cf65183f695d67b0f6d898df0d87bcbaf07bfcb6c5cb0c611922c8d56882",
+    "size": 1784,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Swim-Fwd.uasset",
+    "sha256": "0f8b808b90e10c1e827494f7ed9a4e05fa6fd7d071a11be772bad9f4bf2b6284",
+    "size": 76160,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Swim-Lft.uasset",
+    "sha256": "87aed40156002b5cfc85f561e9ea89e2010e138d6b902ba8ed147cb642475e54",
+    "size": 75768,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Swim-Rit.uasset",
+    "sha256": "cc7e285483d545a3e2e98268c3ca84036041b0982def32df77faf1df7af75d7e",
+    "size": 76372,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Idle.uasset",
+    "sha256": "ac4593856d135d7271237a95de92cf9b97f767b2bdb3940f8de66649d1eb3232",
+    "size": 121160,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Idle_Montage.uasset",
+    "sha256": "6af6ff0aaf2ed8cf1f9a7328ee1c5e3002a1b6e9088a96ccdea9c24fa06f8549",
+    "size": 1800,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-In.uasset",
+    "sha256": "d00228bee63702085804ee4700388b0fa579502a4519d270a1df2e58bf4a08a6",
+    "size": 25192,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-In_Montage.uasset",
+    "sha256": "d6138921c09e81e37e7ee1e667c7e6b1d155f78b0a9419a8cf8c60cb5c4b1b79",
+    "size": 1792,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Out-Tamed.uasset",
+    "sha256": "5edc4fe180e39a63b0dcf0380c3edbb9943b74a82b00ce9ef015c23b012df306",
+    "size": 40680,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "d6557625b4814b7a766d27fd7bdbf57d959718b837e295c105ce13d1db042c4a",
+    "size": 1820,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Out-Wild.uasset",
+    "sha256": "90dd263e6b9f80138e72d8b62b485563e2e72b6a13c8ce666b4a48cc81504b11",
+    "size": 25216,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "6219a014e9ef5177e946f44a77d1ce7dd5d7abd2886a4f357ecbb9f7d3fabe64",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Turn-180-Rit.uasset",
+    "sha256": "f99d6cb02040b03a40693dc855e669728ee39154979e10b7b8c02470f50368bb",
+    "size": 18706,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Turn-180-Rit_Montage.uasset",
+    "sha256": "7e30ba2b6d129df31195b7328ec018f30e9db4d04f1a9676bc56810c55024f4e",
+    "size": 7757,
+    "export_count": 13
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Turn-180.uasset",
+    "sha256": "88d833542ca258c692d0a4f97c6926e478ddd26999df96ec97de31571c2c0f2c",
+    "size": 22838,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis-Turn-180_Montage.uasset",
+    "sha256": "43e8a655e24e166d139592bf51c9958095c61cb21afd8eccfce4b5cb91307659",
+    "size": 7741,
+    "export_count": 13
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Tusoteuthis\\Animations\\Tusoteuthis_AimOffset.uasset",
+    "sha256": "6017e610531bdfd22e1f76453c036e04c5fb96c2abddda83b5a2c3dcd5b0001c",
+    "size": 8029,
+    "export_count": 1
+  }
+]

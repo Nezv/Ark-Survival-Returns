@@ -1,0 +1,62 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Cnidaria.uasset",
+    "sha256": "c05f4fd1f062273ec9545fdf611ec7dfacbf321fd120d3a6747efabfa6db3af9",
+    "size": 2216618,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Cnidaria_Skeleton.uasset",
+    "sha256": "ef65c0d6714d346f8a3e661cc05c2e4491b126616171a0994583dee2772ca1d5",
+    "size": 18185,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Death.uasset",
+    "sha256": "7780a4ec8aaabe48b68e130495bdd39324a21bb8e4819a47dd1c30994f273405",
+    "size": 100752,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Death_Montage.uasset",
+    "sha256": "7c63c895053089548256bbcfa37e1295ab26b82d237d1c4fc89e4873328d6c3a",
+    "size": 1838,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Hurt.uasset",
+    "sha256": "5a386561d16d9c4d54eff1a66e34ae77fd62425ac9b5198028dc9d05d0ed89f9",
+    "size": 11445,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Hurt_Montage.uasset",
+    "sha256": "3e23d56273f4938ff36de9af4acf67e33dcadd6f2f842b672dc702b229159056",
+    "size": 1843,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Idle.uasset",
+    "sha256": "b67ea654ee13bd28af2a6d959a77435726a81644604b8f76d4d26ef08fd437b6",
+    "size": 59505,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Shock.uasset",
+    "sha256": "a67ac0f635451e6e59e335e419cdc0a09e18d8645480e318640d349d0764009d",
+    "size": 48079,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Shock_Montage.uasset",
+    "sha256": "90dfa5b562728016a5ef84a50ecfde05f1f9c7a11d113c6dc8eae039b51962c9",
+    "size": 2600,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Cnidaria\\Animations\\Cnidaria-Wide-Idle.uasset",
+    "sha256": "1f55baf503b910f30d40183c7c354947fda4bb7d4d967c401aa057ca8764846d",
+    "size": 308923,
+    "export_count": 9
+  }
+]

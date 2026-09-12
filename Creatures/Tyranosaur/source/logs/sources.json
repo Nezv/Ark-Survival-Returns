@@ -1,0 +1,302 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Rex.uasset",
+    "sha256": "a8a90284dcef955cfa6606e6aa90d4b4353967b4d95f9bff5f53b446e83b154d",
+    "size": 2701176,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Rex_Skeleton.uasset",
+    "sha256": "1219beed7995ce5e816336177fbe5ab2d668de731b5844d860964dc45d8835d3",
+    "size": 24817,
+    "export_count": 36
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Center.uasset",
+    "sha256": "e5c5f55fbfc34d339e450e35e16d91b7292914142fa69f95816cc74e2b09acba",
+    "size": 6325,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Dwn-Lft.uasset",
+    "sha256": "908b88b17ae7e4fcc9e799925b942e6bbb06a07a8227ee0b1c92fbb20b4ffe84",
+    "size": 6335,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Dwn-Rit.uasset",
+    "sha256": "24b4909d796444fc7154c0a99ee1a4b2b4c0a7f376d3b230ea89ccba5b0becdf",
+    "size": 6339,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Dwn.uasset",
+    "sha256": "9da45a37c6778a488150d54478d9efecf1d88919bb07f7ce0d0e345bc6ec6648",
+    "size": 6319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Lft.uasset",
+    "sha256": "95ca327632ed233d07a763af4285ba51a63790b3724bac52d45d41e93cf722b8",
+    "size": 6331,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Rit.uasset",
+    "sha256": "dbd55b0ba90530b9dcafbf6bca33cdc6968f600fc83023ba3eac73caf00c08be",
+    "size": 6331,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Up-Lft.uasset",
+    "sha256": "3d4dadd555ddc8fff66e26df2703092015adf750bb45371c0893bcf0213883b3",
+    "size": 6325,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Up-Rit.uasset",
+    "sha256": "10d0fd8961cf788a48165310d9e8aea409e4b6228da14399ba315c8c83ec52be",
+    "size": 6329,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Aim-Up.uasset",
+    "sha256": "d1f00590c910913d0c65df8ca8f934ac6d89cdb7dd39959aafacff77cb6a819e",
+    "size": 6321,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Bite2.uasset",
+    "sha256": "68dfea73ed059c8686b49829bc0eed0940b6df9b8f3cbeb265c76a7b0516ab49",
+    "size": 26161,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Bite2_Montage.uasset",
+    "sha256": "0b1ffbd0bb0e8dba1748139a8beeb8a64b72be77d3a282af4065b1d402e05e90",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Blink.uasset",
+    "sha256": "a855b7983d46df92657cadd41f52a6bf04e6b9167fbabb5eaf47e0d9c5b32476",
+    "size": 7362,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Charge-Fwd.uasset",
+    "sha256": "91a9a23d7a2fd09e3cc2cf1970a5a63d2cd83b9d2e8e443f1d13a51cf137e5fe",
+    "size": 37432,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Charge-Lft.uasset",
+    "sha256": "e4963d7d7dda6ca9427710d4bcddcf2182a9b66dc682aa44e86cbf6eb5389226",
+    "size": 36672,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Charge-Rit.uasset",
+    "sha256": "85d501184d9dcec15df0c6c6946a113cc3a2773b616a6e78b7206a0a8eb6b0c3",
+    "size": 37500,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Cuddle.uasset",
+    "sha256": "7ebd4da30f341f8880e5ec81c671f3ae71f5b8e4a56fd32fb0a70c75d76e544f",
+    "size": 88433,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Cuddle_Montage.uasset",
+    "sha256": "f3ecfe5b7a4eda7668ec342773fa5efef8ec509d7a287b431d8372a4eda5d12c",
+    "size": 1708,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Eat-Additive.uasset",
+    "sha256": "d452e917d1236d2b762bd05a307607dfab9089373528505ac2a271efb4e698d4",
+    "size": 35896,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Eat-Additive_Montage.uasset",
+    "sha256": "38d01680eca068bdb9705a2ef1af233dbe7d8127d613605ffbd832e0d6fe8d28",
+    "size": 1732,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Falling.uasset",
+    "sha256": "24d568909a9f63948aea7853f6bfa738778e5558f074c28d769fb33d073b07d0",
+    "size": 23434,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Hurt-Big-Lft.uasset",
+    "sha256": "08185eef7d1d645626704a3b4dcfe2fa96e9eca2250bbe0a085e29109b6958dc",
+    "size": 21236,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Hurt-Big-Lft_Montage.uasset",
+    "sha256": "8acc71724e4160fd83c1426f968f8b7639432dfd3b62b340eb22bbf1a65b9881",
+    "size": 1830,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Idle.uasset",
+    "sha256": "fc563ef8b88b7f4d20813b272b6496c2f4d840cdc70bc1fc36ec0933cdd1d6b6",
+    "size": 143835,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Lay-Egg-Montage.uasset",
+    "sha256": "f578b28c8099eeb61e77b6639b8cbc28cad058c88937e54c3954768f6a477294",
+    "size": 3198,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Lay-Egg.uasset",
+    "sha256": "d7585a4fa49c11508237b7c0d14665d6e020756bf48fdb8b92c8e97e8f512384",
+    "size": 32155,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Move-Fwd.uasset",
+    "sha256": "4b689f1075ddbd80653d10a03d1c65eb14a1985e7d5e5e089b91f622cffa3f37",
+    "size": 41876,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Move-Lft.uasset",
+    "sha256": "d155f941dd3181ad0ab0a5480e84674612aa3ce6230f5e4045fa90073f1df469",
+    "size": 42054,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Move-Rit.uasset",
+    "sha256": "e189e27eef7a801bffdd5dd42bcc06541c303d98d3be25e9e8631cf0b701ecea",
+    "size": 42086,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Roar.uasset",
+    "sha256": "cb530e2b5849fdb789824b96dfb69d04e2ba73a0f0c37f0245eaac61df115be0",
+    "size": 89176,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Roar_Montage.uasset",
+    "sha256": "028443ac8cfe89731a32801485a618c62716e3b81a600218a95cc6817aab8641",
+    "size": 1967,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Sleeping.uasset",
+    "sha256": "4d5e6a1c82293ab18f538b172fc4658a76f4eff60f49262d370a7135e8fc55df",
+    "size": 23436,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Startled-Lft.uasset",
+    "sha256": "8a412ade13bc6509ebf4780754eee1135a54b1566c617a74be272afc9cbb0d29",
+    "size": 31553,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Startled-Lft_Montage.uasset",
+    "sha256": "f461af7530c754fd7d8728904723ef7f65d31d9b63dafef6ffb70435dfa3fcee",
+    "size": 1819,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Startled-Rit.uasset",
+    "sha256": "30b32284ee67027f1fce90826bd5cd2cd0fad6492aed55fb8d6eb665b353a485",
+    "size": 32073,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Startled-Rit_Montage.uasset",
+    "sha256": "442507e91b816eedf15ab8f07b156a175371483f9673a2394aa38c3fb11df4d4",
+    "size": 1777,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Swim-Fwd.uasset",
+    "sha256": "c45c1714e3f259a18058abcb14c926c58c014d7f52822be129d2bd08f3ea855d",
+    "size": 23436,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Swim-Idle.uasset",
+    "sha256": "1721ccbf00e76f08592fedcb7d774f86c5cb11344bd20d7d8fa99ee244d08fbd",
+    "size": 47798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Eat.uasset",
+    "sha256": "ab0af52d8ebfd2aa8319a533d5c28cf948c251a985fadadfbee49df6930b5502",
+    "size": 34165,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Eat_Montage.uasset",
+    "sha256": "9eb4fda1dbaf36ad07e77160d2ac8dce7ea37410e29efc221063cedc9a1ddc0f",
+    "size": 1724,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-In.uasset",
+    "sha256": "766df1c595482cb10264fd406f20a45bbd23c185298e9e951fc7065e3b88368d",
+    "size": 34995,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-In_Montage.uasset",
+    "sha256": "8d25d96713fdbbb57d7655f5ecd5ad7dd3020f9595a6eaa0372c44c8df018f5d",
+    "size": 1720,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Out-Tamed.uasset",
+    "sha256": "0dedde3a93285e081a2cbcceccf9830a8f36b85cfc0cb527e56a638e77154e46",
+    "size": 60732,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "0328c601eec8baad1f09bf02f8a4e6c0e6f7cc32fa867f8bcc422026d5fff784",
+    "size": 1748,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Out-Wild.uasset",
+    "sha256": "fd82b25f54852142a57b8989dcb621afc11949db8e51a56c88924bd6866de04a",
+    "size": 39200,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "3c34d6b2090702eac70163868261c95ba573c0722136dd6481e27fd6d469d80b",
+    "size": 1744,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid.uasset",
+    "sha256": "ce08febd8a6fd18c0ebbba738769e5740d080fc828879fad854a84b6bfddda4d",
+    "size": 34159,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex-Torpid_Montage.uasset",
+    "sha256": "7747c1ddb2f8da86bd63923a6a492ca72117c7e431ed1a185da60897c12c280d",
+    "size": 1708,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Rex\\Animations\\Rex_AimOffset.uasset",
+    "sha256": "186a398121297adcd30e6bc93b4cf306d51c04a68e99d82ab38538972d37a1f1",
+    "size": 7982,
+    "export_count": 1
+  }
+]

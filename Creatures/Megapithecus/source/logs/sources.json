@@ -1,0 +1,242 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Gorilla.uasset",
+    "sha256": "b17f231467e043655061c69b949e2723b370bc91ac0333628ee71b5c7597ba91",
+    "size": 28463,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Gorilla_Skeleton.uasset",
+    "sha256": "81fcf85a286c50ce77e7f35fab7eb2b35460c5e48ddd2b9a91588c70c1a3fdb8",
+    "size": 22310,
+    "export_count": 19
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Gorilla_fur.uasset",
+    "sha256": "30c7e268b3d8867eb0729f2ebfa39c86a755974d91fde564c11041d499c80311",
+    "size": 5396834,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Center.uasset",
+    "sha256": "ef7591a702b736d7aeda00711162f5ade51160adff8062b48e9856cb89a32134",
+    "size": 7569,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Dwn-Lft.uasset",
+    "sha256": "af3829b0ae97ddd0a9e84cf3c173652e2a8b97f5ccd52c87282c56b5e92474e6",
+    "size": 7575,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Dwn-Rit.uasset",
+    "sha256": "3f4a1a6774fe318ddfe7441203042479ce09ca65da84bd4851a835db9f639e51",
+    "size": 7583,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Dwn.uasset",
+    "sha256": "969638ec01f1cb5cf033231bf93c77c5839c5220a54c1853841b212e07de2eee",
+    "size": 7575,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Lft.uasset",
+    "sha256": "02c3b78dd5dfacb82746012bfe3424b92305e9f0db70b8127d2ca4904575a4f4",
+    "size": 7567,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Rit.uasset",
+    "sha256": "fb3bfc7de13b7197a5e89f8561b680adabfb84247437af08a5437ca0e284d3a5",
+    "size": 7575,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Up-Lft.uasset",
+    "sha256": "678bf096661da2ed9a54a264ab341f5f18f3422b635ccd9c7f679879ef813360",
+    "size": 7581,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Up-Rit.uasset",
+    "sha256": "7af25b921509ca6331773903af16025a801e77122bea4b29c2270a9028674370",
+    "size": 7573,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Aim-Up.uasset",
+    "sha256": "c71e90a34451be1a665494f32314a18e2b737827a4734b086efa04cd7f9c1daa",
+    "size": 7557,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Pound.uasset",
+    "sha256": "b0ddc6e0cba1ee6d0ec805677c4c3cd6e92f7a2088ce082e57c66592538a5c6a",
+    "size": 23855,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Pound_Montage.uasset",
+    "sha256": "e0f9cc72249f1f97088604f3d65b2f6d9141709e982c6026198271b0c25af3bd",
+    "size": 2622,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Smash-Lft.uasset",
+    "sha256": "d5442e17e2118c2c2a3493cefd54b463894ff409fb0d52e8f5df3feccaec2d01",
+    "size": 20959,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Smash-Lft_Montage.uasset",
+    "sha256": "aa61186268a2da9c1bf1ebdfe3b857a1e5eb79afb9838ce12b0fa6de8f55f46c",
+    "size": 2549,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Smash-Rit.uasset",
+    "sha256": "72bd5f18363e4fabed75cd04af6702f1d63c1c76139a6669980d519b242cc7e5",
+    "size": 20727,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Smash-Rit_Montage.uasset",
+    "sha256": "b8519b10403961c5276b22a098a8ddae98a54a1c49c2ded3f531a788bec9d441",
+    "size": 2549,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Throw-In.uasset",
+    "sha256": "cc875f69e865948069387443752722381f09190d5c812c1bad21d3919cd79431",
+    "size": 15907,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Throw-Montage.uasset",
+    "sha256": "9ee20c86e43eba179654471e16fc7be482ca564bb1ce7420b72a622d83dac72b",
+    "size": 3999,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Attack-Throw-Out.uasset",
+    "sha256": "6fd7a018611e12e18b7d93acbb3ca911d5f6a1f815b1f4f21fdbf98bb6a3c252",
+    "size": 18139,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Blink.uasset",
+    "sha256": "db8c80e2f0c9e73380b8bcfbaf626821223e9a2d218feadf8cf45f3f17214cbd",
+    "size": 8724,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Charge-Fwd.uasset",
+    "sha256": "7a0b8e24a7fd56b70737af457c1a4acc1c6d681c23557dedcf175e682c2c9565",
+    "size": 27664,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Charge-Lft.uasset",
+    "sha256": "f693693206f621ff46f4bf75ea9ab8b211606fdbc6be7d1f6cca26080ca551fc",
+    "size": 27664,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Charge-Rit.uasset",
+    "sha256": "91911a7a0448fd4b96556437e47a82defe447518b5c0504ab29fc02db052b73a",
+    "size": 27791,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Death.uasset",
+    "sha256": "0e17dbaaa63845ed13a0dc982cf93f89243f96be2c507c0153f6a32a4894fe02",
+    "size": 32582,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Death_Montage.uasset",
+    "sha256": "878a6f02e378fd947e2102be12d13a6e872ae82329eb26f3c07b50877bec6fbc",
+    "size": 1782,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Hurt-Big.uasset",
+    "sha256": "baa49d16a88734b3d70b12201681b448780095007a06a6cc069e7240d48eaab8",
+    "size": 36020,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Idle.uasset",
+    "sha256": "580f3ebda44ea8a178c514c9ef4e083c8b4c11aa167023edaa1a57eac10a6304",
+    "size": 33021,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Idle_EndBossDissolve_Montage.uasset",
+    "sha256": "c90572017d3d6c54440209420982aef1119e121b0a9295bdb0d7077a8ff0abad",
+    "size": 1768,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Move-Fwd.uasset",
+    "sha256": "7b4fded330a5584de99c470a026ba200b754f50c45d9b58469191a5e21510c5b",
+    "size": 28652,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Move-Lft.uasset",
+    "sha256": "f288cb7766f7f992f71f675367d1d4b015ee51f7988bb8e3e65de4178a5e4aeb",
+    "size": 28652,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla-Move-Rit.uasset",
+    "sha256": "6d21d1cac20c45b9d7f1eff0a40393ec7662289c6ff6f9c3ece623d7f6450672",
+    "size": 28523,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_AimOffset.uasset",
+    "sha256": "7259feef5def32fe1ba1979f2974409e3e617d60d8dadad0d1fc71f29a1f5cb7",
+    "size": 7897,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Chest_Pounding.uasset",
+    "sha256": "17fa3b769c4bebd6149f1e3d7341a3f18825e3e24b9bcb8d4bf2b710806fd1fe",
+    "size": 10584,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Chest_Pounding_Montage.uasset",
+    "sha256": "ef2bfe963a9acccdae316320eceea21b87b8e49c5032203eafe4549e8d71874b",
+    "size": 3791,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Falling.uasset",
+    "sha256": "e04ddb880db9b5aac3634caae89eb6f4b26b01d2bd2dfafbfd288794554b098b",
+    "size": 11158,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Move_BS1D.uasset",
+    "sha256": "aa2da4aecf972713bb918bbc4f503fd536d2fa4524e770d9ada9bec0f1ac3108",
+    "size": 3167,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Strafe_Left.uasset",
+    "sha256": "9064765197fe78ec3c2b5bdbf08d1bf8410524152a20ac1d46f567868a660fa6",
+    "size": 26864,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Gorilla\\Animations\\Gorilla_Strafe_Rgt.uasset",
+    "sha256": "b940540401b772cd4e40feb128585782b0eeea6a826003880eac08bd5bbade37",
+    "size": 22058,
+    "export_count": 14
+  }
+]

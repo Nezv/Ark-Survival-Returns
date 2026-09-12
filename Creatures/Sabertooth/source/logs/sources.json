@@ -1,0 +1,308 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Saber.uasset",
+    "sha256": "16f546b7350c9018eecba93c82c26c2058300d6fe1758b4da7121ffa5bb6b8ed",
+    "size": 3292966,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Saber_Skeleton.uasset",
+    "sha256": "46cb10f44d5ab894c56fc703d02be641f053d5d378a753fe701ec2ca26712a08",
+    "size": 24645,
+    "export_count": 25
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Center.uasset",
+    "sha256": "728375aced5bbb97144a74b4398781adcbe0f610d9a89d130f7f6337b6f575fe",
+    "size": 7231,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Dwn-Lft.uasset",
+    "sha256": "2c24dfe0c6f37fe64a0014489a9f4355015f07fbffb55de503a67b19e873528f",
+    "size": 7237,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Dwn-Rit.uasset",
+    "sha256": "0f0d1ad9e3192fbabd981246d0bea08e3eb203dfc2eeff8da3903d1a683eb2d2",
+    "size": 7237,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Dwn.uasset",
+    "sha256": "4cd329e4db7ea8a7a6002d35c2ea2e5400d346fdde0d5a9a880d1e9b370d1ac0",
+    "size": 7229,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Lft.uasset",
+    "sha256": "f9f0df441fe47aeb39670718ca569d9c669731897f69bf96b793711181f775bf",
+    "size": 7229,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Rit.uasset",
+    "sha256": "e0e5f370eee9a43879c0ecf8fcf40f07c7a8ab359e594fac226117518f855393",
+    "size": 7229,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Up-Lft.uasset",
+    "sha256": "ec184e514259368a78b6b527c137c051525cbfedce14eff9144a450e738e8046",
+    "size": 7235,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Up-Rit.uasset",
+    "sha256": "6a0c2662e7ec852f7d82de62022b2343ada85a1dea9e809c78986f86c0745223",
+    "size": 7235,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Aim-Up.uasset",
+    "sha256": "c46b20d47a3a7e6a6e5b5419aa621deaea3497757bfc3718eeabc97be7f65b65",
+    "size": 7223,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Bite.uasset",
+    "sha256": "075b279e92af4c3d7c1be9aeb20f9426f35390aeca1113f10fa7030f1c819eba",
+    "size": 15971,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Bite_Montage.uasset",
+    "sha256": "83ace51e3186fa1f612df50a1fd2e782c0a7e56ce6184904c1015bba842acf5b",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Claw.uasset",
+    "sha256": "af79bda6de6621c68d81ddc3a893238b4e0d4706fe3a76650c0ca710f004df0d",
+    "size": 16151,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Claw_Montage.uasset",
+    "sha256": "0eddf543fe26e2daa2f1c6a2b236003e5444f349d91c44187c94b952a15f02e0",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Leap-Far-Idle.uasset",
+    "sha256": "5a731f0c8110b4ccd59a256ea96d035f41b84857a13a181a32c8b20d27272335",
+    "size": 14180,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Leap-Far-In.uasset",
+    "sha256": "045c1d3042183924f17fdf486d953fe5f4577888ea8f1db35ca1b1658c43a765",
+    "size": 8989,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Leap-Far-Out.uasset",
+    "sha256": "7427d220f6b0047a53d57b96c051a82bba629c7f1c0a6a1bcb0fd3a417eecc0b",
+    "size": 10025,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Attack-Leap-Montage.uasset",
+    "sha256": "bf5f7890078c7b42565b6f2278957fc13f0be80bce36e1456ba7fe04e962a429",
+    "size": 2184,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Blink.uasset",
+    "sha256": "66a119d7dedac4cf4eb8fa0f27cb4e00c5e538fd0f766f1c14771d3c559ce831",
+    "size": 8554,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Charge-Fwd.uasset",
+    "sha256": "489c04b93506c2f40e770350c42cfefc462b89831c4dfd0f6adef4eb8e599fc6",
+    "size": 18205,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Charge-Lft.uasset",
+    "sha256": "40603d95f6846fec576e3e37c75dec018ab621c3255b52718f37a224c6c3547d",
+    "size": 18205,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Charge-Rit.uasset",
+    "sha256": "c6bc74f5c3f1842aa325050ba9522856d3fcb6599bf63c119f7d73e28de83fbb",
+    "size": 16952,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Cuddle.uasset",
+    "sha256": "f436c40fa8aa50e93242bd85535aff66508b64d460a354c8d7cea871902155cc",
+    "size": 52107,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Cuddle_Montage.uasset",
+    "sha256": "0dd8411b56b7b20c0edf784bdebdd5acc363bb6b94ab05b10530dd084ae3f78c",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Eat.uasset",
+    "sha256": "a8244371ea6973007a72e45cc7d554af9db6ba2ca5eccb71732907357033e77c",
+    "size": 54219,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Eat_Montage.uasset",
+    "sha256": "a1e77dcb3c0c551ddd4016d43bcadbfaac28a36aacee01f6b856518f7ddea261",
+    "size": 1714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Falling.uasset",
+    "sha256": "ad6d94205a6fc93e412e0af1451d4f291d0e5e8a0e6ea5618abf32501d0a8fb6",
+    "size": 15098,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Hurt-Big.uasset",
+    "sha256": "1ec3fc51ebcc04bc7072f995222af028cdd8751d720855fd0108c3af7bd8decf",
+    "size": 12095,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Hurt-Big_Montage.uasset",
+    "sha256": "486b5e216154ca5f477587cbba2c6209e56aef513e2fcb9e16d64f52bedd2b5c",
+    "size": 1832,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Idle.uasset",
+    "sha256": "d84d01ba24229babdeba48360d1725eff60b0fa92d8e36d15866bf4b51f136f1",
+    "size": 23659,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Move-Fwd.uasset",
+    "sha256": "c98fdefb0d3b226832660be8df9f35c892eb455c45eeec2fc021960d6fce6872",
+    "size": 24488,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Poop.uasset",
+    "sha256": "b38c09beeeb9b373c80aa6bb5621156a35cd6a4ca977f4d85e24e1fa79313bbc",
+    "size": 12727,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Poop_Montage.uasset",
+    "sha256": "b5d00a5178368e4caa8e26d9a74cf0d3200979f689a4dd41000bff0d2fc3a748",
+    "size": 3210,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Startled.uasset",
+    "sha256": "22a504be307a648cf0c01c4c8e92a8483067d7e91a2f7562502b7fa0d2f4a211",
+    "size": 15978,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Startled_Montage.uasset",
+    "sha256": "c44f733d7f6af0efb97e15161230d1030fc48c353b5bd99077e61dbf0b8936cd",
+    "size": 1779,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Swim-Fwd.uasset",
+    "sha256": "d08ad27716c306365215801d7ac0be76f679cf2dcd96def54654f4238a578f8d",
+    "size": 13975,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Swim-Idle.uasset",
+    "sha256": "72172bb2979a1473871dbed656e4e9dc5c61b43b4593af957deb8be09409aa96",
+    "size": 22485,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Eat.uasset",
+    "sha256": "496bd18a2223333c6d5c02845a2930b8443ad674db01319efb6aea035c94ae16",
+    "size": 21243,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Eat_Montage.uasset",
+    "sha256": "7fb3afcb08a06059c8508f75eb986be433a899497cf63af471805a6ae4a82a5e",
+    "size": 1904,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Idle.uasset",
+    "sha256": "4be00c729e93afd3f711b83a309d9fd8d1ff951a22147cf6d56638f91ebc745f",
+    "size": 21247,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Idle_Montage.uasset",
+    "sha256": "98eedbddf1cd3b632bd5d4d55e68026726723d865faf03f2816f25e47a8e8b45",
+    "size": 1908,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-In.uasset",
+    "sha256": "2739968c87367b786f91013209982ab7b058ef6c96f02d24f1fac86678bdaec7",
+    "size": 18859,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-In_Montage.uasset",
+    "sha256": "68df70920bcc190952727eb8ca861ca35f03b17f21f50b563279d1a35ff2e4bd",
+    "size": 1900,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Out-Tamed.uasset",
+    "sha256": "73ddf6ecb261bc23492200e331eebee2c39e6411a21100639e037edcac13df57",
+    "size": 25791,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "1340e40f85e57c81e9fd50124122d3413c788d4bb53afe9d24672817f7302a89",
+    "size": 1928,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Out-Wild.uasset",
+    "sha256": "3828d361963a747e6c1f400f0d208ca573dc199c5cdb0deafd8b8c35d78687f8",
+    "size": 21307,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "2820b4bb3b5eb3cbc7a3c264e45e50d48a23f15209a97a307487956195506034",
+    "size": 1924,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Turn-Lft.uasset",
+    "sha256": "db42ca570e14a156964c940216dc5d3a952e9d8fd3dfe7fa326d3d54fc0ce418",
+    "size": 24582,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber-Turn-Rit.uasset",
+    "sha256": "a7e63e87f04fe2072e12746ac6df3bbbe6a313549e738f32dfc02e2d9138d9db",
+    "size": 24582,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Saber\\Animations\\Saber_AimOffset.uasset",
+    "sha256": "a342eaa8f028214e145e7bcbd5fc10727a94f2da73c732d7b9cf87d7262919a4",
+    "size": 7831,
+    "export_count": 1
+  }
+]

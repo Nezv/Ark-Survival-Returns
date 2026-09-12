@@ -1,0 +1,284 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Paraceratherium.uasset",
+    "sha256": "9132f49568eeb129b97a245fe524810f9637695c3239268ce5900031df686b5b",
+    "size": 2550873,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Paraceratherium_Skeleton.uasset",
+    "sha256": "85b838786ea33f67cfa4bf3cf32a4cf12243b52ed1eda1d24234de305bb2be19",
+    "size": 24751,
+    "export_count": 34
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Center.uasset",
+    "sha256": "1bb0d47f546765ed937f64540bca3a990199a33b357262c22dc83ef963611e5d",
+    "size": 7165,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Dwn-Lft.uasset",
+    "sha256": "1bd5cbf6a41f4a441369000aee1c68b370d8ebb040ec409a502d330affa4a904",
+    "size": 7187,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Dwn-Rit.uasset",
+    "sha256": "c5e3f7d20043928a7ecc4ebdf94e26cf6894932b3edf8295fa73d86803e03207",
+    "size": 7187,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Dwn.uasset",
+    "sha256": "82e4a28d9d71903c29a42a4e914244dd7b08f637fd707c95a2a7bd7e5e346c2c",
+    "size": 7159,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Lft.uasset",
+    "sha256": "bc25fc92a7aa8a32dafc955ad56ea02b906ae65f4940142e0b56dabbf73e1d85",
+    "size": 7179,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Rit.uasset",
+    "sha256": "7420aec73b5d0afeaf6acd34ad636006f4a1ab94fa5cbf7991fb2de00a54619d",
+    "size": 7179,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Up-Lft.uasset",
+    "sha256": "1e0d9ecdec48d7cd536b9f6a588f9d24aa29465ee9f31931607382a6bd6b1754",
+    "size": 7185,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-Up-Rit.uasset",
+    "sha256": "9a92a04ac9943c5c4d9c8d90b0d080f2b9db81db94a69882afed8bb499a28550",
+    "size": 7185,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Aim-up.uasset",
+    "sha256": "e331f115073fbd634d28e91fb354fd2fc9c4726a75890e554697e7175cb68e72",
+    "size": 7157,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Attack-Footstomp.uasset",
+    "sha256": "e948bc7f3ac14a6fec42c74aabcfc0104b9704f76052f2c9c77c1e7a18ed44ba",
+    "size": 27700,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Attack-Footstomp_Montage.uasset",
+    "sha256": "6a31a69422be7ad16b7a8b6d9735a79c48294b43635c2dbb6cab2a6506f91741",
+    "size": 2710,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Attack-Jab.uasset",
+    "sha256": "580aae6d600ddde77a155b7a15d5c6fd4c5936e0d1e46472bdb2560ed4e70cd4",
+    "size": 12929,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Blink.uasset",
+    "sha256": "20ce694fd5c55e736bf3c41fc6224e5982c4272fed8b916b8eff3b534fef4741",
+    "size": 8112,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Charge-Fwd.uasset",
+    "sha256": "3b3e6c4876199ee529a00aed35cd2f516bb6369b42b32f134b73585cb71d628e",
+    "size": 36720,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Charge-Lft.uasset",
+    "sha256": "395c2fda088d753ac181b42bf2efce56dc06332d9a449d285c266f8b7feb0768",
+    "size": 35744,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Charge-Rit.uasset",
+    "sha256": "c9a2f7814c2e7844e339f6a8ad5e270afb06908513a9287f8891faacc9e3a103",
+    "size": 35744,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Cuddle.uasset",
+    "sha256": "fd9f6f971e74fa085fbe868b0d2e39baafc62b2a9f6e29292a14dc592d1ff84e",
+    "size": 72237,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Cuddle_Montage.uasset",
+    "sha256": "95b93cf781deac8f7fdc659d73205625f20efc6be1901e7ac28ee95b2fdee1c5",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Eat.uasset",
+    "sha256": "7aaccb0e8253584fdc7ca2f4d9a527e44956414f7fe8b0f41ab1557dbf74aaca",
+    "size": 82653,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Eat_Montage.uasset",
+    "sha256": "5c19e17ed4a2401054fa63ac32a810fb0ad80e957f13f6dabaf27de2c50671e8",
+    "size": 1804,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Hurt-Big-Lft.uasset",
+    "sha256": "7cd4792232ba8d4a3f36412202d0bd4ee6d218a1aa1d8d63620bcf5c161a5d57",
+    "size": 16784,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Hurt-Big-Lft_Montage.uasset",
+    "sha256": "fe091d02e3a05ad0bf3414500b4f2694e9619afd527aab0c2a905abf97e14dee",
+    "size": 1938,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Idle.uasset",
+    "sha256": "825728b4d36497b736b46379ec844100de9508e201f849eac2226c944aa9c727",
+    "size": 44653,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Move-Fwd.uasset",
+    "sha256": "71a605995bb3b0fef8585724833a43413c9503f35f12753ccd14b4c4e351170c",
+    "size": 33812,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Move-Lft.uasset",
+    "sha256": "abfd396e75f97abe38c0a0b46b36e144b343b12af0b1e5532515123f7529782e",
+    "size": 33932,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Move-Rit.uasset",
+    "sha256": "0e5ad5bf9ca64a0e0043520f598f7a509800b85069a66c1ff8717033c3f91a42",
+    "size": 33932,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Poop.uasset",
+    "sha256": "ee16ec87bc8e3a956ec54f5aeab8287c601de79338d9de917d629146c8a6b22b",
+    "size": 16076,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Poop_Montage.uasset",
+    "sha256": "cd7b8072cd95da7f159faeca267268b5115733fae7dceed698afd4ac15630269",
+    "size": 2567,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Startled.uasset",
+    "sha256": "7e2f73761e6e5e70efcd464cbe8caba66a9dab926213037ba71df6d397ca2d76",
+    "size": 21765,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Startled_Montage.uasset",
+    "sha256": "273433646b4320f5ec7b2967431803a0cd9d3ee1481351cb08c83208ca4f8476",
+    "size": 1824,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Swim-Attack-Jab.uasset",
+    "sha256": "5b917c24481c861081819cdb0c1c13a00f1330ae72684ece6b59604f0938068e",
+    "size": 18213,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Swim-Attack-Jab_Montage.uasset",
+    "sha256": "77636480187adf24f28b11da308381b72ae0f9739ef9254cb35dd33e422346d5",
+    "size": 2617,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Swim-Fwd.uasset",
+    "sha256": "4d51315a2f274b631a231daec6a657aa27cd28f86a817caedd73b2ba721b14e8",
+    "size": 15096,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Swim-Idle.uasset",
+    "sha256": "e248e76c3935fd53e1311a6216110a317fd3faa13b274a6fdde7c5a7133cdeca",
+    "size": 19196,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Eat.uasset",
+    "sha256": "8d7b5c4837d49eeaa486af299a50cb62384388e531f35df16ab47e8e247daabe",
+    "size": 22029,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Eat_Montage.uasset",
+    "sha256": "1a73d29d417ad8eae076b271c2607e3b82f70656f581d685506ed44cf6e3d740",
+    "size": 1994,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Idle.uasset",
+    "sha256": "2b954dc6c4069bb10f2a5ff24c2d6e39f7aacbc5a9a8637280e5625301fde57b",
+    "size": 19881,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Idle_Montage.uasset",
+    "sha256": "3684425230c155f63a996c03358fdddf3975b4253df8f379fdbf3c68d0bfe296",
+    "size": 1836,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-In.uasset",
+    "sha256": "ea7af2b49e7dde1be96c32dcc20889df176bbed44baeaf7dc93c17cd18cc2590",
+    "size": 20564,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-In_Montage.uasset",
+    "sha256": "e4a5a98efd3be80b214c4373cacb6914ee7d10609a3ba21dbe693cc8b3023606",
+    "size": 1990,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Out-Tamed.uasset",
+    "sha256": "10a1e16e81504599f0258ac607be695bf492cb3f1970d8964d6295a45f6d2798",
+    "size": 36786,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "65dbaaffe1b1d02778194de3749fe1cea11e5e419ba34a353d1fcf0cc4d46d6c",
+    "size": 2018,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Out-Wild.uasset",
+    "sha256": "07e5bf241fab6fb8beca3b197dbd7cdb9db6172918385f3be6af16df5dd6bdca",
+    "size": 31342,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "ec55d9d8fba25315a388c50d632563c87e37996f7050c0f4078b41a5909a4223",
+    "size": 2014,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Paraceratherium\\Animations\\Paraceratherium_AimOffset.uasset",
+    "sha256": "90cb1c6711c6696458746e23c2c659aca1d1abdad86d0758bd714bccdeb5519f",
+    "size": 8161,
+    "export_count": 1
+  }
+]

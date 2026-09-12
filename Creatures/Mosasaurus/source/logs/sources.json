@@ -1,0 +1,212 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Mosasaurus.uasset",
+    "sha256": "4f982c2aa0dc1b7c0a56b0a7fc4b7572f3b51a98023ca7c30da6c3098a1748e3",
+    "size": 2979804,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Mosasaurus_Skeleton.uasset",
+    "sha256": "db6bd29d51e83f2ec1134ca6b20ce765ace2012e9fb539b070a4ce2553a67d62",
+    "size": 12061,
+    "export_count": 19
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Center.uasset",
+    "sha256": "f2fe005d5b0b355c83b8eb76f54f007a6e330cc09162655d449dd61c577df5ed",
+    "size": 3516,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Dwn-Lft.uasset",
+    "sha256": "97147a7e445426ee6a68410ea67d7dfdfdd3deb15827d67a6912d4fee77d9c7e",
+    "size": 3522,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Dwn-Rit.uasset",
+    "sha256": "b8dd618640f5c743487fda121fc58cc0a030a308ebe6237009fb88cf5c1fd256",
+    "size": 3522,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Dwn.uasset",
+    "sha256": "a7ce0c696ab09b47e9e2fe8f8ede907cda6e09dfede9ef4755f8adf439b6b321",
+    "size": 3514,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Lft.uasset",
+    "sha256": "a1e28b5c44eaff0423e05f12d09bf2d0b0e77a553771814c4b4bdc76db62d552",
+    "size": 3510,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Rit.uasset",
+    "sha256": "0bd469d72ce364b3b88a2e683ea1d56155949d54ba127725e7b941cf7746a673",
+    "size": 3514,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Up-Lft.uasset",
+    "sha256": "b71bbddd52d2adc799dc523e70cb269ff63836dc9fabe7a52dec4c229fb8e7e8",
+    "size": 3520,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Up-Rit.uasset",
+    "sha256": "764cc8ae01556b53366118c23845642dd80b4e6e1446dcd0c1334775e25f6980",
+    "size": 3520,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Aim-Up.uasset",
+    "sha256": "04b5e560185f7a381cacde8c6a5e8d7487f608f9a70c6ed65aee22148479a944",
+    "size": 3512,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Attack-Bite.uasset",
+    "sha256": "e55d9825ae00107eb44e6729934101add5baeb3730b097ccaefbaf61a9d456f5",
+    "size": 12470,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Attack-Bite_Montage.uasset",
+    "sha256": "4728c728824b9b235c7662cfd7d66f42e64a20e0c241c2a2ea6282d65e1e5d83",
+    "size": 2687,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Charge-Fwd.uasset",
+    "sha256": "e05e4375c797d12c6358906481448e56e8e86fbb4e4a3748573e3adc52b09460",
+    "size": 21352,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Charge-Lft.uasset",
+    "sha256": "494ef861af002a0011f5911c4dea88c6ea3f178cefd0c4df1b7ba743272de2c5",
+    "size": 20748,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Charge-Rit.uasset",
+    "sha256": "d772a1bc73f2ff9bb2d4e32e8e7db44f4730893210317475d58fd7816e9bf66c",
+    "size": 21352,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Eat.uasset",
+    "sha256": "9d7492856d1d48f3860c4809a5ec85fb8f715f140d0d61d2f8aeae3878d9054c",
+    "size": 10799,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Eat_Montage.uasset",
+    "sha256": "128f52b132f0cf4e074372835374c4cbc126aec9f821dfc0346e182f5f863f38",
+    "size": 1759,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Hurt-Big-Lft.uasset",
+    "sha256": "00d32019c2a26884faf884835b415886f4835611acb2bf577978d76e8755b9d9",
+    "size": 11166,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Hurt-Big-Lft_Montage.uasset",
+    "sha256": "6add340e74574b1cc863fd30e5c55e26a4d5d2e6009981be83c7934e969ee24c",
+    "size": 1893,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Idle.uasset",
+    "sha256": "99ec1717fee4cdff236da1de14c44235d1c34d8d7b7e333d21ebe247661f9757",
+    "size": 18906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Swim-Fwd.uasset",
+    "sha256": "58a759361a08b5bf3b283b6606a790422135c9e676e0c400605006f7f22a1839",
+    "size": 20537,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Swim-Lft.uasset",
+    "sha256": "3ec4296883f08cbc9d6a66f38dc2fc670a47aa965e90467583d4e0c89377ad6d",
+    "size": 19933,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Swim-Rit.uasset",
+    "sha256": "abdbf2b1f6759441c72f9bc808c8e4fc31d0425ceacdc64a7e39f95a5703fb34",
+    "size": 18929,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Eat.uasset",
+    "sha256": "0cd5987f23f269d73a607c965522ac495631cb5d84a160c8976828ae1089c2cc",
+    "size": 21562,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Eat_Montage.uasset",
+    "sha256": "3ce9826aa4f33ea0aced9350b5c3e61e6ecad23f35f1480ec59abca25e03445c",
+    "size": 1876,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Idle.uasset",
+    "sha256": "6f05ef8e76d261ef759b06e36b900706ecddcbc1a5bca6dba7a0e15001a69b7d",
+    "size": 19360,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Idle_Montage.uasset",
+    "sha256": "82e61340968d49a7ab0a3ddbb5bb4f3ea0a4a9c2a9f6cd6b80d111cf6813ae53",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-In.uasset",
+    "sha256": "52a605d115f9250cc46ba5384a10bc64f3d5c215a1f0d8367f30e5f60d307e7a",
+    "size": 8472,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-In_Montage.uasset",
+    "sha256": "db44b06e72b6a77795190ea8093e3f99519b82e9e72720a520954fec835a85bf",
+    "size": 1872,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Out-Tamed.uasset",
+    "sha256": "74ff8742d8d2c5272b89e78c81e23cf03f0ffa05dda64656af0ff93dd7ebe0f7",
+    "size": 13958,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "cc2ff0ef2dab86291400194a02de262e7b4e273369b5cae74bbfbc68494471d3",
+    "size": 1973,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Out-Wild.uasset",
+    "sha256": "88f40c818df28947c8322c54861fbbcdbd7ace75c83adfb9081306876629c87f",
+    "size": 13956,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "d446646a6ccdf357276154f600e593a421cb7ac4531b701092244a54785a93f5",
+    "size": 1969,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mosasaurus\\Animations\\Mosasaurus_AimOffset.uasset",
+    "sha256": "d5b31f47dc1de8529ea7f95f8fd321dd0c9b87b839b9d0b01986cf91ba9c5d5c",
+    "size": 7996,
+    "export_count": 1
+  }
+]

@@ -1,0 +1,695 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.rex_ravager",
+        "texture_width": 64,
+        "texture_height": 8,
+        "visible_bounds_width": 14.19917106628418,
+        "visible_bounds_height": 7.169446069002152,
+        "visible_bounds_offset": [
+          0,
+          1.2817000672221184,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "ROOT_JNT_SKL",
+          "pivot": [
+            -0.0,
+            0.0,
+            -0.0
+          ]
+        },
+        {
+          "name": "joint2",
+          "pivot": [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          "parent": "ROOT_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Spine_000_JNT_SKL",
+          "pivot": [
+            0.0,
+            25.313895,
+            -6.819878
+          ],
+          "parent": "ROOT_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Spine_001_JNT_SKL",
+          "pivot": [
+            -0.01181,
+            26.593317,
+            -1.894655
+          ],
+          "parent": "Cnt_Spine_000_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Spine_002_JNT_SKL",
+          "pivot": [
+            -0.02362,
+            27.872738,
+            3.030568
+          ],
+          "parent": "Cnt_Spine_001_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Spine_003_JNT_SKL",
+          "pivot": [
+            -0.03543,
+            29.15216,
+            7.955791
+          ],
+          "parent": "Cnt_Spine_002_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Spine_004_JNT_SKL",
+          "pivot": [
+            -0.04724,
+            30.431582,
+            12.881014
+          ],
+          "parent": "Cnt_Spine_003_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Neck_001_JNT_SKL",
+          "pivot": [
+            -0.00686,
+            31.864827,
+            15.568861
+          ],
+          "parent": "Cnt_Spine_004_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Neck_002_JNT_SKL",
+          "pivot": [
+            0.017102,
+            33.974863,
+            17.694579
+          ],
+          "parent": "Cnt_Neck_001_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Neck_003_JNT_SKL",
+          "pivot": [
+            0.022669,
+            35.198658,
+            20.498575
+          ],
+          "parent": "Cnt_Neck_002_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Head_JNT_SKL",
+          "pivot": [
+            0.003906,
+            34.17863,
+            22.938678
+          ],
+          "parent": "Cnt_Neck_003_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Jaw_JNT_SKL",
+          "pivot": [
+            0.085183,
+            34.963078,
+            23.877204
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tongue_000_JNT_SKL",
+          "pivot": [
+            0.085187,
+            30.083141,
+            25.581693
+          ],
+          "parent": "Cnt_Jaw_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tongue_001_JNT_SKL",
+          "pivot": [
+            0.085188,
+            29.142149,
+            27.065504
+          ],
+          "parent": "Cnt_Tongue_000_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tongue_002_JNT_SKL",
+          "pivot": [
+            0.085189,
+            27.833165,
+            28.389843
+          ],
+          "parent": "Cnt_Tongue_001_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tongue_003_JNT_SKL",
+          "pivot": [
+            0.08519,
+            27.143117,
+            29.403432
+          ],
+          "parent": "Cnt_Tongue_002_JNT_SKL"
+        },
+        {
+          "name": "Lft_Eye_JNT_SKL",
+          "pivot": [
+            -2.762689,
+            36.449546,
+            27.02043
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "Rht_Eye_JNT_SKL",
+          "pivot": [
+            2.93305,
+            36.449552,
+            27.020431
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "r_lowerEye",
+          "pivot": [
+            3.341654,
+            36.015058,
+            27.08472
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "r_upperEye",
+          "pivot": [
+            3.27471,
+            36.864599,
+            27.209131
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "l_upperEye",
+          "pivot": [
+            -3.274724,
+            36.864592,
+            27.209131
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "l_lowerEye",
+          "pivot": [
+            -3.341668,
+            36.015051,
+            27.08472
+          ],
+          "parent": "Cnt_Head_JNT_SKL"
+        },
+        {
+          "name": "Rht_Arm_Clav000_JNT_SKL",
+          "pivot": [
+            2.680251,
+            30.180398,
+            13.039965
+          ],
+          "parent": "Cnt_Spine_004_JNT_SKL"
+        },
+        {
+          "name": "Rht_Arm_001Tear000_JNT_SKL",
+          "pivot": [
+            3.563071,
+            26.738043,
+            13.81905
+          ],
+          "parent": "Rht_Arm_Clav000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Arm_002Tear000_JNT_SKL",
+          "pivot": [
+            3.470846,
+            24.006181,
+            14.501507
+          ],
+          "parent": "Rht_Arm_001Tear000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Arm_002Tear006_JNT_SKL",
+          "pivot": [
+            3.003722,
+            22.334415,
+            17.154159
+          ],
+          "parent": "Rht_Arm_002Tear000_JNT_SKL"
+        },
+        {
+          "name": "Rht_IndexFinger_000_CTL_JNT_SKL",
+          "pivot": [
+            2.626368,
+            22.179408,
+            17.281912
+          ],
+          "parent": "Rht_Arm_002Tear006_JNT_SKL"
+        },
+        {
+          "name": "Rht_IndexFinger_001_CTL_JNT_SKL",
+          "pivot": [
+            2.501998,
+            21.720009,
+            17.227553
+          ],
+          "parent": "Rht_IndexFinger_000_CTL_JNT_SKL"
+        },
+        {
+          "name": "Rht_IndexFinger_002_CTL_JNT_SKL",
+          "pivot": [
+            2.32758,
+            21.096945,
+            16.972367
+          ],
+          "parent": "Rht_IndexFinger_001_CTL_JNT_SKL"
+        },
+        {
+          "name": "Rht_MiddleFinger_000_CTL_JNT_SKL",
+          "pivot": [
+            3.273947,
+            22.093139,
+            17.224163
+          ],
+          "parent": "Rht_Arm_002Tear006_JNT_SKL"
+        },
+        {
+          "name": "Rht_MiddleFinger_001_CTL_JNT_SKL",
+          "pivot": [
+            3.228153,
+            21.560972,
+            17.291153
+          ],
+          "parent": "Rht_MiddleFinger_000_CTL_JNT_SKL"
+        },
+        {
+          "name": "Rht_MiddleFinger_002_CTL_JNT_SKL",
+          "pivot": [
+            3.189445,
+            21.086583,
+            17.152552
+          ],
+          "parent": "Rht_MiddleFinger_001_CTL_JNT_SKL"
+        },
+        {
+          "name": "Lft_Arm_Clav000_JNT_SKL",
+          "pivot": [
+            -2.680246,
+            30.180406,
+            13.039958
+          ],
+          "parent": "Cnt_Spine_004_JNT_SKL"
+        },
+        {
+          "name": "Lft_Arm_001Tear000_JNT_SKL",
+          "pivot": [
+            -3.563073,
+            26.738034,
+            13.819056
+          ],
+          "parent": "Lft_Arm_Clav000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Arm_002Tear000_JNT_SKL",
+          "pivot": [
+            -3.470849,
+            24.00619,
+            14.501517
+          ],
+          "parent": "Lft_Arm_001Tear000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Arm_002Tear006_JNT_SKL",
+          "pivot": [
+            -3.00372,
+            22.334426,
+            17.154168
+          ],
+          "parent": "Lft_Arm_002Tear000_JNT_SKL"
+        },
+        {
+          "name": "Lft_IndexFinger_000_CTL_JNT_SKL",
+          "pivot": [
+            -2.626366,
+            22.17941,
+            17.2819
+          ],
+          "parent": "Lft_Arm_002Tear006_JNT_SKL"
+        },
+        {
+          "name": "Lft_IndexFinger_001_CTL_JNT_SKL",
+          "pivot": [
+            -2.519687,
+            21.723821,
+            17.384627
+          ],
+          "parent": "Lft_IndexFinger_000_CTL_JNT_SKL"
+        },
+        {
+          "name": "Lft_IndexFinger_002_CTL_JNT_SKL",
+          "pivot": [
+            -2.348943,
+            21.078638,
+            17.580299
+          ],
+          "parent": "Lft_IndexFinger_001_CTL_JNT_SKL"
+        },
+        {
+          "name": "Lft_MiddleFinger_000_CTL_JNT_SKL",
+          "pivot": [
+            -3.273935,
+            22.093145,
+            17.224169
+          ],
+          "parent": "Lft_Arm_002Tear006_JNT_SKL"
+        },
+        {
+          "name": "Lft_MiddleFinger_001_CTL_JNT_SKL",
+          "pivot": [
+            -3.230638,
+            21.611882,
+            17.461407
+          ],
+          "parent": "Lft_MiddleFinger_000_CTL_JNT_SKL"
+        },
+        {
+          "name": "Lft_MiddleFinger_002_CTL_JNT_SKL",
+          "pivot": [
+            -3.195278,
+            21.152794,
+            17.645156
+          ],
+          "parent": "Lft_MiddleFinger_001_CTL_JNT_SKL"
+        },
+        {
+          "name": "Belly_002_JNT_SKL",
+          "pivot": [
+            -0.039222,
+            20.576786,
+            10.688669
+          ],
+          "parent": "Cnt_Spine_003_JNT_SKL"
+        },
+        {
+          "name": "Belly_001_JNT_SKL",
+          "pivot": [
+            -0.026999,
+            16.811702,
+            5.903878
+          ],
+          "parent": "Cnt_Spine_002_JNT_SKL"
+        },
+        {
+          "name": "Belly_000_JNT_SKL",
+          "pivot": [
+            -0.015432,
+            14.735511,
+            1.185631
+          ],
+          "parent": "Cnt_Spine_001_JNT_SKL"
+        },
+        {
+          "name": "Lft_Leg_AIk000_JNT_SKL",
+          "pivot": [
+            -3.788547,
+            30.165796,
+            -4.071909
+          ],
+          "parent": "Cnt_Spine_000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Leg_001Linear000_JNT_SKL",
+          "pivot": [
+            -5.190917,
+            26.883188,
+            -6.904028
+          ],
+          "parent": "Lft_Leg_AIk000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Leg_002Linear000_JNT_SKL",
+          "pivot": [
+            -5.190918,
+            14.83257,
+            -0.507859
+          ],
+          "parent": "Lft_Leg_001Linear000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Leg_003Linear000_JNT_SKL",
+          "pivot": [
+            -5.190915,
+            6.927262,
+            -4.421328
+          ],
+          "parent": "Lft_Leg_002Linear000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Leg_AIk004_JNT_SKL",
+          "pivot": [
+            -5.190912,
+            2.182754,
+            -2.900944
+          ],
+          "parent": "Lft_Leg_003Linear000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Little_Toe_000_JNT_SKL",
+          "pivot": [
+            -7.06243,
+            0.80944,
+            -1.495257
+          ],
+          "parent": "Lft_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Lft_Little_Toe_001_JNT_SKL",
+          "pivot": [
+            -7.973576,
+            0.809439,
+            0.188785
+          ],
+          "parent": "Lft_Little_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Middle_Toe_000_JNT_SKL",
+          "pivot": [
+            -5.139331,
+            0.809441,
+            -1.024368
+          ],
+          "parent": "Lft_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Lft_Middle_Toe_001_JNT_SKL",
+          "pivot": [
+            -5.242139,
+            0.809441,
+            1.515479
+          ],
+          "parent": "Lft_Middle_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Lft_Big_Toe_000_JNT_SKL",
+          "pivot": [
+            -3.356857,
+            0.809442,
+            -1.17985
+          ],
+          "parent": "Lft_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Lft_Big_Toe_001_JNT_SKL",
+          "pivot": [
+            -2.293915,
+            0.809442,
+            0.643889
+          ],
+          "parent": "Lft_Big_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Leg_AIk000_JNT_SKL",
+          "pivot": [
+            3.78852,
+            30.165814,
+            -4.071912
+          ],
+          "parent": "Cnt_Spine_000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Leg_001Linear000_JNT_SKL",
+          "pivot": [
+            5.190914,
+            26.883199,
+            -6.904023
+          ],
+          "parent": "Rht_Leg_AIk000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Leg_002Linear000_JNT_SKL",
+          "pivot": [
+            5.190946,
+            14.832567,
+            -0.507843
+          ],
+          "parent": "Rht_Leg_001Linear000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Leg_003Linear000_JNT_SKL",
+          "pivot": [
+            5.190943,
+            6.927262,
+            -4.421334
+          ],
+          "parent": "Rht_Leg_002Linear000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Leg_AIk004_JNT_SKL",
+          "pivot": [
+            5.190948,
+            2.182751,
+            -2.900944
+          ],
+          "parent": "Rht_Leg_003Linear000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Little_Toe_000_JNT_SKL",
+          "pivot": [
+            7.062469,
+            0.809443,
+            -1.495255
+          ],
+          "parent": "Rht_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Rht_Little_Toe_001_JNT_SKL",
+          "pivot": [
+            7.973615,
+            0.809445,
+            0.188787
+          ],
+          "parent": "Rht_Little_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Middle_Toe_000_JNT_SKL",
+          "pivot": [
+            5.139368,
+            0.809442,
+            -1.024366
+          ],
+          "parent": "Rht_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Rht_Middle_Toe_001_JNT_SKL",
+          "pivot": [
+            5.242176,
+            0.809443,
+            1.515481
+          ],
+          "parent": "Rht_Middle_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Rht_Big_Toe_000_JNT_SKL",
+          "pivot": [
+            3.356893,
+            0.80944,
+            -1.179849
+          ],
+          "parent": "Rht_Leg_AIk004_JNT_SKL"
+        },
+        {
+          "name": "Rht_Big_Toe_001_JNT_SKL",
+          "pivot": [
+            2.293951,
+            0.809439,
+            0.643891
+          ],
+          "parent": "Rht_Big_Toe_000_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_000_JNT_SKL",
+          "pivot": [
+            1e-06,
+            24.336417,
+            -10.457548
+          ],
+          "parent": "Cnt_Spine_000_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_001_JNT_SKL",
+          "pivot": [
+            0.0,
+            23.234653,
+            -16.834322
+          ],
+          "parent": "Cnt_Tail_000_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_002_JNT_SKL",
+          "pivot": [
+            -1e-06,
+            23.205061,
+            -23.344342
+          ],
+          "parent": "Cnt_Tail_001_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_003_JNT_SKL",
+          "pivot": [
+            -2e-06,
+            23.581651,
+            -29.795664
+          ],
+          "parent": "Cnt_Tail_002_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_004_JNT_SKL",
+          "pivot": [
+            -3e-06,
+            24.240407,
+            -36.238632
+          ],
+          "parent": "Cnt_Tail_003_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_005_JNT_SKL",
+          "pivot": [
+            -5e-06,
+            24.873858,
+            -42.679641
+          ],
+          "parent": "Cnt_Tail_004_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_006_JNT_SKL",
+          "pivot": [
+            -6e-06,
+            25.44599,
+            -49.127674
+          ],
+          "parent": "Cnt_Tail_005_JNT_SKL"
+        },
+        {
+          "name": "Cnt_Tail_007_JNT_SKL",
+          "pivot": [
+            -8e-06,
+            26.010055,
+            -55.575977
+          ],
+          "parent": "Cnt_Tail_006_JNT_SKL"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,911 @@
+{
+  "species": "Spinosaurus",
+  "ark_asset": "Spino",
+  "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
+  "bones": 91,
+  "cubes": 258,
+  "source_vertices": 23812,
+  "source_triangles": 41290,
+  "animations": 49,
+  "source_hashes": {
+    "actorx/Animations/Spino-Aim-Center.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Center.props.txt": "f0a5cf3ea7251971221969ae7f2c72f7908d918deb21e4f8b9200f2be76b2214",
+    "actorx/Animations/Spino-Aim-Center.psa": "60a0ad488189ba65b16c25e3366aedcaa100029bf9799f71ed47d45962db7349",
+    "actorx/Animations/Spino-Aim-Dwn-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Dwn-Lft.props.txt": "8aeaf01087afe3039d5a93bfc4b474227135122ade283bbd6acea00b08b36b5f",
+    "actorx/Animations/Spino-Aim-Dwn-Lft.psa": "d0587c0ca0f5130b42097e53202ab6b1438757d6cc63679300990ccfd6cff87a",
+    "actorx/Animations/Spino-Aim-Dwn-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Dwn-Rit.props.txt": "cfa4dc23564b32fd3ec9ec2cc1534960bfe2c5cc6bcf30b0c8ace84f2f6fb740",
+    "actorx/Animations/Spino-Aim-Dwn-Rit.psa": "52e8e7eee293f92840ce2c940ac63ae07f5263ced002bd44fd79f8cb032a54b7",
+    "actorx/Animations/Spino-Aim-Dwn.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Dwn.props.txt": "32eb1570a2cbb8fd7b5d37670dea3141d05c800c7e4fe76e0260bbaafdae507f",
+    "actorx/Animations/Spino-Aim-Dwn.psa": "f6ffd10ab09a00001aa2796636e68c540ed66407ea972cdf3decf1258c7c3d3b",
+    "actorx/Animations/Spino-Aim-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Lft.props.txt": "bedae0eaf7630c2a58a2b713d9604742bd41695a80325642413152151671ab4d",
+    "actorx/Animations/Spino-Aim-Lft.psa": "3c7330b247da73d4586a4e3857142a15f39284c233f7ddb5626b98782c06e67f",
+    "actorx/Animations/Spino-Aim-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Rit.props.txt": "fd079b4b6778927e82225b5eb087ad1472cec7d58e81801d87872559649f0739",
+    "actorx/Animations/Spino-Aim-Rit.psa": "a573d7b0145c3922d041cf054d8b368455e7836b2d7f77dbcb996c253b36af05",
+    "actorx/Animations/Spino-Aim-Up-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Up-Lft.props.txt": "68f7505f6d23efb6b4d33ce47ee13f9ef8fc9e1511d94f944edbde9d7ff862f0",
+    "actorx/Animations/Spino-Aim-Up-Lft.psa": "8ac685c344a31f54651e1416551fb61f082ac9c42a4dbc21035ef17496210f41",
+    "actorx/Animations/Spino-Aim-Up-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Up-Rit.props.txt": "094eb6cb296ea78cf959e95bb8377c783e2d18bf4efcf36a10e2ef69310442a5",
+    "actorx/Animations/Spino-Aim-Up-Rit.psa": "6e1cbcf4ac4a62f3f3dd9fdef91a3cbe8bcc9fafe7a1cdf4cc546b60e4f06a6f",
+    "actorx/Animations/Spino-Aim-Up.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Aim-Up.props.txt": "e03562e8eaebbdda6018739a9d20875e3d330beca50964eb8c680e963b3d360b",
+    "actorx/Animations/Spino-Aim-Up.psa": "76794125943b6aa40020d971a4fe3ee744d6baa771eec03d1086ad798d4fe268",
+    "actorx/Animations/Spino-Attack-Bite.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Attack-Bite.props.txt": "affc37653c30d30b9e6a3dd191d747719c1535f76c4647ffa548f4a15a979363",
+    "actorx/Animations/Spino-Attack-Bite.psa": "ea6435802b3d572ba86c9dec46c9fe92f4077e4e2b5716389df3e2d234d78292",
+    "actorx/Animations/Spino-Biped-Attack-Claw-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Attack-Claw-Lft.props.txt": "d2411bcbd3edd839c4403db52f779102b9f6b3756eee320694306361aba7b925",
+    "actorx/Animations/Spino-Biped-Attack-Claw-Lft.psa": "24ab95f47dc851deca48656dc16923bc76b1cec1f2d448dfac8cb76a492d4787",
+    "actorx/Animations/Spino-Biped-Attack-Claw.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Attack-Claw.props.txt": "795167c22a970bb2c6405e210e2f05bf9b919954e5f3af8d7757c7308e3950a3",
+    "actorx/Animations/Spino-Biped-Attack-Claw.psa": "fa16aaaa5b88237455729b78ec7a2478a435844d5357105e3c61d93b17333991",
+    "actorx/Animations/Spino-Biped-Charge-Fwd.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Charge-Fwd.props.txt": "1a5a975b9c0742d6c86afaf8da2788523887fb5382b3a980fb72cde23c2f7509",
+    "actorx/Animations/Spino-Biped-Charge-Fwd.psa": "24e69e464340634b9a5cba64bd9bdf5e630e7aafbb69802031b122f7956f5c75",
+    "actorx/Animations/Spino-Biped-Charge-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Charge-Lft.props.txt": "29ddce59d4ff0f6df845d114eb4dd31ec00b8b0c4ec638d1ca9c706c4da2f3a5",
+    "actorx/Animations/Spino-Biped-Charge-Lft.psa": "179e381bc58262f8b37f58e7258b0a2ea9c505676e113409a36902a6b9045917",
+    "actorx/Animations/Spino-Biped-Charge-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Charge-Rit.props.txt": "52d31af1b77b81764953082a5af756df44f731e88081f58babe6cf32a13f1f3e",
+    "actorx/Animations/Spino-Biped-Charge-Rit.psa": "9b3ccc2b4ff5cfe5b8be85f4abaed288a89c96440f4d106fc58ed2d18b0e3985",
+    "actorx/Animations/Spino-Biped-Idle.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Idle.props.txt": "8b07b9288a40125759947accbd90750442968fb6b98f4180743786fb58c19685",
+    "actorx/Animations/Spino-Biped-Idle.psa": "80586648fbd40cca0d65de315b819c09bb92d55d166141860e3bfd2ce4afb0d1",
+    "actorx/Animations/Spino-Biped-Move-Fwd.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Move-Fwd.props.txt": "953c249ca34d0a732a155d78c8f6486f81f369f6bcf2c240d45d4f55c8d328ad",
+    "actorx/Animations/Spino-Biped-Move-Fwd.psa": "116449fc7fd0adff0894b962a79d05cdc907c3db7b9a39a0699b8d8c88173a51",
+    "actorx/Animations/Spino-Biped-Move-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Move-Lft.props.txt": "2de4a4ad0d5df1478f6a173874f579cca97fbc2479dbb5dae7009b026efc0ef6",
+    "actorx/Animations/Spino-Biped-Move-Lft.psa": "fcb62743620b1f83e48787ee95f767a54a382697b2b87d110f0a70f1243c83b8",
+    "actorx/Animations/Spino-Biped-Move-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Move-Rit.props.txt": "86f8646700f5573f15fcd40abf463fd364891330efb61364f8d35c64daf3309a",
+    "actorx/Animations/Spino-Biped-Move-Rit.psa": "d4a9830ca8a7875b8c45a5af61628460750d30abe7d161538d00c8e14035452c",
+    "actorx/Animations/Spino-Biped-Roar-Charge-Additive.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Roar-Charge-Additive.props.txt": "e7aba3104314fdbe5f5646856e8ad011221eaf2658acaf7ffd19af5d20d740af",
+    "actorx/Animations/Spino-Biped-Roar-Charge-Additive.psa": "6a1e02f732c72b585f1c944753f70cb806d513b89d1f13657b9a284f6dfca506",
+    "actorx/Animations/Spino-Biped-Roar-Move-Additive.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Roar-Move-Additive.props.txt": "2d7379729ee60d446244c4b40b219801a6bbf9b5e13cf6d7a0fb8937b894178c",
+    "actorx/Animations/Spino-Biped-Roar-Move-Additive.psa": "90b2831c841eccf9262a4a62677e44eade603c4013f9af784e19365895d064b2",
+    "actorx/Animations/Spino-Biped-Roar.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-Roar.props.txt": "750fa1015307f94e8d1b592511141a237f14dc97c9d07a43ddbb9b79e96993f1",
+    "actorx/Animations/Spino-Biped-Roar.psa": "67e251fe119b328847a3d1b522882915662efa62a1d85bbed83bb5b58fd06b55",
+    "actorx/Animations/Spino-Biped-To-Quad.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-To-Quad.props.txt": "48ee71900b683a0a14ea91dabc3273d9f5cb1c1ce93974677db9c73b76ba4641",
+    "actorx/Animations/Spino-Biped-To-Quad.psa": "ed1053dcfd1e899881ebd71683041301898946f36fc55414acb9e74c18534055",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Lft.props.txt": "7eaa900f4ff1b399ca784d07adb2440b867083c2044a287f6f9a97a7f9eb95bd",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Lft.psa": "bddeac61ff540ab7aecaab7273973f3add19013552d76a0d149c9ba64c17cd2e",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Rit.props.txt": "7fdb3fbdda30a1b3d4df0d6488eb223ddba70609e9fa73b7a603fc32d109aaa1",
+    "actorx/Animations/Spino-Biped-TurnInPlace-Rit.psa": "f73f615bd08df55456a35f8d26d8c90edd3e85814f5ebca8ed5a1bfb3071560b",
+    "actorx/Animations/Spino-Blink.config": "6b9197a2cec87e015e4cd5ddc50ba6507f192c670a62866dc1e229f43f3c8a38",
+    "actorx/Animations/Spino-Blink.props.txt": "6721e0e2fcf07ef68e9fdbbd8ffc044c3c93d91f49637f5b3af4328b63694905",
+    "actorx/Animations/Spino-Blink.psa": "e6f39485927c558b65c3e6d0029563f92451084679d0b4b8c146f7aadef97fff",
+    "actorx/Animations/Spino-Charge-Fwd.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Charge-Fwd.props.txt": "8f38f9dd092c0acd2aa090aac9e9ee918f274afe272ebd1fb1d7937e4ecd0db2",
+    "actorx/Animations/Spino-Charge-Fwd.psa": "790a95c5af6b92cfd528f42181cfd512e33fea1d857a972ae2981b81e2528bd4",
+    "actorx/Animations/Spino-Charge-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Charge-Lft.props.txt": "df74045b6e37bedf3b5c78d1c8d956061d2078753cdc87bca58dc81944286364",
+    "actorx/Animations/Spino-Charge-Lft.psa": "8cb7a5fad151555bb87150bac4bf3bf0f9cd1700a086f13eec59ffd4a4655d29",
+    "actorx/Animations/Spino-Charge-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Charge-Rit.props.txt": "fa368dcfd7230adafbbb45454f8e61127b8350b26a9e648e8bab5e338a540993",
+    "actorx/Animations/Spino-Charge-Rit.psa": "3cd7f417434f31fa3cf95f7608e23e857933636e3de3100246a835ec8242688a",
+    "actorx/Animations/Spino-Cuddle.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Cuddle.props.txt": "b21c20b5b69d3a279728b38277ce5c5b64884e869ed725f949b8902f6cb45c86",
+    "actorx/Animations/Spino-Cuddle.psa": "113e76c1f7ec084968e8fa6466a0c97c6bd4cac6421c5e6213fce5f9845a76ca",
+    "actorx/Animations/Spino-Eat.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Eat.props.txt": "9ea2c003dc687cf7d435c3086e946a5990d5c746502aeb79367f9dd685f8a3d0",
+    "actorx/Animations/Spino-Eat.psa": "df9e2ef94a1b45607a1cba0a8c9ccb2b843541055fc669bb99cf85dba2bc8164",
+    "actorx/Animations/Spino-Hurt-Big-Rit.config": "aa671bc59df42029f3d4f815c4cefb9c5bff0bc7ad045d30035ac98515f52116",
+    "actorx/Animations/Spino-Hurt-Big-Rit.props.txt": "657758d41275115a948c4be2418a41d7c1856c7914391b841a3ee58952d686ad",
+    "actorx/Animations/Spino-Hurt-Big-Rit.psa": "59672b01c373d35934ac01db43eda9e129c195b252a5e176f6931ea9d8a1fa7a",
+    "actorx/Animations/Spino-Idle.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Idle.props.txt": "337157a2e4ed72576fdc7b4053c005675b0ab6cc6706987ec918d324b1dde17d",
+    "actorx/Animations/Spino-Idle.psa": "bd8f11243b4c140d896c4a223783c82701e024d5092a84c5e50d9d7c466193ab",
+    "actorx/Animations/Spino-Lay-Egg.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Lay-Egg.props.txt": "421de883928cca59f1db3fc072fed1e9d13c0283c388783d36c181b4f024cb8b",
+    "actorx/Animations/Spino-Lay-Egg.psa": "aceb6b354f8c3710037b6953b12bef08ae4081659ce04b3dba7e822b9312a612",
+    "actorx/Animations/Spino-Move-Fwd.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Move-Fwd.props.txt": "925d09cb6da913b7f4cb488183b306003e0d7b4ba753a4f8d7ee8321b2ccb062",
+    "actorx/Animations/Spino-Move-Fwd.psa": "ca73b34d4a0447d15bae1780a0b22185f63ed58bc2d5b3979b3c54c1756f2278",
+    "actorx/Animations/Spino-Move-Lft.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Move-Lft.props.txt": "9ca6caf84d977c171cc3796079e51ee24345535c541e8236ff9cf3d4f449e3d2",
+    "actorx/Animations/Spino-Move-Lft.psa": "cc2bcf45014b7537cc7ac72f3cd1f66f8f7e298c924bc65e0c378b66577b523f",
+    "actorx/Animations/Spino-Move-Rit.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Move-Rit.props.txt": "e4de74794640cc88e479bb3f30cc533fc9b2af96a15a7176b1a265b5308b9440",
+    "actorx/Animations/Spino-Move-Rit.psa": "d2c5a4b6856982fb2866dc3a7095723de73b4398b86ad1a8c1c7c6495b9d1a2d",
+    "actorx/Animations/Spino-Quad-To-Biped.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Quad-To-Biped.props.txt": "70e775e6becc095954791f3c4d8bcfae5c552772a5f7d683e94bbd33fc2996c7",
+    "actorx/Animations/Spino-Quad-To-Biped.psa": "120a883aa4c16748985d991b5a69c22f92a0d85fb7ffac78049a00b5de8d898c",
+    "actorx/Animations/Spino-Roar-Charge-Addiitive.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Roar-Charge-Addiitive.props.txt": "afcb613c684d7986dae41ce04f9f57a418413c05c574af5cbfdb5a76e18d05d9",
+    "actorx/Animations/Spino-Roar-Charge-Addiitive.psa": "9044f924cfac0c0d2e414566fc9d7679fde7bd7ee0ea0cb21b4c83fb3f1c6e86",
+    "actorx/Animations/Spino-Roar-Move-Addiitive.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Roar-Move-Addiitive.props.txt": "9184b35e1063f73231fe02227b9a301c85767b80cf8b06d850d9e32721b68a95",
+    "actorx/Animations/Spino-Roar-Move-Addiitive.psa": "a37378efd3ea977d21f3ba75dcd08bbb6f5875ab2d8278212470d40b98b5c37a",
+    "actorx/Animations/Spino-Roar.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Roar.props.txt": "14595af791ded76307a7728238971e939984bae1fa4c2b73688f30ebb8c8f034",
+    "actorx/Animations/Spino-Roar.psa": "3d2528e1803697f55ce51f416f718d7f0d45647fde69eb3218a06b61f9f41cb7",
+    "actorx/Animations/Spino-Startled.config": "de86e1a66b623a12100fa15db0a6eb1b8bb062462092e154272841570659a5c9",
+    "actorx/Animations/Spino-Startled.props.txt": "f0318595a60070c1f35c29709c9eabed6c040bf9ab464ccbad838da8adc74ca8",
+    "actorx/Animations/Spino-Startled.psa": "06184509dc62beeb0deac0f78f4a68cf344f0fa1584f6ff759a50573c6c7ef8e",
+    "actorx/Animations/Spino-Swim-Fwd.config": "0542a91f9348b8a44681870080f2b396bd2f064f8caa2a4def39367a377bac6c",
+    "actorx/Animations/Spino-Swim-Fwd.props.txt": "caaa2780d3df4d5008284be5e628ad4679adde54bb6eec09cf2f7b0510e871ce",
+    "actorx/Animations/Spino-Swim-Fwd.psa": "731afdd831e1a0ea5e57314a65d45a4301ee642577bcfb3c84ee78eb8756dcc9",
+    "actorx/Animations/Spino-Swim-Idle.config": "587dedb083e77a866560c075568456430a06cc5520bf2d3d2ac78d9c8fb19487",
+    "actorx/Animations/Spino-Swim-Idle.props.txt": "05956c911dba03532eedb0c3c9fe9002b74467976e043de12039380427cac3a5",
+    "actorx/Animations/Spino-Swim-Idle.psa": "11efeb43ff425398a48fd8743daa12e692c49cc5d4db33dba65fc431f040d15a",
+    "actorx/Animations/Spino-Torpid-Eat.config": "d4cf13128437797f184f220a9b47640c0bf74c8888b0536c1ace93b1c6cff201",
+    "actorx/Animations/Spino-Torpid-Eat.props.txt": "00000217eba631a0b1810e1453a82b074351a901599a4c072258b081bdc875be",
+    "actorx/Animations/Spino-Torpid-Eat.psa": "021fc0fe58ffa1647855f6f84f738d919e052c20c18d3681ab62df9a97c22cbc",
+    "actorx/Animations/Spino-Torpid-Idle.config": "7d490c6debd1859a2bf0abf775e12dbb1277eb4a73f3f64d7ddef0baff155704",
+    "actorx/Animations/Spino-Torpid-Idle.props.txt": "9ca3dabf8b6dd863d579e3ec0c53c7edb47197e7dcdb37a7f31a8a36a93ea329",
+    "actorx/Animations/Spino-Torpid-Idle.psa": "5f2ced6eb7723a6782b373fb9e586e20c736d9d5b88bc04f3c751518c24b531f",
+    "actorx/Animations/Spino-Torpid-In.config": "7f02ce2a7377668905c46be49d99db6993ca702f7060b858819d7175651f827d",
+    "actorx/Animations/Spino-Torpid-In.props.txt": "f50531dde0a7d1e24b7c59b7caa6e942013a18a2d0c793b8df90458a68e4ae33",
+    "actorx/Animations/Spino-Torpid-In.psa": "cb079d087d40654ead2c60bc5b9f9eaa412195bd7e7662200321785cc4fd8aad",
+    "actorx/Animations/Spino-Torpid-Out-Tamed.config": "3a7e6162a111d7f964316e5cb65c3e0ead1defd1543647a21238f18a52deb264",
+    "actorx/Animations/Spino-Torpid-Out-Tamed.props.txt": "61453544318395f79c7495103af140a159ab36d120e954bc2a3bf58314d38914",
+    "actorx/Animations/Spino-Torpid-Out-Tamed.psa": "c1f00417cd65f802b85fdcc2045b141b3f86618eb32ef99c9ca0b8241da9d141",
+    "actorx/Animations/Spino-Torpid-Out-Wild.config": "a10a80aa13edb51516ee0a9be8fb77bbfccc6e5910908af7bad7e716dc324f23",
+    "actorx/Animations/Spino-Torpid-Out-Wild.props.txt": "70893abb6b25e5228e054c62eb049747a3019cb8ed39fd168c398e30a1e8d728",
+    "actorx/Animations/Spino-Torpid-Out-Wild.psa": "f20ea2372803b953d6eda41c2e6c7066a8467c9db106b537bb1a1853b3406637",
+    "actorx/Spino.props.txt": "8d9ea0f225b6227b68e751fadc260a55da4616e339f8b843590cb360b6d511e8",
+    "actorx/Spino.psk": "9225c35b6070a19efcfb72d6d86e69ca19026ceaed4ed6cec20b48b98b4d34a5",
+    "gltf/Spino.bin": "b10259ef6054855178f45bb9fa6908a16814c1220c05f24aef2d151cc00e3a4c",
+    "gltf/Spino.gltf": "1dcff690f82179bfe92a326186abdbc2467874bd26e392ca791b8dad71db7995",
+    "gltf/Spino.props.txt": "8d9ea0f225b6227b68e751fadc260a55da4616e339f8b843590cb360b6d511e8"
+  },
+  "clips": [
+    {
+      "name": "Spino-Aim-Center",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Dwn-Lft",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Dwn-Rit",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Dwn",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Lft",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Rit",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 3.730349362740526e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Up-Lft",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Up-Rit",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Aim-Up",
+      "frames": 1,
+      "fps": 33.75,
+      "source_fps": 33.75,
+      "timing_note": null,
+      "retained_keys": 178,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.0362559120951212e-15
+    },
+    {
+      "name": "Spino-Attack-Bite",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1436,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.171241461241152e-14,
+      "rotation_roundtrip_radians": 1.1433220213449933e-15
+    },
+    {
+      "name": "Spino-Biped-Attack-Claw-Lft",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1836,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.105427357601002e-14,
+      "rotation_roundtrip_radians": 1.1498096126069771e-15
+    },
+    {
+      "name": "Spino-Biped-Attack-Claw",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1679,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.171241461241152e-14,
+      "rotation_roundtrip_radians": 1.4331125889805547e-15
+    },
+    {
+      "name": "Spino-Biped-Charge-Fwd",
+      "frames": 25,
+      "fps": 31.25,
+      "source_fps": 31.25,
+      "timing_note": null,
+      "retained_keys": 1555,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.1613529941910571e-15
+    },
+    {
+      "name": "Spino-Biped-Charge-Lft",
+      "frames": 25,
+      "fps": 31.25,
+      "source_fps": 31.25,
+      "timing_note": null,
+      "retained_keys": 1555,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.3290705182007514e-14,
+      "rotation_roundtrip_radians": 1.1394426535908674e-15
+    },
+    {
+      "name": "Spino-Biped-Charge-Rit",
+      "frames": 25,
+      "fps": 31.25,
+      "source_fps": 31.25,
+      "timing_note": null,
+      "retained_keys": 1556,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 6.750155989720952e-14,
+      "rotation_roundtrip_radians": 1.245759751498166e-15
+    },
+    {
+      "name": "Spino-Biped-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 1574,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.3231471829303825e-15
+    },
+    {
+      "name": "Spino-Biped-Move-Fwd",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2897,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 6.927791673660977e-14,
+      "rotation_roundtrip_radians": 1.1524832259719259e-15
+    },
+    {
+      "name": "Spino-Biped-Move-Lft",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2899,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.993605777301127e-14,
+      "rotation_roundtrip_radians": 1.2574531738167909e-15
+    },
+    {
+      "name": "Spino-Biped-Move-Rit",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2889,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 9.592326932761353e-14,
+      "rotation_roundtrip_radians": 1.2308098390509788e-15
+    },
+    {
+      "name": "Spino-Biped-Roar-Charge-Additive",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 3240,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.171241461241152e-14,
+      "rotation_roundtrip_radians": 1.2482643315393957e-15
+    },
+    {
+      "name": "Spino-Biped-Roar-Move-Additive",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 3192,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.881784197001252e-14,
+      "rotation_roundtrip_radians": 1.23268216165329e-15
+    },
+    {
+      "name": "Spino-Biped-Roar",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 3151,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.3056926080711267e-15
+    },
+    {
+      "name": "Spino-Biped-To-Quad",
+      "frames": 16,
+      "fps": 32.0,
+      "source_fps": 32.0,
+      "timing_note": null,
+      "retained_keys": 963,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.684341886080802e-14,
+      "rotation_roundtrip_radians": 1.0988732301648777e-15
+    },
+    {
+      "name": "Spino-Biped-TurnInPlace-Lft",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1380,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 6.394884621840902e-14,
+      "rotation_roundtrip_radians": 1.1217265805014264e-15
+    },
+    {
+      "name": "Spino-Biped-TurnInPlace-Rit",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1384,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.460698725481052e-14,
+      "rotation_roundtrip_radians": 1.116566879877411e-15
+    },
+    {
+      "name": "Spino-Blink",
+      "frames": 3,
+      "fps": 44.999996185302734,
+      "source_fps": 44.999996185302734,
+      "timing_note": null,
+      "retained_keys": 180,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 3.735900477863652e-14,
+      "rotation_roundtrip_radians": 9.76137894125191e-16
+    },
+    {
+      "name": "Spino-Charge-Fwd",
+      "frames": 23,
+      "fps": 31.363636016845703,
+      "source_fps": 31.363636016845703,
+      "timing_note": null,
+      "retained_keys": 1577,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.3290705182007514e-14,
+      "rotation_roundtrip_radians": 1.2966381018790547e-15
+    },
+    {
+      "name": "Spino-Charge-Lft",
+      "frames": 23,
+      "fps": 31.363636016845703,
+      "source_fps": 31.363636016845703,
+      "timing_note": null,
+      "retained_keys": 1579,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.684341886080802e-14,
+      "rotation_roundtrip_radians": 1.1416060941437048e-15
+    },
+    {
+      "name": "Spino-Charge-Rit",
+      "frames": 23,
+      "fps": 31.363636016845703,
+      "source_fps": 31.363636016845703,
+      "timing_note": null,
+      "retained_keys": 1577,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.3290705182007514e-14,
+      "rotation_roundtrip_radians": 1.1416060941437048e-15
+    },
+    {
+      "name": "Spino-Cuddle",
+      "frames": 201,
+      "fps": 30.150001525878906,
+      "source_fps": 30.150001525878906,
+      "timing_note": null,
+      "retained_keys": 8033,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.881784197001252e-14,
+      "rotation_roundtrip_radians": 1.3172206675035359e-15
+    },
+    {
+      "name": "Spino-Eat",
+      "frames": 46,
+      "fps": 30.66666603088379,
+      "source_fps": 30.66666603088379,
+      "timing_note": null,
+      "retained_keys": 1420,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 9.237055564881302e-14,
+      "rotation_roundtrip_radians": 1.1200417803495642e-15
+    },
+    {
+      "name": "Spino-Hurt-Big-Rit",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1651,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 1.0835776720341528e-13,
+      "rotation_roundtrip_radians": 1.2221715961728605e-15
+    },
+    {
+      "name": "Spino-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 1142,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 9.947598300641403e-14,
+      "rotation_roundtrip_radians": 1.1180402941136748e-15
+    },
+    {
+      "name": "Spino-Lay-Egg",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 1773,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 9.592326932761353e-14,
+      "rotation_roundtrip_radians": 1.125366087424139e-15
+    },
+    {
+      "name": "Spino-Move-Fwd",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 2001,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.460698725481052e-14,
+      "rotation_roundtrip_radians": 1.1822213670213447e-15
+    },
+    {
+      "name": "Spino-Move-Lft",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 2006,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.2230926382870235e-15
+    },
+    {
+      "name": "Spino-Move-Rit",
+      "frames": 31,
+      "fps": 27.280000686645508,
+      "source_fps": 27.280000686645508,
+      "timing_note": null,
+      "retained_keys": 2009,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.684341886080802e-14,
+      "rotation_roundtrip_radians": 1.1822213670213447e-15
+    },
+    {
+      "name": "Spino-Quad-To-Biped",
+      "frames": 16,
+      "fps": 32.0,
+      "source_fps": 32.0,
+      "timing_note": null,
+      "retained_keys": 962,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 5.684341886080802e-14,
+      "rotation_roundtrip_radians": 1.0988732301648777e-15
+    },
+    {
+      "name": "Spino-Roar-Charge-Addiitive",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2618,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.2561365549041192e-15
+    },
+    {
+      "name": "Spino-Roar-Move-Addiitive",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2662,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 6.927791673660977e-14,
+      "rotation_roundtrip_radians": 1.278941868017495e-15
+    },
+    {
+      "name": "Spino-Roar",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2525,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 1.1013412404281553e-13,
+      "rotation_roundtrip_radians": 1.1737586940334466e-15
+    },
+    {
+      "name": "Spino-Startled",
+      "frames": 41,
+      "fps": 30.75,
+      "source_fps": 30.75,
+      "timing_note": null,
+      "retained_keys": 2361,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.526512829121202e-14,
+      "rotation_roundtrip_radians": 1.1710490034641822e-15
+    },
+    {
+      "name": "Spino-Swim-Fwd",
+      "frames": 41,
+      "fps": 30.75,
+      "source_fps": 30.75,
+      "timing_note": null,
+      "retained_keys": 2320,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 8.526512829121202e-14,
+      "rotation_roundtrip_radians": 1.1264512244616566e-15
+    },
+    {
+      "name": "Spino-Swim-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 3438,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.2554041703794929e-15
+    },
+    {
+      "name": "Spino-Torpid-Eat",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 923,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.682743330406083e-14,
+      "rotation_roundtrip_radians": 1.196793256849648e-15
+    },
+    {
+      "name": "Spino-Torpid-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 762,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 6.039613253960852e-14,
+      "rotation_roundtrip_radians": 1.196793256849648e-15
+    },
+    {
+      "name": "Spino-Torpid-In",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 3089,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 7.815970093361102e-14,
+      "rotation_roundtrip_radians": 1.3084185597758136e-15
+    },
+    {
+      "name": "Spino-Torpid-Out-Tamed",
+      "frames": 111,
+      "fps": 30.27272605895996,
+      "source_fps": 30.27272605895996,
+      "timing_note": null,
+      "retained_keys": 4582,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 9.237055564881302e-14,
+      "rotation_roundtrip_radians": 1.1954372051223392e-15
+    },
+    {
+      "name": "Spino-Torpid-Out-Wild",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2773,
+      "extra_source_bones_not_in_mesh": [
+        "l_forearmTwist",
+        "r_forearmTwist",
+        "transform5"
+      ],
+      "source_fk_max_error": 1.1546319456101628e-13,
+      "rotation_roundtrip_radians": 1.2392143794434096e-15
+    }
+  ],
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences",
+  "position_key_tolerance": 0.0005,
+  "rotation_key_tolerance_degrees": 0.03,
+  "timing_adjustments": [],
+  "limitations": [
+    "Rigid cubes approximate the smooth source skin; no blended vertex weights.",
+    "Palette texture is generated, not the ARK texture.",
+    "Loop flags are name-based suggestions; review in Blockbench.",
+    "Entity controller/state transitions, sounds and Unreal notifies are not converted."
+  ]
+}

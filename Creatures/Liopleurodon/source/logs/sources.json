@@ -1,0 +1,218 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Liopleurodon.uasset",
+    "sha256": "1f65e9906d2b88f99b6bf54dffe4c670417b3b0a23eb8c8f51396c54bcdee12c",
+    "size": 1858021,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Liopleurodon_Skeleton.uasset",
+    "sha256": "57bbe7e5a074c59b8bd1e5838862edf9b677b26dfc2e3beb3114f34e626ff888",
+    "size": 12705,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Center.uasset",
+    "sha256": "56684bfc5fd914adedfc87a0ab4122d806226eebd21f89795054ff5382bbdaff",
+    "size": 4562,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Dwn-Lft.uasset",
+    "sha256": "5e61d25d36d2c75fb05fa03db083d32b93206d636739d14ce978f862686755fc",
+    "size": 4580,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Dwn-Rit.uasset",
+    "sha256": "f68dacebeeb088d797e97d7d8ccbf9e6a3f9ae438388821e28ce8f240e00cb6d",
+    "size": 4580,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Dwn.uasset",
+    "sha256": "8dc73cd8ecd1c3dcad5f665d58f5aebc109ec835419281aef007e87678435901",
+    "size": 4556,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Lft.uasset",
+    "sha256": "2004cd941e9e24f71b5b1b8a467968d5bdec2cbe5d0462b1b18f21f97a186f96",
+    "size": 4572,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Rit.uasset",
+    "sha256": "561e2f8588178e7ce748776265c96273eb04ac0522accbf970aef8b0ee3d3021",
+    "size": 4572,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Up-Lft.uasset",
+    "sha256": "174f15d993733c8b7bdf6e7cdf74b31eeb6b58bc423badff581ac0b52c78d30e",
+    "size": 4578,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Up-Rit.uasset",
+    "sha256": "e59cbf97ae2731048fd22b3bfaedadb3983da39b5c1a6124cdbb8e76bda2c4f7",
+    "size": 4578,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Aim-Up.uasset",
+    "sha256": "07ab0ff280012c64d5622b074d80f159e8d11b7109509b39a02bec0dd355f142",
+    "size": 4546,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Attack-Chomp.uasset",
+    "sha256": "57becfd41d8c6302cb1b456c6b5145c6940f092e1a9c88034400f973022dc8a4",
+    "size": 13445,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Attack-Chomp_Montage.uasset",
+    "sha256": "8200e9e110aaf7d718a0ea60c87b75545d6ef0e5d4172c33b028a449324f65da",
+    "size": 2622,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Cuddle.uasset",
+    "sha256": "db13cb3c4890270d77518e71f006bebce67e653846c711a4f1b012d2ddb8dfd4",
+    "size": 27770,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Cuddle_Montage.uasset",
+    "sha256": "61a6ac794b848408f5de43b45145e01d58a44782ea26121e66d92f0f8b04dc43",
+    "size": 1789,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Hurt-Big.uasset",
+    "sha256": "cf28a5d142453027d3346aae9d35d4ffbea64910fcc50e1694fad0b5031feeb3",
+    "size": 10309,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Hurt-Big_Montage.uasset",
+    "sha256": "f08b54502b659b13384d6ca0a932eac53abd0b6e324bf75087bddaaddaaae669",
+    "size": 1850,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Idle.uasset",
+    "sha256": "bd86343a4ff4c45cc3f828ecb4bb100285e720d67ed17c43244d37b3bf3df21f",
+    "size": 20756,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Spin.uasset",
+    "sha256": "cf0cf8c1242964e1c1c6ad2a01256577607da17756cecb9c2fb5eea304f4d2ca",
+    "size": 49990,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Spin_Montage.uasset",
+    "sha256": "282b18f118d5624ffcfaa278835de59b4efd28b4440df59b4a74794d76230b41",
+    "size": 1781,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Charge-Fwd.uasset",
+    "sha256": "a02404ef88d2af68abca36ebf013a7d5e203b77beb611680237fe36456bf3ee0",
+    "size": 24977,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Charge-Lft.uasset",
+    "sha256": "8a292c228a4a64e98d613f368960b806441d19004f2a19994bcbc66ca810a516",
+    "size": 26189,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Charge-Rit.uasset",
+    "sha256": "0577558329a6fcc257868230a0d6ac42decb36a3abf58df79b22e9d188d5c19f",
+    "size": 25577,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Fwd.uasset",
+    "sha256": "5e83cbcf919d31d751503af4ba30720f8a7f2ac9fa8d9bdd59a00a845a53819d",
+    "size": 24949,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Lft.uasset",
+    "sha256": "2a81a6bcecf5dd829160f4e7a6af03c12425728469c6d81ac6320a3521ce6e7d",
+    "size": 26157,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Swim-Rit.uasset",
+    "sha256": "fa871e7547c5e759ccf15e851d985797a0012a3d846261ff99fb408cad5bb749",
+    "size": 25553,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Eat.uasset",
+    "sha256": "44ec1696ca71605e9fe4e2cece306c7f0a8b4710d6f66015d2527bc5976b8875",
+    "size": 42776,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Eat_Montage.uasset",
+    "sha256": "f67ba075ebc01acdd854d2226b9e311b0e38601268300a00bbaf28958f9144df",
+    "size": 1805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Idle.uasset",
+    "sha256": "37dc476291040697e85c4f3dac54f94c497178eb992701f2de9cdd45436b1b53",
+    "size": 22212,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-In.uasset",
+    "sha256": "0334ee85e060e616317e21d90b9de62dfba1a286c6b33b3c885f2981d2d27bda",
+    "size": 10628,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-In_Montage.uasset",
+    "sha256": "8da33ae44f03729bc63bcdf36d3c0e4aec9d742b1e13e2b84e94772308b735c4",
+    "size": 1801,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Out-Tamed.uasset",
+    "sha256": "7ece7a1f396f83b948d46ddc8aca4a96b31870e9344f3c057146b81d90ec31d6",
+    "size": 27824,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "b1c8b451fdb31bf5c87f95d6ada6b15510664ec4a51bd3e73b4a248997d26b2a",
+    "size": 1829,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Out-Wild.uasset",
+    "sha256": "897fdf5de71cb84ac8534abf3b23fbb6ecf07bb817bee4da57829ec6dd591289",
+    "size": 17924,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "c5f20a1d9a2416ba0a6d5c439456044039c9cea8f4153551cb2160ba17f02092",
+    "size": 1825,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Liopleurodon\\Animations\\Liopleurodon_AimOffset.uasset",
+    "sha256": "011cd1447606e1f64fb7d1730bd2afd669d422d6033502e82b9a72bb1fd5c746",
+    "size": 8062,
+    "export_count": 1
+  }
+]

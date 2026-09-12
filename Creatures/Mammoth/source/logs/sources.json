@@ -1,0 +1,398 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Mammoth_new\\SK_Mammoth_new.uasset",
+    "sha256": "2e1b6891df80ad9f739926650cfe24bcfbf120b80bb80b222a54dfa94bbc982a",
+    "size": 5381509,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Mammoth_Skeleton.uasset",
+    "sha256": "3aa2187b3779f10bec8150b8bbcfb3c74157175aa6d0dc902d8e5970dd4d5e5c",
+    "size": 28512,
+    "export_count": 34
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Center.uasset",
+    "sha256": "df2e2fb62e66ad0186ad23984e65863a37ed2a2f014edede49fde4f6b6827b34",
+    "size": 7677,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Dwn-Lft.uasset",
+    "sha256": "4d1bb0409793490c65d91c2fde62bcf11e59a41ceade475f8e944a7b40e14813",
+    "size": 7691,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Dwn-Rit.uasset",
+    "sha256": "adbbb2a26f8d9c65f640e47079a44abcd9898fac4814b711ddc9e1f097b0e7c0",
+    "size": 7691,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Dwn.uasset",
+    "sha256": "4d2cdc79c0e3d445aa9986038c33c87f173e39dffcc9f6b9960630a891988552",
+    "size": 7683,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Lft.uasset",
+    "sha256": "75794237685ed55999826da99e328d8e06f52c1041a282954ec7db2497d0fe07",
+    "size": 7679,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Rit.uasset",
+    "sha256": "2be69f7fffee13802fc750d3a8e4ef47efd98d50fc8acf68c9ce995311ca1cc5",
+    "size": 7679,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Up-Lft.uasset",
+    "sha256": "a45723c03bedf0e35f55f31ec86daf0b6f53b35bc9afbbccd547e10c6c524027",
+    "size": 7689,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Up-Rit.uasset",
+    "sha256": "357ce8f1e5c20bf6abe766aa1c0b2b15026174f20ff12b17aa65c0d720047967",
+    "size": 7689,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Aim-Up.uasset",
+    "sha256": "c10a748fd20e51956ef32d15a325811305bfec2d1bb3805400eb67c85acee9e9",
+    "size": 7681,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Foot-Stomp.uasset",
+    "sha256": "c7f60dfe82ca3356389ab18ec6b40a3ad3f89a91aa49fdfc7451a65f9a70cd78",
+    "size": 25779,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Foot-Stomp_Montage.uasset",
+    "sha256": "440797054f2a157e8c5d23390ba6fa1270dbbf5b027dc65441d29e6b0a44967d",
+    "size": 3427,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-FootStomp-FL.uasset",
+    "sha256": "92fe30683be8456bb80c5385026821a8b05b7f0774cb908b512c09332388a795",
+    "size": 25381,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-FootStomp-FL_Montage.uasset",
+    "sha256": "5bd087dbe4f483e305cb212547604c3d27c6690d4fb95dbb9e10c69719bbd591",
+    "size": 2561,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-FootStomp-FR.uasset",
+    "sha256": "159ba19d3a26a2a2395d9d2fb304ecff944b49e294cf25d3b619b400fad4bbd4",
+    "size": 25833,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-FootStomp-FR_Montage.uasset",
+    "sha256": "ee6f3c831d48cf8d56926a85ddc5392f555e2bae66f00e09a8e1e517d7cbb9c3",
+    "size": 2561,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-Idle-Additive.uasset",
+    "sha256": "924ce811c6107f8223159d48d3cf75a473debb062c8904e2bffe82ae24469595",
+    "size": 10170,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-Idle-Additive_Montage.uasset",
+    "sha256": "faf2369d9570eac2f2a0f2df345e2118f2d8a79cf4c40af2d080315f4d9a1653",
+    "size": 1844,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-In-Additive.uasset",
+    "sha256": "370bf551b8867b0dc64a82f26f80aab170c5035c4235d6670511b2a8f8a1d987",
+    "size": 18485,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-In-Additive_Montage.uasset",
+    "sha256": "cfe89839dff53fccd273598d44581d8dace0bc2cf2d18ef71ab247a796ce4137",
+    "size": 3543,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-Out-Additive.uasset",
+    "sha256": "67540c567be8cbe2626acdd91ead972fbee86c81bf1e793e32f240681cd9c10a",
+    "size": 20575,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Trunk-Grab-Out-Additive_Montage.uasset",
+    "sha256": "2bd24a2bb699ae5ce13b373794b7e6cba26df4a2fe2e951dc710dd8239485d98",
+    "size": 2357,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Jab.uasset",
+    "sha256": "8ccae84a7b8b5bc5218a02014045318ce05ab5f679723c39ad68ce726eb9acbb",
+    "size": 16097,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Jab_Additive.uasset",
+    "sha256": "ae72a7f1458d1a08fff56b7bf9e08f31d7d73dcb11ec29207e6918bf39fd415c",
+    "size": 11931,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Jab_Montage.uasset",
+    "sha256": "d59615e04571bc6a4fe087c96a2aaaa791c3809bcc92afe178bd0aae2602d7d6",
+    "size": 3927,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Jab_Montage_Additive.uasset",
+    "sha256": "fbb884363d962534a6390140d1daa290590b84c0ac72d10c1e7695f3120f5376",
+    "size": 2581,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep-Lft.uasset",
+    "sha256": "25a06faa5daa8795eeed572e5d19799916ebde41cd4c9cfffab2fe6175db4f1b",
+    "size": 22129,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep-Lft_Montage.uasset",
+    "sha256": "1632e11c6298de7a7afa32a1641c29df37a2f8674dd04315e0e2362372dc507c",
+    "size": 4130,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep.uasset",
+    "sha256": "4acbbbbe62fb4e255927c1842f109b90f0de166d5e0c3f50bc87bbfd3552d8be",
+    "size": 24205,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep_Additive.uasset",
+    "sha256": "e5f4f064c27a99994cbc4a1756ff9703281783497f68ab5da31efa4ce7af1ba9",
+    "size": 13407,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep_Montage.uasset",
+    "sha256": "045739c6bbcd55ebe27e3dc604bd0d34ecc16ed99bdc884e2ae9046bdc0bab13",
+    "size": 2830,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Attack-Tusk-Sweep_Montage_Additive.uasset",
+    "sha256": "f04935a915618a150408bb3b157e4d977895c13bae3b57ae57cbaab769465903",
+    "size": 2866,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Blink.uasset",
+    "sha256": "d64ec348cb273470b9d092609a3d9afedd4de84807c14d964a4f1b5700e6aee0",
+    "size": 8724,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Charge-Fwd.uasset",
+    "sha256": "8257b8ecc385fcc780fac342f200b26c394021bde0920d7c6767e6da921d3949",
+    "size": 23788,
+    "export_count": 12
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Charge-Lft.uasset",
+    "sha256": "6d5fbc0e3e7a4e0a6d1c2e41397f3ff0763eb27727c07263be5502508cc71d20",
+    "size": 22568,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Charge-Rit.uasset",
+    "sha256": "81a6d7e08138f88a655dd91f698c8e8aaa7fba5b6b4781ecabb1a1b3f0cdd1ff",
+    "size": 24016,
+    "export_count": 12
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Cuddle.uasset",
+    "sha256": "3372ad3f78be03f7452aa0e725c6bb5f2f5bf1ea52b1eb14caa18b8d0a1a5c58",
+    "size": 80157,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Cuddle_Montage.uasset",
+    "sha256": "ac518587550dca505a632544c7dd7a74ee7298a57bdb293ffe257aba4dddb63e",
+    "size": 1744,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Graze.uasset",
+    "sha256": "7a6df2c7b0936d7e52774179559cf9e836d7fd270599f4559a03c6417acb6c32",
+    "size": 79225,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Graze_Montage.uasset",
+    "sha256": "dbbb301fefc3d434bd30fec92951b38425d7885fd584830c16897afac0b944e5",
+    "size": 1740,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Hurt-Big-Rit-Montage.uasset",
+    "sha256": "e1f252ca4bcd8031861265dc7101dc85c12f2672940fbc630b622af5c78d6877",
+    "size": 1821,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Hurt-Big-Rit.uasset",
+    "sha256": "6d65674264a8abd9371b206ace2f83ea904532b84bb42d8d4f0aba16fd125321",
+    "size": 16507,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Idle.uasset",
+    "sha256": "48dcf354b952913051f6e145c47f9a33bba612d5518b7a356094ad7ea0d7b392",
+    "size": 33273,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Move-Fwd.uasset",
+    "sha256": "4443a471b6dff3f14184880fb9ddd5c8c9139c977f2bb7eeba8c91648fb7dc76",
+    "size": 32722,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Poop-Montage.uasset",
+    "sha256": "16cb88283f9648cc57afa770c1d8ce8ea74c1ff1a30b199ef132c56edd709d71",
+    "size": 3033,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Poop.uasset",
+    "sha256": "e9e80cd19d8e48cdb253d08195691d021f0c01e172466129d15edb63bab79807",
+    "size": 26689,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Startled.uasset",
+    "sha256": "fbdada5131d773af685993f6515c4d764b0dbbbb3f22bc1cf269b967edeb82fb",
+    "size": 22101,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Startled_Montage.uasset",
+    "sha256": "86874efed8dcc0e9408bf6c0e1e8c288b4ccf1bc812395ed0d033b10732eea9b",
+    "size": 1752,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Swim-Fwd.uasset",
+    "sha256": "655843bb7fca5def547cf9e16b8c9dbd44afca7801cf2997f5a1b1f55a143294",
+    "size": 19560,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Swim-Idle.uasset",
+    "sha256": "55a8db67d66fe2405a3149031d555f6399fab1fa99e72daf7890238d7ec1abad",
+    "size": 34534,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Eat.uasset",
+    "sha256": "15f8533c94439d5fe4ff63917f1d4f52906801a82f412e96713a622ecd988e94",
+    "size": 31373,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Eat_Montage.uasset",
+    "sha256": "ef166956ca7b34230658420cf9c5163fa59189db3b61000bb183a32615d29a2d",
+    "size": 1760,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-In.uasset",
+    "sha256": "c5391b43a91247c5525f709ee1bb6326eac96ef53f1f700bef2aa71e584e9a4c",
+    "size": 30789,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-In_Montage.uasset",
+    "sha256": "54f791559b92896edd8d0c367ce607e699e09795d79484b83844d04b84b65d8e",
+    "size": 1756,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Out-Tamed.uasset",
+    "sha256": "820b6e446a86afeace65b051e477062b3c4f17cc1c4ea7f0de293b428dc38fd5",
+    "size": 40149,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "8e4d08211c17e2cd9c997170c920c5c3ef04e9785929febb2e752d1d4c9ae42b",
+    "size": 1784,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Out-Wild.uasset",
+    "sha256": "0e63377dcfaa59e7cf532306bc70e0299261a62eebc964faf28355068baddbc9",
+    "size": 31821,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "bb971b73041b9df215441ca68ee82982c164622e765f4e43e029e412d3add83e",
+    "size": 1780,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid.uasset",
+    "sha256": "6ca32f048ce97f88184b79c7ccc224a81ff64f11cb91fe9e3c514b11f25d8609",
+    "size": 27319,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Torpid_Idle_Montage.uasset",
+    "sha256": "9447036ccb9a02b42c798657a49dbbe6b380584a7e3a9f1f33e51b0362ffaabc",
+    "size": 1754,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Trumpet_Montage.uasset",
+    "sha256": "c1d52f2e57751326588d8c6b7a288266f8255a911620b58921904690c6a00b1b",
+    "size": 2546,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Turn-Lft.uasset",
+    "sha256": "146a7d8bf3056cd271eb3c22a06f439634de425add6b3fcfd58f44917bc32426",
+    "size": 33690,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth-Turn-Rit.uasset",
+    "sha256": "208a66c3b9c4b97086d4f0d6d6ee4f777112f67beb7d683e6d7450a3ef96581a",
+    "size": 33226,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth_AimOffset.uasset",
+    "sha256": "e28180aed50734dbfc817570b5368266254e9c1a3413de2326e76f4e98a5ff94",
+    "size": 7897,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Mammoth\\Animations\\Mammoth_new_Call.uasset",
+    "sha256": "7037f531b23307184082dbfdc2ff42ec9ce211d4d9070da0613aca67c9c4930f",
+    "size": 40341,
+    "export_count": 2
+  }
+]

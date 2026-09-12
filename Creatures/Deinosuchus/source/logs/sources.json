@@ -1,0 +1,546 @@
+[
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Deinosuchus_TLC_Rig.uasset",
+    "sha256": "50b8738bba8ed9f9cf1f20dec806cc047db73c536045037a437812e3160eeaa7",
+    "size": 5689544,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Deinosuchus_TLC_Rig.uasset.z",
+    "workshop_sha256": "3ddb2181e0a8f532d7b137c05fdf03d21d2a660845a941146d4fb9766f90f975"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Deinosuchus_TLC_Rig_Skeleton.uasset",
+    "sha256": "2893e1bbde53312cecffb18ad7ba4a3047ac14e2032bb54c88393004a4da3972",
+    "size": 16255,
+    "export_count": 20,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Deinosuchus_TLC_Rig_Skeleton.uasset.z",
+    "workshop_sha256": "af05672b052c9971b6901bf1d2cd8071e99c27a009bab5bc48763165139c77e8"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Center.uasset",
+    "sha256": "b3c2c0a0c9b227a43b48dd5be5c6f208b4f3a3af7c961feb2d20f7915686b161",
+    "size": 7333,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Center.uasset.z",
+    "workshop_sha256": "ab6ba50f5f44b85a6324f13e8477df64486d85825e43c182426704f0ebd2eeaf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Down.uasset",
+    "sha256": "29e34a971c69b8cd08b11ab148d98a96a0d0044d634782910f4db6fcc9ab0be8",
+    "size": 7329,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Down.uasset.z",
+    "workshop_sha256": "28c55287b4a28f64c669011b7703aac8caa6397462449d52a739e968902fb579"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_DownLeft.uasset",
+    "sha256": "e7c8168c67898aec93d11f091be95a2052541db883772fa451268c8aacd88d0b",
+    "size": 7349,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_DownLeft.uasset.z",
+    "workshop_sha256": "76e8dd389f89c60804b258581ae3fb82169c95e858746e851dfd1da61c338bd2"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_DownRight.uasset",
+    "sha256": "ef0aeb3449789f9b89da6a0a6764eddc8823e07a18fb51736a7d22f8eee7041f",
+    "size": 7351,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_DownRight.uasset.z",
+    "workshop_sha256": "37eaf27d7042977eeb4c1a60540a18f99ebfba1aa805bb13660a386a4d6c3263"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Left.uasset",
+    "sha256": "7863e9fb826fba17679378b1175ac01cd297afef50979f425a220a85a3845d2c",
+    "size": 7341,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Left.uasset.z",
+    "workshop_sha256": "1d263533ca837dcaf512bbb765f984a5d119c3d2d28b7a05a068d95d4a08e1ae"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Right.uasset",
+    "sha256": "9cfb58e18c8e9de9dc9b01ae0ddfc94f36dbc473cc47ce25b7b372a0d9526f9c",
+    "size": 7343,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Right.uasset.z",
+    "workshop_sha256": "77ca24c5ce95de9b178e21aaf9b2b3ef123a69987f83d20f96c1348b968c7b32"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Up.uasset",
+    "sha256": "84a1d65c6ed5783953c3c2d4f70e584a1f413baeaea7d6b7c84882de717ef9ff",
+    "size": 7325,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_Up.uasset.z",
+    "workshop_sha256": "0c8fe355280fd1753da69b5f6c623de9b35196b2561c82369cb6092841e5e87e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_UpLeft.uasset",
+    "sha256": "685cc7f494d0ed9f3823b835481c8248dbaad0fc84ebe1d88a7f722798e3b5fd",
+    "size": 7345,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_UpLeft.uasset.z",
+    "workshop_sha256": "5625a982c4e74c4ef9aba492148c79980ed82931c8d2e0acde9398bc649ded6f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_UpRight.uasset",
+    "sha256": "950be5b41fc60c186c0681c5afbec6b4df723f606cce679b65c479f7d23c4016",
+    "size": 7347,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Aim_UpRight.uasset.z",
+    "workshop_sha256": "0fb1366aa475c8baef61be9bea7160fff55d57e1214feb998331f6896a74089a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_AimOffset.uasset",
+    "sha256": "7fc997ce9526cbda20497fd911160cba2310bda3f98876c90df809392fee280f",
+    "size": 8120,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_AimOffset.uasset.z",
+    "workshop_sha256": "ab3e3767cd8df12d46fd5510b6c8c2e1fee803ee615dd9de5c6494452abc0367"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_AimOffset_Deathroll.uasset",
+    "sha256": "be5c1c377b7bb1d716cd7effff08aa3f621600751d1c3f25efc73ca98a4919e5",
+    "size": 6810,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_AimOffset_Deathroll.uasset.z",
+    "workshop_sha256": "139836bbe19ecd6af8fc8d9a8c34ef7309eb74b4d3da1771136bde711b6c8a6d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Idle.uasset",
+    "sha256": "4a1eed5b1e2e64d98bf2ae9a2672ff4de20b87928ffb5e385f2e8396de6d5287",
+    "size": 16112,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Idle.uasset.z",
+    "workshop_sha256": "871a01e932af6304e21403cd89b3c6162ae6f38dda8dfdb51474e97c4b3f8cae"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Idle_Montage.uasset",
+    "sha256": "1191dbe89e606853e4626d79e78ab3c1bff9e1e7d6ead4e6a20578a7fdcccd4b",
+    "size": 3002,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Idle_Montage.uasset.z",
+    "workshop_sha256": "2485b34689fd9128552200b78c75a3709bda8137a7eb4a001d1daeb3ae9e5d99"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Moving.uasset",
+    "sha256": "d8633338628212dd6732c57589e39f734b859e39632331c5db67f690ec57d48e",
+    "size": 10768,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Moving.uasset.z",
+    "workshop_sha256": "e5a126e42946fe488b226d7fe35bd23691eceb4f76a9564edb396d3d307d4e1a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Moving_Montage.uasset",
+    "sha256": "a664d9bc4127513aa15c217fb2f0830d4c0dabdb7b68a79d88c62df8f4b7f34f",
+    "size": 3010,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bellow_Moving_Montage.uasset.z",
+    "workshop_sha256": "149eafc669e8007db59e718e43c773d6cf79088e8cb04bd81dc3a63d654e5719"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite.uasset",
+    "sha256": "6d057a23b1b6b5a70e952a492ca528bfd2bbe46948aeaa48b8b607e8d3cd61f6",
+    "size": 14090,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite.uasset.z",
+    "workshop_sha256": "803b70e92fcd4ceed441b0087fe65fa0201fa71e2adae3cee643548a1d881645"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Montage.uasset",
+    "sha256": "42e0a8d51b12edcd40255986c916a80180f62fd211f6924fc71152268d3060de",
+    "size": 4254,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Montage.uasset.z",
+    "workshop_sha256": "203a6bc28c6642d7c9241f4f7f7749cd3697c82744a86c504bd12425e54ff820"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Moving.uasset",
+    "sha256": "06260a197384a4d12e40d2e16ac164c46048842d8e9cdb93df38db0ea968ad32",
+    "size": 8920,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Moving.uasset.z",
+    "workshop_sha256": "e446d82510efccf5f2a16a240e856c815aa328f2079850cbef3b777dde92c2ec"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Moving_Montage.uasset",
+    "sha256": "ca04be92b5847f9450d10ca91bcf3b7c06cfe8487da7bbd0106a9284de7ea9e7",
+    "size": 4282,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_Moving_Montage.uasset.z",
+    "workshop_sha256": "b9d611d1be4b9457edf1d8044e504da9869eaacdd5a47b308099282b60303130"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnLeft.uasset",
+    "sha256": "aeb171c06ad9e568a28a909cfcb6cda84a42d686f2071c96fbfdb504d09f0849",
+    "size": 13344,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnLeft.uasset.z",
+    "workshop_sha256": "d6450a09559c9cd3fe7e28bff5b843ac628d852b5399164c9062ea8331861d52"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnLeft_Montage.uasset",
+    "sha256": "493efff8568a867cdcb1661d4d06d16631e3e64c8beba74e4eba2b4bcaa733ca",
+    "size": 4590,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnLeft_Montage.uasset.z",
+    "workshop_sha256": "10a43fdfd539e69c69966ba95013826bccb2f3c3fd3d4398e1202a4d35f8bd23"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnRight.uasset",
+    "sha256": "86ceb4904bb382497b7a5d910e44e7eb3191d574b7d76bc0950d4e4abeee12fa",
+    "size": 13479,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnRight.uasset.z",
+    "workshop_sha256": "4aa808d1a72a50210bbf34eaf7f8aa6880715c5969e694715c2ddd2a3a08fd2b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnRight_Montage.uasset",
+    "sha256": "fb7978c177d220feff33e18edbbabb61cedfb619396604f404078440d70e3059",
+    "size": 4549,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Bite_TurnRight_Montage.uasset.z",
+    "workshop_sha256": "75e934b86b6eebdd3c013939839e2ae38ed6c15fa2d291df53341e851bf01fbb"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll.uasset",
+    "sha256": "2a0a8bcd924d4054f55d9ec3cb40beee92eff27a74850d75d70772b280438a5b",
+    "size": 19153,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll.uasset.z",
+    "workshop_sha256": "d19b81dd64c067e8e5f178f5986a8ccdd66da21de8895ce268ab1d35fdfc0f20"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll_Montage.uasset",
+    "sha256": "55eae110b50c020c445abadd6b504f1337ca3c19fac3c7b865a259282c820d90",
+    "size": 6471,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll_Montage.uasset.z",
+    "workshop_sha256": "c7edb160c691c0c46415cfbacaf8c2e490ad86f207eda4256ae086f680636f00"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll_Start.uasset",
+    "sha256": "136de22fc93a52384d4d3f4db7d8a35416cb247d64b8e1dbea6bb1640a1d5d61",
+    "size": 27034,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Deathroll_Start.uasset.z",
+    "workshop_sha256": "b4d25cd4cc5adddad1c296859ed94a1db7d1432b99b516e641c5d7752285dc84"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Charge.uasset",
+    "sha256": "c65e56a2c8d637e260aff3f28b3b8097cbbf6f6b1439fc4e8afcb9a370d50ee5",
+    "size": 10772,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Charge.uasset.z",
+    "workshop_sha256": "5aaebdf03b1e418d2ac86a3efd6329bb0f80829ee45de56c649f3e909598e70a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Charge_Montage.uasset",
+    "sha256": "54593eee6c7992ddd7f551d123f31d4cdaef312a00d96f2dfc652fe1c75551c9",
+    "size": 5746,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Charge_Montage.uasset.z",
+    "workshop_sha256": "5c7faf40bfd1a24eeda9a304fb80ec1b4e30554e5822f2af78d04bccdf6b3d25"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_FullSnap.uasset",
+    "sha256": "cedc6dbbcfad04b1df0cbaee03f98343a7c6d18832d76240ef5e69c31b65c205",
+    "size": 15184,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_FullSnap.uasset.z",
+    "workshop_sha256": "d042516397bc5e6c7cd2f482510d4b6d2a8231d7ac58b58dd27ded48ac2d48e3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_FullSnap_Montage.uasset",
+    "sha256": "adbe0d74ca69d014b42c2f7c561c0f9ae1ef18fdab95396ae66b55fc61ae6981",
+    "size": 5261,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_FullSnap_Montage.uasset.z",
+    "workshop_sha256": "52be82a391a016e9b205093e4c4f26b3ac6ff199e1ecd7c4ddfcd6013347ba6e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Hold.uasset",
+    "sha256": "c90ab907af2fe5bed7c7c4688bf3244ae2fb6f788269567d5ba03b3c2da9bf03",
+    "size": 8120,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_GigaBite_Hold.uasset.z",
+    "workshop_sha256": "3ed993550cc468c8aa54723d9ce8938e0aab3df581615b47a4bcac40c6b2b705"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Hiss.uasset",
+    "sha256": "aae9adec8c01e5ac707e996abe7ad265a891c1b0c253224c6d9c9b69b25efd66",
+    "size": 10342,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Hiss.uasset.z",
+    "workshop_sha256": "7e716daf888d926dee2eaed17c02c92af4f884c164c40fda854f04d054bf814b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Hiss_Montage.uasset",
+    "sha256": "32cddde1c6c2f46af71efce6f7617785439d6dd71464e8252aeb6b4d2e9b4033",
+    "size": 2836,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_Hiss_Montage.uasset.z",
+    "workshop_sha256": "b4c331fb5d7faaffc3ad3f1298d8f9e24620f5ae235096f914a9e2b8a633326b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_SwimBite.uasset",
+    "sha256": "c056312d48fc1c3450f7d49f10cae007416d646ef53faea5e6d767deebd669ee",
+    "size": 23185,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_SwimBite.uasset.z",
+    "workshop_sha256": "bbe1e88bc56d668abc193d820160e62d09ace79c6c5aad67a119bbbe3889a72d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_SwimBite_Montage.uasset",
+    "sha256": "e45ca364ffc6683fc2b545741f19491fbcec69f79ba2c5dd22b8f0f3494f0078",
+    "size": 4922,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_SwimBite_Montage.uasset.z",
+    "workshop_sha256": "bdfa5f121e0564f8af51f255abbc53963e8f2e742e31991871c0267e8f4c9b3f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Left.uasset",
+    "sha256": "ccac9d629280c1645a06b52475083ffee7621c297e269a529078824c6fe77549",
+    "size": 28270,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Left.uasset.z",
+    "workshop_sha256": "3d37422b265a24d1d70c21d95c349bef1279a0730a4b690891ef86de2949a2a0"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Left_Montage.uasset",
+    "sha256": "ab36ce9132dbf755085e428decb6684784b872c4d373245668aab1ba63a83838",
+    "size": 5997,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Left_Montage.uasset.z",
+    "workshop_sha256": "09f81d8fbbce29ccf53ea9221a02c1c69e2e2fd613f9af69b627d604e0102fcf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Right.uasset",
+    "sha256": "811419972a565cb56b3b31b8c2e42354faa11f4b79a2f9a2067c1a357b586f77",
+    "size": 28272,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Right.uasset.z",
+    "workshop_sha256": "ce0f1b38c2fc5a4cd084d7005b514e99e15a74108a494fb3d3bc53874b997d41"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Right_Montage.uasset",
+    "sha256": "2b6d002829dcfc8e5239fb8b110fdf8e92adb74246bc927f494e221daddd6176",
+    "size": 6046,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Attack_TailWhip_Right_Montage.uasset.z",
+    "workshop_sha256": "1ae38557fc5b67bb2835cba51afa137cb90b94e95dd1ba44e2ec393cd8539e35"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_End.uasset",
+    "sha256": "caa1fc9fb29f713255e72990f1dc81a1374195f3a2bc609a6200ba8495b72e5f",
+    "size": 8878,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_End.uasset.z",
+    "workshop_sha256": "a4330faa6ff70de5a355fb48a50f0fb6018f739da5cef42b5c05235a435b62bf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_End_Montage.uasset",
+    "sha256": "3623409cd1cb993a5eb84aeadb5e9840bdfd498e7652e81db720a8bc2ef470b3",
+    "size": 1827,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_End_Montage.uasset.z",
+    "workshop_sha256": "84565ee3c9d6bed763ec0e6fb6b52cd54589862581e090064d02e2fcb34abe9f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Idle.uasset",
+    "sha256": "32e866ac7e9d5845841046b9b1ad9b00cb7f26222898caaf4be4c9775bd555e7",
+    "size": 7320,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Idle.uasset.z",
+    "workshop_sha256": "083042a2c14edad1ffc7ead60d1252243a42e73cbd4adc6312a5581f95b9f658"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Montage.uasset",
+    "sha256": "cfc148c2739690fca2e962a814938be0bd94441b291f97e5345eba06b6c68c6e",
+    "size": 3521,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Montage.uasset.z",
+    "workshop_sha256": "9ef05b807560b342447fc2af26129890ed63f27f08cd995a2a565045679f6a9e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Start.uasset",
+    "sha256": "f4a226dca03a73f24758f8d46d8e38fee5faf38012d3f632f4a7112d3f0a693e",
+    "size": 9578,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Basking_Start.uasset.z",
+    "workshop_sha256": "ada3e306867bae3bc049eef8b9e7e6a8c3398a5c0d691cc950b2ac86017f6d03"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Blink.uasset",
+    "sha256": "65fa937e7831a46224358779ecae5c93d67d3a533922f9f63b3150a0fb8150fa",
+    "size": 7314,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Blink.uasset.z",
+    "workshop_sha256": "a7d5c219fbaf66385fad4620cec05bfaa2a6021660ab32dfe0053aeb863b86b1"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_FWD.uasset",
+    "sha256": "1e10a3ae4673afac6c57a19a4bddfdf0783abcee188a8367b2c99d3ca3f2ad8c",
+    "size": 33535,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_FWD.uasset.z",
+    "workshop_sha256": "4f8a998a5d6e9b8c061b731e7acaf05e760a55004adb872f36a0d84825b77369"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_LEFT.uasset",
+    "sha256": "ea66e44cff1446fcef07f4d087b6422c500243646c931e735b8ce96c13ccaae6",
+    "size": 32677,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_LEFT.uasset.z",
+    "workshop_sha256": "4bb221f7c0afe16ae1876839a009a789ce795c14c22a5afe2aa2b63b70925189"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_RIGHT.uasset",
+    "sha256": "a21d55d63aea954b7b6d4a25b62fdd8e9c4954a716db3d92f6b12de3c3769c78",
+    "size": 31783,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Charge_RIGHT.uasset.z",
+    "workshop_sha256": "d6792e60d87b62560ff8adf043814792d919276a525fd5b301e0153e34a19e97"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Eat.uasset",
+    "sha256": "5ac6a024385ef2fb06f85f302a5bc768ea3cb06d200ebfbdd65fc88e287e7fb4",
+    "size": 17830,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Eat.uasset.z",
+    "workshop_sha256": "a6d470d437c92bbf2f528efe545c7e5fb7bd77ea9dea0768848931d6612d55cf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Eat_Montage.uasset",
+    "sha256": "383389add239b033b0a1bbb85b636faf19aa5a42891e8e2764a37e47d9bea9a4",
+    "size": 7895,
+    "export_count": 9,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Eat_Montage.uasset.z",
+    "workshop_sha256": "cb7de5d888c41e3899a5b176c296c42d5e789a1424bcae2959283b41bf4d9150"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_GigaBite_NotMax_Montage.uasset",
+    "sha256": "28aedb662e8ab20a66a66f7fe18ba6bbabdb3f9a24b6a9b0a2745736633801ab",
+    "size": 4427,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_GigaBite_NotMax_Montage.uasset.z",
+    "workshop_sha256": "9d73cee639589b1323caef0b597e3f3fc79fb0f17fdfc51291da9067972bdacc"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Idle.uasset",
+    "sha256": "f9f6aa0198f2f2c1d8bbab019cf181f6be658752916c65849c1459f776c3c1ba",
+    "size": 15698,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Idle.uasset.z",
+    "workshop_sha256": "e910fc6ab3ddd0be59e5dec498934358a1790c16bd08fec1b4ec22eadfe789bd"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_FWD.uasset",
+    "sha256": "e49a7b4f9de6581196ed2ef9c5e4ad88658496e70c81553643b1db0ef2412439",
+    "size": 32527,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_FWD.uasset.z",
+    "workshop_sha256": "a0b9617d305f3b4fc7bcc34997e48ad5d03d48d613f8d673982e3a4d82dfd8ee"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_Left.uasset",
+    "sha256": "e1b1994f8f19e828129e0ce99a58b503439f45e68487992d950c99aa60cabc14",
+    "size": 31645,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_Left.uasset.z",
+    "workshop_sha256": "d16598b13b72b8488de181a0acc184b0b29e0b23eee60c0337e51b0b51e1c12f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_Right.uasset",
+    "sha256": "927d5b7cc1f464018be6fa91dfb191a453bf67211f29c99399718fc5a893dcc5",
+    "size": 32671,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_Right.uasset.z",
+    "workshop_sha256": "d09af837a61bd0a67a5cc7cb30e3ffea9bb67033572220051a9d1327162956ca"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_TurnLeft.uasset",
+    "sha256": "15fba7b29b94f3e7b686df45d4c17558f2b54bfbaabd1d1433d016ed67554c73",
+    "size": 32965,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_TurnLeft.uasset.z",
+    "workshop_sha256": "068b24e66451ffb0e4a3eb6c115c6e0b83d8f876148674903d741a185031c824"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_TurnRight.uasset",
+    "sha256": "e4191085fe2887adff0c05277e64f8c4bb26725890bb8e9355dfe2b161fa0656",
+    "size": 33567,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Move_TurnRight.uasset.z",
+    "workshop_sha256": "27f2d4aea8ad9ee30e2a87116d575c0d1c27f4ab4b91a66804bfd516d8aa06f1"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_FWD.uasset",
+    "sha256": "159272f3ac8efd45d7fc812fd157ebe8e78d63aa405acfca50c01792f67b830c",
+    "size": 18758,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_FWD.uasset.z",
+    "workshop_sha256": "b7107f82ba253f34c0b480d2ab0a0a923275bf9a96f074c0db0ab3e399748c0e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_LEFT.uasset",
+    "sha256": "1d659c7b66ae2e5cabb28ecf08b0224241d7b2b50f08d837bb79c1cb2ba94415",
+    "size": 17008,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_LEFT.uasset.z",
+    "workshop_sha256": "51ce1265f236fc77e416c48aa1c24bc52773166822995309445edbc406eb2590"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_RIGHT.uasset",
+    "sha256": "cf9a9774cd7962da1c141726fb8492b793d0db356ffac34610bf271805776c9d",
+    "size": 18026,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Charge_RIGHT.uasset.z",
+    "workshop_sha256": "1bf33ecca07f58f2fc8bdf52cd5359127661521c47574d1e49116df8f664b33f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Idle.uasset",
+    "sha256": "b810755f9bd2f552e70db5cd525cacac9e0fd8383a89cf0841c69ca90def2f0a",
+    "size": 16522,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Idle.uasset.z",
+    "workshop_sha256": "274f54e335136025251efc83a4b7bc9924abc533ac7f411a992597d6ab5a06b2"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_FWD.uasset",
+    "sha256": "2ff84a64dfed460c006cff722ee1399bdc56bfb98b5bb2afcbab269f1ca24fef",
+    "size": 19424,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_FWD.uasset.z",
+    "workshop_sha256": "1d98138745da75ea377b8c37f8a25f0722fc087c9137e69afb44e85414b16e2c"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_LEFT.uasset",
+    "sha256": "c9dc93d8ae4d69a627f2f0099b6a6a725af7a58051a646acc3de65194294c9dd",
+    "size": 16540,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_LEFT.uasset.z",
+    "workshop_sha256": "0d103531636a1372bb3e9e3db9cc824b0b7265131afb60b377b7fe6e7173504e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_RIGHT.uasset",
+    "sha256": "5d835173eb3dfb1096b269bb4e964b514d4b967b5b7909be405760060b78c8d4",
+    "size": 16114,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Swim_Move_RIGHT.uasset.z",
+    "workshop_sha256": "682e7d2bc857df18e14524fa4096b58163a4d0f32acaf3cd16f74918d56d883b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Torp_In.uasset",
+    "sha256": "6f9c15bf5b1e201997d27514d684079ab46228770e5a1e101d2314ab613dbccd",
+    "size": 24882,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Torp_In.uasset.z",
+    "workshop_sha256": "98bbf47d86730c0a4622075d1654e17af02f49d60c924fa80d7baa64afa5bdee"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Torp_In_Montage.uasset",
+    "sha256": "8ebb7591cd9954bc2e69fc65b913fff76b6a0947dceefeca92a019a23751c40f",
+    "size": 4568,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Deinosuchus\\Dino\\Animation\\Deinosuchus_Torp_In_Montage.uasset.z",
+    "workshop_sha256": "c83c39a00b9469196203eae46de338a4076892d4fce531f6d050d61967c975be"
+  }
+]

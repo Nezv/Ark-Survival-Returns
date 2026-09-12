@@ -1,0 +1,1471 @@
+Found 1859 game files (0 skipped) in 71 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 2042 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Center.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Lft.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Attack-Bite-Montage.uasset Ver: 405/10 Engine: 0 Names: 54 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Attack-Bite.uasset Ver: 405/10 Engine: 0 Names: 54 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Eat.uasset Ver: 405/10 Engine: 0 Names: 58 Exports: 2 Imports: 10 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Eat_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Hurt-Big-Rit-Montage.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Hurt-Big-Rit.uasset Ver: 405/10 Engine: 0 Names: 39 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Lft.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Rit.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Fwd.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Lft.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Rit.uasset Ver: 405/10 Engine: 0 Names: 50 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Eat.uasset Ver: 405/10 Engine: 0 Names: 49 Exports: 3 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Eat_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-In.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-In_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Tamed.uasset Ver: 405/10 Engine: 0 Names: 49 Exports: 2 Imports: 8 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Tamed_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Wild.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Wild_Montage.uasset Ver: 405/10 Engine: 0 Names: 37 Exports: 1 Imports: 6 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid.uasset Ver: 405/10 Engine: 0 Names: 30 Exports: 1 Imports: 4 Game: 1000051
+Loading package: PrimalEarth/Dinos/Megalodon/Animations/Megalodon_AimOffset.uasset Ver: 405/10 Engine: 0 Names: 49 Exports: 1 Imports: 22 Game: 1000051
+Loaded in 0.2 sec, 605 allocs, 0.10 MBytes serialized in 31 calls.
+Loading AnimSequence4 Megalodon-Aim-Center from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Center.uasset
+Loading package: PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 88 Exports: 20 Imports: 3 Game: 1000051
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Center to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Center.psa
+Exporting AnimSequence4 Megalodon-Idle to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.psa
+Memory: allocated 479355 bytes in 376 blocks
+Loading AnimSequence4 Megalodon-Aim-Dwn-Lft from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Lft.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Dwn-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Lft.psa
+Memory: allocated 491643 bytes in 379 blocks
+Loading AnimSequence4 Megalodon-Aim-Dwn-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Rit.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Dwn-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn-Rit.psa
+Memory: allocated 503931 bytes in 382 blocks
+Loading AnimSequence4 Megalodon-Aim-Dwn from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Dwn to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Dwn.psa
+Memory: allocated 516219 bytes in 385 blocks
+Loading AnimSequence4 Megalodon-Aim-Lft from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Lft.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Lft.psa
+Memory: allocated 528507 bytes in 388 blocks
+Loading AnimSequence4 Megalodon-Aim-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Rit.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Rit.psa
+Memory: allocated 540795 bytes in 391 blocks
+Loading AnimSequence4 Megalodon-Aim-Up-Lft from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Lft.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Up-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Lft.psa
+Memory: allocated 553083 bytes in 394 blocks
+Loading AnimSequence4 Megalodon-Aim-Up-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Rit.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Up-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up-Rit.psa
+Memory: allocated 565371 bytes in 397 blocks
+Loading AnimSequence4 Megalodon-Aim-Up from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Aim-Up to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Aim-Up.psa
+Memory: allocated 577659 bytes in 400 blocks
+Loading AnimSequence4 Megalodon-Attack-Bite from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Attack-Bite.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Attack-Bite to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Attack-Bite.psa
+Memory: allocated 589947 bytes in 403 blocks
+Loading AnimSequence4 Megalodon-Eat from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Eat.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Eat to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Eat.psa
+Memory: allocated 602235 bytes in 406 blocks
+Loading AnimSequence4 Megalodon-Hurt-Big-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Hurt-Big-Rit.uasset
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Hurt-Big-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Hurt-Big-Rit.psa
+Memory: allocated 614523 bytes in 409 blocks
+Loading AnimSequence4 Megalodon-Idle-Lft from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Lft.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Idle-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Lft.psa
+Memory: allocated 626811 bytes in 412 blocks
+Loading AnimSequence4 Megalodon-Idle-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Rit.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Idle-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle-Rit.psa
+Memory: allocated 639099 bytes in 415 blocks
+Loading AnimSequence4 Megalodon-Idle from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Idle.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Loading AnimSequence4 Megalodon-Swim-Fwd from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Fwd.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Swim-Fwd to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Fwd.psa
+Memory: allocated 651387 bytes in 418 blocks
+Loading AnimSequence4 Megalodon-Swim-Lft from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Lft.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Swim-Lft to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Lft.psa
+Memory: allocated 663675 bytes in 421 blocks
+Loading AnimSequence4 Megalodon-Swim-Rit from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Rit.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Swim-Rit to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Swim-Rit.psa
+Memory: allocated 675963 bytes in 424 blocks
+Loading AnimSequence4 Megalodon-Torpid-Eat from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Eat.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Torpid-Eat to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Eat.psa
+Memory: allocated 688251 bytes in 427 blocks
+Loading AnimSequence4 Megalodon-Torpid-In from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-In.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Torpid-In to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-In.psa
+Memory: allocated 700539 bytes in 430 blocks
+Loading AnimSequence4 Megalodon-Torpid-Out-Tamed from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Tamed.uasset
+FloatProperty: unknown FAnimNotifyEvent DisplayTime
+BoolProperty: unknown FAnimNotifyEvent bIgnoreOnDediServer
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Torpid-Out-Tamed to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Tamed.psa
+Memory: allocated 712827 bytes in 433 blocks
+Loading AnimSequence4 Megalodon-Torpid-Out-Wild from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Wild.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Torpid-Out-Wild to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid-Out-Wild.psa
+Memory: allocated 725115 bytes in 436 blocks
+Loading AnimSequence4 Megalodon-Torpid from package PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid.uasset
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting AnimSequence4 Megalodon-Torpid to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Animations/Megalodon-Torpid.psa
+Memory: allocated 737403 bytes in 439 blocks
+Exported 23/23 objects in 0.1 sec

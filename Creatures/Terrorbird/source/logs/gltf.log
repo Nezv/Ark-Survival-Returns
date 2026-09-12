@@ -1,0 +1,139 @@
+Found 1621 game files (0 skipped) in 61 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 1780 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/TerrorBird/TerrorBird.uasset Ver: 405/10 Engine: 0 Names: 127 Exports: 1 Imports: 10 Game: 1000051
+Loaded in 0.0 sec, 20 allocs, 0.00 MBytes serialized in 1 calls.
+Loading SkeletalMesh4 TerrorBird from package PrimalEarth/Dinos/TerrorBird/TerrorBird.uasset
+Loading package: PrimalEarth/Dinos/TerrorBird/TerrorBird_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 120 Exports: 21 Imports: 3 Game: 1000051
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+BoolProperty: unknown USkeletalMesh4 bIgnoreTriReductions
+BoolProperty: unknown USkeletalMesh4 bConsoleDropLOD0
+IntProperty: unknown USkeletalMesh4 ConsoleDropLODNewTriangleCount
+StructProperty: unknown USkeletalMesh4 ScaleMultiplier
+WARNING: Import(MaterialInstanceConstant'TerrorBird_Colorize_MIC'): package /Game/PrimalEarth/Dinos/TerrorBird/TerrorBird_Colorize_MIC was not found
+WARNING: Import(MaterialInstanceConstant'TerrorBird_Feather_MIC'): package /Game/PrimalEarth/Dinos/TerrorBird/TerrorBird_Feather_MIC was not found
+Loading Skeleton TerrorBird_Skeleton from package PrimalEarth/Dinos/TerrorBird/TerrorBird_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting SkeletalMesh4 TerrorBird to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/gltf/PrimalEarth/Dinos/TerrorBird/TerrorBird.gltf
+ERROR: glTF animation could be exported from mesh viewer only.
+Memory: allocated 410586 bytes in 124 blocks
+Exported 1/1 objects in 0.0 sec

@@ -1,0 +1,179 @@
+# Ark Survival Returns
+
+A prehistoric wildlife mod for Minecraft Java **26.2**, NeoForge **26.2.0.11-beta**, Java **25** and GeckoLib **5.5.3**. Mod ID: `arksurvivalreturns`.
+
+## Play on Windows
+
+**Double-click `Start-Ark-Mod.bat` in the repository root.** It builds the mod and opens Minecraft with NeoForge and GeckoLib loaded. VS Code and a separate Minecraft launcher are not needed. Keep the console open while playing; the first launch may take a few minutes. Startup errors remain visible in the console. The dev client uses a 12 GB maximum heap. The launcher sets the selected Java executables to Windows high-performance GPU preference for the NVIDIA adapter.
+
+PowerShell alternative: `.\Start-Ark-Mod.ps1`. The launcher finds JDK 25 through `JAVA_HOME`, JBang or `PATH`, and uses the project Gradle wrapper. Its execution-policy override applies only to its own process. `Start-Ark-Mod.bat -Check` builds and prepares the client without opening the game.
+
+## Playable systems
+
+The launcher also loads the installed optional client pack: Xaero World Map with the difficulty overlay, Sodium, Iris, AmbientSounds, Sound Physics and their dependencies. Complementary Reimagined is downloaded; enable it in Video Settings → Shader Packs. The map is temporarily open to everyone (`progression.mapRequiresUnlock=false`). The saved entitlement and operator commands remain available for when the gate is re-enabled; taming is not implemented. See [installation, versions and map controls](docs/client-pack.md).
+
+- Nine species using the supplied models, original palette textures and 72 movement, attack and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
+- Replenished natural groups across Overworld biomes, solitary large creatures, terrain checks, population limits and spacing.
+- Five recurring danger ranks, persistent random creature levels, independently scaled HP/damage and biome-entry chat messages.
+- Look at a creature within 32 blocks for its name, level and current/max HP in a boss-style bar. Walls block targeting. Players have independent bars; predators are red and other creatures green.
+- Four complete berry items, textures, inventory models, English/Portuguese names and grass loot integration; nineteen matching spawn eggs in the Ark creative tab.
+- Ten additional creatures share existing land behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
+
+## Spawn rules
+
+Every **Overworld biome**, including modded biomes, can host land wildlife on suitable dry surface terrain. Flying colonies additionally require shoreline sand for Pteranodon or a nest floor at Y≥96 for Argentavis. Habitat tags are preferences: matching habitats receive three times the selection weight. Spawns require a supported footprint, collision-free space, the world border, and at least 24 blocks from players. Forest canopies are allowed; underground rooms and underwater locations are excluded. None of these creatures is aquatic. There is no natural spawning in the Nether or End.
+
+The population director checks every **5 seconds**, targeting **3 distinct wild groups within 96 blocks** of each active player. It adds at most **2 groups per dimension per check**, samples positions 32–80 blocks away in already loaded, entity-ticking chunks, and serves multiplayer players in rotation. Nearby players share wildlife counts. Searches have a fixed attempt budget and never request chunks. Insufficient land or a population cap can delay the target; later checks retry.
+
+Minecraft's animal spawn cycle no longer controls Ark encounter frequency. The `minecraft:spawn_mobs` game rule and the mod's spawning toggle still disable replenishment. Population limits apply to Ark creatures independently of the vanilla animal count.
+
+| Species | Group | Base weight | Base HP | Base damage | Preferred habitats |
+|---|---:|---:|---:|---:|---|
+| Pteranodon | 3–4 | 18 | 24 | 3 | Beaches, rivers, plains, savanna |
+| Velociraptor | 3–5 | 14 | 32 | 5 | Forests, savanna, jungle |
+| Argentavis | 3–4 | 4 | 46 | 6 | Taiga and windy mountains |
+| Triceratops | 2–4 | 12 | 85 | 8 | Plains, savanna, meadows |
+| Therizinosaurus | 1 | 12 | 100 | 10 | Jungle, dark forest, swamp, old spruce taiga |
+| Brontosaurus | 2–4 | 10 | 145 | 12 | Savanna and sparse jungle |
+| Tyrannosaurus | 1 | 12 | 130 | 14 | Badlands, desert, sparse jungle, windswept forest |
+| Giganotosaurus | 1 | 8 | 170 | 17 | Windy hills and rocky peaks |
+| Titanosaur | 1 | 6 | 190 | 20 | Stony peaks and gravelly hills |
+
+Natural spawns allow at most **24 Ark creatures within 96 blocks** and require **24 blocks between solitary creatures of the same species**. All living Ark creatures count toward the cap; only natural, unnamed wildlife counts toward the group target. New groups start at least 18 blocks from existing wildlife. Small packs are placed completely or the attempt is abandoned; a cap or obstacle cannot create a lone pack animal. Brontosaurus and Triceratops form herds of 2–4; other large species spawn alone. High-danger replenishment seeks one varied large-creature encounter if none is present, rather than filling a roster of every species. Existing animals are not culled; lower density takes effect through new spawns and normal despawning. There is no day/night spawn filter. Ark's native biome spawn entries are disabled so chunk generation cannot bypass these rules.
+
+Members of a small group share a saved pack identity. Land followers seek their pack's leading member when separated; combat takes precedence. Flyers share a habitat but use independent flight paths and perches. Separate packs do not merge. Raptors, Rex and Giga hunt non-creative players with line of sight outside Peaceful; land herbivores defend themselves. Flyers attack players only after an egg is taken or an egg-bearing nest is broken. Natural wildlife may despawn at vanilla distances. Named and spawn-egg creatures persist.
+
+## Difficulty and levels
+
+Difficulty is an overlay on existing Minecraft terrain. All five ranks recur in curved regions; no permanent level-5 exterior remains. At the default scale, the pattern repeats every 1,024 blocks in X and Z, with approximately **20% of the area per rank**. The measured complete-tile shares are 19.92% / 20.00% / 20.05% / 19.87% / 20.16%; block-grid rounding causes the small difference from exact fifths.
+
+Neighboring and diagonal blocks cannot skip ranks, including at tile seams. The initial world-spawn region remains level 1. The same biome type can have different ranks in different places.
+
+![Recurring danger regions](docs/difficulty-map.png)
+
+| Rank | Wild levels | Newly eligible species |
+|---|---:|---|
+| 1 — Easy | 1–12 | Pteranodon, Triceratops |
+| 2 — Moderate | 8–28 | Velociraptor, Argentavis |
+| 3 — Hard | 20–50 | Therizinosaurus |
+| 4 — Severe | 32–64 | Tyrannosaurus, Brontosaurus |
+| 5 — Extreme | 40–80 | Giganotosaurus, Titanosaur |
+
+Earlier species remain eligible in later ranks. **The displayed rank is authoritative:** level-5 plains can spawn an apex. The old hidden easy-biome tag prohibition was removed. Rex requires 4+, Giga/Titano require 5, so level 1 remains protected. Existing or manually placed creatures can wander across borders.
+
+Chat announces biome name, rank and wild level range when entering a different biome or rank. Checks occur once per second with two stable readings after a crossing. Other dimensions display an unrated message.
+
+Existing worlds adopt the new pattern immediately using their saved origin and scale; no terrain regeneration is needed. Creature levels are not rerolled. The legacy config key `progression.bandWidth` now controls region scale: tile period = four times that value. The scale is saved per world. Beds, commands and later `/setworldspawn` changes do not move the saved pattern or override chosen respawn locations.
+
+Level is a uniform integer roll, once per creature, from its spawn location's danger range. Crossing a border never rerolls it. Reversed configured level endpoints are sorted; supported levels are 1–100.
+
+Let `n = level - 1`:
+
+```text
+max HP = min(1024, base HP × (1 + 0.10 × n^0.85))
+melee damage = base damage × (1 + 0.14 × sqrt(n))
+```
+
+At level 40, HP is about 3.25× and damage about 1.87×. The formulas are independently chosen for this mod. Values are vanilla HP/damage points (2 points = one heart); armor and difficulty mechanics still apply. The 1024 ceiling respects Minecraft's health attribute limit.
+
+Level, pack identity, natural-spawn status, current HP and scaled attributes survive saves. Growth changes affect newly spawned creatures; existing creatures keep saved stats and are never healed by reloading.
+
+## Size, speed and behavior
+
+| Species | Size multiplier | New body width × height |
+|---|---:|---:|
+| Titanosaur | 6× | 30 × 42 blocks |
+| Giganotosaurus | 3× | 10.5 × 15 |
+| Tyrannosaurus | 3× | 8.4 × 13.5 |
+| Therizinosaurus | 2× | 3.6 × 6 |
+| Brontosaurus | 2× | 8 × 11 |
+| Triceratops | 2× | 5 × 5 |
+| Argentavis | 2× | 2.4 × 3.2 |
+| Velociraptor | 2× | 1.7 × 3 |
+| Pteranodon | 2× | 1.8 × 2.4 |
+
+Movement uses per-species player-relative sprint targets, including existing saved creatures. Animation cadence follows actual distance traveled, clip length and body size. See [movement tuning](docs/movement-tuning.md). Meshes, animation position tracks, collision bodies and eye heights scale together. HP and damage balance are unchanged. Large creatures need correspondingly large clear areas.
+
+The land behavior model adds roaming, foraging, seeking water, drinking, resting, alertness, investigation, warnings, hunting, defense, fleeing, returning home and feeding. Hunger/thirst/fatigue and home positions persist. Individual routine timing varies. Flying species bypass land needs and sensing; their preserved legacy need values are inactive.
+
+Sight uses facing, range and occlusion. Sneaking, darkness and rain reduce visibility. Movement and action sounds can be heard; wind carries scent, reduced while wet. A hidden target's last-known position can be investigated, but it cannot be attacked through cover. Same-pack alarms communicate locations without granting a shared visible target.
+
+Hungry predators hunt suitable wildlife as well as Survival players. They warn before unprovoked aggression, become satiated after a wildlife kill, and abandon excessive or repeatedly failed chases. Most large herbivores warn/defend when crowded. Critical health and larger predators can cause retreat. Creative/spectator players are excluded; Peaceful prevents player-directed aggression.
+
+New Bronto herds spawn with a nearby Rex that tracks their home. Healthy Bronto/Trike packs defend attacked members; predators avoid charging defended herds and flee at low health. Flying colonies contain 3–4 birds and several persistent nests. Pteranodon circles shoreline sand within 32 blocks; Argentavis circles high-ground nests within 48 blocks. Both occasionally land, perch and take off independently.
+
+The HP bar now includes a behavior label. Calls, startles, feeding and charge clips make transitions visible, with sleeping poses for Rex/Trike. Current audio uses temporary Minecraft cues. Birds now use extracted aerial animations and body pitch. Species audio and terrain IK remain separate work.
+
+See [the research and behavioral specification](docs/behavior-research.md) for the inspected ARK interfaces/assets, game-design sources, complete behavior contract and remaining limitations.
+
+## Flying habitats and eggs
+
+Pteranodon nests are shallow sand bowls near a patch of exposed water (within 12 horizontal blocks and 4 blocks vertically). Argentavis nests have a twig/foliage ring on dry ground with a floor at Y≥96. Each natural colony has 3–4 nest bowls and 3–4 independently moving birds. The thresholds and roaming radii are configurable under `[flying]`; existing biome preferences and danger eligibility still apply.
+
+Right-click a nest to collect its species egg. Breaking a nest containing an egg also provokes its colony. Defenders circle, make staggered swoops at that player, and return home after 30 seconds, leaving a 64-block habitat radius, or losing sight for 3 seconds. They do not target bystanders or become aggressive from ordinary approach, carried eggs, noise or direct damage alone. Creative/spectator players and Peaceful remain excluded from attacks. An unprovoked bird evades damage without retaliating.
+
+Collectible eggs are separate from spawn eggs. They do not hatch or replenish automatically. Empty nest bowls remain, including across saves. Existing habitats are reused when birds replenish; surviving members count toward the 3–4 limit. No offscreen simulation or forced chunk loading is added. Existing wild birds can adopt nearby suitable loaded habitats; named and manually spawned birds do not create nests in player builds.
+
+Xaero's installed fullscreen World Map shows one nest glyph per discovered habitat, with a separate **Nests: on/off** toggle and a hover label with species/coordinates. Discoveries persist per player and dimension, respect map access/exploration, and synchronize as bounded snapshots. This integration does not add minimap markers. See [implementation and validation](docs/flying-ecosystem.md).
+
+## Berries
+
+Breaking **short grass or tall grass** without shears has a **35%** chance to drop **1–2 berries of one type**, in addition to vanilla loot. Relative weights are 30 Tintoberry (red) / 30 Amarberry (yellow) / 30 Azulberry (blue) / 10 Narcoberry (dark purple, sedative).
+
+The upper half of tall grass does not make a second roll. Grass blocks, ferns, sheared grass and creative breaking do not yield bonuses. Explosions use vanilla survival filtering. All four berries are inert materials for now: no eating, sedation, recipes, taming or brewing.
+
+Drops use NeoForge's additive loot modifier, preserving vanilla seeds. Edit the `gameplay/grass_berries` loot table in a data pack to tune probability, weights or quantities. The `berries` and `sedative_berries` item tags identify materials without giving effects.
+
+![Berry inventory artwork](docs/berry-assets.png)
+
+## Configuration
+
+The server config is generated at `<instance>/config/arksurvivalreturns-server.toml` on first world load. A file at `<world>/serverconfig/arksurvivalreturns-server.toml` overrides it for that world. The development launcher's instance is `Ark/run`.
+
+Settings cover the group target, check interval/budget, species weights, population cap, large-creature spacing, band width, tier level ranges, HP/damage growth, biome messages and target bar/range. The default example is `config/arksurvivalreturns-server.toml`. Existing values are retained when new keys are added.
+
+Data-pack paths in namespace `arksurvivalreturns`:
+
+- `tags/worldgen/biome/difficulty/*.json`: legacy metadata only; displayed regional danger now determines eligibility for every biome.
+- `tags/worldgen/biome/spawns/<species>.json`: preferred habitats; selection weight multiplied by three. Base weights live in the server config.
+- `tags/block/spawn_surfaces.json`: eligible terrain, including grass, dirt, podzol, mycelium, sand, stone, terracotta, mud, moss, snow and ice.
+- `loot_modifiers/grass_berries.json` and `loot_table/gameplay/grass_berries.json`: berry harvesting.
+
+Use `/reload` for loot and tags. Edit `datagen/ArkData.java`, then run data generation; never hand-edit `src/generated/resources`. Group sizes and minimum danger levels are in `feature/creature/Species.java`.
+
+## Build and verification
+
+Use the included Gradle wrapper with Java 25, from `Ark`:
+
+```powershell
+$env:JAVA_HOME = 'C:/Users/Nez/.jbang/cache/jdks/25'
+./gradlew.bat runData
+./gradlew.bat build
+./gradlew.bat runGameTestServer
+```
+
+Run data generation before the build in a separate Gradle invocation so the build packages newly generated resources. The resulting JAR is `build/libs/arksurvivalreturns-0.1.0.jar`. Install it alongside GeckoLib 5.5.3 on matching NeoForge 26.2.
+
+Eighteen JUnit tests cover growth curves, recurring danger regions, behavioral decisions and map raster correspondence. Seven Ark headless GameTests cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, packet codecs, unloaded-chunk safeguards, and 2,000 real loot rolls for each tested grass/tool case. See `docs/verification.md`.
+
+Asset rebuild (Python 3.12, Pillow for sprites):
+
+```powershell
+python tools/import_creatures.py
+python tools/build_item_assets.py
+python tools/build_test_structure.py
+python tools/verify_assets.py
+```
+
+`docs/creature-import.json` records source hashes, scale factors and selected clips. Imported models retain the original skeleton and palette. Body and animation position tracks are scaled together. Collision covers body mass; tails and wings extend beyond it.
+
+## Playtest checklist
+
+1. Restart the client through the launch script. Inspect each species' forward-facing walk and attack, feet, scale, UVs and animation transitions.
+2. On dry open land, wait 15–30 seconds and check complete small groups and isolated large creatures.
+3. Travel through danger regions and check that higher danger eventually returns to lower danger. Check chat, wild levels, and level-1 apex protection.
+4. Look at creatures, damage them, change targets and look through walls. Save/reload an injured creature. Repeat with two players for independent HP bars.
+5. Break short/tall grass; check four berry types and normal shearing.
+6. Test predator damage in Survival; Peaceful and creative players should not trigger hunting.
+
+This pass includes the **ground wildlife behavioral model** for every species. Flight, riding, taming, breeding, territory ecology, custom dinosaur audio, experience gain, creature harvesting and berry effects are separate future systems. Visual movement and encounter balance still require in-client playtesting; automated checks do not launch an interactive client.

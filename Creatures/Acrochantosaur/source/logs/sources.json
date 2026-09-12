@@ -1,0 +1,570 @@
+[
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Acro_Mesh.uasset",
+    "sha256": "db35a694a87b109f26c29a0e376812bd51b3f420d6386d8b5117fd9b4683efb6",
+    "size": 3103225,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Acro_Mesh.uasset.z",
+    "workshop_sha256": "3a6c3b6adeb5d1ce43d3249ba56313cb2edb77be0225eda869de42375e7fd112"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Acrocanthosaurus_Mesh_Skeleton.uasset",
+    "sha256": "f481db2eb834a2880a651bf699bf36d3cdd61edbb1e073b8e53cacc5583eb038",
+    "size": 60764,
+    "export_count": 18,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Acrocanthosaurus_Mesh_Skeleton.uasset.z",
+    "workshop_sha256": "7eb80ea2b8e2f604b054fb6698b826aa8bdb992d113195179389cd998451079e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Center.uasset",
+    "sha256": "9088087f7a44b2440101f1be3ab0473f417207f51cf3f3b71d4331fd8fe1f363",
+    "size": 28097,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Center.uasset.z",
+    "workshop_sha256": "c4669a4ea57cbd6d3450e7aa94fb625b60a443a31dbbce4c2841fa3422d51e61"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Down.uasset",
+    "sha256": "798fef72317708aab689bda8e2616f8468a419fd78816eaedae2b1e40bb0c3f1",
+    "size": 28073,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Down.uasset.z",
+    "workshop_sha256": "667ded4c337a43ff8ef0521cd99d1d29c52ebc44153fabd931957c126dda78a3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_DownLeft.uasset",
+    "sha256": "109da06dea877f4c720450607388b820137cc4bfe000a84e6f4f46007149dd67",
+    "size": 28137,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_DownLeft.uasset.z",
+    "workshop_sha256": "3604b9d038951128931eaabd959076695729b8baed8f8f2fd575a180daa4a1dd"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_DownRight.uasset",
+    "sha256": "6a5601b354c0779d89b446b11ca7fc33a3decfd26e06bbb89ef5e1516aa9527a",
+    "size": 28143,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_DownRight.uasset.z",
+    "workshop_sha256": "12573d2260f583798da81bf139bae13d170ae5df995df220c88ff17510f247c2"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Left.uasset",
+    "sha256": "9b91c85e349f3384177ec9d5f313afcfe6382bdad1c8029a61a48d498bd4cd06",
+    "size": 28137,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Left.uasset.z",
+    "workshop_sha256": "0b38f343301a8d8338b5c6c59eae22b245c498a4ad672f5b2974a04161350dad"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Right.uasset",
+    "sha256": "f7be2727ddf5bebe2b4a5cd59a3535febd98f90a29bcb89165b0217b45780368",
+    "size": 28131,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Right.uasset.z",
+    "workshop_sha256": "f3fd548931869d15ab15a97ba153e024104f7795a2eeba1e9263f0de840ba21c"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Up.uasset",
+    "sha256": "bda429c91aa8b5af2689e20c5018a52e1ebb1b1c6dca6a392d7e4562eedd2731",
+    "size": 28069,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_Up.uasset.z",
+    "workshop_sha256": "26f16fbaae7a610caec8d5a766481a70e4d846363bbfd38c00e5d0bcb58a73b2"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_UpLeft.uasset",
+    "sha256": "99899908f62388617b156b70949cdb02b8cbf2544850547df29899822fd36a9d",
+    "size": 28133,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_UpLeft.uasset.z",
+    "workshop_sha256": "78d0a3f6e783e531f02d86ea9d57c3d60cf4cf09e508c95d5a76a6fe4f8c6dce"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_UpRight.uasset",
+    "sha256": "f82a81124078633a8a351097ad2a57c28240fb70915a5b705f3274179f20bea6",
+    "size": 28139,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Aim_UpRight.uasset.z",
+    "workshop_sha256": "9d0b30aad17bebc6a462eaff704f53592989dfd86d7b473054608585ba54bc69"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_AimOffset.uasset",
+    "sha256": "18c5f6d6caa6e0ff35f0f0dd9747055cc2f46321821538852308c8c74a25a8e8",
+    "size": 7856,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_AimOffset.uasset.z",
+    "workshop_sha256": "abd991e16fffcb19abac4e6e9ba6d99cde8c4221c51a3f36c27c2a7b96a890ba"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineBite_Montage.uasset",
+    "sha256": "5eb3135b6e2b0b5ac662065d9c6dd8c0e627b633edfa0dceb13525f27713f92c",
+    "size": 5059,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineBite_Montage.uasset.z",
+    "workshop_sha256": "7b2c791c236f905cc39177456bb913f924d62b0cf11baf3d3ed11d6d74e7f5f1"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineStomp.uasset",
+    "sha256": "1487a072908f8f200a3ed7d4dc3c3de4539d1d8dd0136bbf52f7e8be1cbdc10b",
+    "size": 421337,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineStomp.uasset.z",
+    "workshop_sha256": "20fec4a4ae6a4c32f645c81f76b089e0e1e44aab805e319ffa9a435b70887be7"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineStomp_Montage.uasset",
+    "sha256": "5b5bda562d780abc4db0f8f73574f957f002abfaa966265a7f7c80deb8093a1b",
+    "size": 18766,
+    "export_count": 30,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_AdrenalineStomp_Montage.uasset.z",
+    "workshop_sha256": "7f844615b000521410135e4edbe7a37f18dfd9eb12e42e28e0fdc0ff8d78ca2f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Bite.uasset",
+    "sha256": "ecbd44711b8f07c5391d9b3fb684b41ffcf3adacf2d1e5afad6b817b4a8c29c4",
+    "size": 165770,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Bite.uasset.z",
+    "workshop_sha256": "59bddecd5e3b9204f6f864dc40500fe3ab88d4f2ce53d63c19c273401c323adb"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Bite_Montage.uasset",
+    "sha256": "2a77ee723a5c50f7385a8c72809800fdbd506ea13d13103971ae19948a2e79b6",
+    "size": 4882,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Bite_Montage.uasset.z",
+    "workshop_sha256": "ba4bafc2d16be14caf92fb19a116762bbe7e201bfe63a47ae4d411128b7a1bc4"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Roar.uasset",
+    "sha256": "3ded4c53bc79214f76a4de29084d2d95df40a087d72a6488fe581aee4617a340",
+    "size": 249134,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Roar.uasset.z",
+    "workshop_sha256": "6dc03530fd44484947b1ee117dc5d78f3c1fe624d494eb335d497169ce939630"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Roar_Montage.uasset",
+    "sha256": "2f4c0ca214a44d79aa7b9a424d47991fd40e4418529787bccfa23d595820667a",
+    "size": 6283,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Roar_Montage.uasset.z",
+    "workshop_sha256": "77b1bd53867f47c7c71c142364c3496d329bb0203d016e179eefafe7eb9f88f8"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_ShieldBash.uasset",
+    "sha256": "a718baa259b10cdcb7c114daf6c493206cf91ad82121d29c434506475df495f6",
+    "size": 156195,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_ShieldBash.uasset.z",
+    "workshop_sha256": "0d423cbf0e6929276058a314f4c650f988f961a25dbbcd30fecd6c6d0912131a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_ShieldBash_Montage.uasset",
+    "sha256": "cafc5a7506dfc13bd8917f66f68af3ff24210cbdcbda88ca947ffdc276de94a9",
+    "size": 10700,
+    "export_count": 15,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_ShieldBash_Montage.uasset.z",
+    "workshop_sha256": "f2fb5b32696f1dd7109aabbbff03646605117ea02a11ff4291c8dd06c7c44f1d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Stomp.uasset",
+    "sha256": "7ccd7c409b40b81abd9077c3c498baa36dd1576d635a1301b19eed37a1d967ca",
+    "size": 291245,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Stomp.uasset.z",
+    "workshop_sha256": "473d16156397633e64f62bea7392d8d62882397afa8c0a014b292b2a0da4b533"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Stomp_Montage.uasset",
+    "sha256": "174e3c9a5d2c43c53f125bdac185cb4e4a1fde8c751ed984d109009d5c33ef2e",
+    "size": 14008,
+    "export_count": 19,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Attack_Stomp_Montage.uasset.z",
+    "workshop_sha256": "61dc4e93abe4c9520f10b4c7e3e4e4a9941570404f48ed04df5cf8701a452544"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Blink.uasset",
+    "sha256": "789220990f0753e5ce9214376730e6524e7645314d7ab20edd7943500271c86a",
+    "size": 28078,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Blink.uasset.z",
+    "workshop_sha256": "b5ae71a636e1a7e1faafed48a912cb289b0fd84a62b483d276e05cd25fef4304"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Eat.uasset",
+    "sha256": "51194886b591a642606a6e138caca8ee828dfec0b8b8fee068173f54d777edb6",
+    "size": 190010,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Eat.uasset.z",
+    "workshop_sha256": "c2892bf26daff6c9262ccdb2151986c1578d8986ae226eb194b8f137a677e2ad"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Eat_Montage.uasset",
+    "sha256": "900d74934cf57529dd83ef98f5dcbf53d4a27eabf13218d79c53f6c0c5993eaf",
+    "size": 4891,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Eat_Montage.uasset.z",
+    "workshop_sha256": "f7ef585fc5dfb4f3495f5897299babf49e12533e437b0b68eb36859df32f5814"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Idle.uasset",
+    "sha256": "97a2a4f98d67e6c8b7ca8842de8e66cde9c42d535b3ced55dbc579da3f816a86",
+    "size": 206045,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Idle.uasset.z",
+    "workshop_sha256": "5696628f51dd1898abed53831d21b7131dbe292ad69dba5298da26a94187a870"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_LayEgg.uasset",
+    "sha256": "39d8026db615914a05af1af6f1e883b61b11c22843485f55c953b75b4449ee76",
+    "size": 147367,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_LayEgg.uasset.z",
+    "workshop_sha256": "c104a2a05f2c29f96401799e7b751bb95123e670314d5316a8a2bd10b9525031"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_LayEgg_Montage.uasset",
+    "sha256": "2c9b7f0a4a0266bb4648206d0ac2936b2048fe6560cb1a117c14f481da4d337f",
+    "size": 2554,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_LayEgg_Montage.uasset.z",
+    "workshop_sha256": "f9e7fcf6eb265340fcd434d1dd0d162e5ce0ae4d2c696d2cfa03abeccafad029"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_FWD.uasset",
+    "sha256": "b5d22e464f8bbf0fa8f66eee2e95782e885c220f854a485fd5c3d06f4be042fc",
+    "size": 98264,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_FWD.uasset.z",
+    "workshop_sha256": "2d74f226b4b765219a37aabd05c79188aede6edeceb766e92b5a45694fd0bbff"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_LEFT.uasset",
+    "sha256": "52ef76df425408f18e68fa15fd51f7ccf07280fcc57fece339292c984cfe745c",
+    "size": 98022,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_LEFT.uasset.z",
+    "workshop_sha256": "512c30365e89e03cfd919375cb4d161b217a5c2485bc307b71114b3b9e671158"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_RIGHT.uasset",
+    "sha256": "7caf7a0332a57aeb64d0570b15c1e80b31ef91bbef20872efe6e7d0a30989973",
+    "size": 98024,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Charge_RIGHT.uasset.z",
+    "workshop_sha256": "a15e568f759182eb2a52b78c9db0c9eca6b4ddbcde542af22814e3694c31d0ce"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_FWD.uasset",
+    "sha256": "81ed9fb13828371cfed8061761cf64f3bd8a34c207be61d059b0364136a640dc",
+    "size": 108315,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_FWD.uasset.z",
+    "workshop_sha256": "e9fa73c6ef990f24790d07516a84bef3a7eb8a685450385b587cb98719812e06"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_LEFT.uasset",
+    "sha256": "fd22701c1e3c41b3e5ef2d2ee05e50fd86657e665ef15601cbc77a538287604b",
+    "size": 108117,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_LEFT.uasset.z",
+    "workshop_sha256": "7e154b76ff2e7a616995b5721f26e763b61492dda6f7bc57219d2d485c387a28"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_RIGHT.uasset",
+    "sha256": "d58c52a2b09697253b666c3ba45e8db0ee57092fbbf5baefa291c184d4557025",
+    "size": 107615,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Move_Walk_RIGHT.uasset.z",
+    "workshop_sha256": "fd246c02413c3fc1ee85415d266687ad13b5ca3df89d4ad9e980905803de5ffa"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_NarcoticEat.uasset",
+    "sha256": "72e96b8275351eceb7761555e9daad3f8e4fa03ea7d13efb275300c986953f66",
+    "size": 168899,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_NarcoticEat.uasset.z",
+    "workshop_sha256": "85eef94fa23a4e1ef6dcdd8e0ac93973e53cb9f05f2aae13ef956c311a65efd6"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_NarcoticEat_Montage.uasset",
+    "sha256": "e5e9810d29259d4f804310f0d2a5063b3c3a2370e554323816842996334b72d5",
+    "size": 9199,
+    "export_count": 12,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_NarcoticEat_Montage.uasset.z",
+    "workshop_sha256": "033cb4119cef804056fd36174cc7cc9e21ecc814a3fa58027e4742d92832acd5"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_ShakeOff.uasset",
+    "sha256": "3d2a3dd087d10d275a6d58414b57fdcb10353720bde8d4655dca84df11c605c7",
+    "size": 174021,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_ShakeOff.uasset.z",
+    "workshop_sha256": "58d3232359957a5b08a9d27c07937e461db98b49eaf48296f0ad317cfda60bcb"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_ShakeOff_Montage.uasset",
+    "sha256": "bb909fe67bda63f10e6b1e59364a597aaa88f0c9cbd212a9328a8996160b2a76",
+    "size": 3504,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_ShakeOff_Montage.uasset.z",
+    "workshop_sha256": "5494f901137094b43709a99caea0f9e03991d56ee33fa97caed5e5a9106e536e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Idle.uasset",
+    "sha256": "64bcdbf9060249e8b5dd6dcc1153cdd3dd3a40cbfacbd3972c81b504932d7da3",
+    "size": 168469,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Idle.uasset.z",
+    "workshop_sha256": "2564d877da7e4e30ef920d4c1de0204f982ccc8919f37bbd5504f155d7a1e960"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_FWD.uasset",
+    "sha256": "f8b2345431080f38c18429fda155b58d833e2b7c0d1f3981fdc4ae2db5fa8a61",
+    "size": 107591,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_FWD.uasset.z",
+    "workshop_sha256": "7529f8b373e3faac58af96035efc65cc0bc807c85c54bd657333d77b878af5a0"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_Turn_Left.uasset",
+    "sha256": "4231ab03fe4538f2424c49cf2aaaf13270f3aa10f1d29a33b04cddfd9d212a70",
+    "size": 107403,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_Turn_Left.uasset.z",
+    "workshop_sha256": "a982a212d35761dd91c15ad6b37dbfd6e6bfd6b6c59d2d2f569332d37c810dc4"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_Turn_Right.uasset",
+    "sha256": "70b4adc6de4942e8a59389fec0fb65b3e2ab41d7ff9579317025173d764d20ca",
+    "size": 107405,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Move_Turn_Right.uasset.z",
+    "workshop_sha256": "02ed8ead75fbe14b4758faea684c50e2e5063e14acd8eaf5e37ec3f27a724e85"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Roar.uasset",
+    "sha256": "e206394d9dd1ba2c7a1c7c05084f35f371fa11630cce2c7f2e8a60cf44ad5131",
+    "size": 387612,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Roar.uasset.z",
+    "workshop_sha256": "ce285577ee43aa974ee6cef007cd9758466e0adf01443272694b7050c2b99661"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Roar_Montage.uasset",
+    "sha256": "3e0f3a54649f1c1f01353e41ff6ade1033ebc7fcde059f2cf30f951ff25ea200",
+    "size": 11000,
+    "export_count": 14,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Shield_Roar_Montage.uasset.z",
+    "workshop_sha256": "59764ef40e03c5e85ae3a9dcede0e4bb7395b3ff825c8cc8907f6901435d39c6"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Swim_FWD.uasset",
+    "sha256": "18cfdd8c3993333dd4c017bc49e5323f3f2a5f59b28713fa9c130e7c675ba963",
+    "size": 177803,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Swim_FWD.uasset.z",
+    "workshop_sha256": "cc2b2b0fe0e7ae18ebbf598a2e9e278a02e265cfeb1f57f2d4f0044bca0d0daf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Swim_Idle.uasset",
+    "sha256": "3412f54f4a93df2045c3b9caec1bbc4356e4a2d7370010b0d03c4b9b2c332d46",
+    "size": 177131,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Swim_Idle.uasset.z",
+    "workshop_sha256": "8a59a1882f7e0699c238ab2a646cfb4a65c1aa8fb382a810e92dc96b4a20aa65"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Eat.uasset",
+    "sha256": "f99477c43cda1049e9abf8b4fd87e6fde0fa29e7f5edb2ee693403dae1eaa529",
+    "size": 133909,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Eat.uasset.z",
+    "workshop_sha256": "eb7055265a919ba4312ba56f12f6cb49d371ba87ce139f620f8acd43977f0f14"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Eat_Montage.uasset",
+    "sha256": "4a64d061291c8550017df30b4ff611e1be871bdf23cd824ff300b704a18c3d9b",
+    "size": 1811,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Eat_Montage.uasset.z",
+    "workshop_sha256": "289dd66257f9f5b7bb1c6e71092c21691a3b9f9c27625e7a7094ceb4e9db89ab"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_In.uasset",
+    "sha256": "fbe50b2dd327efc7835536fe0eece7d61fa92be54db1a5be5d294709d9a9e5fe",
+    "size": 393001,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_In.uasset.z",
+    "workshop_sha256": "c6023589e992c35244e7db336ba9fe5a26015cbdbcaebc389ef80ae2c313d989"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_In_Montage.uasset",
+    "sha256": "e1fc0c0acaffbbff49f78526fa6db50e918b01ad80957c609d3695ab01667077",
+    "size": 4031,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_In_Montage.uasset.z",
+    "workshop_sha256": "416e62cef4bef9abd08bc0066936a842ef3b36aa29600ba441b4c1044c0883fb"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Loop.uasset",
+    "sha256": "1ea17ba3ef27f82b1db370fd034d654c2c708e2b042cd87138cfe63ab70d3ee6",
+    "size": 144813,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Loop.uasset.z",
+    "workshop_sha256": "d72501db7e01aab778e4ebac8d1d4556a41128c42c040ae469250446362cda71"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Out.uasset",
+    "sha256": "1bde8093e67d3fc04e98750d96b70df4d21592634007d344e9a19d7c83500495",
+    "size": 273817,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Out.uasset.z",
+    "workshop_sha256": "ed83e86c0ec6d15309ffab235f16ebd40a48e600370c8a88bc728a97aeb01286"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Out_Montage.uasset",
+    "sha256": "657a9d3692cba6d732c4fdc822b0b54723107d8c148af432d71f2430b1e55705",
+    "size": 3503,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\Acro_Torp_Out_Montage.uasset.z",
+    "workshop_sha256": "55df1dc87bcbacdc9c3d4ead9758c8a01c0e38571edee4729a2face8cb1749ba"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_AntiAir.uasset",
+    "sha256": "83c47c0790e0615b1e71c400130ecebe17577639401c09895bb6b6e3610c9a55",
+    "size": 130108,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_AntiAir.uasset.z",
+    "workshop_sha256": "e5cfa84c0481802b11bf68cc79ef04fb1a8a87c9c2a5d1ab82beb48e1ee18f9a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_AntiAir_Montage.uasset",
+    "sha256": "f454a7ddb6f8dae27fff88e75fd3061b09382abfd151dfdccca35c9eeb0d0eb1",
+    "size": 7215,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_AntiAir_Montage.uasset.z",
+    "workshop_sha256": "5e87ca49fbf4469ea2ddc0462b6e69a9ca262bb7cc8350b082ba188b53b11963"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Bite2_Montage.uasset",
+    "sha256": "07eff8668cca49c1a03775ce85eec574246c7b5af05bd0bd29285ce4f91efa95",
+    "size": 4908,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Bite2_Montage.uasset.z",
+    "workshop_sha256": "3eddecde6d377b3ab0a142fe7a2396a3f43bd039da596f36a8a7bb1ca9541737"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Bite_Montage.uasset",
+    "sha256": "ee9331de387b7bbb845cacb08e8a649890df816ef5217f6dcf7256d8d5778a55",
+    "size": 4906,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Bite_Montage.uasset.z",
+    "workshop_sha256": "710509b39539181b85295819d345f28944edc71eec919c4e3b87303ca3acaaf3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_ShieldBash_Montage.uasset",
+    "sha256": "787db3ea6a500a39723d8015b99fe6b13fa326f6672469f241e206ad1dded244",
+    "size": 10846,
+    "export_count": 15,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_ShieldBash_Montage.uasset.z",
+    "workshop_sha256": "7edd33d998eabdda9c72471f9c38ea05b0139cf2bbd87006767cfba8bcce7908"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Stomp_Montage.uasset",
+    "sha256": "6cf207d226f62b289e7c1a3022a3b857f830763cf80df0a11f5d3026dfbe936b",
+    "size": 26213,
+    "export_count": 38,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_Stomp_Montage.uasset.z",
+    "workshop_sha256": "aad6151461ecc30a7760e05de98c6a23c30098d6257d865add95af70e8ac9df8"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_SuperRoar.uasset",
+    "sha256": "becbb3cfaf4e17dda5e0b5c60645461fe912d891598ee5757d99c78b4c0dd7c7",
+    "size": 470749,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_SuperRoar.uasset.z",
+    "workshop_sha256": "d405d74397299d2a93f76127448d9c3676d2b8f583e07054e4e496f4fab8dad2"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_SuperRoar_Montage.uasset",
+    "sha256": "ac225b7bc6fcb4fd5b97ba019bfda5938ea3e2f1e7e3eefb50582cacf2629403",
+    "size": 20438,
+    "export_count": 30,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_SuperRoar_Montage.uasset.z",
+    "workshop_sha256": "aa0e76ce58945c492b68d527af9c4b6daad1a0e3b46ab71eb3003886993ab419"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnLeft.uasset",
+    "sha256": "2820779576d5cc44478917371ade8f3c150eea5ce45a85436c18360feaac8192",
+    "size": 145227,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnLeft.uasset.z",
+    "workshop_sha256": "5cdf201286f630e4e1eb751fe000570198c8322728ca636979939b91a81a5f0e"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnLeft_Montage.uasset",
+    "sha256": "bf68e4d9fd599f223fef8f74644b0da8804942d9ad7f1d4673e176a3f642d4a0",
+    "size": 10241,
+    "export_count": 12,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnLeft_Montage.uasset.z",
+    "workshop_sha256": "24e092cab8f61f0ac5a62d4bfa96c47f7e5c41255112e3c90c6b2180d2980ca1"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnRight.uasset",
+    "sha256": "6e7177d6ba2504dee3c578cc46018244db9a7c599c2840eb586ca13c258fd116",
+    "size": 145677,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnRight.uasset.z",
+    "workshop_sha256": "682d7740be1257b4224530c682b0f9877948340ff2de2f66f350b2ff11fcb276"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnRight_Montage.uasset",
+    "sha256": "e37144b7eda7c6f6c1cb4a9668e3fb98acc5b85eaa07f6e29acd52eca5163cc0",
+    "size": 10816,
+    "export_count": 13,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Attack_TurnRight_Montage.uasset.z",
+    "workshop_sha256": "fdaddad0d5842fed2a773d2040cbd6d9c50399ef7b2ca8bb005ceb623af4a47d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Bite2.uasset",
+    "sha256": "b7dd05fb19d8455f65b2bf0da9c30694c83e3822a9aecd3438fc08c2c32403c2",
+    "size": 167318,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Bite2.uasset.z",
+    "workshop_sha256": "c2b4a0320e90c6ffbf21c09914271afa184e1890277e4b426064fb80e43090b0"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_DangerousAttackTrigger_Montage.uasset",
+    "sha256": "6c86b38fac023d1a4a8ba4c9cb7a8f6547166d02bb364b300762b64a8dfc4774",
+    "size": 4128,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_DangerousAttackTrigger_Montage.uasset.z",
+    "workshop_sha256": "3f4fe9427a96044a91d7e6c3164b5ce67be64cdc01a286b004bdb2d4871af46a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Idle.uasset",
+    "sha256": "12dc6f144d31b3ffb6ca5a7395dd4af9d7c0c98c4340555c1105197202daa4e1",
+    "size": 178000,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Idle.uasset.z",
+    "workshop_sha256": "c6f5ec5974c2676dd435e561564a82589b8663b8753b283af7b5b267b1b59d95"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Roar.uasset",
+    "sha256": "0bb31c8e431076cb132c51240e75b11270aa21d863bf2036479a11c059ab59ee",
+    "size": 356742,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Roar.uasset.z",
+    "workshop_sha256": "bdb5a1200c5a175f1182018bcd181ed7d403ab33b057d534efe167a1255ca129"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Roar_Montage.uasset",
+    "sha256": "e6d3920bece9880b6380c203f985bf148f9f59ef92c5f84807b849b5ae2774e6",
+    "size": 14837,
+    "export_count": 20,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Acrocanthosaurus\\Dinos\\Animations\\SavageAcro_Roar_Montage.uasset.z",
+    "workshop_sha256": "7ac046e1e02ae28ef820dc27e8b5c30a3300d9307b25b980a0187dd0d09a615c"
+  }
+]

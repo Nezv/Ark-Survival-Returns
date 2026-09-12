@@ -1,0 +1,470 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Ptero.uasset",
+    "sha256": "12bc0635007b8f684f2953526d65f35da43fd30f9c753765d75d529ccaa7cd49",
+    "size": 2061649,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Ptero_Skeleton.uasset",
+    "sha256": "f0b108a1df504ff83f0b0412c672567c80457ee7a012ea6978b044edd2db0c8a",
+    "size": 29433,
+    "export_count": 17
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Center.uasset",
+    "sha256": "e8d2dfbbc86f9055b4d53f3bfa33fb3618e6a73ada5d013f09cf44eeb1c53e3a",
+    "size": 10223,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Dwn-Lft.uasset",
+    "sha256": "574a1566e09faeb732649e1935fd833a902f11065b683980dc47f3db9bcd5a67",
+    "size": 10241,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Dwn-Rit.uasset",
+    "sha256": "8d4986ecc0044c1960659e1b63b936eec44f62315f680aa9a91bbbd692060203",
+    "size": 10241,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Dwn.uasset",
+    "sha256": "c736f185145f890ee74af647cd3002f51ef91903bd219dacafdfd2e56116a40b",
+    "size": 10217,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Lft.uasset",
+    "sha256": "c2c2f4d5c5cce5bdd509d6f4c23acd84d4b899be54bc4a7c4eaede66ba36f9e7",
+    "size": 10233,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Rit.uasset",
+    "sha256": "9268729e6003704bfe3232450f729f848a04575261a8f364a6dabda41cfaaa40",
+    "size": 10233,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Up-Lft.uasset",
+    "sha256": "6f0faa7975ee75a2f5cc6ac5812dd67d4ef59d41c201560fba6a9cc7f4351db0",
+    "size": 10239,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Up-Rit.uasset",
+    "sha256": "bb5e4524625c419d037e47da854c312313c5734f25de585c6dfac4eeae0eb1e2",
+    "size": 10239,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Fly-Up.uasset",
+    "sha256": "88a9ca272f584b46e9f99b8021f08185182f319aea4396269393361d4c1482ad",
+    "size": 10215,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Center.uasset",
+    "sha256": "0eb82e1b812e14733fb5d3cfce083184e350545323df00bb8d1421ad7949e294",
+    "size": 10331,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Dwn-Lft.uasset",
+    "sha256": "3cf7a339efeac02565209fc4201ca4406e1a07e1b6a895c18cbcbfafe1545a66",
+    "size": 10337,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Dwn-Rit.uasset",
+    "sha256": "f6f8298be575f2db1699e5d6e8b7585b4770411d59aa9b894d2bfdcbddcc3b07",
+    "size": 10337,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Dwn.uasset",
+    "sha256": "57d9c29b4ce6e3a64e1978984686bfd0a2ef8dbff3cda18bfdf6705a64560fbf",
+    "size": 10329,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Lft.uasset",
+    "sha256": "e450ff7867c4d73ec5e021a92f3a88ef5bb2e1a851de0b2526af6dfde8cf99a5",
+    "size": 10329,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Rit.uasset",
+    "sha256": "44badf2ee279732c1f6753f8f35fc94ecc7d851876647f9521065f15ee420b69",
+    "size": 10329,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Up-Lft.uasset",
+    "sha256": "2ee42c36a0fa1dbb284207f42fbc01ca319a0b9e14c7b9c14af83d4b50163af2",
+    "size": 10335,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Up-Rit.uasset",
+    "sha256": "26edf541863dc8a88c24171aea0f4688a17194b57d35f1b674e690e4a219d837",
+    "size": 10335,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Aim-Ground-Up.uasset",
+    "sha256": "8c83f468add9fd3473818e9615cfdb4ac9a5417cfc0bf7c35bc688094e9438a6",
+    "size": 10323,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Barrel_Roll_Rit.uasset",
+    "sha256": "b7d8d44f116cfd10aa5147f61859eefe988bbef1f3b6d2a9fa290cece0c39714",
+    "size": 53101,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Barrel_Roll_Rit_Montage.uasset",
+    "sha256": "dc499adf8d5da48b0062def5f8fce72e84baa2179f2670f4082779918288a1aa",
+    "size": 3116,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Blink.uasset",
+    "sha256": "85799d3e6bd1b2effcf1bdc18fb3666bf01acde691a3d31638d2de4e3153785d",
+    "size": 11802,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Cuddle.uasset",
+    "sha256": "9919b5c4188ca84c51fe9d20e88ac7a8cf90e4c0a2d86a3f3cac3f139b799feb",
+    "size": 102863,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Cuddle_Montage.uasset",
+    "sha256": "0ac017ef1ef2676a82679ce0ec26e44258235a7291e658fe5fb35b8fa10a97ae",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Falling.uasset",
+    "sha256": "587854c0c007c9cb7985951c599d3d88d50c396d5e94a6fce3e251b765693eba",
+    "size": 41542,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Bite-Montage.uasset",
+    "sha256": "dea308dc4f6ea30e75cbffc552aa15be51b37dd3d5af1ad4409201786880b499",
+    "size": 2527,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Bite.uasset",
+    "sha256": "0ebb180f7ee276dd7071d3635225ca909d899e89c3f35255d438f7b3058f5c69",
+    "size": 27020,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Feet-Out-Montage.uasset",
+    "sha256": "763aa537cc1ffa326f58bc53d9b37bfc4e5b3b4b36cebf2d66e608c9d27115eb",
+    "size": 2588,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Feet-Out.uasset",
+    "sha256": "b33495514279eee3d79d77eec674c2849e183b3bf2b3ae8ac7aaa72f21c75551",
+    "size": 106518,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Kick.uasset",
+    "sha256": "a09cbd937bc25f81d7d9367ff1504aee078e6172e5ebf826211871214bb0b67c",
+    "size": 31604,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Swoop-Loop.uasset",
+    "sha256": "f7a1f137c2e3a20d88387b9061c8188f805fb70d6895302fc1db30aa2de87967",
+    "size": 54518,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Attack-Swoop-Out.uasset",
+    "sha256": "c0dd5c80a608f69c7d19839442a5bd858d17c9758f46b0fe1fd086fd13b50253",
+    "size": 105982,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Flap-Lft.uasset",
+    "sha256": "7d281224da59fc99decfe48ff77b655b64ce10e56c1715c6389c439e6a0de8b4",
+    "size": 66612,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Flap-Rit.uasset",
+    "sha256": "7cb1282dec3105de77e385549b63aa92d8bde21dc24bf5f14fc31771b859fac2",
+    "size": 65828,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Flap.uasset",
+    "sha256": "ac5be5aaae8b2597cd6740ba079eeafec7df9f0cd4405c1b81c140e9d022bc84",
+    "size": 65600,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Fwd.uasset",
+    "sha256": "07973285ab41c5f3e8a82cfbdc95db8d69d24afdafca1bb08668c1cba8e085f3",
+    "size": 29253,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Hover.uasset",
+    "sha256": "35fb298c4dae0e5812164183cbe00e5d64eb557b01e66b432ec852b12889eed1",
+    "size": 26713,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Hurt.uasset",
+    "sha256": "b69424ec84826646dcd498b68e235cc4382ddc1bfb2ae7bb36199035ead71141",
+    "size": 31774,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Hurt_Montage.uasset",
+    "sha256": "7312845d437bc50dd77a54dabcbfdedaf760964a9b603bbb76ebc919429184dc",
+    "size": 1743,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Idle.uasset",
+    "sha256": "c2212bdf896a8d943b3a5f47c608dbedecfbb75eba1acf6f32c36af8d0f347e1",
+    "size": 56643,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Lft.uasset",
+    "sha256": "78ea5ba981863ab9c1832b7fc83caa5746b46f8f91fdb6745c0a442d83ba6113",
+    "size": 29585,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Rit.uasset",
+    "sha256": "3ca6447f21e1c769af777884ca7878a28b604c04cb69330eaaeeecdd518ed0ab",
+    "size": 29585,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Startled-Lft.uasset",
+    "sha256": "67e545cc14f47333c04cfe8ccc9639d7f232a6379e75c0a905e0c20426815c0c",
+    "size": 69355,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Startled-Rit.uasset",
+    "sha256": "9125a60896651153c05689a1b0959f246bfb231118ce154b7ea00e1a46f2832f",
+    "size": 69355,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Turn-Lft.uasset",
+    "sha256": "ddfcab1693dca8b119bf2d7fbc41fb256fbdeff7c2eb9c7ca96c5509c11f2c1f",
+    "size": 55911,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Fly-Turn-Rit.uasset",
+    "sha256": "6e386682a55f3b15c54aae355fe0d4912fafbc93f4ca48ac5f1cb8b6e21f6a1e",
+    "size": 56695,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Attack.uasset",
+    "sha256": "a2b348d7bb98671c546831d069cf36333e12e5ce8ab9790191f72c3ec363b0b0",
+    "size": 28043,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Attack_Montage.uasset",
+    "sha256": "64da3f1083bd0ce85f510593e7012ea61b4d2c77499fe95cabe19f6c0ae27ff1",
+    "size": 2519,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Eat.uasset",
+    "sha256": "40fdcd7b1ebf62548d51963b01c9b481710a89c6ee32e75aa1e02fcfb395678c",
+    "size": 52097,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-EatStartled_Montage.uasset",
+    "sha256": "1c5f1ea46f951da2496b1fdfb79ce7269cad9882e23456c3a28633234e10d303",
+    "size": 3236,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Idle.uasset",
+    "sha256": "8f09c8b0a303f0c99cc7c77cbf55c57ec8271d933c2583e0a0a235d49b45fe54",
+    "size": 61233,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Lay-Egg-Montage.uasset",
+    "sha256": "b665cbf5748535c51075ce4d3cb97b00b8c885c3c0971ae5db7fdc61e7cbe100",
+    "size": 3248,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Lay-Egg.uasset",
+    "sha256": "47b17b6d422f8920b8c378bd2d9d003773582cf08e6e473ad72ece3ab9fb6d68",
+    "size": 32127,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Move-Fwd.uasset",
+    "sha256": "00307db2399c414008e718f2b16e6b819d5cd5cc2d81e9e6d0e9c3e2e6e0efcb",
+    "size": 29710,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Startled.uasset",
+    "sha256": "6625d87eda97e15898230cdf6b0ba8de60cbe634611341fed7c7c83c1c371c27",
+    "size": 50826,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Startled_Montage.uasset",
+    "sha256": "23b4d4391406bb32fc15c87f64d839eac8571b61ce0a02ff37ddbe27ffb9b677",
+    "size": 1893,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Turn-Lft.uasset",
+    "sha256": "1d42b7e87f04d1652300135c148e074b9263f923248311ec8ad30f5f0c56d52e",
+    "size": 29607,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Ground-Turn-Rit.uasset",
+    "sha256": "589ac3fb108a2f2e7f04be57b69ce18921c28a588dceb389c24ad1a663b41a79",
+    "size": 29951,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Land.uasset",
+    "sha256": "e39ed11869f4aad5b5fb5e3df1aed6a527d940d27119ad26d5df2b2739ee2cbb",
+    "size": 65213,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Land_Montage.uasset",
+    "sha256": "a7538922fb59ecc583bd1a1bc1efa5fc3ef6ea4b12bbdcdf7488b05fcb160c0d",
+    "size": 1805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Swim-Fwd.uasset",
+    "sha256": "21c1902a91d4397dfd67d4b2fcfc83d536869c9495e69a5b42c35913b9ec025f",
+    "size": 24128,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Swim-Idle.uasset",
+    "sha256": "c874a626e62ff9e12feaded0eda54fb79909c7f62bfb4c769b1982ef34224efa",
+    "size": 41546,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Take-Off.uasset",
+    "sha256": "3ffe1b14071a674966bcee0709ae231dd6aa3d5e69c1e1c97270510d576de78f",
+    "size": 65119,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Take-Off_Montage.uasset",
+    "sha256": "711afd845348716dcc96b95d86401e77f8ae8c0858396fe5c02fd7eabca6f2a6",
+    "size": 1865,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Eat.uasset",
+    "sha256": "a927f9d15fc7a52a297f3ce7ed74840b3fa3b2b16bd3174ccce79e2e7c12de91",
+    "size": 60659,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Eat_Montage.uasset",
+    "sha256": "2a8bbf7fc69c7995c344de6d83b11a5fe744e4bf4526e61dfe9a8854984d1486",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Idle.uasset",
+    "sha256": "58be7555bb550f4d27872a1f9e88e5c1e668ddbe33d0736a56262e0560d2cdc7",
+    "size": 35263,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Idle_Montage.uasset",
+    "sha256": "b4ed222517cf74f79eb69bf8c10a5e0f8d970e3ba68471c986cc49a3582de902",
+    "size": 1746,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-In.uasset",
+    "sha256": "aeae387f1e9763c94d5a96300d4efccb7bd339b1febbf0a0dc39b9397894b5db",
+    "size": 42999,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-In_Montage.uasset",
+    "sha256": "550050bb58eef17cccc266667a22070a450fb5e19a2b3a7391cc316cd233eae8",
+    "size": 1782,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Out-Tamed.uasset",
+    "sha256": "e3637b14fa730c5f8811195ad98c4f9c369bb5c53670a41834e91ea43257847b",
+    "size": 77013,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "c4f9b8c7146a84b25a19118821d4d0265dd950669de701ae57a7f0f3f4c615a0",
+    "size": 2737,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Out-Wild.uasset",
+    "sha256": "b5976be63fcab70500f461d69eb35cc484a74564dfd3358b16f0b18071d1690f",
+    "size": 42767,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "49bdf004a60fcc38e9cc7c8a1a8bb7e034b1bf298ea63f42266acb4d1606ada0",
+    "size": 1762,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero_Fly_AimOffset.uasset",
+    "sha256": "f48b98e34fe169c46b40b1b16d985b1d54f92e655c1467ea2a70231e63730fe3",
+    "size": 7431,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero_Fly_BS.uasset",
+    "sha256": "6d91ca05844e098a61547dfe056c90f71cd6fafe38e576c54dd2831fb61ee9a1",
+    "size": 7348,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ptero\\Animations\\Ptero_Ground_AimOffset.uasset",
+    "sha256": "b3d1e67d40dd824e9a33549a0b2bc2d9b61e0955df152bb02e496905b70ea726",
+    "size": 7971,
+    "export_count": 1
+  }
+]

@@ -1,0 +1,290 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Allosaurus.uasset",
+    "sha256": "599e0c662e1faf4bc4cadf61db5298e154e4dec55736d30b1a40b1627694bc29",
+    "size": 1494402,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Allosaurus_Skeleton.uasset",
+    "sha256": "c60ad598b0194db825f570ae81a680afbde22d1c6f2c3f7860c4c5e31cb004e0",
+    "size": 20571,
+    "export_count": 20
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Center.uasset",
+    "sha256": "c917cce5d2b6fa109abf4d32ab9a2d140edb80064276d6eb4cf7a0a357b69e73",
+    "size": 8203,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Dwn-Lft.uasset",
+    "sha256": "f8b99ff7e9bb99c0c347176d7c83605af0b21d288c3228f9292328e1b0f9a644",
+    "size": 8363,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Dwn-Rit.uasset",
+    "sha256": "de50989c5959328bf473f8bbd67b1a1004dbe0a146b031f782aa799c02f5773c",
+    "size": 8363,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Dwn.uasset",
+    "sha256": "ddfa006aab530d1908cc920cf4107b48efb39e86dbf06634d31f9b4b8c75a474",
+    "size": 8347,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Lft.uasset",
+    "sha256": "0ef07e497779dfa2a256a3c4933af6ecf096fd8d37c8787fb35ee9791a3b9527",
+    "size": 8363,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Rit.uasset",
+    "sha256": "f33a418389332286dae26f17823449c2f8b1d12c5828a3c9d8cebde58213c992",
+    "size": 8363,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Up-Lft.uasset",
+    "sha256": "3ab227a7dc445abbc52d7681ffe1a4f299ef917db4bebac0538614346baad984",
+    "size": 8361,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Up-Rit.uasset",
+    "sha256": "7fa5ed6d817a0ea2dfadf9fb763ca138f9dead083a17aad6ee09ecc8bb18f760",
+    "size": 8369,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Aim-Up.uasset",
+    "sha256": "c28826c8861b77107100818667f146162f840f312fcbbb6602ff11099dcf374d",
+    "size": 8353,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Attack-Bite.uasset",
+    "sha256": "d208bd9d2f6d073ead4497a5f4ce92c0d30b1a27fea850e5c048036a94d4275c",
+    "size": 19679,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Attack-Bite_Montage.uasset",
+    "sha256": "f5fa7b4ca715784507ddee82e1dda3795daf1960b9013eacec81cf8847208b38",
+    "size": 2601,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Attack-Gore.uasset",
+    "sha256": "5d13e65211206bddb6596efdedd0d22fd558b9ca033af376576ed86b5909c3ba",
+    "size": 18921,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Attack-Gore_Montage.uasset",
+    "sha256": "181741b957116c83c55a63b606154fc3bcd67203e3ce9d6e91146032cfe89130",
+    "size": 2643,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Blink.uasset",
+    "sha256": "834d7a09ea390606a663920c52cb11638ebd6af358589f67c8a36fd2a03f50c4",
+    "size": 9410,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Charge-Fwd.uasset",
+    "sha256": "87c79a42867070a8753fa9d7507913072aeeecf0efee2880880fb47f011e1569",
+    "size": 22016,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Charge-Lft.uasset",
+    "sha256": "1a8c39c009f233a7874ba94bf75303bd221940e15cf2a1e33a7fa536cf6d257d",
+    "size": 21271,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Charge-Rit.uasset",
+    "sha256": "6749c13339876cdff72647641ed558cd77710c4ec7ec62415ea4a080c40cc693",
+    "size": 21271,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Cuddle_Anim.uasset",
+    "sha256": "4a8d86cfc360f761eb2cd1f59a4e816ff4c63b040166663b8e6000a026ae14b1",
+    "size": 57074,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Cuddle_Anim_Montage.uasset",
+    "sha256": "ea5b164d481a9b2208389f89a88201e18fd0b0242be44bed369f443be42c69db",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Eat-Additive.uasset",
+    "sha256": "35bb224d236a377eef943b964161fc5297f6e058b4623ba0593e84f2c75ffe78",
+    "size": 21641,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Eat-Additive_Montage.uasset",
+    "sha256": "7d534f6b00b8212eca8378f7806981abbc2a7f3eb08504f0f43c2baff82d5030",
+    "size": 1795,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Hurt-Small-Lft.uasset",
+    "sha256": "7582a28bbc02703318a6c54774a32239cd5d69c5c37a3dad49c6ae4f582edd4e",
+    "size": 11711,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Hurt-Small-Lft_Montage.uasset",
+    "sha256": "7eaff9c766c61eb19834f5b94c48163b3ba5aea294218f06c1ce53f4f166865e",
+    "size": 1943,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Idle.uasset",
+    "sha256": "748c9d388e31a282bf0c840677730ac0fa172b36b1051dceddd38a3bae94445f",
+    "size": 28049,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Lay-Egg.uasset",
+    "sha256": "763ced06700e03b9881bab7b599a7563b7d1bb5aec84420fbc5fefcd6295e85b",
+    "size": 22431,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Lay-Egg_Montage.uasset",
+    "sha256": "756e9a41ecfee0fb94b0e9d1c9fa31319b97c1aa9aa3b863a1559a7c163bea97",
+    "size": 2534,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Move-Fwd.uasset",
+    "sha256": "7bfc007913e7c428603cae9de3f3e3b9d647421d15530bb57669acf246c0c85e",
+    "size": 24083,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Move-Lft.uasset",
+    "sha256": "850aaa13bff6eb82eda5586a438445728b2c2b9cb01a3a8a680c1a8502a89125",
+    "size": 24087,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Move-Rit.uasset",
+    "sha256": "c5f76bd4f8a3e860a99c2d0b1ff32fb16cdf0aee393d29a3e8a87c1624852cb2",
+    "size": 24087,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Roar_Anim.uasset",
+    "sha256": "ef5ecdb6103df5d947f9ab17b62787f359df22dfcdcacf31ae754f32cd1e8c24",
+    "size": 28225,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Roar_Anim_Montage.uasset",
+    "sha256": "64aca3cf8b166d1b9a53ce9c93ce57167d568dc2a2a46e194bff03172fe9fe66",
+    "size": 1870,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Startled.uasset",
+    "sha256": "430be15c4a2b3a17888a01ebb7dde1ce839f35a791e5e85a9d7cd6aa759b4fc8",
+    "size": 22285,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Startled_Montage.uasset",
+    "sha256": "d19a0710c13e5f4c1aca2f34736fca30f7d6848b1affa54593086181c76e5fb6",
+    "size": 1779,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Swim-Fwd.uasset",
+    "sha256": "67a584297cccdf11b162c298357a0cad333d5929b4cc68ceed6a4a5f5bfaa897",
+    "size": 21161,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Swim-Idle.uasset",
+    "sha256": "073972de02d968db218a2bcdebc785a5a319dc5dcb60b26ed073644ce6340c85",
+    "size": 39545,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Eat.uasset",
+    "sha256": "dc9783e30cf6f2c2cf50769b7c93a35323e9bdb3771e3cfa474b53ff0e3298ba",
+    "size": 27403,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Eat_Montage.uasset",
+    "sha256": "ba3ccc2e74c0c17af6a225e5cbed66f9fff3d57dbc9348f3a2257bb5acd9835f",
+    "size": 1860,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Idle.uasset",
+    "sha256": "efc63db33d87361e73e19c5ea825c51b655631b56e83607873ea496646ae8f4a",
+    "size": 25683,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Idle_Montage.uasset",
+    "sha256": "26eb6177197e7a14fe4a7c5a124e675fbd933e4f530180d661da86b9bf098f8d",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-In.uasset",
+    "sha256": "73af95fb51b66eb61b466987bf837915cbc664e03cbe068dbed6267dd03bdb34",
+    "size": 32749,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-In_Montage.uasset",
+    "sha256": "4eabc921f16af5d397178ac213df81860469ebee2c9b62f3de503036eb9cfb41",
+    "size": 1945,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Out-Tamed.uasset",
+    "sha256": "9470d8cfc5373a79850c0772ef8f9abd65416dcff468c1f1a74abc3801d144d4",
+    "size": 48141,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "cdcc02fcebb692b95df9bd8a61b22f11b33924cbc3308829cd69c1a4e824f41c",
+    "size": 1972,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Out-Wild.uasset",
+    "sha256": "e585b209ba8dd279ce115c8e4a37171a5b89e02b96644b5db735d8bd1f0e57a9",
+    "size": 32653,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "bf30d70627839c0536452f0d99d47a825c58f36cadbc669331004f1f98cfd754",
+    "size": 1968,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Allosaurus\\Animations\\Allosaurus_AimOffset.uasset",
+    "sha256": "9c21fbcc153b3ab46fe541a046931cf9cd747ab3c416a6a58806ace532e49579",
+    "size": 7996,
+    "export_count": 1
+  }
+]

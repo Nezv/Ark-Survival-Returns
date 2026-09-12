@@ -1,0 +1,4304 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.acrochantosaur",
+        "texture_width": 64,
+        "texture_height": 8,
+        "visible_bounds_width": 17.79637756347656,
+        "visible_bounds_height": 7.861339187622071,
+        "visible_bounds_offset": [
+          0,
+          1.4347521781921386,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "Acrocanthosaurus",
+          "pivot": [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            -90.0,
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Root_M",
+          "pivot": [
+            0.0,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            180.0,
+            2.475403,
+            90.0
+          ],
+          "parent": "Acrocanthosaurus"
+        },
+        {
+          "name": "Tail0_M",
+          "pivot": [
+            4.345812,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -5.677277,
+            180.0
+          ],
+          "parent": "Root_M"
+        },
+        {
+          "name": "Tail0Part1_M",
+          "pivot": [
+            0.352913,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail0_M"
+        },
+        {
+          "name": "Tail0Part2_M",
+          "pivot": [
+            -3.639987,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail0Part1_M"
+        },
+        {
+          "name": "Tail1_M",
+          "pivot": [
+            -7.632887,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            0.025891,
+            0.0
+          ],
+          "parent": "Tail0Part2_M"
+        },
+        {
+          "name": "Tail1Part1_M",
+          "pivot": [
+            -11.625782,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail1_M"
+        },
+        {
+          "name": "Tail1Part2_M",
+          "pivot": [
+            -15.618678,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail1Part1_M"
+        },
+        {
+          "name": "Tail2_M",
+          "pivot": [
+            -19.611573,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            0.263113,
+            0.0
+          ],
+          "parent": "Tail1Part2_M"
+        },
+        {
+          "name": "Tail2Part1_M",
+          "pivot": [
+            -23.604423,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail2_M"
+        },
+        {
+          "name": "Tail2Part2_M",
+          "pivot": [
+            -27.597272,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail2Part1_M"
+        },
+        {
+          "name": "Tail3_M",
+          "pivot": [
+            -31.590121,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.002612,
+            0.0
+          ],
+          "parent": "Tail2Part2_M"
+        },
+        {
+          "name": "Tail3Part1_M",
+          "pivot": [
+            -35.582966,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail3_M"
+        },
+        {
+          "name": "Tail3Part2_M",
+          "pivot": [
+            -39.57581,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail3Part1_M"
+        },
+        {
+          "name": "Tail4_M",
+          "pivot": [
+            -43.568655,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.28666,
+            0.0
+          ],
+          "parent": "Tail3Part2_M"
+        },
+        {
+          "name": "Tail4Part1_M",
+          "pivot": [
+            -47.464927,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail4_M"
+        },
+        {
+          "name": "Tail4Part2_M",
+          "pivot": [
+            -51.361199,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail4Part1_M"
+        },
+        {
+          "name": "Tail5_M",
+          "pivot": [
+            -55.257471,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            0.795531,
+            0.0
+          ],
+          "parent": "Tail4Part2_M"
+        },
+        {
+          "name": "Tail5Part1_M",
+          "pivot": [
+            -59.21137,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail5_M"
+        },
+        {
+          "name": "Tail5Part2_M",
+          "pivot": [
+            -63.165269,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail5Part1_M"
+        },
+        {
+          "name": "Tail6_M",
+          "pivot": [
+            -63.173177,
+            0.505276,
+            -34.089923
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Tail5Part2_M"
+        },
+        {
+          "name": "Spine1_M",
+          "pivot": [
+            -7.094508,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            1.828663,
+            0.0
+          ],
+          "parent": "Root_M"
+        },
+        {
+          "name": "Spine2_M",
+          "pivot": [
+            -13.682566,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            -0.256666,
+            0.0
+          ],
+          "parent": "Spine1_M"
+        },
+        {
+          "name": "Chest_M",
+          "pivot": [
+            -20.241678,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            -16.295632,
+            0.0
+          ],
+          "parent": "Spine2_M"
+        },
+        {
+          "name": "Neck0_M",
+          "pivot": [
+            -24.359672,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            51.338213,
+            0.0
+          ],
+          "parent": "Chest_M"
+        },
+        {
+          "name": "Neck1_M",
+          "pivot": [
+            -29.068123,
+            0.505276,
+            -31.014123
+          ],
+          "rotation": [
+            -0.0,
+            5.902455,
+            0.0
+          ],
+          "parent": "Neck0_M"
+        },
+        {
+          "name": "Neck5_M",
+          "pivot": [
+            -34.004671,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            -3.56312,
+            0.0
+          ],
+          "parent": "Neck1_M"
+        },
+        {
+          "name": "Head_M",
+          "pivot": [
+            -39.526107,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            -39.323033,
+            0.0
+          ],
+          "parent": "Neck5_M"
+        },
+        {
+          "name": "HeadEnd_M",
+          "pivot": [
+            -39.547901,
+            0.505276,
+            -31.014124
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Head_M"
+        },
+        {
+          "name": "eyeMembrane1_R",
+          "pivot": [
+            -43.052331,
+            -0.80232,
+            -29.586391
+          ],
+          "rotation": [
+            -158.918946,
+            -8.835568,
+            -72.845048
+          ],
+          "parent": "Head_M"
+        },
+        {
+          "name": "eyeMembrane2_R",
+          "pivot": [
+            -43.055091,
+            -0.80232,
+            -29.586391
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "eyeMembrane1_R"
+        },
+        {
+          "name": "eyeMembrane1_L",
+          "pivot": [
+            -43.052331,
+            1.812871,
+            -29.586391
+          ],
+          "rotation": [
+            21.081054,
+            8.835568,
+            -107.154952
+          ],
+          "parent": "Head_M"
+        },
+        {
+          "name": "eyeMembrane2_L",
+          "pivot": [
+            -43.049572,
+            1.812871,
+            -29.586391
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "eyeMembrane1_L"
+        },
+        {
+          "name": "Face_M",
+          "pivot": [
+            -39.528485,
+            0.505276,
+            -31.014005
+          ],
+          "rotation": [
+            -177.155482,
+            -0.0,
+            90.0
+          ],
+          "parent": "Head_M"
+        },
+        {
+          "name": "upperFaceJoint_M",
+          "pivot": [
+            -39.528485,
+            1.331685,
+            -31.893716
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Face_M"
+        },
+        {
+          "name": "Eye_R",
+          "pivot": [
+            -38.220889,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            179.999985,
+            0.0,
+            90.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeEnd_R",
+          "pivot": [
+            -38.243632,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Eye_R"
+        },
+        {
+          "name": "Eye_L",
+          "pivot": [
+            -40.83608,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            179.999985,
+            0.0,
+            90.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeEnd_L",
+          "pivot": [
+            -40.858823,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Eye_L"
+        },
+        {
+          "name": "LidJoints_R",
+          "pivot": [
+            -38.220889,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "upperLidMain0_R",
+          "pivot": [
+            -38.047735,
+            3.533818,
+            -32.604856
+          ],
+          "rotation": [
+            -0.0,
+            -30.032978,
+            -107.12974
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain1_R",
+          "pivot": [
+            -37.995435,
+            3.500817,
+            -32.540859
+          ],
+          "rotation": [
+            -1e-06,
+            -23.445838,
+            -110.758525
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain2_R",
+          "pivot": [
+            -37.949635,
+            3.483317,
+            -32.461906
+          ],
+          "rotation": [
+            -1e-06,
+            -16.385399,
+            -113.893435
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain3_R",
+          "pivot": [
+            -37.900285,
+            3.499119,
+            -32.321406
+          ],
+          "rotation": [
+            -0.0,
+            -4.762369,
+            -118.256627
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain4_R",
+          "pivot": [
+            -37.838785,
+            3.586767,
+            -32.171557
+          ],
+          "rotation": [
+            -0.0,
+            8.352605,
+            -126.903008
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain5_R",
+          "pivot": [
+            -37.761285,
+            3.696368,
+            -32.069508
+          ],
+          "rotation": [
+            0.0,
+            17.801144,
+            -139.019133
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain6_R",
+          "pivot": [
+            -37.692785,
+            3.837718,
+            -32.022906
+          ],
+          "rotation": [
+            -1e-06,
+            22.38681,
+            -153.970599
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain7_R",
+          "pivot": [
+            -37.660885,
+            3.979318,
+            -32.014156
+          ],
+          "rotation": [
+            -0.0,
+            23.679872,
+            -168.266828
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain8_R",
+          "pivot": [
+            -37.607035,
+            4.111768,
+            -32.050357
+          ],
+          "rotation": [
+            -0.0,
+            19.265692,
+            178.493789
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain9_R",
+          "pivot": [
+            -37.612685,
+            4.249368,
+            -32.120408
+          ],
+          "rotation": [
+            -0.0,
+            12.978177,
+            165.814003
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "upperLidMain10_R",
+          "pivot": [
+            -37.660185,
+            4.341368,
+            -32.172657
+          ],
+          "rotation": [
+            -0.0,
+            8.576699,
+            156.33351
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain0_R",
+          "pivot": [
+            -38.047735,
+            3.533818,
+            -32.604856
+          ],
+          "rotation": [
+            -0.0,
+            -30.032978,
+            -107.12974
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain1_R",
+          "pivot": [
+            -37.963485,
+            3.580467,
+            -32.665057
+          ],
+          "rotation": [
+            -1e-06,
+            -33.469029,
+            -113.686086
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain2_R",
+          "pivot": [
+            -37.851635,
+            3.648169,
+            -32.684306
+          ],
+          "rotation": [
+            0.0,
+            -35.388449,
+            -121.7595
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain3_R",
+          "pivot": [
+            -37.779635,
+            3.755368,
+            -32.692308
+          ],
+          "rotation": [
+            1e-06,
+            -36.077992,
+            -130.760304
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain4_R",
+          "pivot": [
+            -37.714735,
+            3.887619,
+            -32.678307
+          ],
+          "rotation": [
+            -0.0,
+            -37.267704,
+            -139.723435
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain5_R",
+          "pivot": [
+            -37.653435,
+            4.005868,
+            -32.636259
+          ],
+          "rotation": [
+            0.0,
+            -37.523479,
+            -149.941951
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain6_R",
+          "pivot": [
+            -37.596885,
+            4.107968,
+            -32.551257
+          ],
+          "rotation": [
+            -0.0,
+            -36.349574,
+            -160.423615
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain7_R",
+          "pivot": [
+            -37.576735,
+            4.195217,
+            -32.455406
+          ],
+          "rotation": [
+            -0.0,
+            -33.353688,
+            -169.742132
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain8_R",
+          "pivot": [
+            -37.582485,
+            4.275317,
+            -32.351858
+          ],
+          "rotation": [
+            0.0,
+            -28.011082,
+            -177.286863
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain9_R",
+          "pivot": [
+            -37.640885,
+            4.342468,
+            -32.257907
+          ],
+          "rotation": [
+            -0.0,
+            -14.561681,
+            169.807285
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "lowerLidMain10_R",
+          "pivot": [
+            -37.660185,
+            4.341368,
+            -32.172657
+          ],
+          "rotation": [
+            0.0,
+            8.576699,
+            156.33351
+          ],
+          "parent": "LidJoints_R"
+        },
+        {
+          "name": "LidJoints_L",
+          "pivot": [
+            -40.83608,
+            4.095627,
+            -32.264988
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "upperLidMain0_L",
+          "pivot": [
+            -41.009235,
+            4.657437,
+            -31.925119
+          ],
+          "rotation": [
+            0.0,
+            30.032978,
+            72.87026
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain1_L",
+          "pivot": [
+            -41.061535,
+            4.690437,
+            -31.989116
+          ],
+          "rotation": [
+            1e-06,
+            23.445838,
+            69.241475
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain2_L",
+          "pivot": [
+            -41.107335,
+            4.707937,
+            -32.068069
+          ],
+          "rotation": [
+            1e-06,
+            16.385399,
+            66.106565
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain3_L",
+          "pivot": [
+            -41.156685,
+            4.692135,
+            -32.208569
+          ],
+          "rotation": [
+            0.0,
+            4.762369,
+            61.743373
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain4_L",
+          "pivot": [
+            -41.218185,
+            4.604487,
+            -32.358418
+          ],
+          "rotation": [
+            0.0,
+            -8.352605,
+            53.096992
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain5_L",
+          "pivot": [
+            -41.295685,
+            4.494886,
+            -32.460467
+          ],
+          "rotation": [
+            -0.0,
+            -17.801144,
+            40.980867
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain6_L",
+          "pivot": [
+            -41.364185,
+            4.353536,
+            -32.507069
+          ],
+          "rotation": [
+            1e-06,
+            -22.38681,
+            26.029401
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain7_L",
+          "pivot": [
+            -41.396085,
+            4.211937,
+            -32.515819
+          ],
+          "rotation": [
+            0.0,
+            -23.679872,
+            11.733172
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain8_L",
+          "pivot": [
+            -41.449935,
+            4.079486,
+            -32.479618
+          ],
+          "rotation": [
+            0.0,
+            -19.265692,
+            -1.506211
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain9_L",
+          "pivot": [
+            -41.444285,
+            3.941886,
+            -32.409568
+          ],
+          "rotation": [
+            0.0,
+            -12.978177,
+            -14.185997
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "upperLidMain10_L",
+          "pivot": [
+            -41.396785,
+            3.849886,
+            -32.357318
+          ],
+          "rotation": [
+            0.0,
+            -8.576699,
+            -23.66649
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain0_L",
+          "pivot": [
+            -41.009235,
+            4.657437,
+            -31.925119
+          ],
+          "rotation": [
+            0.0,
+            30.032978,
+            72.87026
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain1_L",
+          "pivot": [
+            -41.093485,
+            4.610787,
+            -31.864918
+          ],
+          "rotation": [
+            1e-06,
+            33.469029,
+            66.313914
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain2_L",
+          "pivot": [
+            -41.205335,
+            4.543085,
+            -31.845669
+          ],
+          "rotation": [
+            -0.0,
+            35.388449,
+            58.2405
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain3_L",
+          "pivot": [
+            -41.277335,
+            4.435886,
+            -31.837667
+          ],
+          "rotation": [
+            -1e-06,
+            36.077992,
+            49.239696
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain4_L",
+          "pivot": [
+            -41.342235,
+            4.303635,
+            -31.851668
+          ],
+          "rotation": [
+            0.0,
+            37.267704,
+            40.276565
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain5_L",
+          "pivot": [
+            -41.403535,
+            4.185386,
+            -31.893716
+          ],
+          "rotation": [
+            -0.0,
+            37.523479,
+            30.058049
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain6_L",
+          "pivot": [
+            -41.460085,
+            4.083286,
+            -31.978718
+          ],
+          "rotation": [
+            0.0,
+            36.349574,
+            19.576385
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain7_L",
+          "pivot": [
+            -41.480235,
+            3.996037,
+            -32.074569
+          ],
+          "rotation": [
+            0.0,
+            33.353688,
+            10.257868
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain8_L",
+          "pivot": [
+            -41.474485,
+            3.915937,
+            -32.178117
+          ],
+          "rotation": [
+            -0.0,
+            28.011082,
+            2.713137
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain9_L",
+          "pivot": [
+            -41.416085,
+            3.848786,
+            -32.272069
+          ],
+          "rotation": [
+            0.0,
+            14.561681,
+            -10.192715
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "lowerLidMain10_L",
+          "pivot": [
+            -41.396785,
+            3.849886,
+            -32.357318
+          ],
+          "rotation": [
+            -0.0,
+            -8.576699,
+            -23.66649
+          ],
+          "parent": "LidJoints_L"
+        },
+        {
+          "name": "EyeBrowInnerJoint_R",
+          "pivot": [
+            -38.165685,
+            7.138286,
+            -32.293818
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowOuterJoint_R",
+          "pivot": [
+            -37.748285,
+            3.717334,
+            -33.860967
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid1Joint_R",
+          "pivot": [
+            -37.928285,
+            6.603186,
+            -33.033518
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid2Joint_R",
+          "pivot": [
+            -37.686385,
+            5.709986,
+            -33.444367
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid3Joint_R",
+          "pivot": [
+            -37.815735,
+            4.540835,
+            -33.791516
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMiddleJoint_M",
+          "pivot": [
+            -39.527785,
+            7.992936,
+            -32.610519
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowInnerJoint_L",
+          "pivot": [
+            -40.891285,
+            7.138286,
+            -32.293818
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowOuterJoint_L",
+          "pivot": [
+            -41.308685,
+            3.717334,
+            -33.860967
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid1Joint_L",
+          "pivot": [
+            -41.128685,
+            6.603186,
+            -33.033518
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid2Joint_L",
+          "pivot": [
+            -41.370585,
+            5.709986,
+            -33.444367
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "EyeBrowMid3Joint_L",
+          "pivot": [
+            -41.241235,
+            4.540835,
+            -33.791516
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "upperFaceJoint_M"
+        },
+        {
+          "name": "middleFaceJoint_M",
+          "pivot": [
+            -39.528485,
+            1.331685,
+            -31.100334
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Face_M"
+        },
+        {
+          "name": "NoseRegionJoint_M",
+          "pivot": [
+            -39.528485,
+            11.528186,
+            -30.775018
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "middleFaceJoint_M"
+        },
+        {
+          "name": "NoseJoint_M",
+          "pivot": [
+            -39.528485,
+            11.528186,
+            -30.775018
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "NoseRegionJoint_M"
+        },
+        {
+          "name": "NoseUnderJoint_M",
+          "pivot": [
+            -39.528485,
+            12.089185,
+            -29.753218
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "NoseRegionJoint_M"
+        },
+        {
+          "name": "lowerFaceJoint_M",
+          "pivot": [
+            -39.528485,
+            1.331685,
+            -30.306953
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "Face_M"
+        },
+        {
+          "name": "LipJoints_M",
+          "pivot": [
+            -39.528485,
+            1.479053,
+            -30.554704
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "upperLipJoint0_M",
+          "pivot": [
+            -39.527746,
+            12.13951,
+            -28.940547
+          ],
+          "rotation": [
+            93.671363,
+            -0.001921,
+            -179.895936
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint1_R",
+          "pivot": [
+            -39.37269,
+            12.110429,
+            -28.94117
+          ],
+          "rotation": [
+            93.606163,
+            -0.455154,
+            -159.759585
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint2_R",
+          "pivot": [
+            -39.167355,
+            11.987844,
+            -28.944436
+          ],
+          "rotation": [
+            93.257589,
+            -1.076116,
+            -140.6512
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint3_R",
+          "pivot": [
+            -38.958278,
+            11.770657,
+            -28.95176
+          ],
+          "rotation": [
+            92.69431,
+            -1.679092,
+            -128.547681
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint4_R",
+          "pivot": [
+            -38.804824,
+            11.447742,
+            -28.966217
+          ],
+          "rotation": [
+            92.121454,
+            -2.265943,
+            -120.235115
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint5_R",
+          "pivot": [
+            -38.662027,
+            11.077621,
+            -28.985424
+          ],
+          "rotation": [
+            91.622944,
+            -2.912402,
+            -114.537174
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint6_R",
+          "pivot": [
+            -38.577364,
+            10.688636,
+            -29.009383
+          ],
+          "rotation": [
+            91.2476,
+            -3.587355,
+            -110.287333
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint7_R",
+          "pivot": [
+            -38.478915,
+            10.308245,
+            -29.037031
+          ],
+          "rotation": [
+            91.010479,
+            -4.328608,
+            -107.457042
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint8_R",
+          "pivot": [
+            -38.399854,
+            9.909568,
+            -29.071257
+          ],
+          "rotation": [
+            90.861756,
+            -5.191389,
+            -105.065452
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint9_R",
+          "pivot": [
+            -38.354734,
+            9.496176,
+            -29.113136
+          ],
+          "rotation": [
+            90.781413,
+            -6.223456,
+            -102.870271
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint10_R",
+          "pivot": [
+            -38.337233,
+            9.045039,
+            -29.167887
+          ],
+          "rotation": [
+            90.770897,
+            -7.590603,
+            -100.732864
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint11_R",
+          "pivot": [
+            -38.291286,
+            8.548018,
+            -29.242921
+          ],
+          "rotation": [
+            90.87897,
+            -9.522232,
+            -98.779113
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint12_R",
+          "pivot": [
+            -38.254551,
+            7.992821,
+            -29.350907
+          ],
+          "rotation": [
+            91.057684,
+            -12.565438,
+            -96.557901
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint13_R",
+          "pivot": [
+            -38.192207,
+            7.534109,
+            -29.465231
+          ],
+          "rotation": [
+            91.08911,
+            -15.051329,
+            -94.628748
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint14_R",
+          "pivot": [
+            -38.142073,
+            7.170483,
+            -29.566699
+          ],
+          "rotation": [
+            90.924054,
+            -15.847241,
+            -93.192442
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint15_R",
+          "pivot": [
+            -38.104971,
+            6.78276,
+            -29.674956
+          ],
+          "rotation": [
+            90.59511,
+            -14.9707,
+            -92.005716
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint16_R",
+          "pivot": [
+            -38.068477,
+            6.413095,
+            -29.764106
+          ],
+          "rotation": [
+            90.22697,
+            -11.628852,
+            -91.402977
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint17_R",
+          "pivot": [
+            -37.991418,
+            5.960653,
+            -29.824108
+          ],
+          "rotation": [
+            90.149141,
+            -2.19457,
+            -91.749075
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint18_R",
+          "pivot": [
+            -37.918949,
+            5.434265,
+            -29.75138
+          ],
+          "rotation": [
+            91.813919,
+            19.381715,
+            -96.33281
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint19_R",
+          "pivot": [
+            -37.979845,
+            5.037213,
+            -29.553645
+          ],
+          "rotation": [
+            93.413956,
+            35.891238,
+            -102.329998
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint20_R",
+          "pivot": [
+            -37.879198,
+            4.949262,
+            -29.46022
+          ],
+          "rotation": [
+            93.411628,
+            41.376757,
+            -105.006959
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint21_R",
+          "pivot": [
+            -37.769687,
+            4.865111,
+            -29.345626
+          ],
+          "rotation": [
+            92.601323,
+            46.578588,
+            -108.634221
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint22_R",
+          "pivot": [
+            -37.86563,
+            4.684477,
+            -29.203139
+          ],
+          "rotation": [
+            93.794661,
+            49.35184,
+            -109.446728
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint23_R",
+          "pivot": [
+            -37.883875,
+            4.633639,
+            -29.157417
+          ],
+          "rotation": [
+            94.141067,
+            50.161591,
+            -109.658428
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint24_R",
+          "pivot": [
+            -37.850633,
+            4.609442,
+            -29.113089
+          ],
+          "rotation": [
+            93.743878,
+            51.311468,
+            -110.760597
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint25_R",
+          "pivot": [
+            -37.784845,
+            4.598514,
+            -29.06366
+          ],
+          "rotation": [
+            92.728504,
+            52.722067,
+            -112.632399
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint26_R",
+          "pivot": [
+            -37.73064,
+            4.553186,
+            -28.975682
+          ],
+          "rotation": [
+            91.757234,
+            54.465206,
+            -114.752528
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint27_R",
+          "pivot": [
+            -37.70243,
+            4.495963,
+            -28.88399
+          ],
+          "rotation": [
+            91.188282,
+            55.824916,
+            -116.264788
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint0_M",
+          "pivot": [
+            -39.527784,
+            11.206656,
+            -25.5213
+          ],
+          "rotation": [
+            112.620944,
+            -0.0565,
+            -179.806219
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint1_R",
+          "pivot": [
+            -39.44904,
+            11.191737,
+            -25.525661
+          ],
+          "rotation": [
+            111.659544,
+            -5.822827,
+            -159.613145
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint2_R",
+          "pivot": [
+            -39.335477,
+            11.121143,
+            -25.5464
+          ],
+          "rotation": [
+            108.608985,
+            -10.906346,
+            -139.150804
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint3_R",
+          "pivot": [
+            -39.221098,
+            10.995707,
+            -25.58349
+          ],
+          "rotation": [
+            105.515841,
+            -13.314996,
+            -127.08746
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint4_R",
+          "pivot": [
+            -39.053379,
+            10.721384,
+            -25.665383
+          ],
+          "rotation": [
+            101.918286,
+            -14.941173,
+            -117.288388
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint5_R",
+          "pivot": [
+            -38.933294,
+            10.346183,
+            -25.781533
+          ],
+          "rotation": [
+            99.202452,
+            -15.816874,
+            -111.014483
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint6_R",
+          "pivot": [
+            -38.892081,
+            9.868085,
+            -25.932955
+          ],
+          "rotation": [
+            96.900572,
+            -16.449386,
+            -105.843548
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint7_R",
+          "pivot": [
+            -38.853243,
+            9.340377,
+            -26.099722
+          ],
+          "rotation": [
+            95.352423,
+            -16.987676,
+            -102.856824
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint8_R",
+          "pivot": [
+            -38.801096,
+            8.820137,
+            -26.266429
+          ],
+          "rotation": [
+            94.502975,
+            -17.5591,
+            -101.517754
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint9_R",
+          "pivot": [
+            -38.734712,
+            8.319951,
+            -26.431567
+          ],
+          "rotation": [
+            94.139565,
+            -18.259298,
+            -101.145509
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint10_R",
+          "pivot": [
+            -38.662444,
+            7.774322,
+            -26.620963
+          ],
+          "rotation": [
+            94.198155,
+            -19.369205,
+            -101.538485
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint11_R",
+          "pivot": [
+            -38.545269,
+            7.141011,
+            -26.862578
+          ],
+          "rotation": [
+            95.051643,
+            -21.786922,
+            -103.313526
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint12_R",
+          "pivot": [
+            -38.406478,
+            6.520363,
+            -27.146223
+          ],
+          "rotation": [
+            96.234099,
+            -26.373479,
+            -105.434438
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint13_R",
+          "pivot": [
+            -38.152867,
+            6.040959,
+            -27.427183
+          ],
+          "rotation": [
+            95.70124,
+            -32.089964,
+            -105.214541
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint14_R",
+          "pivot": [
+            -38.033332,
+            5.60829,
+            -27.736408
+          ],
+          "rotation": [
+            94.916598,
+            -36.847709,
+            -105.568954
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint15_R",
+          "pivot": [
+            -37.96234,
+            5.203141,
+            -28.0672
+          ],
+          "rotation": [
+            94.369086,
+            -40.131678,
+            -105.191233
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint16_R",
+          "pivot": [
+            -37.820165,
+            4.838043,
+            -28.403296
+          ],
+          "rotation": [
+            95.180946,
+            -42.008353,
+            -104.914559
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint17_R",
+          "pivot": [
+            -37.732792,
+            4.495562,
+            -28.728222
+          ],
+          "rotation": [
+            96.584915,
+            -43.030278,
+            -104.361968
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint1_L",
+          "pivot": [
+            -39.684279,
+            12.110429,
+            -28.94117
+          ],
+          "rotation": [
+            93.606163,
+            0.455154,
+            159.759585
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint2_L",
+          "pivot": [
+            -39.889615,
+            11.987844,
+            -28.944436
+          ],
+          "rotation": [
+            93.257589,
+            1.076116,
+            140.6512
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint3_L",
+          "pivot": [
+            -40.098692,
+            11.770657,
+            -28.95176
+          ],
+          "rotation": [
+            92.69431,
+            1.679092,
+            128.547681
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint4_L",
+          "pivot": [
+            -40.252145,
+            11.447742,
+            -28.966217
+          ],
+          "rotation": [
+            92.121454,
+            2.265943,
+            120.235115
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint5_L",
+          "pivot": [
+            -40.394942,
+            11.077621,
+            -28.985424
+          ],
+          "rotation": [
+            91.622944,
+            2.912402,
+            114.537174
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint6_L",
+          "pivot": [
+            -40.479605,
+            10.688636,
+            -29.009383
+          ],
+          "rotation": [
+            91.2476,
+            3.587355,
+            110.287333
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint7_L",
+          "pivot": [
+            -40.578054,
+            10.308245,
+            -29.037031
+          ],
+          "rotation": [
+            91.010479,
+            4.328608,
+            107.457042
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint8_L",
+          "pivot": [
+            -40.657116,
+            9.909568,
+            -29.071257
+          ],
+          "rotation": [
+            90.861756,
+            5.191389,
+            105.065452
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint9_L",
+          "pivot": [
+            -40.702235,
+            9.496176,
+            -29.113136
+          ],
+          "rotation": [
+            90.781413,
+            6.223456,
+            102.870271
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint10_L",
+          "pivot": [
+            -40.719736,
+            9.045039,
+            -29.167887
+          ],
+          "rotation": [
+            90.770897,
+            7.590603,
+            100.732864
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint11_L",
+          "pivot": [
+            -40.765683,
+            8.548018,
+            -29.242921
+          ],
+          "rotation": [
+            90.87897,
+            9.522232,
+            98.779113
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint12_L",
+          "pivot": [
+            -40.802418,
+            7.992821,
+            -29.350907
+          ],
+          "rotation": [
+            91.057684,
+            12.565438,
+            96.557901
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint13_L",
+          "pivot": [
+            -40.864762,
+            7.534109,
+            -29.465231
+          ],
+          "rotation": [
+            91.08911,
+            15.051329,
+            94.628748
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint14_L",
+          "pivot": [
+            -40.914896,
+            7.170483,
+            -29.566699
+          ],
+          "rotation": [
+            90.924054,
+            15.847241,
+            93.192442
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint15_L",
+          "pivot": [
+            -40.951999,
+            6.78276,
+            -29.674956
+          ],
+          "rotation": [
+            90.59511,
+            14.9707,
+            92.005716
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint16_L",
+          "pivot": [
+            -40.988493,
+            6.413095,
+            -29.764106
+          ],
+          "rotation": [
+            90.22697,
+            11.628852,
+            91.402977
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint17_L",
+          "pivot": [
+            -41.065552,
+            5.960653,
+            -29.824108
+          ],
+          "rotation": [
+            90.149141,
+            2.19457,
+            91.749075
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint18_L",
+          "pivot": [
+            -41.13802,
+            5.434265,
+            -29.75138
+          ],
+          "rotation": [
+            91.813919,
+            -19.381715,
+            96.33281
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint19_L",
+          "pivot": [
+            -41.077124,
+            5.037213,
+            -29.553645
+          ],
+          "rotation": [
+            93.413956,
+            -35.891238,
+            102.329998
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint20_L",
+          "pivot": [
+            -41.177771,
+            4.949262,
+            -29.46022
+          ],
+          "rotation": [
+            93.411628,
+            -41.376757,
+            105.006959
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint21_L",
+          "pivot": [
+            -41.287282,
+            4.865111,
+            -29.345626
+          ],
+          "rotation": [
+            92.601323,
+            -46.578588,
+            108.634221
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint22_L",
+          "pivot": [
+            -41.19134,
+            4.684477,
+            -29.203139
+          ],
+          "rotation": [
+            93.794661,
+            -49.35184,
+            109.446728
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint23_L",
+          "pivot": [
+            -41.173094,
+            4.633639,
+            -29.157417
+          ],
+          "rotation": [
+            94.141067,
+            -50.161591,
+            109.658428
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint24_L",
+          "pivot": [
+            -41.206336,
+            4.609442,
+            -29.113089
+          ],
+          "rotation": [
+            93.743878,
+            -51.311468,
+            110.760597
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint25_L",
+          "pivot": [
+            -41.272125,
+            4.598514,
+            -29.06366
+          ],
+          "rotation": [
+            92.728504,
+            -52.722067,
+            112.632399
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint26_L",
+          "pivot": [
+            -41.326329,
+            4.553186,
+            -28.975682
+          ],
+          "rotation": [
+            91.757234,
+            -54.465206,
+            114.752528
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "upperLipJoint27_L",
+          "pivot": [
+            -41.354539,
+            4.495963,
+            -28.88399
+          ],
+          "rotation": [
+            91.188282,
+            -55.824916,
+            116.264788
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint1_L",
+          "pivot": [
+            -39.607929,
+            11.191737,
+            -25.525661
+          ],
+          "rotation": [
+            111.659544,
+            5.822827,
+            159.613145
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint2_L",
+          "pivot": [
+            -39.721493,
+            11.121143,
+            -25.5464
+          ],
+          "rotation": [
+            108.608985,
+            10.906346,
+            139.150804
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint3_L",
+          "pivot": [
+            -39.835871,
+            10.995707,
+            -25.58349
+          ],
+          "rotation": [
+            105.515841,
+            13.314996,
+            127.08746
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint4_L",
+          "pivot": [
+            -40.00359,
+            10.721384,
+            -25.665383
+          ],
+          "rotation": [
+            101.918286,
+            14.941173,
+            117.288388
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint5_L",
+          "pivot": [
+            -40.123675,
+            10.346183,
+            -25.781533
+          ],
+          "rotation": [
+            99.202452,
+            15.816874,
+            111.014483
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint6_L",
+          "pivot": [
+            -40.164889,
+            9.868085,
+            -25.932955
+          ],
+          "rotation": [
+            96.900572,
+            16.449386,
+            105.843548
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint7_L",
+          "pivot": [
+            -40.203726,
+            9.340377,
+            -26.099722
+          ],
+          "rotation": [
+            95.352423,
+            16.987676,
+            102.856824
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint8_L",
+          "pivot": [
+            -40.255873,
+            8.820137,
+            -26.266429
+          ],
+          "rotation": [
+            94.502975,
+            17.5591,
+            101.517754
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint9_L",
+          "pivot": [
+            -40.322257,
+            8.319951,
+            -26.431567
+          ],
+          "rotation": [
+            94.139565,
+            18.259298,
+            101.145509
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint10_L",
+          "pivot": [
+            -40.394525,
+            7.774322,
+            -26.620963
+          ],
+          "rotation": [
+            94.198155,
+            19.369205,
+            101.538485
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint11_L",
+          "pivot": [
+            -40.511701,
+            7.141011,
+            -26.862578
+          ],
+          "rotation": [
+            95.051643,
+            21.786922,
+            103.313526
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint12_L",
+          "pivot": [
+            -40.650491,
+            6.520363,
+            -27.146223
+          ],
+          "rotation": [
+            96.234099,
+            26.373479,
+            105.434438
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint13_L",
+          "pivot": [
+            -40.904102,
+            6.040959,
+            -27.427183
+          ],
+          "rotation": [
+            95.70124,
+            32.089964,
+            105.214541
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint14_L",
+          "pivot": [
+            -41.023637,
+            5.60829,
+            -27.736408
+          ],
+          "rotation": [
+            94.916598,
+            36.847709,
+            105.568954
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint15_L",
+          "pivot": [
+            -41.094629,
+            5.203141,
+            -28.0672
+          ],
+          "rotation": [
+            94.369086,
+            40.131678,
+            105.191233
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint16_L",
+          "pivot": [
+            -41.236804,
+            4.838043,
+            -28.403296
+          ],
+          "rotation": [
+            95.180946,
+            42.008353,
+            104.914559
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "lowerLipJoint17_L",
+          "pivot": [
+            -41.324177,
+            4.495562,
+            -28.728222
+          ],
+          "rotation": [
+            96.584915,
+            43.030278,
+            104.361968
+          ],
+          "parent": "LipJoints_M"
+        },
+        {
+          "name": "JawJoint_M",
+          "pivot": [
+            -39.528485,
+            1.331685,
+            -29.956568
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "upperTeethJoint_M",
+          "pivot": [
+            -39.528485,
+            9.372811,
+            -28.451064
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "lowerTeethJoint_M",
+          "pivot": [
+            -39.528485,
+            6.984783,
+            -26.50847
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "CheekJoint_R",
+          "pivot": [
+            -38.386535,
+            7.847824,
+            -30.363218
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "CheekJoint_L",
+          "pivot": [
+            -40.670435,
+            7.847824,
+            -30.363218
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "NoseCornerJoint_R",
+          "pivot": [
+            -38.581135,
+            11.136184,
+            -29.907716
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "NoseCornerJoint_L",
+          "pivot": [
+            -40.475835,
+            11.136184,
+            -29.907716
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "CheekRaiserJoint_R",
+          "pivot": [
+            -37.746735,
+            4.789285,
+            -30.564568
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "CheekRaiserJoint_L",
+          "pivot": [
+            -41.310235,
+            4.789285,
+            -30.564568
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "Tongue0Joint_M",
+          "pivot": [
+            -39.528485,
+            1.014119,
+            -26.959443
+          ],
+          "rotation": [
+            -0.0,
+            -11.391648,
+            90.0
+          ],
+          "parent": "lowerFaceJoint_M"
+        },
+        {
+          "name": "Tongue1Joint_M",
+          "pivot": [
+            -42.166826,
+            1.014119,
+            -26.959443
+          ],
+          "rotation": [
+            -0.0,
+            28.169479,
+            0.0
+          ],
+          "parent": "Tongue0Joint_M"
+        },
+        {
+          "name": "Tongue2Joint_M",
+          "pivot": [
+            -43.721256,
+            1.014119,
+            -26.959443
+          ],
+          "rotation": [
+            -0.0,
+            8.822961,
+            0.0
+          ],
+          "parent": "Tongue1Joint_M"
+        },
+        {
+          "name": "Tongue3Joint_M",
+          "pivot": [
+            -45.115165,
+            1.014119,
+            -26.959443
+          ],
+          "rotation": [
+            -0.0,
+            -0.274247,
+            0.0
+          ],
+          "parent": "Tongue2Joint_M"
+        },
+        {
+          "name": "Tongue4Joint_M",
+          "pivot": [
+            -45.118678,
+            1.014119,
+            -26.959443
+          ],
+          "rotation": [
+            19.542244,
+            -0.0,
+            -90.0
+          ],
+          "parent": "Tongue3Joint_M"
+        },
+        {
+          "name": "neckFatUp1_M",
+          "pivot": [
+            -35.0973,
+            0.505276,
+            -34.782885
+          ],
+          "rotation": [
+            -180.0,
+            -78.224236,
+            -180.0
+          ],
+          "parent": "Neck5_M"
+        },
+        {
+          "name": "neckFatUp2_M",
+          "pivot": [
+            -35.100439,
+            0.505276,
+            -34.782885
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "neckFatUp1_M"
+        },
+        {
+          "name": "neckFatMid1_M",
+          "pivot": [
+            -30.970982,
+            0.505276,
+            -33.972462
+          ],
+          "rotation": [
+            180.0,
+            -88.12938,
+            180.0
+          ],
+          "parent": "Neck1_M"
+        },
+        {
+          "name": "neckFatMid2_M",
+          "pivot": [
+            -30.97457,
+            0.505276,
+            -33.972462
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "neckFatMid1_M"
+        },
+        {
+          "name": "neckFatDown1_M",
+          "pivot": [
+            -26.44442,
+            0.505276,
+            -34.287083
+          ],
+          "rotation": [
+            -0.0,
+            -88.186338,
+            0.0
+          ],
+          "parent": "Neck0_M"
+        },
+        {
+          "name": "neckFatDown2_M",
+          "pivot": [
+            -26.448153,
+            0.505276,
+            -34.287083
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "neckFatDown1_M"
+        },
+        {
+          "name": "Clavicle_R",
+          "pivot": [
+            -23.179592,
+            1.83328,
+            -34.25025
+          ],
+          "rotation": [
+            -60.347236,
+            72.800966,
+            179.999991
+          ],
+          "parent": "Chest_M"
+        },
+        {
+          "name": "ShoulderUpper1_R",
+          "pivot": [
+            -27.690161,
+            1.83328,
+            -38.973771
+          ],
+          "rotation": [
+            -39.987304,
+            -0.0,
+            0.0
+          ],
+          "parent": "Clavicle_R"
+        },
+        {
+          "name": "ShoulderUpper2_R",
+          "pivot": [
+            -27.689995,
+            1.83328,
+            -38.975162
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "ShoulderUpper1_R"
+        },
+        {
+          "name": "Shoulder_R",
+          "pivot": [
+            -21.265326,
+            4.474718,
+            -40.824298
+          ],
+          "rotation": [
+            78.563303,
+            -9.871535,
+            -137.615332
+          ],
+          "parent": "ShoulderUpper1_R"
+        },
+        {
+          "name": "Elbow_R",
+          "pivot": [
+            -25.937906,
+            4.474718,
+            -40.824298
+          ],
+          "rotation": [
+            0.0,
+            -89.563155,
+            180.0
+          ],
+          "parent": "Shoulder_R"
+        },
+        {
+          "name": "Wrist_R",
+          "pivot": [
+            -31.022379,
+            4.474718,
+            -40.824298
+          ],
+          "rotation": [
+            114.680802,
+            -71.989356,
+            67.500261
+          ],
+          "parent": "Elbow_R"
+        },
+        {
+          "name": "PinkyFinger5_R",
+          "pivot": [
+            -31.675124,
+            4.491866,
+            -41.534749
+          ],
+          "rotation": [
+            -5.426792,
+            -69.724685,
+            0.610887
+          ],
+          "parent": "Wrist_R"
+        },
+        {
+          "name": "PinkyFinger6_R",
+          "pivot": [
+            -33.415048,
+            4.491866,
+            -41.534749
+          ],
+          "rotation": [
+            0.411085,
+            1.401434,
+            0.83402
+          ],
+          "parent": "PinkyFinger5_R"
+        },
+        {
+          "name": "PinkyFinger7_R",
+          "pivot": [
+            -34.913839,
+            4.491866,
+            -41.534749
+          ],
+          "rotation": [
+            2.921062,
+            0.063973,
+            -9.837168
+          ],
+          "parent": "PinkyFinger6_R"
+        },
+        {
+          "name": "PinkyFinger8_R",
+          "pivot": [
+            -36.188488,
+            4.491866,
+            -41.534749
+          ],
+          "rotation": [
+            3.410461,
+            -4.104357,
+            -18.509303
+          ],
+          "parent": "PinkyFinger7_R"
+        },
+        {
+          "name": "PinkyFinger9_R",
+          "pivot": [
+            -36.191415,
+            4.491866,
+            -41.534749
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "PinkyFinger8_R"
+        },
+        {
+          "name": "RingFinger5_R",
+          "pivot": [
+            -30.939379,
+            4.582619,
+            -41.64263
+          ],
+          "rotation": [
+            -16.014885,
+            -84.066415,
+            31.022712
+          ],
+          "parent": "Wrist_R"
+        },
+        {
+          "name": "RingFinger6_R",
+          "pivot": [
+            -32.661186,
+            4.582619,
+            -41.64263
+          ],
+          "rotation": [
+            -0.295088,
+            -5.84439,
+            3.960654
+          ],
+          "parent": "RingFinger5_R"
+        },
+        {
+          "name": "RingFinger7_R",
+          "pivot": [
+            -34.120368,
+            4.582619,
+            -41.64263
+          ],
+          "rotation": [
+            0.087666,
+            4.155036,
+            -12.277179
+          ],
+          "parent": "RingFinger6_R"
+        },
+        {
+          "name": "RingFinger8_R",
+          "pivot": [
+            -35.347384,
+            4.582619,
+            -41.64263
+          ],
+          "rotation": [
+            3.013438,
+            -7.146382,
+            -18.564989
+          ],
+          "parent": "RingFinger7_R"
+        },
+        {
+          "name": "RingFinger9_R",
+          "pivot": [
+            -35.35064,
+            4.582619,
+            -41.64263
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "RingFinger8_R"
+        },
+        {
+          "name": "MiddleFinger5_R",
+          "pivot": [
+            -30.443497,
+            4.133868,
+            -41.45398
+          ],
+          "rotation": [
+            -166.837457,
+            -70.404901,
+            -173.135531
+          ],
+          "parent": "Wrist_R"
+        },
+        {
+          "name": "MiddleFinger6_R",
+          "pivot": [
+            -32.142003,
+            4.133868,
+            -41.45398
+          ],
+          "rotation": [
+            0.223393,
+            -3.680116,
+            -1.763285
+          ],
+          "parent": "MiddleFinger5_R"
+        },
+        {
+          "name": "MiddleFinger7_R",
+          "pivot": [
+            -33.319492,
+            4.133868,
+            -41.45398
+          ],
+          "rotation": [
+            0.495991,
+            0.389655,
+            -12.913777
+          ],
+          "parent": "MiddleFinger6_R"
+        },
+        {
+          "name": "MiddleFinger8_R",
+          "pivot": [
+            -34.121014,
+            4.133868,
+            -41.45398
+          ],
+          "rotation": [
+            0.253019,
+            3.033636,
+            -11.301406
+          ],
+          "parent": "MiddleFinger7_R"
+        },
+        {
+          "name": "MiddleFinger9_R",
+          "pivot": [
+            -34.123356,
+            4.133868,
+            -41.45398
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "MiddleFinger8_R"
+        },
+        {
+          "name": "Clavicle_L",
+          "pivot": [
+            -23.179592,
+            -0.822728,
+            -34.25025
+          ],
+          "rotation": [
+            119.652764,
+            -72.800966,
+            9e-06
+          ],
+          "parent": "Chest_M"
+        },
+        {
+          "name": "ShoulderUpper1_L",
+          "pivot": [
+            -18.669023,
+            -0.822728,
+            -29.52673
+          ],
+          "rotation": [
+            -39.987304,
+            -0.0,
+            0.0
+          ],
+          "parent": "Clavicle_L"
+        },
+        {
+          "name": "ShoulderUpper2_L",
+          "pivot": [
+            -18.66919,
+            -0.822728,
+            -29.525338
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "ShoulderUpper1_L"
+        },
+        {
+          "name": "Shoulder_L",
+          "pivot": [
+            -25.093859,
+            -3.464166,
+            -27.676202
+          ],
+          "rotation": [
+            78.563303,
+            -9.871535,
+            -137.615332
+          ],
+          "parent": "ShoulderUpper1_L"
+        },
+        {
+          "name": "Elbow_L",
+          "pivot": [
+            -20.421279,
+            -3.464166,
+            -27.676202
+          ],
+          "rotation": [
+            0.0,
+            -89.563155,
+            180.0
+          ],
+          "parent": "Shoulder_L"
+        },
+        {
+          "name": "Wrist_L",
+          "pivot": [
+            -15.336806,
+            -3.464166,
+            -27.676202
+          ],
+          "rotation": [
+            114.680802,
+            -71.989356,
+            67.500261
+          ],
+          "parent": "Elbow_L"
+        },
+        {
+          "name": "PinkyFinger5_L",
+          "pivot": [
+            -14.684061,
+            -3.481314,
+            -26.965751
+          ],
+          "rotation": [
+            -5.426792,
+            -69.724685,
+            0.610887
+          ],
+          "parent": "Wrist_L"
+        },
+        {
+          "name": "PinkyFinger6_L",
+          "pivot": [
+            -12.944137,
+            -3.481314,
+            -26.965751
+          ],
+          "rotation": [
+            0.411085,
+            1.401434,
+            0.83402
+          ],
+          "parent": "PinkyFinger5_L"
+        },
+        {
+          "name": "PinkyFinger7_L",
+          "pivot": [
+            -11.445346,
+            -3.481314,
+            -26.965751
+          ],
+          "rotation": [
+            2.921062,
+            0.063973,
+            -9.837168
+          ],
+          "parent": "PinkyFinger6_L"
+        },
+        {
+          "name": "PinkyFinger8_L",
+          "pivot": [
+            -10.170697,
+            -3.481314,
+            -26.965751
+          ],
+          "rotation": [
+            3.410461,
+            -4.104357,
+            -18.509303
+          ],
+          "parent": "PinkyFinger7_L"
+        },
+        {
+          "name": "PinkyFinger9_L",
+          "pivot": [
+            -10.16777,
+            -3.481314,
+            -26.965751
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "PinkyFinger8_L"
+        },
+        {
+          "name": "RingFinger5_L",
+          "pivot": [
+            -15.419806,
+            -3.572067,
+            -26.85787
+          ],
+          "rotation": [
+            -16.014885,
+            -84.066415,
+            31.022712
+          ],
+          "parent": "Wrist_L"
+        },
+        {
+          "name": "RingFinger6_L",
+          "pivot": [
+            -13.697998,
+            -3.572067,
+            -26.85787
+          ],
+          "rotation": [
+            -0.295088,
+            -5.84439,
+            3.960654
+          ],
+          "parent": "RingFinger5_L"
+        },
+        {
+          "name": "RingFinger7_L",
+          "pivot": [
+            -12.238817,
+            -3.572067,
+            -26.85787
+          ],
+          "rotation": [
+            0.087666,
+            4.155036,
+            -12.277179
+          ],
+          "parent": "RingFinger6_L"
+        },
+        {
+          "name": "RingFinger8_L",
+          "pivot": [
+            -11.011801,
+            -3.572067,
+            -26.85787
+          ],
+          "rotation": [
+            3.013438,
+            -7.146382,
+            -18.564989
+          ],
+          "parent": "RingFinger7_L"
+        },
+        {
+          "name": "RingFinger9_L",
+          "pivot": [
+            -11.008544,
+            -3.572067,
+            -26.85787
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "RingFinger8_L"
+        },
+        {
+          "name": "MiddleFinger5_L",
+          "pivot": [
+            -15.915688,
+            -3.123316,
+            -27.04652
+          ],
+          "rotation": [
+            -166.837457,
+            -70.404901,
+            -173.135531
+          ],
+          "parent": "Wrist_L"
+        },
+        {
+          "name": "MiddleFinger6_L",
+          "pivot": [
+            -14.217182,
+            -3.123316,
+            -27.04652
+          ],
+          "rotation": [
+            0.223393,
+            -3.680116,
+            -1.763285
+          ],
+          "parent": "MiddleFinger5_L"
+        },
+        {
+          "name": "MiddleFinger7_L",
+          "pivot": [
+            -13.039692,
+            -3.123316,
+            -27.04652
+          ],
+          "rotation": [
+            0.495991,
+            0.389655,
+            -12.913777
+          ],
+          "parent": "MiddleFinger6_L"
+        },
+        {
+          "name": "MiddleFinger8_L",
+          "pivot": [
+            -12.23817,
+            -3.123316,
+            -27.04652
+          ],
+          "rotation": [
+            0.253019,
+            3.033636,
+            -11.301406
+          ],
+          "parent": "MiddleFinger7_L"
+        },
+        {
+          "name": "MiddleFinger9_L",
+          "pivot": [
+            -12.235829,
+            -3.123316,
+            -27.04652
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "MiddleFinger8_L"
+        },
+        {
+          "name": "spineFat1_M",
+          "pivot": [
+            -11.76725,
+            0.505276,
+            -42.416621
+          ],
+          "rotation": [
+            -0.0,
+            -84.752063,
+            0.0
+          ],
+          "parent": "Spine1_M"
+        },
+        {
+          "name": "spineFat2_M",
+          "pivot": [
+            -11.770874,
+            0.505276,
+            -42.416621
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "spineFat1_M"
+        },
+        {
+          "name": "BackRump_R",
+          "pivot": [
+            -0.920087,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -107.190115,
+            1.262883,
+            -90.046367
+          ],
+          "parent": "Root_M"
+        },
+        {
+          "name": "Rump_R",
+          "pivot": [
+            -4.562354,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.308115,
+            -0.006563,
+            -91.22015
+          ],
+          "parent": "BackRump_R"
+        },
+        {
+          "name": "Hip_R",
+          "pivot": [
+            -17.204381,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.0,
+            79.365108,
+            0.0
+          ],
+          "parent": "Rump_R"
+        },
+        {
+          "name": "Knee_R",
+          "pivot": [
+            -30.653233,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            0.570577,
+            -85.59891,
+            -0.395072
+          ],
+          "parent": "Hip_R"
+        },
+        {
+          "name": "Ankle_R",
+          "pivot": [
+            -38.45298,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.960609,
+            -13.853626,
+            0.189527
+          ],
+          "parent": "Knee_R"
+        },
+        {
+          "name": "Toes_R",
+          "pivot": [
+            -40.588681,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            1.777522,
+            -42.709025,
+            -1.637011
+          ],
+          "parent": "Ankle_R"
+        },
+        {
+          "name": "ToesEnd_R",
+          "pivot": [
+            -44.878822,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            2.543066,
+            -16.378549,
+            178.015055
+          ],
+          "parent": "Toes_R"
+        },
+        {
+          "name": "toe_mid1_R",
+          "pivot": [
+            -49.870325,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            2.309672,
+            -9.471258,
+            -174.338964
+          ],
+          "parent": "ToesEnd_R"
+        },
+        {
+          "name": "toe_mid2_R",
+          "pivot": [
+            -51.324517,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.3692,
+            -7.031959,
+            0.726074
+          ],
+          "parent": "toe_mid1_R"
+        },
+        {
+          "name": "toe_mid3_R",
+          "pivot": [
+            -52.693616,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.002219,
+            8.59675,
+            3.128304
+          ],
+          "parent": "toe_mid2_R"
+        },
+        {
+          "name": "toe_mid4_R",
+          "pivot": [
+            -54.141934,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            0.02541,
+            -3.158776,
+            -8.066697
+          ],
+          "parent": "toe_mid3_R"
+        },
+        {
+          "name": "toe_midEnd_R",
+          "pivot": [
+            -54.146222,
+            -1.631084,
+            -34.123363
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_mid4_R"
+        },
+        {
+          "name": "toe_in1_R",
+          "pivot": [
+            -49.958967,
+            -0.454011,
+            -33.987911
+          ],
+          "rotation": [
+            8.636534,
+            -0.191753,
+            168.422595
+          ],
+          "parent": "ToesEnd_R"
+        },
+        {
+          "name": "toe_in2_R",
+          "pivot": [
+            -51.54449,
+            -0.454011,
+            -33.987911
+          ],
+          "rotation": [
+            0.553479,
+            -18.737494,
+            -0.155906
+          ],
+          "parent": "toe_in1_R"
+        },
+        {
+          "name": "toe_in3_R",
+          "pivot": [
+            -53.000244,
+            -0.454011,
+            -33.987911
+          ],
+          "rotation": [
+            0.155302,
+            15.82868,
+            0.823343
+          ],
+          "parent": "toe_in2_R"
+        },
+        {
+          "name": "toe_in4_R",
+          "pivot": [
+            -54.439868,
+            -0.454011,
+            -33.987911
+          ],
+          "rotation": [
+            -0.228383,
+            -7.318429,
+            0.369816
+          ],
+          "parent": "toe_in3_R"
+        },
+        {
+          "name": "toe_inEnd_R",
+          "pivot": [
+            -54.444001,
+            -0.454011,
+            -33.987911
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_in4_R"
+        },
+        {
+          "name": "toe_out5_R",
+          "pivot": [
+            -50.220115,
+            -2.745306,
+            -33.631093
+          ],
+          "rotation": [
+            -10.239406,
+            -14.511247,
+            -156.046541
+          ],
+          "parent": "ToesEnd_R"
+        },
+        {
+          "name": "toe_out6_R",
+          "pivot": [
+            -51.681606,
+            -2.745306,
+            -33.631093
+          ],
+          "rotation": [
+            -0.16616,
+            0.352911,
+            -1.248631
+          ],
+          "parent": "toe_out5_R"
+        },
+        {
+          "name": "toe_out7_R",
+          "pivot": [
+            -53.122232,
+            -2.745306,
+            -33.631093
+          ],
+          "rotation": [
+            0.360921,
+            2.73046,
+            0.030155
+          ],
+          "parent": "toe_out6_R"
+        },
+        {
+          "name": "toe_out8_R",
+          "pivot": [
+            -54.937767,
+            -2.745306,
+            -33.631093
+          ],
+          "rotation": [
+            -0.019384,
+            2.390282,
+            1.091089
+          ],
+          "parent": "toe_out7_R"
+        },
+        {
+          "name": "toe_outEnd_R",
+          "pivot": [
+            -54.940948,
+            -2.745306,
+            -33.631093
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_out8_R"
+        },
+        {
+          "name": "sideToe2_R",
+          "pivot": [
+            -35.242942,
+            -3.128517,
+            -33.713997
+          ],
+          "rotation": [
+            105.757337,
+            4.411226,
+            -15.166834
+          ],
+          "parent": "Knee_R"
+        },
+        {
+          "name": "sideToe3_R",
+          "pivot": [
+            -36.344648,
+            -3.128517,
+            -33.713997
+          ],
+          "rotation": [
+            86.951743,
+            -6.029104,
+            -33.091792
+          ],
+          "parent": "sideToe2_R"
+        },
+        {
+          "name": "sideToe4_R",
+          "pivot": [
+            -36.348472,
+            -3.128517,
+            -33.713997
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "sideToe3_R"
+        },
+        {
+          "name": "BackRump_L",
+          "pivot": [
+            -0.920087,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            72.809885,
+            -1.262883,
+            -89.953633
+          ],
+          "parent": "Root_M"
+        },
+        {
+          "name": "Rump_L",
+          "pivot": [
+            2.72218,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.308115,
+            -0.006563,
+            -91.22015
+          ],
+          "parent": "BackRump_L"
+        },
+        {
+          "name": "Hip_L",
+          "pivot": [
+            15.364207,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.0,
+            79.365108,
+            0.0
+          ],
+          "parent": "Rump_L"
+        },
+        {
+          "name": "Knee_L",
+          "pivot": [
+            28.81306,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            0.570577,
+            -85.59891,
+            -0.395072
+          ],
+          "parent": "Hip_L"
+        },
+        {
+          "name": "Ankle_L",
+          "pivot": [
+            36.612807,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.960609,
+            -13.853626,
+            0.189527
+          ],
+          "parent": "Knee_L"
+        },
+        {
+          "name": "Toes_L",
+          "pivot": [
+            38.748507,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            1.777522,
+            -42.709025,
+            -1.637011
+          ],
+          "parent": "Ankle_L"
+        },
+        {
+          "name": "ToesEnd_L",
+          "pivot": [
+            43.038648,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            2.543066,
+            -16.378549,
+            178.015055
+          ],
+          "parent": "Toes_L"
+        },
+        {
+          "name": "toe_mid1_L",
+          "pivot": [
+            48.030151,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            2.309672,
+            -9.471258,
+            -174.338964
+          ],
+          "parent": "ToesEnd_L"
+        },
+        {
+          "name": "toe_mid2_L",
+          "pivot": [
+            49.484344,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.3692,
+            -7.031959,
+            0.726074
+          ],
+          "parent": "toe_mid1_L"
+        },
+        {
+          "name": "toe_mid3_L",
+          "pivot": [
+            50.853443,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.002219,
+            8.59675,
+            3.128304
+          ],
+          "parent": "toe_mid2_L"
+        },
+        {
+          "name": "toe_mid4_L",
+          "pivot": [
+            52.301761,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            0.02541,
+            -3.158776,
+            -8.066697
+          ],
+          "parent": "toe_mid3_L"
+        },
+        {
+          "name": "toe_midEnd_L",
+          "pivot": [
+            52.306048,
+            2.641635,
+            -34.123363
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_mid4_L"
+        },
+        {
+          "name": "toe_in1_L",
+          "pivot": [
+            48.118794,
+            1.464562,
+            -34.258815
+          ],
+          "rotation": [
+            8.636534,
+            -0.191753,
+            168.422595
+          ],
+          "parent": "ToesEnd_L"
+        },
+        {
+          "name": "toe_in2_L",
+          "pivot": [
+            49.704317,
+            1.464562,
+            -34.258815
+          ],
+          "rotation": [
+            0.553479,
+            -18.737494,
+            -0.155906
+          ],
+          "parent": "toe_in1_L"
+        },
+        {
+          "name": "toe_in3_L",
+          "pivot": [
+            51.160071,
+            1.464562,
+            -34.258815
+          ],
+          "rotation": [
+            0.155302,
+            15.82868,
+            0.823343
+          ],
+          "parent": "toe_in2_L"
+        },
+        {
+          "name": "toe_in4_L",
+          "pivot": [
+            52.599694,
+            1.464562,
+            -34.258815
+          ],
+          "rotation": [
+            -0.228383,
+            -7.318429,
+            0.369816
+          ],
+          "parent": "toe_in3_L"
+        },
+        {
+          "name": "toe_inEnd_L",
+          "pivot": [
+            52.603827,
+            1.464562,
+            -34.258815
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_in4_L"
+        },
+        {
+          "name": "toe_out5_L",
+          "pivot": [
+            48.379942,
+            3.755858,
+            -34.615634
+          ],
+          "rotation": [
+            -10.239406,
+            -14.511247,
+            -156.046541
+          ],
+          "parent": "ToesEnd_L"
+        },
+        {
+          "name": "toe_out6_L",
+          "pivot": [
+            49.841433,
+            3.755858,
+            -34.615634
+          ],
+          "rotation": [
+            -0.16616,
+            0.352911,
+            -1.248631
+          ],
+          "parent": "toe_out5_L"
+        },
+        {
+          "name": "toe_out7_L",
+          "pivot": [
+            51.282059,
+            3.755858,
+            -34.615634
+          ],
+          "rotation": [
+            0.360921,
+            2.73046,
+            0.030155
+          ],
+          "parent": "toe_out6_L"
+        },
+        {
+          "name": "toe_out8_L",
+          "pivot": [
+            53.097593,
+            3.755858,
+            -34.615634
+          ],
+          "rotation": [
+            -0.019384,
+            2.390282,
+            1.091089
+          ],
+          "parent": "toe_out7_L"
+        },
+        {
+          "name": "toe_outEnd_L",
+          "pivot": [
+            53.100775,
+            3.755858,
+            -34.615634
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "toe_out8_L"
+        },
+        {
+          "name": "sideToe2_L",
+          "pivot": [
+            33.402769,
+            4.139069,
+            -34.532729
+          ],
+          "rotation": [
+            105.757337,
+            4.411226,
+            -15.166834
+          ],
+          "parent": "Knee_L"
+        },
+        {
+          "name": "sideToe3_L",
+          "pivot": [
+            34.504475,
+            4.139069,
+            -34.532729
+          ],
+          "rotation": [
+            86.951743,
+            -6.029104,
+            -33.091792
+          ],
+          "parent": "sideToe2_L"
+        },
+        {
+          "name": "sideToe4_L",
+          "pivot": [
+            34.508299,
+            4.139069,
+            -34.532729
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "sideToe3_L"
+        }
+      ]
+    }
+  ]
+}

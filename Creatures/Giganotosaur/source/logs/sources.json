@@ -1,0 +1,290 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Giganotosaurus.uasset",
+    "sha256": "dfc1220b5236ec05a44f9434260777fb15660197c597550168a329ffa7ebde22",
+    "size": 3720845,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Giganotosaurus_Skeleton.uasset",
+    "sha256": "473e30f82d21308b197ca588410919793b0c1a93652f0af1adc371d3b678a11d",
+    "size": 25089,
+    "export_count": 30
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Center.uasset",
+    "sha256": "f019b32bd455e830798ae220862abe8bf8323728e3bfeb09e1acb3e3a1a0877f",
+    "size": 9325,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Dwn-Lft.uasset",
+    "sha256": "418f247881ae58408292640ee8332aaf9c915e6e4b8d751473a53b5401dacae6",
+    "size": 9319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Dwn-Rit.uasset",
+    "sha256": "550ad0383c8cc9d69729b8573531b7ffc7eb5c6a8c3acddc2e356af9a39902ac",
+    "size": 9319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Dwn.uasset",
+    "sha256": "cbff19ff567ce4c30d1901733e1c78008049ea556f371d2dbef49756fa643582",
+    "size": 9311,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Lft.uasset",
+    "sha256": "58be50fa2fd19cb42dcff29174d59f1e97b665c6abad9512d77f8bdbe3e41bfe",
+    "size": 9319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Rit.uasset",
+    "sha256": "9d875f27131c522c03fc7ae71b03e555093a3e26e898f00a880c6a27a6f05dde",
+    "size": 9319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Up-Lft.uasset",
+    "sha256": "aaff28e3c9ff35253a97fece3475cff0380f855e0f76a83342542f6fdd0708c8",
+    "size": 9325,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Up-Rit.uasset",
+    "sha256": "e4f81fd7c979daad29a89a0208940ec44ea2bacc0b385e72e4df3f0fac52d1e8",
+    "size": 9325,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Aim-Up.uasset",
+    "sha256": "6ee9bfa1587a615aa3e771ee48f72b3b1172ca204962bb0cdac865f49b8f6b17",
+    "size": 9317,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Attack-Bite.uasset",
+    "sha256": "910433dfc9968ea20cfa6f40234bf7d4bf8644e0c90edd04202ec5e5256d9283",
+    "size": 19020,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Attack-Bite_Montage.uasset",
+    "sha256": "ecb5d7ca94bacb143cbb89d8821638ef20904bb0b1d88ac0c238cef680a013db",
+    "size": 2637,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Blink.uasset",
+    "sha256": "2055f24ae94d33bd91017a8025e6e110e8972670dc0854a5f11de379e6b5bf24",
+    "size": 10502,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Charge-Fwd.uasset",
+    "sha256": "8d06862220740817c8e800dc8facbfaf0bfdeccccc863d320608f16f4e9933a2",
+    "size": 21361,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Charge-Lft.uasset",
+    "sha256": "98071ca63d5bef21a81806ee1e072323111d843296d3f0a835a675f87ec198c2",
+    "size": 21737,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Charge-Rit.uasset",
+    "sha256": "8a7b13ec4107a9191a7b9540286838eb5bfe2ef2b5c2e69c6f7dfe5000b02a56",
+    "size": 21737,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Cuddle.uasset",
+    "sha256": "5ba71264a74c58dc42d0b76d00f669489d2bbfb9497fc085254251e6a0859ab1",
+    "size": 78721,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Cuddle_Montage.uasset",
+    "sha256": "6e4c78987e54714dae896539f4dd241da476f34f2ff4961c3c690c10b8885dd4",
+    "size": 1807,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Eat.uasset",
+    "sha256": "9c71c50bc9a22bda5f1440b441d1a5418e8c07161e23e6c11cf58572e462f186",
+    "size": 77905,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Eat_Montage.uasset",
+    "sha256": "c7aa28cc6b96e4281049045fb3325d6df80262c7f53cc273406c9d53829c0758",
+    "size": 1795,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Hurt-Small-Rit.uasset",
+    "sha256": "4f89838dc396d1e5590743b5ff2fccd955091e9109219101a6ad915ab45e30a6",
+    "size": 11976,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Hurt-Small-Rit_Montage.uasset",
+    "sha256": "10d3e3bfd397ea5bad2b8034741e37496be702a26c7c51b682f31c0dc032c658",
+    "size": 1937,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Idle.uasset",
+    "sha256": "3a33c82f24f8030467a2dde894f9a79790aa0d50ad5de6d48cd460d126e5cd0f",
+    "size": 40945,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Lay-Egg.uasset",
+    "sha256": "4351e78fb388457804b559f0282773af7d522924d144953e2e7effed61f61a88",
+    "size": 28481,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Lay-Egg_Montage.uasset",
+    "sha256": "cd8515dfc21acd688745f8775971f240e3338b7d7d5a090dc9eb7d725a04617d",
+    "size": 2570,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Move-Fwd.uasset",
+    "sha256": "1906ce9dc6cf1502e4302624e5e8b2f180d7261384087c9b7bbdc8ac12a04f7d",
+    "size": 21717,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Move-Lft.uasset",
+    "sha256": "9f212d98120f465f2098b9560bcec78925a98bceeb3067b0eb0173a585a71bec",
+    "size": 21909,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Move-Rit.uasset",
+    "sha256": "0e2057242782b17f4a5ec6018d86a130fd7b69fc10f3d83c4ffe7b6b6d90e88b",
+    "size": 21996,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Rage_Montage.uasset",
+    "sha256": "334f300090b61c6b923da74e6df7ce53cca4381419ddc8713b009c5e5387cd94",
+    "size": 1841,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Roar.uasset",
+    "sha256": "9a23cee93d617793f6e5c64582a571e11bd7d3db968aeffc5355feeab71280c3",
+    "size": 31509,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Roar_ExpG_Montage.uasset",
+    "sha256": "dd4b4bf24f2fd7b1e4f090625481833d99c74855eb45db10731d455fd25e5f65",
+    "size": 6449,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Roar_Montage.uasset",
+    "sha256": "489f6fedd3dd0c05ac5b7a50a1605e79daa2ce4ed4994948d474274686101165",
+    "size": 2724,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Startled.uasset",
+    "sha256": "9858535d7d78a62f7808d80efa3da7fa4ddadcff9bf658ba427ca9d7d3078d27",
+    "size": 23933,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Startled_Montage.uasset",
+    "sha256": "8ab818b8b50d3be51e4e2b1b6935f6b6b86a6c6728d21718d04573f7030157e5",
+    "size": 1857,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Swim-Fwd.uasset",
+    "sha256": "1836b2b5cb508ec8e4a290eb6d36591bc15267dd48b4c9bb6fae96bfe2727a56",
+    "size": 23391,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Swim-Idle.uasset",
+    "sha256": "74bb274e4a365e1c36d7550b92b2ef7929125d9c2a3bf5cb87d432e1b7fda899",
+    "size": 43433,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Eat.uasset",
+    "sha256": "b992b36934f5da3fd6850464a3ed421f314976ce69a37b8de8fa9f03a3597506",
+    "size": 23537,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Eat_Montage.uasset",
+    "sha256": "735c280d4c43fd882882d4484fa79f73202b33ee525eda0b24a55d1e316e1bdd",
+    "size": 1896,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Idle.uasset",
+    "sha256": "2510460583142ab45a491b34627726bf0202bce3df95a18930b21cd3e34e7c95",
+    "size": 23541,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Idle_Montage.uasset",
+    "sha256": "c11cd50e683b40a51026b513aba10d5700c64d26fe70e8c4851180ed48315e74",
+    "size": 1827,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-In.uasset",
+    "sha256": "f0f0270bceeda4823e3f090b13cbe483db17edead9549bf2722b7af3e4f5ae35",
+    "size": 32284,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-In_Montage.uasset",
+    "sha256": "90ad8dac1018a791a824502766286d1ea3a463d50fe6d476f3ec8b86df5ad0f7",
+    "size": 1981,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Out-Tamed.uasset",
+    "sha256": "db6ed4e40055d55a480c13a4cb01cb620f470990c6a6269940d6e136a49ee5d7",
+    "size": 53136,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "88976d20a264ef75d87ef2d4f2a245af97b930e203d2fd4ceed809b891cb609c",
+    "size": 2009,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Out-Wild.uasset",
+    "sha256": "345fef4cfcb573a1e1d66c9189641faf419e098b6bb9d7be1ebad1d3998dce79",
+    "size": 34662,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "8dcc07dc6f3f0ad123ec0ef8d9a03c0a0354a10c2efc31f886415e359cbe32a4",
+    "size": 2005,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Giganotosaurus\\Animations\\Giganotosaurus_AimOffset.uasset",
+    "sha256": "caa2410cde21896c7c2199f975db89b262c0b86b46d0c68e19eb78aa381056aa",
+    "size": 8128,
+    "export_count": 1
+  }
+]

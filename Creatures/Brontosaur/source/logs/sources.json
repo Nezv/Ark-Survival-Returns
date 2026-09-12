@@ -1,0 +1,320 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Sauropod.uasset",
+    "sha256": "40c836532a35afb463a25912c0797a8ab8af46cbf7db1e5e8c04a96aadc00937",
+    "size": 2980523,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Sauropod_Skeleton.uasset",
+    "sha256": "cbf324ba8695c0f141fff5e6b0c495740c744db9ba06b24ca4dc668771cf3f2a",
+    "size": 25029,
+    "export_count": 52
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Center.uasset",
+    "sha256": "3ac93c243f99fb39ffbe163308a37095973e1d629cb941de0fc5965867332367",
+    "size": 5670,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Dwn-Lft.uasset",
+    "sha256": "368a6925eaa63d2e837661d52e3530f95147e3aa898db7274a135f1ca644a6a5",
+    "size": 5676,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Dwn-Rit.uasset",
+    "sha256": "726e57cf89be2dbf31c43574718822898caea4f22329ea23d297c1e82cbd81c2",
+    "size": 5676,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Dwn.uasset",
+    "sha256": "fead2ec37b96ab0270c728e5a681b58232c1df0ad9f7f866a28b0540efaa03f3",
+    "size": 5664,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Lft.uasset",
+    "sha256": "f6b523e073a4bc0ac2211024afc26a6ba91af03493f1d163d4d87891e8144467",
+    "size": 5668,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Rit.uasset",
+    "sha256": "cb0409328c47a68e7119315d33a9b7fbfbcd48ec8cbd341e96fa871f25c7ec52",
+    "size": 5668,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Up-Lft.uasset",
+    "sha256": "be5b53f05e6f1725678c43768e3bd75dea8bdd867e6fe2f74f1f15dabba85fd2",
+    "size": 5674,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Up-Rit.uasset",
+    "sha256": "b0b5578f0e97ce02b4affcba60c9bca2716629b885549a3fc7882fd30c27b123",
+    "size": 5674,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Aim-Up.uasset",
+    "sha256": "45abc49ae67a99a28a2c9f72ef0e31c66b1a827c5ddbd20b9a4386e0a4ccf8de",
+    "size": 5666,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-FootStomp.uasset",
+    "sha256": "a63c3f8935c0842d16f67af560a0fc90b861c31b4dd6d6ce43a6bd3bb0bc73c7",
+    "size": 39935,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Lft-Montage.uasset",
+    "sha256": "3cd7f371a3521f1bae659e4a7c2fd01b02555bd7fb1570b12eb3d4a290ee8f38",
+    "size": 2554,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Lft-Montage_Additive.uasset",
+    "sha256": "b5385eb1492d734431cebd0c723743146f5cb1f3db32954ead91a7547f6559be",
+    "size": 2590,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Lft.uasset",
+    "sha256": "80aafcf3a237422ce3826d1966196e609972029bb249fe48037618b77372845c",
+    "size": 37961,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Lft_Additive.uasset",
+    "sha256": "312751d784109162946a2aa28abb5eed0f8c9c96b9afba4ffad479eeb7b14e5a",
+    "size": 38374,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Rit-Montage.uasset",
+    "sha256": "91ee364eb51edf7509cb2d14304d087d913bd38aba5eb60d26914535f234f75e",
+    "size": 2554,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Rit-Montage_Additive.uasset",
+    "sha256": "ca2053ef9e8813e2399cfe406812bdd51acb670fc814cec9aff4778bdfbe575a",
+    "size": 2590,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Rit.uasset",
+    "sha256": "94cf5647322cf215c07229fda751e6dbaf48dee6f28720befaebebe1ccbbe26f",
+    "size": 38281,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Attack-Tail-Rit_Additive.uasset",
+    "sha256": "6c505114d2d35ffa87cb166a0726e1cc9660c04feb6a8194d423f0579f78dbd8",
+    "size": 38694,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Blink.uasset",
+    "sha256": "9f016f0f0507121f3531f71ec58955e15adc41d042ef625191e3956b38a98010",
+    "size": 6605,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Charge-Fwd.uasset",
+    "sha256": "6cd863b78a051b69cb109561b2e8abf2d8cb174d59b40db9c10494a5f9851253",
+    "size": 30916,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Charge-Lft.uasset",
+    "sha256": "8a6400261b144e34ef4164bfe4c6d63ceb1f3dd636c26b2f1533044286fa3c52",
+    "size": 31024,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Charge-Rit.uasset",
+    "sha256": "cad0425198e0ae02d22b2f685a0b84d86b71a3d45dba5881fc0ff30468cd2e78",
+    "size": 31024,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Cuddle.uasset",
+    "sha256": "8d3193d36a0611411fcbe08fd004d3995849495d2c4b26bd21323c6fce3daa24",
+    "size": 96210,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Cuddle_Montage.uasset",
+    "sha256": "ba9295790c93bb3c151caf6388eff83faf2ff99a8c03cf611f7edf3590915b9c",
+    "size": 1753,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Graze.uasset",
+    "sha256": "27f0a75fab05d11d02233b86a71b867096b91abb42952dab334287537ca5c80d",
+    "size": 123322,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Graze_Montage.uasset",
+    "sha256": "615d39c3357fc42a2c8ffe016e95a06716b1ba94ccb723992dc2336535fe188d",
+    "size": 1749,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Hurt-Lft.uasset",
+    "sha256": "97f1ea4e1773f1d1634cb5f4788b14984071bc7a5163e594448ba7b5d57bcfc3",
+    "size": 15405,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Hurt-Lft_Montage.uasset",
+    "sha256": "7e9fed87f1095840570ff08602fe975692892183ee49223f187efaf940778840",
+    "size": 1901,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Idle.uasset",
+    "sha256": "85445b9d4bc09966c87fe3c98b0931c08f145d6918bd6a2966ae4da6d1d141f4",
+    "size": 78786,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Lay-Egg-Montage.uasset",
+    "sha256": "88dd55f76ea318e1bb5629e38bcaa33bafb7909e8de0980a619bb9fb472adf00",
+    "size": 3250,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Lay-Egg.uasset",
+    "sha256": "f98ffbf9b75d4cd801d2e34182be8176e539923575550b26eceb4d3ae3c327f2",
+    "size": 24660,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Move-Fwd.uasset",
+    "sha256": "d2a5da472a5f3005411c72f220e466312dfbb14ca11852c02cd9b27e30bca7ea",
+    "size": 48967,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Startled-Lft.uasset",
+    "sha256": "01855598e68c14a5a47f9e8986fbe47f0e40ead0a6e505b952a6bd70f34cc616",
+    "size": 24622,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Startled-Lft_Montage.uasset",
+    "sha256": "0f1a64fb1a95374f0ce21b6c00710d5f8c07b60be61c251c40453ac83ad5da0d",
+    "size": 1822,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Startled-Rit.uasset",
+    "sha256": "db317c314b085499f58f62aaab4a65faf73165e0028e2be1bc926dc3a22d53a3",
+    "size": 24490,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Startled-Rit_Montage.uasset",
+    "sha256": "6a440d086650d7e32b7a68c780a0b939ab489865dc9cfbd8a0ffa702610e423a",
+    "size": 1822,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Swim-Fwd.uasset",
+    "sha256": "52b8ae730cae026c5171b1b01d9b2c89f3cf14a95e7907ad8c7417b1130f9253",
+    "size": 18826,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Swim-Idle.uasset",
+    "sha256": "ed58bda68f5aef7fb4bb0d94fd96064541d77fca810c8ad2de487eadbab53d93",
+    "size": 38576,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Eat.uasset",
+    "sha256": "86ca445c7e98cf6dc8626878271c1667dc6333cb5fb6a32c57129be3705e4407",
+    "size": 32566,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Eat_Montage.uasset",
+    "sha256": "9e42d879598e7866f5ca824c9ffb94ece339b8e9c3f015b08f54a2a522f9026c",
+    "size": 1931,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-In.uasset",
+    "sha256": "88476b5935e0c600c2a2d674a2bfabb7f8525aa60058306e0728c0f4cfba1203",
+    "size": 56453,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-In_Montage.uasset",
+    "sha256": "f90a5d5328ffa2b591e68f3e7412d05ad80a29b5f16c2a577c01096b323084bf",
+    "size": 1927,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Out-Tamed.uasset",
+    "sha256": "a4a7a56bd1099695ab1fba0ba9499ce74c87f78711d496b5a8f81f26222c2c26",
+    "size": 66966,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "ac8610696e3aed25b2c140fc3109e218808fa9b63d712caa711d0ae63376d64b",
+    "size": 1955,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Out-Wild.uasset",
+    "sha256": "df3ec1a25ef9fd49a5cd9b5cfd3480371574a57711327ae60722585b0f2ad775",
+    "size": 36310,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "98811e012f79c46ef90d6d48c05007c4f85554c34ff9dfc70926b3027913e044",
+    "size": 1951,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid.uasset",
+    "sha256": "04225fd51b3bceb25ea69b225f3dd72c10a86b57e32d5d021a2fe31cdf699ef0",
+    "size": 31344,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Torpid_Montage.uasset",
+    "sha256": "382a9f906ab98ebd4f8f5f0f1d6377e094007bda47df8c754f333a58d447aeaa",
+    "size": 1753,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Turn-Lft.uasset",
+    "sha256": "021a1d6bdfddea6711174b7afdd54a89dc295ab8be4c353e65b0914be29fe22b",
+    "size": 49132,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod-Turn-Rit.uasset",
+    "sha256": "e0cca85545cba5cfbe8d0f66d60728d1a0417c2eac956f41449dafc79f69dd28",
+    "size": 50328,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sauropod\\Animations\\Sauropod_AimOffset.uasset",
+    "sha256": "d739de3716259a20195618330c83fd1f517d813efc12f6d37d270c552863b25c",
+    "size": 7930,
+    "export_count": 1
+  }
+]

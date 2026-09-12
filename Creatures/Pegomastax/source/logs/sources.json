@@ -1,0 +1,392 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Pegomastax.uasset",
+    "sha256": "2912084ad562789d9ac87e95a07c283db67f646ad7518dcd3c8891118b6a10d8",
+    "size": 3944037,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Pegomastax_Skeleton.uasset",
+    "sha256": "9e2a5050c0a11fcc2f9fd3eb65f1b853776148ad7ccaea53d8806ac22e4fec11",
+    "size": 18652,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Center.uasset",
+    "sha256": "598bb47ff004f496720d32be5d2cbb9a76fbff39776c786476ff371385a9e582",
+    "size": 7378,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Dwn-Lft.uasset",
+    "sha256": "edfdddb3cc2d778f147d891c7ebf0be3d5600152a014be8f1a2b908a6eff41a2",
+    "size": 7400,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Dwn-Rit.uasset",
+    "sha256": "3013e471b22b233efd6c408b2de44aea493f8846a7cec5c91ef5d4961d89a549",
+    "size": 7392,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Dwn.uasset",
+    "sha256": "99c4524ec1b42d5465ed9769a0ed9174c8fd57545688b12a1398e8a3050bc98e",
+    "size": 7392,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Lft.uasset",
+    "sha256": "7642326662b28e81afc43eb65779f3975b9791e76d99c67a64ba17e881f73bff",
+    "size": 7372,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Rit.uasset",
+    "sha256": "ed9a1d1da95eb285c4646698918be7bf1b8d87225e30e3901fc31526713a333a",
+    "size": 7364,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Up-Lft.uasset",
+    "sha256": "f0c1c7ac9a27ef88b9bebba930c42d3d7e67091a84e6cf61c8a279a23819e9e8",
+    "size": 7398,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Up-Rit.uasset",
+    "sha256": "4991407bbe46107dbb24533090b30815bbf050fcab951aa50b762b14b21ad9e0",
+    "size": 7398,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Aim-Up.uasset",
+    "sha256": "59847aecb0ce9a7d6e3e0f6e29a69e087dfbc38e6a5f3140cd6657f052b65f78",
+    "size": 7382,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Attack-Bite-Additive.uasset",
+    "sha256": "814269c81618756ba73429889caba01bc307bf2ada2a5d4d1d98b46161bb75c1",
+    "size": 8838,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Attack-Bite-Additive_Montage.uasset",
+    "sha256": "c6f8c137949483ff5aa24b4ecd81d356245da9a6878bb5e71d25296d93df7209",
+    "size": 2721,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Attack-Bite.uasset",
+    "sha256": "8edd59e16d53653c994492aa98a4695d056280ebf111187ac23d9a107c122237",
+    "size": 16550,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Attack-Bite_Montage.uasset",
+    "sha256": "9aa1b47fab814383ef20936ad2989aa6e687640f1178518ef82b5f58c81098c5",
+    "size": 2643,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Biped-Charge-Fwd.uasset",
+    "sha256": "a60e2a673db1cb53db9be9370764bcd190329ffc75b4d0647cbec08cea9aa703",
+    "size": 13274,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Biped-Charge-Holding.uasset",
+    "sha256": "2371105364d37e0b5a0aa9cd0485a53d7ca905cd782ab5d61840373c790272a0",
+    "size": 12385,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Biped-Charge-Lft.uasset",
+    "sha256": "9e9d76328c263c0c6bc0314f2babf649d2e6b35c3c9b345c6c853933ca9e4363",
+    "size": 13274,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Biped-Charge-Rit.uasset",
+    "sha256": "adf3c518f539b6d53d21c063d5cda6b679373bb5f1dfe67e03d1e4fd0342df91",
+    "size": 13274,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Blink.uasset",
+    "sha256": "ce55a5782fc28a92e50922e6e663f7dd21cc8cfbbdb7565ff2a6c6e10027421d",
+    "size": 8293,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Charge-Lft.uasset",
+    "sha256": "d0afc16a8175cc989d334df7ab5882a91ad55915374eac66d377347aec046b53",
+    "size": 18260,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Charge-Rit.uasset",
+    "sha256": "b3f20a889b6b4044f7e586053bdd0de6aea7c50ec255f86b61051b221e3bd4ab",
+    "size": 18260,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Cuddle.uasset",
+    "sha256": "edabf6180066e8f742cadf48721af2875068a3912ef8eff6b31585f0d11bee69",
+    "size": 41798,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Cuddle_Montage.uasset",
+    "sha256": "dd8fe6dbc60ee98f0ead3f6bad103814a90fd1abfe9ecacf6165a55173fd80df",
+    "size": 1769,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Eat.uasset",
+    "sha256": "98edc3aa9e63f86499b35d751cfe28f57f8f971afa69a56fba7ac4fa7501156b",
+    "size": 39796,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Eat_Montage.uasset",
+    "sha256": "37ee76ed35362231cffa66d625777f359c906c2598d1e6cddaaba4e808bc7ba4",
+    "size": 1757,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Harvest_Montage.uasset",
+    "sha256": "e3c001cd8cea55433d198f0e7c257e2f3dc7fd4a77e46f1bfae4f616cc648d44",
+    "size": 2602,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Holding-Pose-Idle.uasset",
+    "sha256": "27c646dae3e29d4d4de8549d7eca48a1e0f82c69b373329e42385bbc72ffa291",
+    "size": 7363,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Holding-Pose-Idle_Montage.uasset",
+    "sha256": "af199ae82bdb9c0f0c60d3585e2a4209f8c60ec4cc318def889e6f0cd4a696e6",
+    "size": 1978,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Holding-Pose_Montage.uasset",
+    "sha256": "36463ef51b75126af0cf959ac9217ed5766b746cedb3cded636bfdd86df34a5e",
+    "size": 2700,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Hurt-Big-Rit.uasset",
+    "sha256": "e043a1d6810b4002cf33ad1cb87f961a059dcd449c78ccbf5094c6bdbc7c6cd7",
+    "size": 16665,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "56b57a1b4e5bdc9e4ca67b81c2035de1c02f291dfd2e5763450780fd41322ed2",
+    "size": 1891,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Idle.uasset",
+    "sha256": "09aeb051ef48a13941d47f7d3168073c50c42a527e4b3d65a0464392fa87880a",
+    "size": 39230,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Jump-Idle.uasset",
+    "sha256": "c6aa232936c32591ca8c3111601ce4379631b8a331285068a3c8dbb3bf4756cc",
+    "size": 35867,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Jump-In.uasset",
+    "sha256": "ed1abe8a2880786844894878b2c8724d58f51bb87197af0bcf08bb29bcee3b61",
+    "size": 13096,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Jump-Out.uasset",
+    "sha256": "229498abcf9f8f36732a56c4307ab19066d9b4e5c3714b2617155d7b3a44ee68",
+    "size": 14956,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Jump-Out_Montage.uasset",
+    "sha256": "7469d3d328ef85c8f92a1168bc296067ad5f94e42dff7de989d501886b320099",
+    "size": 1777,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Jump_Montage.uasset",
+    "sha256": "d9a1f5d7883d7bc7d854fef2e70229c7eaaf49b77958e6b0d557c5c85882eb86",
+    "size": 2207,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Lay-Egg.uasset",
+    "sha256": "34187d588c52beb1b05e902a1bef3787139c8c21566a72a24e9811704cea6593",
+    "size": 23645,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Lay-Egg_Montage.uasset",
+    "sha256": "d9fcd46395c789db383e4bd3ba666aca750e7aaed8ace6e666916fc826f24ba7",
+    "size": 2532,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Mount-Idle.uasset",
+    "sha256": "8e3dfa3398a7b3994d744035cf39c26a780fa370d8bc87e7227e0c6db30f1d52",
+    "size": 18723,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Move-Fwd.uasset",
+    "sha256": "fa522a986f0531e1cbf958be994be9c4393425d2dc00bb2eab82ed5e8d8aa82c",
+    "size": 18464,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Move-Lft.uasset",
+    "sha256": "5da3e29ff3c1753b595c8caba8e16be9c24b4c98b120b5dcf8f4ce07aa430ee8",
+    "size": 18280,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Move-Rit.uasset",
+    "sha256": "e57fc13bf9804639e5a4eb483e36f31fffc91daeda2ecbc44fdf0557eb687b1c",
+    "size": 18280,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Pickpocket.uasset",
+    "sha256": "57476f5d3a9f2f388c5d74aaaa0694ccf7977339bec4bdc2204be1789817fa8b",
+    "size": 21946,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Pickpocket_Montage.uasset",
+    "sha256": "1b53e6b55afdde964be7cae323440cd062244000b74916c3f8b7d2d20649899a",
+    "size": 2550,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Roar.uasset",
+    "sha256": "8cc76a76e47f6989bb12d110328d3f4cca3bb692d9a81cc677b80b613b5be619",
+    "size": 23342,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Roar_Montage.uasset",
+    "sha256": "d6ba1e49f2a17b8712ebf19d6c47876b2537696a8bb6b6e01c66f82d1669678c",
+    "size": 1803,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Startled.uasset",
+    "sha256": "9a918d6d239e60e746edf736e408fc4c1f47aa4eaa67a0373fcbbb7e712a0dc1",
+    "size": 29286,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Startled_Montage.uasset",
+    "sha256": "79c51fdf72aa85bdc7ca7c4b456d1318f2969abc248daf68d437d0926230bedb",
+    "size": 1777,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Swim-Attack-Bite-Additive.uasset",
+    "sha256": "2b33058589bc077e311653af0d8728623614c16befd8cd90c3af9977d869dd9c",
+    "size": 9038,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Swim-Attack-Bite-Additive_Montage.uasset",
+    "sha256": "17fc2c22900231fcd755584a8237e427e9012881559b126e4a4adfb616d1a076",
+    "size": 2741,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Swim-Fwd.uasset",
+    "sha256": "38f125a1057ef23fb9fef32213bfc5debcddad4d12e8d80b85c9cd3409d44971",
+    "size": 18049,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Swim-Idle.uasset",
+    "sha256": "3cb16de909e0b7291b3f64778fd2db6c291790d89d0d9f1f8594fb720caa4ef9",
+    "size": 34007,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Eat.uasset",
+    "sha256": "3a0e466ec890cc9fa2b066d7b7c0b61b29c6f5b0f91388219557af093e1098c7",
+    "size": 10636,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Eat_Montage.uasset",
+    "sha256": "4196340ee1552900da5f8f7a5adbe3643591897bc34b92ef1f276e33855a7f62",
+    "size": 1785,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Idle.uasset",
+    "sha256": "f234b7877ffa01eab84a4d3f21f1035a56000ee503193230070e67fc1a18da59",
+    "size": 28468,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Idle_Montage.uasset",
+    "sha256": "e6f9f24576201b3f6f3ab79502dbc1e9ddce217a7b5c1e308c5a193c563fe90f",
+    "size": 1789,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-In.uasset",
+    "sha256": "cee232011dbce02b79b946240cc0ecf80c66e0dc83fc1cd0fc8fd5c331440755",
+    "size": 27706,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-In_Montage.uasset",
+    "sha256": "5669b4a211e731541fd882e95aa9c776f600070dd513019b3c1746659c2a994c",
+    "size": 1781,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Out-Tamed.uasset",
+    "sha256": "fc534d13452cdd350264fd07f3235b3418412f5a437d659e98685d319401393a",
+    "size": 47930,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "fe937ff46dbac4e18d82f99dc02a692e2f498c9d89e922f2d4b3c4520f929083",
+    "size": 1809,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Out-Wild.uasset",
+    "sha256": "1d2575e1c87dff63c6ee225ddf59486386dbd27fcf4d7701abde72d6ad996b8c",
+    "size": 29462,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "3419cfa2d45444983d7fccc3a09a1811187fafa8c8dbfa991b65aa4040f90577",
+    "size": 1805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Pegomastax\\Animation\\Pegomastax_AimOffset.uasset",
+    "sha256": "b4a42a5cdcb5a571a49876b12c0ca77afb636220f2edce672160bac24ef6958c",
+    "size": 7782,
+    "export_count": 1
+  }
+]

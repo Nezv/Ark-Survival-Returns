@@ -1,0 +1,314 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Titanosaur.uasset",
+    "sha256": "cc4801c5bc941751a4aa4eb84aff1c91142a64160e4983bcdacd77d8ad1dc2d3",
+    "size": 4171019,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Titanosaur_Skeleton.uasset",
+    "sha256": "9fabb7f7256a2c0fc1cd087e4f31c2cdc9fb3284fde978b01f52a71690f530e9",
+    "size": 17776,
+    "export_count": 21
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Center.uasset",
+    "sha256": "b39a6bcd4365695d2968f724517729eb3070917cdc15f65e021647be40e0b2d2",
+    "size": 6120,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Down.uasset",
+    "sha256": "e3d8cc361660b8640eedb71f699c7ed1b175abc7d73452b21bf0d7ea9dd0d19c",
+    "size": 6116,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Dwn-Lft.uasset",
+    "sha256": "12105a64823059d1352fbae3c2d0f53bbddb9b15c1b1babf3c03ce21d6789cf8",
+    "size": 6122,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Dwn-Rit.uasset",
+    "sha256": "cb172d07aef559b8388c829c4299b9265d367f35fd239b1cd4f26ad4fe623441",
+    "size": 6126,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Lft.uasset",
+    "sha256": "954459d62caa2b570a7eaebbe464482eafd37a9860478aef1fe971f8c2b461b1",
+    "size": 6114,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Rit.uasset",
+    "sha256": "ef42714716df26458bdcd9122062077725366a366e816304802599ec6c298a97",
+    "size": 6114,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Up-Lft.uasset",
+    "sha256": "a85c91ac3270202fa05daf4d150202e5884b1a44338a0848571bf3236d6e169c",
+    "size": 6124,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Up-Rit.uasset",
+    "sha256": "bd3513d2db9ab569303d1e84fcca3e71e813c42a7106cd3e270efc313d9376b1",
+    "size": 6124,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Aim-Up.uasset",
+    "sha256": "481f117d60c1880b1ccbb34e14c5dac8728980807b72fbb36436fbff849d4b91",
+    "size": 6108,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Footstomp-Rear-Rit.uasset",
+    "sha256": "68ad0ed676ef0b1d0e70dc6d4e39768acad847f8cbe0e705ee04ef2fa19381fe",
+    "size": 33177,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Footstomp-Rear-Rit_Montage.uasset",
+    "sha256": "3b70f2731d6bea074d1eefa1d639c96a4082d2f3eaff1d5cf85cff4efbf0fa0e",
+    "size": 2657,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Footstomp.uasset",
+    "sha256": "f252054edebaa4a201d9f20613a8dd32da5a64dd5bf9c8dae57b010d64777682",
+    "size": 58529,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Footstomp_Additive.uasset",
+    "sha256": "a5ac5aeb09a1564e31009e915f6e3f7062c0b082e618b06f849e60bc5cfe2f1d",
+    "size": 56265,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Footstomp_Montage.uasset",
+    "sha256": "d8addb031bb0246ace352fc4d991bf6c969134bc9002c9d2010ff82fac0cf2bd",
+    "size": 2663,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Attack-Tail-Rit.uasset",
+    "sha256": "5bc5fe3f696fe8bfd263a2f9929f6ebca0cd1270480231ca1dec601614f4435a",
+    "size": 52908,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Blink.uasset",
+    "sha256": "56c2183dbddee595c3c26cbad36f29812d7b12c24513488e362973d3e8e502e3",
+    "size": 6699,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Charge-Fwd.uasset",
+    "sha256": "5c3a3ad47e6eeadcfc537b0e058fbe7805d83368a85f0b0a7648b1d3da38e7ee",
+    "size": 70794,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Charge-Lft.uasset",
+    "sha256": "784e5ae6ef6568146e04105e3073140ad183d82205441bac9c285494dbe531e1",
+    "size": 72282,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Charge-Rit.uasset",
+    "sha256": "897523278e0130e8099e5e29e6c324be900ece02bba813cb0b581f1d4e36ed7f",
+    "size": 72674,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Eat.uasset",
+    "sha256": "94da7b4fffe8db5cc3a7fdc174c23ac3d0f41767d9c5f75a906daf8a40ca589a",
+    "size": 174996,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Eat_Montage.uasset",
+    "sha256": "a08a764dfd31186ff8402ae06e01d63e8c32e564d70fdbedfe8327785c8afce9",
+    "size": 1759,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Hit.uasset",
+    "sha256": "283665703360d1ca8e2ba74bb29c11d97480086608e76aed98a4e26166f3285c",
+    "size": 38797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Hurt-Lft.uasset",
+    "sha256": "f92dc674c073e18a23351dea12b02fbb03b93922dc157ddb97c95f5714722558",
+    "size": 24663,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Hurt-Lft_Montage.uasset",
+    "sha256": "4c94b03810df52656da67896a5d53e26e8cd05932cd7ef486da1bd007e0120f3",
+    "size": 1877,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Hurt-Rit_Montage.uasset",
+    "sha256": "ec5cb383273d9d6557c67b6020d514f525fe75571fa8479e7e24a1c703ad3fa4",
+    "size": 2946,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Idle.uasset",
+    "sha256": "87c446a872ce53881b2bc281f3967097ef104e4e1fd5d38d5418240b568baece",
+    "size": 116048,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Lay-Egg.uasset",
+    "sha256": "016cc9cc18b0e9a6069022c1ff09457b01bd2c93f1a29e8263acbc86fc80466a",
+    "size": 37848,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Lay-Egg_Montage.uasset",
+    "sha256": "fbeb0bfefd9ad72bf327b0be408bb172514f63af7a5dc8ecafe117918a43e849",
+    "size": 2534,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Move-Fwd.uasset",
+    "sha256": "e1ebac8c4e59594d8ee74772675cdf422611902a9fd7cdac3815bd51525c87fb",
+    "size": 70346,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Move-Lft.uasset",
+    "sha256": "128c9d72339e776f1f822ae4370311f1d101cd619bca96ea2a0a4f93f8a8d752",
+    "size": 71866,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Move-Rit.uasset",
+    "sha256": "fe4f7c45935ad7767b6387fca36d96d2a7be69c0da115d332ee834ea3b7712fb",
+    "size": 71830,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Startled-Lft.uasset",
+    "sha256": "202e43bd526b6c532c23886c04741b33929a72d0feb0b8dd185e4a4ccd31c5be",
+    "size": 37665,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Startled-Lft_Montage.uasset",
+    "sha256": "757171dab5d5d3e82293b76621099bf860dd892ced1e87b941abc8f8be36967d",
+    "size": 1795,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Startled-Rit.uasset",
+    "sha256": "e14dff784f830193f71aae0d32f2544faa84b7a4007706b718d6e4c47b71047c",
+    "size": 37169,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Startled-Rit_Montage.uasset",
+    "sha256": "2b81a9b04fc2ef18245e1fbfdbd833638732d0615d9a7753e3a96bde757870af",
+    "size": 1795,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Swim-Attack-Bite.uasset",
+    "sha256": "8f1569913d23a79e98e0ab2fb25c6364cc6cc3a34bdeaa0a6690303dadabd97e",
+    "size": 57338,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Swim-Attack-Bite_Montage.uasset",
+    "sha256": "af3cc0a7fd5c64a06d45bc00631e2657b36aab8756ebeb67ca79f2f6fde5a461",
+    "size": 2618,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Swim-Fwd.uasset",
+    "sha256": "bda9e710f09c67ae14339560fb1d75148f780371d3b9cf7df608b2bb84022c83",
+    "size": 29260,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Swim-Idle.uasset",
+    "sha256": "42087806d67db22cc3ad5af4d932199b66fdda68c364f5ad33c06302a95313a4",
+    "size": 62190,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Eat.uasset",
+    "sha256": "311e517cfa3a6885395f6b494633aeba800f4c5822799767649cc236381fac19",
+    "size": 45514,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Eat_Montage.uasset",
+    "sha256": "ee952bcb217a5a531c509db8d7c1ff0f4ecfc27c97ad77f407f27bd64d69446f",
+    "size": 1860,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Idle.uasset",
+    "sha256": "b2d3b57ea41f9f6efbd362f8e8e57a5f5e7da8b17644dd4f32b386516986ca94",
+    "size": 44484,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Idle_Montage.uasset",
+    "sha256": "c30872d4b07eaac06728499a0e8cdc8e1cee04d427012ca1afc4845a42ec2e94",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-In.uasset",
+    "sha256": "0952dde54750612628f4fce326a3e90e55aaf85e3dedea9f8b8b59febbc58e26",
+    "size": 66943,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-In_Montage.uasset",
+    "sha256": "888954e755d6869763d4f3738ce444a005309dcfcaea0ea97b63b71345c42ff0",
+    "size": 1987,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Out-Tamed.uasset",
+    "sha256": "c6625d6918128825bdf74c434fb25ac8b5b1e7293314008531d04b82414fff20",
+    "size": 72463,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "428554ecdb4fd4de5638acf41df46eedf7010546907694916b8cbdb0b977184d",
+    "size": 1973,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Out-Wild.uasset",
+    "sha256": "837a4f5f61c383dbd947c9a35de8874cbbb67cca0be1f5f824d43a3c1b11088e",
+    "size": 30458,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "d47b3b92bc2d31f6d5db5af8655704a491c3f32499840967248f912a7cf70005",
+    "size": 1969,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Titanosaur\\Animations\\Titanosaur_AimOffset.uasset",
+    "sha256": "83e2574eb643c4e05d202c1928ffd4870e1c236107c352379cb5e4b696ef56cd",
+    "size": 7998,
+    "export_count": 1
+  }
+]

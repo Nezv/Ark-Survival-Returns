@@ -1,0 +1,206 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Plesiosaur.uasset",
+    "sha256": "2e44b6809ecbe0bbf68d3161c663a74537a5bffb3a175d94a7d2c1e5230e467e",
+    "size": 2473089,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Plesiosaur_Skeleton.uasset",
+    "sha256": "7d7cd05ae0815f93b9cb0b064376278e08f3a08661719ea3ff14b130f4a02e49",
+    "size": 13740,
+    "export_count": 19
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Center.uasset",
+    "sha256": "acd6b9a64e53a6ac245600818157b9001e05b78fad291a63135f025dab21a4bb",
+    "size": 4476,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Dwn-Lft.uasset",
+    "sha256": "4d0baecf77e1aea86bb972169245a649d660a31851405891ebb09ace848fddd5",
+    "size": 4526,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Dwn-Rit.uasset",
+    "sha256": "0504db559a0a37372b0243d00d2c1dd5d9148c84489f260de6c31a5f8211f831",
+    "size": 4526,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Dwn.uasset",
+    "sha256": "fdf3a2c04cb03c641aabb6dca450c09eed295cfc9d2affbf2c467eaae5481c61",
+    "size": 4478,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Lft.uasset",
+    "sha256": "76759f8aea544576f8aacb5c950abec2de39fbd88c36443f79909a7cb0f09cd5",
+    "size": 4502,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Rit.uasset",
+    "sha256": "16410fef472d001ba751afcb3914435b2fb0032f179ce943abc5fa57ddf5c05a",
+    "size": 4502,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Up-Lft.uasset",
+    "sha256": "19d89bd0dc8a43473e18ae12591e1f4e96cad99d9b02c815721bb305dce142d4",
+    "size": 4524,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Up-Rit.uasset",
+    "sha256": "7d70d25ef727ad455d605c9f36b3e13414f1b8609094d7044a27b226680641dd",
+    "size": 4524,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Aim-Up.uasset",
+    "sha256": "884be1378f8da97e37d2d590fcc31781efc5ee6d7dc43145b99fb11b1b01966a",
+    "size": 4484,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Attack-Bite.uasset",
+    "sha256": "a26f559d2a9a4ff0cd74ca95a2ffe3ad4d953c6996111a3a9ffa1868a31e1981",
+    "size": 11214,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Attack-Bite_Montage.uasset",
+    "sha256": "d838bdc4d40d3c2bd8e2d87d806652a2d125d679c7338f2d3ca9f14a7ba19368",
+    "size": 2687,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Eat.uasset",
+    "sha256": "a64f6face5b8cf760aa1c9a50b964c3e131878c1a7bfb23b93be8f1fe0b48005",
+    "size": 7306,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Eat_Montage.uasset",
+    "sha256": "eb8505843bbdb5d430becf8cdaae10ac12c824a6cc02f81bb18e5b4bacc66a32",
+    "size": 1759,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Hurt-Big-Lft.uasset",
+    "sha256": "4d5e2642150daeb8649b2269d66da6bb9f6abd316d1fffed2ed1dbd517871727",
+    "size": 9423,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Hurt-Big-Lft_Montage.uasset",
+    "sha256": "beaf51d5d33157203f9c5f667a50334b1dd5294164e784dff223d3dae03ca864",
+    "size": 1893,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Idle.uasset",
+    "sha256": "ba9645a7f54e8cf84bdfc27528c388651b73ddaa75159b39e9bd60ad997c67d6",
+    "size": 19686,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Lay-Egg.uasset",
+    "sha256": "3069fd0cbd67f01e0ad813e40ec92445f3a4129b4c4a1ded8b5bf0d1356065ec",
+    "size": 6337,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Lay-Egg_Montage.uasset",
+    "sha256": "4ba45e8e3d7ac9e4c632ee8d6251e412503ea9844e993f160b31812a0f79f755",
+    "size": 1775,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Move-Fwd.uasset",
+    "sha256": "bc7733c49d48d6998b9d2eed271fe1356b1178ad8c3e0cb401e27c07d62c83df",
+    "size": 26397,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Move-Lft.uasset",
+    "sha256": "8bdb9bdd39e87f96bcd3b03cd632dfcf736da3f104964fccda680364f5a1856a",
+    "size": 25153,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Move-Rit.uasset",
+    "sha256": "4ad72bf466225d60ce6c9786f8bfc715191f6984c8dfbf53ef5ed753f8d6279b",
+    "size": 25153,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Eat.uasset",
+    "sha256": "1fe9c4ba93b845f2fc388c9536a6edd13a4de23bb3819f13c9c1a0878000eaa6",
+    "size": 43492,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Eat_Montage.uasset",
+    "sha256": "bb4373000744d8fe05947bf93ff79f689d629335ebfaebd2de71cc56fe9a74ee",
+    "size": 1787,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Idle.uasset",
+    "sha256": "5e096816060f64312131e11019cd859b473710efc815e52d0124649b424677cb",
+    "size": 21532,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Idle_Montage.uasset",
+    "sha256": "c080bdc0ed27b66de06d6fa8c777fc98acfc86e523b9177d40415e0251edcc03",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-In.uasset",
+    "sha256": "25b16e4152630d89e04806d79d447c0ea0c5339dcf3814f492952c3ff0a642ec",
+    "size": 9364,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-In_Montage.uasset",
+    "sha256": "ec1d28b43e8d0ea152d554b1471d2f5f061f9e69e11f2421f8599330d54fdc08",
+    "size": 1783,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Out-Tamed.uasset",
+    "sha256": "0717e53e22d5fe996139c99fc3c5581a36f4b3c3a9955e2197c71e547971627d",
+    "size": 25937,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "fa1f6376a8d1b00675de0b8b4cd5b4f14247a2fc9bc6215508f471a026012b01",
+    "size": 1811,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Out-Wild.uasset",
+    "sha256": "9ec113c56d4432cb42d76197f35b8ded96ace0755d645eec484a869d65a90a4b",
+    "size": 15932,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "917cfc2e39f991be9a30d000fbc5a99f00909d0eaf123c2e55f6e956d94ac5a6",
+    "size": 1807,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Plesiosaur\\Animations\\Plesiosaur_AimOffset.uasset",
+    "sha256": "587db9894e7e6f8c36afb16fa39d82878e0a98c4ef7992db2f6950339af844be",
+    "size": 7996,
+    "export_count": 1
+  }
+]

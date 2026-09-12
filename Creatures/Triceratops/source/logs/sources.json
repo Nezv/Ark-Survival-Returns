@@ -1,0 +1,362 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Trike.uasset",
+    "sha256": "520be5199b1af5817d71f67184e4c90bc623f52b9cc071f74246ed6e41bf5ba8",
+    "size": 2436797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Trike_Skeleton.uasset",
+    "sha256": "d994e5f25fc56f77d4b63e00f113032ea0d7321136fe3bd9a3076f3f22ffa5c1",
+    "size": 26630,
+    "export_count": 32
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Center.uasset",
+    "sha256": "4a0d6c870931422db0009f2335f26b3b026c0eadd39decad978f2dceb25449e5",
+    "size": 7983,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Dwn-Lft.uasset",
+    "sha256": "d697b96978c870ec2dd47cac34ed1dd483ee4f03e9d69fc8e345a8d874a3f129",
+    "size": 8005,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Dwn-Rit.uasset",
+    "sha256": "8ed98140136b8062007e1f020e5a5f4f1ba14b16545a725c1f20d1ee729a2306",
+    "size": 8005,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Dwn.uasset",
+    "sha256": "66c716e91f8d0244a6cf1d90947b5974384b2e7a64799383cff487147ed90608",
+    "size": 7981,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Lft.uasset",
+    "sha256": "6fa69263709d61c24c450f302083498f85e0a2d1ff1d8f6c0d03a37f2e2de2aa",
+    "size": 7981,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Rit.uasset",
+    "sha256": "b47659561dff67f0066e71784ba87e60c21a58e6c158fc6ddff8a2780f7872f1",
+    "size": 7981,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Up-Lft.uasset",
+    "sha256": "5cec08f945766b270dcc6d6948dbafbaad786fe1a790da8a1c47034a45a153b9",
+    "size": 7987,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Up-Rit.uasset",
+    "sha256": "6ed72a86d1365a9e0004a3cbfd778e12322ee0cb25dcc8734e7deeac25986b52",
+    "size": 7987,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Aim-Up.uasset",
+    "sha256": "297849630a511d9a27f1dc27588f749839009309e2d9b45c47db8845a8e7c2f2",
+    "size": 7979,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Attack-FootStomp.uasset",
+    "sha256": "adc953ab345099d2e75697930bf8aa536fab6675728732701202cf4c820ab290",
+    "size": 22016,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Attack-Horn-Montage.uasset",
+    "sha256": "4d1dd024616775621899d6c27a60de53a4d9906620a9ed304b526ce0a9599030",
+    "size": 2556,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Attack-Horn.uasset",
+    "sha256": "9de37f4f0c81e13ad5d4aa4585df9e050777b895d9fca6b5ec094e80bca2c616",
+    "size": 18622,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Blink.uasset",
+    "sha256": "052758587b84495dccc93e50505aec58b0dadf20c33e6b2bd594abf1e1c7efed",
+    "size": 8934,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Buildup-Out_Montage.uasset",
+    "sha256": "a5d6fdb395cc47ca89a5839a07fd2b3d67967359a11c909473a037434fb77473",
+    "size": 1754,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Charge-Fwd.uasset",
+    "sha256": "1cebc2db657aae12b41a5468e0fc0b3700379aff14f4274a1b388df3ac250a43",
+    "size": 15340,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Charge-Lft.uasset",
+    "sha256": "1259579c1b46b51682d54943d6a41eaecba4874e76fdc2fbb1ecb5a9ae1ffc4a",
+    "size": 22388,
+    "export_count": 12
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Charge-Loop.uasset",
+    "sha256": "265f3a7f397954746587a6f2c7a6af86e5e437382f7ac74ca4350ad7a51b2f0d",
+    "size": 23288,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Charge-Rit.uasset",
+    "sha256": "7758bf0201cd23e9ccd4e12b0a364ecad8815eda2fe17b327fd74aee1866a0b4",
+    "size": 23138,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Cuddle.uasset",
+    "sha256": "eec9038f8f1466f19b367d0a1787d41d2920c7ea46c5b01fde8a535a74c39ca6",
+    "size": 70762,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Cuddle_Montage.uasset",
+    "sha256": "0bfdecd8748314c7641fc16daad8b159126aa4d7e4161899b65c69af876346d9",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Falling.uasset",
+    "sha256": "55c78399e4e5a198251c13e33fbacec7696b9859de505d1a37095355e1e5c7a5",
+    "size": 22374,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Graze.uasset",
+    "sha256": "0bd6a796be239ed1a6b5128ea1cfed324e816d96033fc9b6d6d6d32e4646bcb2",
+    "size": 71371,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Graze_Montage.uasset",
+    "sha256": "a4acf707e3c75886b9736ab785c522cd1349f3c4046865a42f9e8e7b6d5c5ae2",
+    "size": 1722,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Hurt-Big-Rit.uasset",
+    "sha256": "5dc33de53a32d2fdfed9fc740ad16a1280634690f02e9105eac5ea11969ec023",
+    "size": 30282,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "97bf85ad60eacfe078f7f8a83b5df5a0a6f015a08a60e916a6849101f80f58e4",
+    "size": 1846,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Idle.uasset",
+    "sha256": "c375cd721c68d633451d1f5aa290e6497f17623a8b4eaf19aaaf54a4908146c6",
+    "size": 37851,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Lay-Egg-Montage.uasset",
+    "sha256": "9cb703f8a2396d6e6bd7a9fc4b385b28e34735d88652506a75da58daaa706ef6",
+    "size": 3220,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Lay-Egg.uasset",
+    "sha256": "947054758048669603f3c321ea2a3d12b569da552eeecb6b338ea330208c4d56",
+    "size": 22193,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Move-Fwd.uasset",
+    "sha256": "c37c40eff536e1c22c5b8eb3eb267ca38d9e3e36579e331104b40e3d68d63f7b",
+    "size": 37825,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-In-Loop-Out.uasset",
+    "sha256": "0fa746afec87f9e85773a72926d313ee53056080dd58ffc28fd8bd52547dfbd6",
+    "size": 11005,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-In-Loop.uasset",
+    "sha256": "8328c3630fd2684bf7d0f66f41ee3f74046dd536bc1f7e7c6f16ac66f6ce0c11",
+    "size": 17342,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-In.uasset",
+    "sha256": "5589f05048df83370840385c1386eb3715b6327ec6867ed51f300c38ef10c455",
+    "size": 17327,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-In_Montage.uasset",
+    "sha256": "efed2bc0c7dff298d03b0aaca53876495eb16743444e0850a5607c6f0717c0a6",
+    "size": 1725,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-Lft.uasset",
+    "sha256": "ff95773fa6f34784187a480ca7d5302581aaa832ed450337e8ce74da7c5d4666",
+    "size": 15533,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-Loop.uasset",
+    "sha256": "c28dc15050a446df71d802c082abb2a424f5eeee80340674f36ae9359810f4bb",
+    "size": 15535,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-Out.uasset",
+    "sha256": "be722a7ab93c471ed2c6fb62f212d20d1a41e9e6f531fc588d63c25eafd698b2",
+    "size": 19490,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-Out_Montage.uasset",
+    "sha256": "d6847732e223d748733ac93c14bb4643033fa13957af7acd46979654dc157157",
+    "size": 1730,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Ram-Rit.uasset",
+    "sha256": "643ffe6ac119636ada3164835f2ea5ff31708297d937ffdd208aacdc4870b2f0",
+    "size": 15533,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Sleeping.uasset",
+    "sha256": "81a5a08b6e311c8ab6354a5c638d4818d3e47ce8ff629e2090034a0bd9af5542",
+    "size": 10861,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Startled.uasset",
+    "sha256": "e33e74411a933bfbd65ab0b47b3747905997af125175eb28a02c44047e81ca06",
+    "size": 20847,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Startled_Montage.uasset",
+    "sha256": "0cb9cc1a02bcffc64d695f1b1fafb15f9d58ad6e6127ae043f2fe7f980b7ac74",
+    "size": 1779,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Swim-Fwd.uasset",
+    "sha256": "7f3ad29fded271c90ad9e9bba9c028fef23f494b4fc272ab62aeb76044c99da6",
+    "size": 13336,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Swim-Idle.uasset",
+    "sha256": "1834f7be66e0ace781063c40b2fd8a10f39d2327dff7c3b5b1b5eac3f04c2696",
+    "size": 22378,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Eat.uasset",
+    "sha256": "433a894a254c66a4a6453d64ca9975df37b9f0e5eb4219c7a776f640da6b7f9c",
+    "size": 24615,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Eat_Montage.uasset",
+    "sha256": "cbf2dfe8fa7faa08f45fef6b9a5bd81f4cf4ec8f6a2d1e7f98daee5226328308",
+    "size": 1904,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-In.uasset",
+    "sha256": "2947c8e0259f51b248f5cf321970b0341edcdb6e0b5a30b9f8415e6bc95f5c01",
+    "size": 36560,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-In_Montage.uasset",
+    "sha256": "d05a4c2fca71b1dc8035684db9e11ec19116c201d4d0c31efdf99648e7bbd764",
+    "size": 1900,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Out-Tamed.uasset",
+    "sha256": "9a7028c2a8dac877a98f0b75f45ebd0322893181938df23e6565ef8f09605233",
+    "size": 41823,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "19d6bf10f2702328f88371ca849060d1f4d52c4496f2a904159f73e30459e652",
+    "size": 1928,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Out-Wild.uasset",
+    "sha256": "f441a8ea2a51169e0e8fd179457dea8a819f45f14a92a80ad5174374654bcaa8",
+    "size": 28379,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "3c824e31b738e84d783f5765a04b22a49214db1b579bbef9ec260d19dbe5d62e",
+    "size": 1924,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid.uasset",
+    "sha256": "7b989146ec0897e09ddc24764dba60d9c5ed8181675151fe8bc08ad1a321cdd9",
+    "size": 21005,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Torpid_Idle_Montage.uasset",
+    "sha256": "073bbf2178d864faba2bcdf577a8507656c2cf3ffc80c17d912d54557412f024",
+    "size": 1736,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Turn-Lft.uasset",
+    "sha256": "653cd60eb9b7a8d5ac9db77b07fee6952db428405074deee5d76a41c65368c9a",
+    "size": 36263,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike-Turn-Rit.uasset",
+    "sha256": "6e43c8fadb5aa0398450b49d5d9bee81a676bfb758c9f9cc1169652ecdcd7490",
+    "size": 35839,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike_AimOffset.uasset",
+    "sha256": "6e900f7d4042b04c4c4e3fa7bcd510389b93b31dc3ae678702835d7be101176e",
+    "size": 7831,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\Trike_Strafe_2D_BS.uasset",
+    "sha256": "76e594b847fffbc295d47387582452d91e152baf8646237c5a72b4fb889cefe7",
+    "size": 6391,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Trike\\Animations\\TrikeMovementBlendSpace.uasset",
+    "sha256": "2fc7359805f29f52db1d2c8609e65a19f37a18e9e732ff90789390c0107a7532",
+    "size": 3173,
+    "export_count": 1
+  }
+]

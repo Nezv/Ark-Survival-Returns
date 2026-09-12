@@ -1,0 +1,380 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Equus.uasset",
+    "sha256": "faf0fc976c9510b0c8f0ed93d810dbdd2241598f0df2695b6ff0751994fc57d2",
+    "size": 2228554,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Equus_Skeleton.uasset",
+    "sha256": "9ba730ea6cff3645914d271c8024995f8e96674d2b8f42bf00d7876d1887ac5f",
+    "size": 21359,
+    "export_count": 25
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\SM_Unicorn_Horn_01.uasset",
+    "sha256": "97731ea63a771f055abe3b13fa256b47a0a155ea04b73b3edd31194c912c0cee",
+    "size": 44307,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Center.uasset",
+    "sha256": "ad60a89b7090f8d086dc7ae2a28f2ab07fba4b37d923ab4bcf5e268568392bc9",
+    "size": 8823,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Dwn-Lft.uasset",
+    "sha256": "743f0dcfd8c45a15571baef8def40c9b30825f51ce389a43de800c7f30d0ba31",
+    "size": 8713,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Dwn-Rit.uasset",
+    "sha256": "6379df606bd51efe1f828d66cd39b66910704b352d63376455161b2860f11f26",
+    "size": 8713,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Dwn.uasset",
+    "sha256": "3d8355e960b3574e159553714c86e32f9c0cc1318294324e94971622f375c0fa",
+    "size": 8705,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Lft.uasset",
+    "sha256": "c3486f1f2251cee811c675b238cb033a48d63095146e6da8d0c9a461573945df",
+    "size": 8678,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Rit.uasset",
+    "sha256": "e6c46b29e50762d1f89196f22e0afb16e7ed7b11e06c738c0369f913a04c44e8",
+    "size": 8705,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Up-Lft.uasset",
+    "sha256": "5f2abbd8e16f1cde906cf03b87bd60a5038891d5a43737206d3a6da4026b70d5",
+    "size": 8711,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Up-Rit.uasset",
+    "sha256": "0856092aec6e65ac8f731bd81e23b285d9b2ee3db3e7e658db692ee60c2c9ba0",
+    "size": 8711,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Aim-Up.uasset",
+    "sha256": "86f348163f248e458ffccdd06687ad977d1201f06abdd5037dddf5e81d4da075",
+    "size": 8703,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Bite.uasset",
+    "sha256": "52c2960ea143f823a452a3dc8b0c50d0f49bd729f7efa91f2f433c2bd314157f",
+    "size": 13887,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Bite_Montage.uasset",
+    "sha256": "d8d0e627c5dd821f9dbc9dcd9487217a082338a583127e5c7d96d0876d07c815",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Buck.uasset",
+    "sha256": "313f131e1bab6aadbe58b4c03dfa178c99f1c523a09a4b79efc4e71a5a9e57df",
+    "size": 19913,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Buck_Montage.uasset",
+    "sha256": "52a073beaffb823d1af82d0798af54f29ec6cd3e7570bba851c8ee715b54563e",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Push.uasset",
+    "sha256": "f00b22dfd09bf80d8878fa433e956a9f1ea3642114e53048a21db5a2ad6b1313",
+    "size": 15015,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Attack-Push_Montage.uasset",
+    "sha256": "a19d2f61da1bfc127d44dd91917c3c453636b68a904bdad44c592f4f1cea6935",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Blink.uasset",
+    "sha256": "eb95b64f6b42341f4eb88b0302bb3f62de0305b0c35e034f59edabf442dbcad3",
+    "size": 9614,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Buck-Loop.uasset",
+    "sha256": "7ee44bbc1f3d0852a512908a5a8c8c34412d21f04df132a879553b22075b6c5f",
+    "size": 30171,
+    "export_count": 22
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Buck-Loop_Montage.uasset",
+    "sha256": "6db9bdc10762b45f00b7c43ed9769434291b121337ce82e85daba873ee7950a1",
+    "size": 1736,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Buck-Seq.uasset",
+    "sha256": "85ace25429bea90ffa7ac9f8a3d475e1ffbfffed272f31d419f5b814e6fdedc1",
+    "size": 21449,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-BuckEat_Montage.uasset",
+    "sha256": "6224a1b7e6826d5d4ad5e2ff7eae0a6a90c6f3ab1875f899b916611bf34388be",
+    "size": 1780,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Charge-Fwd.uasset",
+    "sha256": "ac935777733ceece09ae7bb76282ff532523ada4bb37ff8c5c91ed8e7b5fca91",
+    "size": 18817,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Charge-Lft.uasset",
+    "sha256": "0df5e49ef10dba57fc4577b05b59fd465066064522c928123b5da2cd09e89dec",
+    "size": 18953,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Charge-Rit.uasset",
+    "sha256": "9b240d5364e7f5bcc3458ef2e5cbba678e16998a4c8358545fc2042836d554c7",
+    "size": 18757,
+    "export_count": 11
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Cuddle.uasset",
+    "sha256": "aad0f7c4a9d3c9c2d793fd892ffbdf4cdc81ee4e10af703ed93b9d78e2c31f9d",
+    "size": 48492,
+    "export_count": 16
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Cuddle_Montage.uasset",
+    "sha256": "3a42174766457ed71cb0119161f3a380fb38f79f7efc8b03e36ea947e214ebec",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Eat.uasset",
+    "sha256": "3138c32866c0c2ef21e07171924b97401a648e16b86946009d40082c9f0a01c7",
+    "size": 38087,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Eat_Montage.uasset",
+    "sha256": "02e466faa594324df4d3606a1d192213208908140c7cd35b5e939071a445163f",
+    "size": 1714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Fall.uasset",
+    "sha256": "105c9cd36e0131e6f9c4a6fd4721845190bed500515b5890d0be7185dadbe2f5",
+    "size": 15813,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Hurt-Big-Rit.uasset",
+    "sha256": "a19e3996fe647f043fcb9c0cc0075bf25d401f1774f0b867d83a07734fc02391",
+    "size": 15334,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Hurt_Montage.uasset",
+    "sha256": "579530323c54e9eeb1614f9dcf612a90ac91e571df9721603de1f2383c05a1a3",
+    "size": 1832,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Idle.uasset",
+    "sha256": "4952f7aa292219124ef1c6c912e25d0a3666c8b757ca8ad1432d21be47878cc9",
+    "size": 32031,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Idle2.uasset",
+    "sha256": "3d6f3a4334f2464919064b512aca7b99023e1c5321a93c9c23f5e70acc6c5191",
+    "size": 88225,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Jump-Idle.uasset",
+    "sha256": "1b347626f90c9beec43443de677d383e344f47a3f1ccb0253d00c9ac1a00faa7",
+    "size": 18805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Jump-In.uasset",
+    "sha256": "0dd9eeea53ee990ad9b69e92f7712ce9121f3b0d3065476b8d30b982567d0d0b",
+    "size": 13185,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Jump-In_Montage.uasset",
+    "sha256": "e4e63e77d1373664a95683a5659b3f26022e5a8dfbe55b7fbb067ee1db240c51",
+    "size": 1774,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Jump-Out.uasset",
+    "sha256": "024e0aa6665e5b3a52c2f01987260e037c387d5c9bd2188b5c874af88e549758",
+    "size": 16243,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Jump-Out_Montage.uasset",
+    "sha256": "4ef2bd2018bfee447dbb51d90fd86e58845a852719757fbb96a6725f2196b800",
+    "size": 1999,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Mounted-Eat.uasset",
+    "sha256": "41c5bfe0a2d0736cece1d9653c7481f49f09d47238f898a695520276643e125f",
+    "size": 20871,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Move-Fwd.uasset",
+    "sha256": "88b7ae4e6b6291dbcc5200801df9dec5843e703bdd949f15907ee8a3c1ee4f65",
+    "size": 18826,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Poop.uasset",
+    "sha256": "401c42b550a1240d0e1f3c9208f2fce6e7957cb219a2cf72611d55950b6e18ca",
+    "size": 14841,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Poop_Montage.uasset",
+    "sha256": "bda839df1045704063f073763bdd4c9478f473af1fca26e3c27015dc7ae9d781",
+    "size": 2477,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Roar.uasset",
+    "sha256": "47a4f650cfa6ff6725c65a74dc6b3c1520b210ccd74ae9186ff3da3583e853a5",
+    "size": 34757,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Roar_Montage.uasset",
+    "sha256": "edd46b97b03da5651ae2300a12abf877a7b546e6443396da205eea230356125a",
+    "size": 1718,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Startled.uasset",
+    "sha256": "a22641dd463859978d3da923f5d784b19d89f05721ee3d0bda65eaa8f61e8e68",
+    "size": 21181,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Startled_Montage.uasset",
+    "sha256": "a9b3f05abb42e147542a61c34825b154d269b58103c5825b6dfbf6c9f8d78154",
+    "size": 1821,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Swim-Fwd.uasset",
+    "sha256": "418a86459d044c31086217acef051f712abd3f69acc50ba8e223891b88d50454",
+    "size": 17269,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Swim-Idle.uasset",
+    "sha256": "1d827a42135ea0de6b7ab9759295a9bd0293f6e242fc7d40f62bf5d837cb853a",
+    "size": 25619,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Eat.uasset",
+    "sha256": "2ea962eadcf0164c070d05215bdeec7ebd9fedd06b52f65dd9721f3d873fd27a",
+    "size": 30610,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Eat_Montage.uasset",
+    "sha256": "9dde7b30132411ad2ff9801dd054de0a3b0f7af0d4bc2c8e38bd01f0bfe4df3a",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Idle.uasset",
+    "sha256": "e99958b8a52916e27ed549ce01313df61e78b5d679ed33dd98d05a01c3ae8f3b",
+    "size": 22803,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Idle_Montage.uasset",
+    "sha256": "4ec45c45077cb071edad0a6a841594c74dc6c68eef260fd42fd9473fc75d28db",
+    "size": 1746,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-In.uasset",
+    "sha256": "6d5b3351ac82c38288edab3f6dd21af76dbb1bb774fd651994534557efcf8ff8",
+    "size": 26924,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-In_Montage.uasset",
+    "sha256": "537298a991617c80cff9e149ec7ad416faf2ed6770531475599c2bdfac40d849",
+    "size": 1900,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Out-Tamed.uasset",
+    "sha256": "04a680d67a12ffb5f3a080e5a9548a79a9200f24e3775ecf0891c63a520130ac",
+    "size": 31925,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "e879e61f9ab5b87b90b3522d1056c1ce2035994b9b958d5689f9ff3e8654a843",
+    "size": 1928,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Out-Wild.uasset",
+    "sha256": "c84daf644316252bb35e855f3df030c20773113c26ad6710186dbf8b4658a904",
+    "size": 24391,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "1e6eca5589b5f01633b917fbfde9ec9cbc7c02dd0bdd5e8b4920576fcf39e164",
+    "size": 1924,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Trot-Fwd.uasset",
+    "sha256": "f9544c652dacaad8d9bfb846f701ced9b1d55c868c9fea2328618cfc264560a6",
+    "size": 19184,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Trot-Lft.uasset",
+    "sha256": "d2fffff099889ba2efa1a5615fab2e3d0d4c870152bb9618b8b05e9887a33142",
+    "size": 19420,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Equus\\Animations\\Equus-Trot-Rit.uasset",
+    "sha256": "02e13de0881535cee9be5b0ccc6d9ddbfc3f9bdad46996f4d41b9a155ca75e3c",
+    "size": 19544,
+    "export_count": 10
+  }
+]

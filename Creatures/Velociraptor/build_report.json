@@ -1,0 +1,623 @@
+{
+  "species": "Velociraptor",
+  "ark_asset": "Raptor",
+  "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
+  "bones": 79,
+  "cubes": 226,
+  "source_vertices": 11798,
+  "source_triangles": 21959,
+  "animations": 35,
+  "source_hashes": {
+    "actorx/Animations/Raptor-Aim-Center.config": "a81809a99bd78c2abfe39f3192a1de2d2fc6e9386e5d2191db9f9d032048bd5c",
+    "actorx/Animations/Raptor-Aim-Center.props.txt": "b001436c5bc4fcd3bed912e5c61668686ad79473ee45d0a852069fb99df1dd98",
+    "actorx/Animations/Raptor-Aim-Center.psa": "173f07e0913d31d695457006d4397b76dca0fd91230919392524615c2e90f159",
+    "actorx/Animations/Raptor-Aim-Dwn-Lft.config": "97ae02c35f1bb85d600885ffe4ba2e8061ce13d445d587be71684ffd481c30cc",
+    "actorx/Animations/Raptor-Aim-Dwn-Lft.props.txt": "6fb246d95cfe998de2902e0d305144c5cbd604624e3ae15ed9e7af54955f6cd2",
+    "actorx/Animations/Raptor-Aim-Dwn-Lft.psa": "d162e41192610b735fbdd7096dfc78ae4afb763aaffdcfb6c923bf41ae8df935",
+    "actorx/Animations/Raptor-Aim-Dwn-Rit.config": "7caaa1ed0e7601f192149e22ca926c8465b83db6519e8246b0d365bd50f5b326",
+    "actorx/Animations/Raptor-Aim-Dwn-Rit.props.txt": "b5b3f35240ce0d44663940b1036790970bf2166a169167cbb80e33b3cd097e34",
+    "actorx/Animations/Raptor-Aim-Dwn-Rit.psa": "69673338cb486e140182f289f1d1576417bc077ce34513fc4ce68ecd1dbd4d8a",
+    "actorx/Animations/Raptor-Aim-Dwn.config": "3d886f157ecfa4a07a823aaee21388f6ccea4edc6c4bbb2c3ffd547976030420",
+    "actorx/Animations/Raptor-Aim-Dwn.props.txt": "8324934aeeee1423ed44318d2d48f0280912e866d4a4baf66e4dcd6a0af1526c",
+    "actorx/Animations/Raptor-Aim-Dwn.psa": "bf4d9c638c1c1f4122826a92195147c5dcd344a72fb535514de4fafb7d084b95",
+    "actorx/Animations/Raptor-Aim-Lft.config": "9823d8e9ddee857a91ef6855c771cbaef825940620720915f978a616c767827e",
+    "actorx/Animations/Raptor-Aim-Lft.props.txt": "c551f66a9b21aafb0dff21b2a68bc5553b714c1e76741acdfca310ed561d751f",
+    "actorx/Animations/Raptor-Aim-Lft.psa": "f5f0311a7b6fdf916828cecfa994c5c9c89dd54cb5326eeaf11f791be232fd67",
+    "actorx/Animations/Raptor-Aim-Rit.config": "cb68473c277a316e35daa39f9a6e2534a8d9b776932896d82d9796a7437fedf4",
+    "actorx/Animations/Raptor-Aim-Rit.props.txt": "1c497daceb77abc75ec5b107be3f9589cd711cce974199fed6c0ee6119f8ac92",
+    "actorx/Animations/Raptor-Aim-Rit.psa": "66b16fdaf678f563d4891cfb66b28a7a9c65945355c38333a2a824105b35c76d",
+    "actorx/Animations/Raptor-Aim-Up-Lft.config": "b87bc7d8e0709649ac5c74d91049a2da6cf59c08eb58fcce5961b1479ba7fcb9",
+    "actorx/Animations/Raptor-Aim-Up-Lft.props.txt": "13a4e005d2c25f817d1d137a3c6478fccdc36a004626f0909058ec4ffa5af72e",
+    "actorx/Animations/Raptor-Aim-Up-Lft.psa": "0f39d2bdeecae0c0bcb000ce25e53254a89a0c0f1718e9e41de97456456707a8",
+    "actorx/Animations/Raptor-Aim-Up-Rit.config": "c6a12b951da6269cf0b6d5ebc63502f5bfa2effaa477382a3c7dd38a4fda2ac9",
+    "actorx/Animations/Raptor-Aim-Up-Rit.props.txt": "1b3f4409c60e5a7ed5f7be814d09aa55a35fb0897d314ec9d7ea3edfcceddd9c",
+    "actorx/Animations/Raptor-Aim-Up-Rit.psa": "b2a67400d1f23625c85cab2c00b9613c6cd2c5b6c733472a4976cc8869bc1af2",
+    "actorx/Animations/Raptor-Aim-Up.config": "1316d48d9952ce7686cbab05269ea057e3aafbd57affdb02d19312984984641f",
+    "actorx/Animations/Raptor-Aim-Up.props.txt": "6d7c4b2e7fbe36d2b3363472549897333ff5892f26e20c5059d118c9b547b661",
+    "actorx/Animations/Raptor-Aim-Up.psa": "520346b7f5b15408fca6ebb18b2081d5e44682f1cceb40dff1012939fe92ec04",
+    "actorx/Animations/Raptor-Attack.config": "e110a090266d8943b07c1e4b16092815c898d8c1ba28e4638b43e4b9919403f9",
+    "actorx/Animations/Raptor-Attack.props.txt": "6bb942203794b00cdf6ff80d90d8c08d67877f19200aa21365671298c3aea44f",
+    "actorx/Animations/Raptor-Attack.psa": "1f340ea2bac48b4b79140bb10b3aad46530b3fa754125467255b372644c87d1d",
+    "actorx/Animations/Raptor-Blink.config": "2b5239d22cdc14d81cf85fe10e3f8720a57922e8c005fa282aa8365c582a3c2d",
+    "actorx/Animations/Raptor-Blink.props.txt": "a0bec1091d90fdf48608881f18d221aa6746765d80b51504ad11faf5da997567",
+    "actorx/Animations/Raptor-Blink.psa": "5aeded438da3e328357d2e738a33dd3e746440aab203817a73dc1216e6d87d12",
+    "actorx/Animations/Raptor-Call.config": "37d4eca3d9a7f9eea4f5cc204fe63172ecba0db4d28cf7443a7a4ed746080cbd",
+    "actorx/Animations/Raptor-Call.props.txt": "43628be6675b0d79ba5e0e240f246c2ffe7c6ee41c329a8f7829340c652ebcb4",
+    "actorx/Animations/Raptor-Call.psa": "10a3cfb43321c13f243f90da14c5e6250b780c9db597e52351b5a88bfee1a86d",
+    "actorx/Animations/Raptor-Charge-Fwd.config": "b50b276e315b17db9a9baf1669f9354a419634a9bdd3e58c49abb01fa62aa3cb",
+    "actorx/Animations/Raptor-Charge-Fwd.props.txt": "b0bac5849239d0a4d6807c42ed9a8cd55b106348761be9581e72adb09411dbd7",
+    "actorx/Animations/Raptor-Charge-Fwd.psa": "f9b1979472cc651d64288bdae7518d134bac44bb87ae02216c4bbf1961e6dbdc",
+    "actorx/Animations/Raptor-Cuddle.config": "c0d393ba12b35ba6384d71daee9985d8d871aca8144d41ac2aa26406e7fed23b",
+    "actorx/Animations/Raptor-Cuddle.props.txt": "ca88aa8b399032889f3fa756ea8fdc75c5f103ed68cfb1dd28e1a7fbc12112b9",
+    "actorx/Animations/Raptor-Cuddle.psa": "0938393455facece39ec35e270eeac6ee7aa14141685802b0766b1c9852d6f10",
+    "actorx/Animations/Raptor-Eat-Additive.config": "0d4c852cedfd5943223ed36a8afdd5a178b8a11de1f2a93bb86009538a06703c",
+    "actorx/Animations/Raptor-Eat-Additive.props.txt": "8a2ec515139c1b171660629e93fa6b739b7c08c2e43c0f19d69263be4d15bd3c",
+    "actorx/Animations/Raptor-Eat-Additive.psa": "64859fae295249ffdf0f0bd5b6b0b46ae9ff3b9e34524543a9d4f477c5240e8e",
+    "actorx/Animations/Raptor-Hurt-Big.config": "207ba24fbce3f3ee9ab8f12e90b9451755b3ee2ec95fd9105e4aa6c606860b18",
+    "actorx/Animations/Raptor-Hurt-Big.props.txt": "dfb5e02e7f34dd8cc4f45d9a405122e35515052ee1a815bc3f4720965a783e8e",
+    "actorx/Animations/Raptor-Hurt-Big.psa": "bf4a338d9d213ae8f831acb97e32621fe172bd9246d37f634fa9ed264a024b14",
+    "actorx/Animations/Raptor-Idle.config": "eb7ba0252a313c19f00945b10dd04c4de8c938880ea6417019a1a3f3e65326e4",
+    "actorx/Animations/Raptor-Idle.props.txt": "0fc0b2a7c250e155bbf664737e179e2ee0c2031bb25f839202996208dafdd711",
+    "actorx/Animations/Raptor-Idle.psa": "a8b83def2f5c891856e0c8fcc3781f56a951194905b7694f1ad92d9c1657f530",
+    "actorx/Animations/Raptor-Jump-Idle.config": "64380b2422850d369ab74c39457c6b103a61825e0e8efe2f811b4a63b5875434",
+    "actorx/Animations/Raptor-Jump-Idle.props.txt": "8c496c1ad150a39012c522238ff8fdf8626de3032b266bf3289b95694992f922",
+    "actorx/Animations/Raptor-Jump-Idle.psa": "285348df7ae43c7027eabe25f14bd5328dff2e8a29406c869310d19467c3a58d",
+    "actorx/Animations/Raptor-Jump-in.config": "a7a3151546c5f41101e32f5285b62e105d7eba0c221fe159bfbad471298360c8",
+    "actorx/Animations/Raptor-Jump-in.props.txt": "993d024f3552df4ae59b6c6150773ff50841b993eda12ed4a7fcde52affa496a",
+    "actorx/Animations/Raptor-Jump-in.psa": "5970c36d3519337225e74b1c0c91a5996c81b818cac8af5e373a49e269896646",
+    "actorx/Animations/Raptor-Jump-Out.config": "6cd8f5b8b76e4c47def5674efb4f99b65ff91603302364ccaa82b262187b3a65",
+    "actorx/Animations/Raptor-Jump-Out.props.txt": "29b9488abd84c86f499bf7a748fc4d463687017708f5dfafb4183f11a2323a7b",
+    "actorx/Animations/Raptor-Jump-Out.psa": "68036c2aa182fd84a107a0eab146b3fff0321366b335ac869ba642d15554ae48",
+    "actorx/Animations/Raptor-Lay-Egg.config": "a53763c1f8f1598b0fc02e8c1acdb7f74a6cd2d65680ed402c631dd8a3c96123",
+    "actorx/Animations/Raptor-Lay-Egg.props.txt": "b6ce8d1998cbac1a2a0e18478928dcfea308ad41d5f4f7729b1e6dd69cda7ef5",
+    "actorx/Animations/Raptor-Lay-Egg.psa": "872b6809f7bb81c6ada011768e31fdbe38c9cad9ca76dfa9e3cbad9e4d3b40d7",
+    "actorx/Animations/Raptor-Move-Fwd-Attack.config": "e2adfaa7a5427c1c56078c4d433c659957cd8bbe711441552e7c0c97e3d4488c",
+    "actorx/Animations/Raptor-Move-Fwd-Attack.props.txt": "17ed225baa15e05db047fbcad7e589a5103b36f4377ffc3f769a817bf24b9e44",
+    "actorx/Animations/Raptor-Move-Fwd-Attack.psa": "fc6fd138b2384f6c06f721c5aef59236e98f9297b239b6f06d18eab3f4534f05",
+    "actorx/Animations/Raptor-Move-Fwd.config": "dcecf4f13547d4ae0ee3739feee6bee68f942dc4c923764584d3c37b224c3613",
+    "actorx/Animations/Raptor-Move-Fwd.props.txt": "28803fe7c065f80b71dc6b089997462d6fbaa7a6a1eaffee94ce65fb8cfd0a00",
+    "actorx/Animations/Raptor-Move-Fwd.psa": "4f014cbf22090e4fe42b74141da957624b8c3e2916709a0acb45d92f50c30866",
+    "actorx/Animations/Raptor-Pounce-Attack.config": "1b643a1166309fdffc67b8bcd152efd1aefb41f9b6cb36aaaa0e972a479626b1",
+    "actorx/Animations/Raptor-Pounce-Attack.props.txt": "a2aede13c40e667c3c80628ca29817db14172b73e8072e13911fe7d8db8d5d76",
+    "actorx/Animations/Raptor-Pounce-Attack.psa": "09f06c4bc39ab886664fc8a92adb69758e1be6f38305c145218b563ff9f73c61",
+    "actorx/Animations/Raptor-Pounce-Idle.config": "65502434447e99ea458dd651f7258582211b50b7c38b1f45e6eea18f2a442fd8",
+    "actorx/Animations/Raptor-Pounce-Idle.props.txt": "363a0fbfc195a8acaa48b9fbb14795425cdf753e7c5c2cdf94032f0224378cce",
+    "actorx/Animations/Raptor-Pounce-Idle.psa": "8d755f388fae088e05366312dd0d13ecc8381456be62cfcc9ab37cff8b7e13ff",
+    "actorx/Animations/Raptor-Pounce-In.config": "0db9fafb6f2562cebf5ab0e7cfcd568f71cb2a5b02005b465e540b3c6b8821a7",
+    "actorx/Animations/Raptor-Pounce-In.props.txt": "f9cf533a5143192e1325050e9df428ebad412b73cfb0d07dd9c305bf8b4f4434",
+    "actorx/Animations/Raptor-Pounce-In.psa": "239547072794af78921f98abb6c0d1dbe6ff8097645258cfed02de0e1dd15b04",
+    "actorx/Animations/Raptor-Pounce-Out.config": "2ae3ed1594ac869a22fc0d27f66f682f3097d48501bbcbdef4d02c3dfa605f6d",
+    "actorx/Animations/Raptor-Pounce-Out.props.txt": "82e09941bacb4b6f59a59dc3401f89b7be08dfd3d60a5b50d4485052312037ee",
+    "actorx/Animations/Raptor-Pounce-Out.psa": "43cb8bee2e50c080ee2cd8599aaa7a6d5742b1936645b8bbf2018586e46a5988",
+    "actorx/Animations/Raptor-Startled.config": "1b6f3921950bc6f6aa90d3e4079efb30b51bcdd4fa49197cca8843f3675dbcac",
+    "actorx/Animations/Raptor-Startled.props.txt": "56747bd189a9df1f2d4c6ad3e20003ef2cb19708ceba58ffe239847693ebeece",
+    "actorx/Animations/Raptor-Startled.psa": "3b5464c3bdd23b0b59c4a2a6ad6870925377e2e532819992bd9b15b076fc96a8",
+    "actorx/Animations/Raptor-Swim-Fwd.config": "b6f933ebd2a2de00c36778c3d2fe5a1423244512358d3ceb53441f8b0f904043",
+    "actorx/Animations/Raptor-Swim-Fwd.props.txt": "34f7351fd4b2f81dda80b5445e576811166945d22555ca5ea536e0dae3671fb3",
+    "actorx/Animations/Raptor-Swim-Fwd.psa": "cda39810fb5b07ff7696838975950f73039b18fcd683b260795c53f0354f2599",
+    "actorx/Animations/Raptor-Swim-Idle.config": "61cec3e36c12d25004ec608e7a5cd0ca0ef2dabb5bb2b30b0f751059853e05fd",
+    "actorx/Animations/Raptor-Swim-Idle.props.txt": "45b4b5ccb5bb43d8bb3340e78353fe353adb7b93d31f775e35f360a7630007cf",
+    "actorx/Animations/Raptor-Swim-Idle.psa": "2cf888636c14d62558d1d87d54b60439630b5e33c09264c0053f749b772c0198",
+    "actorx/Animations/Raptor-Torpid-Eat.config": "a02d22d5071dabeac9f1b51b0dcc7febaa6d9285c670ca219c203170a450133d",
+    "actorx/Animations/Raptor-Torpid-Eat.props.txt": "eeb5e2b45e4f12758ddc7ef3088af4a194b005ce9e8e9a47bf09c428e396910f",
+    "actorx/Animations/Raptor-Torpid-Eat.psa": "1a95e6cf87fb6f7128f269fa7da8f3d76e541bdf115e9484f26316fb7ccbc24b",
+    "actorx/Animations/Raptor-Torpid-In.config": "7108d7749ea9ff8dbae2bbf18ffcacbb1b3056d904d038aa1bb170c1d556ef28",
+    "actorx/Animations/Raptor-Torpid-In.props.txt": "34ae95c42069bca87903daacc124b95a4e6eb2de6821ee9636a1189b267e06db",
+    "actorx/Animations/Raptor-Torpid-In.psa": "3ab9a9dbd1b2e3dc5c80948f3e8d856e7554112edafd911cfd62912c2bb38228",
+    "actorx/Animations/Raptor-Torpid-Out-Tamed.config": "1072f958b1e455c696b39d61394c6c174942fe6769000d606e876cf6565c15ab",
+    "actorx/Animations/Raptor-Torpid-Out-Tamed.props.txt": "0f923592eedbb31b52664c8d774c1dc6f8460ca73c5bf69a8516d95188facb3a",
+    "actorx/Animations/Raptor-Torpid-Out-Tamed.psa": "29b14ac805519c119956aa8e56e39a8ff11ed490322e8111ad8a0d6fa9121151",
+    "actorx/Animations/Raptor-Torpid-Out-Wild.config": "eb39b3ccbecd618d246f6a51fc89edd496e5df6735d7b4b3ce3333a026aece5a",
+    "actorx/Animations/Raptor-Torpid-Out-Wild.props.txt": "047cf55b02c84cd3f518eae1f86024c67767e2522127fe9e02b935dafd958e2c",
+    "actorx/Animations/Raptor-Torpid-Out-Wild.psa": "89332628d7f27ef3e2dd209b254a513ce84b47b49fa2c192f9b16f133576ab06",
+    "actorx/Animations/Raptor-Torpid.config": "b435deb015cafa31d17955fa5e4afe850e1772b3c567903d56a6ea88da0274d2",
+    "actorx/Animations/Raptor-Torpid.props.txt": "a412155946c4b322a1b8d2786221dc909c17542766cec48001c588b6d66c31d2",
+    "actorx/Animations/Raptor-Torpid.psa": "db0adae003e93b44223ab1dffcaad86b6108e4e0699283b7ff720477e37db8d0",
+    "actorx/Raptor.props.txt": "3625bf204ae1765eddf7b4359ae8dbf57c1f0c0ee013263a22b2a18d7ede4c18",
+    "actorx/Raptor.psk": "2a7f8160349c8f1013e491d0014c27ebd4af6c338d54420645e634d5ffbf8652",
+    "gltf/Raptor.bin": "34a4a275e244f0b3b4e9c2162bf739060780826f7bde2621cdd1b0020feb5863",
+    "gltf/Raptor.gltf": "fb38142f942e8cfb95c6d80f42c34aeb74752736f39207ecd756d8a152a46df7",
+    "gltf/Raptor.props.txt": "3625bf204ae1765eddf7b4359ae8dbf57c1f0c0ee013263a22b2a18d7ede4c18"
+  },
+  "clips": [
+    {
+      "name": "Raptor-Aim-Center",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 134,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 7.993605777301127e-15,
+      "rotation_roundtrip_radians": 9.640880811541195e-16
+    },
+    {
+      "name": "Raptor-Aim-Dwn-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 134,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.0769163338864018e-14,
+      "rotation_roundtrip_radians": 9.032687412053248e-16
+    },
+    {
+      "name": "Raptor-Aim-Dwn-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 131,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 9.992007221626409e-15,
+      "rotation_roundtrip_radians": 9.032687412053248e-16
+    },
+    {
+      "name": "Raptor-Aim-Dwn",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 131,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 9.769962616701378e-15,
+      "rotation_roundtrip_radians": 9.032687412053248e-16
+    },
+    {
+      "name": "Raptor-Aim-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 130,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 8.881784197001252e-15,
+      "rotation_roundtrip_radians": 9.032687412053248e-16
+    },
+    {
+      "name": "Raptor-Aim-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 133,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 8.881784197001252e-15,
+      "rotation_roundtrip_radians": 9.145837857233118e-16
+    },
+    {
+      "name": "Raptor-Aim-Up-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 132,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 8.881784197001252e-15,
+      "rotation_roundtrip_radians": 9.032687412053248e-16
+    },
+    {
+      "name": "Raptor-Aim-Up-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 133,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 9.769962616701378e-15,
+      "rotation_roundtrip_radians": 1.0307462056065216e-15
+    },
+    {
+      "name": "Raptor-Aim-Up",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 131,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.3322676295501878e-14,
+      "rotation_roundtrip_radians": 9.154424447391922e-16
+    },
+    {
+      "name": "Raptor-Attack",
+      "frames": 21,
+      "fps": 31.5,
+      "retained_keys": 1475,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.6645352591003757e-14,
+      "rotation_roundtrip_radians": 1.1483085587652995e-15
+    },
+    {
+      "name": "Raptor-Blink",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "retained_keys": 149,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.509903313490213e-14,
+      "rotation_roundtrip_radians": 1.004137083293382e-15
+    },
+    {
+      "name": "Raptor-Call",
+      "frames": 61,
+      "fps": 30.5,
+      "retained_keys": 3634,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.7763568394002505e-14,
+      "rotation_roundtrip_radians": 1.1408005192395415e-15
+    },
+    {
+      "name": "Raptor-Charge-Fwd",
+      "frames": 25,
+      "fps": 37.5,
+      "retained_keys": 1333,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.687538997430238e-14,
+      "rotation_roundtrip_radians": 1.3143893431651495e-15
+    },
+    {
+      "name": "Raptor-Cuddle",
+      "frames": 181,
+      "fps": 30.16666603088379,
+      "retained_keys": 7341,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.3092638912203256e-14,
+      "rotation_roundtrip_radians": 1.1716474407329836e-15
+    },
+    {
+      "name": "Raptor-Eat-Additive",
+      "frames": 46,
+      "fps": 30.66666603088379,
+      "retained_keys": 2098,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.9539925233402755e-14,
+      "rotation_roundtrip_radians": 1.1588411773007127e-15
+    },
+    {
+      "name": "Raptor-Hurt-Big",
+      "frames": 21,
+      "fps": 31.5,
+      "retained_keys": 1255,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.7763568394002505e-14,
+      "rotation_roundtrip_radians": 1.1490759121612892e-15
+    },
+    {
+      "name": "Raptor-Idle",
+      "frames": 91,
+      "fps": 30.33333396911621,
+      "retained_keys": 3343,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.842170943040401e-14,
+      "rotation_roundtrip_radians": 1.2312492399452051e-15
+    },
+    {
+      "name": "Raptor-Jump-Idle",
+      "frames": 51,
+      "fps": 30.600000381469727,
+      "retained_keys": 1977,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.4868995751603507e-14,
+      "rotation_roundtrip_radians": 1.2976473706775542e-15
+    },
+    {
+      "name": "Raptor-Jump-in",
+      "frames": 11,
+      "fps": 33.0,
+      "retained_keys": 803,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.8207657603852567e-14,
+      "rotation_roundtrip_radians": 1.2940351129460611e-15
+    },
+    {
+      "name": "Raptor-Jump-Out",
+      "frames": 17,
+      "fps": 31.874998092651367,
+      "retained_keys": 1199,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.5987211554602254e-14,
+      "rotation_roundtrip_radians": 1.1669163453219236e-15
+    },
+    {
+      "name": "Raptor-Lay-Egg",
+      "frames": 61,
+      "fps": 30.5,
+      "retained_keys": 3152,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.930988785010413e-14,
+      "rotation_roundtrip_radians": 1.1541605643293108e-15
+    },
+    {
+      "name": "Raptor-Move-Fwd-Attack",
+      "frames": 33,
+      "fps": 30.937498092651367,
+      "retained_keys": 2134,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.5757174171303632e-14,
+      "rotation_roundtrip_radians": 1.134106697219849e-15
+    },
+    {
+      "name": "Raptor-Move-Fwd",
+      "frames": 33,
+      "fps": 30.937498092651367,
+      "retained_keys": 1685,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.6645352591003757e-14,
+      "rotation_roundtrip_radians": 1.1192408442636065e-15
+    },
+    {
+      "name": "Raptor-Pounce-Attack",
+      "frames": 41,
+      "fps": 30.75,
+      "retained_keys": 1708,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.9539925233402755e-14,
+      "rotation_roundtrip_radians": 1.1551591228185182e-15
+    },
+    {
+      "name": "Raptor-Pounce-Idle",
+      "frames": 70,
+      "fps": 30.434783935546875,
+      "retained_keys": 2799,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.3092638912203256e-14,
+      "rotation_roundtrip_radians": 1.2391419638929865e-15
+    },
+    {
+      "name": "Raptor-Pounce-In",
+      "frames": 32,
+      "fps": 30.967742919921875,
+      "retained_keys": 1808,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 3.7192471324942744e-14,
+      "rotation_roundtrip_radians": 1.1226292239288884e-15
+    },
+    {
+      "name": "Raptor-Pounce-Out",
+      "frames": 26,
+      "fps": 31.200000762939453,
+      "retained_keys": 1282,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.3092638912203256e-14,
+      "rotation_roundtrip_radians": 1.1427122222165232e-15
+    },
+    {
+      "name": "Raptor-Startled",
+      "frames": 25,
+      "fps": 31.25,
+      "retained_keys": 1606,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.220446049250313e-14,
+      "rotation_roundtrip_radians": 1.1701941865056627e-15
+    },
+    {
+      "name": "Raptor-Swim-Fwd",
+      "frames": 43,
+      "fps": 30.71428680419922,
+      "retained_keys": 2854,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.1316282072803006e-14,
+      "rotation_roundtrip_radians": 1.1743774447922263e-15
+    },
+    {
+      "name": "Raptor-Swim-Idle",
+      "frames": 61,
+      "fps": 30.5,
+      "retained_keys": 2488,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.1316282072803006e-14,
+      "rotation_roundtrip_radians": 1.1796023971356798e-15
+    },
+    {
+      "name": "Raptor-Torpid-Eat",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "retained_keys": 1890,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.7541523789077473e-14,
+      "rotation_roundtrip_radians": 1.2431953801660566e-15
+    },
+    {
+      "name": "Raptor-Torpid-In",
+      "frames": 61,
+      "fps": 30.5,
+      "retained_keys": 3813,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 2.1316282072803006e-14,
+      "rotation_roundtrip_radians": 1.1437512185201215e-15
+    },
+    {
+      "name": "Raptor-Torpid-Out-Tamed",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "retained_keys": 5690,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.9539925233402755e-14,
+      "rotation_roundtrip_radians": 1.1628031452138453e-15
+    },
+    {
+      "name": "Raptor-Torpid-Out-Wild",
+      "frames": 61,
+      "fps": 30.5,
+      "retained_keys": 3718,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.865174681370263e-14,
+      "rotation_roundtrip_radians": 1.1628031452138453e-15
+    },
+    {
+      "name": "Raptor-Torpid",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "retained_keys": 692,
+      "extra_source_bones_not_in_mesh": [
+        "Lft_LowerEyelid_JNT_SKL",
+        "Lft_UpperEyelid_JNT_SKL",
+        "Rht_LowerEyelid_JNT_SKL",
+        "Rht_UpperEyelid_JNT_SKL"
+      ],
+      "source_fk_max_error": 1.8263168755083825e-14,
+      "rotation_roundtrip_radians": 1.1767613464295774e-15
+    }
+  ],
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences",
+  "position_key_tolerance": 0.0005,
+  "rotation_key_tolerance_degrees": 0.03,
+  "limitations": [
+    "Rigid cubes approximate the smooth source skin; no blended vertex weights.",
+    "Palette texture is generated, not the ARK texture.",
+    "Loop flags are name-based suggestions; review in Blockbench.",
+    "Entity controller/state transitions, sounds and Unreal notifies are not converted."
+  ]
+}

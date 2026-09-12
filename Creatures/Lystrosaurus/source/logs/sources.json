@@ -1,0 +1,302 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Lystrosaurus.uasset",
+    "sha256": "32fc18dedd2d87a12591e9b44b019a9725e03d26c18b8ea592645b8961d06c40",
+    "size": 1095933,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Lystrosaurus_Skeleton.uasset",
+    "sha256": "f9dc6ebdd08c4053940cc3ff7695bab7217f63fafafa31a5e7358dbe960bbf94",
+    "size": 16567,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Center.uasset",
+    "sha256": "4c317499718209f69dae653333f6f1cad52917a4a7524c066e7624b6c9175549",
+    "size": 6418,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Dwn-Lft.uasset",
+    "sha256": "4d9252ff245fde2c007e28c83fdf9a9a71e673652713b726aad9b18b330eed9b",
+    "size": 6420,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Dwn-Rit.uasset",
+    "sha256": "7a1eb240e35b73b39ab444eef0f68488cd6f4f240a06258d16117e8369d7471e",
+    "size": 6420,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Dwn.uasset",
+    "sha256": "0a4231bb7b517dbd71dacd2331e4ef50a3afb00421c8dd0ba2741dc42a38ffbb",
+    "size": 6412,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Lft.uasset",
+    "sha256": "5a4aa367c296ea20f573adfc095f88c376a8774e0b7e14736f48a0bd6de49f5e",
+    "size": 6412,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Rit.uasset",
+    "sha256": "df86bc9917d26cc8129ce0a4b5a7e20acaa9a9d0862fafae79788e8b1507f679",
+    "size": 6412,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Up-Lft.uasset",
+    "sha256": "116da286692a4c5e8754a72a9d4cbfedb1cbe5fcd7c5bd4148446be3f5148e69",
+    "size": 6418,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Up-Rit.uasset",
+    "sha256": "d58d42400fad6737c7a59d43876fc00e9d854d2582905dcca9aca2c035f4b232",
+    "size": 6418,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Aim-Up.uasset",
+    "sha256": "8f4954885c98155f851d2dbf7f4d733708bf9e38b5423a35165db9f6a0eb575f",
+    "size": 6410,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Attack-Bite.uasset",
+    "sha256": "2f4a8869711a9e13e2717e6d722af1b20cc1615fc272aff11538c1a14a26f362",
+    "size": 11987,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Attack-Bite_Montage.uasset",
+    "sha256": "78d488611edaefc3e10f12a8a746dc091545c0ba34103801775ee46f900b4e5a",
+    "size": 2574,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Blink.uasset",
+    "sha256": "a120d761e06483e77c67da91dc0cc4aaafc56fbd6ccc91d688a75039cb434bcc",
+    "size": 7173,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Charge-Fwd.uasset",
+    "sha256": "29e33ecafaf11ff79fa905f7ff72915bf004134d07e4cb990dbdf75a22a6938d",
+    "size": 15710,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Charge-Lft.uasset",
+    "sha256": "a4bb65ec0f69bb6cf4dc29b6b06dcdb364601a60056167d7b7cd86b1ac5e5c71",
+    "size": 15710,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Charge-Rit.uasset",
+    "sha256": "5a3ccf77d5fc067c97bdbc7737c9bdfd0ce2921f31882b00f7024f0fe3a8a382",
+    "size": 15710,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Eat.uasset",
+    "sha256": "8630780182a0a418c33dea9b9b74a6391c0c0475004eeae54fac62898feac0d1",
+    "size": 20411,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Eat_Montage.uasset",
+    "sha256": "40763e8404182d1edee1a108f1e5d05f1bd4cfa1ac1048bcd4b409be66a74b15",
+    "size": 1819,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Dance.uasset",
+    "sha256": "9d2ff3d1fdf7edd1325765ec7e7d8f4fef050e6061428fe803c42908a8a16abf",
+    "size": 17963,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Dance_Montage.uasset",
+    "sha256": "188b50f74bfb1f2b7be12791d502b0e0a3a7ec9987475c745c7739e2ca45b1e2",
+    "size": 1809,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Flip.uasset",
+    "sha256": "848df5eae7a8ca38c4de4f3c8f6063ce20cdcea4eeeaecad1a04466291decda8",
+    "size": 19775,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Flip_Montage.uasset",
+    "sha256": "1e930323003e63bd4ea4ab34dfa5823d0aafe6f50c598a227dc3a4daaa534bbf",
+    "size": 1805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Jump.uasset",
+    "sha256": "03b0bec8eaa0246deb2a2fbfa8dfa08390a1df7bc0cf79c351fcf118fd7c25f3",
+    "size": 30036,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Jump_Montage.uasset",
+    "sha256": "9160645ae1644c173ebde8bd9a78ca946cf0037a75450eedf56dc55c6def405c",
+    "size": 1805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Stand.uasset",
+    "sha256": "934db21b9aa9975ab006d060203676bdfcabdb4e6802c3bf65bb21d474320223",
+    "size": 24367,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Emote-Stand_Montage.uasset",
+    "sha256": "44bbef87f3073a2958e82442b5c9b6c3e7f6b141ee00f7adbed89673df3359c9",
+    "size": 1809,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Hurt-Small.uasset",
+    "sha256": "6ab3bfda5ed22691df2e9ece93240a893b98e9d49e0c1ef0b77c34961b8cf03f",
+    "size": 7757,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Hurt-Small_Montage.uasset",
+    "sha256": "cb84d64265fe7b42b64e81a8c362517e04bd79160efd55b0979a7752c564fa8a",
+    "size": 1814,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Idle.uasset",
+    "sha256": "e3ad6ee0749c953de2323d7e9301b5656fb4f867de1aa29f90a39f4b3f9ddec6",
+    "size": 18222,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Lay-Egg.uasset",
+    "sha256": "003acf54a3608d34a554ec62d8df89a006b5f799357e05e7565477b5ef818e63",
+    "size": 10828,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Lay-Egg_Montage.uasset",
+    "sha256": "21742c8a4b9bf3c21048aa180eef4b497dabceff062186c2b8c1aea58e8cda02",
+    "size": 2552,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Move-Fwd.uasset",
+    "sha256": "54681a560f0c003144225260f58ff605b722c4caf5d2926d41b773d3240d59ac",
+    "size": 15664,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Move-Lft.uasset",
+    "sha256": "107108bf433e24148872444ae9f2b4fdc4ae0ae0556866fe8ac361c0c399392a",
+    "size": 15664,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Move-Rit.uasset",
+    "sha256": "68be5d907d2c60d0ec2bbca3ee7655843f3c3d6af7a314a524ca88f260cd65b4",
+    "size": 15511,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Startled.uasset",
+    "sha256": "16a8e3ce104cec325bb7dc225f7db04902a863e5fd201feda77d45e9495906f6",
+    "size": 11586,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Startled_Montage.uasset",
+    "sha256": "1742b4df2a6741730455d51a42ed4bf3d692dcaf270ed0f62d3ae606d1b53b71",
+    "size": 1797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Swim-Fwd.uasset",
+    "sha256": "f6b9e1a255cca1371bf9b03208899de8c438db23ecb8a82205d12d2c2449cfed",
+    "size": 15858,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Swim-Idle.uasset",
+    "sha256": "cf70a4f92083faee23461978dd91ee32f9d8775ca542c604cbd370a9588659a7",
+    "size": 33640,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Eat.uasset",
+    "sha256": "38099879786a37338e9fd00e0da0cfee4111901e0c10f72073fb211a28b54539",
+    "size": 17653,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Eat_Montage.uasset",
+    "sha256": "a4b74be463489ce9313f781a17388b78b4988d80aaf71c367a0c1add9c014a88",
+    "size": 1967,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Idle.uasset",
+    "sha256": "7e1d7562a6f99d038687401d0697e819e2485497e08579939eb00e557a28cf7c",
+    "size": 15422,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Idle_Montage.uasset",
+    "sha256": "ba314f8e9a2f6f448d06d457625c337d335f9d7906389794548ff8616aee4948",
+    "size": 1809,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-In.uasset",
+    "sha256": "aa457c090ba39281f23b6dabcffb9a1ef94783db2e891a9617dc41bdc1cfda97",
+    "size": 18658,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-In_Montage.uasset",
+    "sha256": "254fa54ba095b9f6dad990d9116338eed8796b46d36552f6b3b9d93d5b745b90",
+    "size": 1963,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Out-Tamed.uasset",
+    "sha256": "71f62d2811079ad7c450810cb309d3ae0d5f670c115cb427d13af8482951b552",
+    "size": 22122,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "52d13771f9c1f7bdc156a10b20e5c255508af01ed67248b87b2ca80ba898377c",
+    "size": 1991,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Out-Wild.uasset",
+    "sha256": "fe46f6c867e06812b1e8b91c285bcdcb3bb8ad06e7cada0605ebfc161470b774",
+    "size": 22000,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "2551cf45cf9b1eea0791b4fe1889129de06f16a69affef5356358ad21e9e843d",
+    "size": 1987,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Lystrosaurus\\Animations\\Lystrosaurus_AimOffset.uasset",
+    "sha256": "9108eddb2f352699730b04cc97b4270fc426c47a0a46cab66864765ca2b1b006",
+    "size": 8062,
+    "export_count": 1
+  }
+]

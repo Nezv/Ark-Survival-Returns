@@ -1,0 +1,674 @@
+NumFrames = 91
+KeyEncodingFormat = AKF_PerTrackCompression (2)
+TranslationCompressionFormat = ACF_Identity (6)
+RotationCompressionFormat = ACF_Identity (6)
+ScaleCompressionFormat = ACF_Identity (6)
+CompressedTrackOffsets[0] = {}
+CompressedScaleOffsets =
+{
+    OffsetData[59] =
+    {
+        OffsetData[0] = 0
+        OffsetData[1] = 20
+        OffsetData[2] = 1680
+        OffsetData[3] = 2252
+        OffsetData[4] = 2824
+        OffsetData[5] = 3396
+        OffsetData[6] = 3972
+        OffsetData[7] = 4548
+        OffsetData[8] = 5120
+        OffsetData[9] = 5152
+        OffsetData[10] = 5184
+        OffsetData[11] = 5212
+        OffsetData[12] = 5232
+        OffsetData[13] = 5812
+        OffsetData[14] = 6384
+        OffsetData[15] = 6404
+        OffsetData[16] = 6444
+        OffsetData[17] = 6484
+        OffsetData[18] = 7064
+        OffsetData[19] = 7636
+        OffsetData[20] = 7656
+        OffsetData[21] = 7692
+        OffsetData[22] = 7724
+        OffsetData[23] = 7760
+        OffsetData[24] = 7792
+        OffsetData[25] = 7828
+        OffsetData[26] = 7876
+        OffsetData[27] = 7912
+        OffsetData[28] = 7960
+        OffsetData[29] = 9076
+        OffsetData[30] = 9648
+        OffsetData[31] = 9856
+        OffsetData[32] = 10428
+        OffsetData[33] = 11000
+        OffsetData[34] = 11572
+        OffsetData[35] = 11592
+        OffsetData[36] = 13252
+        OffsetData[37] = 14368
+        OffsetData[38] = 14940
+        OffsetData[39] = 15148
+        OffsetData[40] = 15720
+        OffsetData[41] = 16292
+        OffsetData[42] = 16864
+        OffsetData[43] = 16884
+        OffsetData[44] = 17464
+        OffsetData[45] = 17672
+        OffsetData[46] = 18244
+        OffsetData[47] = 18816
+        OffsetData[48] = 19388
+        OffsetData[49] = 19408
+        OffsetData[50] = 20528
+        OffsetData[51] = 21100
+        OffsetData[52] = 21672
+        OffsetData[53] = 22244
+        OffsetData[54] = 22824
+        OffsetData[55] = 23032
+        OffsetData[56] = 23604
+        OffsetData[57] = 24176
+        OffsetData[58] = 24748
+    }
+    StripSize = 1
+}
+TrackToSkeletonMapTable[59] =
+{
+    TrackToSkeletonMapTable[0] = { BoneTreeIndex=0 }
+    TrackToSkeletonMapTable[1] = { BoneTreeIndex=1 }
+    TrackToSkeletonMapTable[2] = { BoneTreeIndex=2 }
+    TrackToSkeletonMapTable[3] = { BoneTreeIndex=3 }
+    TrackToSkeletonMapTable[4] = { BoneTreeIndex=4 }
+    TrackToSkeletonMapTable[5] = { BoneTreeIndex=5 }
+    TrackToSkeletonMapTable[6] = { BoneTreeIndex=6 }
+    TrackToSkeletonMapTable[7] = { BoneTreeIndex=7 }
+    TrackToSkeletonMapTable[8] = { BoneTreeIndex=8 }
+    TrackToSkeletonMapTable[9] = { BoneTreeIndex=9 }
+    TrackToSkeletonMapTable[10] = { BoneTreeIndex=10 }
+    TrackToSkeletonMapTable[11] = { BoneTreeIndex=11 }
+    TrackToSkeletonMapTable[12] = { BoneTreeIndex=12 }
+    TrackToSkeletonMapTable[13] = { BoneTreeIndex=13 }
+    TrackToSkeletonMapTable[14] = { BoneTreeIndex=14 }
+    TrackToSkeletonMapTable[15] = { BoneTreeIndex=15 }
+    TrackToSkeletonMapTable[16] = { BoneTreeIndex=16 }
+    TrackToSkeletonMapTable[17] = { BoneTreeIndex=17 }
+    TrackToSkeletonMapTable[18] = { BoneTreeIndex=18 }
+    TrackToSkeletonMapTable[19] = { BoneTreeIndex=19 }
+    TrackToSkeletonMapTable[20] = { BoneTreeIndex=51 }
+    TrackToSkeletonMapTable[21] = { BoneTreeIndex=52 }
+    TrackToSkeletonMapTable[22] = { BoneTreeIndex=53 }
+    TrackToSkeletonMapTable[23] = { BoneTreeIndex=54 }
+    TrackToSkeletonMapTable[24] = { BoneTreeIndex=55 }
+    TrackToSkeletonMapTable[25] = { BoneTreeIndex=56 }
+    TrackToSkeletonMapTable[26] = { BoneTreeIndex=57 }
+    TrackToSkeletonMapTable[27] = { BoneTreeIndex=58 }
+    TrackToSkeletonMapTable[28] = { BoneTreeIndex=20 }
+    TrackToSkeletonMapTable[29] = { BoneTreeIndex=21 }
+    TrackToSkeletonMapTable[30] = { BoneTreeIndex=22 }
+    TrackToSkeletonMapTable[31] = { BoneTreeIndex=23 }
+    TrackToSkeletonMapTable[32] = { BoneTreeIndex=24 }
+    TrackToSkeletonMapTable[33] = { BoneTreeIndex=25 }
+    TrackToSkeletonMapTable[34] = { BoneTreeIndex=26 }
+    TrackToSkeletonMapTable[35] = { BoneTreeIndex=27 }
+    TrackToSkeletonMapTable[36] = { BoneTreeIndex=28 }
+    TrackToSkeletonMapTable[37] = { BoneTreeIndex=29 }
+    TrackToSkeletonMapTable[38] = { BoneTreeIndex=30 }
+    TrackToSkeletonMapTable[39] = { BoneTreeIndex=31 }
+    TrackToSkeletonMapTable[40] = { BoneTreeIndex=32 }
+    TrackToSkeletonMapTable[41] = { BoneTreeIndex=33 }
+    TrackToSkeletonMapTable[42] = { BoneTreeIndex=34 }
+    TrackToSkeletonMapTable[43] = { BoneTreeIndex=35 }
+    TrackToSkeletonMapTable[44] = { BoneTreeIndex=36 }
+    TrackToSkeletonMapTable[45] = { BoneTreeIndex=37 }
+    TrackToSkeletonMapTable[46] = { BoneTreeIndex=38 }
+    TrackToSkeletonMapTable[47] = { BoneTreeIndex=39 }
+    TrackToSkeletonMapTable[48] = { BoneTreeIndex=40 }
+    TrackToSkeletonMapTable[49] = { BoneTreeIndex=41 }
+    TrackToSkeletonMapTable[50] = { BoneTreeIndex=42 }
+    TrackToSkeletonMapTable[51] = { BoneTreeIndex=43 }
+    TrackToSkeletonMapTable[52] = { BoneTreeIndex=44 }
+    TrackToSkeletonMapTable[53] = { BoneTreeIndex=45 }
+    TrackToSkeletonMapTable[54] = { BoneTreeIndex=46 }
+    TrackToSkeletonMapTable[55] = { BoneTreeIndex=47 }
+    TrackToSkeletonMapTable[56] = { BoneTreeIndex=48 }
+    TrackToSkeletonMapTable[57] = { BoneTreeIndex=49 }
+    TrackToSkeletonMapTable[58] = { BoneTreeIndex=50 }
+}
+CompressedTrackToSkeletonMapTable[0] = {}
+CompressedCurveData = { FloatCurves[0]={} }
+Interpolation = Linear (0)
+AdditiveAnimType = AAT_None (0)
+RefPoseType = ABPT_None (0)
+RetargetSource = None
+RefPoseSeq = None
+RefFrameIndex = 0
+RetargetSourceAssetReferencePose[0] = {}
+bEnableRootMotion = false
+AuthoredSyncMarkers[0] = {}
+BakedPerBoneCustomAttributeData[0] = {}
+TargetFrameRate = { Numerator=0, Denominator=0 }
+Notifies[8] =
+{
+    Notifies[0] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_stag_torpid_out_wild_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[1] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[2] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[3] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[4] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[5] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_wep_slingshot_impact_sand_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[6] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_stag_torpid_out_tamed_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[7] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+}
+SequenceLength = 3
+RateScale = 1
+RawCurveData =
+{
+    FloatCurves[1] =
+    {
+        FloatCurves[0] = { FloatCurve=, CurveTypeFlags=6 }
+    }
+}
+Skeleton = Skeleton'PrimalEarth/Dinos/Stag/Stag_Skeleton.Stag_Skeleton'
+
+// Sequence: Stag-Torpid-Out-Tamed
+NumFrames = 91
+KeyEncodingFormat = AKF_PerTrackCompression (2)
+TranslationCompressionFormat = ACF_Identity (6)
+RotationCompressionFormat = ACF_Identity (6)
+ScaleCompressionFormat = ACF_Identity (6)
+CompressedTrackOffsets[0] = {}
+CompressedScaleOffsets =
+{
+    OffsetData[59] =
+    {
+        OffsetData[0] = 0
+        OffsetData[1] = 20
+        OffsetData[2] = 1680
+        OffsetData[3] = 2252
+        OffsetData[4] = 2824
+        OffsetData[5] = 3396
+        OffsetData[6] = 3972
+        OffsetData[7] = 4548
+        OffsetData[8] = 5120
+        OffsetData[9] = 5152
+        OffsetData[10] = 5184
+        OffsetData[11] = 5212
+        OffsetData[12] = 5232
+        OffsetData[13] = 5812
+        OffsetData[14] = 6384
+        OffsetData[15] = 6404
+        OffsetData[16] = 6444
+        OffsetData[17] = 6484
+        OffsetData[18] = 7064
+        OffsetData[19] = 7636
+        OffsetData[20] = 7656
+        OffsetData[21] = 7692
+        OffsetData[22] = 7724
+        OffsetData[23] = 7760
+        OffsetData[24] = 7792
+        OffsetData[25] = 7828
+        OffsetData[26] = 7876
+        OffsetData[27] = 7912
+        OffsetData[28] = 7960
+        OffsetData[29] = 9076
+        OffsetData[30] = 9648
+        OffsetData[31] = 9856
+        OffsetData[32] = 10428
+        OffsetData[33] = 11000
+        OffsetData[34] = 11572
+        OffsetData[35] = 11592
+        OffsetData[36] = 13252
+        OffsetData[37] = 14368
+        OffsetData[38] = 14940
+        OffsetData[39] = 15148
+        OffsetData[40] = 15720
+        OffsetData[41] = 16292
+        OffsetData[42] = 16864
+        OffsetData[43] = 16884
+        OffsetData[44] = 17464
+        OffsetData[45] = 17672
+        OffsetData[46] = 18244
+        OffsetData[47] = 18816
+        OffsetData[48] = 19388
+        OffsetData[49] = 19408
+        OffsetData[50] = 20528
+        OffsetData[51] = 21100
+        OffsetData[52] = 21672
+        OffsetData[53] = 22244
+        OffsetData[54] = 22824
+        OffsetData[55] = 23032
+        OffsetData[56] = 23604
+        OffsetData[57] = 24176
+        OffsetData[58] = 24748
+    }
+    StripSize = 1
+}
+TrackToSkeletonMapTable[59] =
+{
+    TrackToSkeletonMapTable[0] = { BoneTreeIndex=0 }
+    TrackToSkeletonMapTable[1] = { BoneTreeIndex=1 }
+    TrackToSkeletonMapTable[2] = { BoneTreeIndex=2 }
+    TrackToSkeletonMapTable[3] = { BoneTreeIndex=3 }
+    TrackToSkeletonMapTable[4] = { BoneTreeIndex=4 }
+    TrackToSkeletonMapTable[5] = { BoneTreeIndex=5 }
+    TrackToSkeletonMapTable[6] = { BoneTreeIndex=6 }
+    TrackToSkeletonMapTable[7] = { BoneTreeIndex=7 }
+    TrackToSkeletonMapTable[8] = { BoneTreeIndex=8 }
+    TrackToSkeletonMapTable[9] = { BoneTreeIndex=9 }
+    TrackToSkeletonMapTable[10] = { BoneTreeIndex=10 }
+    TrackToSkeletonMapTable[11] = { BoneTreeIndex=11 }
+    TrackToSkeletonMapTable[12] = { BoneTreeIndex=12 }
+    TrackToSkeletonMapTable[13] = { BoneTreeIndex=13 }
+    TrackToSkeletonMapTable[14] = { BoneTreeIndex=14 }
+    TrackToSkeletonMapTable[15] = { BoneTreeIndex=15 }
+    TrackToSkeletonMapTable[16] = { BoneTreeIndex=16 }
+    TrackToSkeletonMapTable[17] = { BoneTreeIndex=17 }
+    TrackToSkeletonMapTable[18] = { BoneTreeIndex=18 }
+    TrackToSkeletonMapTable[19] = { BoneTreeIndex=19 }
+    TrackToSkeletonMapTable[20] = { BoneTreeIndex=51 }
+    TrackToSkeletonMapTable[21] = { BoneTreeIndex=52 }
+    TrackToSkeletonMapTable[22] = { BoneTreeIndex=53 }
+    TrackToSkeletonMapTable[23] = { BoneTreeIndex=54 }
+    TrackToSkeletonMapTable[24] = { BoneTreeIndex=55 }
+    TrackToSkeletonMapTable[25] = { BoneTreeIndex=56 }
+    TrackToSkeletonMapTable[26] = { BoneTreeIndex=57 }
+    TrackToSkeletonMapTable[27] = { BoneTreeIndex=58 }
+    TrackToSkeletonMapTable[28] = { BoneTreeIndex=20 }
+    TrackToSkeletonMapTable[29] = { BoneTreeIndex=21 }
+    TrackToSkeletonMapTable[30] = { BoneTreeIndex=22 }
+    TrackToSkeletonMapTable[31] = { BoneTreeIndex=23 }
+    TrackToSkeletonMapTable[32] = { BoneTreeIndex=24 }
+    TrackToSkeletonMapTable[33] = { BoneTreeIndex=25 }
+    TrackToSkeletonMapTable[34] = { BoneTreeIndex=26 }
+    TrackToSkeletonMapTable[35] = { BoneTreeIndex=27 }
+    TrackToSkeletonMapTable[36] = { BoneTreeIndex=28 }
+    TrackToSkeletonMapTable[37] = { BoneTreeIndex=29 }
+    TrackToSkeletonMapTable[38] = { BoneTreeIndex=30 }
+    TrackToSkeletonMapTable[39] = { BoneTreeIndex=31 }
+    TrackToSkeletonMapTable[40] = { BoneTreeIndex=32 }
+    TrackToSkeletonMapTable[41] = { BoneTreeIndex=33 }
+    TrackToSkeletonMapTable[42] = { BoneTreeIndex=34 }
+    TrackToSkeletonMapTable[43] = { BoneTreeIndex=35 }
+    TrackToSkeletonMapTable[44] = { BoneTreeIndex=36 }
+    TrackToSkeletonMapTable[45] = { BoneTreeIndex=37 }
+    TrackToSkeletonMapTable[46] = { BoneTreeIndex=38 }
+    TrackToSkeletonMapTable[47] = { BoneTreeIndex=39 }
+    TrackToSkeletonMapTable[48] = { BoneTreeIndex=40 }
+    TrackToSkeletonMapTable[49] = { BoneTreeIndex=41 }
+    TrackToSkeletonMapTable[50] = { BoneTreeIndex=42 }
+    TrackToSkeletonMapTable[51] = { BoneTreeIndex=43 }
+    TrackToSkeletonMapTable[52] = { BoneTreeIndex=44 }
+    TrackToSkeletonMapTable[53] = { BoneTreeIndex=45 }
+    TrackToSkeletonMapTable[54] = { BoneTreeIndex=46 }
+    TrackToSkeletonMapTable[55] = { BoneTreeIndex=47 }
+    TrackToSkeletonMapTable[56] = { BoneTreeIndex=48 }
+    TrackToSkeletonMapTable[57] = { BoneTreeIndex=49 }
+    TrackToSkeletonMapTable[58] = { BoneTreeIndex=50 }
+}
+CompressedTrackToSkeletonMapTable[0] = {}
+CompressedCurveData = { FloatCurves[0]={} }
+Interpolation = Linear (0)
+AdditiveAnimType = AAT_None (0)
+RefPoseType = ABPT_None (0)
+RetargetSource = None
+RefPoseSeq = None
+RefFrameIndex = 0
+RetargetSourceAssetReferencePose[0] = {}
+bEnableRootMotion = false
+AuthoredSyncMarkers[0] = {}
+BakedPerBoneCustomAttributeData[0] = {}
+TargetFrameRate = { Numerator=0, Denominator=0 }
+Notifies[8] =
+{
+    Notifies[0] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_stag_torpid_out_wild_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[1] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[2] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[3] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[4] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[5] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_wep_slingshot_impact_sand_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[6] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = PW_stag_torpid_out_tamed_Cue
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+    Notifies[7] =
+    {
+        TriggerTimeOffset = 0
+        EndTriggerTimeOffset = 0
+        TriggerWeightThreshold = 0
+        NotifyName = Footstep
+        Duration = 0
+        EndLink =
+        {
+            SlotIndex = 0
+            SegmentIndex = 0
+            SegmentBeginTime = 0
+            SegmentLength = 0
+        }
+        bConvertedFromBranchingPoint = false
+        NotifyTriggerChance = 0
+        TrackIndex = 0
+        SlotIndex = 0
+        SegmentIndex = 0
+        SegmentBeginTime = 0
+        SegmentLength = 0
+    }
+}
+SequenceLength = 3
+RateScale = 1
+RawCurveData =
+{
+    FloatCurves[1] =
+    {
+        FloatCurves[0] = { FloatCurve=, CurveTypeFlags=6 }
+    }
+}
+Skeleton = Skeleton'PrimalEarth/Dinos/Stag/Stag_Skeleton.Stag_Skeleton'

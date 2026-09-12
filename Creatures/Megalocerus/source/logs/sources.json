@@ -1,0 +1,320 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Stag.uasset",
+    "sha256": "7ea4937c790daaf3b43c4e6fd22d504de8c45f7c58c5c6cc58cfe14b95fa6216",
+    "size": 4531667,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Stag_Skeleton.uasset",
+    "sha256": "9982fd26c5d1f233e8186795b8f7753e0b6805862e8294799b1ccdd9cda6af85",
+    "size": 17865,
+    "export_count": 23
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Center.uasset",
+    "sha256": "a6e11dab26ea85b10f4accf1edaf63aac6c2592e6c365518233ed3829753fbe5",
+    "size": 7078,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Dwn-Lft.uasset",
+    "sha256": "f83b0d4a01fba02f34a99b32cb34e40a993e8662afa0fb6ce8951b8319d1ce2e",
+    "size": 7092,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Dwn-Rit.uasset",
+    "sha256": "0550b787fd8b71378c80bd07abe5ad544859402c2be10bad20bfeb7946757276",
+    "size": 7080,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Dwn.uasset",
+    "sha256": "3fe00f77331c97bb949f316a43c0700420bd6c6de15e0571ce1c1416b9a5b6c4",
+    "size": 7084,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Lft.uasset",
+    "sha256": "6e8dc8abe8fe299662582de8185dc6e809914f39400eb1dda7dadd02064478db",
+    "size": 7072,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Rit.uasset",
+    "sha256": "5c22f41ff53c6a68c4938e7d292be7dec6736481ab22c534cfb14f1fa11b6fb2",
+    "size": 7072,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Up-Lft.uasset",
+    "sha256": "5cb3a9494bc3b2a52a448a24f549925df3298c62013b741099bf5485331969ae",
+    "size": 7078,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Up-Rit.uasset",
+    "sha256": "ae3345b5f5abb142e8fc3c8f1d723bfadbd144452af23d1a14113b129d86ae94",
+    "size": 7078,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Aim-Up.uasset",
+    "sha256": "4f045ca6bb450522565e69d7b14cd5919c8219fccb37ec837dca47670a178bb1",
+    "size": 7074,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Attack-Gore.uasset",
+    "sha256": "307233d75ba4a57d4e513485cf90c5535e55061179222b47ac1c1aae0c67d86d",
+    "size": 12546,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Attack-Gore2.uasset",
+    "sha256": "86d5f612552ac63c6dedb6e63e724f4561dbba1940efbe938fdb3d5ab9b2ea8e",
+    "size": 12720,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Attack-Gore2_Montage.uasset",
+    "sha256": "f329591bc576001e4ba77dbdab14d72bb3410e109e25be3263a6760ca43da3f6",
+    "size": 2548,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Attack-Gore_Montage.uasset",
+    "sha256": "25d0425fd48564f8f70f5c381386762b48fb68b3c24b57ae9d69d175154e2b5e",
+    "size": 2544,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Blink.uasset",
+    "sha256": "714df043250f878617a24496ad42d491062109d95b5bdfec69937ed1191385f1",
+    "size": 7875,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Charge-FlyFwd.uasset",
+    "sha256": "0619ef5d05d22a61d68eebe50be137e029adc36a67d236549bd31aaa5004eb0d",
+    "size": 17099,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Charge-Fwd.uasset",
+    "sha256": "c6861a57b80fcc7bb24aeeec244da4dc5daa775d064568e785cc631b6f83d03e",
+    "size": 24504,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Charge-Lft.uasset",
+    "sha256": "cd2d885d882d62f48a2a077aa8b5640f3f4f4f29090289711d739c565928c3ca",
+    "size": 24504,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Charge-Rit.uasset",
+    "sha256": "4558f50554436494eca3da6d3ca390f34bf80ccb7af9f402826321665635b400",
+    "size": 24504,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Cuddle.uasset",
+    "sha256": "b028d852b19335184e7907b2759f44c580ed4f3db401d3d77d4978b19189ff49",
+    "size": 63251,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Cuddle_Montage.uasset",
+    "sha256": "49517b8ed705fc8e7cac5476709cd60b6ec786184b13bb7fe22189ffb909cd1f",
+    "size": 1717,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Graze.uasset",
+    "sha256": "c566012f2e8ef2bad922f9e57ddfbaa67dfaeec4bd7f59093315a90293bf3a60",
+    "size": 58774,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Graze_Montage.uasset",
+    "sha256": "014f012a592eee33a480974841c5f5541c1d10e7ac8e2e50c60b17f90073fc96",
+    "size": 1713,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Hurt-Big-Lft.uasset",
+    "sha256": "eb91f9de4f77efd492ee316812f801fbba5f5d57612b6125a382d4a9b9481ae2",
+    "size": 14049,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Hurt-Big-Lft_Montage.uasset",
+    "sha256": "47994b54d7247c915763fe7f9212f448d04ae17fc41dbcc3eaaf753d6907b8e9",
+    "size": 1839,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Idle.uasset",
+    "sha256": "0b562f7e2fa4e9e0c60344ded9edb16bad7214776fbfa9d99fcf7723afb5962b",
+    "size": 27864,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Jump-Idle.uasset",
+    "sha256": "09f7d82a023648233ff674d657ea8a703a38bb8c32fc82b7e9380d697adfaca0",
+    "size": 13321,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Jump-In.uasset",
+    "sha256": "04d4d6dfe73880ad0460dcbfc7708d42e3fd361c500f86decdfe83985141925b",
+    "size": 10545,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Jump-In_Montage.uasset",
+    "sha256": "4a530c2fa74123948238769e9481b827ad96c8da2b7a4926833ba4954a2f5e42",
+    "size": 3456,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Jump-Out.uasset",
+    "sha256": "27c17e1a24b4f603a232eb58812cfaf6bfe431c838c11ea22fb0b8abb37f3c7b",
+    "size": 9887,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Jump-Out_Montage.uasset",
+    "sha256": "1ea120b774a99823c5a0985bb8c1269985bb1310f6da9d58328cbd468da38ae5",
+    "size": 1768,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Look-Around.uasset",
+    "sha256": "8a1de491bcb181e38e4412e86e9262b423e113434be185d3c38350fa17698f65",
+    "size": 51586,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Move-Fwd.uasset",
+    "sha256": "03e6d306cd8562e55cb7fdb99eaa1cd32826184ee9eae20ec135c3f985251e6c",
+    "size": 19787,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Move-Lft.uasset",
+    "sha256": "00552497aa111b80f1144bd3e822620347f8d8647259dad309dbd317a65fc3f6",
+    "size": 20451,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Move-Rit.uasset",
+    "sha256": "632a7f8f10c21f052729d2abf89fe0d5a871fe89dde62fdc813eecd2284fa04a",
+    "size": 20451,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Poop.uasset",
+    "sha256": "9496f24b1458691a20d62829fecc057a8749c953d3a9ea4a23f66258660d1284",
+    "size": 11965,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Poop_Montage.uasset",
+    "sha256": "a783f5ccfcb59192ac53750eb9889546302ca310d4b1c45e46a6cb91ccba4dc1",
+    "size": 2468,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Startled.uasset",
+    "sha256": "21eb1a62c8c1cc629d9ad99ce8ad6e7d65d9204bda86a8835fae2e16d78015b7",
+    "size": 15423,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Startled_Montage.uasset",
+    "sha256": "72d8a3714f30d58eb697d63eeedf907e1be0d8afac820abb324bee679ad7e793",
+    "size": 1811,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Swim-Fwd.uasset",
+    "sha256": "75db351527e5e182583e572dd775ca83ba3458ad9f85b4ed1f22f8591f126869",
+    "size": 15093,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Swim-Idle.uasset",
+    "sha256": "13d38efd50f5e73caa68f7fdd7bd310644d22fe00c95d4373d108b6a019ac53a",
+    "size": 20201,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Eat.uasset",
+    "sha256": "5bdcf19eb4d6411dedbd30797de6decf0963b0d48285c54c5325dfe8444b7499",
+    "size": 28872,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Eat_Montage.uasset",
+    "sha256": "5c5d098f56c012264287ca98a8877923036e3ff49425c2784896578bf14fc6dc",
+    "size": 1895,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Idle.uasset",
+    "sha256": "64a24ed9d87b8b3032d8f239df79c33d7ee11383e9609675f282352ebc038d61",
+    "size": 23069,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Idle_Montage.uasset",
+    "sha256": "035b7b1bdc73d4f0b339bd4498be44bc5638d40310c3509e698ba94943815c79",
+    "size": 1737,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-In.uasset",
+    "sha256": "89536ebee3c04b8cc4eef91ba90908c2ef43109d5028053fc4735905d4ea8777",
+    "size": 25961,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-In_Montage.uasset",
+    "sha256": "6fa889fa1cf70d8242b1c44dddb0f583c8fdedd9b1edd8d100ea6c1a9371aa8e",
+    "size": 1891,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Out-Tamed.uasset",
+    "sha256": "dfd189cbf9473072e3dfec1f558858ceee0f88bd42c159adb6768b8f47039372",
+    "size": 36394,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "b8ce2cacb93496753965ae6f7b928e2ee25085d3d13b2b8589a5a855b29bb682",
+    "size": 1919,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Out-Wild.uasset",
+    "sha256": "1a24110b3154d5f0050a49322873050616351743580004d26d41b06aaa22edf6",
+    "size": 26058,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "7548be85fb69767b44dc884f887a4cf1eb2edde3888a31f2a4f7058024efa7db",
+    "size": 1915,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Stag\\Animations\\Stag_AimOffset.uasset",
+    "sha256": "ffbcc0a8341eb9c0d8d1635a55d039076d7cb18c202f2c6dc65da422eb3a270c",
+    "size": 7798,
+    "export_count": 1
+  }
+]

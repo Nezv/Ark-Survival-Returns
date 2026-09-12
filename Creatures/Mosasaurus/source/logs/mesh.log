@@ -1,0 +1,80 @@
+Found 1826 game files (0 skipped) in 69 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 2005 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/Mosasaurus/Mosasaurus.uasset Ver: 405/10 Engine: 0 Names: 96 Exports: 1 Imports: 8 Game: 1000051
+Loaded in 0.0 sec, 19 allocs, 0.00 MBytes serialized in 1 calls.
+Loading SkeletalMesh4 Mosasaurus from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus.uasset
+Loading package: PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 89 Exports: 19 Imports: 3 Game: 1000051
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+BoolProperty: unknown USkeletalMesh4 bIgnoreTriReductions
+BoolProperty: unknown USkeletalMesh4 bConsoleDropLOD0
+IntProperty: unknown USkeletalMesh4 ConsoleDropLODNewTriangleCount
+StructProperty: unknown USkeletalMesh4 ScaleMultiplier
+WARNING: Import(MaterialInstanceConstant'Mosasaurus_Colorize_MIC'): package /Game/PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Colorize_MIC was not found
+Loading Skeleton Mosasaurus_Skeleton from package PrimalEarth/Dinos/Mosasaurus/Mosasaurus_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting SkeletalMesh4 Mosasaurus to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Mosasaurus/Mosasaurus.psk
+Memory: allocated 422912 bytes in 131 blocks
+Exported 1/1 objects in 0.0 sec

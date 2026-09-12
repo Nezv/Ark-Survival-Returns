@@ -1,0 +1,1210 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cnidaria",
+        "texture_width": 64,
+        "texture_height": 8,
+        "visible_bounds_width": 4.0789642333984375,
+        "visible_bounds_height": 8.352732753753664,
+        "visible_bounds_offset": [
+          0,
+          -1.15659658908844,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            -90.0,
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "body",
+          "pivot": [
+            -0.0,
+            0.0,
+            -1.75
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "bodyTop1",
+          "pivot": [
+            0.0,
+            -0.468344,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            29.497596,
+            -90.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop14",
+          "pivot": [
+            -4.582495,
+            -0.468344,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            -0.0
+          ],
+          "parent": "bodyTop1"
+        },
+        {
+          "name": "tentacle1",
+          "pivot": [
+            -9.293236,
+            -0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            30.116014,
+            0.0
+          ],
+          "parent": "bodyTop14"
+        },
+        {
+          "name": "tentacle2",
+          "pivot": [
+            -22.136307,
+            -0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle1"
+        },
+        {
+          "name": "tentacle3",
+          "pivot": [
+            -35.280968,
+            -0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle2"
+        },
+        {
+          "name": "bodyTop2",
+          "pivot": [
+            -0.33117,
+            -0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -1e-06,
+            29.497597,
+            -45.000004
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop13",
+          "pivot": [
+            -4.913664,
+            -0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop2"
+        },
+        {
+          "name": "tentacle4",
+          "pivot": [
+            -9.624405,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            29.391714,
+            -0.0
+          ],
+          "parent": "bodyTop13"
+        },
+        {
+          "name": "tentacle5",
+          "pivot": [
+            -25.849958,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            2.283535,
+            0.0
+          ],
+          "parent": "tentacle4"
+        },
+        {
+          "name": "tentacle6",
+          "pivot": [
+            -42.377102,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle5"
+        },
+        {
+          "name": "bodyTop5",
+          "pivot": [
+            -0.33117,
+            0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            1e-06,
+            29.497597,
+            45.000004
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop10",
+          "pivot": [
+            -4.913664,
+            0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop5"
+        },
+        {
+          "name": "tentacle7",
+          "pivot": [
+            -9.624405,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            0.0,
+            28.934589,
+            0.0
+          ],
+          "parent": "bodyTop10"
+        },
+        {
+          "name": "tentacle8",
+          "pivot": [
+            -25.849958,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            2.283535,
+            -0.0
+          ],
+          "parent": "tentacle7"
+        },
+        {
+          "name": "tentacle9",
+          "pivot": [
+            -42.377102,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle8"
+        },
+        {
+          "name": "bodyTop3",
+          "pivot": [
+            -0.468344,
+            0.0,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            29.497596,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop15",
+          "pivot": [
+            -5.050839,
+            0.0,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop3"
+        },
+        {
+          "name": "tentacle10",
+          "pivot": [
+            -9.76158,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            28.934589,
+            0.0
+          ],
+          "parent": "bodyTop15"
+        },
+        {
+          "name": "tentacle11",
+          "pivot": [
+            -22.604651,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle10"
+        },
+        {
+          "name": "tentacle12",
+          "pivot": [
+            -35.749312,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle11"
+        },
+        {
+          "name": "bodyTop6",
+          "pivot": [
+            0.33117,
+            0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -1e-06,
+            29.497597,
+            134.999996
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop12",
+          "pivot": [
+            -4.251325,
+            0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop6"
+        },
+        {
+          "name": "tentacle13",
+          "pivot": [
+            -8.962066,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            28.934589,
+            0.0
+          ],
+          "parent": "bodyTop12"
+        },
+        {
+          "name": "tentacle14",
+          "pivot": [
+            -25.187619,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            2.283535,
+            0.0
+          ],
+          "parent": "tentacle13"
+        },
+        {
+          "name": "tentacle15",
+          "pivot": [
+            -41.714762,
+            0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle14"
+        },
+        {
+          "name": "bodyTop7",
+          "pivot": [
+            0.0,
+            0.468344,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            29.497596,
+            90.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop11",
+          "pivot": [
+            -4.582495,
+            0.468344,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop7"
+        },
+        {
+          "name": "tentacle16",
+          "pivot": [
+            -9.293236,
+            0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            30.116014,
+            0.0
+          ],
+          "parent": "bodyTop11"
+        },
+        {
+          "name": "tentacle17",
+          "pivot": [
+            -22.136307,
+            0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle16"
+        },
+        {
+          "name": "tentacle18",
+          "pivot": [
+            -35.280968,
+            0.468344,
+            -5.987053
+          ],
+          "rotation": [
+            -180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle17"
+        },
+        {
+          "name": "bodyTop8",
+          "pivot": [
+            0.468344,
+            0.0,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            29.497596,
+            -180.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop9",
+          "pivot": [
+            -4.11415,
+            -0.0,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop8"
+        },
+        {
+          "name": "tentacle19",
+          "pivot": [
+            -8.824891,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            28.934589,
+            0.0
+          ],
+          "parent": "bodyTop9"
+        },
+        {
+          "name": "tentacle20",
+          "pivot": [
+            -21.667962,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle19"
+        },
+        {
+          "name": "tentacle21",
+          "pivot": [
+            -34.812623,
+            -0.0,
+            -5.987053
+          ],
+          "rotation": [
+            180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle20"
+        },
+        {
+          "name": "bodyTop4",
+          "pivot": [
+            0.33117,
+            -0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            1e-06,
+            29.497597,
+            -134.999996
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "bodyTop16",
+          "pivot": [
+            -4.251325,
+            -0.33117,
+            -5.854306
+          ],
+          "rotation": [
+            -0.0,
+            30.105471,
+            0.0
+          ],
+          "parent": "bodyTop4"
+        },
+        {
+          "name": "tentacle22",
+          "pivot": [
+            -8.962066,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            29.288718,
+            0.0
+          ],
+          "parent": "bodyTop16"
+        },
+        {
+          "name": "tentacle23",
+          "pivot": [
+            -25.187619,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -0.0,
+            2.283535,
+            0.0
+          ],
+          "parent": "tentacle22"
+        },
+        {
+          "name": "tentacle24",
+          "pivot": [
+            -41.714762,
+            -0.33117,
+            -5.987053
+          ],
+          "rotation": [
+            -180.0,
+            3.045259,
+            0.0
+          ],
+          "parent": "tentacle23"
+        },
+        {
+          "name": "tentacle25",
+          "pivot": [
+            2.484784,
+            5.983049,
+            0.442843
+          ],
+          "rotation": [
+            -24.26659,
+            89.719084,
+            89.999773
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle26",
+          "pivot": [
+            -10.358287,
+            5.983049,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle25"
+        },
+        {
+          "name": "tentacle27",
+          "pivot": [
+            -2.296871,
+            5.810885,
+            0.442843
+          ],
+          "rotation": [
+            -24.266702,
+            89.71908,
+            44.999654
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle28",
+          "pivot": [
+            -15.139942,
+            5.810885,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle27"
+        },
+        {
+          "name": "tentacle29",
+          "pivot": [
+            -6.083049,
+            2.484784,
+            0.442843
+          ],
+          "rotation": [
+            -24.266602,
+            89.719085,
+            -0.000243
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle30",
+          "pivot": [
+            -18.92612,
+            2.484784,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle29"
+        },
+        {
+          "name": "tentacle31",
+          "pivot": [
+            -6.110885,
+            -2.446871,
+            0.442843
+          ],
+          "rotation": [
+            -24.266609,
+            89.719084,
+            -45.000249
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle32",
+          "pivot": [
+            -18.953956,
+            -2.446871,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle31"
+        },
+        {
+          "name": "tentacle33",
+          "pivot": [
+            -2.484784,
+            -5.733049,
+            0.442843
+          ],
+          "rotation": [
+            -24.26659,
+            89.719084,
+            -90.000227
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle34",
+          "pivot": [
+            -15.327855,
+            -5.733049,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle33"
+        },
+        {
+          "name": "tentacle35",
+          "pivot": [
+            2.546871,
+            -5.960885,
+            0.442843
+          ],
+          "rotation": [
+            -24.266702,
+            89.71908,
+            -135.000346
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle36",
+          "pivot": [
+            -10.2962,
+            -5.960885,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle35"
+        },
+        {
+          "name": "tentacle37",
+          "pivot": [
+            6.133049,
+            -2.484784,
+            0.442843
+          ],
+          "rotation": [
+            -24.266602,
+            89.719085,
+            179.999757
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle38",
+          "pivot": [
+            -6.710022,
+            -2.484784,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle37"
+        },
+        {
+          "name": "tentacle39",
+          "pivot": [
+            5.810885,
+            2.496871,
+            0.442843
+          ],
+          "rotation": [
+            -24.266609,
+            89.719084,
+            134.999751
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle40",
+          "pivot": [
+            -7.032186,
+            2.496871,
+            0.442843
+          ],
+          "rotation": [
+            -0.0,
+            0.680971,
+            0.0
+          ],
+          "parent": "tentacle39"
+        },
+        {
+          "name": "tentacle41",
+          "pivot": [
+            0.0,
+            4.257694,
+            -1.015106
+          ],
+          "rotation": [
+            90.0,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle42",
+          "pivot": [
+            -5.0,
+            4.257694,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle41"
+        },
+        {
+          "name": "tentacle43",
+          "pivot": [
+            -10.0,
+            4.257694,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle42"
+        },
+        {
+          "name": "tentacle45",
+          "pivot": [
+            4.257695,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle46",
+          "pivot": [
+            -0.742305,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle45"
+        },
+        {
+          "name": "tentacle47",
+          "pivot": [
+            -5.742305,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle46"
+        },
+        {
+          "name": "tentacle49",
+          "pivot": [
+            -4.257694,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -180.0,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle50",
+          "pivot": [
+            -9.257694,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle49"
+        },
+        {
+          "name": "tentacle51",
+          "pivot": [
+            -14.257694,
+            0.0,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle50"
+        },
+        {
+          "name": "tentacle53",
+          "pivot": [
+            -0.0,
+            -4.257696,
+            -1.015106
+          ],
+          "rotation": [
+            -90.0,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle54",
+          "pivot": [
+            -5.0,
+            -4.257696,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle53"
+        },
+        {
+          "name": "tentacle55",
+          "pivot": [
+            -10.0,
+            -4.257696,
+            -1.015106
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle54"
+        },
+        {
+          "name": "tentacle57",
+          "pivot": [
+            1.567502,
+            -0.053082,
+            -1.498726
+          ],
+          "rotation": [
+            179.332753,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle58",
+          "pivot": [
+            -7.432498,
+            -0.053082,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle57"
+        },
+        {
+          "name": "tentacle59",
+          "pivot": [
+            -16.432498,
+            -0.053082,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle58"
+        },
+        {
+          "name": "tentacle61",
+          "pivot": [
+            0.557287,
+            1.249243,
+            -1.498726
+          ],
+          "rotation": [
+            -114.495561,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle62",
+          "pivot": [
+            -8.992713,
+            1.249243,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle61"
+        },
+        {
+          "name": "tentacle63",
+          "pivot": [
+            -18.542713,
+            1.249243,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle62"
+        },
+        {
+          "name": "tentacle65",
+          "pivot": [
+            0.593801,
+            -1.391921,
+            -1.498726
+          ],
+          "rotation": [
+            131.785924,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle66",
+          "pivot": [
+            -8.406199,
+            -1.391921,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle65"
+        },
+        {
+          "name": "tentacle67",
+          "pivot": [
+            -17.406199,
+            -1.391921,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle66"
+        },
+        {
+          "name": "tentacle69",
+          "pivot": [
+            -1.219717,
+            -1.148496,
+            -1.498726
+          ],
+          "rotation": [
+            31.832442,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle70",
+          "pivot": [
+            -10.219717,
+            -1.148496,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle69"
+        },
+        {
+          "name": "tentacle71",
+          "pivot": [
+            -19.219717,
+            -1.148496,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle70"
+        },
+        {
+          "name": "tentacle73",
+          "pivot": [
+            -1.268402,
+            0.579823,
+            -1.498726
+          ],
+          "rotation": [
+            -11.614079,
+            90.0,
+            0.0
+          ],
+          "parent": "body"
+        },
+        {
+          "name": "tentacle74",
+          "pivot": [
+            -10.268402,
+            0.579823,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle73"
+        },
+        {
+          "name": "tentacle75",
+          "pivot": [
+            -19.268402,
+            0.579823,
+            -1.498726
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "tentacle74"
+        }
+      ]
+    }
+  ]
+}

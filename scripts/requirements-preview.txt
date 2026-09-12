@@ -1,0 +1,3 @@
+# Optional: correct hidden-surface previews for dense cuboid models.
+-r requirements.txt
+numba==0.67.0

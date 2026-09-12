@@ -1,0 +1,76 @@
+Found 1859 game files (0 skipped) in 71 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 2042 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/Megalodon/Megalodon.uasset Ver: 405/10 Engine: 0 Names: 94 Exports: 1 Imports: 8 Game: 1000051
+Loaded in 0.0 sec, 19 allocs, 0.00 MBytes serialized in 1 calls.
+Loading SkeletalMesh4 Megalodon from package PrimalEarth/Dinos/Megalodon/Megalodon.uasset
+Loading package: PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 88 Exports: 20 Imports: 3 Game: 1000051
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+IntProperty: unknown FSkeletalMeshLODInfo StaggeredUpdateFrequency
+BoolProperty: unknown USkeletalMesh4 bIgnoreTriReductions
+BoolProperty: unknown USkeletalMesh4 bConsoleDropLOD0
+IntProperty: unknown USkeletalMesh4 ConsoleDropLODNewTriangleCount
+StructProperty: unknown USkeletalMesh4 ScaleMultiplier
+WARNING: Import(MaterialInstanceConstant'Megalodon_Colorize_MIC'): package /Game/PrimalEarth/Dinos/Megalodon/Megalodon_Colorize_MIC was not found
+Loading Skeleton Megalodon_Skeleton from package PrimalEarth/Dinos/Megalodon/Megalodon_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Exporting objects ...
+Exporting SkeletalMesh4 Megalodon to C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/exports/actorx/PrimalEarth/Dinos/Megalodon/Megalodon.psk
+Memory: allocated 423042 bytes in 133 blocks
+Exported 1/1 objects in 0.0 sec

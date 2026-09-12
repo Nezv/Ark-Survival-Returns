@@ -1,0 +1,200 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Megalodon.uasset",
+    "sha256": "cec7db65a00e987789963adb4f22c49c07a08f4952331a5d0d42cc80da946e9c",
+    "size": 2611695,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Megalodon_Skeleton.uasset",
+    "sha256": "d6b5b01c64c1e549ed2d55a65c9210bc0613a3f1622d1e9453d21d0b9c7bf986",
+    "size": 11652,
+    "export_count": 20
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Center.uasset",
+    "sha256": "7d8dba5f7a40e06188bcdaf42b0f46ca40ed29826431fb1c0d8e75a03a249756",
+    "size": 3607,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Dwn-Lft.uasset",
+    "sha256": "c8bf530f916979e0ef791d7f5db77bcfb89c435d6ae0b499f3a295f239575703",
+    "size": 3641,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Dwn-Rit.uasset",
+    "sha256": "237ec6d9cc488de193993ab6aac72d00d8fea641cbbf4059c0eb0ea0526a3dfb",
+    "size": 3641,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Dwn.uasset",
+    "sha256": "4eca8c188dc44aed19569f59576bd494b6204cc0b570373d42bf69061fdc87c6",
+    "size": 3617,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Lft.uasset",
+    "sha256": "94f63f8e6b2471678209debd185ec09bf44e049029dbccec598fd3dfbd158860",
+    "size": 3597,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Rit.uasset",
+    "sha256": "e361da08f026098377566e61d0e5e970c5b4098bb6046570c5cbe1e70b47d8b5",
+    "size": 3605,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Up-Lft.uasset",
+    "sha256": "3a1255788b8b09bc33c479dba17b5177a92f8c8b42c694c0d21f9e6bb7bbfe9a",
+    "size": 3623,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Up-Rit.uasset",
+    "sha256": "c2058db99f868fd27b03980140e6dd97199d65d1554a3f551d0e3f0117ba3ef6",
+    "size": 3623,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Aim-Up.uasset",
+    "sha256": "574ca5bfa4cc04e233c5174604bed52377ccd5a8e1ffc7c7f754b4ce0d014ad3",
+    "size": 3615,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Attack-Bite-Montage.uasset",
+    "sha256": "f2351560c9232baca385882332f1adbb4bf7a8c00f159614f6001204b5be9056",
+    "size": 2636,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Attack-Bite.uasset",
+    "sha256": "0694f660083cfe28e78ae46fe178ad016b5636279da45c227d873af283cc39f9",
+    "size": 10308,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Eat.uasset",
+    "sha256": "ae18c8c15cb8c766b260f0c468560cbb4edd407404abd1d9d90b452bbccb4bec",
+    "size": 6491,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Eat_Montage.uasset",
+    "sha256": "a59a7f79869c3c6daebc371a3a91a31a47c8023abc7e2be3f62add676e538afc",
+    "size": 1750,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Hurt-Big-Rit-Montage.uasset",
+    "sha256": "e8928d33ceb17545d67c0e90bc4559776b1b8e38d98c2bcacd45ba7e7dbe5bf6",
+    "size": 1884,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Hurt-Big-Rit.uasset",
+    "sha256": "95f1e243d341a521bd6dab372a2a003b7ab72d4f97ed4c0e1e250b2e54c7aeae",
+    "size": 9370,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Idle-Lft.uasset",
+    "sha256": "d4abc211ca3e1064959772d73ed28bda3583eabdcf13eface83c26a2932b6bbe",
+    "size": 9228,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Idle-Rit.uasset",
+    "sha256": "1b041c4c2c4197784ae9cb7d89735959423cfe83214a2bc7ea7974ec557683d9",
+    "size": 9228,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Idle.uasset",
+    "sha256": "e681c4daccb80c82a73bb6d28c499c5153a0477d01c5815d393f388fd9188ac2",
+    "size": 9220,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Swim-Fwd.uasset",
+    "sha256": "6a2d5c6b545d40e8239e23ad235302b620f75ff6d1261333fbbc1425dd698cf7",
+    "size": 10453,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Swim-Lft.uasset",
+    "sha256": "f1289e8b29fca5d31e4a37ebcb6838b17a44629aaf275664112d1bd366e37bd3",
+    "size": 10453,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Swim-Rit.uasset",
+    "sha256": "829c4f76c06acb78f1b85021bea11e4d53315a90942a4f18cb326b96d16fdb55",
+    "size": 10453,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Eat.uasset",
+    "sha256": "37ce0e504cbadf06eb420824bd557b0a23ffe9559326534618d4e1c6e8db1190",
+    "size": 15647,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Eat_Montage.uasset",
+    "sha256": "254e64734582fbb53160b0f25a773baba5c48dcf7d71818a53cf9ae1f9a63194",
+    "size": 1778,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-In.uasset",
+    "sha256": "9a17b1e291e0b0232a11981f72ed423a239ae495211017940e09737d9671d052",
+    "size": 4894,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-In_Montage.uasset",
+    "sha256": "7acb0df553227589f7132330c6bb6c70fc589aaa2c8100da9da193a09de1c9e7",
+    "size": 1774,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Out-Tamed.uasset",
+    "sha256": "514e9f66240064fe9a9fac0fe9841a8a8607dfd45d84650b802c2b0291aab4fa",
+    "size": 9674,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "644944a1b6ebb5fd692a959d90a6d48cec2ec9d2dfca45e123302b2d0d1e16c6",
+    "size": 1802,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Out-Wild.uasset",
+    "sha256": "78ff464ec7b8f231e194998191c60fe2c9db5bf1e1ed30090433a5521a17443b",
+    "size": 8678,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "4a67d5a837af26c1ccc4606af61ca9b47903c1953b2198b06e64361024f58859",
+    "size": 1798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon-Torpid.uasset",
+    "sha256": "96750b4c7391475090c700901a9004a889f3dfcf3b99719548b57a9059dce064",
+    "size": 13664,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Megalodon\\Animations\\Megalodon_AimOffset.uasset",
+    "sha256": "5e5d2d4dc41fcfaf3ef50f1596fad290cd24ed4d72b9884f434ba65934cebd27",
+    "size": 7963,
+    "export_count": 1
+  }
+]

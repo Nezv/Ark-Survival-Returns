@@ -1,0 +1,674 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\CaveWolf.uasset",
+    "sha256": "9312d32efd3b358fad42bc11e0b8a52158a99d6a42fe8825f0cf0e3b2bb98408",
+    "size": 2959642,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\CaveWolf_Skeleton.uasset",
+    "sha256": "07a7b85dac816b1466be59c47a0bfb7822b9a7861dca1788eff9c5431f9d37ea",
+    "size": 25270,
+    "export_count": 28
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Center.uasset",
+    "sha256": "ceb0150565ce2003838ad2565ab0dfbbb4f01abdf4f223dcb0d6e41a15334eb1",
+    "size": 8131,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Dwn-Lft.uasset",
+    "sha256": "2560a03c640d0e86176b2ecb2751147caec8612cc29aef3f35497ffcbd198611",
+    "size": 8133,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Dwn-Rit.uasset",
+    "sha256": "429f08e44b462b14960fa28b5b64ba565e49bd7d56ad74a377927156a8145456",
+    "size": 8125,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Dwn.uasset",
+    "sha256": "fe757bafb71db788266115a4df1435a7b6b6c1a0d6a6f28cbcc874ad25155c67",
+    "size": 8125,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Lft.uasset",
+    "sha256": "f65d43cddfe3ca15f78e1e1c72c102e06ae0d69cec949cb0cb297bafcdbe7147",
+    "size": 8125,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Rit.uasset",
+    "sha256": "e8975394567c16a506202a2febb3bb3b6dd8dc789a4c038b3980c933b46c3769",
+    "size": 8125,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Up-Lft.uasset",
+    "sha256": "cb4e42823610c42d97f1ce21c71bba89ebccd3a8e578d05b62166d63c5d0fc83",
+    "size": 8127,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Up-Rit.uasset",
+    "sha256": "2771c77c84fc13fead6a546a4c5c00ffc5777158a3043235867ea2ef1f09e930",
+    "size": 8131,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Aim-Up.uasset",
+    "sha256": "e36317b482a8310e7138abecd149aa7bd986e363239865834a57a63aa440ffd4",
+    "size": 8123,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Attack-Bite.uasset",
+    "sha256": "ea0e7eb700b401b78f765a3eb3edc20c4d7ae951941ac564647242cc15fa534e",
+    "size": 22359,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Attack-Bite_Montage.uasset",
+    "sha256": "6ce9ac9730a10fadadeec5afbc0ab4f6aee8decd5b4e10cd1b736ffdbf3a0b2f",
+    "size": 2535,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Attack-Claw-Montage.uasset",
+    "sha256": "15cab2338ce216db1625a3b49c7393e82b95fb0c97779cb3f885f198bbb3abd1",
+    "size": 2543,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Attack-Claw-Rit.uasset",
+    "sha256": "d68580e7b6406b75caeca81a9c5cabb01b058fb226b64618ce53fb51dcd34bad",
+    "size": 23230,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Blink.uasset",
+    "sha256": "3c99daeff1bd92283aebb36d1ef498818d7ed1193d0717aecc81ca3dc0aa4956",
+    "size": 8112,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Charge-Fwd.uasset",
+    "sha256": "6129f00fc73153a70d784ae3bd6008c3909c1b6cc8c9e3daeb8be824dac0e0ed",
+    "size": 20338,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Charge-Lft.uasset",
+    "sha256": "05f0d62766f3eb7596d2d367b2669a41440e51feb947ef859104e6a552a3643c",
+    "size": 20438,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Charge-Rit.uasset",
+    "sha256": "abc2f9fc5c8cabc3438c94d83a6ab2c912a5d9e007b83b863e9cbca7e61f091c",
+    "size": 20438,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Cuddle.uasset",
+    "sha256": "3214787224023bccd8419cda0e1f766112dfbf02959fb699b26783fa38ae2248",
+    "size": 84441,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Cuddle_Montage.uasset",
+    "sha256": "5cc6bf10ea0c07064b34da6d80177301f5447dcc7b3d8667c8f8b18b6473d1a1",
+    "size": 1750,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Eat.uasset",
+    "sha256": "1c770c4731797b67aef7ceef2d8c8ce6590082311c0437fcb7143fc35876f8f3",
+    "size": 83733,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Eat_Montage.uasset",
+    "sha256": "a81f91d27d75140d2c4c3fd5d69dee04147b2f22a6e30ad405670d3cd608829f",
+    "size": 1738,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Howl.uasset",
+    "sha256": "e680c8e69c7ecaa78942e96776b5a3873bcfad42c13431fc7248718f5ddb5721",
+    "size": 38395,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Howl_Montage.uasset",
+    "sha256": "04e14ef1264e4db2f83d20b49242af7d0115761d051756ee4295203c267e0d8a",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Hurt.uasset",
+    "sha256": "6ce8e615c0f6fc4c3fe00a0529af380d40696d5f8707bfed2f2c8946c96ec388",
+    "size": 16787,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Hurt_Montage.uasset",
+    "sha256": "0f9ade9f82249c8427c5d68a070c38f9dd985cb76535cd0a4ec9a45f81c12a06",
+    "size": 1882,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Idle.uasset",
+    "sha256": "0bd270cbf04263208416b2ca32d8fde5266878de1271f63fcad9e4beac8682fa",
+    "size": 35753,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-Attack-Bite-Additive.uasset",
+    "sha256": "00e011985f19fba8e69437bb0024108be21c6959500d4d134454d52aa73c737b",
+    "size": 16028,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-Attack-Bite-Additive_Montage.uasset",
+    "sha256": "75d3d9fe88e1bbe0c1962b6ed14aa6cb23d37ebdbfd835acda6a36efdcb6fafa",
+    "size": 2591,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-Idle.uasset",
+    "sha256": "29df4abb74cabf8a0b5f0597c39e64fceb456bc28e96433feb1ea1613e6db2fe",
+    "size": 25542,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-In.uasset",
+    "sha256": "fb6f1ee39509f321d49927d20d494d6de72bb4ef248c8a521bc2d56ab6fe43fa",
+    "size": 16985,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-In_Montage.uasset",
+    "sha256": "56c3cb98088b05e226f930ae5979b97a0443912aa4a0bf18e4c53d90b202a5cf",
+    "size": 2726,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-Out.uasset",
+    "sha256": "19cc4048379f3dda6dc88418bd96b44aa338dff0a93e0916be94f9530d31802a",
+    "size": 16211,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Jump-Out_Montage.uasset",
+    "sha256": "cdd8214e02a3a0b64c80122eb4ed47a97df52de2a7265a7c19fbc5012c119867",
+    "size": 1802,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Poop.uasset",
+    "sha256": "627b2a5bb420ab101ebcd20c194d857e466b0dc8cb4362fc4a0e649c5bf6dfb3",
+    "size": 24675,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Poop_Montage.uasset",
+    "sha256": "eac95f694dcd35f75e0d50b6bc8a98517b00e0f7519fbd5ec12456ea3f91b99d",
+    "size": 2501,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Startled.uasset",
+    "sha256": "b16cd8684a0e2e8be3e9fa6b5c0c15105515027e5ebfafd0698b0cf5317ced66",
+    "size": 38173,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Startled_Montage.uasset",
+    "sha256": "226b7baec67643deee0ef274ed3f61fee6f974361996d0f43b8b519666d56a62",
+    "size": 1758,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Swim-Fwd.uasset",
+    "sha256": "cd37008d1409f2b5f05c0cd1dac2804cf658526f9558ddc96a95cefd1c007870",
+    "size": 26941,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Swim-Idle.uasset",
+    "sha256": "1fc6702d2376a046ff6d3b0beb257f767b12f432c6fd093b7b607af3c533f73a",
+    "size": 26739,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Eat.uasset",
+    "sha256": "5f85a7be86de47c05649a58bd61f55e275ada87f9484df39f9ab547188ac2f46",
+    "size": 32345,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Eat_Montage.uasset",
+    "sha256": "a13fd1afb561850bf8f3449719558706f6f2d02ae2288f778306472ddf3d9c3a",
+    "size": 1928,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Idle.uasset",
+    "sha256": "40768c45ac261173767d094fac316d1b6779799fff0b2485f77a31d22535fbc5",
+    "size": 26985,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Idle_Montage.uasset",
+    "sha256": "4698ef9c654e4d3f1b16f755405901e95cffdd8e9f7282bca394bfdda7c3121a",
+    "size": 1770,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-In.uasset",
+    "sha256": "8898613dc6a640e235c9b09c27cb16a1ae144dbe509647f977c424c0f69f7033",
+    "size": 42190,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-In_Montage.uasset",
+    "sha256": "5865b9fde6fb98a768a10534f5b7349fe6ba633043e8aa065b0162be56f33078",
+    "size": 1924,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Out-Tamed.uasset",
+    "sha256": "8bae222b66f8febbdf9ca84152cc9a8a7e2bd97e25f6ba8f7c9c3f261906e894",
+    "size": 61529,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "f785bad0ff0dc2a962bbdea5dc0ce969ef6c74d4ab0d5d76e365951145abd431",
+    "size": 1790,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Out-Wild.uasset",
+    "sha256": "e2dcb1276aa12fd08b416be20ae4889916f9a75cb86ab8679c73b4f60fe123a3",
+    "size": 38293,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "a413ba13f5f0c78151f4338129e290ff060f5008abd66f86247d2882e0ead1d8",
+    "size": 1948,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Walk-Fwd.uasset",
+    "sha256": "18fba9682d3b4ac9cdaab8f2e0b010653463a42352a6f2d51811854ea97bb726",
+    "size": 27521,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Walk-Lft.uasset",
+    "sha256": "771ab20bdd4aa1f355d243abe428cf57f843041da24b88cbc6cd557e38209c8f",
+    "size": 27521,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Walk-Rit.uasset",
+    "sha256": "0ca587eae56638911a0bf895cec654fee8f3e49960f2e05c84f4b473d78d99a1",
+    "size": 27521,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Attack-Bite.uasset",
+    "sha256": "9b32b41ef625b366caf66b614af8874970ff715cb875640c844209dd0593122a",
+    "size": 20456,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Attack-Bite_Montage.uasset",
+    "sha256": "19155c4ff18e91efa66a7de3c2b2598555a488c6d36858a5c521565ac8171f3d",
+    "size": 2591,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Attack-Claw.uasset",
+    "sha256": "a26628ad4f88a2b559216f9e5e47398ffecd7c7167afb6db8b235215d15f4190",
+    "size": 20961,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Attack-Claw_Montage.uasset",
+    "sha256": "78102ee4dbce0451d9a1fc7eb1e27ea917d1ff3ac88f0ef53b85e2ff421f0509",
+    "size": 2591,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Charge-Fwd.uasset",
+    "sha256": "1df3ab4c10eeb65e413350f5a48dd9e68496846e0477664700c09f7773995740",
+    "size": 20696,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Hurt.uasset",
+    "sha256": "027423233afcf1727cb5b926663e154fca793416dcd95e7d28272daf9a1a03b9",
+    "size": 15683,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Hurt_Montage.uasset",
+    "sha256": "bb18efd3ecc934e638a2b9c8bd630078086218c1d22357363b12700d816e39bd",
+    "size": 1798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Idle-Slide.uasset",
+    "sha256": "ceb89cb0bf492a9456a904a3f29016eb9f88ae63657210e98067784774c371f7",
+    "size": 56393,
+    "export_count": 13
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Idle.uasset",
+    "sha256": "44fdaee7c0bf463616bba5342533d6068cc8ceb5bcb26f332d8fed7fffdc3a10",
+    "size": 34805,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-In.uasset",
+    "sha256": "cf399daaa89a537636492a2ef2dc3b08d7d7cbf52e58b7ee2bff9f05dd8a859a",
+    "size": 16167,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-In_Montage.uasset",
+    "sha256": "f3acb6494a3b359684ebe95ce1816393e98e98f26d8d11a2d1b88ec904523f16",
+    "size": 1907,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-In.uasset",
+    "sha256": "9efe9b3aae8cad3c1261bcb1db0756e3ccf8f7325c6468cd4ab2a50de5faefd3",
+    "size": 15941,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-In_Montage.uasset",
+    "sha256": "5b3f4ea9aa0c131f6478842953a3af02582f67f75b8afab4f1770b9cd3a66eb6",
+    "size": 2761,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-Lft.uasset",
+    "sha256": "6740c8d61935d1de648cbb322c95b993f5ac2e893abcaccb7b89598241301940",
+    "size": 15943,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-Lft_Montage.uasset",
+    "sha256": "dfff48a5b379826acecbf53f3634cd1f529268a59508963d2b83f49b095a540e",
+    "size": 2727,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-Rit.uasset",
+    "sha256": "bd65e2f0d1731f8e7de17de044efe498ad9f56f0e1be38e710370852e3bb3469",
+    "size": 15785,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Jump-Rit_Montage.uasset",
+    "sha256": "f72e03a2c545ab5b5016deb218e6187b165371217a0b11b2e0bbfe897f3f09b9",
+    "size": 2727,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Out.uasset",
+    "sha256": "032d75df53d47bd89e2f91f4fa032dd1e593783b9cb6a255dfd6ef50019ef037",
+    "size": 17038,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Out_Montage.uasset",
+    "sha256": "61269e64c1f2d0b03db047744ea1a7a0c2df43641590c249548710671c10c4e5",
+    "size": 1838,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Turn-Lft.uasset",
+    "sha256": "d23b097b0b35dedc8158d8e08d7afb359fd4ed9d117f7cc3bdaed1a68a3ed2b0",
+    "size": 18199,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Turn-Lft_Montage.uasset",
+    "sha256": "5483d06e2c45f153e63fc03a786489fd5cdc35cab2abbc9f9eec47cf08655759",
+    "size": 3028,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Above-Walk-Fwd.uasset",
+    "sha256": "10a6e1e19e4baabd24e1467f822bdb4f02efb7d36a29bdd5c6178c1d35d2b400",
+    "size": 24532,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-AboveToBelow-Lft.uasset",
+    "sha256": "275c2086509f65c51efebad501d8bf2058e84fc6b8cb4b5601e583505ea6c019",
+    "size": 19855,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-AboveToBelow-Lft_Montage.uasset",
+    "sha256": "dd221f26335292feb84d4c538c515e34a80f5e9312352e1d25f3603c91cd625a",
+    "size": 1911,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Center.uasset",
+    "sha256": "8e1cc1d3ab885a15f2cab1750a151c9993952625f1713668a4a4277cc518b55f",
+    "size": 8207,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Dwn-Lft.uasset",
+    "sha256": "9f775e085258c5237a26b54fb2751262d6c139a0ed1f371b1163c220f29de917",
+    "size": 8209,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Dwn-Rit.uasset",
+    "sha256": "d2c45d27f2ed425fb2b7e1303e25ca66ae05dc47745e2ed5e46dcff3ce82a4bc",
+    "size": 8209,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Dwn.uasset",
+    "sha256": "d761851c068c85a8cb18565407676fd00002c2855f5f604dd5e2d791f34d8790",
+    "size": 8201,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Lft.uasset",
+    "sha256": "4fcfb6ba3e421d5e3ac983dd411629b49197bd08fe894be9e43a3cff639b2f6f",
+    "size": 8201,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Rit.uasset",
+    "sha256": "c8cadc2945a8ec3aa92df4dd0008b7bf47cc26afea336c7b6b60edc410bee9fb",
+    "size": 8201,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Up-Lft.uasset",
+    "sha256": "adaaebfa7b0f3288264ad57f10876aa7ad285e476b81ce67310e47ad8f4d2231",
+    "size": 8207,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Up-Rit.uasset",
+    "sha256": "ce2cc6210ea6c97a9f12fb280f38b81d5f8d8bcc953074745639bbe1fd102470",
+    "size": 8207,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Aim-Up.uasset",
+    "sha256": "1b91bbb64e0cb577d5cdb3006f0ec866a852fbc8d696288b6ecd994b1e2f447a",
+    "size": 8199,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Attack-Bite.uasset",
+    "sha256": "4a006c58c38939a3217c8faa2400a86f56caa8bc306d19f8a5c8b502851373fb",
+    "size": 20444,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Attack-Bite_Montage.uasset",
+    "sha256": "6836503dfd7767bd0ffe868a6dea4aa4f5d0c6641322b7ae3ef302c37de78ea3",
+    "size": 2567,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Attack-Claw.uasset",
+    "sha256": "42294df4d995b7f4c0081d4d152efebcd669d21bee68c4a3635c1f171ec9c595",
+    "size": 21760,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Attack-Claw_Montage.uasset",
+    "sha256": "f69936b3647c15eb8b2ce05a83d9af64a7c376031bc5e7f9c225d87cf4562649",
+    "size": 2567,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Idle.uasset",
+    "sha256": "5e90f68b21b308500836762e55fb967609dfe08af3ba68635bea32d9c4f19fad",
+    "size": 25570,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Lft.uasset",
+    "sha256": "64002dc2cfbc05ba4347c2d4f5f5c7d62dc62cf6dfe683929b9948c0fcebe851",
+    "size": 15951,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Lft_Montage.uasset",
+    "sha256": "750d32cfad3ec0146dc2f7ede9dce7f53397b3f53611336131cf570469611bb0",
+    "size": 2727,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Out.uasset",
+    "sha256": "550974db9a5fd3d458348f3a2103551bac8967c81325a347c02aad035c6e9700",
+    "size": 15691,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Out_Montage.uasset",
+    "sha256": "35785d961467daa85db5555d4fc6247daa58bd2e8f372d2f624c730a0fa0f430",
+    "size": 1903,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Rit.uasset",
+    "sha256": "b68192964ee349677f1bc78e1ad0d77936f11c7e34a8522cfd6ddbd0751c2196",
+    "size": 15855,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Below-Jump-Rit_Montage.uasset",
+    "sha256": "d0ebea897a72a9c37065b743dc0f631906db7b8ff11ecaa9cde0d8e4bb61138c",
+    "size": 2727,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-BelowToAbove-Rit.uasset",
+    "sha256": "013277fbf4ae7ef2d3098b1412ce75803915ebb664876e0af91506ab311066ec",
+    "size": 22411,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-BelowToAbove-Rit_Montage.uasset",
+    "sha256": "a45a9e48382336a92596c0a8f670399149f3d97f4ea02958f1d3ddec3b810691",
+    "size": 1911,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Charge-Fwd.uasset",
+    "sha256": "2334d391c60c1ae72017ceac0a50e53041ca6084a9dac05d5227f4d4579403e2",
+    "size": 20684,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Hurt.uasset",
+    "sha256": "81092fe0f054537315ef4848cee78077d6deb212431bff7e544d0b6973652f0a",
+    "size": 15459,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Hurt_Montage.uasset",
+    "sha256": "89161ba14e5d7d951304dc4d2ab830f0afc878559ac8a3e1cfb483c09bcc2dad",
+    "size": 1774,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Idle-Slide.uasset",
+    "sha256": "8299cd7300a92b43a02809daf3f0aee4e8cf6e166e20bfd68c3c9b9ab080060f",
+    "size": 53781,
+    "export_count": 13
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Idle.uasset",
+    "sha256": "0869859bdeb40d5e5730373882b55a29ee3f03a2792a20da06d03cd1842e92b3",
+    "size": 28145,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Out.uasset",
+    "sha256": "954a79f590e933d448db84b0032ff9bebead7fe1745ed792e888182be5a74fe0",
+    "size": 16203,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Out_Montage.uasset",
+    "sha256": "b30a2d6085e3442902f355e2225b0d0afb85d465a322dff4bc829142c8dc57db",
+    "size": 3086,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Turn-Lft.uasset",
+    "sha256": "23ec72fef4b09d2c76748dcc303f8209bc5900b1a550f17f11b25ae46ef033a1",
+    "size": 18551,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Turn-Lft_Montage.uasset",
+    "sha256": "dd84e4ab95831907116ddc612fa208e320de1a1c0ae592c2873a5d79d3f8dbd5",
+    "size": 2654,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline-Walk-Fwd.uasset",
+    "sha256": "276d6a5ae1c3fac5a8a1e676f8c8da6400b79289828384613555f0689367af4d",
+    "size": 24272,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf-Zipline_AimOffset2D.uasset",
+    "sha256": "e585005bbbefd72d811cfb028a04fe93db5e2745d2014aea66cd7c08997d529f",
+    "size": 7879,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\Aberration\\Dinos\\CaveWolf\\Animations\\CaveWolf_AimOffset2D.uasset",
+    "sha256": "8245dacc2f5a1e12ae353ed45ea9b6fec865b71accb556b0f36ac600306454cc",
+    "size": 7923,
+    "export_count": 1
+  }
+]

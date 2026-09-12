@@ -1,0 +1,679 @@
+{
+  "species": "Megalocerus",
+  "ark_asset": "Stag",
+  "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
+  "bone_axes": "native bind axes (nonuniform scale supported)",
+  "bones": 59,
+  "cubes": 4574,
+  "source_vertices": 24429,
+  "source_triangles": 29366,
+  "animations": 36,
+  "source_hashes": {
+    "actorx/Animations/Stag-Aim-Center.config": "e65d41f0aa679da1aa6bf0827ed4b16a560e537a1cf63ef26dc5aee2765d7751",
+    "actorx/Animations/Stag-Aim-Center.props.txt": "ea19524f884968cb46e0851a507884914f98595fc5d441dcc60812819680873b",
+    "actorx/Animations/Stag-Aim-Center.psa": "d0cc09e8657c482760b50b31925b957298c1018410fac17eea0fe2b9eec22a64",
+    "actorx/Animations/Stag-Aim-Dwn-Lft.config": "42ce865b18d6bb635c6279cd2ea186d7388772bd4a30cbd898079a63c90c42b9",
+    "actorx/Animations/Stag-Aim-Dwn-Lft.props.txt": "7d7239bbc41bb442f448109a90bb1d21cd9f24ad3a886282c01c06001bb58025",
+    "actorx/Animations/Stag-Aim-Dwn-Lft.psa": "fce56732f72b3c691554ff739df9f65416feaeb4fd360c83d6a399d59a374ccb",
+    "actorx/Animations/Stag-Aim-Dwn-Rit.config": "9249c9e11f67e95f637e6ee0e1d2b010c43243a46578ab66e787fb9967779c3e",
+    "actorx/Animations/Stag-Aim-Dwn-Rit.props.txt": "8bbf2f1f512e1bafc2157003c589ee6edb8d8e0f4681cb2f18a4a25787266738",
+    "actorx/Animations/Stag-Aim-Dwn-Rit.psa": "126bf1533820446b3a3cf3eecbf085454eeb4a1522aca1ce3bba522ba580e0f1",
+    "actorx/Animations/Stag-Aim-Dwn.config": "42cf3c83987a47a0191da992a38ca94ed4792ad5b7ac9e25bd5be5af9447b8a1",
+    "actorx/Animations/Stag-Aim-Dwn.props.txt": "51b36a08f29e223f3a04edcd911fb754e61e8b11e34679a7e0bf55dfb1903c56",
+    "actorx/Animations/Stag-Aim-Dwn.psa": "425bc775b177d9088e7ff01effb5fbb89304502e20089e362be54b1c7496aaac",
+    "actorx/Animations/Stag-Aim-Lft.config": "64c3dd2d31ab1e90eac9e22d129d25640327c1859acef81abf95e25b788c2cdd",
+    "actorx/Animations/Stag-Aim-Lft.props.txt": "ec5eb4967942e35c917843410bd9634331f05e07fcd727a569181291b61cada2",
+    "actorx/Animations/Stag-Aim-Lft.psa": "4e31dbc4538e5511e36016092854d51d0c240099ab4cf590e6332534a127c44f",
+    "actorx/Animations/Stag-Aim-Rit.config": "e9845a2e31750f4eaa62fa60b0867c641f605b363d78d127b4f5c6226e32575b",
+    "actorx/Animations/Stag-Aim-Rit.props.txt": "fd551587d451b8b7470a97b35a062c3dfee7cb0f0513c58025492c06d798e07b",
+    "actorx/Animations/Stag-Aim-Rit.psa": "df98db8b874bf056573808f0f2d2fc30c23e590269087ee0058196ea2e966d44",
+    "actorx/Animations/Stag-Aim-Up-Lft.config": "0931d2eefcd4442bdae7a7b2307303014a7d11daf47ed32a3f93a18e1edad895",
+    "actorx/Animations/Stag-Aim-Up-Lft.props.txt": "4c61b88ad442c105eb87b078a6971195cf74be821237428b062a72276f9ee007",
+    "actorx/Animations/Stag-Aim-Up-Lft.psa": "e4e307608aa30721e061fa5e21c3dc2eae8b23fed50f98ab5c308b0506989bc7",
+    "actorx/Animations/Stag-Aim-Up-Rit.config": "ccf87034e5885ac7ab2e6e415ab80a0827df468c15bcd90cd1d3ceb22be96b1c",
+    "actorx/Animations/Stag-Aim-Up-Rit.props.txt": "27cb9a6384f97014e7d125de849eec7b494bd5dd38ebaf6aeba9e3487d7ee350",
+    "actorx/Animations/Stag-Aim-Up-Rit.psa": "6e0745b5f3f813ca46a660148ce06c9bdba527a7cae85817c344a5e4872d0d0c",
+    "actorx/Animations/Stag-Aim-Up.config": "c42cff3db07f9db4169093ff61f8f0ffea3cb936ba34aebb1abccea2fa5f6fcc",
+    "actorx/Animations/Stag-Aim-Up.props.txt": "b8ecb63b9f639ef10d0f4000886223631ae110c77dffc03a2ab74483114380b1",
+    "actorx/Animations/Stag-Aim-Up.psa": "a6bcb0c4a8eb8593e2fe879c3c76e1cc5bf51bea1747cb4a498129c9ea5f8621",
+    "actorx/Animations/Stag-Attack-Gore.config": "784ecfac9f70050aef4a8a59bf473997f52b744fda587c179f6be77fbc112d5a",
+    "actorx/Animations/Stag-Attack-Gore.props.txt": "423d1e433625bd357f7684c4f7bfeac184af9ac66961ae11272cb56ee836bcea",
+    "actorx/Animations/Stag-Attack-Gore.psa": "54a70a6799ebbd4620fa3cccb542d3556eff1d491da09317229a9387831d2b8f",
+    "actorx/Animations/Stag-Attack-Gore2.config": "787c688fca90e17a377b17f32c7a373832f2c8ca04c357c9d4bd7b09ff83f699",
+    "actorx/Animations/Stag-Attack-Gore2.props.txt": "88acaa2f66e11169cf5e71d5c44d615e7df6ebd03c04842ca3cb77d8ef2cb68f",
+    "actorx/Animations/Stag-Attack-Gore2.psa": "6fb5e6b045ccf1e1c1cd3a9cc0e5fb40e43587a44cd33b24550818e63563ce18",
+    "actorx/Animations/Stag-Blink.config": "5298a4b2abd0bcc2dc4cb4612b44f290fff95688c435570306f963b005bb1262",
+    "actorx/Animations/Stag-Blink.props.txt": "c2e8b65fe47a39bc8ecfe52b9f7fe8e29d523e2a1a3572b8e79d837baa5ace6a",
+    "actorx/Animations/Stag-Blink.psa": "672d263315ca85fc0226a5741234bfaf9ce3b3d0c303e5ce26f51103ab8d5d5e",
+    "actorx/Animations/Stag-Charge-FlyFwd.config": "8deb3c9ab6573a139b231275833d4fc411a844cac390e9630c594ce1de100a7f",
+    "actorx/Animations/Stag-Charge-FlyFwd.props.txt": "4a70ab46001130f6664479d17b51704673eb78152b7e41b35bcdeffd62c0d0ad",
+    "actorx/Animations/Stag-Charge-FlyFwd.psa": "7925403e35403d56b86558e8375dee2837f3c4a6336bcf28684f69cb185b4d04",
+    "actorx/Animations/Stag-Charge-Fwd.config": "61c8aeb4f8da2153c6337cd2c1e3882ab27018fabb1684fa68604e8ca059df2c",
+    "actorx/Animations/Stag-Charge-Fwd.props.txt": "9dfd7da0f364744fedd8b81ca85c23d3bab363bbb35336226dc88ce034417ea4",
+    "actorx/Animations/Stag-Charge-Fwd.psa": "e51a25cef9172b6b22785af3d050a20c728d4c1b433ec1e995f80eef721e0d3a",
+    "actorx/Animations/Stag-Charge-Lft.config": "4a3f2e6c35df86e2920e89ffd6707bdb853d833f775f944101e9b37f210f258b",
+    "actorx/Animations/Stag-Charge-Lft.props.txt": "bd4fe091b454610ef5a86e8e6a16e4349362b99874071a27d6ec4994d06e6f17",
+    "actorx/Animations/Stag-Charge-Lft.psa": "10f7272c7e4adcc0e0b4b9ac15db29e1843b52f3701e4e10cb865a2290323699",
+    "actorx/Animations/Stag-Charge-Rit.config": "f4ed0102ca467c9b65876357f76017e119cad4f2350077f1be58a7e9eefe1b76",
+    "actorx/Animations/Stag-Charge-Rit.props.txt": "ee7f7ad1724d7c7e40501b2c14b571670799a37c4bdff51d743495d395908ee9",
+    "actorx/Animations/Stag-Charge-Rit.psa": "ee20b198cb2aa476ce0596cd8eed51d05b44af9258ed628c1d5521ce0711f4e5",
+    "actorx/Animations/Stag-Cuddle.config": "7e5aaf200133da9f863dc5f363189f74bcc8c9e49c4ffe98ba7d6a904d994652",
+    "actorx/Animations/Stag-Cuddle.props.txt": "b18a071a7b4a1023061e1313bc8ed6102dd1dbe6d00ae7c152fb76cadfbd268c",
+    "actorx/Animations/Stag-Cuddle.psa": "687ac70ec82ddf041a49410eb578608457cf155217a5f15ae7dcf94e7125632b",
+    "actorx/Animations/Stag-Graze.config": "0e64d4ab0148b233c50393f3e8fb52d956e8f3bbd6522ab0b43ee65bf1286e0a",
+    "actorx/Animations/Stag-Graze.props.txt": "aea2bc5aaba62aebf3400daf79073ba8275bb55a0d110ceae8532f78fc72c6a1",
+    "actorx/Animations/Stag-Graze.psa": "c181aa77a9673a0422365ef9cb7adf630c6ab6d8f4d96a07525dbe8280b2dd5a",
+    "actorx/Animations/Stag-Hurt-Big-Lft.config": "c3818ec3333bdeb5f6e5b0b5d69304c57b73902f7a5a9244b5a153bc3bd6a3fd",
+    "actorx/Animations/Stag-Hurt-Big-Lft.props.txt": "fb6d55a88249b261bec4ecf9b1b80f25f95ebd60f710e9f4943a7d4b48f16b78",
+    "actorx/Animations/Stag-Hurt-Big-Lft.psa": "cf8b4d84197d7215877b26c1921e8eee0f051f0c498bd2c5f2a32e2683152106",
+    "actorx/Animations/Stag-Idle.config": "4759afc0c83caed41bd405dadd31ca56d16715d7e064093b75fef99594f8dc8d",
+    "actorx/Animations/Stag-Idle.props.txt": "694bbb4f13905cf65e0e26a7906a719afa9b2cdeaf192f174e7c278fe91b4b8a",
+    "actorx/Animations/Stag-Idle.psa": "0d0e438c32e8dc1d42f898094c10a644ecaa94aa08fc940493a615153e961d51",
+    "actorx/Animations/Stag-Jump-Idle.config": "f8074e6df4c32502324922c8d21aef100387cca85f1cf6f1d42b815bba295e2a",
+    "actorx/Animations/Stag-Jump-Idle.props.txt": "1064c42cd411cc06c5c5f18e1f3b1d0d786473d78638025c2a027736ee70845b",
+    "actorx/Animations/Stag-Jump-Idle.psa": "5cab15d79d571a9d088732f18e085b37a3195922c8f219cfb4c62cdc0ac0c834",
+    "actorx/Animations/Stag-Jump-In.config": "e942ef6f2225f8d5412038a27cccd0fb3ddf169d51510fa5c8614fc9cea7d32e",
+    "actorx/Animations/Stag-Jump-In.props.txt": "cc38907cdc7f7322f3acc803a39e8bc57319bcb800703a5c640c55dee08454dd",
+    "actorx/Animations/Stag-Jump-In.psa": "e872d8fcaeb310fc8fbbcabaca0e8c07072d684f33ec111eb8e7dfdd33f475d2",
+    "actorx/Animations/Stag-Jump-Out.config": "fbfbb79fe575aca3103aab9b922d6a1231a8e95113da6f1c4eccc2c28559286a",
+    "actorx/Animations/Stag-Jump-Out.props.txt": "58b78098216f19befd9a0f508fd52823b3807665a6f61038a68cce416453a289",
+    "actorx/Animations/Stag-Jump-Out.psa": "212e24afa4818aea3f20d0215584f17c57ec3c95a75d4b964cfc860c7a8283df",
+    "actorx/Animations/Stag-Look-Around.config": "1179123a1c399eb3248cd4a679c85064f7c4c401e885921338f94899c3d092c7",
+    "actorx/Animations/Stag-Look-Around.props.txt": "116974202628eb1b44de304093b551f65201292e059b33a9e02151942e677998",
+    "actorx/Animations/Stag-Look-Around.psa": "1593fffaab6b65e19f9b807b9c914153d701e7229005c4bd43b7f833dc8013a7",
+    "actorx/Animations/Stag-Move-Fwd.config": "44ed18c57cedacf440232f13553652193bc4d9e551fca4d505f4cd0212ed3331",
+    "actorx/Animations/Stag-Move-Fwd.props.txt": "e4fbd4e76668937318f6eea78bea50a68ccf932741e7c0b3a95c54eea8bb3666",
+    "actorx/Animations/Stag-Move-Fwd.psa": "a6078fcb4953a7f1868a4b2ec8a15203a9d4807f60ccceb0d6a234d8f3420df3",
+    "actorx/Animations/Stag-Move-Lft.config": "f70aca8b925cb721cc5779755e8b2d715dcafef9ee4cf420a25b65846be27b21",
+    "actorx/Animations/Stag-Move-Lft.props.txt": "8d8a65dcc8c44deca030a7b25c4ae97be827f31d2a92aed363354c7e47e7583a",
+    "actorx/Animations/Stag-Move-Lft.psa": "acf8ea4e82c1fb7b66d88528f9123946b1384b87837d10186226def8d6fd65b8",
+    "actorx/Animations/Stag-Move-Rit.config": "50a21980b11edd99cf155ad61af319b16c6cbe18ca9d3ff3819c5bb2229c7d8f",
+    "actorx/Animations/Stag-Move-Rit.props.txt": "070fbfbe11aaaf687855def77b96cb24adee55751090ed0ac3fcdfac60b97b0a",
+    "actorx/Animations/Stag-Move-Rit.psa": "63b17b407895cef4f389dedbc44875ff11abbbc0507d1f125ea008381772374a",
+    "actorx/Animations/Stag-Poop.config": "282fc4e5c87a5e92356103617c2db430480180595c77ad563c1dec06265a222f",
+    "actorx/Animations/Stag-Poop.props.txt": "e1824f18d2a3ea100b1eb1260a46150d1bab874336cd5748de25b74ccc6a05e1",
+    "actorx/Animations/Stag-Poop.psa": "5728e37d003257591f40345b85a22327c5b5f0379895be2d33ff6fc4dfbd10c8",
+    "actorx/Animations/Stag-Startled.config": "65f69c3999276644e13eed04298122eafd62e7f27140bb509f7c0426733710b2",
+    "actorx/Animations/Stag-Startled.props.txt": "ae627fb72cb3f41894a1c59612695e5db850e675ecc6c22997257fbce86e370c",
+    "actorx/Animations/Stag-Startled.psa": "17e1b699bbc0d27ad3e9e1505fcd5312c3d9eb030a9feb6c015f231792c89334",
+    "actorx/Animations/Stag-Swim-Fwd.config": "b2f6b09fb7f2a2911b147a45064794fbb3e66f7beead0765c7edce4ad4a51950",
+    "actorx/Animations/Stag-Swim-Fwd.props.txt": "1fa167cc1272bdd7cfe52e1c36519c51dfa37379fee5dced04196e1df61e9d07",
+    "actorx/Animations/Stag-Swim-Fwd.psa": "79de43a328c4f6affcf6b3491ab8073d199b315b7e9f45e2b938cbb8c842dbfb",
+    "actorx/Animations/Stag-Swim-Idle.config": "5ed6d875305815404b00c100f15545790395f1b3280375be11473b49fc26033c",
+    "actorx/Animations/Stag-Swim-Idle.props.txt": "6c07067488ac8312332a675c9a955b47d75c863f79fd10fba68625db25583642",
+    "actorx/Animations/Stag-Swim-Idle.psa": "0c72fa95cb14d4525cc658c4b9ab4bd375f628eed511ec7dd82bcd7d07ce09aa",
+    "actorx/Animations/Stag-Torpid-Eat.config": "519497d26d97cc7f75f6b49f161d067eb503736b54292401d7aa604e420d423a",
+    "actorx/Animations/Stag-Torpid-Eat.props.txt": "a53145279e51190f19929e00f91b41ecc6630684c93ad5f61e27316f8d6e4169",
+    "actorx/Animations/Stag-Torpid-Eat.psa": "308165d099ea8102b66d3647dbc850bd455ba343c1425e91a1dcc03f556d462d",
+    "actorx/Animations/Stag-Torpid-Idle.config": "18a23fe45e42cd31f451aab0ba1f444ef90250dcd71553729821f399f7693860",
+    "actorx/Animations/Stag-Torpid-Idle.props.txt": "b812be3af03047e0cfe47cc74aeeb0fc75c95662fb9cf60aad85769249154568",
+    "actorx/Animations/Stag-Torpid-Idle.psa": "b4e9cb957b23c51a3dbfa885d392f5f16abd993c6e4e7bef65aa5442cbe92a56",
+    "actorx/Animations/Stag-Torpid-In.config": "be7365c37f400607e7440089aa3dca21e02cd4f08454db4a611ac1607c2f7472",
+    "actorx/Animations/Stag-Torpid-In.props.txt": "64b01ca1d2b5c8a55932ce8bb0fd1eef4b72922095c056b78dcd82dd53fbb8c1",
+    "actorx/Animations/Stag-Torpid-In.psa": "67a42e6ab2c9b109badba6a8de6e36e5e182800c91273639ddea23b169c8149c",
+    "actorx/Animations/Stag-Torpid-Out-Tamed.config": "8168831f93f669c34841444c4ee578a67a82781593c403b136111e73513df21f",
+    "actorx/Animations/Stag-Torpid-Out-Tamed.props.txt": "6b03db6dc9ed3f0f6d0f096d704d6d729a8c74c15635b9973bbc53a9af353315",
+    "actorx/Animations/Stag-Torpid-Out-Tamed.psa": "2ae96b51f9924bfe803290904ca766c1772ea35391ed246b2049a2a441213462",
+    "actorx/Animations/Stag-Torpid-Out-Wild.config": "c62c4bf8b2730d6a485ea87755d699cd7aba476e7cd5679cc81bc20919b4c1e2",
+    "actorx/Animations/Stag-Torpid-Out-Wild.props.txt": "e30f11e658f3dd93f611a705fbd9e0e9a0159a5f337b49703020c0fc8f8fedf0",
+    "actorx/Animations/Stag-Torpid-Out-Wild.psa": "a121fdf28ac553880751c817bf045474277aa4d5ec1020a53b7642dd1069b88d",
+    "actorx/Stag.props.txt": "82aac6e422dc1228ab6438ceeee6f310162f1d85ff28d3b1390ea731fc84c54d",
+    "actorx/Stag.psk": "0bf61d429fd2a8ee5ff82b05146fa6b2f9305a45d0ca122c8b9d6f1606638cc8",
+    "gltf/Stag.bin": "c73a61028baa40be82f29d21e6441e9936a07f1631abcbb74e05ce46ae6f4513",
+    "gltf/Stag.gltf": "49af7c0c3c7543a6d560f382fadd435c8e7d5d8eac758783a0a1852a06a6745b",
+    "gltf/Stag.props.txt": "82aac6e422dc1228ab6438ceeee6f310162f1d85ff28d3b1390ea731fc84c54d"
+  },
+  "clips": [
+    {
+      "name": "Stag-Aim-Center",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 113,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Dwn-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 110,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Dwn-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 107,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Dwn",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 113,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 111,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 107,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Up-Lft",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 112,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Up-Rit",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 108,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Aim-Up",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 112,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 7.990582662685335e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Attack-Gore",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 745,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.3810054877306275e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Attack-Gore2",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 743,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6007861140477678e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Blink",
+      "frames": 2,
+      "fps": 59.999996185302734,
+      "source_fps": 59.999996185302734,
+      "timing_note": null,
+      "retained_keys": 111,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 8.98013944464251e-16,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Charge-FlyFwd",
+      "frames": 41,
+      "fps": 38.4375,
+      "source_fps": 38.4375,
+      "timing_note": null,
+      "retained_keys": 1600,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6974785024721138e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Charge-Fwd",
+      "frames": 41,
+      "fps": 83.0250015258789,
+      "source_fps": 83.0250015258789,
+      "timing_note": null,
+      "retained_keys": 1600,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6974785024721138e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Charge-Lft",
+      "frames": 41,
+      "fps": 83.0250015258789,
+      "source_fps": 83.0250015258789,
+      "timing_note": null,
+      "retained_keys": 1618,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6523587139134992e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Charge-Rit",
+      "frames": 41,
+      "fps": 83.0250015258789,
+      "source_fps": 83.0250015258789,
+      "timing_note": null,
+      "retained_keys": 1609,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6523587139134992e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Cuddle",
+      "frames": 201,
+      "fps": 30.150001525878906,
+      "source_fps": 30.150001525878906,
+      "timing_note": null,
+      "retained_keys": 5592,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 3.545661058539617e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Graze",
+      "frames": 201,
+      "fps": 30.150001525878906,
+      "source_fps": 30.150001525878906,
+      "timing_note": null,
+      "retained_keys": 2821,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.8638036359363908e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Hurt-Big-Lft",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1098,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.3692320856464603e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 869,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.7393852752881138e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Jump-Idle",
+      "frames": 51,
+      "fps": 91.80000305175781,
+      "source_fps": 91.80000305175781,
+      "timing_note": null,
+      "retained_keys": 491,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.4014676255749588e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Jump-In",
+      "frames": 21,
+      "fps": 31.5,
+      "source_fps": 31.5,
+      "timing_note": null,
+      "retained_keys": 676,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.082789656923238e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Jump-Out",
+      "frames": 17,
+      "fps": 31.874998092651367,
+      "source_fps": 31.874998092651367,
+      "timing_note": null,
+      "retained_keys": 565,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.5855564736388163e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Look-Around",
+      "frames": 201,
+      "fps": 30.150001525878906,
+      "source_fps": 30.150001525878906,
+      "timing_note": null,
+      "retained_keys": 2185,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.178993188084785e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Move-Fwd",
+      "frames": 41,
+      "fps": 39.05249786376953,
+      "source_fps": 39.05249786376953,
+      "timing_note": null,
+      "retained_keys": 1615,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.8849938740999898e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Move-Lft",
+      "frames": 41,
+      "fps": 39.05249786376953,
+      "source_fps": 39.05249786376953,
+      "timing_note": null,
+      "retained_keys": 1634,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.8849938740999898e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Move-Rit",
+      "frames": 41,
+      "fps": 39.05249786376953,
+      "source_fps": 39.05249786376953,
+      "timing_note": null,
+      "retained_keys": 1633,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.8849938740999898e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Poop",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 800,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.7526804817625093e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Startled",
+      "frames": 31,
+      "fps": 31.0,
+      "source_fps": 31.0,
+      "timing_note": null,
+      "retained_keys": 1163,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.6772040057106937e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Swim-Fwd",
+      "frames": 41,
+      "fps": 30.75,
+      "source_fps": 30.75,
+      "timing_note": null,
+      "retained_keys": 1087,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.752487072725083e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Swim-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 1119,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.8412607921205075e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Torpid-Eat",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 1200,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.3723302606968021e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Torpid-Idle",
+      "frames": 101,
+      "fps": 30.30000114440918,
+      "source_fps": 30.30000114440918,
+      "timing_note": null,
+      "retained_keys": 526,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.3723302606968021e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Torpid-In",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2222,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 1.4711550105292006e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Torpid-Out-Tamed",
+      "frames": 91,
+      "fps": 30.33333396911621,
+      "source_fps": 30.33333396911621,
+      "timing_note": null,
+      "retained_keys": 2909,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.308175883779864e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    },
+    {
+      "name": "Stag-Torpid-Out-Wild",
+      "frames": 61,
+      "fps": 30.5,
+      "source_fps": 30.5,
+      "timing_note": null,
+      "retained_keys": 2090,
+      "extra_source_bones_not_in_mesh": [
+        "l_horn",
+        "r_horn"
+      ],
+      "source_fk_max_error": null,
+      "rotation_roundtrip_radians": 2.1375908857856214e-15,
+      "fk_validation": "All frames validated after JSON write using full affine matrices."
+    }
+  ],
+  "model_method": "Triangle-sampled surface cells merged into cuboids per original bone/material; fine features use smaller cells",
+  "attachments": [],
+  "position_key_tolerance": 0.0005,
+  "rotation_key_tolerance_degrees": 0.03,
+  "timing_adjustments": [],
+  "limitations": [
+    "Rigid cubes approximate the smooth source skin; no blended vertex weights.",
+    "Palette texture is generated, not the ARK texture.",
+    "Loop flags are name-based suggestions; review in Blockbench.",
+    "Entity controller/state transitions, sounds and Unreal notifies are not converted."
+  ]
+}

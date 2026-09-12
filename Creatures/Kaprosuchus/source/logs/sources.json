@@ -1,0 +1,368 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Kaprosuchus.uasset",
+    "sha256": "db83ecb6d6dbe611aaf7e48b56acdc7075ec5b451a7f7027cd83a559075733e3",
+    "size": 3005743,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Kaprosuchus_Skeleton.uasset",
+    "sha256": "efb77fd3f8833a6b776ceb8a0f5c2094ff61f50775fcb51f551d541ad81fe5d0",
+    "size": 21445,
+    "export_count": 25
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Center.uasset",
+    "sha256": "92ebc43e45b140c6e5aabf01ea84d2ef786b92a5f7e6d1f7ea348112f9bd68e0",
+    "size": 6749,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Lft.uasset",
+    "sha256": "0f20e5ecc0930e7b4fe9a952ac59bc3cb3239dce4178d5a5dfa6bb5073a64393",
+    "size": 6755,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Rit.uasset",
+    "sha256": "048a047fae3a186fc561ffe2d8b2d610c01ff9957b2f710e9fed958a1dfa65c3",
+    "size": 6755,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Up-Lft.uasset",
+    "sha256": "aaf2c1bacee5d52e7979d54172ea3696a6a94b2c23c66b34e499ce15777a4dd5",
+    "size": 6785,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Up-Rit.uasset",
+    "sha256": "ebfe43f11c9333181f6c380da5fbc177d09e0d7c5938894bb54cd4d0d563b6fe",
+    "size": 6785,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Aim-Up.uasset",
+    "sha256": "494518a341db7a4642c7c7b1a7bf9a55f47af50dc41b2513d698c3f3626009e9",
+    "size": 6765,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Bite-Additive.uasset",
+    "sha256": "5f40ce965aed11879f8ea5c3e50042c21540e9ab0f471526a78e6a3d0760c974",
+    "size": 11922,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Bite.uasset",
+    "sha256": "c5348ca7e2c6a2727cfc7db0477fae798b307f8171f62a0aa88d7b60e9737d1c",
+    "size": 16303,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Bite_Montage.uasset",
+    "sha256": "68fd0188ef60112c3b871653112274069e9b9d422531704bce0491544aa7b0e0",
+    "size": 2583,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-BiteGrab-Swim_Montage.uasset",
+    "sha256": "1d38941bac882558e2a616aab705f4e4837ef2571a765ed061e791e7a09a8815",
+    "size": 2880,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-BiteGrab_Montage.uasset",
+    "sha256": "ded93c82363943b9c161a71d492534f45ff2d34ca54da32c2cd40c6db8d2eac1",
+    "size": 2852,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Grab-Chew.uasset",
+    "sha256": "b3bad8b0fc6ebd5bac543c372bee32299b5f999c97f723540701305d5f986323",
+    "size": 8267,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Grab-Chew_Montage.uasset",
+    "sha256": "b7ac52b84fcd037120247825f9f8d5fe6ab16415a6d4dd7106a16b03d7fb3ec8",
+    "size": 1820,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Grab-Drop.uasset",
+    "sha256": "37e327dc4e2d886e1967c6ed273dc806e300849a22f25c738af1dc63d31ddaf3",
+    "size": 8925,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Grab-Drop_Montage.uasset",
+    "sha256": "7251cc76cf6ce104bc5efdb3f377090435ca29b8aaf97257520444acd0d5ab2a",
+    "size": 1820,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Lunge-In-Ground.uasset",
+    "sha256": "187bea4964b78d187484d9c7a9240a302b5b4b299e66b9bd159ef08004db5f5d",
+    "size": 14183,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Lunge-In-Swim.uasset",
+    "sha256": "3408b693400c75fe890ccded436e5b4c344299f51f57655e79c4e01f010c2764",
+    "size": 12479,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Lunge-loop.uasset",
+    "sha256": "35ab511615524ea4b69af2cf72e55fa19e54722a6a006d1e9b6e61c70170df57",
+    "size": 11150,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Lunge-Out-Ground.uasset",
+    "sha256": "76f352343cab4fe2318730831f2bf0e9c53ad1608014f4f540c1fe7e9692aa48",
+    "size": 12543,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Attack-Lunge-Out-Swim.uasset",
+    "sha256": "9ef222f9d1ffd655aa22dce8c669949ee3c1c188c7c52c653b4c5a4ae69871ff",
+    "size": 12627,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Blink.uasset",
+    "sha256": "4021a8432fc0bec6796a8cfb9027639fc0554de752a49ad6e6bfd103536ba7d2",
+    "size": 7620,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Charge-Fwd.uasset",
+    "sha256": "fefbaf0f9fb9285e332151dfea6322aa50e6db74d42acf12b92a8300adf3d5be",
+    "size": 16734,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Charge-Lft.uasset",
+    "sha256": "45b4e91546febbef96459d462508cc67bed47559d042cbfcfdcc335cb878c4fb",
+    "size": 16814,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Charge-Rit.uasset",
+    "sha256": "334e71a9e376f015a66ea3ec6c1b75f51362141a0cfbe4d988e34055f309ce48",
+    "size": 16914,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Cuddle.uasset",
+    "sha256": "cc6d6522a11e63ca0f2c8c9d935127886c0fa905c4af88b7bc4fedb6def2492f",
+    "size": 58681,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Cuddle_Montage.uasset",
+    "sha256": "7f0d2336dca3c10a010c5054893cbd5b9823f96c66cb0d518050dc49a4a8899d",
+    "size": 1780,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Eat.uasset",
+    "sha256": "de4af4ea29b31d701438b35225724f7eedcb62fbea67fbe1666d809857316acd",
+    "size": 23553,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Eat_Montage.uasset",
+    "sha256": "be6f415b2f5880f2181cd51d1a8ed30493f719a673587921ccbf8df8bcbaa55a",
+    "size": 1768,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Hurt-Big.uasset",
+    "sha256": "35b11eb81cef5d0e7f579a2130f5468cc01da6bfa45790b64da19544b2fa7490",
+    "size": 11220,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Hurt_Montage.uasset",
+    "sha256": "2e759bf7dd0f9218de90537563b3f5e2d465025b971e9882b2de65d4ad78a65a",
+    "size": 1920,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Idle.uasset",
+    "sha256": "848c74ca94ad7d9967058ba1128be182dbf567e852b36371b36beb02cfc01926",
+    "size": 22617,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lay-Egg.uasset",
+    "sha256": "3aeffc64ef769e4cb57085e925de569d566b886764534c8cd1cb22658fc3a52a",
+    "size": 14055,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lay-Egg_Montage.uasset",
+    "sha256": "77b841114d150cf122b54331297674c02cb52a030dd856d34f496aa0b7c50136",
+    "size": 2543,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lunge-In-Ground_Montage.uasset",
+    "sha256": "11271743c8f7668ef18ff78b6974c654f2964cb2ec15b71715ab874454f48d77",
+    "size": 3654,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lunge-In-Swim_Montage.uasset",
+    "sha256": "589ff094d5c53a6584378ed44bdde64b74ae2a8fb6107346bcece752b5b1c332",
+    "size": 3646,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lunge-Out-Ground_Montage.uasset",
+    "sha256": "acb8f32db7dd443a432fe29b7c536e9e88b003316c08a488b57fa9d867ef1d8c",
+    "size": 2795,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Lunge-Out-Swim_Montage.uasset",
+    "sha256": "e6267d7ed3d9bd1c225809d1fc448c8d481e225d7599c23dd8ab3f9cc2ca4b11",
+    "size": 2787,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Move-Fwd.uasset",
+    "sha256": "c689814dd99346a64456d1dc79d477e37a95586429d63faca6bed65ee047528d",
+    "size": 27662,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Move-Lft.uasset",
+    "sha256": "7800d452f2fee854bae1ca4c7412ede3aea99f29f4afa142d2a3cdcaa42a2c98",
+    "size": 27862,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Move-Rit.uasset",
+    "sha256": "aa82f3599e8eba7340025be18cd35b4a5da27c468d0697748b157417245d7d7c",
+    "size": 27662,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Startle.uasset",
+    "sha256": "81fa76d9dfd4b79dff47d6e8c4eb6bb83417645f2420cb9c0a6160a4ceb48137",
+    "size": 18893,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Startle_Montage.uasset",
+    "sha256": "d3143572046cf36bf5f436c2c633fdfe5a0d80a8e5019c04cb36f21102726b74",
+    "size": 1873,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Attack-Bite-Additive.uasset",
+    "sha256": "d8808dc4ea06e7318397b8348daceaf66e84fea4f7dc402efbb9bae10f6de3f3",
+    "size": 11332,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Attack-Bite_Montage.uasset",
+    "sha256": "022d82481c1241eeb28da5ac2a67a61fa4baef8e34a1f347dcf702479de08496",
+    "size": 2603,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Fwd.uasset",
+    "sha256": "1813ce8ff947db0a40acc4588b2075c431706166aaa1f35b83ea3549ca47b0bf",
+    "size": 21582,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Idle.uasset",
+    "sha256": "6117def724c6148d11d8e3fd42ff0add9a6b646dec585a07a242b694309ebf8a",
+    "size": 40569,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Startle.uasset",
+    "sha256": "4a1f767516f8955bc2102c6f23fde617f5a3d31088f7419ede534ac9915dc3b3",
+    "size": 19398,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Swim-Startle_Montage.uasset",
+    "sha256": "04d800a02bb4e35a3e50b0301baf24d626091c81273554d725f85ab6f42ce578",
+    "size": 1804,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Eat.uasset",
+    "sha256": "b8962bf50dbf76510eb78f67eae3b7df3f7029bd5226e52a3d849a1928dd5db5",
+    "size": 19961,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Eat_Montage.uasset",
+    "sha256": "8b5e40ec8dd43d6170726368b3e91364553308fb2f234b0b448daeb2cda225a3",
+    "size": 1796,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Idle.uasset",
+    "sha256": "5fe2f9e157ca563f7b674d0bf438654fcd0bdf12f9b7da91c3ea2a6105a6cc32",
+    "size": 13365,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Idle_Montage.uasset",
+    "sha256": "550dbc316caec32a9ceb15ec94dfef21b68dff2176a87e7789238b09943ecad7",
+    "size": 1800,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-In.uasset",
+    "sha256": "82ee96b0350a0fef369f3272f51f455895df2f58594664110f2c085812d1e142",
+    "size": 14311,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-In_Montage.uasset",
+    "sha256": "23c99f3c4ac7a637247f68c3c033a7a6dc7db63fd9c5b540d0aa358ae32f9473",
+    "size": 1792,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Out-Tamed.uasset",
+    "sha256": "98cbe5ceeba08bb7ba407d83b107ca484662c22552992d89a7e8d26980677788",
+    "size": 20353,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "6d7f11815f1027951cd96d916f610d15cd8cf01a5ba06939bbad5056aa472b64",
+    "size": 1820,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Out-Wild.uasset",
+    "sha256": "b44bf9904f0bbb5118e418d71fdcd88d031e2997f1401338982ec3e75b5a1733",
+    "size": 13869,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "7ed7d30d92c93e98d076910812661503b741f91006960f044802ab3242a7b41a",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Kaprosuchus\\Animations\\Kaprosuchus_AimOffset.uasset",
+    "sha256": "3725bc0256c314ad2953c10906e994d22f3121e07951ae9dd9c8a6a1b80de54e",
+    "size": 7548,
+    "export_count": 1
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Para.uasset",
+    "sha256": "af44b5386eb68ca36730ea98c4fb6de2b402def1106c4143e8c4ffc8e4939b7a",
+    "size": 2364490,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Para_Skeleton.uasset",
+    "sha256": "42a0e8e9dc767d0df534097979ddaf167cfe3b4ee7d194d82cef15aff7800278",
+    "size": 23243,
+    "export_count": 26
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Center.uasset",
+    "sha256": "ad1110c21003f37ac4a090f8dec8729641689bd632a0d62a4a78fd8b746c96ff",
+    "size": 7006,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Dwn-Lft.uasset",
+    "sha256": "f3a588b433d0009e4d44adcb6d11646582f9e9d4b880355a250fd393e8cea759",
+    "size": 7008,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Dwn-Rit.uasset",
+    "sha256": "f9bdcd76eec9684165f5a427388e1b0038d0c513074e6981e18bcf23bc34b656",
+    "size": 7008,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Dwn.uasset",
+    "sha256": "a329c342471615b45b244ed4e76e6db3daa8aa4602d51f0f57f9250703736743",
+    "size": 7000,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Lft.uasset",
+    "sha256": "ad8b7f48b1dab91fa16e03a1fc5ff18556f8973feaddea52467b7ffbc9f5040d",
+    "size": 7000,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Rit.uasset",
+    "sha256": "48b32d03b05805171e64d45b4a29206168bef322519162924626651af9bc2e61",
+    "size": 7000,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Up-Lft.uasset",
+    "sha256": "5e72f83946fcc09f933e102f7c39fadb724e7eea421b8595becea6387c09a7a8",
+    "size": 7006,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Up-Rit.uasset",
+    "sha256": "7cf27ec3f93cb950554f75a8e152e654ce700ebf11bf26de0c2a10fe2158ef66",
+    "size": 7006,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Aim-Up.uasset",
+    "sha256": "248aa2453525359671b98e023d4cfc1180b51c7202448c64ca32d0d8a21ca302",
+    "size": 6986,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Attack-Bite-Montage.uasset",
+    "sha256": "af9a270c7271d66534ca0df2b078955d22b7578d26e2d79774e96b23287c92d4",
+    "size": 2502,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Attack-Bite-Montage_Additive.uasset",
+    "sha256": "723f0b646cc723bab14e1398e1db78b5273197f8de855cd5f21543b2eba234c0",
+    "size": 2538,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Attack-Bite.uasset",
+    "sha256": "b5535a23bf1b05d95192b2393f1a3326c96f33ef972ca2fc4182e6ed669667f4",
+    "size": 14824,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Attack-Bite_Additive.uasset",
+    "sha256": "2a10654173c4c348af82d799fb68ba755691307c38618d955312bcadca5d202e",
+    "size": 14953,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Blink.uasset",
+    "sha256": "8272a068a8fb2f6d5ade4ab4e7b16d926fdb6349637a05c72c724161d19e9916",
+    "size": 8089,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Charge-Fwd.uasset",
+    "sha256": "4b00f8c888515108e747355a993957b5edd5f379d3c3b5868375bd6ae30cbc6f",
+    "size": 23249,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Charge-Lft.uasset",
+    "sha256": "8201b66d0a5594330d756a7a077922eab97bd1a20d20a06edb260d45beb933b1",
+    "size": 23249,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Charge-Rit.uasset",
+    "sha256": "6c340f06be5b3d8a419af2e7c12f30a89d6596945f3b84b3e3c17b25abcca955",
+    "size": 23249,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Cuddle.uasset",
+    "sha256": "1abc373cbfb89acbe363f3b712d2fa8c3f7a1c08151c9e8eef3ab1787b5897c9",
+    "size": 71890,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Cuddle_Montage.uasset",
+    "sha256": "05b718625b6317677cd6935909aa8ad750c86b2c2b155584f204ed611bc3864a",
+    "size": 1717,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Graze.uasset",
+    "sha256": "c08f61da9384fe8f802f8b2fc370f46fed3cf8605cff0017e93e3ae95697b7be",
+    "size": 68782,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Graze_Montage.uasset",
+    "sha256": "3d43d87229caa91e79efc838fe72acc4253e3053c5166d3bc1062b3609d08879",
+    "size": 1713,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Hurt-Big-Rit-Montage.uasset",
+    "sha256": "06dc443804f9a4e828bc27acd58bbccaad10ab8d84a2585c39e6ae9849e95439",
+    "size": 1794,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Hurt-Big-Rit.uasset",
+    "sha256": "cb17324d5787d01e93691605b1dca85c8f682ecb1f7272c1dc4a462ca1166cb3",
+    "size": 13961,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Idle.uasset",
+    "sha256": "12fc188d09248992d40b09ed10c9219723476f44296a0c70923227296eed00ab",
+    "size": 36638,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Lay-Egg-Montage.uasset",
+    "sha256": "42777240e5ccb2c4ad42f14c98f79241ad3fa6732380e251f93069fcb3d5e8ef",
+    "size": 2480,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Lay-Egg.uasset",
+    "sha256": "c22382c85ff2bd1cbc0a0c8317dc48cb926428dd1a2eca89c8727857d38f1671",
+    "size": 21392,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Move-Fwd.uasset",
+    "sha256": "efd69ca40e582c8a8d9b00807e87682a6964fa88123945ce505eb0db25907251",
+    "size": 22564,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Alert.uasset",
+    "sha256": "7a02d587b7904d9fb7e1fef9816218cb2444f552fbf04270ced8f7b1bb23dc1c",
+    "size": 29928,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Alert_Montage.uasset",
+    "sha256": "b0dbc4e04af94d660c22de3025f9e9dc033e6053fc2bda3d844edf397e047092",
+    "size": 2813,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Cooldown.uasset",
+    "sha256": "2bdfd34b24695174d22313f9c0e5452f73b9b3f09e808ac433b884cbba13725d",
+    "size": 19048,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Cooldown_Montage.uasset",
+    "sha256": "b99fc7cec68d2b0eeac630e309101bfc681d2ac468056e8669abde9783cf9fb7",
+    "size": 1745,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Scare.uasset",
+    "sha256": "e97d3c690534226573f95a38a29054eec9159fefa914f30b740416c653d365eb",
+    "size": 21668,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Roar-Scare_Montage.uasset",
+    "sha256": "c2cbf2471d034c3570a3e9e525c6864b46ca10ef8c3e81972d93b0d75b779f5e",
+    "size": 2809,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Startled.uasset",
+    "sha256": "d3941d0bb72b991a50da48c6e6a9f5a4fbd0fd66b8642f26eb10eb2e518b130e",
+    "size": 21440,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Startled_Montage.uasset",
+    "sha256": "786fd3758813e9b10a2ebfbf0ad702d36f5de0e2fe353701970cefeeef7ab487",
+    "size": 1770,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Swim-Fwd.uasset",
+    "sha256": "e1d1412dfb59e8c65b3ae9e6d70baaec997c5f0afe67d1b8a651583ba3da3e2e",
+    "size": 18378,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Swim-Idle.uasset",
+    "sha256": "10046cbeb815542c55c08023a81412c2ee2ac0b2f89bbe4bd30a2f2de16891e3",
+    "size": 36624,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Eat.uasset",
+    "sha256": "336e5dea372a150dcf8ed5f7d3003e70334299ff9e856060533f4640dae3b366",
+    "size": 23002,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Eat_Montage.uasset",
+    "sha256": "2360e6966adddbcf8d67fb477cbb9522711ababb58164f3e3cf6c46da9f19ca4",
+    "size": 1895,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-In.uasset",
+    "sha256": "fd72b0cb4a6338dfc8b7f4fe793375cf8d4447fe86d17719e0800c160f5c8132",
+    "size": 22503,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-In_Montage.uasset",
+    "sha256": "bac92e9ab50414c567ff9b99159f245c73542f7a466868f61a8c88e02192ba40",
+    "size": 1891,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Out-Tamed.uasset",
+    "sha256": "eb96d6e714c9a4aad2cfa05a1f53398c1669334e72211710f7be28690ecbadcb",
+    "size": 28690,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "479af4dceca4848e1a0437d16fbe53e4e8fa232f352177423be4dbabc6071d7b",
+    "size": 1919,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Out-Wild.uasset",
+    "sha256": "d955ae930bbbd7ce83945167d212de24f31d62c6c7ad6c08e3707c4f839edf8d",
+    "size": 21666,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "adaf32ebac5569ccf0ca748501e3da7175f4c57f1b53219f5e45cf9251f391f2",
+    "size": 1915,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid.uasset",
+    "sha256": "1e0037711fbea602487cd74ebd1484aa90b590dcb504f50fe2e757eefe18d165",
+    "size": 22996,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Torpid_Idle_Montage.uasset",
+    "sha256": "5a29447f413388a2cd98808b53788c445a8f129e2cc19634d1688bc414c8b311",
+    "size": 1727,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Turn-Lft.uasset",
+    "sha256": "b6cb96628e58a1f2199ef60ef197a923c1455e6a9f15684b7a25cac976db9e32",
+    "size": 21906,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Turn-Rit.uasset",
+    "sha256": "d3c19994abbb683340e5fb15777de029bc8f6912fb2c61604724d47c3b61fff4",
+    "size": 21906,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Turret-Check-Idle.uasset",
+    "sha256": "93345126e1fcb9a88b1626ba2e35e98a6a173154854cb48505c16b5050afebf5",
+    "size": 24904,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para-Turret-Check-Idle_Montage.uasset",
+    "sha256": "f7c3c5e21e0e4f05d8135afb12ce3565a02d5b1f81421fcba2cb301994d17460",
+    "size": 1761,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Para\\Animations\\Para_AimOffset.uasset",
+    "sha256": "cd3962bb9ec6dc4d7e7025e79802dc2d695be9d7f375c43e0e99a408380833ce",
+    "size": 7798,
+    "export_count": 1
+  }
+]

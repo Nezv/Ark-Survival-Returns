@@ -1,0 +1,344 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Raptor.uasset",
+    "sha256": "f889c98241b0f31bcac902a550cc7da285b0ed3deb59d0bc8722ef4030d10cb1",
+    "size": 2602874,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Raptor_Skeleton.uasset",
+    "sha256": "51775998cdd080c3fd69334dbe95e3e5880286d400808551db0f15b68492b6ae",
+    "size": 24218,
+    "export_count": 28
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Center.uasset",
+    "sha256": "32433c757fe1051152597e468090bb723cc797384405b171d0b9ad7325232920",
+    "size": 6628,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Dwn-Lft.uasset",
+    "sha256": "14f2409aa01fd0c1f61db001a48dd350ee315b8e49e871ec21b99b422c9918fe",
+    "size": 6642,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Dwn-Rit.uasset",
+    "sha256": "b221737d25d4cd1736a753a0ce88b07a162ed90d4340944238414ca51813677f",
+    "size": 6642,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Dwn.uasset",
+    "sha256": "97e3fecf7d0bee22cc48bae4699b8cb5425c498685c8607c6c9e086398479ac3",
+    "size": 6618,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Lft.uasset",
+    "sha256": "b30de82caaf14fa56a41ac36b798bd0f61f56113619751a35211a989065d4404",
+    "size": 6626,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Rit.uasset",
+    "sha256": "28393829296e8e9972c0dc70fce6ee2ba6a81ce454ee6f5c5bcf8a6f35474ada",
+    "size": 6634,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Up-Lft.uasset",
+    "sha256": "653b6c4b92509628fb2f1bc062d45575be8b68abe56c17d3d6821dc68cbb8432",
+    "size": 6632,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Up-Rit.uasset",
+    "sha256": "fe21330b04ef0208a92895b87928605b9a11c333a70c465d38626ad9c0c9449f",
+    "size": 6640,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Aim-Up.uasset",
+    "sha256": "44fb3283e17bce334e6390aaa4d390c9926ae101a4cab1224c5da011b0db387c",
+    "size": 6612,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Attack-Montage.uasset",
+    "sha256": "b98cd64c3b1e0bdd0ffedcfdfcba08156c494f69424bcbcf67f8ba6f5fb3b9ce",
+    "size": 2500,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Attack.uasset",
+    "sha256": "fce19f98a1175af1c0a684dad5fbebc568a40f733bfb0b3eef90cfa85f26f235",
+    "size": 16170,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Blink.uasset",
+    "sha256": "4b16e43ccaf87e8fc11300c5977622686583ed3bcd884c298119558b81fbf481",
+    "size": 7651,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Call.uasset",
+    "sha256": "d8b4b062c39efe52a5e9b32bc7457522fe62f4a1d0a0adef707cf71192ed41d1",
+    "size": 29822,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Call_Montage.uasset",
+    "sha256": "07348cdce438bb8801b474760e43564a68ddde6b34d9327e42704be124975c7a",
+    "size": 1727,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Charge-Fwd.uasset",
+    "sha256": "20a3605bef8a0c5e8bfe99b59f016e5d7e7cdc59b7bb8fbd58d66f03c83d2111",
+    "size": 15836,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Cuddle.uasset",
+    "sha256": "3581cad0182570a7f9bc9031a1264448fb7f26b55ea1d5f3e2fbfaa89922183f",
+    "size": 67773,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Cuddle_Montage.uasset",
+    "sha256": "a45f69c538751ed46878ea873f20c26e625cccbf82def829592110e8b2eea4c1",
+    "size": 1735,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Eat-Additive.uasset",
+    "sha256": "e63c3f3e1be7fb9d7c26889567a72ee765d75718b20509b86dea263842b95397",
+    "size": 20808,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Eat-Additive_Montage.uasset",
+    "sha256": "3fb2acf881f4f1885abcf693948c4e4cda82fcfcdf0092d6a78089e09ebeceff",
+    "size": 1759,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Hurt-Big.uasset",
+    "sha256": "ac7d137f15812eb4ecc4d90a5aa5c67ecce95ff3ab81ac73a065c2cb2fb66ced",
+    "size": 13269,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Hurt-Big_Montage.uasset",
+    "sha256": "5f2747a4677c132259e33a5e461d08f819a11b08bb013ad8dc08ede1f5b32062",
+    "size": 1794,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Idle.uasset",
+    "sha256": "d7669f764045db4428d95a69bd902255ef2fe7397c0a4e4270b27dbd3e2008f1",
+    "size": 41180,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Jump-Idle.uasset",
+    "sha256": "a7cb77b06d642a2edc0fd4a523a3ad6e3464b89bf31bb9df361c4b20a42edd05",
+    "size": 25808,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Jump-in.uasset",
+    "sha256": "da26031a835eb86e5c2e49c488a317768e588616e8291e002b17b6ea890d7e7b",
+    "size": 11328,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Jump-in_Montage.uasset",
+    "sha256": "0740b0579d827b43fcddc40214e7e00d1073161b8fe04c0e90f6934ba43ca743",
+    "size": 1870,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Jump-Out.uasset",
+    "sha256": "78dbf6b6bf0f8f8110c88f237c166f4a9e1648a19f493ee610a261b24f86f0ae",
+    "size": 14697,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Jump-Out_Montage.uasset",
+    "sha256": "5dad7e898aaccc2a7f4c073a40d4dcce90882c57e7711317139909284ce7df79",
+    "size": 1743,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Lay-Egg-Montage.uasset",
+    "sha256": "6ef7a7da4c06ed0409782c83eca632dd204808434f89a3798521c3fa15a0f638",
+    "size": 2498,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Lay-Egg.uasset",
+    "sha256": "7dac46b3aed8998af67c4088c2f1bd10aa69764e746ea82d463ca93d664dbb61",
+    "size": 29082,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Move-Fwd-Attack.uasset",
+    "sha256": "1c70174cd1e8c2131a775bbf7a648c00e25ac52a9e92ea8e0bab99ec7ee3fc8b",
+    "size": 21426,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Move-Fwd-Attack_Montage.uasset",
+    "sha256": "07b711a0be20a80076b631dfd0e6bb3bd98d03c68058044ba6e8487e993054c9",
+    "size": 2536,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Move-Fwd.uasset",
+    "sha256": "a73200e833eb1c9e0553493adc446222c724aea212436104a24ff82effbb2bd2",
+    "size": 17746,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Attack.uasset",
+    "sha256": "1b4292d16e5f059fac698fd4645e7e7f61d5cd119a80353f7fdde4a2b056bab9",
+    "size": 18639,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Attack_Montage.uasset",
+    "sha256": "f3dc3423657fc5ab119548de4c8ded1c79686507edce9baa10e55e2936e4220e",
+    "size": 2528,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Idle.uasset",
+    "sha256": "a4f229457d8076b30b0b8ae01e20e60c446b00d7a872308e391ad35dab582612",
+    "size": 25232,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Idle_Montage.uasset",
+    "sha256": "364fefda58ae36becf9a051a2ec78209c374811a06aff38f81464c928be6f24b",
+    "size": 1755,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-In.uasset",
+    "sha256": "9158a5c162aa3e6da717a97e0ea478c8b9491379e1f1afb3d9bfe1dc1e91a4d3",
+    "size": 20943,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-In_Montage.uasset",
+    "sha256": "fadc4b561d343230eb6dbd4076f4962326aa9398b1945f19c87aa55c0f472fdf",
+    "size": 3652,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Out.uasset",
+    "sha256": "6d298d3b1e98d84867e2f90af7b9933d7703336538699bcfc506be4796ead81c",
+    "size": 15632,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Pounce-Out_Montage.uasset",
+    "sha256": "2b622ba527c6dbf9db7815d6c9124c1eff70d4130a003f0ac784924de1935ffb",
+    "size": 1751,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Startled.uasset",
+    "sha256": "8ca86771a2f9190b1bfbc34f03e7245c45a0a4dae54390c3fc4ac113562741bb",
+    "size": 17348,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Startled_Montage.uasset",
+    "sha256": "b041a1b35e3ddada0937cc99a307a2dd4b944686d94c778fda5ab2441bad88ad",
+    "size": 1788,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Swim-Fwd.uasset",
+    "sha256": "5b49b82c66fbe65cb61bdc9b2ded6917622133a0f18500b0d67870d3da5f2cb0",
+    "size": 24144,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Swim-Idle.uasset",
+    "sha256": "f8590cc718a81c660cf48f1bdb21052afc513ef2e6795aac0eea82eeb0b55a24",
+    "size": 30082,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Eat.uasset",
+    "sha256": "72160adb64bb1f7ec674f0a50c41b38219c8d091f6a55373d9db25a372d6a169",
+    "size": 32860,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Eat_Montage.uasset",
+    "sha256": "677b9435488ab698d36d1a968627866f8fa6d50f8ffc36c0af62318841d07e04",
+    "size": 1913,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-In.uasset",
+    "sha256": "237b9d78287e23bd7806bccc56bb211078baf04bac501422f51cb3bebb40505a",
+    "size": 32442,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-In_Montage.uasset",
+    "sha256": "efb4573d6df0589071b02f2c5022afe3df54a2d23fc936025f41a034c6b2b610",
+    "size": 1909,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Out-Tamed.uasset",
+    "sha256": "313f34ca4b0e4533360d72ac2c147be7d45a83e778b4180bdf3a8becb83a3e41",
+    "size": 50040,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "874b7c729f2696914bc12c22ea399e74247634ce5909a06f005c94eb92c40eac",
+    "size": 1937,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Out-Wild.uasset",
+    "sha256": "52f9722cd61de5ebd9de880d08b8363fb794395176e3adc497ccc91b5c83d6ce",
+    "size": 33076,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "04357431df69289fc305eaee31feeb5fbf9dbec84caf63d4636a5b2deb682168",
+    "size": 1933,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid.uasset",
+    "sha256": "432faffc0b4b092eb90931a4013597947c776df02b4815f4b995954cf4329218",
+    "size": 30870,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor-Torpid_Idle_Montage.uasset",
+    "sha256": "d19c7dbf78d7e23ab7de9b093a6a69768f9d1177ce000c64b21755c36144ebd7",
+    "size": 1745,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Raptor\\Animations\\Raptor_AimOffset.uasset",
+    "sha256": "e1f634b038367756116bacec4a7ea40e7e837f428e7d8829209262adcdf62e2b",
+    "size": 8081,
+    "export_count": 1
+  }
+]

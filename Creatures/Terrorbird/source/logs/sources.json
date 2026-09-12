@@ -1,0 +1,296 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\TerrorBird.uasset",
+    "sha256": "bbae55a9e1285be840810b5f3fb3045cd39bc19edc6c48b09d96f5c1620dc5dd",
+    "size": 3298886,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\TerrorBird_Skeleton.uasset",
+    "sha256": "25741a62bf7eeaaf8cd037f9c222d6af1abda856d176bd03327bc8c0857eda09",
+    "size": 17177,
+    "export_count": 21
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Center.uasset",
+    "sha256": "58cd0525515109d602a9e8d3c74b0186ad2fb513933753c62a561bc7ac79d0f8",
+    "size": 5696,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Dwn-Lft.uasset",
+    "sha256": "3c08a3502b1490bfd86d6633276400245ed8ebcc523b8023ae91b9f946f004cd",
+    "size": 5722,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Dwn-Rit.uasset",
+    "sha256": "3acb28c54e1b0d941521027c1739d6c7e6b207282ecf61258694e3cb0d0b91c9",
+    "size": 5722,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Dwn.uasset",
+    "sha256": "cffb16ce7f30ecaf07eab9701fdb786c5a2b87fd2fbe0ed5ceebd31354536040",
+    "size": 5690,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Lft.uasset",
+    "sha256": "8acd8e6b91b6e0c3cf5337368fa9d0256af8e8f098586960475e23de539e29ac",
+    "size": 5714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Rit.uasset",
+    "sha256": "a23b43919c0058a5195e82e214aff702b6ea2dffbc4ca33aa1538ab0931a8016",
+    "size": 5714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Up-Lft.uasset",
+    "sha256": "e80670f9e31ac505049d4fba1f3be3f920bc4fc32b27686707424c03f8c48d1e",
+    "size": 5720,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Up-Rit.uasset",
+    "sha256": "36a51189fd79cff66a380aae0408a901d6eed66d500926e09fe55da721cf858c",
+    "size": 5720,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Aim-Up.uasset",
+    "sha256": "6441ebbfb6f4d89fdebe7fb0aa1f9c8e0311d130e034bfd15d086322e105f0fa",
+    "size": 5688,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Attack-Bite.uasset",
+    "sha256": "edd011b5b28013a31246d87de48bb15af548f7fc0db4ec11c4d61610e5d0a2cc",
+    "size": 12646,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Attack-Bite_Montage.uasset",
+    "sha256": "7d5d78761c1cf379a7ec9547e4c3ef54cdaaed1e09d9b8b272e0ec22033be776",
+    "size": 2556,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Blink.uasset",
+    "sha256": "2cbf9f9874d2fc8230eb061587199345a4b69cbed77607a3f7a2bc9f16e510d1",
+    "size": 6167,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Charge-Fwd.uasset",
+    "sha256": "a09886bb23bf3cd4c28aef89fa243eb15233130853a491b493211bd8bb148b9d",
+    "size": 17298,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Charge-Lft.uasset",
+    "sha256": "6d8e6b1aef4e2d6e64303b549b24aa901516f01a713b6f8056289295160d75fa",
+    "size": 17298,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Charge-Rit.uasset",
+    "sha256": "c8f2abb7e410e974a134c56e5a69aa449215d02592cb483212fd55f52255c6a9",
+    "size": 17298,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Cuddle.uasset",
+    "sha256": "67a4afa3f019ac4dbd2a3355d65767235cadb9bed333924911818f2de0876b5d",
+    "size": 66064,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Cuddle_Montage.uasset",
+    "sha256": "462f43a19d852608324675b11fa348273aee0e0d7e07aae43c34991fcb68ef35",
+    "size": 1771,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Eat.uasset",
+    "sha256": "3de268326e23a7863d7512ef423f2a2feb9d4072d658e2af8dc45f0f4d21a9d9",
+    "size": 56031,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Eat_Montage.uasset",
+    "sha256": "a29b2db312444cbdc248ca412e72c431b8ccc1b3053f5369c2f6bfdb87898451",
+    "size": 1759,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Hurt-Big.uasset",
+    "sha256": "52b8c95ecd7a82d7dd827c0a1bfebe73024fa5df2d30d17f3e14e21c2b2fe8d5",
+    "size": 12255,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Hurt-Big_Montage.uasset",
+    "sha256": "db6cfe128b476201ce5942cc6b4d05c5606d6694c793dcb9bd268c58f500b4b3",
+    "size": 1877,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Idle.uasset",
+    "sha256": "bf0b32636ced9458917475a244ceda00e04e9349ae67fe447a1a0d3f4f29ea21",
+    "size": 24127,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Jump-Idle.uasset",
+    "sha256": "e8f1c293b6d206350bd73d32c914578d86fc54cacb387d898f7bf375cd096a7a",
+    "size": 17168,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Jump-IdleFlapping2.uasset",
+    "sha256": "65978521ec88fbf1ce9d34889273cd76913bd769bfe9f8d12f04ee2e553bda9a",
+    "size": 25431,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Jump-IdleFlapping2_Montage.uasset",
+    "sha256": "c4c12940392a973066d4602590e52f0c86b0175336ec9465a698c9eb24ecf6f0",
+    "size": 1892,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Jump-In.uasset",
+    "sha256": "5126d406f673be1d50ca569c56ae3548bd4a5ecbb4cf29ff4877f8708b6891d4",
+    "size": 9749,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Jump-In_Montage.uasset",
+    "sha256": "17c231736a48824418088219065cab9f9972b2e9267f10f92414f3d72edb1a35",
+    "size": 1906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Lay-Egg.uasset",
+    "sha256": "30c66c51e0f9a9c3b72de016ed6b6506d8c2f1f26b30f5c7cdf3688bfa874810",
+    "size": 11676,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Lay-Egg_Montage.uasset",
+    "sha256": "022038364df072193c7d8c88879918dbc14713f61609a2c60a24906866ed806d",
+    "size": 2534,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Move-Fwd.uasset",
+    "sha256": "eee81bf20f9d7f04f1713e1f7ae6f3bce3fc3ec6e4430ec8f6017c278c19e48e",
+    "size": 15123,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Move-Lft.uasset",
+    "sha256": "712b62a4098b0899153df95e705d5bf4d87ea3aeac9665ab4137cc27234e1180",
+    "size": 15123,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Move-Rit.uasset",
+    "sha256": "72ab9b1b0c9a2c7864c2cb381b00d97849af9679ca4b07a28672730ba3ad1194",
+    "size": 15123,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Startled.uasset",
+    "sha256": "7bdda9701a43532fa8c375f199ba501415b7d3cb234b55796515e3d51292a27a",
+    "size": 14289,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Startled_Montage.uasset",
+    "sha256": "a106aea23e42bcc0bcd112ddac734fcbb27c8057c79aae4ccd94533daa30e2e2",
+    "size": 1779,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Swim-Fwd.uasset",
+    "sha256": "3991b06fee0492bd8e9e14364baf5e48f7f784e87d9607207c0b9c713327b739",
+    "size": 14282,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Swim-Idle.uasset",
+    "sha256": "e1a1fefa7540f100d8f441d843f0bf6ea7221c360b9f78114e5b418c04a6cfae",
+    "size": 23308,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Eat.uasset",
+    "sha256": "475ef8bb6e4f1ccd7ee33c92b15206836fca9d66b055555a697c74953b62c923",
+    "size": 45398,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Eat_Montage.uasset",
+    "sha256": "0480d88e20675023c0a0c97b91f50073d100a2f5f1c7c52b385f80a5b4caacf8",
+    "size": 1949,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Idle.uasset",
+    "sha256": "de5540292593bb3d038166331b27b6cbd1c5562b18da6befc6cebf175db2a2c7",
+    "size": 23952,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Idle_Montage.uasset",
+    "sha256": "7363fd66a2a34b3fee2ba1ecf5b937bcaf6662b8221125e28872a7489be4ceb5",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-In.uasset",
+    "sha256": "eb45f4558ba8ff002303200a7b079b5a73e98f0132ad1c50af31985dc7ac8f00",
+    "size": 24396,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-In_Montage.uasset",
+    "sha256": "2910eda3c30d1903397c3e482ca4637921df4aa74242e685bf38e4a7b3e585ab",
+    "size": 1945,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Out-Tamed.uasset",
+    "sha256": "23500c613a7504caf131409380c4f0db024a3cbee65b5faa8ef6bc7ce1a59073",
+    "size": 27803,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "1eb53df6dfced899d9b3bfebccdf1499b7ac3cee21b8ceb71ea36456de27c16e",
+    "size": 1973,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Out-Wild.uasset",
+    "sha256": "9da43e9bd5ea43fdeaf2e89d6f76344134742e76406d25b101e56d0bc5e417d1",
+    "size": 22439,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "d9960602ab74b7167df9850b0581479bf22b47c5574b863920bb6e05c9528d4d",
+    "size": 1969,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\TerrorBird\\Animations\\TerrorBird_AimOffset.uasset",
+    "sha256": "dd6e27518068d1a31c23e6ecde0d6a8fe8ced2030e9c89b558fe9a57b39f3a95",
+    "size": 7996,
+    "export_count": 1
+  }
+]

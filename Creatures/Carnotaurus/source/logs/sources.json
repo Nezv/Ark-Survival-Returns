@@ -1,0 +1,278 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Carno.uasset",
+    "sha256": "e0310231f580565e68ecbbf2cfdb5462d647ab48df4044b78dc2da40ea35bbbf",
+    "size": 1787952,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Carno_Skeleton.uasset",
+    "sha256": "36bc90a34010336f96efd7e91ee56d7b6b80939fa0ea924a9e102118517a32bf",
+    "size": 20757,
+    "export_count": 30
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Center.uasset",
+    "sha256": "adcf142728901877237a52ab078987b997be15d248d8ba29870e9816135400a3",
+    "size": 5851,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Dwn-Lft.uasset",
+    "sha256": "b6a3e160b10a33c75b8881c3963774f809c9e34ee4d348f84ba03710f10942b7",
+    "size": 5873,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Dwn-Rit.uasset",
+    "sha256": "c18437128a479d22afa060516b9040c0e319addf2890cbe45564ce2ed4929bd6",
+    "size": 5865,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Dwn.uasset",
+    "sha256": "a79e72832db61ed9883a2e0a47246295d941e5e7519b2e9fd7d5ecd2d1870dc2",
+    "size": 5849,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Lft.uasset",
+    "sha256": "abb6f5cb84128d793f90124fcc235553aebc1132da45b38cf14e26c8f879699e",
+    "size": 5845,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Rit.uasset",
+    "sha256": "fdc6ee0ea2a041666004f8f8e0ffa966f6b8b6c224692567a89327c41b8593a5",
+    "size": 5845,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Up-Lft.uasset",
+    "sha256": "435b747983bef63bb4932ae6c41231896a6aa97124718ac226e4e3772adda945",
+    "size": 5863,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Up-Rit.uasset",
+    "sha256": "30c028c54131cd1426888421e68ce0d9d457a1003de884c600f13b3223d6ae49",
+    "size": 5871,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Aim-Up.uasset",
+    "sha256": "e3305d70a502b8bf50120bce913b9789153cde197beb4f503ae4440aacd23e72",
+    "size": 5855,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Attack-Bite.uasset",
+    "sha256": "640f94633dd84e958d4785295fff487716c409f68f3a4d3d7300d3d01cd43e26",
+    "size": 15525,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Attack-Bite_Montage.uasset",
+    "sha256": "7b862a2c0750f727d43e8f4f1e7e00e1a37080cd3dfd50d753cf12a08f40e4e4",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Attack-Gore.uasset",
+    "sha256": "f088ddecb2c6d6af6104b8bdfe800fe38f086ebcf42203c83f5bb07ec9d1ce3f",
+    "size": 13277,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Attack-Gore_Montage.uasset",
+    "sha256": "d7beb0fae4af80ce69dabe44d37f33e8442240eb77eb022bafd46ef9229aa331",
+    "size": 2511,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Blink.uasset",
+    "sha256": "653f78573e6e5bf7907d5313eaa1d9ac024041868b5d45858a230e0881fb8b7f",
+    "size": 6730,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Charge-Fwd.uasset",
+    "sha256": "943a855e22f9863fcbeddd67686294e65affb8dae983a09f1d9b74a5d5de32c1",
+    "size": 16713,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Charge-Lft.uasset",
+    "sha256": "e0b23bdc1824a83dba77ac08177563b2ed66035d7cc3064aaefc698761816064",
+    "size": 16905,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Charge-Rit.uasset",
+    "sha256": "5f8b201939bc3501c89343114bded27ea68c1759fed151772bd11e290e17f81b",
+    "size": 17089,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Cuddle.uasset",
+    "sha256": "122e97f1d77d2d5d0172521ccecdd796fa758531f4ee53336e22b0764b1c06d4",
+    "size": 62759,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Cuddle_Montage.uasset",
+    "sha256": "910279c97d1052569ca7b2b4a148c69b03cf9f174b3615885f3a42e89a1bc913",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Eat.uasset",
+    "sha256": "6952f6de05ca4681ea54028a8aa7de11f62d80ff46d9ad92b2fef74a408f4ba9",
+    "size": 20793,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Eat_Montage.uasset",
+    "sha256": "8e86a53f14d6526476a1ecd02258b52382cbc95a261bc6f059f2714cd388cf14",
+    "size": 1714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Hurt-Big-Rit.uasset",
+    "sha256": "5dd0e6dcdd0e678ed44ff47d0e79d5ce2ee34db892c53db6d81e6f664192a331",
+    "size": 14655,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "fa959098281eeb2d5bf9d9500428a79866b6e0ddfea304f14dedff6cff009fa2",
+    "size": 1848,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Idle.uasset",
+    "sha256": "12247733dd500b1e6b9a897e3d2147f61a3840fd667028758b68005ba780f19c",
+    "size": 32907,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Lay-Egg.uasset",
+    "sha256": "b88728869712ca0ba39a40391db4f0f94d01b7b3690c5fc49161a46aa6aecfda",
+    "size": 21601,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Lay-Egg_Montage.uasset",
+    "sha256": "ea8a1d26ca386bcd827025ece7312f0febd2c3fd10ef85bde6ea3d977d0c5f54",
+    "size": 2489,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Move-Fwd.uasset",
+    "sha256": "b44d46430ed153c8cbd7f6ce4cf5d4b04535f8471204766d6933a876180cbeba",
+    "size": 18779,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Move-Lft.uasset",
+    "sha256": "42ead34d1e0829a23612fb9c96906b5a993724481a720444a88cb75c15dff65d",
+    "size": 18787,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Move-Rit.uasset",
+    "sha256": "2006a29332b8ec37dfb0f27fb51e00ee545a6f77bfaab54f549208c28a069299",
+    "size": 18787,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Startled.uasset",
+    "sha256": "c0f008ab563aee2de88c6aeec3313293ae499a8994aa7542d7ada61db5a08267",
+    "size": 17927,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Startled_Montage.uasset",
+    "sha256": "ffeaa28a4211dbe37582715aee9eae1e4833be19fec8370e3e3f9db4fcd3ff4e",
+    "size": 1821,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Swim-Fwd.uasset",
+    "sha256": "7fd5cceb537e225e23de500bfab0750a4503b8e64a73259b585e2308242b9a78",
+    "size": 17015,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Swim-Idle.uasset",
+    "sha256": "a60d9688443e5ca514937dfe3b4135b843950590eccec02be90be55844728224",
+    "size": 31513,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Eat.uasset",
+    "sha256": "eeb5fd61d603b63a9bcd41ec594d2a74b3ec3757b17584b95313baf4c804d88e",
+    "size": 23295,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Eat_Montage.uasset",
+    "sha256": "4e350c43ae081922322f53b4e40476d61375b0f9601c022b59fb6c8f6fb5a286",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Idle.uasset",
+    "sha256": "d172e2f86a89ea5cf66ffcaf54cc9e9df907d4f5fa26b82af97442ee8e106b88",
+    "size": 23299,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Idle_Montage.uasset",
+    "sha256": "f27ee637ed0cc721858088f17d59a4d2dc33b5b3dd047318baed90190831a3d1",
+    "size": 1746,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-In.uasset",
+    "sha256": "14fdfc2be44480855be12537ccb893a41d33259327fbd9520dfe62e78780a44a",
+    "size": 23083,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-In_Montage.uasset",
+    "sha256": "a3d94c5c47cb47cae26f75a8af822ab721b1b72dd3cb4da659fc15ac0169e2b7",
+    "size": 1738,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Out-Tamed.uasset",
+    "sha256": "13f776b3fc8f6ca9b12680019cfcfc424d0254246d03f6da2d36727058fac209",
+    "size": 39971,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "749d2829c08f4804e03fa40622bb8d5e4be9ed8d723679e2aea4b235e8036ffa",
+    "size": 1766,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Out-Wild.uasset",
+    "sha256": "4808e5d593a242343300e407e4a1614a8dd9f51711ba7529e27dee1ba295e09d",
+    "size": 24159,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "ac550c7170015e544a5c7e766b77f705220a0998ba3faa300e59d4127eb7e541",
+    "size": 1762,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Carno\\Animations\\Carno_AimOffset.uasset",
+    "sha256": "ff6710f56c7c02bd4a1b377eeb2b8b438163ab8d316b5528683235fe4e4a55c1",
+    "size": 7831,
+    "export_count": 1
+  }
+]

@@ -1,0 +1,308 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Direwolf_new\\Direwolf_New.uasset",
+    "sha256": "f8ca90602ae8c1759d321c3d4ed44dbcfab1f381c6b161e9d2e33d2986da0b0f",
+    "size": 3769927,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Direwolf_Skeleton.uasset",
+    "sha256": "b4124363ba78cf940e3d46577cdc840eb24bc7ec0b9dbb5ab7b7d135b3b1d8ca",
+    "size": 22619,
+    "export_count": 22
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Center.uasset",
+    "sha256": "5d0514bb50b790a5d327812d9db266be3da52fbbba5cb0878a031830b5016148",
+    "size": 7398,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Dwn-Lft.uasset",
+    "sha256": "cc69f17b146909c86fbe43ba514d69dc1df429b8fee18ba7cd95ce7c2b595a05",
+    "size": 7408,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Dwn-Rit.uasset",
+    "sha256": "90b42f7b084312eebdb0d60e977848a442dd8780de3af60028d929a2d1f72ad2",
+    "size": 7408,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Dwn.uasset",
+    "sha256": "938654d1f3fd384312022268d4f76704f086a35881b8967754d3f50ce32f1564",
+    "size": 7400,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Lft.uasset",
+    "sha256": "faf75cee08df045b3f30bd8f7c0cdb49e4a49f31689e2e2c35b88836cb8b4365",
+    "size": 7400,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Rit.uasset",
+    "sha256": "f92d85aea5c646d7dc8457e994ddc577a22e8cc33ebba28967930263ab6e6bc9",
+    "size": 7400,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Up-Lft.uasset",
+    "sha256": "a11c6836a16b05abcd9eb594270e438c86ca93061810c884d56bb2566de1b345",
+    "size": 7406,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Up-Rit.uasset",
+    "sha256": "4f90f36c761926f45eb7f5b19e75be42f2c579f9e8cf5f691ead65376b7223a7",
+    "size": 7406,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Aim-Up.uasset",
+    "sha256": "28ab321aa6803faf07e1a68d260971c7a8868786570642438896542ecbe96404",
+    "size": 7398,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Attack-Bite.uasset",
+    "sha256": "3a86cc78f7879682e7ed2fafbd86a84e8568bdbddb31d16925544dd2e74d6e81",
+    "size": 17063,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Attack-Bite_Montage.uasset",
+    "sha256": "46bb2c0385cf23e5ef4f2e20dc0139965ebc4a9e2a44928bd2023f1f73286ce9",
+    "size": 2538,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Blink.uasset",
+    "sha256": "7ecc397ce492bd1e4ecbf0f977ed4ef9c6fee58886baf960ef2f8a3c61d9ddf9",
+    "size": 8429,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Charge-Fwd.uasset",
+    "sha256": "766c2723c66ef48207cf33886bef3065e27145b049e5f39e7721f76210d3e4db",
+    "size": 17018,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Charge-Lft.uasset",
+    "sha256": "eb7a66ce875afa398aa1c913c529e90793b3826fa5e2f9939e3328ef965ff96b",
+    "size": 17526,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Charge-Rit.uasset",
+    "sha256": "8afa63f2ae941566c9aa60d345e86d8571561e7634fd2191e0ac506d7aa56096",
+    "size": 17094,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Cuddle.uasset",
+    "sha256": "bd37fbf1fa25b8f4b40a2f798e936c95c42fc6ab80ba5bdea85f4faee20adce0",
+    "size": 62430,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Cuddle_Montage.uasset",
+    "sha256": "0be4eeb0f14f36650fe01d88c1304acc38c016ab42e40380acd77d0ed6d52acb",
+    "size": 1753,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Eat.uasset",
+    "sha256": "af93a62541045f810d9cb08f2230ea299e03a33e1b9f51d430f4e1f26dc6cfd7",
+    "size": 59662,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Eat_Montage.uasset",
+    "sha256": "03e96c1f288b77a5be39572e41ae27618b3a224392f9887dc3f62511a55abc4e",
+    "size": 1741,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Howl.uasset",
+    "sha256": "ce97db8dca51fad98c609e538fde7911d66505f22775e29435b92771f5d478bf",
+    "size": 32525,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Howl_Montage.uasset",
+    "sha256": "a29473a8fd6eb30de066df346f2b3a0244e341d584364c8690edff6d6ccee730",
+    "size": 1745,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Hurt-Big.uasset",
+    "sha256": "2d247cc9d7e753b8f117b782a5a3809579a61d493d82db3fa62fef68edbe9f77",
+    "size": 12925,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Hurt-Big_Montage.uasset",
+    "sha256": "1e61e5aa64496914df26cc0f9d2ee77a77697eb77e519095436868ec66689de5",
+    "size": 1859,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Idle.uasset",
+    "sha256": "f9d8040e06eb3e32f78678b71c6ea85d4150e11adbfafc8aa6e5d668bf83beae",
+    "size": 23846,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Jump-Idle.uasset",
+    "sha256": "d8b6a0a85c9cfb3ea41fd88d4157a5865bb487be97d9f38b45da016141cb9d07",
+    "size": 13090,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Jump-In.uasset",
+    "sha256": "ea452af082b14158bae364ae4a95b4a502b1bc12e9008834b1e2841e3cdae228",
+    "size": 15738,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Jump-In_Montage.uasset",
+    "sha256": "5b67a0166708f0a40cc820c2f2c99c787001b7a9d6ea0b948d91b7fded7f7c89",
+    "size": 1888,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Move-Fwd.uasset",
+    "sha256": "66b04fb45fde66477f9bf2cb8a790675cd80ab8ad786573c1e8b56306b6a2b64",
+    "size": 17722,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Move-Lft.uasset",
+    "sha256": "235baee4aa86509046baa60823e32e325a84b77b7a6a0aee43f990142e96cc6b",
+    "size": 17738,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Move-Rit.uasset",
+    "sha256": "9263c65cc7de6b1f484844958f7c5585797a99ccdc78ff6e01b14bee3421b432",
+    "size": 17738,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Poop.uasset",
+    "sha256": "af098e733338879ccbbed000149a26fa7ee27f3da5f0f8def8cf9c7472ee47c3",
+    "size": 11646,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Poop_Montage.uasset",
+    "sha256": "febdc27a1c58413ff5cb591d520a08e3268d8805fbb9052480a2ded4d3716afd",
+    "size": 2504,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Sniff.uasset",
+    "sha256": "59e0203a64436be8171376e32c398c3c06abb4cbb154043c08428293655303fd",
+    "size": 26347,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Sniff_Montage.uasset",
+    "sha256": "63383ce46240d6b56e151a2164844a00c85f8b3b81d8856b525f9e34b0eabd32",
+    "size": 2542,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Startled.uasset",
+    "sha256": "fad86ed1a99830376656ce34b0331b51c10f5f0471fa0337d04c2039abb00091",
+    "size": 23138,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Startled_Montage.uasset",
+    "sha256": "abb34e775312b08a626967864a7d53c4e45babb2ebdc778f96dde615eb0d2216",
+    "size": 1806,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Swim-Fwd.uasset",
+    "sha256": "39d2bfb91a4beebb032a6e394ede13c3209301bae26b4f5c0d5bf46f900e0ed5",
+    "size": 16039,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Swim-Idle.uasset",
+    "sha256": "ff101f3b80bbb0b5cd33c76d0ad8c283759dc52779e8cf6bf566512bf28017ac",
+    "size": 21672,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Eat.uasset",
+    "sha256": "40ac5aae990c6d121a829a49a49aee2ad22bc244f38b475d33c14ac6504429bf",
+    "size": 24670,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Eat_Montage.uasset",
+    "sha256": "4b18be7569db1be4d88f41ba831a92cb51d00843978717081537b64cef66ea99",
+    "size": 1931,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Idle.uasset",
+    "sha256": "3ff98c638c27602219020bc0cf38c980e9a8a5b6e8d5e19114a4581b6f3d195e",
+    "size": 22250,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Idle_Montage.uasset",
+    "sha256": "feabeb1ee351cde30531357c809c78f64237b92477ff36b8da10239ec1a27143",
+    "size": 1773,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-In.uasset",
+    "sha256": "d58ad9290130795ccaa03c88050cfef95ca999cb5cc865c875c5c41af59f251c",
+    "size": 31099,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-In_Montage.uasset",
+    "sha256": "e0257b9bd3fec0106ebcfae4bd710e012cc6c6d65112e067be37ac5ed5be25c8",
+    "size": 1927,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Out-Tamed.uasset",
+    "sha256": "48c4b02b5437757c624910e18524a8f846b85f8d3bedbe3c6d40145bdf90c764",
+    "size": 33268,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "566b286958cc64fb848f56883f31a96bb7370ccbe51043a3a47b48a9c9b3e45f",
+    "size": 1955,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Out-Wild.uasset",
+    "sha256": "0d7b291c87adcfb94a5b750362854e0328168913e62c2362656eb82b4350e8ec",
+    "size": 25828,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "b2b7d7cb7e2548ec5de22c86200050a83b7af7c751b2650472a75dce4396b5a7",
+    "size": 1951,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Direwolf\\Animations\\Direwolf_AimOffset.uasset",
+    "sha256": "c19ce34e77cc244904bf02682bd8c5ba6ab946af19fd0a20919b38e988e4ca4b",
+    "size": 7930,
+    "export_count": 1
+  }
+]

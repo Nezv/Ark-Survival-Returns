@@ -1,0 +1,332 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Archaeopteryx.uasset",
+    "sha256": "fd7957c6f95ad95453d1159f47cc5db439fdd519a0bd8da503ec56ffb7fc5792",
+    "size": 3093630,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Archaeopteryx_Skeleton.uasset",
+    "sha256": "443dd8d522b6ef32856d97479f9dcc646efa8fd14be4a4edbd861efb88028d82",
+    "size": 26687,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Center.uasset",
+    "sha256": "05b1357fc7f8809907c4faccb9563a9ba27191f63fdb0e05d5d15f9940e85de3",
+    "size": 10859,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Dwn-Lft.uasset",
+    "sha256": "2489f93686f9b1bf4b4c772fc2909592e254e024e5965c28492f7784655f2997",
+    "size": 10861,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Dwn-Rit.uasset",
+    "sha256": "f1b47c2941aebe9861d4a97abe2fe12820fe554ec492ee2e27c2ab10d104382a",
+    "size": 10861,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Dwn.uasset",
+    "sha256": "ff6642c682e49f0a83697eb74f13fdc598cfb08e0a4947d5bfd3bed9d022d10c",
+    "size": 10841,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Lft.uasset",
+    "sha256": "003604d3defb742577f492ac4a8e0c7db25b15d014edef7e5c9574ee8888081f",
+    "size": 10869,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Rit.uasset",
+    "sha256": "ac4afaae2d1a8368919b48ae49062f08eb529554224c04748b494571fa4d54e2",
+    "size": 10869,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Up-Lft.uasset",
+    "sha256": "a2de874643e9b4be001976923642b2a9b0f85f48d83204bea4eb6e11e2f7aafc",
+    "size": 10875,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Up-Rit.uasset",
+    "sha256": "faca71b01959d0cc430d76e5355c14e8ac05161c7ff8316fefcd093829490add",
+    "size": 10859,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Aim-Up.uasset",
+    "sha256": "5b8d9d7c60ede0c79c67a9e7f2ca7042da1bc29a10166ab09017982229d10073",
+    "size": 10851,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Attack-Bite.uasset",
+    "sha256": "087d1eeceda6c88d613856343a480718953e418b1b13e0d17f775caa8c7e210a",
+    "size": 26574,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Attack-Bite_Montage.uasset",
+    "sha256": "f93556dcc1e13cd9ea5ed3f46a8e0be5d965acb6e0ec4e356196d774f7f9a648",
+    "size": 2583,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Blink.uasset",
+    "sha256": "b7199ebac7cdbe44eb0529822b4afdb64146891c23ef7095d3ff62b043aadb7f",
+    "size": 11968,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Carried.uasset",
+    "sha256": "a1744350a2a66d8000d5497b860cc7dd21f3f7c0fae25004e5aa3e12e449108a",
+    "size": 33397,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Charge-Fwd.uasset",
+    "sha256": "3d924918bd364d5572195aa9a61d476601181e7ce4279ec7c3fcd14e68fd501c",
+    "size": 30201,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Cuddle.uasset",
+    "sha256": "1b29bc246b29cf7b5685c30796f9b867913d9c6c2e6edf59c9ec63ba92ab9086",
+    "size": 130245,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Cuddle_Montage.uasset",
+    "sha256": "7ef2ba9075ac626bcc3674246efdcc4751cae1af0581661bf2db5e5de04227b8",
+    "size": 1798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Eat.uasset",
+    "sha256": "c56d52394d834a0731cf209c581965dd3f66ef3b150cbccd55453c9c725531b7",
+    "size": 122977,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Eat_Montage.uasset",
+    "sha256": "828cdd6306c05e5818c6dd9f5874b2b5bd8108538afb6d9a47ee71b2eecfb8d6",
+    "size": 1786,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Fly-Hanging.uasset",
+    "sha256": "a342d48c035e224028113399431d83c50b0262ac5ef97e5e23d1d74edf7fb65c",
+    "size": 38776,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Fly-Startle.uasset",
+    "sha256": "0df8a79a5202759ea38f87e3959b44b001328b18608b21b197606cf368cd34ef",
+    "size": 31068,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Fly-Startle_Montage.uasset",
+    "sha256": "4fc4ef265f38dbb63e28ee28d678f31d2508aca96b13f0e7d3ebf03164b0b99e",
+    "size": 1818,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Fly.uasset",
+    "sha256": "17cf8c7bbdeb14f847bf83fc00800bc2cc1edfa80fb9c206b5a760ef4e43a9d5",
+    "size": 38162,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Fly_Lower.uasset",
+    "sha256": "a01c3eb2455717ca5fc427fd4d1eaf733a0c2b9152e0ccb404cff64e583eb172",
+    "size": 37599,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Glide.uasset",
+    "sha256": "9f3cb0577d9e7ea7b6e1107267a321b6fad8360e5ed6408245d05c4a142b702b",
+    "size": 35594,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Hurt-Big-Rit.uasset",
+    "sha256": "11efc4668e93857d7c52326d87bfda9c3b0e049369e3cea3848c94944c549011",
+    "size": 26173,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "489af28b265aed87f84e675c38522f1df006784b59163936467e46668479520f",
+    "size": 1920,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Idle.uasset",
+    "sha256": "79941f03db052ddb6eef0904891c114fd21c7f5319b6766ed470b9433cc9c9a3",
+    "size": 39461,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Jump-In.uasset",
+    "sha256": "85b470f0655b99f947109ae2c8b0cf4eafc8f38b759df55336401bc1b32f8088",
+    "size": 16845,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Jump-In_Montage.uasset",
+    "sha256": "239871e994b9ba9bfc904edcb7bbf9bb74224e38c9468f636ae08f9bcb577720",
+    "size": 1801,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Lay-Egg.uasset",
+    "sha256": "d5e65e00a0df067031d78c52e5771d4349906ca0b9c20932d5d11f0d8c1471db",
+    "size": 32403,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Lay-Egg_Montage.uasset",
+    "sha256": "740ee5780e7d66bd91d6b6988432fb3fa93e0661c5015043c3e343b489ae442d",
+    "size": 2561,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Move-Fwd.uasset",
+    "sha256": "c53de02830daa5037762cc2f7aa1ccef7227c70ca455076bf11ae28467783690",
+    "size": 26985,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Perched.uasset",
+    "sha256": "6e7dd5996fbc6377a26f15bd7d2875e68c648e2d066b502b54dd2b445e837999",
+    "size": 40539,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Startle.uasset",
+    "sha256": "edd2fcc5e734b81fb392e5ea6dea9495bfba47de9a0bd0967b290c10cff273e5",
+    "size": 42221,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Startle_Montage.uasset",
+    "sha256": "a3cbae61a2b10a3c0a97d0526618a11c1c5860e2e48a8a5902c529c8f2247e8f",
+    "size": 1888,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-StartPerch.uasset",
+    "sha256": "eace0d61352a255324e3a118c677343795510d6f684911841bcb45328c594e30",
+    "size": 19340,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-StartPerch_Montage.uasset",
+    "sha256": "8985a610bcfbf324b3e158593b55a76537ab9326b47736fadadbfded0555a118",
+    "size": 3360,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Swim-Fwd.uasset",
+    "sha256": "1ff8f5a4e5befbafc715a8d8304a9f6b2ffed486a5ac3d9d73e07ee9cb64030b",
+    "size": 28570,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Swim-Idle.uasset",
+    "sha256": "07cabbef298bd223b1b4a6e26746afe86753f03edd0c3d1421e67d37ce7e1e66",
+    "size": 43466,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-TakeOff.uasset",
+    "sha256": "1b687cd5d1d4c1d078a22901551e4c5a53b469f0bf858f35c1147bc20a853372",
+    "size": 1875,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Eat.uasset",
+    "sha256": "62bc87963abe28ba62988ae670ed14fad13cff3a14015a7d5a3110d796761f46",
+    "size": 37582,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Eat_Montage.uasset",
+    "sha256": "23fc4ce4fbb4d2ec481b66ff98630627902ef9a3912e803b543fc392d9940370",
+    "size": 1814,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Idle.uasset",
+    "sha256": "7e9871898be6c35d26a59fb4eeb63ed4fc09997e579961b4d30f909f22e17233",
+    "size": 36729,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Idle_Montage.uasset",
+    "sha256": "42fcdf11bb210a5b802f69a31d1c9dccdbe0273eb1d63c7d379b4de658f20e60",
+    "size": 1818,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-In.uasset",
+    "sha256": "90fe44ba2006c814bcb4cc3108dca2d683d2d4e98575a948b07ed128f0b03a1b",
+    "size": 70061,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-In_Montage.uasset",
+    "sha256": "1a984b3a8ebf0f7fbc023de8b899332948f533ac468cd61889cb58472ab6ee93",
+    "size": 1810,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Out-Tamed.uasset",
+    "sha256": "cb9fa178225182d591ab8a2265dc2b404bf909b5d401629e77afe1a2c88cd22e",
+    "size": 71483,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "4d961ed0fb4eefa379f43e21f85628dd705d630e052e3989598e110fb71585a1",
+    "size": 1838,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Out-Wild.uasset",
+    "sha256": "576925c8c42f41d4b2b959ede779ab3419556b185cd718fa966a49ca4f67c10b",
+    "size": 43488,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "6350eea80540e20dffffd547aa632df4f16a8f27f113e883fc52e054e201c1fb",
+    "size": 1834,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\Archaeopteryx_AimOffset.uasset",
+    "sha256": "ff06b1b2cc2a015cd8b917cc8b7ce175b2e1c35f58d78bdf280dd7bc8a6d8ba3",
+    "size": 8095,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\TPV\\TPV_Archaeopteryx_Hanging_Loop.uasset",
+    "sha256": "fa77eaea6ed0b95973ba683e08d0e9aaae32f13822be66999f72a0517a5a6043",
+    "size": 17743,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Archaeopteryx\\Animations\\TPV\\TPV_HF_Archaeopteryx_Hanging_Loop.uasset",
+    "sha256": "7ad30e64af1d25776c7f677982d2420ed5e4cf2281d5830ec2695601c32bef4c",
+    "size": 14551,
+    "export_count": 1
+  }
+]

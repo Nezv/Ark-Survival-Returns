@@ -1,0 +1,1126 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.tusoteuthis",
+        "texture_width": 64,
+        "texture_height": 8,
+        "visible_bounds_width": 13.659231567382813,
+        "visible_bounds_height": 6.0891289710998535,
+        "visible_bounds_offset": [
+          0,
+          -0.6641656637191773,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            -90.0,
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "c_main",
+          "pivot": [
+            -0.0,
+            0.371878,
+            -0.144593
+          ],
+          "rotation": [
+            0.150114,
+            -0.0,
+            0.0
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "c_head",
+          "pivot": [
+            0.0,
+            4.055802,
+            0.870263
+          ],
+          "rotation": [
+            88.452226,
+            25.999356,
+            91.898514
+          ],
+          "parent": "c_main"
+        },
+        {
+          "name": "l_tentacleB1",
+          "pivot": [
+            -4.780553,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -40.561789,
+            -5.540873,
+            3.796838
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "l_tentacleB2",
+          "pivot": [
+            -15.535559,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -135.700002,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB1"
+        },
+        {
+          "name": "l_tentacleB3",
+          "pivot": [
+            -26.290565,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB2"
+        },
+        {
+          "name": "l_tentacleB4",
+          "pivot": [
+            -37.045572,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB3"
+        },
+        {
+          "name": "l_tentacleB5",
+          "pivot": [
+            -47.800578,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB4"
+        },
+        {
+          "name": "l_tentacleB6",
+          "pivot": [
+            -58.555585,
+            5.692377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB5"
+        },
+        {
+          "name": "l_tentacleB7",
+          "pivot": [
+            -61.542055,
+            5.162377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB6"
+        },
+        {
+          "name": "l_tentacleB8",
+          "pivot": [
+            -65.168526,
+            5.162377,
+            -1.798128
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleB7"
+        },
+        {
+          "name": "l_tentacleC1",
+          "pivot": [
+            -4.262075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -176.405996,
+            -4.609448,
+            1.643625
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "l_tentacleC2",
+          "pivot": [
+            -10.762075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleC1"
+        },
+        {
+          "name": "l_tentacleC3",
+          "pivot": [
+            -17.262075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleC2"
+        },
+        {
+          "name": "l_tentacleC4",
+          "pivot": [
+            -23.762075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleC3"
+        },
+        {
+          "name": "l_tentacleC5",
+          "pivot": [
+            -30.262075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleC4"
+        },
+        {
+          "name": "l_tentacleC6",
+          "pivot": [
+            -36.762075,
+            4.323812,
+            -2.005266
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleC5"
+        },
+        {
+          "name": "l_tentacleD1",
+          "pivot": [
+            -4.074576,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -176.403893,
+            -4.358901,
+            0.553863
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "l_tentacleD2",
+          "pivot": [
+            -11.407909,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD1"
+        },
+        {
+          "name": "l_tentacleD3",
+          "pivot": [
+            -18.741243,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD2"
+        },
+        {
+          "name": "l_tentacleD4",
+          "pivot": [
+            -26.074577,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD3"
+        },
+        {
+          "name": "l_tentacleD5",
+          "pivot": [
+            -33.40791,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD4"
+        },
+        {
+          "name": "l_tentacleD6",
+          "pivot": [
+            -40.741244,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD5"
+        },
+        {
+          "name": "l_tentacleD7",
+          "pivot": [
+            -48.074577,
+            2.962666,
+            -1.837786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD6"
+        },
+        {
+          "name": "l_tentacleD8",
+          "pivot": [
+            -50.474577,
+            2.662666,
+            -1.727786
+          ],
+          "rotation": [
+            -0.0,
+            2.4,
+            0.0
+          ],
+          "parent": "l_tentacleD7"
+        },
+        {
+          "name": "l_tentacleD9",
+          "pivot": [
+            -52.874577,
+            2.412666,
+            -1.727786
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleD8"
+        },
+        {
+          "name": "l_tentacleE1",
+          "pivot": [
+            -4.435526,
+            2.308682,
+            -0.08221
+          ],
+          "rotation": [
+            -177.098915,
+            -2.512035,
+            -1.949641
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "l_tentacleE2",
+          "pivot": [
+            -8.935526,
+            2.308682,
+            -0.08221
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleE1"
+        },
+        {
+          "name": "l_tentacleE3",
+          "pivot": [
+            -13.435526,
+            2.308682,
+            -0.08221
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleE2"
+        },
+        {
+          "name": "l_tentacleE4",
+          "pivot": [
+            -17.935526,
+            2.308682,
+            -0.08221
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleE3"
+        },
+        {
+          "name": "l_tentacleE5",
+          "pivot": [
+            -22.435526,
+            2.308682,
+            -0.08221
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            -90.0
+          ],
+          "parent": "l_tentacleE4"
+        },
+        {
+          "name": "l_tentacleE6",
+          "pivot": [
+            -22.435526,
+            4.517185,
+            -0.08221
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleE5"
+        },
+        {
+          "name": "l_tentacleA1",
+          "pivot": [
+            -5.237176,
+            6.074953,
+            -0.252526
+          ],
+          "rotation": [
+            -177.430416,
+            -2.328916,
+            1.766624
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "l_tentacleA2",
+          "pivot": [
+            -11.903842,
+            6.074953,
+            -0.252526
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleA1"
+        },
+        {
+          "name": "l_tentacleA3",
+          "pivot": [
+            -18.570509,
+            6.074953,
+            -0.252526
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleA2"
+        },
+        {
+          "name": "l_tentacleA4",
+          "pivot": [
+            -25.237175,
+            6.074953,
+            -0.252526
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "l_tentacleA3"
+        },
+        {
+          "name": "l_tentacleA5",
+          "pivot": [
+            -28.132606,
+            6.074953,
+            -0.251429
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            -90.0
+          ],
+          "parent": "l_tentacleA4"
+        },
+        {
+          "name": "r_tentacleA1",
+          "pivot": [
+            -5.304873,
+            6.148107,
+            1.507379
+          ],
+          "rotation": [
+            177.919898,
+            1.233567,
+            -178.188886
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "r_tentacleA2",
+          "pivot": [
+            1.361794,
+            6.148107,
+            1.507379
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleA1"
+        },
+        {
+          "name": "r_tentacleA3",
+          "pivot": [
+            8.02846,
+            6.148107,
+            1.507379
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleA2"
+        },
+        {
+          "name": "r_tentacleA4",
+          "pivot": [
+            14.695127,
+            6.148107,
+            1.507379
+          ],
+          "rotation": [
+            180.0,
+            -0.0,
+            180.0
+          ],
+          "parent": "r_tentacleA3"
+        },
+        {
+          "name": "r_tentacleA5",
+          "pivot": [
+            17.590528,
+            6.148107,
+            1.506279
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            -90.0
+          ],
+          "parent": "r_tentacleA4"
+        },
+        {
+          "name": "r_tentacleB1",
+          "pivot": [
+            -4.911509,
+            5.896174,
+            3.104699
+          ],
+          "rotation": [
+            -36.398103,
+            -1.806218,
+            -175.913147
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "r_tentacleB2",
+          "pivot": [
+            5.843492,
+            5.896174,
+            3.104699
+          ],
+          "rotation": [
+            -144.385363,
+            -0.0,
+            -0.0
+          ],
+          "parent": "r_tentacleB1"
+        },
+        {
+          "name": "r_tentacleB3",
+          "pivot": [
+            16.598492,
+            5.896174,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB2"
+        },
+        {
+          "name": "r_tentacleB4",
+          "pivot": [
+            27.353492,
+            5.896174,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB3"
+        },
+        {
+          "name": "r_tentacleB5",
+          "pivot": [
+            38.108493,
+            5.896174,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB4"
+        },
+        {
+          "name": "r_tentacleB6",
+          "pivot": [
+            48.863492,
+            5.896173,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB5"
+        },
+        {
+          "name": "r_tentacleB7",
+          "pivot": [
+            51.849992,
+            6.426173,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB6"
+        },
+        {
+          "name": "r_tentacleB8",
+          "pivot": [
+            55.476492,
+            6.426173,
+            3.104699
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleB7"
+        },
+        {
+          "name": "r_tentacleC1",
+          "pivot": [
+            -4.440076,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            178.936975,
+            -1.049408,
+            -178.126254
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "r_tentacleC2",
+          "pivot": [
+            2.059924,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleC1"
+        },
+        {
+          "name": "r_tentacleC3",
+          "pivot": [
+            8.559924,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleC2"
+        },
+        {
+          "name": "r_tentacleC4",
+          "pivot": [
+            15.059924,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleC3"
+        },
+        {
+          "name": "r_tentacleC5",
+          "pivot": [
+            21.559924,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleC4"
+        },
+        {
+          "name": "r_tentacleC6",
+          "pivot": [
+            28.059924,
+            4.550745,
+            3.454164
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleC5"
+        },
+        {
+          "name": "r_tentacleD1",
+          "pivot": [
+            -4.246312,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            178.872534,
+            -0.88854,
+            -179.229687
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "r_tentacleD2",
+          "pivot": [
+            3.087022,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD1"
+        },
+        {
+          "name": "r_tentacleD3",
+          "pivot": [
+            10.420355,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD2"
+        },
+        {
+          "name": "r_tentacleD4",
+          "pivot": [
+            17.753689,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD3"
+        },
+        {
+          "name": "r_tentacleD5",
+          "pivot": [
+            25.087022,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD4"
+        },
+        {
+          "name": "r_tentacleD6",
+          "pivot": [
+            32.420356,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD5"
+        },
+        {
+          "name": "r_tentacleD7",
+          "pivot": [
+            39.75369,
+            3.180867,
+            3.411573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD6"
+        },
+        {
+          "name": "r_tentacleD8",
+          "pivot": [
+            42.15369,
+            3.480867,
+            3.301573
+          ],
+          "rotation": [
+            -0.0,
+            2.4,
+            0.0
+          ],
+          "parent": "r_tentacleD7"
+        },
+        {
+          "name": "r_tentacleD9",
+          "pivot": [
+            44.55369,
+            3.730867,
+            3.301573
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleD8"
+        },
+        {
+          "name": "r_tentacleE1",
+          "pivot": [
+            -4.503825,
+            2.382677,
+            1.69792
+          ],
+          "rotation": [
+            178.030811,
+            0.742866,
+            178.125623
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "r_tentacleE2",
+          "pivot": [
+            -0.003825,
+            2.382677,
+            1.69792
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleE1"
+        },
+        {
+          "name": "r_tentacleE3",
+          "pivot": [
+            4.496175,
+            2.382677,
+            1.69792
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleE2"
+        },
+        {
+          "name": "r_tentacleE4",
+          "pivot": [
+            8.996175,
+            2.382677,
+            1.69792
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleE3"
+        },
+        {
+          "name": "r_tentacleE5",
+          "pivot": [
+            13.496175,
+            2.382677,
+            1.69792
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            -90.0
+          ],
+          "parent": "r_tentacleE4"
+        },
+        {
+          "name": "r_tentacleE6",
+          "pivot": [
+            13.496175,
+            0.174177,
+            1.69792
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "r_tentacleE5"
+        },
+        {
+          "name": "upper_beak",
+          "pivot": [
+            -5.693889,
+            4.347509,
+            0.688371
+          ],
+          "rotation": [
+            -87.346277,
+            -1.238678,
+            -10.646946
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "lower_beak",
+          "pivot": [
+            -5.645553,
+            3.996151,
+            0.704417
+          ],
+          "rotation": [
+            92.653723,
+            -1.238678,
+            -10.646946
+          ],
+          "parent": "c_head"
+        },
+        {
+          "name": "c_body1",
+          "pivot": [
+            0.0,
+            0.555474,
+            -0.253066
+          ],
+          "rotation": [
+            -94.099999,
+            -2.763099,
+            -90.000002
+          ],
+          "parent": "c_main"
+        },
+        {
+          "name": "c_body2",
+          "pivot": [
+            -4.462119,
+            0.555474,
+            -0.253066
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            6.0
+          ],
+          "parent": "c_body1"
+        },
+        {
+          "name": "c_body3",
+          "pivot": [
+            -10.966705,
+            0.555474,
+            -0.253066
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            2.3
+          ],
+          "parent": "c_body2"
+        },
+        {
+          "name": "c_body4",
+          "pivot": [
+            -16.722406,
+            0.555474,
+            -0.253066
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            3.8
+          ],
+          "parent": "c_body3"
+        },
+        {
+          "name": "c_body5",
+          "pivot": [
+            -21.454706,
+            0.555474,
+            -0.253066
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "c_body4"
+        },
+        {
+          "name": "ric_c_saddle",
+          "pivot": [
+            -3.924709,
+            -4.480949,
+            0.107949
+          ],
+          "rotation": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "parent": "c_body1"
+        }
+      ]
+    }
+  ]
+}

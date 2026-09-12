@@ -1,0 +1,194 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\BoaFrill.uasset",
+    "sha256": "8d4adab3c75c845e187de23a2fbcd5666039e2e69d500c4565dfd249b6181e8d",
+    "size": 3211849,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\BoaFrill_Skeleton.uasset",
+    "sha256": "888048587e4b94b9b31432d0037f6aba589d7c259ab4b9ea0b1b7400542c4a1c",
+    "size": 15670,
+    "export_count": 21
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Center.uasset",
+    "sha256": "946844f746ba0ab20fb8331630eeaed47b2f165ca4668413b73e9843d3cad58a",
+    "size": 5282,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Lft.uasset",
+    "sha256": "8122aac51a24acdd78ecd5f597cf4fa7392e0b82b97453ecac9973372b14c9b8",
+    "size": 5272,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Rit.uasset",
+    "sha256": "379dc83fbf2e4fb74893617e7e6e11a9055d7b340f1806732706c3d5d68e4334",
+    "size": 5276,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Up-Lft.uasset",
+    "sha256": "5befb56b764e4c81e3488c8b1a4c6465aba965cef2af6cbfd4572cf9a034c07f",
+    "size": 5282,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Up-Rit.uasset",
+    "sha256": "fca75a6a483b601cf867bd9bb11711f9f625d4eeaf76a5df4c94d14c24ed58bb",
+    "size": 5278,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Aim-Up.uasset",
+    "sha256": "3165313d1061c928733f5bc3ca3971de81daf2ba088d2afe4c4d17785b5c7629",
+    "size": 5270,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Lunge.uasset",
+    "sha256": "762888a508cf4d3e278f7265d6006fa6cb8497ffcdfa538940f9b6a211ab6d79",
+    "size": 18843,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Lunge_Montage.uasset",
+    "sha256": "67fa5b70f28d0a305798aa321c1f9f27fcc5ffae4340e5687cb4143c8360496f",
+    "size": 2629,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Spit.uasset",
+    "sha256": "5d3a96fc44ca823ef9e05fe57d26577a69074c6a11aa0c8e7ca91c4f404f688e",
+    "size": 17012,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Spit_Montage.uasset",
+    "sha256": "2ee671c64a0bab7ce89365fdbbeeb2228c1855424486675d2b543eb799732356",
+    "size": 1773,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Tail-Whip-Lft.uasset",
+    "sha256": "b19badec0f58adbd0273947d596a97b5157f4b8cbb5cd63dd5a531e48e683136",
+    "size": 10590,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Tail-Whip-Lft_Montage.uasset",
+    "sha256": "43d0f844c0b2c791da4f03d9efd897ffcea0519cfc74ca47d3a62a4018f02878",
+    "size": 2574,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Tail-Whip-Rit.uasset",
+    "sha256": "61aac03258e6cbdc6b31d3a2ae88114b689378b6d1f918e2a3eac95ad17e70ee",
+    "size": 10110,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Attack-Tail-Whip-Rit_Montage.uasset",
+    "sha256": "49b0c1086ed40e45a9bc49c80ac48e4d32fb1885e9f5f63c61e557ae802c2895",
+    "size": 2574,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Charge-Fwd.uasset",
+    "sha256": "2f654fd47f759cfd0fef54afcb05328808034773a0abeb44b452990d9a6e17f1",
+    "size": 16151,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Charge-Lft.uasset",
+    "sha256": "40baa3fa589225d8a0063e99b4d79c033e3a75202e3fba8e7c34fa7002dd58f9",
+    "size": 16359,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Charge-Rit.uasset",
+    "sha256": "c1cec44b25a3d6af1911193c0173cf4730fb572e615710609508335a79b52e6e",
+    "size": 16359,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Eat-Additive.uasset",
+    "sha256": "3f80d118686bb7259ab613ca10bb14a8b2ef5a88639aca760c3068b4830a1e67",
+    "size": 19178,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Eat-Additive_Montage.uasset",
+    "sha256": "66e976f2dca2b688f02871c9676feaa79e6b264117c106452d854ea44ea74943",
+    "size": 1777,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Hurt-Big.uasset",
+    "sha256": "b4ad1c4c4fc06cd81b94c7bb7857e2ff2c23ed42cb217d7eb7ede4e3e356b6b6",
+    "size": 13309,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Hurt-Big_Montage.uasset",
+    "sha256": "55f2713710a66a080f04a331c5a236d00cb1ea1f103d6a2d45886ad0c0ceb1a6",
+    "size": 1814,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Idle.uasset",
+    "sha256": "79ed27e97f2a7090ac332cf49ec4d81a81a6c049c980a6ed0f9b6f43550e0244",
+    "size": 25310,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Lay-Egg.uasset",
+    "sha256": "9c3ae77065dec1298545355414917b7afbe0fe816e8b43790cba04262fcd7a1c",
+    "size": 16004,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Lay-Egg_Montage.uasset",
+    "sha256": "8fb8df6beb077d981d182203d815b7ba6f533c6c64cb28886e262081562c6955",
+    "size": 3243,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Move-Fwd.uasset",
+    "sha256": "aec159b58afb4e3c9503d7c6252eb6d7234652c7ac4e764f56107f87e97a7021",
+    "size": 18188,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Startled.uasset",
+    "sha256": "15c3134629f48f0bd0895c3f18f6f195c5bc2e0393d4156ca719afad295fa0c2",
+    "size": 19977,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Startled_Montage.uasset",
+    "sha256": "9374c03b4c99da1e6a8c813600d6de13fc546e16e6ca8b276b1b89104b5c39bf",
+    "size": 1806,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Turn-Lft.uasset",
+    "sha256": "abe29de90779418935b3382c7f22958b91b4bf3cb7b92d3e3259df5f030ad966",
+    "size": 18092,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill-Turn-Rit.uasset",
+    "sha256": "63deb8d8b5ebdffb0a0b5649b3da837fc44bcd2e3294e2fb5d9e438c99cde53a",
+    "size": 18396,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\BoaFrill\\Animations\\BoaFrill_AimOffset.uasset",
+    "sha256": "9901ce810026509ffce4c11ccf9ede59d9fd72a5a2d207ff5d24baf9e7d7f0b1",
+    "size": 7476,
+    "export_count": 1
+  }
+]

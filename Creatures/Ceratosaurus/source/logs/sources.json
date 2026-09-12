@@ -1,0 +1,634 @@
+[
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\CeratosaurusAA_Mesh.uasset",
+    "sha256": "34d78d309f2e002d235ad0b484c49e1440abb0c6b4690b84606e985d862cbe29",
+    "size": 3998916,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\CeratosaurusAA_Mesh.uasset.z",
+    "workshop_sha256": "f7d3642964d8449e70f9e3fb523c01f7107bd8e1eadd9022ba475347c0170eab"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\CeratosaurusAA_Skeleton.uasset",
+    "sha256": "aa9336e18e469fc7e12a0a8d71a598384fdb0a434bca1cc91be215c5df1f57aa",
+    "size": 25244,
+    "export_count": 18,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\CeratosaurusAA_Skeleton.uasset.z",
+    "workshop_sha256": "50bb7623ba486aca27366e12a1522cee87f6bc6a14a9cd77046399c82bc6d31b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite1.uasset",
+    "sha256": "a4643fb765581740ffeb1833744148a25104b69ffb939e27d98cc71336e03294",
+    "size": 18064,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite1.uasset.z",
+    "workshop_sha256": "7d103f42eebc06e039a150ded7b727ea1cc7dd9f4ac84ecdc386971e919d26cf"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite1_Montage.uasset",
+    "sha256": "89dc3ba195883ee156da8dc37934293dff4b88324609c7d4e752daa554f732be",
+    "size": 4084,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite1_Montage.uasset.z",
+    "workshop_sha256": "e74ede4374d17c8b38bfb4be177e7210119ef41735199f2c15f8c25a58be9d0a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite2.uasset",
+    "sha256": "f161972c0338f8696f32d9530a74698b67a5b5bc1d5155489b5ece31b3214c43",
+    "size": 22268,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite2.uasset.z",
+    "workshop_sha256": "16aa1c7937d3a70ff4e6e9f33461c10cb78ddd3d62f9543515cd0608783bf7e7"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite2_Montage.uasset",
+    "sha256": "937047497ab90774a4491642ee1b1ef77c35b7fa49b4429c3f30863f5ea136b1",
+    "size": 4084,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite2_Montage.uasset.z",
+    "workshop_sha256": "ee6092ec9a6da08b7c4d34c36686b636a2bba44f211210c62429048f0dfdac4f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite3.uasset",
+    "sha256": "8e6176ae8ac42d6da71d3a4134bf95910a6e2d3d6f86501e002964c094f5abc0",
+    "size": 24473,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite3.uasset.z",
+    "workshop_sha256": "fc681e059d932417e9b5c130af92a03cac9fe3abda94aba88d61a4212ab8401f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite3_Montage.uasset",
+    "sha256": "5605da39b4dde86ed25d5ea01673003b0529eb36d80a640639bf7e730ded75d0",
+    "size": 4260,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite3_Montage.uasset.z",
+    "workshop_sha256": "3ba7657b2a77beab5c722e20a3da5691b8046d6acca5561b05e95b1bfb465a61"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite4.uasset",
+    "sha256": "920fe197c0dcd64ff364cd9309320d005baffa8418cf7b09583898186dc4cf36",
+    "size": 23493,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite4.uasset.z",
+    "workshop_sha256": "56a2bed3c7ae7d11670e7a0c39c00a47183bbe07d6f4b1aad50f9414bf8ace40"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite4_Montage.uasset",
+    "sha256": "0e8bb693f2f74f38fcae5042fe4e21e5b78e978abaea6e3048b2f449369e2de3",
+    "size": 4260,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Bite4_Montage.uasset.z",
+    "workshop_sha256": "09a311e2f2c210a9be63feafc947a8ab05271b1a7b77d90d3d8ae43099a43b20"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1.uasset",
+    "sha256": "65ae2937f78c2184ac3d43086dc20f5f60d05b715beed06163f66ba8af1b43d4",
+    "size": 22166,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1.uasset.z",
+    "workshop_sha256": "94ef09f1c9761087a59f92e3a47bc2a650750ff15f27fbf55fdf23e9eae65dd3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1_Montage.uasset",
+    "sha256": "19090ded0632dea1b3f18ff519d9d9e987c34c3e7d64ca519fe732f50e419891",
+    "size": 5927,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1_Montage.uasset.z",
+    "workshop_sha256": "24ff349064b45f27527fc98894c8f613d6e6e16f0af23faa8cbc6249e0234d57"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1_Montage2.uasset",
+    "sha256": "198419f830d2d4f6d75184427b5143bba54d2903875983d2a361afa0501ae286",
+    "size": 5929,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn1_Montage2.uasset.z",
+    "workshop_sha256": "dcf062c9d048288f5b9572f3b2f8cb989f4b7eab9a5fc71d71c293661baf3ef3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn2.uasset",
+    "sha256": "f6a78d14571cc50c6021fba677e6d938a76c16249461b2dc1b20b50ba50ad0e4",
+    "size": 22166,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Horn2.uasset.z",
+    "workshop_sha256": "95277a09bbd4a751dc18da1597b99dcb1a4699b5d95d113df5018c18c9a2a6e8"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Left.uasset",
+    "sha256": "8a0aa36f54a5d37fa69408998345a065a11972b9f696fd6cad05a84ad9b99a69",
+    "size": 22683,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Left.uasset.z",
+    "workshop_sha256": "fab3165788880a467e699abb4ecc2048ed93a9a541fdb056853101c7372de171"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Left_Montage.uasset",
+    "sha256": "766726dbae0d3e8de2a66942151d96a30661c3dde0dff3b949ce4cb3933c62ae",
+    "size": 6957,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Left_Montage.uasset.z",
+    "workshop_sha256": "565422ab35ea47aafcd55c80906dcc1ac1c9a45baa32be998ecf2c0fcc9442fd"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Right.uasset",
+    "sha256": "9993419ef6d080d87ceff5850a394fcbc3ac9f582088927edf7b07c23726fcbc",
+    "size": 22685,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Right.uasset.z",
+    "workshop_sha256": "39b63c3d76e1e6a592e7bb5420fa7636bbf63e0ab858ff2735bf73a6b6615106"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Right_Montage.uasset",
+    "sha256": "d5e80b27e8cb57e2529bfdb594ba778cba9182ee456ff7a5a7ef094435630340",
+    "size": 6961,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_TailSpin_Right_Montage.uasset.z",
+    "workshop_sha256": "e5f7e798138ac53bc27605f4363000118bc2ac19ad8faccc0474fd6318162be0"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Left.uasset",
+    "sha256": "1c735e2f381b123e59838d0b904ebabec4e9738bd068df6abfd95324b5622414",
+    "size": 23957,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Left.uasset.z",
+    "workshop_sha256": "19c02e52902659617c6c034ed05801080e7c6b4855d8fcafc052e37f4dac940b"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Left_Montage.uasset",
+    "sha256": "c491bda0a31a289b11b7ada14b726d83482eaab66b10a71e916f995f1816ba70",
+    "size": 7116,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Left_Montage.uasset.z",
+    "workshop_sha256": "b1f30ea21c5f7bc89b7c1dcc72a254d6633328c5dfe63b410f2a64fb10897818"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Right.uasset",
+    "sha256": "e790d3b08b9775be45a13728b86e90698cb88a684b7e285cf1bfbc4f8770f8b3",
+    "size": 24203,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Right.uasset.z",
+    "workshop_sha256": "912472e36e988315a35d556aee5a68f7f3d30ea1a4124a4c135aa5fd8363b1fb"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Right_Montage.uasset",
+    "sha256": "d1ffbed417766c04fc296a33bf5c1d849ace754209e48a8ea819f93ae6a078af",
+    "size": 7120,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_Attack_Tailswipe_Right_Montage.uasset.z",
+    "workshop_sha256": "be17e8747722591a4e44759817ccb95e6f5df1995c1d943dd797059be6c588c3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Cerato_DossierPose.uasset",
+    "sha256": "f85bbf8a8faaca8dbe98ba98d38291555b39f5eb15a441aaff2d36cc563b27e1",
+    "size": 10689,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Cerato_DossierPose.uasset.z",
+    "workshop_sha256": "9b9dc529bd5154ef4fe778138c679060649044308d82be2750428eae1b454d86"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aggro.uasset",
+    "sha256": "2f4232340f060454389c707b6ccda9ea515af1cc1baf568b6352213390c6c8eb",
+    "size": 48100,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aggro.uasset.z",
+    "workshop_sha256": "4198322df46abe00d3ebc5d47d9061a490e53bb77293823f986d33f5f96ac3de"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Center.uasset",
+    "sha256": "d248232aab9969c9388e3d783a53e74ab6e3b027cfdef97c6b44415ad2060e85",
+    "size": 11031,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Center.uasset.z",
+    "workshop_sha256": "dec9b9821d8fde7222e711dfe4bfe6b23a8e88d32996bec524d1c3e621983bc3"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Down.uasset",
+    "sha256": "c6d93f5be376c4be2d6e95983df9d98d778f8265b94953d1a2ffefe11366a650",
+    "size": 11047,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Down.uasset.z",
+    "workshop_sha256": "324ac00b1f913a6477ba631cd7c1bc86ebc9e2b81e472612affc11b6ea7f6931"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_DownLeft.uasset",
+    "sha256": "7a5fda8ea48dd6baab23f5c292f13e5a3016d1e6c49795ee149413c27e3d7956",
+    "size": 11095,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_DownLeft.uasset.z",
+    "workshop_sha256": "b2d9b6e7a5a402bd7ed71144621d6a94087a8acc6f29e3ddeb8e6da3e1bfbf24"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_DownRight.uasset",
+    "sha256": "949e0d019d226578610b72d4c727a71b2bd9f11bb41a5bdaff1c0e3c62741b4a",
+    "size": 11101,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_DownRight.uasset.z",
+    "workshop_sha256": "649db1dca0d210ca0f1b39a288992438a25162edd732ed7e0a3b14d730f5f63a"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Left.uasset",
+    "sha256": "aa6ca8dd7eea668b9b4665698f864a8ee88a7f69764e152f470782a9ddfd955b",
+    "size": 11087,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Left.uasset.z",
+    "workshop_sha256": "feccb59a831e031e7fe54c64d3e06f6767ea55251d183c6c10d63288d005dfad"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Right.uasset",
+    "sha256": "37d3fef0aaacf90feded19724db5955d33f1adab15fbb857d65cf2252384291e",
+    "size": 11089,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Right.uasset.z",
+    "workshop_sha256": "ff70e9117649afc69e07b6840609353de551e6b9cf7ce58ef1664dc18d181693"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Up.uasset",
+    "sha256": "e34cb4f7d05f4d4e93695accf0a4ad6f3a3c4b946617f30eed92ba37e876c783",
+    "size": 11043,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_Up.uasset.z",
+    "workshop_sha256": "079b7aa938524e897530d609d86e77c3ac7182a762a56731b9238a2c4d9b0f63"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_UpLeft.uasset",
+    "sha256": "6f40b7e266dd321d598f2522881875c3da27bc574c9b0cc5064f096f28c01f37",
+    "size": 11099,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_UpLeft.uasset.z",
+    "workshop_sha256": "a7ff53a701d196d56511008478c5c355911d80e00ecc6426afbbb2795daabe52"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_UpRight.uasset",
+    "sha256": "10b61d6d45f8ff6acc29bb265c0f8e0eaad441c68ccfd17af5babb3d2f2c614b",
+    "size": 11097,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Aim_UpRight.uasset.z",
+    "workshop_sha256": "8bd24f0b6cc428def0727caae66c61382eb105f6772285ae6471fd5f2ba29b51"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_AimOffset.uasset",
+    "sha256": "0af9ac78cbc3758e8d4f67dfde60afc1dd25790a40717c5473f344d5282cee74",
+    "size": 8379,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_AimOffset.uasset.z",
+    "workshop_sha256": "03687b051e00700571c3249061f83b29785d1273374c006f2cb21dedd5dae415"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust.uasset",
+    "sha256": "dffa559b9004d3abfb8cf5372ca9d9d55654e1cf094694421194e1fe918e167c",
+    "size": 29471,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust.uasset.z",
+    "workshop_sha256": "d6448cb91eb73c63ae633a6b37643d0767203adfd8297ced2964080dae033c14"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Alt.uasset",
+    "sha256": "6567867ce6a75dc50dbc989266245587e5356efbe242be0ebf78895dd147977e",
+    "size": 29979,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Alt.uasset.z",
+    "workshop_sha256": "09d56e63fd85a8ae72072a04310526a94cb80036a17ea3deccd5112311762d52"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Alt_Montage.uasset",
+    "sha256": "f343c532cca11bbe8d3f3f386fde95fa999136d0e467a8e213ce7dfdd41c469f",
+    "size": 6695,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Alt_Montage.uasset.z",
+    "workshop_sha256": "0d120f4d59ab172d784eff9585232411ec21c8498ad2020119c16fdd18fb6433"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Montage.uasset",
+    "sha256": "bfd7f62b7af57016caaa0f2639e8b50cd7639a4df490a70c37ab907edb601a23",
+    "size": 6679,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_SlidingHornThrust_Montage.uasset.z",
+    "workshop_sha256": "5d7bb89b644b13a3d89549cafc366c12afb0760e7760e7a5ed914960345ec337"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Left.uasset",
+    "sha256": "f104653176780420a7919d1a089caf5e4242f487829b9e82978c20cb2fc98bc9",
+    "size": 23663,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Left.uasset.z",
+    "workshop_sha256": "da93ff7b97ad2b69a230077d55cef8b9454ddaec8b648dea55457dd73c3d575d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Left_Montage.uasset",
+    "sha256": "f8abcbb6b5973d121b6642753aa882b0cc65547c7ef999ddd141ef14e8fc369d",
+    "size": 4374,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Left_Montage.uasset.z",
+    "workshop_sha256": "bb871d05ba5916cbef538d4141856b0300f3ca3632a4983391fb967a8e9ba6fa"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Right.uasset",
+    "sha256": "1372a1f5207fe9ac461c6a621c82791108bdfbec1bff1897d7082e258b88314e",
+    "size": 24397,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Right.uasset.z",
+    "workshop_sha256": "227234c757b08526bc7611f240008f9ccd899a39d9300f4d4f49e649ec9e7195"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Right_Montage.uasset",
+    "sha256": "3ebfc3af9174d701ac986705ae6b1a21c112a50d23295b8698d7a9e4d4d26795",
+    "size": 4378,
+    "export_count": 4,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Attack_TurnBite_Right_Montage.uasset.z",
+    "workshop_sha256": "546e9aebf42611068c01a2234dfadec64939065de7b71baa2e5ff050fe842f11"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Blink.uasset",
+    "sha256": "126f1c40c48859a54fee4e382998b1898dfd3c6ecf2e9d76eee366d562533c8a",
+    "size": 11020,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Blink.uasset.z",
+    "workshop_sha256": "f9fedac3aa559cabbfb8f828087660125abaedb5a3ec209c1c6f8d947d891a88"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeFWD.uasset",
+    "sha256": "fa9efab0addb76ec5d000ef7489129cb0516287fbf7163b3c5866f8185f32501",
+    "size": 28747,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeFWD.uasset.z",
+    "workshop_sha256": "aeb764b416a02bb57a3740bab1d2693b01cd185f9d1cb9714f6dd0e26310b346"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeFWD_NOBOOST.uasset",
+    "sha256": "35428c43c0e06eb99ba7a90ec58b4b92169c259b7b1070134b24fa3b20d2877c",
+    "size": 28763,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeFWD_NOBOOST.uasset.z",
+    "workshop_sha256": "3296d8116fca2664dedee7983c0d98abf794ed37f0adf7730a0a6c8d1677dd6d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeLeft.uasset",
+    "sha256": "e1cbf598a1dd67e3d3f43cf0b9e83b0f024d46985b22aa3b2aeef60a3311daf8",
+    "size": 28921,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeLeft.uasset.z",
+    "workshop_sha256": "99190c4b9ebe1d58c75037f642bfd055e1a769cb84496182e1c2aa895c6f56fc"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeLeft_NOBOOST.uasset",
+    "sha256": "fc51a7e2780659240618e0f0a0be3d547becb978b0b61c15d5980c41fe2afae0",
+    "size": 28937,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeLeft_NOBOOST.uasset.z",
+    "workshop_sha256": "cb49c8b7c38ffa14d63c9a2715accb74d4722e62a483e62a4c2c6d520b72eaae"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeRight.uasset",
+    "sha256": "03cbcafd500dd61ecd06a8928ed6f388c778d802ba5ca80d56bfbca594122813",
+    "size": 28235,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeRight.uasset.z",
+    "workshop_sha256": "11475c8021e4dc18a583a89d2d503f8961345c79c4811ea073e42d4de0eca861"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeRight_NOBOOST.uasset",
+    "sha256": "c26efac601074c10231d4c22f86f34f13516348304c7e7c882a8e3e1e8854d8e",
+    "size": 28251,
+    "export_count": 5,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_ChargeRight_NOBOOST.uasset.z",
+    "workshop_sha256": "84288a7704e84753770c4bc092f8e369ea306f9dd5b68d2e7f1c246027bcb1fc"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Cuddle.uasset",
+    "sha256": "6964c884797875b3902690a66a9c8aa4f07c8c076166bb520b6610f5023e73d4",
+    "size": 62115,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Cuddle.uasset.z",
+    "workshop_sha256": "de04d46d71e2444299ba5e890041774ec507f4d69424dcb54f84cb6e8ca59952"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Cuddle_Montage.uasset",
+    "sha256": "084a735355bc7bafc83db3aaa41baa94152cb7e64b08d40bc6a756f0e81dd781",
+    "size": 5622,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Cuddle_Montage.uasset.z",
+    "workshop_sha256": "42ce30a62e2766cd728a9f52ea42bf22db0d62a4b3e60fc8dbf088c8d8be58e7"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_DrunkAdditive.uasset",
+    "sha256": "f0fc07ca7c7355dae68ffd9c6c2f34057443d948e7568c3fa6376136abc72cea",
+    "size": 21154,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_DrunkAdditive.uasset.z",
+    "workshop_sha256": "3809f5b6b93c88d7c962a111236f1516e85a248d35dd731a509cf804345bd1b9"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Eat.uasset",
+    "sha256": "3d75ea2d68351dfb14350eff7bb327229149ccd777ab39fc68c3c0c2069b2899",
+    "size": 20956,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Eat.uasset.z",
+    "workshop_sha256": "22fe8bc966a8cbf2c2a7966ad9126f4b522c6a8cfa370a9023332d6d64c3f17d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Eat_Montage.uasset",
+    "sha256": "42041c3d9f0548264643adef492449c2274688657de2d6b40ba57f1a42d0c750",
+    "size": 7160,
+    "export_count": 9,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Eat_Montage.uasset.z",
+    "workshop_sha256": "8714904b9461ce2196474f6be45d0420f3babd48b90076c5c217b8f025a7996f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Falling.uasset",
+    "sha256": "69f03575db3b11698d9e2949435fe6711ffe99bb0b7d3c90fe0c78e071a86f11",
+    "size": 95489,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Falling.uasset.z",
+    "workshop_sha256": "fc60726388444bda727aa2583851dcf81487e167e4565fdebd29acf72cbac7b9"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Idle.uasset",
+    "sha256": "568b0bb894b5cdbacf8aa74d282698b730aa254f2a5d2cb4fb6ffd5ec463ebcc",
+    "size": 166447,
+    "export_count": 2,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Idle.uasset.z",
+    "workshop_sha256": "c830107487222823f6fc944b31397039f11b9c7967ab1450091cc5dc5b8e5c66"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_Blendspace.uasset",
+    "sha256": "fa7cb684919593c5bad6ba53b02e3837f672a5740083aa4788f7c75f2476db06",
+    "size": 8426,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_Blendspace.uasset.z",
+    "workshop_sha256": "95dc6e4a49b2e9a252cb87ac160595868658c930323f4a2c658a9b30c1bfc7b9"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_TurningLeft.uasset",
+    "sha256": "ea6c744451e81c23297863c00fe6debca5340aee272ba30a572dd9d2131e47a8",
+    "size": 37666,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_TurningLeft.uasset.z",
+    "workshop_sha256": "716fb272da5110b3e0655fe514403da4bba7517af464511023cb4bb3dc657875"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_TurningRight.uasset",
+    "sha256": "d8bd846d2d2f928c917d9bec4bf2f9d7b4446da2dc0729cdde6e61842e378b28",
+    "size": 37336,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Move_TurningRight.uasset.z",
+    "workshop_sha256": "1cb3af87d827e2914d3da4b84ef24d515e8a732f922d35886033a256f2089641"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_MoveFWD.uasset",
+    "sha256": "6df3040a4dead5e3801989aaa02d26360847f0e32df451dd135398bf496072f2",
+    "size": 36988,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_MoveFWD.uasset.z",
+    "workshop_sha256": "31a55d71b47184a8d3a694eb330ba2d4224bba13222e30d3c36a5ce77e368421"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar1.uasset",
+    "sha256": "1e0c47b87f83bad347f6268bc362e4ceda95be1337d2518faef0a1f9837cfbe7",
+    "size": 40176,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar1.uasset.z",
+    "workshop_sha256": "db882f61819e72889156cb04b6eb310e6bdad4ba532d991f76fe435ac7a8b257"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar1_Montage.uasset",
+    "sha256": "484471e696bde4a25c9f07c2f7c72339011c646ada32fe6e15d01a93940748af",
+    "size": 6353,
+    "export_count": 8,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar1_Montage.uasset.z",
+    "workshop_sha256": "fcfa54e32fa76ded5ff155d2a60347261794932e2c68ffd31070bb2773c60a43"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar2.uasset",
+    "sha256": "e12a7f805653097ed8dd29546b5ae88b33c1eb978679467e6a3f3deeb8023803",
+    "size": 40900,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar2.uasset.z",
+    "workshop_sha256": "cf63a36cf7f1ea4b235f760c43530ab3ec0f89a9636ad09a7bd05de5ddb59ce5"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar2_Montage.uasset",
+    "sha256": "4e19c9d9acd5311fb3ca1e6f725e959907f2144d3e64e448b7e7089b22df92a0",
+    "size": 5251,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar2_Montage.uasset.z",
+    "workshop_sha256": "8716b80ab1046296de6a06412c9f00bf9ee7e0040d8897167e47d65934be7cec"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar3.uasset",
+    "sha256": "c3f0752f5e8c41a6f67457dc88c7d761b31ba1ae13c8373a46355e684da7baa3",
+    "size": 41808,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar3.uasset.z",
+    "workshop_sha256": "9f6332701294d3088e3ab03d143c9b29c5feef5e0d6c8bd0f03180c0292b30db"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar3_Montage.uasset",
+    "sha256": "59e892996dc2c50181af4ade9d993652a3e8b9b415f24b5a9f47b2e4164f23e1",
+    "size": 5869,
+    "export_count": 7,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Roar3_Montage.uasset.z",
+    "workshop_sha256": "6d85f5ad9952ee0d02cf5cf46446350ebd1eb8f5efde8e17605f5f88e989c439"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Run_TurningLeft.uasset",
+    "sha256": "6e44ca04e6107b8914899ab8f5aed2ed51eea01852f8ab852c55810ab92d9b27",
+    "size": 25632,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Run_TurningLeft.uasset.z",
+    "workshop_sha256": "731a47f9924a847ef171e5d3fad396b9e6b05eaf88a23141ca38cd650d910323"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Run_TurningRight.uasset",
+    "sha256": "6ab6088682e0b0206e5d1a3dfd5a5cff58b13e18073a766673303f9fa9921d04",
+    "size": 25634,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Run_TurningRight.uasset.z",
+    "workshop_sha256": "e324b15e356b2a87ddcf9d1fe3950354419c6b629f84581cd1d8f9a7cde03647"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_RunFWD.uasset",
+    "sha256": "126e0d833ae71f35fcadf8b558b526e7da949f95d26bb1d10a436cc8904cb994",
+    "size": 25786,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_RunFWD.uasset.z",
+    "workshop_sha256": "aa5b48204e080b5d8e741d23579c760924045eb23d4616ba5c26cecc7ee4021f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_RunningBS.uasset",
+    "sha256": "800a7a6aaa47d88f9bf66061306b8661c5e47cb9b6c7578bd58df56fccab8a31",
+    "size": 7741,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_RunningBS.uasset.z",
+    "workshop_sha256": "daf3077ca860cb9f2450811fc65e4eb46fddc847ef499337a5720761ea69a4ca"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Sliding.uasset",
+    "sha256": "e321a7533a73b628b20ec60e55b1ebd7150b2dfb39e5041336c3d5b2c6307537",
+    "size": 37422,
+    "export_count": 11,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Sliding.uasset.z",
+    "workshop_sha256": "623a22efef9ddc3ce9653901518409f6b58717aa3188d3db279010a87aaafd1d"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SlidingLeft.uasset",
+    "sha256": "111e66fbd86f6831e51a39e4227ace3a817c35a4ab3b437cb6660f46712bb980",
+    "size": 37108,
+    "export_count": 11,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SlidingLeft.uasset.z",
+    "workshop_sha256": "f29db68dc89671de0b053c74a024f6a15fd3d71ede03ab7a1163da468d8a7767"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SlidingRight.uasset",
+    "sha256": "1141202e584180ac28d059528c62dc02f54d57594408193d9c67360f1d73d81d",
+    "size": 37474,
+    "export_count": 11,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SlidingRight.uasset.z",
+    "workshop_sha256": "b368aae3e96bd03e224e95cb5654c2198196b864bb26ed92d5a1110ea4743432"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Startled.uasset",
+    "sha256": "0dfce25dc47ad7ded0814dc8d2f8a3a36278e890d3a79578e16e0cfce12994a9",
+    "size": 41903,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Startled.uasset.z",
+    "workshop_sha256": "40fa2553a319ced786a9612a98ee62a2baefedec896ccfb32ee4f2519254b857"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Startled_Montage.uasset",
+    "sha256": "ea4a6fc4139ed6ac130efd44b690a700117aeb9498b49bad27b99d9e68348272",
+    "size": 5291,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_Startled_Montage.uasset.z",
+    "workshop_sha256": "2ddbf4b74e62c3f020d6e6e77b6f6034c6ae378dff65e247f9d1a03f8dbac753"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_StartledRight.uasset",
+    "sha256": "dc43bc89b2b5b5f935f6a1f03c5e0be0ec2d9f3083a23576f0042bafffc34ad8",
+    "size": 41913,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_StartledRight.uasset.z",
+    "workshop_sha256": "6a07987431096c0ac0194f335faf3aaa4c6e276b2122b5a9e4ffd9d4a28735fa"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_StartledRight_Montage.uasset",
+    "sha256": "5685cd6aa9afcf4c7146d924176d06335446c956bebb387d13ff00884876b8b2",
+    "size": 5311,
+    "export_count": 6,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_StartledRight_Montage.uasset.z",
+    "workshop_sha256": "ef2c027d23ff5b7bed0a0fd7f54d6e6b640bef72d65d2879060e69c9c71c36dc"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SwimFWD.uasset",
+    "sha256": "22742ebc5e1b5c7a5c4ed96a18ad08670762e2882be99a0228ceeb5ee13776cc",
+    "size": 37686,
+    "export_count": 3,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SwimFWD.uasset.z",
+    "workshop_sha256": "f3a1c5d88e7cf69ceb44fec4db6f2cc14261f6e91ee738900ea1ba8f68b8f92f"
+  },
+  {
+    "source": "C:\\Users\\Nez\\Desktop\\GitHub\\Ark-Survival-Returns\\.work\\workshop\\Mods\\Additions_Pack\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SwimIdle.uasset",
+    "sha256": "488ed9a2db0f6813ee1400b7ef9ae2ee1f728d416fdfa1f34806590d6994985b",
+    "size": 36397,
+    "export_count": 1,
+    "workshop_source": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\346110\\1522327484\\WindowsNoEditor\\Ceratosaurus\\Dinos\\Animations\\Ceratosaurus_SwimIdle.uasset.z",
+    "workshop_sha256": "f72e81f534583f167bbe520aee2bf4760dd4ac0591acc8d2276d67ad93ec4b3b"
+  }
+]

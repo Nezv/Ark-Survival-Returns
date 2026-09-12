@@ -1,0 +1,619 @@
+Found 2154 game files (0 skipped) in 84 folders at path "C:/Users/Nez/Desktop/GitHub/Ark-Survival-Returns/.work/normalized"
+Scanned game directory in 0.0 sec, 2368 allocs, 0.00 MBytes serialized in 0 calls.
+Loading package: PrimalEarth/Dinos/Gorilla/Gorilla_Skeleton.uasset Ver: 405/10 Engine: 0 Names: 150 Exports: 19 Imports: 3 Game: 1000051
+Loading Skeleton Gorilla_Skeleton from package PrimalEarth/Dinos/Gorilla/Gorilla_Skeleton.uasset
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+BoolProperty: unknown FBoneNode bLockBone
+BoolProperty: unknown FBoneNode bRemoveBone
+Loaded in 0.0 sec, 73 allocs, 0.02 MBytes serialized in 7 calls.
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_0
+    SocketName = ThrowRockSocket
+    BoneName = root
+    RelativeLocation = { X=2.27137e-08, Y=-272.754, Z=236.619 }
+    RelativeRotation = { Yaw=90, Pitch=90, Roll=0 }
+    RelativeScale = { X=10, Y=14, Z=12 }
+
+Object info:
+============
+ClassName: Skeleton ObjectName: Gorilla_Skeleton
+    VirtualBones[0] = {}
+    BoneTree[93] =
+    {
+        BoneTree[0] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[1] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[2] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[3] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[4] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[5] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[6] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[7] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[8] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[9] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[10] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[11] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[12] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[13] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[14] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[15] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[16] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[17] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[18] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[19] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[20] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[21] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[22] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[23] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[24] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[25] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[26] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[27] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[28] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[29] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[30] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[31] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[32] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[33] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[34] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[35] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[36] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[37] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[38] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[39] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[40] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[41] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[42] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[43] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[44] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[45] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[46] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[47] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[48] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[49] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[50] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[51] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[52] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[53] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[54] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[55] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[56] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[57] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[58] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[59] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[60] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[61] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[62] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[63] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[64] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[65] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[66] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[67] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[68] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[69] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[70] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[71] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[72] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[73] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[74] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[75] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[76] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[77] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[78] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[79] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[80] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[81] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[82] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[83] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[84] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[85] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[86] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[87] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[88] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[89] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[90] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[91] = { TranslationRetargetingMode=Animation (0) }
+        BoneTree[92] = { TranslationRetargetingMode=Animation (0) }
+    }
+    Sockets[18] =
+    {
+        Sockets[0] =
+        {
+            SocketName = RiderSocket
+            BoneName = c_neck
+            RelativeLocation = { X=0, Y=-85, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[1] =
+        {
+            SocketName = RockSocket
+            BoneName = r_wrist
+            RelativeLocation = { X=-80, Y=140, Z=20 }
+            RelativeRotation = { Yaw=10, Pitch=180, Roll=170 }
+            RelativeScale = { X=10, Y=14, Z=12 }
+        }
+        Sockets[2] =
+        {
+            SocketName = ThrowRockSocket
+            BoneName = root
+            RelativeLocation = { X=2.27137e-08, Y=-272.754, Z=236.619 }
+            RelativeRotation = { Yaw=90, Pitch=90, Roll=0 }
+            RelativeScale = { X=10, Y=14, Z=12 }
+        }
+        Sockets[3] =
+        {
+            SocketName = LookOffsetSocket
+            BoneName = root
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[4] =
+        {
+            SocketName = MeleeSocket1
+            BoneName = r_wrist
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[5] =
+        {
+            SocketName = MeleeSocket2
+            BoneName = l_wrist
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[6] =
+        {
+            SocketName = GroundFX
+            BoneName = root
+            RelativeLocation = { X=-9.18355e-41, Y=0, Z=227.762 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[7] =
+        {
+            SocketName = GroundFXRock
+            BoneName = root
+            RelativeLocation = { X=-1.76063e-05, Y=0, Z=156.133 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[8] =
+        {
+            SocketName = l_hand_SKT
+            BoneName = l_wrist
+            RelativeLocation = { X=90, Y=0, Z=20 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[9] =
+        {
+            SocketName = r_hand_SKT
+            BoneName = r_wrist
+            RelativeLocation = { X=-90, Y=0, Z=-20 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[10] =
+        {
+            SocketName = l_foot_SKT
+            BoneName = l_footBall
+            RelativeLocation = { X=0, Y=10, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[11] =
+        {
+            SocketName = r_foot_SKT
+            BoneName = r_footBall
+            RelativeLocation = { X=0, Y=-10, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[12] =
+        {
+            SocketName = MinionSocket
+            BoneName = root
+            RelativeLocation = { X=0, Y=-1432.78, Z=-0.00343604 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[13] =
+        {
+            SocketName = buffsocketcenterdynamic
+            BoneName = c_back4
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=34.3111, Pitch=-0.134491, Roll=-88.9175 }
+            RelativeScale = { X=14, Y=14, Z=14 }
+        }
+        Sockets[14] =
+        {
+            SocketName = BuffSocketHeadDynamic
+            BoneName = c_head
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+            RelativeScale = { X=7, Y=7, Z=7 }
+        }
+        Sockets[15] =
+        {
+            SocketName = HeadIconFXSocket
+            BoneName = root
+            RelativeLocation = { X=0, Y=-616.259, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=90, Roll=-90 }
+            RelativeScale = { X=2, Y=2, Z=2 }
+        }
+        Sockets[16] =
+        {
+            SocketName = EndbossHeartFXSocket
+            BoneName = c_back4
+            RelativeLocation = { X=0, Y=0, Z=0 }
+            RelativeRotation = { Yaw=40.7006, Pitch=0, Roll=-90 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+        Sockets[17] =
+        {
+            SocketName = EyeFX
+            BoneName = c_head
+            RelativeLocation = { X=46.0842, Y=-8.21301, Z=0 }
+            RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+            RelativeScale = { X=1, Y=1, Z=1 }
+        }
+    }
+    SlotGroups[3] =
+    {
+        SlotGroups[0] =
+        {
+            GroupName = DefaultGroup
+            SlotNames[1] = { DefaultSlot }
+        }
+        SlotGroups[1] =
+        {
+            GroupName = FullBodyGroup
+            SlotNames[1] = { FullBodySlot }
+        }
+        SlotGroups[2] =
+        {
+            GroupName = AdditiveGroup
+            SlotNames[1] = { AdditiveSlot }
+        }
+    }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_1
+    SocketName = RockSocket
+    BoneName = r_wrist
+    RelativeLocation = { X=-80, Y=140, Z=20 }
+    RelativeRotation = { Yaw=10, Pitch=180, Roll=170 }
+    RelativeScale = { X=10, Y=14, Z=12 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_10
+    SocketName = l_foot_SKT
+    BoneName = l_footBall
+    RelativeLocation = { X=0, Y=10, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_11
+    SocketName = HeadIconFXSocket
+    BoneName = root
+    RelativeLocation = { X=0, Y=-616.259, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=90, Roll=-90 }
+    RelativeScale = { X=2, Y=2, Z=2 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_12
+    SocketName = r_foot_SKT
+    BoneName = r_footBall
+    RelativeLocation = { X=0, Y=-10, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_13
+    SocketName = EndbossHeartFXSocket
+    BoneName = c_back4
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=40.7006, Pitch=0, Roll=-90 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_14
+    SocketName = buffsocketcenterdynamic
+    BoneName = c_back4
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=34.3111, Pitch=-0.134491, Roll=-88.9175 }
+    RelativeScale = { X=14, Y=14, Z=14 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_15
+    SocketName = EyeFX
+    BoneName = c_head
+    RelativeLocation = { X=46.0842, Y=-8.21301, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_2
+    SocketName = RiderSocket
+    BoneName = c_neck
+    RelativeLocation = { X=0, Y=-85, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_3
+    SocketName = LookOffsetSocket
+    BoneName = root
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_4
+    SocketName = MeleeSocket1
+    BoneName = r_wrist
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_5
+    SocketName = MeleeSocket2
+    BoneName = l_wrist
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_57
+    SocketName = BuffSocketHeadDynamic
+    BoneName = c_head
+    RelativeLocation = { X=0, Y=0, Z=0 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=-90 }
+    RelativeScale = { X=7, Y=7, Z=7 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_58
+    SocketName = MinionSocket
+    BoneName = root
+    RelativeLocation = { X=0, Y=-1432.78, Z=-0.00343604 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_6
+    SocketName = GroundFXRock
+    BoneName = root
+    RelativeLocation = { X=-1.76063e-05, Y=0, Z=156.133 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_7
+    SocketName = GroundFX
+    BoneName = root
+    RelativeLocation = { X=-9.18355e-41, Y=0, Z=227.762 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_8
+    SocketName = l_hand_SKT
+    BoneName = l_wrist
+    RelativeLocation = { X=90, Y=0, Z=20 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }
+
+Object info:
+============
+ClassName: SkeletalMeshSocket4 ObjectName: SkeletalMeshSocket_9
+    SocketName = r_hand_SKT
+    BoneName = r_wrist
+    RelativeLocation = { X=-90, Y=0, Z=-20 }
+    RelativeRotation = { Yaw=0, Pitch=0, Roll=0 }
+    RelativeScale = { X=1, Y=1, Z=1 }

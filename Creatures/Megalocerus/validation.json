@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "clips": 36,
+  "source_frames_checked": 1812,
+  "bones": 59,
+  "cubes": 4574,
+  "max_rotation_key_error_degrees": 0.02999388541103265,
+  "max_position_key_error_model_units": 0.0004980621193496626,
+  "max_world_bone_error_model_units": 0.024888978121447546,
+  "checks": [
+    "Source bone names and parent topology",
+    "All source clips present",
+    "Blockbench animation UUID bindings",
+    "GeckoLib/Blockbench cube equivalence",
+    "Every source frame vs reduced JSON tracks",
+    "Decoded output forward kinematics vs source"
+  ],
+  "runtime_test": "Not run inside Minecraft; software validation and software-rendered previews only."
+}

@@ -1,0 +1,296 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Ankylo.uasset",
+    "sha256": "118190ce3f62e459342aaa5ad05555bd79a28da65f542ea4f6793a731d304df9",
+    "size": 2719628,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Ankylo_Skeleton.uasset",
+    "sha256": "e7299e753b6cdd961ca836184037d1d990abc037cbc5d56dfbbecedf61b6ca4a",
+    "size": 21410,
+    "export_count": 26
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Center.uasset",
+    "sha256": "8b228c6fb65a4fe720057574be88a971aff425002cc0bff02294d931a9a67999",
+    "size": 6304,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Dwn-Lft.uasset",
+    "sha256": "5d3fa35327569147d2a5701e0e0c71bf3a1e05a57540c9c6aa242b57a2ee11a6",
+    "size": 6310,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Dwn-Rit.uasset",
+    "sha256": "d5fc3559383cb76da2bae113a633963f99b9835334100daf5b7b5a86a6c1b383",
+    "size": 6310,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Dwn.uasset",
+    "sha256": "3a7c0d5a7137262faa6b6fd437bbd68239e44b35c08a6a1ab37c1ad2d8369087",
+    "size": 6302,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Lft.uasset",
+    "sha256": "e0f8fdaf564642b83d01a3e91c032d3a4eb9eddc5ba61d8d5d629bf3e8191076",
+    "size": 6298,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Rit.uasset",
+    "sha256": "86b9414855862fab78464547a70bd79f326f6a24f29d59708a361d86960b96dc",
+    "size": 6302,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Up-Lft.uasset",
+    "sha256": "d6cc6e6842f99a786e6a61d51bfa40c14543afacb15872b6b615c86fd70451e3",
+    "size": 6308,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Up-Rit.uasset",
+    "sha256": "e75a502b5fc7d1ca3dfe073e79887c871deee0d521eadea8901f07047772c47a",
+    "size": 6308,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Aim-Up.uasset",
+    "sha256": "f0b086bd0a00340d8350ebf0bc147feeafb9a4560bdb0558503017cb25dbc12c",
+    "size": 6296,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Attack-Tail-Pound.uasset",
+    "sha256": "bface4d92153dc684f2cd9d38afcb51c73df2147543ce4f649af28b91c71eccd",
+    "size": 19060,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Attack-Tail-Pound_Montage.uasset",
+    "sha256": "534acbf99e3b6300f1cf69f2abec70489966e37dab9df70e1ce5d64ef40d1096",
+    "size": 2675,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Attack-Tail-Sweep.uasset",
+    "sha256": "c1156302b7878909f16f9601a174f763ad0894d78cf32b394a27903abf46ff05",
+    "size": 18640,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Attack-Tail-Sweep_Montage.uasset",
+    "sha256": "9346d39b48500cf40c1c26e2a32069ef3e6434bab0572f166079e5aed9d39604",
+    "size": 2675,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Blink.uasset",
+    "sha256": "c44f94087573f73e7272279f8478a24efe94c8832df02948724ddf5a0dc4a435",
+    "size": 7423,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Charge-Fwd.uasset",
+    "sha256": "9bd4eb6b43cc04ab742e40ca143f967b4736b2893a66f6c49a888e9d7f6707eb",
+    "size": 16671,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Charge-Lft.uasset",
+    "sha256": "f53459297a268194a130d8e2a8cbfb617cfba79d2d0fed5a641ef1e8713e36a1",
+    "size": 16795,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Charge-Rit.uasset",
+    "sha256": "52183d58da860dbe563652b399bb4ad88c29b29f98e92879defb845055dfed28",
+    "size": 17643,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Graze.uasset",
+    "sha256": "26585b49d693bb6c81d5236f5430f44d6948a239ace138573746d3248aa536f7",
+    "size": 57704,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Graze_Montage.uasset",
+    "sha256": "c70c57a8782c4084407ad9059364e56f436fe9a5a114a460e6e448dcfc85e515",
+    "size": 1731,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Hurt-Big-Rit-Montage.uasset",
+    "sha256": "a6233d16324515664dad57ae28cdcadf53f345d717c51fa414479f40081431b0",
+    "size": 1899,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Hurt-Big-Rit.uasset",
+    "sha256": "cf16e54c4c9697d56d8593414d111e3b5f77158f48cb19643bdd21fc27781d66",
+    "size": 14311,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Idle-Aggressive.uasset",
+    "sha256": "e39f9085da58ce46d5f015f57165fa5d74b70802483b90612e4f855d8588757d",
+    "size": 31352,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Idle.uasset",
+    "sha256": "3fa522ce75a0262d22b0d2f3bc2474af67f6583e9f4267e86236aa6bbc2aac5e",
+    "size": 31736,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Lay-Egg.uasset",
+    "sha256": "ebac89eba6ac1ab7a4f854c3b98105fcf9a92eb2a7d017c0faf3e0a034d8cc93",
+    "size": 14912,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Lay-Egg_Montage.uasset",
+    "sha256": "a1590ddd9a26b86bd7f62d583caada6434caea66cac21e1769228c2d08a9b7e5",
+    "size": 2498,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Move-Fwd.uasset",
+    "sha256": "5abc7f48fefe9a8b24819b04ab4e6c541b6e63ab362da5edfdc07a48547595cb",
+    "size": 25168,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Startled.uasset",
+    "sha256": "43797832abb1d0a0b0672ed9f995896e01dbdf80bce1843386abe320c2c4accb",
+    "size": 13140,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Startled_Montage.uasset",
+    "sha256": "8a945d36169087abb194bfc6ec3afbe03a815006c9ede83e7410d3310997a158",
+    "size": 1743,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Attack-Bite.uasset",
+    "sha256": "44b54e59b09361a9d82c288eaeb7a9078068c94593baeb3bd8ec909b3b9ad586",
+    "size": 11133,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Attack-Bite_Montage.uasset",
+    "sha256": "ea913de223f56fbe0b4484ee6997d1079f4722751df12cdeec5d42417b0e4300",
+    "size": 2540,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Attack-Tail-Sweep.uasset",
+    "sha256": "2d60b52590f49c63c1db7cdaf97e56ea4b261970a32e11f699a7a5a9f6e1e7e5",
+    "size": 16553,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Attack-Tail-Sweep_Montage.uasset",
+    "sha256": "41a82231158a9c422e53bf06b339d75e83670bf3d05c2a78ac860faedb463af6",
+    "size": 2564,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Fwd.uasset",
+    "sha256": "53b41463880ac73242d3f124d6d6ee8eb353086970d379f7c662ff933c8826b6",
+    "size": 12296,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Swim-Idle.uasset",
+    "sha256": "875234826efce31e977dafe96d81d86bbf8b0374880febb5859349c23006eccb",
+    "size": 20942,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Eat.uasset",
+    "sha256": "2a112c9f1c7c3c44e324c5b2a78379aa633a986ee23883bac3b5521b019bbde1",
+    "size": 21294,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Eat_Montage.uasset",
+    "sha256": "17c4eb0da09be50864bd5807b706b6ae0d2aadfd12e1af7e07a1d8b2a3bf336b",
+    "size": 1913,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-In.uasset",
+    "sha256": "d0846b0c3bd369b2a268a3a142fa43ab079cbada5b288d11107df86a3b2e9734",
+    "size": 19215,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-In_Montage.uasset",
+    "sha256": "2891f39148e16bdde16c7d2024d71b8470b165dfcfdabd2da543f7204c262ede",
+    "size": 1909,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Out-Tamed.uasset",
+    "sha256": "7515da41930a91a42a6a2c02a291e96ad13078a2b62501cf9be33a22069dd4f3",
+    "size": 25012,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "e7d2e82c32c5361a6ce4ec8d040110e263949fed6c79b27d9466391560309d2c",
+    "size": 1937,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Out-Wild.uasset",
+    "sha256": "9b5861b714a70f596a8d9cd7a7ebbdc2b8427ebc07bb070a538c4ede3756e113",
+    "size": 21460,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "8b9696b33bdbc10ef87675f4a6b06024fb750c61792a5bbfca483cce1446d796",
+    "size": 1933,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid.uasset",
+    "sha256": "17b437dac27f3697dc32926c11e786f04319b030783d9666cab17cd5a33c1b48",
+    "size": 20554,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Torpid_Idle_Montage.uasset",
+    "sha256": "5bb56959da4ee71f4e842446bbb1dd9c9dc8ea399eb2edff6caf2129f9b6325a",
+    "size": 1745,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Turn-Lft.uasset",
+    "sha256": "e354658646011bfa00c9dc3993b4089a27221f317f78d7903840e438cdb4748e",
+    "size": 24435,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo-Turn-Rit.uasset",
+    "sha256": "c97bb9d8267fcf201d01e69144720a163c109168491a45bd793717096f9d3319",
+    "size": 24739,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Ankylo\\Animations\\Ankylo_AimOffset.uasset",
+    "sha256": "d4368beb40acbcdbf3c25159d2c16a71d22f6ab471b7e73ca5a5c99a4dcf417e",
+    "size": 7864,
+    "export_count": 1
+  }
+]

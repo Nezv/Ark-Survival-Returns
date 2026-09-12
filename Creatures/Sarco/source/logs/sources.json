@@ -1,0 +1,374 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Sarco_New\\Sarco-New.uasset",
+    "sha256": "c97ada882e4e5c4c8b5bfbdfa1ae16649db73d4f723a8f36b4ea3dbd62f21b0a",
+    "size": 3957222,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Sarco_Skeleton.uasset",
+    "sha256": "4e7661519d909e627998afd5022720660b0863364fb575c3a88d66a2cf91be9c",
+    "size": 21191,
+    "export_count": 25
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Blink.uasset",
+    "sha256": "83b32f4e2410f3c183c18b6d90eaece45f11cd16f6c2a0d25ce8f53bdc7dc07f",
+    "size": 7276,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Cuddle.uasset",
+    "sha256": "6408732b10deab50c5bbe2dcfe25cbfe761446d2266eab3fee36878b01013f20",
+    "size": 35171,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Cuddle_Montage.uasset",
+    "sha256": "2a3843f4b96bf48918df89828e6c4faca79d2e8713b1676d697c2de04c816832",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Fall.uasset",
+    "sha256": "79e0d4dcd49eba6a49eb6d60b0dc4467dc7e0900ab2d1986cadafcc922559ff3",
+    "size": 21844,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Center.uasset",
+    "sha256": "8c89c17e4462e2c40a5de8587912f8d0a40cdc978b9ba1fa700158320d2f15c8",
+    "size": 6515,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Lft.uasset",
+    "sha256": "e7c42a4dd72385863f33b86e4b0f32fffdd7c9e0b8042832b87eb59416dfb9f6",
+    "size": 6509,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Rit.uasset",
+    "sha256": "9b50b424c371a3a4d3c249eadbc8d45129e353741c7ff982659dba206646d5e9",
+    "size": 6509,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Up-Lft.uasset",
+    "sha256": "345440e4a9085829da851be7438899f62191196dbb0b58084fd1bafa706fc236",
+    "size": 6515,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Up-Rit.uasset",
+    "sha256": "09340e6a7e00df96e232a46c285050e81805996f173876fc2d2e7949eb743acd",
+    "size": 6515,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Aim-Up.uasset",
+    "sha256": "2340e9e1296a39061b6066bcc8b810fbef768c5407e99f002cdeec8a31ac0e38",
+    "size": 6507,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Bite.uasset",
+    "sha256": "705e2c37118c6eca11c5b5ddf28ea22389cd1da64a7efa894337686a68b979ac",
+    "size": 12418,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Bite_Montage.uasset",
+    "sha256": "d017a4089ac8ef4aae85247c9fef2e54c7d809be860678504a0d421cc29a2d46",
+    "size": 2539,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Lunge.uasset",
+    "sha256": "c71a6232f262df14f02eae07ad548d39214c3b8e55af249642d8d869d25597eb",
+    "size": 17278,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Lunge_Montage.uasset",
+    "sha256": "21e46875f5b7e9306a6f3c8d3730705aaffef548505d45727fc6ebe4bd41d0c0",
+    "size": 2814,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Roll.uasset",
+    "sha256": "df2f5c11933f8ba1ba50a858bfdbc8c80ff9b78194b99278173a25cfb5b4d2b2",
+    "size": 18932,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Roll_Montage.uasset",
+    "sha256": "7b9173d4061b79cb2e51f07f611951eca195678743026d5ee132f7577d44914b",
+    "size": 2809,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Turn-Lft.uasset",
+    "sha256": "b0fa276ac70c3351ee5a454d2d3fdf3aa65b50fe1675d4fefe5326c9b2737a1c",
+    "size": 14786,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Turn-Lft_Montage.uasset",
+    "sha256": "db55e10ff9fe7b0720899fa9dfdcbc11bf36ad0ddb8c301352aeb79f10eb5294",
+    "size": 3118,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Turn-Rit.uasset",
+    "sha256": "e68dd4d380c551d35e5f00a9fa4a9f69d570508dd17e77acd56e05111a69d60b",
+    "size": 14066,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Attack-Turn-Rit_Montage.uasset",
+    "sha256": "d5792b4fbc1afa7ff0302f6ee26e79250e28475f7ea1b0a2eedfb5b17f5d820c",
+    "size": 3118,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Charge-Fwd.uasset",
+    "sha256": "116114e963be05a869fd2cf3bab3b23d969ef9c181cfce1556b96317549ec681",
+    "size": 18848,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Charge-Lft.uasset",
+    "sha256": "46a88b1b18d4696f5d9612e55507833ed36b99076edd57014eced4e339f0b746",
+    "size": 19092,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Charge-Rit.uasset",
+    "sha256": "f077b587f5c7ce8f86da189a9fc39560ce9841f5cdd73f5b6118cd03fc4ef756",
+    "size": 18944,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Cuddle.uasset",
+    "sha256": "8f82c117ad97e166011bcde04f023fd1ad039e5b0cc0a012c87635f92d8c1de6",
+    "size": 34817,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Eat-Additive.uasset",
+    "sha256": "40c047ef6ad3f54d5bf7d9d9bef5ba16da6454a77f3a9944fa3d006a343c4257",
+    "size": 14312,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Eat-Additive_Montage.uasset",
+    "sha256": "3b035e3a4deb5c031f40c83ffa3a3cfc8bf3931fcc6cf04545a54f567f228b2e",
+    "size": 1778,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Hurt-Big.uasset",
+    "sha256": "b0e1694c98f3853851eca4da8101e7d19f773333f4ba4c18568f868d14c37e1f",
+    "size": 11069,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Hurt-Big_Montage.uasset",
+    "sha256": "1ecda372ea59a67238f16836641af0b557dd6764809e88974bfa0e2d4d9642af",
+    "size": 1860,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Idle.uasset",
+    "sha256": "e281faa440de9f28185a2471c6224374cd05f44c77bb51b40b3e9a7a6da73c8e",
+    "size": 15521,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Lay-Egg.uasset",
+    "sha256": "febcca8ad0fd5938430276c8272cf415dcc8bac55cce00006e6f1267dfd6a4b9",
+    "size": 11159,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Lay-Egg_Montage.uasset",
+    "sha256": "15ffe22f63fe2cd08108ba19c2892f8c38feb8d326c734047c97ef53cb718de9",
+    "size": 2517,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Move-Fwd.uasset",
+    "sha256": "46f372c4ad00d4ac0571a6899c2f28fecf455ccf2dee07d3b718ffb12efadaa8",
+    "size": 25655,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Eat.uasset",
+    "sha256": "791e7c402159f70b0a3ce9d2c557da308e5f5ae782721ddcc7a002f39c20c682",
+    "size": 24833,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Eat_Montage.uasset",
+    "sha256": "5f52fd1803a54a94cc01086a35e49653a5c95eb521278d2c987cb64b7adf10ba",
+    "size": 1770,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Idle.uasset",
+    "sha256": "56e8595cffefe8b6b55a05cd39004f2f851a7b45390f04ceb15c3f9d220f16e6",
+    "size": 16153,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Idle_Montage.uasset",
+    "sha256": "db6f78d4a8d581d6c27a5602906de2b34ce66ad29815f6a59b3b1c07eca9b1ec",
+    "size": 1774,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-In.uasset",
+    "sha256": "1d3bf62cb806eac8ffa01da39eb354345aef1cab38bcf4e3147e5a4a82cdd53d",
+    "size": 18060,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-In_Montage.uasset",
+    "sha256": "78015627344f40abeb3bcb647c9efaea05fe1211b6ff953825a5fa7159ba521e",
+    "size": 1766,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Out-Tamed.uasset",
+    "sha256": "70529941c431b7a5bb3158c9283b3060f1f63318e095e9e234777ab0d3fdb42a",
+    "size": 21309,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "b3d5839cf6878cb38c4f807c424bb32d306f8d672eaef14026030bc77b037858",
+    "size": 1794,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Out-Wild.uasset",
+    "sha256": "d1920d5a96acf6528c844c1c939fa0f493f38d1f8fc42d42efb2f2902568d089",
+    "size": 17341,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "4fb5c2f584cde06e565919702495f3675d66f20371fd85723614668d40667b97",
+    "size": 1790,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Turn-Lft.uasset",
+    "sha256": "4c267c5212f94f6d1fa659d0890b071ecc0010563c490808e516d66b2d2de469",
+    "size": 16351,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Ground-Turn-Rit.uasset",
+    "sha256": "90104789e3ca2f810ef7137b5a484db613655d720c7429dd0c54634696d0caed",
+    "size": 16151,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Bite.uasset",
+    "sha256": "b55a42f4bce42f74bfae7b1404fea04075923b5a27ce2ce2567339491ac0b0b0",
+    "size": 12161,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Bite_Montage.uasset",
+    "sha256": "e4d9011b1e66b7ebc4eb3ae4d5ac9ba8774f904818046a3d7c05cd92f2805711",
+    "size": 2575,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Roll.uasset",
+    "sha256": "429d23b7e9d36625a119719915a74c04b0d3bc1bed85163b885df49805cee3a2",
+    "size": 18824,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Roll_Montage.uasset",
+    "sha256": "631f93ac991ef4587cac08a85d1b0462f7f845107c641e54136bc12029dde248",
+    "size": 2531,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Turn-Lft.uasset",
+    "sha256": "a170738c8c20cbe33414ba770b3ee6ec1df1525811214c63cee18cbe4bf03024",
+    "size": 13260,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Turn-Lft_Montage.uasset",
+    "sha256": "c26040c6b595cda9462a76895e213c672e55bb0e399afbc5abe025abd3a5bc70",
+    "size": 3110,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Turn-Rit.uasset",
+    "sha256": "030cb1132f7d39a505e1ec9b1de96fbc9171cb34f76025db37908c9cf0590ad0",
+    "size": 12448,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Attack-Turn-Rit_Montage.uasset",
+    "sha256": "666d92d8c26e665d3e72da6d1fdb03e1fda7e3011eb821ed06895598a1d91aa7",
+    "size": 3110,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Charge-Fwd.uasset",
+    "sha256": "c378d96037d35fda57e319ea41f88e8fc368187b977b6c9eb338085112e45f17",
+    "size": 11061,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Charge-Lft.uasset",
+    "sha256": "892ef10846918124414c93f7f097fa6241754cbae2f89560e2ced1ab51968e43",
+    "size": 11817,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Charge-Rit.uasset",
+    "sha256": "e34ac278c3d52f684c52f0943b1de8246879a910e5959d569548999222a7f76c",
+    "size": 11841,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Fwd.uasset",
+    "sha256": "d693d0fdad42a4ddd8957b6062972293d95493f24dc79f766e44118ae5fa8f37",
+    "size": 13124,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Idle.uasset",
+    "sha256": "25760ffdc0089f33f53da0e258910585a5a7351474e18e48e33291844ca4d2e6",
+    "size": 28853,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Lft.uasset",
+    "sha256": "da4a1caccb58409a4e89d00a929df1741d26ddde8214fe1f1d5bafafe6ab2d03",
+    "size": 13224,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco-Swim-Rit.uasset",
+    "sha256": "5447ab6b8177f94dc266d4123ea8bd747bf65e2f8a039df003d1de07364af2d9",
+    "size": 13284,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Sarco\\Animations\\Sarco_Ground_AimOffset.uasset",
+    "sha256": "090e3d1786b1b2413b487ce07b632ef3fd4d2b98bedef3854e4bcd59906dbf1d",
+    "size": 7502,
+    "export_count": 1
+  }
+]

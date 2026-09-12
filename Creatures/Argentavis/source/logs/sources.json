@@ -1,0 +1,350 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Argentavis.uasset",
+    "sha256": "9fb97732795c2c784bc1f67230b08775b07cecd1fbb90dedf995053bb592f8fb",
+    "size": 5330808,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Argentavis_Skeleton.uasset",
+    "sha256": "56e8c78ee522ddfee15cbcb8bedcdbd7bfd59dba1e8b448d261159c31ca8ff59",
+    "size": 31348,
+    "export_count": 26
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Blink.uasset",
+    "sha256": "7d7fd67674a75f5aced6bebfd4cdb104eadb9e414c9a4deb47ca7cb0d9f1e2a2",
+    "size": 9879,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Cuddle.uasset",
+    "sha256": "23525dd90c8f1ae9388647bde925951b70de90f00ec68af645cd00fe6bbd6325",
+    "size": 51232,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Cuddle_Montage.uasset",
+    "sha256": "06ee040cf80f44d66929def975fbce4ad46c4261e64258390befe739fdb72570",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Attack-Claw.uasset",
+    "sha256": "724c17685588b3b4b961b11c23596e1bbbbad258cb06ed17d22618c2222b8fa8",
+    "size": 23912,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Attack-Claw_Montage.uasset",
+    "sha256": "7813740b23809d2d6b7b1865ca3c3953eda506450efe023d3168eca0801ea786",
+    "size": 2572,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Attack-Swoop-Out.uasset",
+    "sha256": "07d7ef8aed1063d579eda632ad1e9fa44173073fc7d67f9e2663663e6bfc419a",
+    "size": 24250,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Attack-Swoop-Out_Montage.uasset",
+    "sha256": "3e91c37057945de8a0bea0b037acc4cdec73b63cfeb3188a6defb92581f2fa60",
+    "size": 2592,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Fwd.uasset",
+    "sha256": "448dcc0c86dc4598dbfdab64823ff629dd6ab4e4ce61e9de42bde87001c56a5e",
+    "size": 26337,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Hover.uasset",
+    "sha256": "60e4155976b77dafb719ccfcd96ffdb39b4c655a36c24739a859279e6253edf6",
+    "size": 20751,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Hurt-Big.uasset",
+    "sha256": "7cd2b41ebeebbddf26433bdaedc8f3ba3c604c30c5a894333dcc23e34f49dad6",
+    "size": 18798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Hurt-Big_Montage.uasset",
+    "sha256": "390a6b826dbd0b5299eb5ef0f40aab8c85a6b724eb64a9bb2d878fc30f029379",
+    "size": 1893,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-BeakHold.uasset",
+    "sha256": "d6fd2f8cc967fc77a48d4747983dbf7c60773f1cafb5fad63b0d314670a246e6",
+    "size": 23860,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-BeakHold_Montage.uasset",
+    "sha256": "a92e94176cdd4dc56589b679fdb4a4ee0a4ab74db6ce139f4243a0878581948f",
+    "size": 1815,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-ClawBeakHold.uasset",
+    "sha256": "5bf32e60811ba091b9af71e1d3de0f2c347b9ef0cb1faf64c7b986cbe4e95965",
+    "size": 24288,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-ClawBeakHold_Montage.uasset",
+    "sha256": "397cdc5321fdca4bed1bc828074c3516488fd6137706aa14b614499f628f81ff",
+    "size": 1831,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-Clawhold.uasset",
+    "sha256": "cc7301bb946373c14f2f711c69b7ecb369b86879498121a80f3284281d99299d",
+    "size": 24274,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle-Clawhold_Montage.uasset",
+    "sha256": "b839994e03a56fd382e7f7319df4a4be53e016228e0b56235e4b62442af80556",
+    "size": 1815,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Idle.uasset",
+    "sha256": "a69a99b4c3cc6e5131acf9fc5e64280c8bbfb87e71c97e45294a680b9cb5088c",
+    "size": 24452,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Lft.uasset",
+    "sha256": "8a983139436d2d4700589177a26417521ebaab494f75db47c7339160c363fded",
+    "size": 25909,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Fly-Rit.uasset",
+    "sha256": "7792f031b371aa3b76b7dbccf6306d8bf8b4dce35662b0b078f92ec811015db0",
+    "size": 25909,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Center.uasset",
+    "sha256": "3d580553c85fa347adad0428dc6e6a39ddbf9c1294b359cb5072026a6af1d7bd",
+    "size": 9912,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Dwn-Lft.uasset",
+    "sha256": "cdd3efb13123f8dd406ac785e8953ab933e8639b8012bf00700240dd7f50164a",
+    "size": 9906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Dwn-Rit.uasset",
+    "sha256": "e404d9aa8d1a3ca8b32888e55bdfa47070114ab63d357e41edbcd43b37efb3e4",
+    "size": 9906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Dwn.uasset",
+    "sha256": "cd858a765af6438564c05bed2e1287c6aae35a0f8e5b2400265803b21858a8f7",
+    "size": 9898,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Lft.uasset",
+    "sha256": "705d0700dfb321053ec4ead3f4a90af38bd600ff7c96cb27f89db37645419123",
+    "size": 9906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Rit.uasset",
+    "sha256": "eb8bf8aa2c24d4d2031719b990bbb659b9d17e514362e98c04230d2d58270cab",
+    "size": 9906,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Up-Lft.uasset",
+    "sha256": "b290d2d13472c2194797fab57674659692bee286add1cfc627ea02750546a876",
+    "size": 9908,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Up-Rit.uasset",
+    "sha256": "e5b76c4a59e53230e8d9975316cb9de9639ebd3183b779227f634a90a93f3982",
+    "size": 9912,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Aim-Up.uasset",
+    "sha256": "d17ba791f0253fe798253eaa78f2d6882e53e6e27b3e8af6be18073734f76510",
+    "size": 9904,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Attack.uasset",
+    "sha256": "b44bd05d80dd735bcedb798de89f0230a59f861683c246fced19c29865c18aa8",
+    "size": 26176,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Attack_Montage.uasset",
+    "sha256": "01a4d791486c982b93781d11b90332b4d4ae6a444075a0093d8992bf4892559f",
+    "size": 2564,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Eat-Bite_Montage.uasset",
+    "sha256": "8a6a7422b5dd029d7dd5eeca4caa82870a50a0ef977a2f8de89491e19cbebd3b",
+    "size": 1797,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Eat.uasset",
+    "sha256": "3896a4bbdc259cfde5e54f986893f39192f232f1316d1fc36f79ac12bf2cf8b2",
+    "size": 54926,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Idle.uasset",
+    "sha256": "c967ae09238660b4e8bae3fde2bed33634cfd5ac7f5761484331bb39ea3dafc0",
+    "size": 24366,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Lay-Egg.uasset",
+    "sha256": "0ec74a0b86e4910186c0a07402908bfd85b5592fca0f6c822340886af20c1589",
+    "size": 19692,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Lay-Egg_Montage.uasset",
+    "sha256": "4e13f7a92a897e4bbe62635c2a723bba54e128d6ec576f0b1c454834d63c1b96",
+    "size": 3296,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Move-Fwd.uasset",
+    "sha256": "a99d15bfca6d3ec474af8ab8f7d946421079c4e32443074cc443f47bc6e218be",
+    "size": 26184,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Startled.uasset",
+    "sha256": "75f5305fcd14f1b22821e5279203b5a70f3974838987853742a19d83f471bc4e",
+    "size": 29498,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Ground-Startled_Montage.uasset",
+    "sha256": "16f2e82fe2096c73606cd16ced3fa321ac172c45615d641e14055819e82f81b1",
+    "size": 1852,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Idle-BeakHold.uasset",
+    "sha256": "91dcb2342b6129dbbd5b2f57406555a3b4a370c450b4dc1732ca0e713c4892a9",
+    "size": 24168,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Idle-BeakHold_Montage.uasset",
+    "sha256": "73a9017fdbbc5074bc8becb93d08a2e6ff1493dc6f2ec8694661b35cd157f98c",
+    "size": 1799,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Land.uasset",
+    "sha256": "770cb57f247898321c23a1371ba223df834dbf21cd435ebf2e4c2d61ebcb37ca",
+    "size": 32132,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Land_Montage.uasset",
+    "sha256": "c6b08d83d34a66451e1b85f6d3e4e6aa8859a0225127704242b9eded50b75960",
+    "size": 1763,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Take-Off.uasset",
+    "sha256": "161c6b97db7d35bcaf00b9bd50953f633b88d24232b0806a931fbc4a1d3eff3d",
+    "size": 33010,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Take-Off_Montage.uasset",
+    "sha256": "35f8e504bc30898bffa77ecbcb8ba90d42ae37f5f98d877a2114f998c43b04ea",
+    "size": 1868,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Eat.uasset",
+    "sha256": "04d490cbd78cf48df1429eedb48605483d18fd216251c1f070dfee646e83d554",
+    "size": 33388,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Eat_Montage.uasset",
+    "sha256": "fafcae6693c056a3326deb379d8e5b9752e68b980b03521d14d3bcd752ae46ec",
+    "size": 4185,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Idle.uasset",
+    "sha256": "4b07bc6b4fed6a705c7b18f1aec467aa982dcdc118fbd6e10d5e381593901036",
+    "size": 33392,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Idle_Montage.uasset",
+    "sha256": "f5551be46f620d5cb3ae327de6803ea1cd36b7197835e589fe64412c6fb064a4",
+    "size": 1791,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-In.uasset",
+    "sha256": "de0660910483b68313dd110e977dcdffdef545549694ab0bcee11a7accc404bc",
+    "size": 29604,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-In_Montage.uasset",
+    "sha256": "5e4c83e9858a4eec696d5e238d8d82933e9148dacb2f1d6e9d423ceb673b9c77",
+    "size": 1827,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Out-Tamed.uasset",
+    "sha256": "3c45e480d0118615d598445d6bb90d3ac732ecaa42a3360b8533da7336bc9568",
+    "size": 48210,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "190bae4a3cf26d0d615795d41b3769732109af81d9b47e2ec3c38e12b1fc0466",
+    "size": 1811,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Out-Wild.uasset",
+    "sha256": "c1888ea4a2005604ec6df99c81a0f6860cf33a7e4a237dc0628e80d796439c08",
+    "size": 34092,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "db43ed47e737362add14c96ba4ec80eaa11675cb4c84c99191e985f4a01b3fc0",
+    "size": 1807,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Argentavis\\Animations\\Argentavis_Ground_AimOffset.uasset",
+    "sha256": "317a802ce2c8fc6e978e280db5ddff12f659b2780bdce888d0508d3329870c10",
+    "size": 8136,
+    "export_count": 1
+  }
+]

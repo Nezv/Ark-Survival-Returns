@@ -1,0 +1,350 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Therizinosaurus.uasset",
+    "sha256": "ea07d6a550ad0a07826b40c67fcf80fce26e8309fd5972e6e7bad6bc10fda9a2",
+    "size": 4059059,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Therizinosaurus_Skeleton.uasset",
+    "sha256": "4af240c1b456509918a080d1af804d1b6a49b0a38a91cdd07aa531b409b70b2d",
+    "size": 22577,
+    "export_count": 23
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Center.uasset",
+    "sha256": "e9663e4281c315a47640131673d9b1f872d660f843b3faf684ebec290ed04169",
+    "size": 9226,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Dwn-Lft.uasset",
+    "sha256": "1e57da72e9bfc18f1badb2cc35190035c220f6c4ded758b8ec4008327cfe4fa2",
+    "size": 9228,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Dwn-Rit.uasset",
+    "sha256": "fd794bc7c32492ba1f4e1fb8f67000d1586894ca10157104351d8f7b3e345d92",
+    "size": 9228,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Dwn.uasset",
+    "sha256": "cc3a78c5eb948758baef7ed4022cb8312b5a742507c929591b0a4849313ca53f",
+    "size": 9220,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Lft.uasset",
+    "sha256": "13a3227736d2d380d84b300edb2f068739845849820fa1cc339ee780e0b8c74c",
+    "size": 9220,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Rit.uasset",
+    "sha256": "85e3becdd953b4313ab977d8b94df8751cf8da34fd6cbd9bf51f0e9949fdb78b",
+    "size": 9220,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Up-Lft.uasset",
+    "sha256": "01557cf363ed7de7b0485da3f8f805fbb490bfa9005c7c7857a224b1986b9f5d",
+    "size": 9226,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Up-Rit.uasset",
+    "sha256": "9c07459454d65042396eea0c4ede232a8b6d037fad41c5fd5e0ec545fa996caa",
+    "size": 9226,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Aim-Up.uasset",
+    "sha256": "c5562c5b85d3de091f3b50cfd1b3e7a3ceacb31207b92ed168898b1f342f20c4",
+    "size": 9218,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Bite.uasset",
+    "sha256": "e48ec04da07e9609e0f87ad05b8ee472af05e651e3df3e7f234b72664536b0b6",
+    "size": 19790,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Bite_Montage.uasset",
+    "sha256": "c21945af79275ce8138c30ad3f768d8897dbc14661020a338803cf1d8cca8a62",
+    "size": 3779,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Claw.uasset",
+    "sha256": "d763ba090ce03a7653d484c2076d0ce1fccf0083421e4f9272755c665d1dd180",
+    "size": 20754,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Claw2.uasset",
+    "sha256": "6abd47bced392b958329c8026edc4cc6ec3971f11f55538f1c422e3923fc2b9c",
+    "size": 21844,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Claw2_Montage.uasset",
+    "sha256": "2d0feeb7c6c28ac6235be49494c6b2e7317a8c3d593d1659fa50b3671cd041d3",
+    "size": 2886,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Attack-Claw_Montage.uasset",
+    "sha256": "53981c12b62094a38285b173a04ccfdbf42998ae3022610196b61d627a8d4a35",
+    "size": 2882,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Blink.uasset",
+    "sha256": "354496a3aea10c50abed51c6b3ef402680b92f40c7a4cd5a4a41916e6013b6ec",
+    "size": 10319,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Charge-Attack-Claw.uasset",
+    "sha256": "855ca89c015f03228e61139fda48f956f4734e763f71a2160f2cad07da798ed9",
+    "size": 21868,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Charge-Attack-Claw_Montage.uasset",
+    "sha256": "d757f5ee5f1dd0fbc21dc0643cd6d6e3d33a5d8a8e85c692a48888907dd338d3",
+    "size": 2955,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Charge-Fwd.uasset",
+    "sha256": "966a2a002358ab9609627407040f4ceeedc7d40b713b5447f89f46cfb8a7fc11",
+    "size": 24302,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Charge-Lft.uasset",
+    "sha256": "4af241ba6bb8a806cb6cb42ac150e488b882d2e93f8ed9cfe0f7c47bfcdd480c",
+    "size": 23546,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Charge-Rit.uasset",
+    "sha256": "29ccb035380dc13b16bb509692b1565c33333be443c8cff5fc0d8a1c23edf22d",
+    "size": 23546,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Cuddle.uasset",
+    "sha256": "8b36d517b3dd37254cc10f9e7c6d03a13b0cf9f2d26e36b7ec391220c5719159",
+    "size": 49009,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Cuddle_Montage.uasset",
+    "sha256": "379ef12245ea5e44efb7e66f913f207769a17ea2614180d7333f73304db291d7",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Eat.uasset",
+    "sha256": "eff790f7f2c7e668a4ba189d5e00f4505b4e9836e6c58112cee01af236658dbb",
+    "size": 71790,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Eat_Montage.uasset",
+    "sha256": "0b271c091ce6bdf7d23e8cb0cb362fdefdba421d8920a4a2300c7eed29f07b6f",
+    "size": 1804,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Harvest-Shrub.uasset",
+    "sha256": "20758dc210a8f10dc85b423e2849207f95ec09b5607c81f366cbb7593fc2e6d8",
+    "size": 28976,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Harvest-Shrub_Montage.uasset",
+    "sha256": "e76d739380a647ce8b3782a41432d5d0c45c499a637db164f90484eccb722f03",
+    "size": 4131,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Hurt-Big-Rit.uasset",
+    "sha256": "b5cf8d1a4d8a48d81b0cae685c987c4a29da46c94e69aa26f727726d8bdf09b2",
+    "size": 20245,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "a14c516637a7d1af1027eef5a802b1a49299cf1c2fd03b250c6b121e5232c20b",
+    "size": 1938,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Idle.uasset",
+    "sha256": "c8908de6d15870d999c150562a0b0a2b842460b55db752d31616456e3deef47c",
+    "size": 44650,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Lay-Egg.uasset",
+    "sha256": "ac04357933bf44054dcff994eecd262e05951187036024d9092eb0e8ac561260",
+    "size": 31660,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Lay-Egg_Montage.uasset",
+    "sha256": "1a83108c3efbac526a39eece2533abb5edcd054d7a688b5f53cd6b14b10351e6",
+    "size": 2579,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-LevelUP.uasset",
+    "sha256": "100b7ebebd27b8efe6699d5dfddf6408b4715f441573d86ce03f9af9d6640d6a",
+    "size": 49013,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-LevelUp_Montage.uasset",
+    "sha256": "f68e8e48c5c8297ae9d98018f1c856127245553dd7df831226d36791606ed019",
+    "size": 1820,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Attack-Claw.uasset",
+    "sha256": "64938d6a82f079642e6324c43522a0a3373858214e04952de1c7ab10fc61753f",
+    "size": 21860,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Attack-Claw_Montage.uasset",
+    "sha256": "3ce58da32dddf0352e0b8c36c5ac572cd39be625a19e83450c17cdcb28120da9",
+    "size": 2902,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Fwd.uasset",
+    "sha256": "ea1c2af16d6b26f38d6180f81d3959b3d5fc8cbce4d20a26d1180947c98425d3",
+    "size": 24838,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Harvest-Shrub.uasset",
+    "sha256": "37ed71f6b1cfed03b5fcbb51780eb96a8338febffbf0412e8f3115dac7f4e2fe",
+    "size": 29814,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Harvest-Shrub_Montage.uasset",
+    "sha256": "24d6ac70a59442f573cff1dfac7a062d38db0573d49410e1998ccdaa8e8fd090",
+    "size": 4151,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Lft.uasset",
+    "sha256": "1c879ab4e5a77375a086c174fed60e4295b2882ee45ad0860dc35be1059354ed",
+    "size": 24838,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Move-Rit.uasset",
+    "sha256": "1640ff8cf2be94b2749efec1c32729467d0f7bcf75773b5e9c6e831e875fa4fb",
+    "size": 24838,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Startled.uasset",
+    "sha256": "837c81142da6c86e7f305d4ffc7801ca7cf9fb3aecb5c3e5ada3840bf70008d7",
+    "size": 24306,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Startled_Montage.uasset",
+    "sha256": "251ef2dd26ae04b9bfab0c712b5e8fbe4ff8c7a14e4b2b5943f29db75a33cc96",
+    "size": 1824,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Swim-Fwd.uasset",
+    "sha256": "06d0e7fb7296ad5162bdde2b25ed66cfe78864ebbe8823b337dc90d8274c39d7",
+    "size": 22483,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Swim-Idle.uasset",
+    "sha256": "f032a40cc16c9b3851c7837cbc401ba56fbfa82ea3b3b594ec3d33d4108327dd",
+    "size": 42843,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Eat.uasset",
+    "sha256": "83a5c6bf23da9e496bb239fcd657b56fa2811282b87ba4364292c1ac3eb2d680",
+    "size": 34726,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Eat_Montage.uasset",
+    "sha256": "3b27deb6c542b23216221f1b799ecda825fe37ded927196635462b9ecd2b6b45",
+    "size": 1832,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Idle.uasset",
+    "sha256": "6ee335354ae157056c9b4b930cd4fbf9de4a960fd4081472d555e4f4c60582c5",
+    "size": 32466,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Idle_Montage.uasset",
+    "sha256": "5426b0cdd698e641129fbbf71783c66963c64c1592f81a050cb61e8e0b8f3480",
+    "size": 1836,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-In.uasset",
+    "sha256": "22ca8ed91c25a7a9586acefe2e28f545237ac0c45c1185fbe80ad2143e269a48",
+    "size": 33354,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-In_Montage.uasset",
+    "sha256": "d68f5dffd23ec48c9e5923de71d465f26d42fb12e41be790b8bff50f84f0bf24",
+    "size": 1990,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Out-Tamed.uasset",
+    "sha256": "bc90142551d7c6c7619281c5d5db8ae4c6ad8993ed2998d0acfdfdde47795cfa",
+    "size": 52318,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "63d2859e31ac5d0973c6ced7df7742237759e0e5fa549becad499d6648cb3f5e",
+    "size": 2018,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Out-Wild.uasset",
+    "sha256": "b1d86a9428221732b250bc70b76bfd6b28f584bacfa756725663ff54f4eded13",
+    "size": 33014,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "a1e733062a5d1e87b99b37ed387fc72f132f379ab3466cf5c292290c48a042b7",
+    "size": 2014,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Therizinosaurus\\Animations\\Therizinosaurus_AimOffset.uasset",
+    "sha256": "22ab6a5776e7bb1dc4a6ae6862790d47e2c13f472d06c45c8dc419cdd325022e",
+    "size": 8161,
+    "export_count": 1
+  }
+]

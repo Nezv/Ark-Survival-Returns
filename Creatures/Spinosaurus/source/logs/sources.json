@@ -1,0 +1,440 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Spino.uasset",
+    "sha256": "fae054f3c7328a7bac9537c1017e86f0360c33fac4ce54405606dfb4fef6d707",
+    "size": 4620020,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Spino_Skeleton.uasset",
+    "sha256": "2538ffc55623573f7ef98bbb1821ead16a49796e593b556e6fe4b2f12f0a73c5",
+    "size": 25894,
+    "export_count": 33
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Center.uasset",
+    "sha256": "e6169bb95dba6bb626246ffbe8d1eb398395df46862b0581d2f99102adfedc03",
+    "size": 9536,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Dwn-Lft.uasset",
+    "sha256": "13ddc1d9131ea44f240e21cd643daf32d8ee62cb8e6057d34739d59e835165b2",
+    "size": 9538,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Dwn-Rit.uasset",
+    "sha256": "92cc0d481c90e4bda653d35d3e265b7c4a4e7a669427e298b9e39b488a73721f",
+    "size": 9538,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Dwn.uasset",
+    "sha256": "083a0785bb53d2168528b615969a426688f2b4219a4e0355868c4933fe6e4fa9",
+    "size": 9526,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Lft.uasset",
+    "sha256": "d477e907ff1cdf929faad7215402b093bd931d71f297be3ca2fec88e5972d217",
+    "size": 9530,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Rit.uasset",
+    "sha256": "3e859236a48ff87bf902ad3913bf0df821da3bcff0a8980a4e3c30e878f4c312",
+    "size": 9530,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Up-Lft.uasset",
+    "sha256": "ef60f5a53e8b09e65c7ee608477003df2cf70988b65e8f39559392b75f3367a1",
+    "size": 9536,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Up-Rit.uasset",
+    "sha256": "ccd395be4421da493efd057a1fcbd64608a539bae6c6f74c70166d14a9c25eac",
+    "size": 9536,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Aim-Up.uasset",
+    "sha256": "6bcb4eb3fa277a37846e03c834fb553b92e0fcccabb553551601a96526b53d5d",
+    "size": 9528,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Attack-Bite.uasset",
+    "sha256": "34113200890f2f836657830870a7ece7a1de6b13191b20b06d1d3f25a72c0c7e",
+    "size": 20223,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Attack-Bite_Montage.uasset",
+    "sha256": "933a76bb2a10690fd9b7a0306ebbc6b297585d262d3f4ddbdfdf3c976a23565b",
+    "size": 2600,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Attack-Claw-Lft.uasset",
+    "sha256": "72f1e2e42cd70b5236ee14d09f69b2f8e457c5c9ad02bb9a4ce16e95edf1abfd",
+    "size": 22482,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Attack-Claw-Lft_Montage.uasset",
+    "sha256": "85b39dafd8ff26bd73693498d2596248df417f920655b0eb2f69eb3a47d33096",
+    "size": 2551,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Attack-Claw.uasset",
+    "sha256": "cfe9bbd9224746df710f5822853ae9dcaa693ad968f1463db2af186d13fe5a4c",
+    "size": 21026,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Attack-Claw_Montage.uasset",
+    "sha256": "a0a498b728f44617cc0c164ef2c8bb1762b5b937414d77d8ba439037a4684976",
+    "size": 2535,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Charge-Fwd.uasset",
+    "sha256": "b5355ff1c022cb461a806e864cb7460db1d0ffc33b2ec31afaf19b021a135ec3",
+    "size": 22863,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Charge-Lft.uasset",
+    "sha256": "a1e7aed7ed675638c09034599a538b3ab04fc47915ab17d8020abb761df6e214",
+    "size": 22927,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Charge-Rit.uasset",
+    "sha256": "7b670c78325c4c52916779b16f44dcb9792ff28c5f601dddd2242a244ac163f0",
+    "size": 23075,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Idle.uasset",
+    "sha256": "5fbf1011a98a7f40b5469584ddd3037d757b223380a6ae9fdb0ee653656c3b11",
+    "size": 45056,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Move-Fwd.uasset",
+    "sha256": "59f6b30b41802a96483bb0a4f77313dfdc423234b9b626795e35e190cb8ed5f4",
+    "size": 36291,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Move-Lft.uasset",
+    "sha256": "4684d293f1bdbafd29c2885a643e84c204c5396d3ba1690dfad40b036545654d",
+    "size": 36035,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Move-Rit.uasset",
+    "sha256": "0cddc6fd7a21eecdade39984e35e65bb1ae059a47bb8725b403eea0680325c1f",
+    "size": 35415,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar-Charge-Additive.uasset",
+    "sha256": "f9720307aa6ea9eabea5d4bac0d3a3fc32b295b996ccf44289163c1423114be3",
+    "size": 33710,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar-Charge-Additive_Montage.uasset",
+    "sha256": "eb94001ed7553057a56f853cdde618d904bc69b720c135adc4b1d24384cc3305",
+    "size": 1806,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar-Move-Additive.uasset",
+    "sha256": "6fdabec08003e4a27dc46c15a3115ff64c343de85f24630d143b4d3102f40476",
+    "size": 34678,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar-Move-Additive_Montage.uasset",
+    "sha256": "8750b990b3a1fd11bb1dd518ddf5b6fd0f85f60b82cf5d76444d45c6d0a5e6a6",
+    "size": 1798,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar.uasset",
+    "sha256": "28560d303cc87283e68d4f18c51f4e829b8ec7e6e86119b4da7e866d951b6fc6",
+    "size": 33794,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-Roar_Montage.uasset",
+    "sha256": "a6dae8041ed835794e0ef6aedee6e9471ddfe6961fed90b3d4f838b30f49dce6",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-To-Quad.uasset",
+    "sha256": "253864b91c0131e12aa26d54111200bbda59f8183ad59e1ceb3c96662775d6d8",
+    "size": 17854,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-To-Quad_Montage.uasset",
+    "sha256": "847f28576e2fad9c65c3cfdeb120414611e6de5b5558ae2072f8447d86b1ed88",
+    "size": 1852,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-TurnInPlace-Lft.uasset",
+    "sha256": "c943ca61402c6f332d5e85e4bd4dcc5dedad6c1bcc21939b5bc7bd58f0d0ddb3",
+    "size": 22243,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Biped-TurnInPlace-Rit.uasset",
+    "sha256": "363cbddf47c97ef142f1f3b8ac10102588db10feaefbae62e33ed1d6057719bb",
+    "size": 21923,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Blink.uasset",
+    "sha256": "bd6d6b9534d2ac7c1efd74e5c1a78dc13f0ac996132fba41022a8acdf56e1765",
+    "size": 10805,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Charge-Fwd.uasset",
+    "sha256": "aaef8e2ad0d41cef06ac5fd3698219ed63b561e02d3238c07180008848f4063a",
+    "size": 26643,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Charge-Lft.uasset",
+    "sha256": "058a8c94f32ce97823735eba7071bff3b8929af3235937c02478148a035d02fd",
+    "size": 26643,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Charge-Rit.uasset",
+    "sha256": "9a07b99bbafa3c3b6a9ab4fe715e9b977614e8b08915770d9deef61711a0ca57",
+    "size": 26643,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Cuddle.uasset",
+    "sha256": "221fbd983ae6f1a707edfa8fee7c51feb86a691916768c87ea4b21346fbaac79",
+    "size": 89812,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Cuddle_Montage.uasset",
+    "sha256": "3ab59b057021a46b1f4b97cfc0901dc1ad5fe390967c832b62d12eb9cd62c3f0",
+    "size": 1726,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Eat.uasset",
+    "sha256": "b6c62edf4af9fa157bc76efbe3c17322b7f16df8e4198a03bf3497f6b2d9e68f",
+    "size": 22574,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Eat_Montage.uasset",
+    "sha256": "a62df16d1d2e82b19d4c551172e283e729d85a121aac309bf2efe272a533a750",
+    "size": 1714,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Hurt-Big-Rit.uasset",
+    "sha256": "8aa7ef17ef5dbf628ed89463683bcc1908db24b29f226eb22837f73fea6ed4a2",
+    "size": 18287,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Hurt-Big-Rit_Montage.uasset",
+    "sha256": "ee3b97603fc8c0f2fd3207ff10894ca9d82100d617c353aeb4f16fed1735777c",
+    "size": 1848,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Idle.uasset",
+    "sha256": "f339893193deadddfe49a08334e98b762f7e423be3ac35e4f65c1db8170100ad",
+    "size": 36824,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Lay-Egg.uasset",
+    "sha256": "a56fbf722eaade13f50012589b9d08a70cb11b6c526d0b6cdc356e172b58ddb4",
+    "size": 28399,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Lay-Egg_Montage.uasset",
+    "sha256": "47610ce3697b04803c05bf713701e220feadc999b8936f7fa58e47e6530904dc",
+    "size": 3223,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Move-Fwd.uasset",
+    "sha256": "0c46b6556e2a4142adbab22f491c5bbee02bba6365a6a819d748b8107102e81b",
+    "size": 29771,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Move-Lft.uasset",
+    "sha256": "61eb1c35d0556a6f6df1adc8867ef43ffe4ea641680572ead2655096a6a8259e",
+    "size": 30177,
+    "export_count": 15
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Move-Rit.uasset",
+    "sha256": "5a8c15bb9983972a47525606198815fbb86498cb00a8d7ba851e1a606eed82d1",
+    "size": 29997,
+    "export_count": 14
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Quad-To-Biped.uasset",
+    "sha256": "78e0fcaed633a69f66178af2076240fb52939a49b65c3d587fa1d9f35b4e74d7",
+    "size": 17854,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Quad-To-Biped_Montage.uasset",
+    "sha256": "f2fdabcd14525c2bbadbcc8ba32d3ebe0d84f02102b6ccea9473b7660435a22a",
+    "size": 1852,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar-Charge-Addiitive.uasset",
+    "sha256": "e2088d68cf56bf9825fac31fb57d9442a7c5b2c9320dc8d92e7ca177bb4e7f06",
+    "size": 29984,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar-Charge-Addiitive_Montage.uasset",
+    "sha256": "90640603d48562635b5838f71dfa9fa4681592d5efc0cfb444a94ef5e0af9988",
+    "size": 1786,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar-Move-Addiitive.uasset",
+    "sha256": "91b1a37682a76c6f84eeba8aab57f2e548e3df355e94a39bcd9de9e13f6e53a4",
+    "size": 32844,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar-Move-Addiitive_Montage.uasset",
+    "sha256": "2eb49f0a4ca8e7de2115557c170839173666ed8e565696aff717794638bfb64b",
+    "size": 1778,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar.uasset",
+    "sha256": "7f6f516dad97c0bb6b43ce6a32ae6884fda5df5585cda9259ba1f5f7daeaf586",
+    "size": 29086,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Roar_Montage.uasset",
+    "sha256": "16a84d83f2c81c112a16afd3a6461c2741940c3161bf690197352c6208c39b9a",
+    "size": 1718,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Startled.uasset",
+    "sha256": "5da1cbd402c87b3a2084bff40714e94020c38eaa8a23c3393d89300c2fdff058",
+    "size": 24503,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Startled_Montage.uasset",
+    "sha256": "82cf1f233f3989102a8425f9a8f461467db58e10828a9081d978cecd6d6ddcb8",
+    "size": 1779,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Swim-Fwd.uasset",
+    "sha256": "bfb5215a2a870c36524df85633f294f536c035bbfca9060fb40b5eee70888964",
+    "size": 22831,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Swim-Idle.uasset",
+    "sha256": "6a0c0a0471e642596b07eb45404b0d70ae4acd50c2b51ff237f5a39f470f9d3a",
+    "size": 44433,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Eat.uasset",
+    "sha256": "fd6e2efc110aa60b2bf8a7592e68f6c6f9e91f58ca485119931b1024febf4bd4",
+    "size": 29383,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Eat_Montage.uasset",
+    "sha256": "0427f167daf45de38c02836f8f9ee2c4bc8dc5fe29875c26d7590532275d0208",
+    "size": 1742,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Idle.uasset",
+    "sha256": "4659316922702b0a75363ad1e99dd6e64074b83a9c37619814c1036b5e049c90",
+    "size": 29439,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Idle_Montage.uasset",
+    "sha256": "04df4f9e5f54bf0c2685adc4961b0521777338a04e828c6d46308277c686ca93",
+    "size": 1746,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-In.uasset",
+    "sha256": "6aed02cac6557f4ccac1a8cd5a2bc60978b15a7845896396c53b3d2d0bbd2095",
+    "size": 35878,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-In_Montage.uasset",
+    "sha256": "bd30a1299ee4b5204e53b489468995502753df546734e4d50c7b4b5da63b24ba",
+    "size": 1900,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Out-Tamed.uasset",
+    "sha256": "c857b7b2ad1c048a1695f2c802007bc04eecdb9cdea15fa227076bdec95dc177",
+    "size": 53985,
+    "export_count": 6
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Out-Tamed_Montage.uasset",
+    "sha256": "62009f91374802c804ebe99010c49287b8c73e1074fb585ce7fe6b281a72523a",
+    "size": 1928,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Out-Wild.uasset",
+    "sha256": "315412bc42ad0d6d4a26efdcfe54826a623d02a24c590555eeb6d13550b9aee1",
+    "size": 31443,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino-Torpid-Out-Wild_Montage.uasset",
+    "sha256": "90b502ded26e0c74c3dd1bc5d39a3eb128838a4539b6499bc44226ec12c861d7",
+    "size": 1924,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Spino\\Animations\\Spino_AimOffset.uasset",
+    "sha256": "b2f75abc692ba232c9dddb352ac7a7007f5449348591794ee6768c06d344f889",
+    "size": 7831,
+    "export_count": 1
+  }
+]

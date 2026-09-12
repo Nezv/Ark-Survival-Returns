@@ -1,0 +1,72 @@
+[
+  {
+    "id": "spinosaurus",
+    "family": "BIG_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.569402963421453e-06
+  },
+  {
+    "id": "parasaur",
+    "family": "SMALL_HERBIVORE",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.421657428503977e-06
+  },
+  {
+    "id": "ceratosaurus",
+    "family": "BIG_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.7415096727499986e-06
+  },
+  {
+    "id": "dilophosaur",
+    "family": "SMALL_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.6095290396609414e-06
+  },
+  {
+    "id": "acrocanthosaurus",
+    "family": "BIG_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 5.017377489480168e-06
+  },
+  {
+    "id": "allosaurus",
+    "family": "SMALL_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.1785190870436963e-06
+  },
+  {
+    "id": "ankylosaurus",
+    "family": "BIG_HERBIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.610048615847571e-06
+  },
+  {
+    "id": "carnotaurus",
+    "family": "BIG_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.5542036290460146e-06
+  },
+  {
+    "id": "pegomastax",
+    "family": "SMALL_HERBIVORE",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.7881202520063653e-06
+  },
+  {
+    "id": "lystrosaurus",
+    "family": "SMALL_HERBIVORE",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.2761158797734993e-06
+  }
+]
