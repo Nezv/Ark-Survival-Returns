@@ -1,0 +1,872 @@
+{
+  "date": "2026-09-13",
+  "timezone": "America/Sao_Paulo",
+  "status": "Source JSON audit only; animation names, durations, loop flags and bone references checked. No animation rendered or gameplay implemented.",
+  "species_count": 19,
+  "torpor_clip_count": 89,
+  "species": [
+    {
+      "species": "pteranodon",
+      "source": "../Creatures/Piterodon/animations/piterodon.animation.json",
+      "source_sha256": "51d754861b296b97f03b9eb2ee0e38e6176253375542e0f6e28abcd682160a64",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/pteranodon.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Ptero-Torpid-Eat",
+          "duration_seconds": 6.666666329269469,
+          "loop": false,
+          "animated_bones": 129,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ptero-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 129,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ptero-Torpid-In",
+          "duration_seconds": 1.6666666458894488,
+          "loop": false,
+          "animated_bones": 129,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ptero-Torpid-Out-Tamed",
+          "duration_seconds": 2.9999999371203763,
+          "loop": false,
+          "animated_bones": 129,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ptero-Torpid-Out-Wild",
+          "duration_seconds": 1.6666666458894488,
+          "loop": false,
+          "animated_bones": 129,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "velociraptor",
+      "source": "../Creatures/Velociraptor/animations/velociraptor.animation.json",
+      "source_sha256": "319f8d62e944b12e21ae837fe0210cf904b3b3572d374df9901cea01029be1ec",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/velociraptor.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Raptor-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 68,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Raptor-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 69,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Raptor-Torpid-Out-Tamed",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 68,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Raptor-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 68,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Raptor-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 68,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "argentavis",
+      "source": "../Creatures/Argentavis/animations/argentavis.animation.json",
+      "source_sha256": "71e28a44f772a4cd3af828e41614b2d6b16b58ebf6c09bdb3e96377aa759c036",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/argentavis.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Argentavis-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 109,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Argentavis-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 109,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Argentavis-Torpid-In",
+          "duration_seconds": 1.6666666458894488,
+          "loop": false,
+          "animated_bones": 108,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Argentavis-Torpid-Out-Tamed",
+          "duration_seconds": 2.6666666666666665,
+          "loop": false,
+          "animated_bones": 107,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Argentavis-Torpid-Out-Wild",
+          "duration_seconds": 1.6666666458894488,
+          "loop": false,
+          "animated_bones": 108,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "triceratops",
+      "source": "../Creatures/Triceratops/animations/triceratops.animation.json",
+      "source_sha256": "6d196481298b056468d1325a8bb4f36dba15dab351ba057dc7f575d5e7843155",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/triceratops.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Trike-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 84,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Trike-Torpid-In",
+          "duration_seconds": 2.6666666666666665,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Trike-Torpid-Out-Tamed",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 84,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Trike-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 84,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Trike-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 84,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "therizinosaurus",
+      "source": "../Creatures/Therezinosaur/animations/therezinosaur.animation.json",
+      "source_sha256": "19afa5caeed73de06dc600ae4c498b8874959d9fa55859d0ffd1574479e60d0c",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/therizinosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Therizinosaurus-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Therizinosaurus-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Therizinosaurus-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 88,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Therizinosaurus-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Therizinosaurus-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "brontosaurus",
+      "source": "../Creatures/Brontosaur/animations/brontosaur.animation.json",
+      "source_sha256": "a8340c6b48c09ea11021be3a922bbc86ced9ee97cfe01159419959f43dfaec66",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/brontosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Sauropod-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 61,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Sauropod-Torpid-In",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 61,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Sauropod-Torpid-Out-Tamed",
+          "duration_seconds": 4.999999873685524,
+          "loop": false,
+          "animated_bones": 61,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Sauropod-Torpid-Out-Wild",
+          "duration_seconds": 2.6666666666666665,
+          "loop": false,
+          "animated_bones": 61,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Sauropod-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 61,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "tyrannosaurus",
+      "source": "../Creatures/Tyranosaur/animations/rex_ravager.animation.json",
+      "source_sha256": "b29efc5f11b41d5f1929e5d04cab3a5ba04d0dd9687f656d50c17a700023ae41",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/tyrannosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Rex-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 70,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Rex-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 70,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Rex-Torpid-Out-Tamed",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 70,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Rex-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 70,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Rex-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 70,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "giganotosaurus",
+      "source": "../Creatures/Giganotosaur/animations/giganotosaur.animation.json",
+      "source_sha256": "a1280af25016b4a4229a51406bae319b2cea630fe555dd585bfec4fc0c07b88b",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/giganotosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Giganotosaurus-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 90,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Giganotosaurus-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 90,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Giganotosaurus-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 89,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Giganotosaurus-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 90,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Giganotosaurus-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 90,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "titanosaur",
+      "source": "../Creatures/Titanosaur/animations/titanosaur.animation.json",
+      "source_sha256": "1731200ea7668214b442d6c0d0488f4b91f6f5c46a884bdef2f69476f23acdeb",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/titanosaur.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Titanosaur-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 65,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Titanosaur-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 65,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Titanosaur-Torpid-In",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 64,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Titanosaur-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 66,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Titanosaur-Torpid-Out-Wild",
+          "duration_seconds": 1.3333333333333333,
+          "loop": false,
+          "animated_bones": 65,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "spinosaurus",
+      "source": "../Creatures/Spinosaurus/animations/spinosaurus.animation.json",
+      "source_sha256": "79c8a2645f94d7e6b8bf7a2c1a7ecbb6155a64dbfef131ff4dd354b0d326c712",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/spinosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Spino-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 91,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Spino-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 91,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Spino-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 91,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Spino-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 91,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Spino-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 91,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "parasaur",
+      "source": "../Creatures/Parasaur/animations/parasaur.animation.json",
+      "source_sha256": "ba734378c1bfb5f9fe1561368426d7fa33506a0cb37b32927918362017212406",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/parasaur.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Para-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Para-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Para-Torpid-Out-Tamed",
+          "duration_seconds": 2.9999999371203763,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Para-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Para-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "ceratosaurus",
+      "source": "../Creatures/Ceratosaurus/animations/ceratosaurus.animation.json",
+      "source_sha256": "1acb82bca26667e2bf339a5a71bbe8e8d5c6a05d605ccb5291f26b3c3507cb1a",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/ceratosaurus.animation.json",
+      "torpor_clips": []
+    },
+    {
+      "species": "dilophosaur",
+      "source": "../Creatures/Dilophosaur/animations/dilophosaur.animation.json",
+      "source_sha256": "3c95a00591fd2ba391995f9ddda80d4c6b1afde0420f0c651c83acc149d4c827",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/dilophosaur.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Dilo-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 99,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Dilo-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 99,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Dilo-Torpid-Out-Tamed",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 99,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Dilo-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 99,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Dilo-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 99,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "acrocanthosaurus",
+      "source": "../Creatures/Acrochantosaur/animations/acrochantosaur.animation.json",
+      "source_sha256": "09f529a64529e0bd1e6e5867aaefa490f06a41c0403cc821f2953f3c5421eee4",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/acrocanthosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Acro_Torp_Eat",
+          "duration_seconds": 4.1666667189514435,
+          "loop": false,
+          "animated_bones": 297,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Acro_Torp_In",
+          "duration_seconds": 8.333333043382611,
+          "loop": false,
+          "animated_bones": 298,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Acro_Torp_Loop",
+          "duration_seconds": 4.0,
+          "loop": true,
+          "animated_bones": 305,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Acro_Torp_Out",
+          "duration_seconds": 5.916666692972369,
+          "loop": false,
+          "animated_bones": 297,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "allosaurus",
+      "source": "../Creatures/Allosaurus/animations/allosaurus.animation.json",
+      "source_sha256": "85d690db5588acb19b2098627929ba26668774d8fbe83650fbf331d0bcd0e65b",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/allosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Allosaurus-Torpid-Eat",
+          "duration_seconds": 3.3000000314712525,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Allosaurus-Torpid-Idle",
+          "duration_seconds": 3.3000000314712525,
+          "loop": true,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Allosaurus-Torpid-In",
+          "duration_seconds": 1.9666666812543516,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Allosaurus-Torpid-Out-Tamed",
+          "duration_seconds": 3.3000000314712525,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Allosaurus-Torpid-Out-Wild",
+          "duration_seconds": 1.9666666812543516,
+          "loop": false,
+          "animated_bones": 79,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "ankylosaurus",
+      "source": "../Creatures/Ankylosaurus/animations/ankylosaurus.animation.json",
+      "source_sha256": "7ca2492f7dbba57df0edda8fc548d1c31705729cb5a57c53205dd18aeaadb30c",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/ankylosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Ankylo-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ankylo-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ankylo-Torpid-Out-Tamed",
+          "duration_seconds": 2.500000031370866,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ankylo-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Ankylo-Torpid",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "carnotaurus",
+      "source": "../Creatures/Carnotaurus/animations/carnotaurus.animation.json",
+      "source_sha256": "176c076e267b640c517d25931a11dfa73215bd5a7926f971b7ec1d5017956dbe",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/carnotaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Carno-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 62,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Carno-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 62,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Carno-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 63,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Carno-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 63,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Carno-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 63,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "pegomastax",
+      "source": "../Creatures/Pegomastax/animations/pegomastax.animation.json",
+      "source_sha256": "1d683bd0044032f14571166815b8c42689778be6c282347519053fcda67396aa",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/pegomastax.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Pegomastax-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 78,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Pegomastax-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 83,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Pegomastax-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 83,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Pegomastax-Torpid-Out-Tamed",
+          "duration_seconds": 3.66666681367953,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Pegomastax-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 86,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    },
+    {
+      "species": "lystrosaurus",
+      "source": "../Creatures/Lystrosaurus/animations/lystrosaurus.animation.json",
+      "source_sha256": "b323aa77e1646b72a02d517a967f282a76ab33f2d89df6fb0e8634cd0051e6f7",
+      "runtime": "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/lystrosaurus.animation.json",
+      "torpor_clips": [
+        {
+          "name": "Lystrosaurus-Torpid-Eat",
+          "duration_seconds": 3.3333332074357385,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Lystrosaurus-Torpid-Idle",
+          "duration_seconds": 3.3333332074357385,
+          "loop": true,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Lystrosaurus-Torpid-In",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Lystrosaurus-Torpid-Out-Tamed",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        },
+        {
+          "name": "Lystrosaurus-Torpid-Out-Wild",
+          "duration_seconds": 2.0,
+          "loop": false,
+          "animated_bones": 72,
+          "missing_geometry_bones": [],
+          "imported": false
+        }
+      ]
+    }
+  ]
+}
