@@ -69,6 +69,20 @@ public final class ArkData implements DataProvider {
     }
     private void models() {
         Map<String, String> en = new TreeMap<>(), pt = new TreeMap<>();
+        en.put("item." + NS + ".debug_spyglass", "Debug Spyglass");
+        pt.put("item." + NS + ".debug_spyglass", "Luneta de depura\u00e7\u00e3o");
+        String[] debugKeys = {"title", "searching", "aim", "page", "range"};
+        String[] debugEn = {"ARK // DINO INSPECTOR", "SCANNING...", "Aim at a dinosaur to read its state.", "PAGE %s/%s | Mouse wheel to browse", "RANGE %s blocks | Hold use to scan"};
+        String[] debugPt = {"ARK // INSPETOR DE DINOS", "BUSCANDO...", "Mire em um dinossauro para ler seu estado.", "P\u00c1GINA %s/%s | Role para navegar", "ALCANCE %s blocos | Segure usar"};
+        for (int i = 0; i < debugKeys.length; i++) {
+            en.put("debug." + NS + "." + debugKeys[i], debugEn[i]);
+            pt.put("debug." + NS + "." + debugKeys[i], debugPt[i]);
+        }
+        // Preserve the vanilla scope's separate inventory and held models.
+        put("assets/" + NS + "/items/debug_spyglass", Map.of("model", Map.of("type", "minecraft:select",
+                "property", "minecraft:display_context", "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
+                        "model", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass"))),
+                "fallback", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass_in_hand"))));
         en.put("itemGroup." + NS, "Ark Survival Returns"); pt.put("itemGroup." + NS, "Ark Survival Returns");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
         pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
@@ -194,5 +208,7 @@ public final class ArkData implements DataProvider {
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
         put("data/" + NS + "/test_instance/nighttime", Map.of("type", "minecraft:function", "function", NS + ":nighttime",
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
+        put("data/" + NS + "/test_instance/debug_spyglass", Map.of("type", "minecraft:function", "function", NS + ":debug_spyglass",
+                "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 100, "sky_access", true));
     }
 }

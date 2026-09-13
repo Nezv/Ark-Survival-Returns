@@ -22,6 +22,28 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 - Baseline Gradle build passed. Patch validation pending.
 
+## Debug Spyglass — 2026-09-13
+
+A separate scope for inspecting dinosaur state through a green terminal overlay.
+
+### Added
+
+- Debug Spyglass in the Ark creative tab and via `/give @s arksurvivalreturns:debug_spyglass`. Hold use to zoom; scroll to browse live stats, mod AI/flight variables, species configuration and saved entity data.
+- Read-only server snapshots, independent targets/pages per viewer, a 96-block range, solid-wall checks and bounded updates twice per second while inspecting.
+- English and Brazilian Portuguese item names and overlay instructions.
+
+### Compatibility and known limitations
+
+- Restart clients and server to load the item. No crafting recipe or dinosaur save migration. Vanilla Spyglass behavior is unchanged.
+- Mod runtime fields and saved data are exposed; private Minecraft/GeckoLib engine fields and animation-cache internals are outside the inspector. Oversized/deep saved data has visible limits. See [controls, bounds and visual checklist](Ark/docs/debug-spyglass.md).
+- Overlay appearance and live two-player interaction require in-client playtesting; automated checks did not launch the client.
+
+### Validation
+
+- Gradle data generation and build passed, with 26 unit tests and all 14 headless GameTests passing.
+- New coverage checks all 19 species' snapshots and unchanged saved state, scope activation in both hands, vanilla item isolation, packet round trips/bounds, nearest/invisible targets, walls, direction changes, range and unloaded-chunk protection.
+- Verified the built JAR includes the debug item model, classes and generated test definition; refreshed the code graph.
+
 ## Source Model Collection — 2026-09-12
 
 Detailed ice, flying, aquatic and swamp source art, with no new gameplay integration.

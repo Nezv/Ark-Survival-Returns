@@ -10,6 +10,8 @@ PowerShell alternative: `.\Start-Ark-Mod.ps1`. The launcher finds JDK 25 through
 
 ## Playable systems
 
+- **Debug Spyglass:** hold use while aiming at a dinosaur for a green terminal inspector of live stats, AI/flight variables and saved data. Scroll to page through values. Obtain it from the Ark creative tab or `/give @s arksurvivalreturns:debug_spyglass`. See [controls and limits](docs/debug-spyglass.md).
+
 The launcher also loads the installed optional client pack: Xaero World Map with the difficulty overlay, Sodium, Iris, AmbientSounds, Sound Physics and their dependencies. Complementary Reimagined is downloaded; enable it in Video Settings → Shader Packs. The map is temporarily open to everyone (`progression.mapRequiresUnlock=false`). The saved entitlement and operator commands remain available for when the gate is re-enabled; taming is not implemented. See [installation, versions and map controls](docs/client-pack.md).
 
 - Nine species using the supplied models, original palette textures and 72 movement, attack and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
