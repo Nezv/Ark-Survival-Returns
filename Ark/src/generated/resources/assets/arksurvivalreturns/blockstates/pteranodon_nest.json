@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "egg=false": {
+      "model": "arksurvivalreturns:block/pteranodon_nest_empty"
+    },
+    "egg=true": {
+      "model": "arksurvivalreturns:block/pteranodon_nest"
+    }
+  }
+}

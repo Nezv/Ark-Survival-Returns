@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "egg=false": {
+      "model": "arksurvivalreturns:block/argentavis_nest_empty"
+    },
+    "egg=true": {
+      "model": "arksurvivalreturns:block/argentavis_nest"
+    }
+  }
+}

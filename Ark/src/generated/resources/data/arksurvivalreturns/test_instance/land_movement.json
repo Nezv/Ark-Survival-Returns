@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:land_movement",
+  "max_ticks": 500,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

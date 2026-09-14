@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "chance": 0.35,
+          "condition": "minecraft:random_chance"
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:tintoberry",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:amarberry",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:azulberry",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:narcoberry",
+          "weight": 10
+        }
+      ],
+      "functions": [
+        {
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 2,
+            "min": 1
+          },
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

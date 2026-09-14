@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:population",
+  "function": "arksurvivalreturns:population",
+  "max_ticks": 200,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

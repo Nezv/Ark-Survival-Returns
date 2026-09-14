@@ -22,6 +22,37 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 - Baseline Gradle build passed. Patch validation pending.
 
+## Land Ecosystem & Behavior — 2026-09-14
+
+Persistent water-associated homes, coordinated herds and discoverable land habitats.
+
+### Added
+
+- Saved land habitats with exposed water, reachable dry drinking approaches and complete group placement.
+- Shared group satiation, feeding, roaming direction and destinations, with individual spacing and danger responses.
+- Leaf and fang symbols on Xaero's fullscreen World Map, per-player discovery, coordinate/status tooltips and clustered markers.
+- A dev dependency list that verifies installed Iris/Sodium pins and records River Redux as unavailable for Minecraft 26.2 / NeoForge.
+
+### Changed
+
+- Family group sizes use solo large predators/Titanosaur, 4–6 small predators/herbivores and 2–4 large herbivores. Herbivores use smaller home ranges and stricter water distances.
+- Confirmed permanent losses replenish after a configurable cooldown; unloaded members retain their slots. Occupied and vacant habitats can recover after water changes.
+- Terrain surveys and navigation use shared dimension budgets. Legacy natural groups adopt suitable loaded homes without changing levels or HP.
+- Reproducible dev profiles use 16 GB maximum heap per run, 24 render/view chunks and 12 simulation chunks, configurable separately.
+
+### Compatibility and known limitations
+
+- Both server and clients need the updated mod. A separate versioned land save preserves pack identity and player discoveries; disabling land habitats retains those records.
+- Narrow water, wide-creature slopes/banks, natural population balance and marker appearance still need interactive playtesting. No client was launched or multiplayer performance measured.
+- River Redux has no compatible published artifact for this runtime and was not installed. Ordinary exposed water supports habitats. The six cold creatures remain source-only in the separate snow proposal.
+- See [behavior and work bounds](Ark/docs/land-ecosystem.md) and [dev dependencies](Ark/docs/dev-dependencies.md). The separate Unreleased nighttime work remains unfinished.
+
+### Validation
+
+- Gradle data generation and build passed, including 32 unit tests and all 16 headless GameTests.
+- Land checks cover natural river placement, dry rejection, group feeding, persistent identity/occupancy, unload/death distinction, replacement cooldown, vacant-site recovery, incremental water discovery and actual coordinated movement without forced chunk loads.
+- Source leaf/fang pixels match runtime symbols. Installer hashes, client-only dependency scope and client preparation passed. The code graph was refreshed; its parser could not index Gradle's build script, which Gradle itself validated.
+
 ## Debug Spyglass — 2026-09-13
 
 A separate scope for inspecting dinosaur state through a green terminal overlay.

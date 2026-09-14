@@ -1,0 +1,44 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:blocks/short_grass"
+        },
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:blocks/tall_grass"
+        }
+      ]
+    },
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "block": "minecraft:short_grass",
+          "condition": "minecraft:block_state_property"
+        },
+        {
+          "block": "minecraft:tall_grass",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "half": "lower"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "minecraft:match_tool",
+        "predicate": {
+          "items": "minecraft:shears"
+        }
+      }
+    }
+  ],
+  "table": "arksurvivalreturns:gameplay/grass_berries"
+}

@@ -1,0 +1,11 @@
+{
+  "minecraft": "26.2",
+  "loader": "neoforge",
+  "checked": "2026-09-14",
+  "dependencies": [
+    {"project": "iris", "scope": "client", "status": "pinned", "lock": "client-mods.lock.json", "requires": ["sodium"], "source": "https://modrinth.com/mod/iris/version/bXt6zsZT"},
+    {"project": "sodium", "scope": "client", "status": "pinned", "lock": "client-mods.lock.json", "requires": [], "source": "https://modrinth.com/mod/sodium/version/KHPycol7"},
+    {"project": "river-redux", "scope": "world-generation", "status": "unavailable", "requires": ["terrablender"], "reason": "No published Minecraft 26.2 / NeoForge release. Do not load the 1.21.x JAR into this dev run.", "source": "https://modrinth.com/mod/river-redux/versions"},
+    {"project": "terrablender", "scope": "world-generation", "status": "deferred", "requires": [], "reason": "Resolve an exact compatible dependency only when a matching River Redux release is available.", "source": "https://modrinth.com/mod/terrablender"}
+  ]
+}

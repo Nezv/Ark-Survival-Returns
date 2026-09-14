@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns.feature.behavior;
 import java.util.Comparator;
 import java.util.EnumSet;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.land.*;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
@@ -23,6 +24,8 @@ public final class WildlifeGoal extends Goal {
     private final CreatureEntity mob;
     private WildlifeMind mind;
     private BlockPos home;
+    private LandHabitatData.Habitat habitat;
+    private long nextGroupPath;
     private Vec3 lastKnown, destination, waterDestination;
     private LivingEntity focus;
     private LivingEntity herdThreat;
@@ -43,7 +46,7 @@ public final class WildlifeGoal extends Goal {
         }
         return mind;
     }
-    public BlockPos home() { if (home == null) home = mob.blockPosition(); return home; }
+    public BlockPos home() { if (habitat != null) return habitat.center; if (home == null) home = mob.blockPosition(); return home; }
     @Override public boolean canUse() { return mob.isAlive() && !mob.species().flyer(); }
     @Override public boolean canContinueToUse() { return mob.isAlive() && !mob.species().flyer(); }
     @Override public boolean requiresUpdateEveryTick() { return true; }
@@ -65,7 +68,9 @@ public final class WildlifeGoal extends Goal {
     public void think() {
         if (!(mob.level() instanceof ServerLevel world) || mob.species().flyer()) return;
         var brain = mind();
-        boolean cycle = WildlifeSenses.hasNightCycle(mob), night = cycle && WildlifeSenses.night(mob);
+        habitat = LandHabitats.think(mob);
+        if (habitat != null) home = habitat.center;
+        boolean cycle = WildlifeSenses.hasNightCycle(mob), night = cycle && (habitat == null ? WildlifeSenses.night(mob) : LandHabitats.night(world, habitat));
         boolean quietRoutine = cycle && (mob.species().predator ? !night : night);
         corneredTicks = Math.max(0, corneredTicks - 10);
         mob.setNightActive(night && mob.species().predator);
@@ -73,7 +78,8 @@ public final class WildlifeGoal extends Goal {
         if (preyHerd != null) {
             var herd = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(96),
                     c -> c.isAlive() && c.species() == Species.BRONTOSAURUS && c.packId().equals(preyHerd));
-            if (!herd.isEmpty()) home = herd.getFirst().blockPosition();
+            // A linked prey herd may attract a bounded search, never move the permanent habitat.
+            if (!herd.isEmpty() && habitat == null) home = herd.getFirst().blockPosition();
         }
         if ((herdThreatTicks -= 10) <= 0) herdThreat = null;
         boolean peaceful = world.getDifficulty() == Difficulty.PEACEFUL;
@@ -135,12 +141,14 @@ public final class WildlifeGoal extends Goal {
         if (cycle && night && !mob.species().predator) intimidating = false;
         if (mob.species().predator && guardedPrey && (mob.distanceTo(sensed) < mob.getBbWidth() + 8
                 || mob.getHealth() < mob.getMaxHealth() * 0.45)) intimidating = true;
-        boolean far = mob.blockPosition().distSqr(home) > territoryRadius() * territoryRadius();
-        boolean water = nearbyWater(world);
+        boolean far = LandHabitatData.distanceSqr(mob.blockPosition(), home) > territoryRadius() * territoryRadius();
+        boolean water = habitat == null ? nearbyWater(world) : LandHabitats.atWater(world, habitat, mob);
         var ground = world.getBlockState(mob.blockPosition().below());
         boolean forage = ground.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK) || ground.is(net.minecraft.world.level.block.Blocks.PODZOL)
                 || ground.is(net.minecraft.world.level.block.Blocks.MYCELIUM) || ground.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK)
                 || ground.is(net.minecraft.world.level.block.Blocks.PALE_MOSS_BLOCK);
+        if (habitat != null && habitat.routine == BehaviorState.FORAGE && habitat.destination != null)
+            forage &= mob.position().distanceToSqr(habitat.destination) <= Math.pow(mob.getBbWidth()+10,2);
         BehaviorState before = brain.state();
         boolean huntable = visible && prey(sensed) && (!guardedPrey || sensed.getHealth() < sensed.getMaxHealth() * 0.35);
         boolean danger = attacked || herdThreat != null || alarmTicks > 0
@@ -165,12 +173,12 @@ public final class WildlifeGoal extends Goal {
             else regrouping = false;
         }
         var routine = cycle ? new WildlifeMind.Routine(true, night,
-                NighttimeCycle.sleepWanted(world.getDefaultClockTime(), mob.getUUID().getLeastSignificantBits(),
+                NighttimeCycle.sleepWanted(world.getDefaultClockTime(), habitat == null ? mob.getUUID().getLeastSignificantBits() : habitat.id.getLeastSignificantBits(),
                         mob.species().predator, night, Config.DAY_SLEEP.get()), safeSleep, danger, defended,
                 corneredTicks > 0 || attacked && (mob.species() == Species.THERIZINOSAURUS || mob.species() == Species.TITANOSAUR),
                 Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : WildlifeMind.Routine.LEGACY;
         var state = brain.step(new WildlifeMind.Observation(signal, visible, huntable, intruding, attacked,
-                intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth()), 10, routine);
+                intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth()), 10, routine, habitat == null ? null : new WildlifeMind.GroupRoutine(habitat.needs.hunger(), habitat.routine));
         interrupted = false;
         if (!brain.remembers()) { lastKnown = null; focus = null; }
         mob.setBehavior(state);
@@ -195,6 +203,7 @@ public final class WildlifeGoal extends Goal {
                     nextAttack = world.getGameTime() + 20; // Keep the previous vanilla melee cadence and damage.
                     mob.doHurtTarget(world, sensed);
                     if (!sensed.isAlive() && mob.species().predator && !(sensed instanceof Player)) {
+                        if (habitat != null) LandHabitats.feed(mob, sensed);
                         brain.ate(); focus = null; mob.setTarget(null); mob.getNavigation().stop();
                     }
                 }
@@ -239,8 +248,15 @@ public final class WildlifeGoal extends Goal {
         if (other instanceof CreatureEntity c) return !c.species().predator && c.species() != mob.species() && c.getBbWidth() <= mob.getBbWidth() * 1.3;
         return other instanceof Animal && other.getBbWidth() <= mob.getBbWidth() * 1.3;
     }
-    private double territoryRadius() { return mob.species().flyer() ? 96 : mob.species().herd() || mob.species().solitary() ? 80 : 48; }
+    private double territoryRadius() { if (habitat != null) return LandHabitats.leash(mob.species()); return mob.species().flyer() ? 96 : mob.species().herd() || mob.species().solitary() ? 80 : 48; }
     private void roam(ServerLevel world) {
+        if (habitat != null) {
+            if (world.getGameTime() < nextGroupPath) return;
+            nextGroupPath = world.getGameTime()+40+Math.floorMod(mob.getUUID().hashCode(),10);
+            var point = LandHabitats.destination(world, habitat, mob);
+            if (point != null) move(world, point, mob.species().predator ? 0.6 : 0.55);
+            return;
+        }
         if (!mob.species().solitary()) {
             var leader = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(64),
                     c -> c.isAlive() && c.packId().equals(mob.packId()) && c.getId() < mob.getId())
@@ -266,8 +282,19 @@ public final class WildlifeGoal extends Goal {
         // Reuse a successful path until the goal moves appreciably. Retry failure at most twice/sec.
         if (destination != null && destination.distanceToSqr(point) < 4 && !mob.getNavigation().isDone()) return true;
         if (!SpawnRules.loaded(world, new net.minecraft.world.phys.AABB(mob.position(), point).inflate(mob.getBbWidth() + 1))) return false;
+        double range = mob.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+        if (!LandHabitats.navigationLoaded(world, mob, range)) return false;
+        if (!LandHabitats.allowPath(world, false)) return true; // Deferred work is not a failed route.
+        var routePoint = point;
+        var delta = point.subtract(mob.position());
+        if (delta.horizontalDistance() > 20) {
+            var step = mob.position().add(delta.normalize().scale(18));
+            var ground = SpawnRules.surface(world, (int)Math.floor(step.x), (int)Math.floor(step.z));
+            if (ground == null) return false;
+            routePoint = Vec3.atBottomCenterOf(ground);
+        }
         destination = point;
-        boolean found = mob.getNavigation().moveTo(point.x, point.y, point.z, speed);
+        boolean found = mob.getNavigation().moveTo(routePoint.x, routePoint.y, routePoint.z, speed);
         if (found) failedPaths = 0;
         else if (++failedPaths >= 6) {
             if (WildlifeSenses.hasNightCycle(mob) && mind().state() == BehaviorState.FLEE) corneredTicks = 100;
@@ -287,6 +314,13 @@ public final class WildlifeGoal extends Goal {
         return false;
     }
     private void seekWater(ServerLevel world) {
+        if (habitat != null) {
+            if (world.getGameTime() < nextGroupPath) return;
+            nextGroupPath=world.getGameTime()+40;
+            var shore = LandHabitats.drinkingDestination(world, habitat, mob);
+            if (shore != null) move(world, shore, 0.75);
+            return;
+        }
         if (waterDestination != null && move(world, waterDestination, 0.75)) return;
         if (world.getGameTime() < nextWaterSearch) { roam(world); return; }
         nextWaterSearch = world.getGameTime() + 200;

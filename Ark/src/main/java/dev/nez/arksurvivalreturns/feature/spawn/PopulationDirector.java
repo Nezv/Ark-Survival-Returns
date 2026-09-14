@@ -108,7 +108,9 @@ public final class PopulationDirector {
         return spawnLand(world, origin, species, capacity, random, null);
     }
     public static List<CreatureEntity> tryReplenishHabitat(ServerLevel world, LandHabitatData.Habitat h, int capacity, RandomSource random) {
-        if (!LandHabitats.enabled(world) || !h.valid || world.getGameTime() < h.replacementAt || h.members.size() >= h.capacity
+        if (!LandHabitats.enabled(world)) return List.of();
+        LandHabitats.revalidate(world,h);
+        if (!h.valid || world.getGameTime() < h.replacementAt || h.members.size() >= h.capacity
                 || Config.WEIGHTS.get(h.species).get() == 0) return List.of();
         return spawnLand(world, h.center, h.species, capacity, random, h);
     }
@@ -118,7 +120,7 @@ public final class PopulationDirector {
         origin = SpawnRules.placementSurface(world, species, origin.getX(), origin.getZ());
         if (origin == null) return List.of();
         var type = ModContent.CREATURES.get(species).get();
-        if (!SpawnRules.canSpawn(type, world, EntitySpawnReason.NATURAL, origin, random)) return List.of();
+        if (existing == null && !SpawnRules.canSpawn(type, world, EntitySpawnReason.NATURAL, origin, random)) return List.of();
         if (existing == null && !world.getEntitiesOfClass(CreatureEntity.class, new AABB(origin).inflate(18),
                 c -> c.isAlive() && c.isNaturalWildlife()).isEmpty()) return List.of();
         LandHabitats.Site site = null;
@@ -163,7 +165,7 @@ public final class PopulationDirector {
         }
         if (site != null) {
             if (existing == null) LandHabitats.register(world, site, pending, size);
-            else { pending.forEach(LandHabitats::group); LandHabitatData.get(world).setDirty(); }
+            else { LandHabitatData.get(world).relocate(existing,site.center(),site.water()); pending.forEach(LandHabitats::group); }
         }
         return pending;
     }

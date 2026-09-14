@@ -1,0 +1,170 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#rim"
+        },
+        "east": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#rim"
+        },
+        "south": {
+          "texture": "#rim"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "west": {
+          "texture": "#rim"
+        }
+      },
+      "from": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "to": [
+        14.0,
+        1.0,
+        14.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#rim"
+        },
+        "east": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#rim"
+        },
+        "south": {
+          "texture": "#rim"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "west": {
+          "texture": "#rim"
+        }
+      },
+      "from": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "to": [
+        15.0,
+        3.0,
+        3.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#rim"
+        },
+        "east": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#rim"
+        },
+        "south": {
+          "texture": "#rim"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "west": {
+          "texture": "#rim"
+        }
+      },
+      "from": [
+        1.0,
+        0.0,
+        13.0
+      ],
+      "to": [
+        15.0,
+        3.0,
+        15.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#rim"
+        },
+        "east": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#rim"
+        },
+        "south": {
+          "texture": "#rim"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "west": {
+          "texture": "#rim"
+        }
+      },
+      "from": [
+        1.0,
+        0.0,
+        3.0
+      ],
+      "to": [
+        3.0,
+        3.0,
+        13.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#rim"
+        },
+        "east": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#rim"
+        },
+        "south": {
+          "texture": "#rim"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "west": {
+          "texture": "#rim"
+        }
+      },
+      "from": [
+        13.0,
+        0.0,
+        3.0
+      ],
+      "to": [
+        15.0,
+        3.0,
+        13.0
+      ]
+    }
+  ],
+  "textures": {
+    "egg": "minecraft:block/turtle_egg",
+    "leaf": "minecraft:block/moss_block",
+    "particle": "minecraft:block/sand",
+    "rim": "minecraft:block/sand"
+  }
+}

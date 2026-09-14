@@ -119,6 +119,13 @@ public final class ArkData implements DataProvider {
             en.put("item." + NS + "." + s.id + "_spawn_egg", s.displayName + " Spawn Egg");
             pt.put("item." + NS + "." + s.id + "_spawn_egg", "Ovo gerador de " + s.displayName);
         }
+        en.put("map."+NS+".land_on", "Land habitats: on"); en.put("map."+NS+".land_off", "Land habitats: off");
+        pt.put("map."+NS+".land_on", "Habitats: ligados"); pt.put("map."+NS+".land_off", "Habitats: desligados");
+        en.put("map."+NS+".land_label", "%s | %s, %s, %s | %s"); pt.put("map."+NS+".land_label", "%s | %s, %s, %s | %s");
+        en.put("map."+NS+".land_occupied", "Occupied"); pt.put("map."+NS+".land_occupied", "Ocupado");
+        en.put("map."+NS+".land_vacant", "Recovering"); pt.put("map."+NS+".land_vacant", "Em recupera\u00e7\u00e3o");
+        en.put("map."+NS+".land_invalid", "Seeking water"); pt.put("map."+NS+".land_invalid", "Buscando \u00e1gua");
+        en.put("map."+NS+".land_more", "+%s habitats"); pt.put("map."+NS+".land_more", "+%s habitats");
         en.put("map." + NS + ".nests_on", "Nests: on"); en.put("map." + NS + ".nests_off", "Nests: off");
         pt.put("map." + NS + ".nests_on", "Ninhos: ligados"); pt.put("map." + NS + ".nests_off", "Ninhos: desligados");
         en.put("map." + NS + ".nest_label", "%s habitat | %s, %s, %s"); pt.put("map." + NS + ".nest_label", "Habitat de %s | %s, %s, %s");
@@ -203,7 +210,7 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/population", spawningRules);
         put("data/" + NS + "/test_instance/population", Map.of("type", "minecraft:function", "function", NS + ":population",
                 "environment", NS + ":population", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
-        for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis"))
+        for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis", "land_ecology", "land_movement"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
         put("data/" + NS + "/test_instance/nighttime", Map.of("type", "minecraft:function", "function", NS + ":nighttime",

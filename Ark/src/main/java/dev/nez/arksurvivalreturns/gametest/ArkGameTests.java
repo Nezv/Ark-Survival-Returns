@@ -29,6 +29,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("spawn_rules", () -> ArkGameTests::spawnRules);
         FUNCTIONS.register("grass_berries", () -> ArkGameTests::grassBerries);
         FUNCTIONS.register("progression", () -> ArkGameTests::progression);
+        FUNCTIONS.register("land_ecology", () -> LandGameTests::ecology);
+        FUNCTIONS.register("land_movement", () -> LandGameTests::movement);
         FUNCTIONS.register("population", () -> ArkGameTests::population);
         FUNCTIONS.register("behavior", () -> ArkGameTests::behavior);
         FUNCTIONS.register("flying_ecology", () -> FlyingGameTests::ecology);

@@ -1,0 +1,95 @@
+{
+  "minecraft": "26.2",
+  "loader": "neoforge",
+  "verified": "2026-09-07",
+  "entries": [
+    {
+      "project": "xaeros-world-map",
+      "version": "neoforge-26.2-1.44.2",
+      "versionId": "pKatKnls",
+      "filename": "xaeroworldmap-neoforge-26.2-1.44.2.jar",
+      "url": "https://cdn.modrinth.com/data/NcUtCpym/versions/pKatKnls/xaeroworldmap-neoforge-26.2-1.44.2.jar",
+      "sha512": "d74fe4155e0b5b9aa4d6d51933dbae3043a5e6550f130e13cfc79af387d9f49c2497a58c060d25e420667cff20cd384bdf3f8c5afc3ad4fc189a9e984ae465d6",
+      "size": 1441885,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/xaeros-world-map"
+    },
+    {
+      "project": "xaero-world-map-bridge",
+      "version": "0.1.1+26.2-neoforge",
+      "versionId": "xvbOh80a",
+      "filename": "xaero-world-map-bridge-0.1.1+26.2-neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/zwHpHXOr/versions/xvbOh80a/xaero-world-map-bridge-0.1.1%2B26.2-neoforge.jar",
+      "sha512": "1b12013378b6036890f528dd23ebdaa542ebb72430cd8eae78b12ea5b25b7d3774e1ae3dd64cafb778d2054c5e3a9f78f3da2f2d524360d79f6b18444736cd51",
+      "size": 22154,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/xaero-world-map-bridge"
+    },
+    {
+      "project": "sodium",
+      "version": "mc26.2-0.9.1-neoforge",
+      "versionId": "KHPycol7",
+      "filename": "sodium-neoforge-0.9.1+mc26.2.jar",
+      "url": "https://cdn.modrinth.com/data/AANobbMI/versions/KHPycol7/sodium-neoforge-0.9.1%2Bmc26.2.jar",
+      "sha512": "93c18ad0c4b3a59009ce652a29fafb1e508d3a36320d8a2a30a97ca1db2cf51bfa90354b711cc3001873caca2e529a5cdf06f99b40abf3c1cbaac7defb316d02",
+      "size": 1128681,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/sodium"
+    },
+    {
+      "project": "iris",
+      "version": "1.11.2+26.2-neoforge",
+      "versionId": "bXt6zsZT",
+      "filename": "iris-neoforge-1.11.2+mc26.2.jar",
+      "url": "https://cdn.modrinth.com/data/YL57xq9U/versions/bXt6zsZT/iris-neoforge-1.11.2%2Bmc26.2.jar",
+      "sha512": "4f50647ba9644fd47feb7f1a46c74a34c7ef4a03e06d589243eed0863b8f08f5bc0ebf1e53a7c5e3ed55806204d3d22d50f9ec66d494e352375080e790096fdc",
+      "size": 2751198,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/iris"
+    },
+    {
+      "project": "ambientsounds",
+      "version": "6.3.6",
+      "versionId": "odflTtI0",
+      "filename": "AmbientSounds_NEOFORGE_v6.3.6_mc26.2.jar",
+      "url": "https://cdn.modrinth.com/data/fM515JnW/versions/odflTtI0/AmbientSounds_NEOFORGE_v6.3.6_mc26.2.jar",
+      "sha512": "90a3c905d70d1ca150f34e44e74324e1d4b8d696708562d94ca1c53109e6b0bd078477bfc30640a590c8b94c659343d1b3dfd175e238a2991f1f58fd27ed159a",
+      "size": 84813650,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/ambientsounds"
+    },
+    {
+      "project": "creativecore",
+      "version": "2.14.16",
+      "versionId": "Mwk5iw3d",
+      "filename": "CreativeCore_NEOFORGE_v2.14.16_mc26.2.jar",
+      "url": "https://cdn.modrinth.com/data/OsZiaDHq/versions/Mwk5iw3d/CreativeCore_NEOFORGE_v2.14.16_mc26.2.jar",
+      "sha512": "f34975eee977e2e2ec2af78603526638df8e668135189e64af15517c6941f1f6744e48f1cee3aa80c66c85c5d2608a2ea564eeec48fa3de8e49a3ede2fbef93b",
+      "size": 1345747,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/creativecore"
+    },
+    {
+      "project": "sound-physics-remastered",
+      "version": "neoforge-1.5.1+26.2",
+      "versionId": "T2rk5I7r",
+      "filename": "sound-physics-remastered-neoforge-1.5.1+26.2.jar",
+      "url": "https://cdn.modrinth.com/data/qyVF9oeo/versions/T2rk5I7r/sound-physics-remastered-neoforge-1.5.1%2B26.2.jar",
+      "sha512": "b5d3e5ccf6e73c7d4b603dfc5516357bcfce3938d3c939fed4a281de27953d32c8c075e7a50d7cb8be6ba2ecdfa4b41338cbf058b4afecab0b6251bdb8024466",
+      "size": 201519,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/sound-physics-remastered"
+    },
+    {
+      "project": "complementary-reimagined",
+      "version": "r5.9",
+      "versionId": "111gsk0f",
+      "filename": "ComplementaryReimagined_r5.9.zip",
+      "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/111gsk0f/ComplementaryReimagined_r5.9.zip",
+      "sha512": "dfaa3a8104b491a4351ec9e0ea324ff72ec7653c3e20e0022482ee8f8cb31d00b363d9747f295b343bc1b1a6c6985d7cc73c0f5a26302d1345d80ed924530d4b",
+      "size": 552449,
+      "kind": "shader",
+      "source": "https://modrinth.com/shader/complementary-reimagined"
+    }
+  ]
+}

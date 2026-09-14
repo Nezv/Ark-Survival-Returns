@@ -1,0 +1,146 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'idea'
+}
+version = mod_version
+group = mod_group_id
+base { archivesName = mod_id }
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+def devRuntimeFile = file('config/dev-runtime.properties')
+def devRuntime = new Properties()
+devRuntimeFile.withInputStream { devRuntime.load(it) }
+['clientHeap', 'serverHeap'].each { key ->
+    if (!(devRuntime.getProperty(key) ==~ /[1-9][0-9]*[GM]/)) throw new GradleException("Invalid ${key} in dev-runtime.properties")
+}
+['renderDistance', 'simulationDistance'].each { key ->
+    def value = devRuntime.getProperty(key).toInteger()
+    if (value < 2 || value > 32) throw new GradleException("Invalid ${key} in dev-runtime.properties")
+}
+// Presentation mods belong only to the interactive client, never datagen or a server.
+sourceSets {
+    immersiveClient { runtimeClasspath += sourceSets.main.runtimeClasspath }
+}
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '**/*.bbmodel', '.cache/**'
+}
+repositories {
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+    mavenCentral()
+}
+neoForge {
+    version = project.neo_version
+    runs {
+        client {
+            client(); sourceSet = sourceSets.immersiveClient; jvmArgument "-Xmx${devRuntime.clientHeap}"
+            // Iris 1.11.2 returns a short binding array; dev GL validation assumes 16 slots.
+            // Client-only workaround for https://github.com/IrisShaders/Iris/issues/3304.
+            systemProperty 'neoforge.disableGlValidation', 'true'
+        }
+        server { server(); jvmArgument "-Xmx${devRuntime.serverHeap}"; programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'arksurvivalreturns.benchmarkNighttime', providers.gradleProperty('nighttimeBenchmark').getOrElse('false')
+        }
+        data {
+            clientData()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources').absolutePath, '--existing', file('src/main/resources').absolutePath
+        }
+        configureEach { logLevel = org.slf4j.event.Level.INFO }
+    }
+    mods { "${mod_id}" { sourceSet sourceSets.main } }
+}
+dependencies {
+    implementation "maven.modrinth:geckolib:${geckolib_version}"
+    compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'
+    compileOnly 'maven.modrinth:xaeros-world-map:pKatKnls'
+    immersiveClientRuntimeOnly fileTree(dir: 'client-mods', include: ['*.jar'])
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+tasks.named('test') { useJUnitPlatform() }
+def clientPackClasspath = neoForge.runs.client.sourceSet.get().runtimeClasspath
+def serverPackClasspath = neoForge.runs.gameTestServer.sourceSet.get().runtimeClasspath
+def installedPack = fileTree(dir: 'client-mods', include: ['*.jar'])
+tasks.register('verifyClientPack') {
+    group = 'verification'
+    description = 'Checks that installed presentation mods load only with the interactive client.'
+    inputs.files(clientPackClasspath, serverPackClasspath, installedPack)
+    doLast {
+        def clientFiles = clientPackClasspath.files
+        def serverFiles = serverPackClasspath.files
+        installedPack.files.each { artifact ->
+            if (!clientFiles.contains(artifact)) throw new GradleException("Missing client dependency: ${artifact.name}")
+            if (serverFiles.contains(artifact)) throw new GradleException("Client dependency leaked into server: ${artifact.name}")
+        }
+        logger.lifecycle("Verified ${installedPack.files.size()} presentation mods on client classpath only.")
+    }
+}
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var properties = [minecraft_version_range: minecraft_version_range, neo_version: neo_version,
+        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version]
+    inputs.properties properties
+    expand properties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+idea { module { downloadSources = true; downloadJavadoc = true } }
+
+// List the reviewed dev dependencies before launch, and verify active pins locally.
+def devManifest = file('config/dev-dependencies.json')
+def clientManifest = file('config/client-mods.lock.json')
+tasks.register('verifyDevDependencies') {
+    group = 'verification'
+    description = 'Lists the dev-run dependencies and verifies installed compatible Iris/Sodium pins.'
+    inputs.files(devManifest, clientManifest, installedPack)
+    doLast {
+        def plan = new groovy.json.JsonSlurper().parse(devManifest)
+        def pins = new groovy.json.JsonSlurper().parse(clientManifest).entries
+        plan.dependencies.each { dependency ->
+            if (dependency.status == 'pinned') {
+                def pin = pins.find { it.project == dependency.project }
+                if (pin == null) throw new GradleException("Missing dependency pin: ${dependency.project}")
+                def artifact = new File(devManifest.parentFile.parentFile, "client-mods/${pin.filename}")
+                if (!artifact.isFile()) throw new GradleException("Missing ${pin.filename}; run Install-Ark-Extras.bat")
+                def actual = java.security.MessageDigest.getInstance('SHA-512').digest(artifact.bytes).encodeHex().toString()
+                if (!actual.equalsIgnoreCase(pin.sha512)) throw new GradleException("Checksum mismatch: ${pin.filename}")
+                logger.lifecycle("Dev dependency: ${dependency.project} ${pin.version} [${dependency.scope}, verified]")
+            } else logger.lifecycle("Dev dependency: ${dependency.project} [${dependency.status}] ${dependency.reason}")
+        }
+    }
+}
+def devOptions = file('run/options.txt')
+def devServerProperties = file('run/server.properties')
+tasks.register('prepareDevRuntime') {
+    group = 'application'
+    description = 'Applies the explicit dev render/simulation distances while preserving other game settings.'
+    inputs.file(devRuntimeFile)
+    outputs.files(devOptions, devServerProperties)
+    doLast {
+        def settings = new Properties()
+        devRuntimeFile.withInputStream { settings.load(it) }
+        def update = { File target, String separator, Map values ->
+            target.parentFile.mkdirs()
+            def lines = target.exists() ? target.readLines('UTF-8') : []
+            values.each { key, value ->
+                lines.removeAll { it.startsWith(key + separator) }
+                lines.add(key + separator + value)
+            }
+            target.setText(lines.join('\n') + '\n', 'UTF-8')
+        }
+        update(devOptions, ':', [renderDistance:settings.renderDistance, simulationDistance:settings.simulationDistance])
+        update(devServerProperties, '=', ['view-distance':settings.renderDistance, 'simulation-distance':settings.simulationDistance])
+    }
+}
+tasks.named('runClient') { dependsOn 'verifyDevDependencies', 'verifyClientPack', 'prepareDevRuntime' }
+tasks.named('runServer') { dependsOn 'prepareDevRuntime' }
