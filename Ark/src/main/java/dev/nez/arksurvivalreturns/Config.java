@@ -10,6 +10,8 @@ public final class Config {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue LAND_HABITATS;
     public static final ModConfigSpec.IntValue LAND_PROBES, LAND_WATER_PATCH, LAND_RECHECK, LAND_REPOPULATE;
+    public static final ModConfigSpec.BooleanValue AQUATIC_HABITATS;
+    public static final ModConfigSpec.IntValue AQUATIC_PROBES, AQUATIC_DEPTH, AQUATIC_COLUMNS, AQUATIC_RADIUS, AQUATIC_RECHECK, AQUATIC_REPOPULATE;
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_ROAM = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_LEASH = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_WATER_MAX = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
@@ -57,7 +59,7 @@ public final class Config {
         PLAYER_SPRINT_REFERENCE = b.comment("Normal player sprint benchmark in blocks/second; does not chase temporary player potion buffs.").defineInRange("playerSprintBlocksPerSecond", 5.612, 1.0, 20.0);
         for (var species : Species.values()) {
             b.push(species.id);
-            SPRINT_RATIO.put(species, b.comment("Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.").defineInRange("sprintRatio", Species.defaultSprintRatio(species.id), 0.2, 4.0));
+            SPRINT_RATIO.put(species, b.comment("Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.").defineInRange("sprintRatio", species.sprintRatioDefault(), 0.2, 4.0));
             WATER_RETENTION.put(species, b.comment("Fraction of land speed retained while swimming.").defineInRange("waterRetention", species.predator ? 1.0 : 0.65, 0.1, 1.5));
             STRIDE_SCALE.put(species, b.comment("Visual stride length multiplier; larger values slow the animation at the same ground speed.").defineInRange("strideScale", 1.0, 0.5, 2.0));
             b.pop();
@@ -81,6 +83,14 @@ public final class Config {
         DAY_SLEEP = b.comment("Share of undisturbed daytime routine spent sleeping; urgent needs and danger override.").defineInRange("carnivoreDaySleepFraction", 0.7, 0.0, 1.0);
         WAKE_DISTANCE = b.comment("Distance from body bounds for ordinary player approach; noisy actions can wake from farther away.").defineInRange("playerWakeDistance", 8.0, 2.0, 24.0);
         SLEEP_CALM = b.comment("Simulated ticks without relevant danger before sleep is allowed again.").defineInRange("calmBeforeSleepTicks", 200, 20, 1200);
+        b.pop().push("aquatic");
+        AQUATIC_HABITATS = b.comment("Saved water bodies for water-bound species; solo groups that roam one home pool.").define("enabled", true);
+        AQUATIC_PROBES = b.comment("Maximum water-column reads per dimension tick while planning a home pool.").defineInRange("waterProbesPerTick", 2048, 256, 8192);
+        AQUATIC_DEPTH = b.comment("Minimum swimmable depth for a valid pool; shallow water is rejected or retried.").defineInRange("minimumDepth", 6, 3, 24);
+        AQUATIC_COLUMNS = b.comment("Connected deep-water columns a pool needs before it can host a resident.").defineInRange("minimumColumns", 12, 4, 64);
+        AQUATIC_RADIUS = b.comment("How far a pool is sampled from the spawn point, in blocks.").defineInRange("searchRadius", 32, 8, 64);
+        AQUATIC_RECHECK = b.defineInRange("waterRecheckTicks", 1200, 200, 12000);
+        AQUATIC_REPOPULATE = b.comment("Cooldown after a confirmed permanent removal; unloading does not free a slot.").defineInRange("replacementCooldownTicks", 12000, 200, 72000);
         b.pop().push("landHabitats");
         LAND_HABITATS = b.comment("Persistent water-associated land groups; legacy local behavior remains available when disabled.").define("enabled", true);
         LAND_PROBES = b.comment("Maximum surface-water planning block/height reads per dimension tick.").defineInRange("waterProbesPerTick", 256, 32, 2048);

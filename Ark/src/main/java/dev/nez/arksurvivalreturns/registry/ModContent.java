@@ -30,13 +30,19 @@ public final class ModContent {
     static {
         for (Species s : Species.values()) {
             var type = ENTITIES.register(s.id, () -> EntityType.Builder
-                    .<CreatureEntity>of((t, l) -> s.flyer() ? new dev.nez.arksurvivalreturns.feature.creature.FlyingCreatureEntity(t, l, s) : new CreatureEntity(t, l, s), MobCategory.CREATURE)
+                    .<CreatureEntity>of((t, l) -> switch (s.realm()) {
+                        case AIR -> new dev.nez.arksurvivalreturns.feature.creature.FlyingCreatureEntity(t, l, s);
+                        case WATER -> new dev.nez.arksurvivalreturns.feature.aquatic.AquaticCreatureEntity(t, l, s);
+                        case AMPHIBIOUS -> new dev.nez.arksurvivalreturns.feature.creature.AmphibiousCreatureEntity(t, l, s);
+                        case LAND -> new CreatureEntity(t, l, s);
+                    }, MobCategory.CREATURE)
                     .sized(s.width, s.height).eyeHeight(s.height * 0.85f).clientTrackingRange(12)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id(s.id))));
             CREATURES.put(s, type);
             EGGS.put(s, ITEMS.registerItem(s.id + "_spawn_egg", p -> new SpawnEggItem(p.spawnEgg(type.get()))));
         }
-        for (var s : new Species[]{Species.PTERANODON, Species.ARGENTAVIS}) {
+        for (Species s : Species.values()) {
+            if (!s.flyer()) continue;
             NESTS.put(s, BLOCKS.registerBlock(s.id + "_nest", dev.nez.arksurvivalreturns.feature.flying.NestBlock::new,
                     p -> p.strength(0.4f).noOcclusion().noCollision()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)

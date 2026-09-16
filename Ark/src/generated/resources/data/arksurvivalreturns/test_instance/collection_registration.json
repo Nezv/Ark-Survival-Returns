@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:collection",
+  "function": "arksurvivalreturns:collection_registration",
+  "max_ticks": 500,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

@@ -34,7 +34,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private boolean levelInitialized;
     private UUID packId = UUID.randomUUID();
     private boolean naturalWildlife;
-    private WildlifeGoal wildlife;
+    private WildlifeController wildlife;
     private double animationBlocksPerSecond;
     private float eyeGlow, previousEyeGlow;
 
@@ -47,13 +47,14 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public int creatureLevel() { return entityData.get(LEVEL); }
     public UUID packId() { return packId; }
     public void assignHabitatPack(UUID id) { if (species.flyer()) packId = id; }
-    public void assignLandHabitat(UUID id) { if (!species.flyer()) packId = id; }
+    public void assignLandHabitat(UUID id) { if (species.landHabitat()) packId = id; }
+    public void assignAquaticHabitat(UUID id) { if (species.aquatic()) packId = id; }
     @Override public void remove(Entity.RemovalReason reason) {
         if (!isRemoved() && species != null) dev.nez.arksurvivalreturns.feature.land.LandHabitats.removed(this, reason);
         super.remove(reason);
     }
     public boolean isNaturalWildlife() { return naturalWildlife && !isPersistenceRequired(); }
-    public WildlifeGoal wildlife() { return wildlife; }
+    public WildlifeController wildlife() { return wildlife; }
     public BehaviorState behavior() { return BehaviorState.values()[Math.clamp(entityData.get(BEHAVIOR), 0, BehaviorState.values().length - 1)]; }
     public void setBehavior(BehaviorState state) { entityData.set(BEHAVIOR, state.ordinal()); }
     public void setNightActive(boolean value) { if (!species.flyer()) entityData.set(NIGHT_ACTIVE, value); }
@@ -79,10 +80,15 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         builder.define(NIGHT_ACTIVE, false);
     }
     @Override protected void registerGoals() {
-        if (!(this instanceof FlyingCreatureEntity)) goalSelector.addGoal(0, new FloatGoal(this));
-        wildlife = new WildlifeGoal(this);
+        // registerGoals runs from the superclass constructor, before this.species is assigned, so the
+        // realm is detected from the concrete type. Water-bound and flying species never float.
+        if (!(this instanceof FlyingCreatureEntity) && !(this instanceof dev.nez.arksurvivalreturns.feature.aquatic.AquaticCreatureEntity))
+            goalSelector.addGoal(0, new FloatGoal(this));
+        wildlife = createController();
         goalSelector.addGoal(1, wildlife);
     }
+    /** Realm hook: water-bound species replace the land adapter with their own steering goal. */
+    protected WildlifeController createController() { return new WildlifeGoal(this); }
     public void initializeLevel(int level) {
         if (levelInitialized) return;
         entityData.set(LEVEL, LevelScaling.clamp(level));
@@ -115,7 +121,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 previousEyeGlow = eyeGlow;
                 float target = nightActive() && isAlive() && !behavior().sleeping() ? 1 : 0;
                 eyeGlow += Math.clamp(target - eyeGlow, -0.05f, 0.05f);
-            } else if (WildlifeSenses.hasNightCycle(this) && behavior().sleeping()
+            } else if (WildlifeSenses.hasNightCycle(this) && species.sleeps() && behavior().sleeping()
                     && (isInWater() || isInLava() || isOnFire() || !onGround())) wildlife.interruptSleep();
         }
         double distance = Math.hypot(getX() - xo, getZ() - zo);
@@ -181,11 +187,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
             state.setControllerSpeed(state.isMoving() ? (float)MovementTuning.animationRate(animationBlocksPerSecond,
                     species.height, species.strideCycleSeconds(running), running, Config.STRIDE_SCALE.get(species).get()) : 1);
-            String clip = state.isMoving() ? (running ? species.runClip() : species.walk)
+            String clip = state.isMoving() ? movingClip(running)
                     : behavior == BehaviorState.SLEEP ? species.sleepClip()
-                    : behavior == BehaviorState.REST ? species.restClip()
+                    : behavior == BehaviorState.REST ? restingClip()
                     : (behavior == BehaviorState.FORAGE || behavior == BehaviorState.FEED || behavior == BehaviorState.DRINK)
-                            && !species.additiveFood() ? species.foodClip() : species.idle;
+                            && !species.additiveFood() ? species.foodClip() : standingClip();
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<CreatureEntity>("feeding", 5, state ->
@@ -197,6 +203,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 .triggerableAnim("strike", RawAnimation.begin().thenPlay(species.attack)));
     }
     @Override public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
+    /** Realm hook: a swimming creature selects its water clip set. */
+    protected boolean swimming() { return false; }
+    protected String movingClip(boolean running) {
+        return swimming() ? (running ? species.swimRun() : species.swimWalk()) : running ? species.runClip() : species.walk;
+    }
+    protected String standingClip() { return swimming() ? species.swimIdle() : species.idle; }
+    protected String restingClip() { return swimming() ? species.swimIdle() : species.restClip(); }
     @Override protected net.minecraft.sounds.SoundEvent getAmbientSound() { return net.minecraft.sounds.SoundEvents.SNIFFER_IDLE; }
     @Override protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) { return net.minecraft.sounds.SoundEvents.SNIFFER_HURT; }
     @Override protected net.minecraft.sounds.SoundEvent getDeathSound() { return net.minecraft.sounds.SoundEvents.SNIFFER_DEATH; }

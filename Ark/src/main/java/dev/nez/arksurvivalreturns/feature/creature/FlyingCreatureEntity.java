@@ -68,13 +68,34 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     public void defendEgg(Player thief) {
         if (habitatId == null || !validThief(thief)) return;
-        thiefId = thief.getUUID(); defenseUntil = level().getGameTime() + Config.EGG_DEFENSE_TICKS.get();
-        lastSeen = level().getGameTime(); nextSwoop = level().getGameTime() + 20 + Math.floorMod(getId() * 17, 41);
-        struck = false; phase(Phase.DEFENSE_CIRCLE); setTarget(thief);
+        engage(thief);
         playSound(net.minecraft.sounds.SoundEvents.PARROT_AMBIENT, 0.8f, species() == Species.ARGENTAVIS ? 0.7f : 1.2f);
     }
+    /** Circle-and-swoop engagement shared by egg defense and territorial apex flyers. */
+    private void engage(Player target) {
+        thiefId = target.getUUID(); defenseUntil = level().getGameTime() + Config.EGG_DEFENSE_TICKS.get();
+        lastSeen = level().getGameTime(); nextSwoop = level().getGameTime() + 20 + Math.floorMod(getId() * 17, 41);
+        struck = false; phase(Phase.DEFENSE_CIRCLE); setTarget(target);
+    }
     private void endDefense() { thiefId = null; setTarget(null); phase(Phase.RETURN_HOME); }
-    private int roamRadius() { return species() == Species.ARGENTAVIS ? Config.ARGENT_ROAM_RADIUS.get() : Config.PTERO_ROAM_RADIUS.get(); }
+    /**
+     * Apex flyers guard the airspace around their own roost. Peaceful, creative and spectator
+     * players are excluded, the engagement ends at the habitat leash and nothing is pursued
+     * outside the saved home area.
+     */
+    private void considerTerritorialDefense(ServerLevel world) {
+        if (thiefId != null || !species().predator || !species().apex()) return;
+        if (Math.floorMod(tickCount + getId(), 40) != 0) return;
+        Player nearest = null;
+        double best = Double.MAX_VALUE;
+        for (var player : world.players()) {
+            if (!validThief(player)) continue;
+            double distance = HabitatData.horizontalDistanceSqr(habitatCenter(), player.blockPosition());
+            if (distance < best) { best = distance; nearest = player; }
+        }
+        if (nearest != null && seesPlayer(world, nearest)) engage(nearest);
+    }
+    private int roamRadius() { return species().flyerRoamRadius(); }
     @Override protected void customServerAiStep(ServerLevel world) {
         super.customServerAiStep(world); tickFlight(world);
     }
@@ -95,6 +116,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             else if (!h.nests().contains(nest)) nest = h.nests().getFirst();
             if (habitatId == null && isNaturalWildlife()) FlyerHabitats.adopt(world, this);
         }
+        considerTerritorialDefense(world);
         Player thief = thiefId != null && world.getEntity(thiefId) instanceof Player player ? player : null;
         if (thiefId != null && (!validThief(thief) || world.getGameTime() >= defenseUntil
                 || HabitatData.horizontalDistanceSqr(center, blockPosition()) > (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get())) endDefense();
@@ -241,25 +263,54 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         orbitInitialized = false; destination = null;
     }
     public String flightPrefix() { return species() == Species.ARGENTAVIS ? "Argentavis-" : "Ptero-"; }
+    private Species.FlyerProfile flightProfile() { return species().flyerProfile(); }
+    /** Clip used while airborne and travelling. */
+    private String flyMoveClip() { var p = flightProfile(); return p == null ? flightPrefix() + "Fly-Fwd" : p.flyMove(); }
+    /** Clip used while hovering, landing or taking off. */
+    private String hoverClip() { var p = flightProfile(); return p == null ? flightPrefix() + "Fly-Hover" : p.hover(); }
+    private String landClip() { var p = flightProfile(); return p == null ? flightPrefix() + "Land" : p.land(); }
+    private String takeOffClip() { var p = flightProfile(); return p == null ? flightPrefix() + "Take-Off" : p.takeOff(); }
+    private String swoopLoopClip() {
+        var p = flightProfile();
+        String clip = p == null ? (species() == Species.PTERANODON ? flightPrefix() + "Fly-Attack-Swoop-Loop" : null) : p.swoopLoop();
+        return clip == null ? flyMoveClip() : clip;
+    }
+    private String swoopOutClip() {
+        var p = flightProfile();
+        String clip = p == null ? flightPrefix() + "Fly-Attack-Swoop-Out" : p.swoopOut();
+        return clip == null ? species().attack : clip;
+    }
+    private String attackClip() {
+        var p = flightProfile();
+        return p == null ? flightPrefix() + (species() == Species.ARGENTAVIS ? "Fly-Attack-Claw" : "Fly-Attack-Bite") : p.attack();
+    }
+    private String perchClip() {
+        var p = flightProfile();
+        return p == null || p.perchIdle() == null ? species().idle : p.perchIdle();
+    }
     @Override public void registerControllers(AnimatableManager.ControllerRegistrar registrar) {
-        String prefix = flightPrefix();
         registrar.add(new AnimationController<FlyingCreatureEntity>("movement", 5, state -> {
-            String clip = flightPhase() == Phase.PERCH ? species().idle
-                    : flightPhase() == Phase.SWOOP && species() == Species.PTERANODON ? "Ptero-Fly-Attack-Swoop-Loop"
-                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? prefix + "Fly-Hover" : prefix + "Fly-Fwd";
+            String clip = flightPhase() == Phase.PERCH ? perchClip()
+                    : flightPhase() == Phase.SWOOP ? swoopLoopClip()
+                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : flyMoveClip();
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<FlyingCreatureEntity>("transition", 4, state -> PlayState.STOP)
-                .triggerableAnim("takeoff", RawAnimation.begin().thenPlay(prefix + "Take-Off"))
-                .triggerableAnim("land", RawAnimation.begin().thenPlay(prefix + "Land"))
-                .triggerableAnim("pullout", RawAnimation.begin().thenPlay(prefix + "Fly-Attack-Swoop-Out")));
+                .triggerableAnim("takeoff", RawAnimation.begin().thenPlay(takeOffClip()))
+                .triggerableAnim("land", RawAnimation.begin().thenPlay(landClip()))
+                .triggerableAnim("pullout", RawAnimation.begin().thenPlay(swoopOutClip())));
         registrar.add(new AnimationController<FlyingCreatureEntity>("attack", 2, state -> PlayState.STOP)
-                .triggerableAnim("strike", RawAnimation.begin().thenPlay(prefix + (species() == Species.ARGENTAVIS ? "Fly-Attack-Claw" : "Fly-Attack-Bite"))));
+                .triggerableAnim("strike", RawAnimation.begin().thenPlay(attackClip())));
     }
     public static double altitudeWeight(Species species, int y, int seaLevel) {
         if (species == Species.PTERANODON) return 1;
-        if (species != Species.ARGENTAVIS) return 1;
-        int relative = y - seaLevel;
-        return relative < 16 ? 0.08 : relative <= 80 ? 1 : relative <= 112 ? 0.4 : 0.1;
+        if (species == Species.ARGENTAVIS) {
+            int relative = y - seaLevel;
+            return relative < 16 ? 0.08 : relative <= 80 ? 1 : relative <= 112 ? 0.4 : 0.1;
+        }
+        var profile = species.flyerProfile();
+        if (profile == null || profile.nestFloorY() <= 0) return 1;
+        // High-ground nesters are weighted toward their own altitude band, not the surface.
+        return y - seaLevel < profile.nestFloorY() - seaLevel - 24 ? 0.15 : 1;
     }
 }

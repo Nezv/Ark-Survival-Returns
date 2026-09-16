@@ -19,12 +19,16 @@ import net.minecraft.world.phys.*;
 /** Bounded habitat planning, reuse and migration in already loaded terrain. */
 public final class FlyerHabitats {
     public static boolean siteAllowed(ServerLevel world, Species species, BlockPos pos) {
-        if (!species.flyer() || !SpawnRules.loaded(world, new AABB(pos).inflate(2)) || !world.canSeeSky(pos)) return false;
+        var profile = species.flyerProfile();
+        if (!species.flyer() || profile == null || !SpawnRules.loaded(world, new AABB(pos).inflate(2)) || !world.canSeeSky(pos)) return false;
         var floor = world.getBlockState(pos.below());
         if (!floor.isFaceSturdy(world, pos.below(), Direction.UP) || !floor.is(SpawnRules.SURFACES)) return false;
-        if (species == Species.ARGENTAVIS) return pos.getY() - 1 >= Config.ARGENT_NEST_Y.get();
+        if (!profile.shoreSand()) {
+            int floorY = species.flyerNestFloorY();
+            return floorY <= 0 || pos.getY() - 1 >= floorY;
+        }
         if (!floor.is(BlockTags.SAND)) return false;
-        int radius = Config.NEST_WATER_RADIUS.get();
+        int radius = species.flyerShoreWaterRadius();
         // Sample a bounded shoreline grid. A missed site is retried later; never request terrain.
         for (int x = -radius; x <= radius; x += 2) for (int z = -radius; z <= radius; z += 2) {
             if (x*x + z*z > radius*radius) continue;
@@ -45,7 +49,7 @@ public final class FlyerHabitats {
     private static List<BlockPos> plan(ServerLevel world, BlockPos origin, Species species, int size, RandomSource random) {
         if (!siteAllowed(world, species, origin)) return List.of();
         var result = new ArrayList<BlockPos>();
-        int radius = species == Species.ARGENTAVIS ? 24 : 16;
+        int radius = species.flyerProfile() == null ? 16 : species.flyerProfile().nestRadius();
         for (int attempt = 0; attempt < size*24 && result.size() < size; attempt++) {
             var pos = attempt == 0 ? origin : SpawnRules.surface(world, origin.getX()+random.nextInt(radius*2+1)-radius, origin.getZ()+random.nextInt(radius*2+1)-radius);
             if (pos == null || Math.abs(pos.getY()-origin.getY()) > 12 || HabitatData.horizontalDistanceSqr(origin, pos) > radius*radius

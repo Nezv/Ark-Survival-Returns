@@ -57,6 +57,31 @@ public final class ArkData implements DataProvider {
         biomeTag("spawns/carnotaurus", "forest", "savanna", "badlands", "sparse_jungle");
         biomeTag("spawns/pegomastax", "beach", "forest", "birch_forest", "jungle");
         biomeTag("spawns/lystrosaurus", "plains", "sunflower_plains", "beach", "forest", "meadow");
+        // Collection: water-bound species prefer open and deep water, semi-aquatic species the swamp.
+        biomeTag("spawns/cnidaria", "warm_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "ocean", "deep_ocean");
+        biomeTag("spawns/plesiosaur", "ocean", "deep_ocean", "cold_ocean", "deep_cold_ocean", "frozen_ocean", "deep_frozen_ocean", "river");
+        biomeTag("spawns/megalodon", "ocean", "deep_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "cold_ocean", "deep_cold_ocean");
+        biomeTag("spawns/liopleurodon", "deep_ocean", "deep_lukewarm_ocean", "deep_cold_ocean", "deep_frozen_ocean");
+        biomeTag("spawns/mosasaurus", "deep_ocean", "deep_lukewarm_ocean", "deep_cold_ocean");
+        biomeTag("spawns/tusoteuthis", "deep_ocean", "deep_cold_ocean", "deep_frozen_ocean");
+        biomeTag("spawns/kaprosuchus", "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle", "lush_caves");
+        biomeTag("spawns/sarco", "swamp", "mangrove_swamp", "river", "jungle");
+        biomeTag("spawns/deinosuchus", "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle");
+        biomeTag("spawns/titanoboa", "swamp", "mangrove_swamp", "jungle", "sparse_jungle", "dark_forest");
+        // Collection: cold species are gated to snow and mountain biomes, never to warm high ground.
+        biomeTag("spawns/megalocerus", "snowy_taiga", "snowy_plains", "grove", "taiga");
+        biomeTag("spawns/unicorn", "snowy_plains", "snowy_taiga", "grove", "ice_spikes");
+        biomeTag("spawns/mammoth", "snowy_plains", "snowy_taiga", "snowy_beach", "grove", "frozen_river");
+        biomeTag("spawns/direwolf", "snowy_taiga", "snowy_plains", "grove", "taiga", "frozen_river");
+        biomeTag("spawns/sabertooth", "snowy_taiga", "grove", "snowy_slopes", "frozen_peaks", "jagged_peaks");
+        biomeTag("spawns/megapithecus", "jagged_peaks", "frozen_peaks", "snowy_slopes", "stony_peaks");
+        // Collection: remaining warm land and flying species reuse existing habitat families.
+        biomeTag("spawns/paraceratherium", "plains", "sunflower_plains", "savanna", "meadow", "forest");
+        biomeTag("spawns/terrorbird", "savanna", "plains", "jungle", "sparse_jungle", "badlands");
+        biomeTag("spawns/ravager", "dark_forest", "old_growth_pine_taiga", "taiga", "windswept_forest", "forest");
+        biomeTag("spawns/archaeopteryx", "forest", "dark_forest", "jungle", "sparse_jungle", "birch_forest", "old_growth_birch_forest");
+        biomeTag("spawns/quetzal", "windswept_hills", "windswept_gravelly_hills", "stony_peaks", "savanna_plateau", "badlands", "jagged_peaks");
+        biomeTag("spawns/dragon", "jagged_peaks", "frozen_peaks", "stony_peaks", "snowy_slopes", "windswept_gravelly_hills");
         tag("block/spawn_surfaces", "#minecraft:dirt", "#minecraft:sand", "#minecraft:terracotta",
                 "grass_block", "podzol", "mycelium",
                 "stone", "granite", "diorite", "andesite", "gravel", "snow", "snow_block", "ice", "packed_ice", "blue_ice",
@@ -129,7 +154,8 @@ public final class ArkData implements DataProvider {
         en.put("map." + NS + ".nests_on", "Nests: on"); en.put("map." + NS + ".nests_off", "Nests: off");
         pt.put("map." + NS + ".nests_on", "Ninhos: ligados"); pt.put("map." + NS + ".nests_off", "Ninhos: desligados");
         en.put("map." + NS + ".nest_label", "%s habitat | %s, %s, %s"); pt.put("map." + NS + ".nest_label", "Habitat de %s | %s, %s, %s");
-        for (var bird : new Species[]{Species.PTERANODON, Species.ARGENTAVIS}) {
+        for (var bird : Species.values()) {
+            if (!bird.flyer()) continue;
             en.put("block." + NS + "." + bird.id + "_nest", bird.displayName + " Nest");
             pt.put("block." + NS + "." + bird.id + "_nest", "Ninho de " + bird.displayName);
             en.put("item." + NS + "." + bird.id + "_egg", bird.displayName + " Egg");
@@ -170,16 +196,27 @@ public final class ArkData implements DataProvider {
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
         return Map.of("from", List.of(x,y,z), "to", List.of(xx,yy,zz), "faces", faces);
     }
+    private static String nestRim(Species species) {
+        return switch (species) {
+            case PTERANODON -> "minecraft:block/sand";
+            case ARGENTAVIS -> "minecraft:block/spruce_planks";
+            case QUETZAL -> "minecraft:block/oak_planks";
+            case ARCHAEOPTERYX -> "minecraft:block/moss_block";
+            case DRAGON -> "minecraft:block/polished_blackstone";
+            default -> "minecraft:block/oak_planks";
+        };
+    }
     private void flying() {
-        for (var species : new Species[]{Species.PTERANODON, Species.ARGENTAVIS}) {
+        for (var species : Species.values()) {
+            if (!species.flyer()) continue;
             String id = species.id + "_nest";
-            String rim = species == Species.ARGENTAVIS ? "minecraft:block/spruce_planks" : "minecraft:block/sand";
+            String rim = nestRim(species);
             var textures = Map.of("rim", rim, "leaf", "minecraft:block/moss_block", "egg", "minecraft:block/turtle_egg", "particle", rim);
             var bowl = new ArrayList<Map<String,Object>>();
             bowl.add(nestBox(2,0,2,14,1,14,"rim"));
             bowl.add(nestBox(1,0,1,15,3,3,"rim")); bowl.add(nestBox(1,0,13,15,3,15,"rim"));
             bowl.add(nestBox(1,0,3,3,3,13,"rim")); bowl.add(nestBox(13,0,3,15,3,13,"rim"));
-            if (species == Species.ARGENTAVIS) {
+            if (species != Species.PTERANODON) {
                 // Short staggered fronds over a twig ring; all geometry remains within its block.
                 for (int i=0;i<3;i++) {
                     bowl.add(nestBox(2+i*3,2,1,4+i*3,3.5,4,"leaf"));
@@ -204,6 +241,7 @@ public final class ArkData implements DataProvider {
     private void tests() {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
+        put("data/" + NS + "/test_environment/collection", spawningRules);
         for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "creature_expansion"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
@@ -213,6 +251,11 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis", "land_ecology", "land_movement"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
+        // The collection tests own their own batch: they share the per-dimension terrain budgets with
+        // the land and flying suites, and running them apart keeps those budgets predictable.
+        for (String name : List.of("aquatic_ecology", "collection_registration", "collection_cold"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                "environment", NS + ":collection", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
         put("data/" + NS + "/test_instance/nighttime", Map.of("type", "minecraft:function", "function", NS + ":nighttime",
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
         put("data/" + NS + "/test_instance/debug_spyglass", Map.of("type", "minecraft:function", "function", NS + ":debug_spyglass",

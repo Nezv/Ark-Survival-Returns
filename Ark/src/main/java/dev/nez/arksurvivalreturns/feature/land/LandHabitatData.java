@@ -19,6 +19,10 @@ public final class LandHabitatData extends SavedData {
         for (var species : Species.values()) if (!species.flyer() && species.id.equals(name)) return DataResult.success(species);
         return DataResult.error(() -> "Unknown land species: " + name);
     }, s -> s.id);
+    /**
+     * Per-group runtime state. Everything except the occupancy fields is transient: navigation,
+     * destinations and the pool radius are rebuilt from saved data after a load.
+     */
     public static final class Habitat {
         public final UUID id;
         public final Species species;
@@ -33,6 +37,8 @@ public final class LandHabitatData extends SavedData {
         public Vec3 destination;
         public double heading;
         public long nextPlan, nextCheck;
+        /** Runtime horizontal roam radius of a water pool; rebuilt on load, not serialized. */
+        public int radius = 24;
         public Habitat(UUID id, Species species, BlockPos center, BlockPos water, int capacity,
                 List<UUID> members, List<UUID> discovered, double hunger, long replacementAt, boolean valid) {
             this.id = id; this.species = species; this.center = center.immutable(); this.water = water.immutable();

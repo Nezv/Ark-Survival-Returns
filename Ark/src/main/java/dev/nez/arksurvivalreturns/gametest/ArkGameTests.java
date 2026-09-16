@@ -38,6 +38,9 @@ public final class ArkGameTests {
         FUNCTIONS.register("flying_argentavis", () -> h -> FlyingGameTests.flight(h, Species.ARGENTAVIS));
         FUNCTIONS.register("nighttime", () -> NighttimeGameTests::run);
         FUNCTIONS.register("creature_expansion", () -> CreatureExpansionGameTests::run);
+        FUNCTIONS.register("aquatic_ecology", () -> AquaticGameTests::ecology);
+        FUNCTIONS.register("collection_registration", () -> CollectionGameTests::registration);
+        FUNCTIONS.register("collection_cold", () -> CollectionGameTests::cold);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

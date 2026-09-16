@@ -24,7 +24,10 @@ public final class NestBlock extends Block {
     @Override public MapCodec<NestBlock> codec() { return CODEC; }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(EGG); }
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return Block.box(1, 0, 1, 15, 5, 15); }
-    public Species species() { return this == ModContent.NESTS.get(Species.ARGENTAVIS).get() ? Species.ARGENTAVIS : Species.PTERANODON; }
+    public Species species() {
+        for (var entry : ModContent.NESTS.entrySet()) if (entry.getValue().isBound() && entry.getValue().get() == this) return entry.getKey();
+        return Species.PTERANODON;
+    }
     @Override protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) { return level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP); }
     @Override protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
             Direction direction, BlockPos neighbor, BlockState neighborState, RandomSource random) {

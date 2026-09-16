@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns.feature.spawn;
 import java.util.ArrayList;
 import java.util.List;
 import dev.nez.arksurvivalreturns.feature.land.*;
+import dev.nez.arksurvivalreturns.feature.aquatic.AquaticHabitats;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
@@ -47,10 +48,15 @@ public final class PopulationDirector {
         if (world.dimension() != Level.OVERWORLD || !Config.NATURAL_SPAWNS.get()
                 || !world.getGameRules().get(GameRules.SPAWN_MOBS)) return 0;
         var nearby = world.getEntitiesOfClass(CreatureEntity.class, new AABB(viewer).inflate(RADIUS), Entity::isAlive);
-        var habitats = LandHabitats.enabled(world) ? LandHabitatData.get(world).near(viewer, RADIUS) : List.<LandHabitatData.Habitat>of();
+        // Land, semi-aquatic and water-bound residents share one saved occupancy store.
+        var stored = LandHabitats.enabled(world) || AquaticHabitats.enabled(world)
+                ? LandHabitatData.get(world).near(viewer, RADIUS) : List.<LandHabitatData.Habitat>of();
+        var habitats = stored.stream().filter(h -> !h.species.aquatic() && LandHabitats.enabled(world)).toList();
+        var pools = stored.stream().filter(h -> h.species.aquatic() && AquaticHabitats.enabled(world)).toList();
         var knownGroups = new java.util.HashSet<java.util.UUID>();
         nearby.stream().filter(CreatureEntity::isNaturalWildlife).forEach(c -> knownGroups.add(c.packId()));
         habitats.forEach(h -> knownGroups.add(h.id));
+        pools.forEach(h -> knownGroups.add(h.id));
         int missing = Math.max(0, Config.MIN_GROUPS.get() - knownGroups.size());
         int added = 0;
         // Repair one partially populated colony even when it already counts toward the group target.
@@ -66,6 +72,12 @@ public final class PopulationDirector {
             var repaired = tryReplenishHabitat(world, h, Config.LOCAL_CAP.get()-nearby.size(), random);
             if (!repaired.isEmpty()) { nearby.addAll(repaired); added++; }
         }
+        // A saved pool recovers the same way a herd does; the residents are replaced inside it.
+        for (var h : pools) {
+            if (added >= budget) break;
+            var repaired = AquaticHabitats.replenish(world, h, Config.LOCAL_CAP.get()-nearby.size(), random);
+            if (!repaired.isEmpty()) { nearby.addAll(repaired); added++; }
+        }
         int viewerDanger = BiomeTier.at(world, viewer).dangerLevel();
         for (int attempt = 0; attempt < 96 && added < budget; attempt++) {
             var regionalLarge = prioritySpecies(viewerDanger);
@@ -75,16 +87,24 @@ public final class PopulationDirector {
             if (nearby.size() >= Config.LOCAL_CAP.get()) break;
             double angle = random.nextDouble() * Math.PI * 2;
             double radius = Math.sqrt(32 * 32 + random.nextDouble() * (80 * 80 - 32 * 32));
-            var pos = SpawnRules.surface(world, viewer.getX() + (int) (Math.cos(angle) * radius), viewer.getZ() + (int) (Math.sin(angle) * radius));
-            if (pos == null || !world.isPositionEntityTicking(pos) || Math.abs(pos.getY() - viewer.getY()) > 48) continue;
-            var biome = world.getBiome(pos);
-            int danger = BiomeTier.at(world, pos).dangerLevel();
+            int sampleX = viewer.getX() + (int) (Math.cos(angle) * radius), sampleZ = viewer.getZ() + (int) (Math.sin(angle) * radius);
+            var pos = SpawnRules.surface(world, sampleX, sampleZ);
+            var waterPos = AquaticHabitats.surfaceWater(world, sampleX, sampleZ);
+            if (pos != null && (!world.isPositionEntityTicking(pos) || Math.abs(pos.getY() - viewer.getY()) > 48)) pos = null;
+            if (waterPos != null && (!world.isPositionEntityTicking(waterPos) || Math.abs(waterPos.getY() - viewer.getY()) > 48
+                    || AquaticHabitats.depth(world, waterPos) < Config.AQUATIC_DEPTH.get())) waterPos = null;
+            if (pos == null && waterPos == null) continue;
+            var anchor = pos != null ? pos : waterPos;
+            var biome = world.getBiome(anchor);
+            int danger = BiomeTier.at(world, anchor).dangerLevel();
             var choices = new ArrayList<Species>();
             var weights = new ArrayList<Integer>();
             int total = 0;
             for (var species : Species.values()) {
+                // Each realm is only offered the sample it can actually use.
+                if (species.aquatic() ? waterPos == null : pos == null) continue;
                 if (!SpawnRules.speciesAllowed(species, biome, danger)) continue;
-                int weight = selectionWeight(species, Config.WEIGHTS.get(species).get(), biome.is(species.biomes), pos.getY(), world.getSeaLevel());
+                int weight = selectionWeight(species, Config.WEIGHTS.get(species).get(), biome.is(species.biomes), anchor.getY(), world.getSeaLevel());
                 if (!missingLarge.isEmpty() && !missingLarge.contains(species)) continue;
                 if (species == Species.ARGENTAVIS && nearby.stream().filter(c -> c.species() == species).map(CreatureEntity::packId).distinct().count() >= 2) continue;
                 if (weight == 0) continue;
@@ -95,16 +115,19 @@ public final class PopulationDirector {
             while (pick >= weights.get(index)) pick -= weights.get(index++);
             var selected = choices.get(index);
             if (!SpawnRules.speciesAllowed(selected, biome, danger)) continue;
+            var origin = selected.aquatic() ? waterPos : pos;
+            if (origin == null) continue;
             if (selected == Species.BRONTOSAURUS && budget - added < 2) continue;
             var group = selected == Species.BRONTOSAURUS
-                    ? trySpawnBrontoEncounter(world, pos, Config.LOCAL_CAP.get() - nearby.size(), random)
-                    : trySpawnGroup(world, pos, selected, Config.LOCAL_CAP.get() - nearby.size(), random);
+                    ? trySpawnBrontoEncounter(world, origin, Config.LOCAL_CAP.get() - nearby.size(), random)
+                    : trySpawnGroup(world, origin, selected, Config.LOCAL_CAP.get() - nearby.size(), random);
             if (!group.isEmpty()) { nearby.addAll(group); added += (int)groupCount(group); }
         }
         return added;
     }
     public static List<CreatureEntity> trySpawnGroup(ServerLevel world, BlockPos origin, Species species, int capacity, RandomSource random) {
         if (species.flyer()) return dev.nez.arksurvivalreturns.feature.flying.FlyerHabitats.spawn(world, origin, species, capacity, random);
+        if (species.aquatic()) return AquaticHabitats.spawn(world, origin, species, capacity, random);
         return spawnLand(world, origin, species, capacity, random, null);
     }
     public static List<CreatureEntity> tryReplenishHabitat(ServerLevel world, LandHabitatData.Habitat h, int capacity, RandomSource random) {

@@ -26,11 +26,12 @@ public final class LandHabitatSync {
     }
     public static LandHabitatPayload snapshot(ServerPlayer player) {
         var world = player.level(); var data = LandHabitatData.get(world);
-        if (LandHabitats.enabled(world)) for (var h : data.near(player.blockPosition(),96)) {
-            if (SpawnRules.loaded(world,new AABB(h.center)) && Math.abs(h.center.getY()-player.getY())<=64) data.discover(h,player.getUUID());
-        }
+        if (LandHabitats.enabled(world) || dev.nez.arksurvivalreturns.feature.aquatic.AquaticHabitats.enabled(world))
+            for (var h : data.near(player.blockPosition(),96)) {
+                if (SpawnRules.loaded(world,new AABB(h.center)) && Math.abs(h.center.getY()-player.getY())<=64) data.discover(h,player.getUUID());
+            }
         boolean unlocked = MapUnlockData.get(world).hasAccess(player.getUUID(),Config.MAP_REQUIRES_UNLOCK.get());
-        var markers = unlocked && LandHabitats.enabled(world) ? data.discovered(player.getUUID(),player.blockPosition(),LandHabitatPayload.MAX_MARKERS).stream()
+        var markers = unlocked && (LandHabitats.enabled(world) || dev.nez.arksurvivalreturns.feature.aquatic.AquaticHabitats.enabled(world)) ? data.discovered(player.getUUID(),player.blockPosition(),LandHabitatPayload.MAX_MARKERS).stream()
                 .map(h -> new LandHabitatPayload.Marker(h.id,h.species,h.center,h.valid,!h.members.isEmpty())).toList()
                 : List.<LandHabitatPayload.Marker>of();
         return new LandHabitatPayload(world.dimension().identifier().toString(),markers);

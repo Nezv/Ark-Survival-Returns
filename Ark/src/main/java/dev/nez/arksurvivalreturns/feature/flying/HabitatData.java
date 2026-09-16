@@ -12,15 +12,26 @@ import net.minecraft.world.level.saveddata.*;
 
 /** Dimension-local colony records. Spatial indices avoid scans of every explored habitat. */
 public final class HabitatData extends SavedData {
+    /**
+     * Dimension-local colony records. `species` is the authoritative field; the legacy
+     * `argentavis` flag is still read so saves written before the collection landed keep loading.
+     */
     public record Habitat(UUID id, Species species, BlockPos center, List<BlockPos> nests, Set<UUID> discovered) {
         public Habitat { nests = List.copyOf(nests); discovered = new HashSet<>(discovered); }
         public static final Codec<Habitat> CODEC = RecordCodecBuilder.create(i -> i.group(
                 UUIDUtil.CODEC.fieldOf("id").forGetter(Habitat::id),
-                Codec.BOOL.fieldOf("argentavis").forGetter(h -> h.species == Species.ARGENTAVIS),
+                Codec.BOOL.optionalFieldOf("argentavis", false).forGetter(h -> h.species == Species.ARGENTAVIS),
                 BlockPos.CODEC.fieldOf("center").forGetter(Habitat::center),
                 BlockPos.CODEC.listOf(1, 4).fieldOf("nests").forGetter(Habitat::nests),
-                UUIDUtil.CODEC.listOf().optionalFieldOf("discovered", List.of()).forGetter(h -> h.discovered.stream().sorted().toList())
-        ).apply(i, (id, argent, center, nests, players) -> new Habitat(id, argent ? Species.ARGENTAVIS : Species.PTERANODON, center, nests, new HashSet<>(players))));
+                UUIDUtil.CODEC.listOf().optionalFieldOf("discovered", List.of()).forGetter(h -> h.discovered.stream().sorted().toList()),
+                Codec.STRING.optionalFieldOf("species", "").forGetter(h -> h.species.id)
+        ).apply(i, (id, argent, center, nests, players, species) ->
+                new Habitat(id, flyer(species, argent), center, nests, new HashSet<>(players))));
+        private static Species flyer(String id, boolean argentavis) {
+            for (var candidate : Species.values())
+                if (candidate.flyer() && candidate.id.equals(id)) return candidate;
+            return argentavis ? Species.ARGENTAVIS : Species.PTERANODON;
+        }
     }
     public static final Codec<HabitatData> CODEC = Habitat.CODEC.listOf().xmap(HabitatData::new,
             d -> d.habitats.values().stream().sorted(Comparator.comparing(Habitat::id)).toList()).fieldOf("habitats").codec();

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "arksurvivalreturns:dragon_nest",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "egg": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:dragon_egg"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

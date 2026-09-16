@@ -16,7 +16,7 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
         super(context, new CreatureModel(species));
         this.species = species;
         shadowRadius = species.width * 0.45f;
-        if (species.predator && !species.flyer()) withRenderLayer(new NightEyesLayer((com.geckolib.renderer.base.GeoRenderer)this, species));
+        if (species.glowingEyes()) withRenderLayer(new NightEyesLayer((com.geckolib.renderer.base.GeoRenderer)this, species));
     }
 
     @Override

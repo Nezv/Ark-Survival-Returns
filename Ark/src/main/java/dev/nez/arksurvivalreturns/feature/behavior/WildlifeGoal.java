@@ -20,8 +20,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 /** Server adapter: bounded perception, local routines, pack signals and collision-aware navigation. */
-public final class WildlifeGoal extends Goal {
-    private final CreatureEntity mob;
+public final class WildlifeGoal extends WildlifeController {
     private WildlifeMind mind;
     private BlockPos home;
     private LandHabitatData.Habitat habitat;
@@ -36,8 +35,8 @@ public final class WildlifeGoal extends Goal {
     private int corneredTicks;
     private int failedEscapes;
     private boolean interrupted, regrouping;
-    public WildlifeGoal(CreatureEntity mob) { this.mob = mob; setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
-    public WildlifeMind mind() {
+    public WildlifeGoal(CreatureEntity mob) { super(mob); setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
+    @Override public WildlifeMind mind() {
         if (mind == null) {
             mind = new WildlifeMind(mob.species().predator, mob.species().timid(), mob.species() == Species.VELOCIRAPTOR);
             long variation = mob.getUUID().getLeastSignificantBits();
@@ -46,27 +45,27 @@ public final class WildlifeGoal extends Goal {
         }
         return mind;
     }
-    public BlockPos home() { if (habitat != null) return habitat.center; if (home == null) home = mob.blockPosition(); return home; }
-    @Override public boolean canUse() { return mob.isAlive() && !mob.species().flyer(); }
-    @Override public boolean canContinueToUse() { return mob.isAlive() && !mob.species().flyer(); }
+    @Override public BlockPos home() { if (habitat != null) return habitat.center; if (home == null) home = mob.blockPosition(); return home; }
+    @Override public boolean canUse() { return mob.isAlive() && mob.species().landHabitat(); }
+    @Override public boolean canContinueToUse() { return mob.isAlive() && mob.species().landHabitat(); }
     @Override public boolean requiresUpdateEveryTick() { return true; }
     @Override public void tick() { if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think(); }
     @Override public void stop() { mob.getNavigation().stop(); mob.setTarget(null); }
-    public void receiveAlarm(Vec3 position) { lastKnown = position; alarmTicks = 40; }
-    public void interruptSleep() {
-        if (mob.species().flyer()) return;
+    @Override public void receiveAlarm(Vec3 position) { lastKnown = position; alarmTicks = 40; }
+    @Override public void interruptSleep() {
+        if (!mob.species().landHabitat()) return;
         interrupted = true;
         mind().interruptSleep(Config.SLEEP_CALM.get());
         mob.setBehavior(mind().state());
     }
-    public void followPreyHerd(java.util.UUID herd) { preyHerd = herd; }
-    public java.util.UUID preyHerd() { return preyHerd; }
-    public void receiveHerdThreat(LivingEntity threat) {
+    @Override public void followPreyHerd(java.util.UUID herd) { preyHerd = herd; }
+    @Override public java.util.UUID preyHerd() { return preyHerd; }
+    @Override public void receiveHerdThreat(LivingEntity threat) {
         if (!mob.species().defensiveHerd() || !WildlifeSenses.validTarget(threat)) return;
         herdThreat = threat; herdThreatTicks = 100; focus = threat; lastKnown = threat.position(); mind().defendHerd();
     }
-    public void think() {
-        if (!(mob.level() instanceof ServerLevel world) || mob.species().flyer()) return;
+    @Override public void think() {
+        if (!(mob.level() instanceof ServerLevel world) || !mob.species().landHabitat()) return;
         var brain = mind();
         habitat = LandHabitats.think(mob);
         if (habitat != null) home = habitat.center;
@@ -144,9 +143,7 @@ public final class WildlifeGoal extends Goal {
         boolean far = LandHabitatData.distanceSqr(mob.blockPosition(), home) > territoryRadius() * territoryRadius();
         boolean water = habitat == null ? nearbyWater(world) : LandHabitats.atWater(world, habitat, mob);
         var ground = world.getBlockState(mob.blockPosition().below());
-        boolean forage = ground.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK) || ground.is(net.minecraft.world.level.block.Blocks.PODZOL)
-                || ground.is(net.minecraft.world.level.block.Blocks.MYCELIUM) || ground.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK)
-                || ground.is(net.minecraft.world.level.block.Blocks.PALE_MOSS_BLOCK);
+        boolean forage = LandHabitats.forage(world, mob.species(), mob.blockPosition());
         if (habitat != null && habitat.routine == BehaviorState.FORAGE && habitat.destination != null)
             forage &= mob.position().distanceToSqr(habitat.destination) <= Math.pow(mob.getBbWidth()+10,2);
         BehaviorState before = brain.state();
@@ -341,17 +338,17 @@ public final class WildlifeGoal extends Goal {
         }
         roam(world);
     }
-    public void save(ValueOutput out) {
+    @Override public void save(ValueOutput out) {
         var p = home(); out.putInt("WildHomeX", p.getX()); out.putInt("WildHomeY", p.getY()); out.putInt("WildHomeZ", p.getZ());
         if (preyHerd != null) out.putString("WildPreyHerd", preyHerd.toString());
         out.putDouble("WildHunger", mind().hunger()); out.putDouble("WildThirst", mind().thirst()); out.putDouble("WildFatigue", mind().fatigue());
-        if (!mob.species().flyer()) out.putInt("WildSleepCalm", mind().calmTicksRemaining());
+        out.putInt("WildSleepCalm", mind().calmTicksRemaining());
     }
-    public void load(ValueInput in) {
+    @Override public void load(ValueInput in) {
         home = new BlockPos(in.getIntOr("WildHomeX", mob.blockPosition().getX()), in.getIntOr("WildHomeY", mob.blockPosition().getY()), in.getIntOr("WildHomeZ", mob.blockPosition().getZ()));
-        if (!mob.species().flyer()) mind = null; // Reset land transient pursuit and sleep state on reload.
+        mind = null; // Reset transient pursuit and sleep state on reload.
         mind().restoreNeeds(in.getDoubleOr("WildHunger", 0.55), in.getDoubleOr("WildThirst", 0.35), in.getDoubleOr("WildFatigue", 0.15));
-        if (!mob.species().flyer()) mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
+        mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
         focus = null; lastKnown = null; destination = null; regrouping = false;
         herdThreat = null; herdThreatTicks = 0;
         try { preyHerd = java.util.UUID.fromString(in.getStringOr("WildPreyHerd", "")); }

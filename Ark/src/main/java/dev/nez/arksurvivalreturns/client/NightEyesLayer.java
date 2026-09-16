@@ -20,8 +20,7 @@ final class NightEyesLayer<R extends EntityRenderState & GeoRenderState> extends
     private final String[] eyes;
     NightEyesLayer(GeoRenderer<CreatureEntity, Void, R> renderer, Species species) {
         super(renderer);
-        eyes = species == Species.GIGANOTOSAURUS ? new String[]{"l_eye", "r_eye"}
-                : new String[]{"Lft_Eye_JNT_SKL", "Rht_Eye_JNT_SKL"};
+        eyes = species.eyeBones();
     }
     @Override public void addRenderData(CreatureEntity creature, Void unused, R state, float partialTick) {
         state.addGeckolibData(GLOW, creature.nightEyeGlow(partialTick) * NighttimeClientConfig.EYE_GLOW.get().floatValue());
