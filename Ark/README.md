@@ -4,7 +4,7 @@ A prehistoric wildlife mod for Minecraft Java **26.2**, NeoForge **26.2.0.11-bet
 
 ## Play on Windows
 
-**Double-click `Start-Ark-Mod.bat` in the repository root.** It builds the mod and opens Minecraft with NeoForge and GeckoLib loaded. VS Code and a separate Minecraft launcher are not needed. Keep the console open while playing; the first launch may take a few minutes. Startup errors remain visible in the console. The dev client uses a 12 GB maximum heap. The launcher sets the selected Java executables to Windows high-performance GPU preference for the NVIDIA adapter.
+**Double-click `Start-Ark-Mod.bat` in the repository root.** It builds the mod and opens Minecraft with NeoForge and GeckoLib loaded. VS Code and a separate Minecraft launcher are not needed. Keep the console open while playing; the first launch may take a few minutes. Startup errors remain visible in the console. The dev client uses a 16 GB maximum heap. The launcher sets the selected Java executables to Windows high-performance GPU preference for the NVIDIA adapter.
 
 PowerShell alternative: `.\Start-Ark-Mod.ps1`. The launcher finds JDK 25 through `JAVA_HOME`, JBang or `PATH`, and uses the project Gradle wrapper. Its execution-policy override applies only to its own process. `Start-Ark-Mod.bat -Check` builds and prepares the client without opening the game.
 
@@ -14,16 +14,17 @@ PowerShell alternative: `.\Start-Ark-Mod.ps1`. The launcher finds JDK 25 through
 
 The launcher also loads the installed optional client pack: Xaero World Map with the difficulty overlay, Sodium, Iris, AmbientSounds, Sound Physics and their dependencies. Complementary Reimagined is downloaded; enable it in Video Settings → Shader Packs. The map is temporarily open to everyone (`progression.mapRequiresUnlock=false`). The saved entitlement and operator commands remain available for when the gate is re-enabled; taming is not implemented. See [installation, versions and map controls](docs/client-pack.md).
 
-- Nine species using the supplied models, original palette textures and 72 movement, attack and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
+- Forty-one species using the supplied models, original palette textures and 298 movement, attack, water and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
 - Replenished natural groups across Overworld biomes, solitary large creatures, terrain checks, population limits and spacing.
 - Five recurring danger ranks, persistent random creature levels, independently scaled HP/damage and biome-entry chat messages.
 - Look at a creature within 32 blocks for its name, level and current/max HP in a boss-style bar. Walls block targeting. Players have independent bars; predators are red and other creatures green.
-- Four complete berry items, textures, inventory models, English/Portuguese names and grass loot integration; nineteen matching spawn eggs in the Ark creative tab.
-- Ten additional creatures share existing land behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
+- Four complete berry items, textures, inventory models, English/Portuguese names and grass loot integration; forty-one matching spawn eggs in the Ark creative tab.
+- Ten additional land creatures share existing behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
+- Twenty-two collection creatures add water, swamp, cold and flying realms: saved home pools for six water species, semi-aquatic shorelines that switch to swim clips, snow-supported hydration for the cold six, three more nest colonies and a solo apex flyer that guards its roost. See [the collection ecosystem](docs/collection-ecosystem.md).
 
 ## Spawn rules
 
-Every **Overworld biome**, including modded biomes, can host land wildlife on suitable dry surface terrain. Flying colonies additionally require shoreline sand for Pteranodon or a nest floor at Y≥96 for Argentavis. Habitat tags are preferences: matching habitats receive three times the selection weight. Spawns require a supported footprint, collision-free space, the world border, and at least 24 blocks from players. Forest canopies are allowed; underground rooms and underwater locations are excluded. None of these creatures is aquatic. There is no natural spawning in the Nether or End.
+Every **Overworld biome**, including modded biomes, can host land wildlife on suitable dry surface terrain. Flying colonies additionally require shoreline sand for Pteranodon or a nest floor at Y≥96 for Argentavis; Quetzal roosts at Y≥110, Archaeopteryx nests on forest ground and Dragon roosts on high peaks. Water species need a loaded pool of connected deep water, semi-aquatic species a bank next to exposed water, and cold species accept snow cover or ice over water as their drink source. Habitat tags are preferences: matching habitats receive three times the selection weight. Spawns require a supported footprint, collision-free space, the world border, and at least 24 blocks from players. Forest canopies are allowed; underground rooms and underwater locations are excluded for land species. There is no natural spawning in the Nether or End.
 
 The population director checks every **5 seconds**, targeting **3 distinct wild groups within 96 blocks** of each active player. It adds at most **2 groups per dimension per check**, samples positions 32–80 blocks away in already loaded, entity-ticking chunks, and serves multiplayer players in rotation. Nearby players share wildlife counts. Searches have a fixed attempt budget and never request chunks. Insufficient land or a population cap can delay the target; later checks retry.
 
@@ -32,16 +33,38 @@ Minecraft's animal spawn cycle no longer controls Ark encounter frequency. The `
 | Species | Group | Base weight | Base HP | Base damage | Preferred habitats |
 |---|---:|---:|---:|---:|---|
 | Pteranodon | 3–4 | 18 | 24 | 3 | Beaches, rivers, plains, savanna |
-| Velociraptor | 3–5 | 14 | 32 | 5 | Forests, savanna, jungle |
+| Velociraptor | 4–6 | 14 | 32 | 5 | Forests, savanna, jungle |
 | Argentavis | 3–4 | 4 | 46 | 6 | Taiga and windy mountains |
 | Triceratops | 2–4 | 12 | 85 | 8 | Plains, savanna, meadows |
-| Therizinosaurus | 1 | 12 | 100 | 10 | Jungle, dark forest, swamp, old spruce taiga |
+| Therizinosaurus | 2–4 | 12 | 100 | 10 | Jungle, dark forest, swamp, old spruce taiga |
 | Brontosaurus | 2–4 | 10 | 145 | 12 | Savanna and sparse jungle |
 | Tyrannosaurus | 1 | 12 | 130 | 14 | Badlands, desert, sparse jungle, windswept forest |
 | Giganotosaurus | 1 | 8 | 170 | 17 | Windy hills and rocky peaks |
 | Titanosaur | 1 | 6 | 190 | 20 | Stony peaks and gravelly hills |
+| Cnidaria | 1 | 8 | 12 | 2 | Warm and temperate oceans |
+| Plesiosaur | 1 | 8 | 60 | 6 | Oceans and rivers |
+| Megalodon | 1 | 7 | 90 | 12 | Oceans and deep oceans |
+| Liopleurodon | 1 | 5 | 80 | 11 | Deep oceans |
+| Mosasaurus | 1 | 3 | 160 | 18 | Deep oceans |
+| Tusoteuthis | 1 | 3 | 150 | 16 | Deep cold and frozen oceans |
+| Kaprosuchus | 1 | 7 | 55 | 8 | Swamps, rivers, jungle |
+| Sarco | 2–3 | 8 | 70 | 10 | Swamps and rivers |
+| Deinosuchus | 1 | 4 | 120 | 14 | Swamps and rivers |
+| Titanoboa | 1 | 6 | 45 | 9 | Swamps and jungle |
+| Megalocerus | 4–6 | 10 | 60 | 6 | Snowy taiga and plains |
+| Unicorn | 1 | 3 | 65 | 7 | Snowy plains and groves |
+| Mammoth | 2–4 | 7 | 140 | 12 | Snowy plains, taiga, frozen rivers |
+| Direwolf | 4–6 | 9 | 50 | 8 | Snowy taiga and plains |
+| Sabertooth | 1–2 | 6 | 60 | 11 | Groves, snowy slopes and peaks |
+| Megapithecus | 1 | 1 | 180 | 18 | Frozen and jagged peaks |
+| Paraceratherium | 2–4 | 6 | 155 | 13 | Plains, savanna, meadows |
+| Terrorbird | 4–6 | 8 | 45 | 9 | Savanna, plains, jungle |
+| Ravager | 4–6 | 5 | 65 | 11 | Dark forests and taiga |
+| Archaeopteryx | 3–4 | 8 | 10 | 2 | Forests and jungle |
+| Quetzal | 1 | 2 | 130 | 10 | Windswept hills and peaks |
+| Dragon | 1 | 1 | 190 | 22 | Jagged and frozen peaks |
 
-Natural spawns allow at most **24 Ark creatures within 96 blocks** and require **24 blocks between solitary creatures of the same species**. All living Ark creatures count toward the cap; only natural, unnamed wildlife counts toward the group target. New groups start at least 18 blocks from existing wildlife. Small packs are placed completely or the attempt is abandoned; a cap or obstacle cannot create a lone pack animal. Brontosaurus and Triceratops form herds of 2–4; other large species spawn alone. High-danger replenishment seeks one varied large-creature encounter if none is present, rather than filling a roster of every species. Existing animals are not culled; lower density takes effect through new spawns and normal despawning. There is no day/night spawn filter. Ark's native biome spawn entries are disabled so chunk generation cannot bypass these rules.
+Natural spawns allow at most **24 Ark creatures within 96 blocks** and require **24 blocks between solitary creatures of the same species**. All living Ark creatures count toward the cap; only natural, unnamed wildlife counts toward the group target. New groups start at least 18 blocks from existing wildlife. Small packs are placed completely or the attempt is abandoned; a cap or obstacle cannot create a lone pack animal. Brontosaurus, Triceratops, Therizinosaurus and Ankylosaurus form herds of 2–4; other large species spawn alone. High-danger replenishment seeks one varied large-creature encounter if none is present, rather than filling a roster of every species. Saved land habitats, water pools and nest colonies are repaired first, so a depleted group refills its own home before a new site is planned. Existing animals are not culled; lower density takes effect through new spawns and normal despawning. There is no day/night spawn filter. Ark's native biome spawn entries are disabled so chunk generation cannot bypass these rules.
 
 Members of a small group share a saved pack identity. Land followers seek their pack's leading member when separated; combat takes precedence. Flyers share a habitat but use independent flight paths and perches. Separate packs do not merge. Raptors, Rex and Giga hunt non-creative players with line of sight outside Peaceful; land herbivores defend themselves. Flyers attack players only after an egg is taken or an egg-bearing nest is broken. Natural wildlife may despawn at vanilla distances. Named and spawn-egg creatures persist.
 
@@ -156,7 +179,7 @@ $env:JAVA_HOME = 'C:/Users/Nez/.jbang/cache/jdks/25'
 
 Run data generation before the build in a separate Gradle invocation so the build packages newly generated resources. The resulting JAR is `build/libs/arksurvivalreturns-0.1.0.jar`. Install it alongside GeckoLib 5.5.3 on matching NeoForge 26.2.
 
-Eighteen JUnit tests cover growth curves, recurring danger regions, behavioral decisions and map raster correspondence. Seven Ark headless GameTests cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, packet codecs, unloaded-chunk safeguards, and 2,000 real loot rolls for each tested grass/tool case. See `docs/verification.md`.
+Thirty-two JUnit tests cover growth curves, recurring danger regions, behavioral decisions and map raster correspondence. Nineteen Ark headless GameTests cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, packet codecs, unloaded-chunk safeguards, 2,000 real loot rolls for each tested grass/tool case, water pool validation and containment, realm/group/clip invariants for all 41 species, and the cold hydration policy. See `docs/verification.md`.
 
 Asset rebuild (Python 3.12, Pillow for sprites):
 
@@ -177,5 +200,9 @@ python tools/verify_assets.py
 4. Look at creatures, damage them, change targets and look through walls. Save/reload an injured creature. Repeat with two players for independent HP bars.
 5. Break short/tall grass; check four berry types and normal shearing.
 6. Test predator damage in Survival; Peaceful and creative players should not trigger hunting.
+7. Swim into a deep pool and watch a water species patrol it, hunt at night and stay submerged; a stranded one sinks back rather than floating.
+8. Walk a swamp bank and check that Sarco basks in its 2–3 group and switches to swim clips in the water.
+9. Visit a snowfield and check cold hydration, snow browsing and the Direwolf/Mammoth/Sabertooth group sizes.
+10. Find a Quetzal or Dragon roost, check the nest and egg, and confirm the apex flyer guards its airspace without chasing beyond the habitat leash.
 
-This pass includes the **ground wildlife behavioral model** for every species. Flight, riding, taming, breeding, territory ecology, custom dinosaur audio, experience gain, creature harvesting and berry effects are separate future systems. Visual movement and encounter balance still require in-client playtesting; automated checks do not launch an interactive client.
+This pass includes the **ground wildlife behavioral model** for every species plus the water, swamp, cold and flying realms. Riding, taming, breeding, territory ecology, custom dinosaur audio, experience gain, creature harvesting and berry effects are separate future systems. Visual movement and encounter balance still require in-client playtesting; automated checks do not launch an interactive client.
