@@ -4,7 +4,29 @@ import json
 import math
 from pathlib import Path
 from PIL import Image
-from import_creatures import ROOT, ASSETS, SPECIES, AUTHORED_SLEEP
+from collection_catalog import COLLECTION
+from import_creatures import ROOT, ASSETS, SPECIES
+
+# Eye geometry used by the emissive night layer, mirroring Species.eyeBones().
+# Deinosuchus, Dragon and Mosasaurus own eye bones without usable cube geometry, so they are excluded
+# there and here: an empty bone would render nothing.
+EYE_PAIRS = {'velociraptor': ('Lft_Eye_JNT_SKL', 'Rht_Eye_JNT_SKL'),
+             'tyrannosaurus': ('Lft_Eye_JNT_SKL', 'Rht_Eye_JNT_SKL'),
+             'ceratosaurus': ('Eye_L', 'Eye_R'), 'acrocanthosaurus': ('Eye_L', 'Eye_R'),
+             'argentavis': ('l_Eye_01', 'r_Eye_01'), 'ravager': ('l_Eye_01', 'r_Eye_01'),
+             'archaeopteryx': ('l_Eye', 'r_Eye')}
+NO_EYE_GEOMETRY = {'lystrosaurus', 'cnidaria', 'tusoteuthis', 'kaprosuchus', 'sarco', 'terrorbird',
+                   'deinosuchus', 'dragon', 'mosasaurus'}
+FLYERS = ['pteranodon', 'argentavis'] + [entry['id'] for entry in COLLECTION if entry['realm'] == 'AIR']
+# Only predators receive the emissive layer, so only predators must own usable eye geometry.
+PREDATORS = {'velociraptor', 'tyrannosaurus', 'giganotosaurus'} | {entry['id'] for entry in COLLECTION if entry['predator']}
+
+
+def eye_bones(identifier):
+    if identifier in NO_EYE_GEOMETRY:
+        return ()
+    return EYE_PAIRS.get(identifier, ('l_eye', 'r_eye'))
+
 
 def main():
     generated = ROOT / 'src/generated/resources'
@@ -24,13 +46,14 @@ def main():
         for clip in anim.values():
             assert set(clip['bones']) <= bones
             assert clip['animation_length'] > 0
-        if identifier in AUTHORED_SLEEP:
+        if 'Ark-Sleep' in clips:
             assert anim['Ark-Sleep']['loop'] and anim['Ark-Sleep']['animation_length'] == 4
-        if identifier in ('velociraptor', 'tyrannosaurus', 'giganotosaurus'):
-            eye_names = {'l_eye', 'r_eye'} if identifier == 'giganotosaurus' else {'Lft_Eye_JNT_SKL', 'Rht_Eye_JNT_SKL'}
-            for name in eye_names:
-                eye = next(b for b in geo['bones'] if b['name'] == name)
-                assert len(eye.get('cubes', [])) == 2, f'Expected eye-only geometry: {identifier}/{name}'
+        # A glowing eye bone must exist and carry geometry, or the night layer would light nothing.
+        for name in eye_bones(identifier):
+            eye = next((b for b in geo['bones'] if b['name'] == name), None)
+            assert eye is not None, f'Missing eye geometry: {identifier}/{name}'
+            if identifier in PREDATORS:
+                assert eye.get('cubes'), f'Glowing eye bone has no geometry: {identifier}/{name}'
         with Image.open(ASSETS/f'textures/entity/{identifier}.png') as image:
             assert image.size == (geo['description']['texture_width'], geo['description']['texture_height'])
         original = ROOT.parent/'Creatures'/folder
@@ -39,10 +62,15 @@ def main():
             path = next(original.rglob(name))
             assert hashlib.sha256(path.read_bytes()).hexdigest() == checksum, f'Original changed: {path}'
         assert entry['height_blocks'] == height
+    # Spawn eggs, nest eggs, berries and the debug tool.
     definitions = list((generated/f'assets/arksurvivalreturns/items').glob('*.json'))
-    assert len(definitions) == len(SPECIES) + 4 + 2
+    expected_items = len(SPECIES) + len(FLYERS) + 4 + 1
+    assert len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}'
     for definition in definitions:
-        model_id = json.loads(definition.read_text())['model']['model'].split(':')[1]
+        body = json.loads(definition.read_text())['model']
+        if body.get('type') != 'minecraft:model':
+            continue  # Shaped definitions such as the debug scope select a vanilla model per context.
+        model_id = body['model'].split(':')[1]
         model = json.loads((generated/f'assets/arksurvivalreturns/models/{model_id}.json').read_text())
         texture=model['textures']['layer0']
         if texture.startswith('minecraft:'):continue
@@ -54,12 +82,26 @@ def main():
     for _, identifier, *_ in SPECIES:
         path = generated/f'data/arksurvivalreturns/tags/worldgen/biome/spawns/{identifier}.json'
         assert json.loads(path.read_text())['values'], identifier
+    # Every flying species owns a complete nest: block state, both models, loot table and egg item.
+    for identifier in FLYERS:
+        for relative in (f'assets/arksurvivalreturns/blockstates/{identifier}_nest.json',
+                         f'assets/arksurvivalreturns/models/block/{identifier}_nest.json',
+                         f'assets/arksurvivalreturns/models/block/{identifier}_nest_empty.json',
+                         f'assets/arksurvivalreturns/items/{identifier}_egg.json',
+                         f'assets/arksurvivalreturns/models/item/{identifier}_egg.json',
+                         f'data/arksurvivalreturns/loot_table/blocks/{identifier}_nest.json'):
+            assert (generated/relative).is_file(), f'Missing nest asset: {relative}'
     surfaces = json.loads((generated/'data/arksurvivalreturns/tags/block/spawn_surfaces.json').read_text())['values']
     assert {'minecraft:grass_block', 'minecraft:podzol', 'minecraft:mycelium'} <= set(surfaces)
     for locale in ['en_us', 'pt_br']:
         lang = json.loads((generated/f'assets/arksurvivalreturns/lang/{locale}.json').read_text(encoding='utf-8'))
         assert lang['chat.arksurvivalreturns.biome'].count('%s') == 4
         assert 'chat.arksurvivalreturns.biome_unrated' in lang
-    print(f'PASS: {len(SPECIES)} creatures, {sum(len(row[3:]) for row in SPECIES)} valid clips, unchanged originals, {len(definitions)} item definitions, JSON and spawn resource references.')
+        for _, identifier, *_ in SPECIES:
+            assert f'entity.arksurvivalreturns.{identifier}' in lang, f'Missing name: {locale}/{identifier}'
+        for identifier in FLYERS:
+            assert f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}'
+    print(f'PASS: {len(SPECIES)} creatures, {sum(len(row[3:]) for row in SPECIES)} valid clips, {len(FLYERS)} nests, '
+          f'unchanged originals, {len(definitions)} item definitions, JSON and spawn resource references.')
 
 if __name__ == '__main__': main()

@@ -1,0 +1,1100 @@
+[spawning]
+	#Enable natural creature spawns. Spawn eggs and commands still work.
+	enabled = true
+	#Maximum Ark creatures within 96 blocks. Independent of vanilla animal caps.
+	# Default: 24
+	# Range: 1 ~ 128
+	localCap = 24
+	#Minimum distance between naturally spawning large creatures.
+	# Default: 24
+	# Range: 16 ~ 128
+	solitarySpacing = 24
+	#Target minimum wild groups per player within 96 blocks; retries when safe loaded ground is unavailable.
+	# Default: 3
+	# Range: 1 ~ 20
+	minimumGroups = 3
+	#Ticks between population checks (20 ticks = 1 second).
+	# Default: 100
+	# Range: 20 ~ 1200
+	checkIntervalTicks = 100
+	#Maximum groups added across a dimension per check; players are served round-robin.
+	# Default: 2
+	# Range: 1 ~ 8
+	groupsPerPass = 2
+
+	[spawning.weights]
+		# Default: 18
+		# Range: 0 ~ 100
+		pteranodon = 18
+		# Default: 14
+		# Range: 0 ~ 100
+		velociraptor = 14
+		# Default: 4
+		# Range: 0 ~ 100
+		argentavis = 4
+		# Default: 12
+		# Range: 0 ~ 100
+		triceratops = 12
+		# Default: 12
+		# Range: 0 ~ 100
+		therizinosaurus = 12
+		# Default: 10
+		# Range: 0 ~ 100
+		brontosaurus = 10
+		# Default: 12
+		# Range: 0 ~ 100
+		tyrannosaurus = 12
+		# Default: 8
+		# Range: 0 ~ 100
+		giganotosaurus = 8
+		# Default: 6
+		# Range: 0 ~ 100
+		titanosaur = 6
+		# Default: 8
+		# Range: 0 ~ 100
+		spinosaurus = 8
+		# Default: 14
+		# Range: 0 ~ 100
+		parasaur = 14
+		# Default: 8
+		# Range: 0 ~ 100
+		ceratosaurus = 8
+		# Default: 12
+		# Range: 0 ~ 100
+		dilophosaur = 12
+		# Default: 6
+		# Range: 0 ~ 100
+		acrocanthosaurus = 6
+		# Default: 9
+		# Range: 0 ~ 100
+		allosaurus = 9
+		# Default: 10
+		# Range: 0 ~ 100
+		ankylosaurus = 10
+		# Default: 10
+		# Range: 0 ~ 100
+		carnotaurus = 10
+		# Default: 10
+		# Range: 0 ~ 100
+		pegomastax = 10
+		# Default: 14
+		# Range: 0 ~ 100
+		lystrosaurus = 14
+		# Default: 8
+		# Range: 0 ~ 100
+		cnidaria = 8
+		# Default: 8
+		# Range: 0 ~ 100
+		plesiosaur = 8
+		# Default: 7
+		# Range: 0 ~ 100
+		megalodon = 7
+		# Default: 5
+		# Range: 0 ~ 100
+		liopleurodon = 5
+		# Default: 3
+		# Range: 0 ~ 100
+		mosasaurus = 3
+		# Default: 3
+		# Range: 0 ~ 100
+		tusoteuthis = 3
+		# Default: 7
+		# Range: 0 ~ 100
+		kaprosuchus = 7
+		# Default: 8
+		# Range: 0 ~ 100
+		sarco = 8
+		# Default: 4
+		# Range: 0 ~ 100
+		deinosuchus = 4
+		# Default: 6
+		# Range: 0 ~ 100
+		titanoboa = 6
+		# Default: 10
+		# Range: 0 ~ 100
+		megalocerus = 10
+		# Default: 3
+		# Range: 0 ~ 100
+		unicorn = 3
+		# Default: 7
+		# Range: 0 ~ 100
+		mammoth = 7
+		# Default: 9
+		# Range: 0 ~ 100
+		direwolf = 9
+		# Default: 6
+		# Range: 0 ~ 100
+		sabertooth = 6
+		# Default: 1
+		# Range: 0 ~ 100
+		megapithecus = 1
+		# Default: 6
+		# Range: 0 ~ 100
+		paraceratherium = 6
+		# Default: 8
+		# Range: 0 ~ 100
+		terrorbird = 8
+		# Default: 5
+		# Range: 0 ~ 100
+		ravager = 5
+		# Default: 8
+		# Range: 0 ~ 100
+		archaeopteryx = 8
+		# Default: 2
+		# Range: 0 ~ 100
+		quetzal = 2
+		# Default: 1
+		# Range: 0 ~ 100
+		dragon = 1
+
+[progression]
+	#Require the saved map entitlement. Disabled during development while taming is unavailable; restart/rejoin after changing.
+	mapRequiresUnlock = false
+	#Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.
+	# Default: 256
+	# Range: 96 ~ 1024
+	bandWidth = 256
+
+[movement]
+	#Normal player sprint benchmark in blocks/second; does not chase temporary player potion buffs.
+	# Default: 5.612
+	# Range: 1.0 ~ 20.0
+	playerSprintBlocksPerSecond = 5.612
+
+	[movement.pteranodon]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.velociraptor]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 2.2
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 2.2
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.argentavis]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.triceratops]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.1
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.1
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.therizinosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.5
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.5
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.brontosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.05
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.05
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.tyrannosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.8
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.8
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.giganotosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 2.0
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 2.0
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.titanosaur]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.25
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.25
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.spinosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.85
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.parasaur]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.55
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.55
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.ceratosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.65
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.65
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.dilophosaur]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.25
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.25
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.acrocanthosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.7
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.7
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.allosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.9
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.9
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.ankylosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.95
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.95
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.carnotaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.8
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.8
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.pegomastax]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.55
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.55
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.lystrosaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.cnidaria]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.6
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.6
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.plesiosaur]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.9
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.9
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.megalodon]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.3
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.3
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.liopleurodon]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.2
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.2
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.mosasaurus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.1
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.1
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.tusoteuthis]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.0
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.0
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.kaprosuchus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.35
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.35
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.sarco]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.3
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.3
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.deinosuchus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.2
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.2
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.titanoboa]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.4
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.4
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.megalocerus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.5
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.5
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.unicorn]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.7
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.7
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.mammoth]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.0
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.0
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.direwolf]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 2.0
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 2.0
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.sabertooth]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.9
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.9
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.megapithecus]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.4
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.4
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.paraceratherium]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.0
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.0
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.terrorbird]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 2.1
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 2.1
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.ravager]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 1.9
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 1.9
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.archaeopteryx]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.quetzal]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 0.65
+		# Range: 0.1 ~ 1.5
+		waterRetention = 0.65
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+	[movement.dragon]
+		#Full pursuit speed relative to the player benchmark; normal wandering uses a slower gait.
+		# Default: 0.85
+		# Range: 0.2 ~ 4.0
+		sprintRatio = 0.85
+		#Fraction of land speed retained while swimming.
+		# Default: 1.0
+		# Range: 0.1 ~ 1.5
+		waterRetention = 1.0
+		#Visual stride length multiplier; larger values slow the animation at the same ground speed.
+		# Default: 1.0
+		# Range: 0.5 ~ 2.0
+		strideScale = 1.0
+
+[levels]
+	#HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.
+	# Default: 0.1
+	# Range: 0.0 ~ 0.2
+	healthGrowth = 0.1
+	#Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.
+	# Default: 0.14
+	# Range: 0.0 ~ 0.5
+	damageGrowth = 0.14
+
+	[levels.easy]
+		# Default: 1
+		# Range: 1 ~ 100
+		min = 1
+		#Reversed endpoints are sorted automatically.
+		# Default: 12
+		# Range: 1 ~ 100
+		max = 12
+
+	[levels.moderate]
+		# Default: 8
+		# Range: 1 ~ 100
+		min = 8
+		#Reversed endpoints are sorted automatically.
+		# Default: 28
+		# Range: 1 ~ 100
+		max = 28
+
+	[levels.hard]
+		# Default: 20
+		# Range: 1 ~ 100
+		min = 20
+		#Reversed endpoints are sorted automatically.
+		# Default: 50
+		# Range: 1 ~ 100
+		max = 50
+
+	[levels.severe]
+		# Default: 32
+		# Range: 1 ~ 100
+		min = 32
+		#Reversed endpoints are sorted automatically.
+		# Default: 64
+		# Range: 1 ~ 100
+		max = 64
+
+	[levels.extreme]
+		# Default: 40
+		# Range: 1 ~ 100
+		min = 40
+		#Reversed endpoints are sorted automatically.
+		# Default: 80
+		# Range: 1 ~ 100
+		max = 80
+
+[nighttime]
+	#Land wildlife only; flying species retain their existing behavior. Requires a dimension with a normal sky clock.
+	enabled = true
+	# Default: 13000
+	# Range: 0 ~ 23999
+	nightStartTick = 13000
+	#Equal start/end disables the night window.
+	# Default: 23000
+	# Range: 0 ~ 23999
+	nightEndTick = 23000
+	#Maximum individual dusk/dawn delay; 600 ticks = 30 seconds.
+	# Default: 600
+	# Range: 0 ~ 1200
+	transitionTicks = 600
+	# Default: 2.0
+	# Range: 1.0 ~ 5.0
+	carnivoreHungerMultiplier = 2.0
+	#Multiplier of daytime sight for land carnivores at night; cover, rain and crouching still apply.
+	# Default: 1.3
+	# Range: 1.0 ~ 2.0
+	carnivoreVisionMultiplier = 1.3
+	#Share of undisturbed daytime routine spent sleeping; urgent needs and danger override.
+	# Default: 0.7
+	# Range: 0.0 ~ 1.0
+	carnivoreDaySleepFraction = 0.7
+	#Distance from body bounds for ordinary player approach; noisy actions can wake from farther away.
+	# Default: 8.0
+	# Range: 2.0 ~ 24.0
+	playerWakeDistance = 8.0
+	#Simulated ticks without relevant danger before sleep is allowed again.
+	# Default: 200
+	# Range: 20 ~ 1200
+	calmBeforeSleepTicks = 200
+
+[aquatic]
+	#Saved water bodies for water-bound species; solo groups that roam one home pool.
+	enabled = true
+	#Maximum water-column reads per dimension tick while planning a home pool.
+	# Default: 2048
+	# Range: 256 ~ 8192
+	waterProbesPerTick = 2048
+	#Minimum swimmable depth for a valid pool; shallow water is rejected or retried.
+	# Default: 6
+	# Range: 3 ~ 24
+	minimumDepth = 6
+	#Connected deep-water columns a pool needs before it can host a resident.
+	# Default: 12
+	# Range: 4 ~ 64
+	minimumColumns = 12
+	#How far a pool is sampled from the spawn point, in blocks.
+	# Default: 32
+	# Range: 8 ~ 64
+	searchRadius = 32
+	# Default: 1200
+	# Range: 200 ~ 12000
+	waterRecheckTicks = 1200
+	#Cooldown after a confirmed permanent removal; unloading does not free a slot.
+	# Default: 12000
+	# Range: 200 ~ 72000
+	replacementCooldownTicks = 12000
+
+[landHabitats]
+	#Persistent water-associated land groups; legacy local behavior remains available when disabled.
+	enabled = true
+	#Maximum surface-water planning block/height reads per dimension tick.
+	# Default: 256
+	# Range: 32 ~ 2048
+	waterProbesPerTick = 256
+	#Connected surface water cells, including a 2x2 patch. Lower for narrow rivers.
+	# Default: 8
+	# Range: 4 ~ 16
+	minimumWaterCells = 8
+	# Default: 1200
+	# Range: 200 ~ 12000
+	waterRecheckTicks = 1200
+	#Cooldown after a confirmed permanent member removal; unloading does not free a slot.
+	# Default: 12000
+	# Range: 200 ~ 72000
+	replacementCooldownTicks = 12000
+
+	[landHabitats.big_carnivore]
+		# Default: 96
+		# Range: 24 ~ 160
+		roamRadius = 96
+		# Default: 160
+		# Range: 32 ~ 224
+		returnRadius = 160
+		# Default: 32
+		# Range: 0 ~ 96
+		preferredWaterDistance = 32
+		# Default: 96
+		# Range: 16 ~ 128
+		maximumWaterDistance = 96
+
+	[landHabitats.small_carnivore]
+		# Default: 80
+		# Range: 24 ~ 160
+		roamRadius = 80
+		# Default: 128
+		# Range: 32 ~ 224
+		returnRadius = 128
+		# Default: 24
+		# Range: 0 ~ 96
+		preferredWaterDistance = 24
+		# Default: 80
+		# Range: 16 ~ 128
+		maximumWaterDistance = 80
+
+	[landHabitats.titanosaur]
+		# Default: 64
+		# Range: 24 ~ 160
+		roamRadius = 64
+		# Default: 112
+		# Range: 32 ~ 224
+		returnRadius = 112
+		# Default: 24
+		# Range: 0 ~ 96
+		preferredWaterDistance = 24
+		# Default: 64
+		# Range: 16 ~ 128
+		maximumWaterDistance = 64
+
+	[landHabitats.big_herbivore]
+		# Default: 48
+		# Range: 24 ~ 160
+		roamRadius = 48
+		# Default: 96
+		# Range: 32 ~ 224
+		returnRadius = 96
+		# Default: 16
+		# Range: 0 ~ 96
+		preferredWaterDistance = 16
+		# Default: 48
+		# Range: 16 ~ 128
+		maximumWaterDistance = 48
+
+	[landHabitats.small_herbivore]
+		# Default: 32
+		# Range: 24 ~ 160
+		roamRadius = 32
+		# Default: 64
+		# Range: 32 ~ 224
+		returnRadius = 64
+		# Default: 12
+		# Range: 0 ~ 96
+		preferredWaterDistance = 12
+		# Default: 32
+		# Range: 16 ~ 128
+		maximumWaterDistance = 32
+
+	[landHabitats.aquatic]
+		# Default: 64
+		# Range: 24 ~ 160
+		roamRadius = 64
+		# Default: 96
+		# Range: 32 ~ 224
+		returnRadius = 96
+		# Default: 0
+		# Range: 0 ~ 96
+		preferredWaterDistance = 0
+		# Default: 16
+		# Range: 16 ~ 128
+		maximumWaterDistance = 16
+
+	[landHabitats.amphibious]
+		# Default: 48
+		# Range: 24 ~ 160
+		roamRadius = 48
+		# Default: 96
+		# Range: 32 ~ 224
+		returnRadius = 96
+		# Default: 16
+		# Range: 0 ~ 96
+		preferredWaterDistance = 16
+		# Default: 48
+		# Range: 16 ~ 128
+		maximumWaterDistance = 48
+
+	[landHabitats.swamp_pack]
+		# Default: 48
+		# Range: 24 ~ 160
+		roamRadius = 48
+		# Default: 96
+		# Range: 32 ~ 224
+		returnRadius = 96
+		# Default: 16
+		# Range: 0 ~ 96
+		preferredWaterDistance = 16
+		# Default: 48
+		# Range: 16 ~ 128
+		maximumWaterDistance = 48
+
+	[landHabitats.cold_predator]
+		# Default: 96
+		# Range: 24 ~ 160
+		roamRadius = 96
+		# Default: 144
+		# Range: 32 ~ 224
+		returnRadius = 144
+		# Default: 64
+		# Range: 0 ~ 96
+		preferredWaterDistance = 64
+		# Default: 112
+		# Range: 16 ~ 128
+		maximumWaterDistance = 112
+
+	[landHabitats.cold_grazer]
+		# Default: 40
+		# Range: 24 ~ 160
+		roamRadius = 40
+		# Default: 80
+		# Range: 32 ~ 224
+		returnRadius = 80
+		# Default: 40
+		# Range: 0 ~ 96
+		preferredWaterDistance = 40
+		# Default: 96
+		# Range: 16 ~ 128
+		maximumWaterDistance = 96
+
+	[landHabitats.cold_browser]
+		# Default: 48
+		# Range: 24 ~ 160
+		roamRadius = 48
+		# Default: 96
+		# Range: 32 ~ 224
+		returnRadius = 96
+		# Default: 48
+		# Range: 0 ~ 96
+		preferredWaterDistance = 48
+		# Default: 96
+		# Range: 16 ~ 128
+		maximumWaterDistance = 96
+
+	[landHabitats.cold_stalker]
+		# Default: 64
+		# Range: 24 ~ 160
+		roamRadius = 64
+		# Default: 112
+		# Range: 32 ~ 224
+		returnRadius = 112
+		# Default: 64
+		# Range: 0 ~ 96
+		preferredWaterDistance = 64
+		# Default: 112
+		# Range: 16 ~ 128
+		maximumWaterDistance = 112
+
+	[landHabitats.guardian]
+		# Default: 48
+		# Range: 24 ~ 160
+		roamRadius = 48
+		# Default: 80
+		# Range: 32 ~ 224
+		returnRadius = 80
+		# Default: 24
+		# Range: 0 ~ 96
+		preferredWaterDistance = 24
+		# Default: 64
+		# Range: 16 ~ 128
+		maximumWaterDistance = 64
+
+	[landHabitats.rare_grazer]
+		# Default: 40
+		# Range: 24 ~ 160
+		roamRadius = 40
+		# Default: 80
+		# Range: 32 ~ 224
+		returnRadius = 80
+		# Default: 40
+		# Range: 0 ~ 96
+		preferredWaterDistance = 40
+		# Default: 96
+		# Range: 16 ~ 128
+		maximumWaterDistance = 96
+
+[flying]
+	#Minimum floor Y for natural Argentavis nests.
+	# Default: 96
+	# Range: 64 ~ 256
+	argentavisMinimumNestY = 96
+	#Maximum horizontal distance from a Pteranodon nest to exposed water.
+	# Default: 12
+	# Range: 4 ~ 24
+	shoreWaterRadius = 12
+	# Default: 32
+	# Range: 16 ~ 48
+	pteranodonRoamRadius = 32
+	# Default: 48
+	# Range: 24 ~ 56
+	argentavisRoamRadius = 48
+	#Maximum horizontal chase distance from the habitat center.
+	# Default: 64
+	# Range: 56 ~ 80
+	defenseRadius = 64
+	#Maximum defense duration after each actual egg disturbance.
+	# Default: 600
+	# Range: 100 ~ 1200
+	eggDefenseTicks = 600
+	#Independent landing/rest/takeoff at safe nest perches; no hunger or thirst.
+	perching = true
+
+[display]
+	biomeEntryMessages = true
+	targetHealthBar = true
+	# Default: 32
+	# Range: 8 ~ 64
+	targetRange = 32

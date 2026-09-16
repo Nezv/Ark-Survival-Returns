@@ -5,6 +5,7 @@ import json
 import shutil
 import copy
 from expansion_catalog import EXPANSION
+from collection_catalog import COLLECTION, import_clips
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'src/main/resources/assets/arksurvivalreturns'
@@ -43,6 +44,9 @@ for entry in EXPANSION:
 SPECIES = [(folder, identifier, height * SIZE_MULTIPLIERS.get(identifier, 2), *clips, *BEHAVIOR_CLIPS[identifier],
             *(['Ark-Sleep'] if identifier in AUTHORED_SLEEP else []))
            for folder, identifier, height, *clips in SPECIES]
+# The collection catalog already names its final height and complete clip set.
+for entry in COLLECTION:
+    SPECIES.append((entry['folder'], entry['id'], entry['height'], *import_clips(entry)))
 
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)

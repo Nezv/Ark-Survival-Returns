@@ -4,23 +4,50 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 ## Unreleased
 
+All 41 creature projects are now runtime species: the ice, flying, aquatic and swamp collection has been
+registered with realms, group settings, saved homes, day routines and night routines.
+
 ### Added
 
 - Land wildlife day/night routines: scheduled sleep, daytime carnivore roaming, nighttime prey searching, sensed-danger escape and defensive herd responses.
 - Red emissive eyes for awake nighttime Raptor, Rex and Giga, with client brightness control and smooth fading. Five authored standing sleep poses supplement Rex/Trike sleeping clips.
+- Twenty-two collection species with their own models, spawn eggs, biome preferences and selected runtime clips: Cnidaria, Plesiosaur, Megalodon, Liopleurodon, Mosasaurus, Tusoteuthis, Kaprosuchus, Sarco, Deinosuchus, Titanoboa, Megalocerus, Unicorn, Mammoth, Direwolf, Sabertooth, Megapithecus, Paraceratherium, Terrorbird, Ravager, Archaeopteryx, Quetzal and Dragon.
+- Four realms that decide where a creature lives and how it moves: water-bound pools, semi-aquatic shorelines, ground habitats and nest colonies. Every species reports status, group settings, a saved home, day routines and night routines through the existing decision model.
+- Saved home pools for water species. A pool needs connected deep water, is re-checked periodically, relocates when it is filled in, and rejects puddles and shallow water.
+- Cold-adapted hydration: snow cover, powder snow or ice over water satisfies thirst, and snow over browse ground is used for grazing. Ice is never broken and no terrain is edited.
+- Nest blocks and collectible eggs for Archaeopteryx, Quetzal and Dragon, sharing the existing colony, perching and egg-defense behavior.
+- Apex flyers guard the airspace around their own roost; Peaceful, creative and spectator players are excluded and the chase ends at the habitat leash.
 
 ### Changed
 
 - Land carnivore nighttime hunger grows at 2× and sight reaches 1.3× daytime range before rain/crouching modifiers. Successful wildlife kills still satisfy hunger.
 - Added configurable night hours, individual transition delays, daytime sleep share, player wake distance and calm-down time. Flying creatures are excluded from the patch.
+- Water predators hunt at night and patrol by day through the same clock, so the night patch now covers all six water species and every semi-aquatic one.
+- Semi-aquatic species switch to their own swim clip set in water while keeping ground navigation, herd limits and the authored sleep pose.
+- Cold species use dedicated family profiles: Direwolf 4–6 with the widest cold range, Mammoth 2–4, Megalocerus 4–6, Sabertooth an explicit 1–2, and Megapithecus/Unicorn stay solitary. Water and swamp species are mostly solitary; Sarco is the only water-side species with a 2–3 bask group.
+- Terrorbird is a pack carnivore, matching its ARK behavior, rather than the herbivore label the catalog previously carried.
+- Sprint defaults now follow each species profile, so the configured default and the entity speed agree for every new species.
+- `Species` gained realms, water/browse clip sets and per-species flight policies; the flying controller, nest site policy and habitat records are now profile-driven instead of hard-coded per species.
+- New `[aquatic]` configuration section: pool depth, connected columns, search radius, per-tick probe budget, water recheck and replacement cooldown. Nine `[landHabitats]` family sections were added, and `[spawning.weights]` and `[movement.*]` gained one entry per new species.
 
 ### Compatibility and known limitations
 
 - Implementation in progress. Existing levels, health, homes, packs and hunger are retained. New sleep poses and eye rendering require client playtesting; they are not visually verified.
+- Both server and clients need the update: 22 entities, 3 nests, 3 egg items and new payload fields are not optional.
+- An existing server config keeps its stored sprint values, so a species added earlier can retain the previous default until its section is removed or edited.
+- Deinosuchus, Dragon and Mosasaurus own eye bones without usable cube geometry and therefore do not receive the emissive eye layer.
+- Titanoboa has no separate swim animation in the ARK library and reuses its ground clips in water.
+- ARK abilities remain out of scope: Cnidaria shock, venom, throws, fire breath and platform saddles are not implemented. Water species never dive under ice and no creature breaks blocks.
+- Water, swamp, snow and nest visuals, marker readability and cold-biome balance need interactive playtesting. No client was launched.
 
 ### Validation
 
-- Baseline Gradle build passed. Patch validation pending.
+- Data generation passed, writing 111 new resources: 22 spawn tags, 3 nest blocks with models, block states and loot tables, both translations and the item models.
+- Gradle build passed with 32 JUnit tests, no failures or skips.
+- All 19 required headless GameTests passed, including three new collection tests: water pool validation, occupancy, containment and save/load; realm, group, clip and registry invariants for all 41 species; and the cold hydration, snow-browsing and site policy checks.
+- Creature import produced 41 creatures and 298 unique runtime clips; 41 spawn egg sprites were rebuilt.
+- Asset validation passed for 41 creatures, 298 clips, 5 nests and 51 item definitions with unchanged source hashes; the expansion validator checked 411 sampled poses against the source rigs.
+- Remaining work is visual: movement and containment in real terrain, nest and egg appearance, cold-biome balance and marker readability.
 
 ## Land Ecosystem & Behavior — 2026-09-14
 
@@ -88,7 +115,6 @@ Detailed ice, flying, aquatic and swamp source art, with no new gameplay integra
 ### Compatibility and known limitations
 
 - These twenty-one projects are source assets only; this collection adds no runtime entities, behavior or spawn rules. The playable roster remains nineteen.
-- Dreadnoughtus is pending: its Ascended mesh/skeleton/animations are absent from the installed Evolved game and DLC. Its folder records the source requirement; it contains no substitute model.
 - Cuboids approximate the original skins with rigid bone ownership. Palette textures replace the original materials; shader transparency and Unreal animation events are not converted. No interactive game or Blockbench test was run.
 
 ### Validation

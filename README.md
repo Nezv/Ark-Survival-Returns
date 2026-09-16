@@ -4,9 +4,9 @@ To play the mod on Windows, double-click **Start-Ark-Mod.bat** in this folder. I
 
 The optional Xaero difficulty map, shader loader, shader pack and ambience mods are installed locally. **Install-Ark-Extras.bat** reproduces the pinned downloads on another checkout. The map is temporarily open to everyone while taming is deferred. See [client pack and map instructions](Ark/docs/client-pack.md).
 
-The editable projects in `Creatures/` retain the installed ARK mesh skeletons and original animation clips bound to those exact bone names. `Tyranosaur` retains its original `rex_ravager` resource filenames and geometry identifier. Nineteen creatures are integrated into the playable mod; see [creature expansion](Ark/docs/creature-expansion.md).
+The editable projects in `Creatures/` retain the installed ARK mesh skeletons and original animation clips bound to those exact bone names. `Tyranosaur` retains its original `rex_ravager` resource filenames and geometry identifier. All forty-one creatures are integrated into the playable mod; see [creature expansion](Ark/docs/creature-expansion.md) and [collection ecosystem](Ark/docs/collection-ecosystem.md).
 
-The newer [ice, flying, aquatic and swamp collection](Creatures/Collection/README.md) adds twenty-one detailed source projects. These models have no runtime entity, behavior or spawn registration. A reserved Dreadnoughtus folder records the missing Ascended source. The table below lists the nineteen runtime creatures.
+The [ice, flying, aquatic and swamp collection](Creatures/Collection/README.md) adds twenty-two detailed source projects. These models are now registered runtime species: six water species with saved home pools, four semi-aquatic shoreline species, six cold species with snow-supported hydration, and five flying species with nest colonies. The table below lists all forty-one runtime creatures.
 
 | Folder | ARK asset | Common name |
 | --- | --- | --- |
@@ -29,6 +29,28 @@ The newer [ice, flying, aquatic and swamp collection](Creatures/Collection/READM
 | Carnotaurus | Carno | Carnotaurus |
 | Pegomastax | Pegomastax | Pegomastax |
 | Lystrosaurus | Lystrosaurus | Lystrosaurus |
+| Cnidaria | Cnidaria | Cnidaria |
+| Plesiosaur | Plesiosaur | Plesiosaur |
+| Megalodon | Megalodon | Megalodon |
+| Liopleurodon | Liopleurodon | Liopleurodon |
+| Mosasaurus | Mosasaurus | Mosasaurus |
+| Tusoteuthis | Tusoteuthis | Tusoteuthis |
+| Kaprosuchus | Kaprosuchus | Kaprosuchus |
+| Sarco | Sarco | Sarco |
+| Deinosuchus | Deinosuchus | Deinosuchus |
+| Titanoboa | Titanoboa | Titanoboa |
+| Megalocerus | Stag | Megalocerus |
+| Unicorn | Equus | Unicorn |
+| Mammoth | Mammoth | Mammoth |
+| Direwolf | Direwolf | Direwolf |
+| Sabertooth | Saber | Sabertooth |
+| Megapithecus | Gorilla | Megapithecus |
+| Paraceratherium | Paraceratherium | Paraceratherium |
+| Terrorbird | TerrorBird | Terrorbird |
+| Ravager | CaveWolf | Ravager |
+| Archaeopteryx | Archaeopteryx | Archaeopteryx |
+| Quetzal | Quetzalcoatlus | Quetzal |
+| Dragon | Dragon | Dragon |
 
 All folders listed above are inside `Creatures/`. Folder spellings follow the request. ARK's Raptor is used for the requested Velociraptor; `Acrochantosaur` maps to the mod entity `acrocanthosaurus`.
 

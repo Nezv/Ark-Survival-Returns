@@ -1,6 +1,7 @@
 [
   {
     "id": "spinosaurus",
+    "realm": "LAND",
     "family": "BIG_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -8,6 +9,7 @@
   },
   {
     "id": "parasaur",
+    "realm": "LAND",
     "family": "SMALL_HERBIVORE",
     "timid": true,
     "sampled_poses": 12,
@@ -15,6 +17,7 @@
   },
   {
     "id": "ceratosaurus",
+    "realm": "LAND",
     "family": "BIG_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -22,6 +25,7 @@
   },
   {
     "id": "dilophosaur",
+    "realm": "LAND",
     "family": "SMALL_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -29,6 +33,7 @@
   },
   {
     "id": "acrocanthosaurus",
+    "realm": "LAND",
     "family": "BIG_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -36,6 +41,7 @@
   },
   {
     "id": "allosaurus",
+    "realm": "LAND",
     "family": "SMALL_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -43,6 +49,7 @@
   },
   {
     "id": "ankylosaurus",
+    "realm": "LAND",
     "family": "BIG_HERBIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -50,6 +57,7 @@
   },
   {
     "id": "carnotaurus",
+    "realm": "LAND",
     "family": "BIG_CARNIVORE",
     "timid": false,
     "sampled_poses": 12,
@@ -57,6 +65,7 @@
   },
   {
     "id": "pegomastax",
+    "realm": "LAND",
     "family": "SMALL_HERBIVORE",
     "timid": true,
     "sampled_poses": 12,
@@ -64,9 +73,186 @@
   },
   {
     "id": "lystrosaurus",
+    "realm": "LAND",
     "family": "SMALL_HERBIVORE",
     "timid": true,
     "sampled_poses": 12,
     "max_cube_coordinate_error": 2.2761158797734993e-06
+  },
+  {
+    "id": "cnidaria",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.826930766808289e-06
+  },
+  {
+    "id": "plesiosaur",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.340416341757191e-06
+  },
+  {
+    "id": "megalodon",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.3624221299201054e-06
+  },
+  {
+    "id": "liopleurodon",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.4707079049335334e-06
+  },
+  {
+    "id": "mosasaurus",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.694252683317245e-06
+  },
+  {
+    "id": "tusoteuthis",
+    "realm": "WATER",
+    "family": "AQUATIC",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.020605575443369e-06
+  },
+  {
+    "id": "kaprosuchus",
+    "realm": "AMPHIBIOUS",
+    "family": "AMPHIBIOUS",
+    "timid": false,
+    "sampled_poses": 21,
+    "max_cube_coordinate_error": 3.2364320379230094e-06
+  },
+  {
+    "id": "sarco",
+    "realm": "AMPHIBIOUS",
+    "family": "SWAMP_PACK",
+    "timid": false,
+    "sampled_poses": 21,
+    "max_cube_coordinate_error": 4.389500645629596e-06
+  },
+  {
+    "id": "deinosuchus",
+    "realm": "AMPHIBIOUS",
+    "family": "AMPHIBIOUS",
+    "timid": false,
+    "sampled_poses": 21,
+    "max_cube_coordinate_error": 4.4991719754250425e-06
+  },
+  {
+    "id": "titanoboa",
+    "realm": "AMPHIBIOUS",
+    "family": "AMPHIBIOUS",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.4865405353912138e-06
+  },
+  {
+    "id": "megalocerus",
+    "realm": "LAND",
+    "family": "COLD_GRAZER",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.202540970193013e-06
+  },
+  {
+    "id": "unicorn",
+    "realm": "LAND",
+    "family": "RARE_GRAZER",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.310861268701615e-06
+  },
+  {
+    "id": "mammoth",
+    "realm": "LAND",
+    "family": "COLD_BROWSER",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.6968483456689682e-06
+  },
+  {
+    "id": "direwolf",
+    "realm": "LAND",
+    "family": "COLD_PREDATOR",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.0194598217292423e-06
+  },
+  {
+    "id": "sabertooth",
+    "realm": "LAND",
+    "family": "COLD_STALKER",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.9599524002120745e-06
+  },
+  {
+    "id": "megapithecus",
+    "realm": "LAND",
+    "family": "GUARDIAN",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.3858495154248658e-06
+  },
+  {
+    "id": "paraceratherium",
+    "realm": "LAND",
+    "family": "BIG_HERBIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 2.94661885114067e-06
+  },
+  {
+    "id": "terrorbird",
+    "realm": "LAND",
+    "family": "SMALL_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.4269545494680642e-06
+  },
+  {
+    "id": "ravager",
+    "realm": "LAND",
+    "family": "SMALL_CARNIVORE",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.847616003582743e-06
+  },
+  {
+    "id": "archaeopteryx",
+    "realm": "AIR",
+    "family": "GLIDER",
+    "timid": true,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 4.03284241345947e-06
+  },
+  {
+    "id": "quetzal",
+    "realm": "AIR",
+    "family": "GIANT_FLYER",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.0776366557461188e-06
+  },
+  {
+    "id": "dragon",
+    "realm": "AIR",
+    "family": "APEX_FLYER",
+    "timid": false,
+    "sampled_poses": 12,
+    "max_cube_coordinate_error": 3.5397976461126746e-06
   }
 ]
