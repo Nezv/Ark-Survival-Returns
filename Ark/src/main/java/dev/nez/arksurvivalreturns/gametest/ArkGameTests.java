@@ -41,6 +41,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("aquatic_ecology", () -> AquaticGameTests::ecology);
         FUNCTIONS.register("collection_registration", () -> CollectionGameTests::registration);
         FUNCTIONS.register("collection_cold", () -> CollectionGameTests::cold);
+        FUNCTIONS.register("theme_alignment", () -> ThemeGameTests::run);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

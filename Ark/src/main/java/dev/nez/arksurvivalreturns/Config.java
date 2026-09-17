@@ -28,6 +28,7 @@ public final class Config {
     public static final ModConfigSpec.IntValue GROUPS_PER_PASS;
     public static final ModConfigSpec.IntValue BAND_WIDTH;
     public static final ModConfigSpec.BooleanValue BIOME_MESSAGES;
+    public static final ModConfigSpec.BooleanValue THEME_DIMENSIONS, THEME_MONSTERS, THEME_MECHANICS;
     public static final ModConfigSpec.BooleanValue MAP_REQUIRES_UNLOCK;
     public static final EnumMap<Species, ModConfigSpec.IntValue> WEIGHTS = new EnumMap<>(Species.class);
     public static final ModConfigSpec.DoubleValue HEALTH_GROWTH;
@@ -113,6 +114,10 @@ public final class Config {
         FLIGHT_LEASH = b.comment("Maximum horizontal chase distance from the habitat center.").defineInRange("defenseRadius", 64, 56, 80);
         EGG_DEFENSE_TICKS = b.comment("Maximum defense duration after each actual egg disturbance.").defineInRange("eggDefenseTicks", 600, 100, 1200);
         PERCHING = b.comment("Independent landing/rest/takeoff at safe nest perches; no hunger or thirst.").define("perching", true);
+        b.pop().push("theme");
+        THEME_DIMENSIONS = b.comment("Refuse Nether and End access, and return players already inside those dimensions to the Overworld. Portal structures, structures, loot and advancements are removed by the data pack either way.").define("dimensions", true);
+        THEME_MONSTERS = b.comment("Block every survival creation route for removed creatures, including spawners, conversions and creative spawn eggs. Generated biome spawn lists are cleaned by the data pack either way.").define("monsters", true);
+        THEME_MECHANICS = b.comment("Refuse enchanting, brewing, teleportation, magical infrastructure, sculk, totems, golems, the Wither build and elytra flight in worlds that already contain them.").define("mechanics", true);
         b.pop().push("display");
         BIOME_MESSAGES = b.define("biomeEntryMessages", true);
         HEALTH_BAR = b.define("targetHealthBar", true);

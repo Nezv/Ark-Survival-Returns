@@ -49,6 +49,83 @@ registered with realms, group settings, saved homes, day routines and night rout
 - Asset validation passed for 41 creatures, 298 clips, 5 nests and 51 item definitions with unchanged source hashes; the expansion validator checked 411 sampled poses against the source rigs.
 - Remaining work is visual: movement and containment in real terrain, nest and egg appearance, cold-biome balance and marker readability.
 
+## Theme Alignment — 2026-09-16
+
+The mod is a prehistoric survival experience, so Minecraft's fantasy and alternate-dimension
+content no longer competes with hunting, herding and reading terrain. Detailed decisions,
+retained material sources and limitations are in
+[theme alignment](Ark/docs/theme-alignment.md).
+
+### Removed
+
+- Nether and End access: portals cannot be lit, every dimension change is cancelled,
+  `allow_entering_nether_using_portals` is forced off, and ruined portals, strongholds, end
+  cities, fortresses and bastions no longer generate. Players already inside either dimension
+  are returned to safe Overworld ground on join and on respawn.
+- Fantasy hostiles with every variant of this version: zombies, drowned, husks, zombie
+  villagers and the zombie aquatic, camel and horse forms; skeletons, strays, bogged, parched
+  and wither skeletons; creepers; endermen, endermites, shulkers and the Ender Dragon;
+  witches and all illagers with vexes and ravagers; phantoms; slimes, magma cubes and sulfur
+  cubes; guardians; blazes, breezes and ghasts; piglins, hoglins and zoglins; wardens and the
+  creaking; silverfish; cave spiders; iron, snow and copper golems; and the Wither. Spawn
+  eggs of removed creatures are hidden from the creative listings.
+- Enchanting: the table cannot be used or crafted, enchanted books and golden apples are gone,
+  and enchantment functions are stripped from generated loot and trades.
+- Brewing and supernatural potions, tipped arrows and their ingredients; ender pearls, eyes of
+  ender, ender chests and chorus fruit; totems of undying; soul items; beacons, conduits,
+  respawn anchors and lodestones; elytra and firework rockets; sculk spreading, catalysts,
+  shriekers and sensors; and the netherite, nether star, dragon, echo shard and shulker
+  progression tiers, with the trial chamber rewards.
+- Monster rooms, trial chambers, ancient cities, woodland mansions, pillager outposts, witch
+  huts and ocean monuments from world generation, plus raids, patrols, sieges, phantom flybys
+  and infested-block silverfish.
+
+### Added
+
+- Bones from animal carcasses: 23 vanilla animals drop 1–2 bones at 75%, so bone meal, wolf
+  taming and bone blocks survive the removal of skeletons.
+- A grounded copper bulb family: the Nether blaze rod in its centre becomes a torch, so every
+  copper and redstone bulb variant stays craftable.
+
+### Changed
+
+- Ordinary spiders, every ordinary animal, villagers and wandering traders are kept, and the
+  mod's own creatures are untouched. Gunpowder and slime balls keep the wandering trader as
+  their grounded source; string, leather, feathers and wool never needed one.
+- New `theme` server config section (`dimensions`, `monsters`, `mechanics`, all `true`) that
+  switches the runtime guards off for debugging. The generated data removals always apply.
+- Raids, patrols, phantom and warden game rules are re-applied on every server start.
+
+### Compatibility and known limitations
+
+- No save is rewritten: dimension ids, registries and saved data are untouched, existing
+  creatures are removed as their chunks load, and characters inside a removed dimension are
+  moved out. Both server and clients need the update.
+- Content already generated in an existing world stays, so leftover sculk can keep spreading
+  from catalysts, and disabled structures can still be looted. Block and removed-creature
+  loot tables cannot be re-encoded and keep their original contents; chests, fishing,
+  archaeology, village and structure loot are filtered, and the log lists what was skipped.
+- Tridents, prismarine, sponge, shulker boxes, nautilus shells, hearts of the sea, fire
+  charges and the Mojang banner pattern have no source left, and no replacement recipe was
+  invented for them beyond the copper bulb.
+- Interactive balance, the new bone supply and the return positions of player-owned worlds
+  still need playtesting. No client was launched.
+
+### Validation
+
+- Data generation passed, writing 115 new resources: the removed-creature and biome tags, both
+  biome modifiers, 11 emptied structure sets, 66 unreachable advancements, 23 filtered trade
+  tags, 8 grounded copper bulb recipes, the animal bone loot modifier and the new test
+  instance.
+- Gradle build passed with 32 JUnit tests, no failures or skips.
+- All 20 required headless GameTests passed, including the new `theme_alignment` test, which
+  checks the removal lists against loaded registries, refuses ten removed creature families
+  while a control animal joins, verifies biome spawn lists and features, the 11 disabled and
+  4 surviving structure sets, removed and surviving recipes including the re-authored copper
+  bulb, four sanitized loot tables,
+  filtered and surviving trades, seven disabled advancements, the dimension rules, cancelled
+  portal travel, the safe Overworld return position, and bones from animal carcasses.
+
 ## Land Ecosystem & Behavior — 2026-09-14
 
 Persistent water-associated homes, coordinated herds and discoverable land habitats.

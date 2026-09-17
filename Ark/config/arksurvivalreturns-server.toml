@@ -1098,3 +1098,11 @@
 	# Default: 32
 	# Range: 8 ~ 64
 	targetRange = 32
+
+[theme]
+	#Refuse Nether and End access, and return players already inside those dimensions to the Overworld. Portal structures, structures, loot and advancements are removed by the data pack either way.
+	dimensions = true
+	#Block every survival creation route for removed creatures, including spawners, conversions and creative spawn eggs. Generated biome spawn lists are cleaned by the data pack either way.
+	monsters = true
+	#Refuse enchanting, brewing, teleportation, magical infrastructure, sculk, totems, golems, the Wither build and elytra flight in worlds that already contain them.
+	mechanics = true

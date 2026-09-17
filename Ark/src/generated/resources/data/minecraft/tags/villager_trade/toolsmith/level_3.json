@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "#minecraft:common_smith/level_3",
+    "minecraft:toolsmith/3/flint_emerald",
+    "minecraft:toolsmith/3/emerald_diamond_hoe"
+  ]
+}

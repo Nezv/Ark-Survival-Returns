@@ -1,0 +1,5 @@
+{
+  "type": "neoforge:remove_spawns",
+  "biomes": "#arksurvivalreturns:theme/all_dimensions",
+  "entity_types": "#arksurvivalreturns:theme/removed"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "waxed_copper_bulb",
+  "key": {
+    "C": "minecraft:waxed_copper_block",
+    "R": "minecraft:redstone",
+    "T": "minecraft:torch"
+  },
+  "pattern": [
+    " C ",
+    "CTC",
+    " R "
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:waxed_copper_bulb"
+  }
+}

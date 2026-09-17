@@ -7,10 +7,13 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Mod(ArkSurvivalReturns.MOD_ID)
 public final class ArkSurvivalReturns {
     public static final String MOD_ID = "arksurvivalreturns";
+    public static final Logger LOGGER = LoggerFactory.getLogger("Ark Survival Returns");
 
     public ArkSurvivalReturns(IEventBus bus, ModContainer container) {
         ModContent.ENTITIES.register(bus);

@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "#minecraft:common_smith/level_4",
+    "minecraft:weaponsmith/4/diamond_emerald"
+  ]
+}

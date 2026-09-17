@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); flying(); tests();
+        tags(); models(); berries(); flying(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -167,6 +167,68 @@ public final class ArkData implements DataProvider {
         put("assets/" + NS + "/models/item/" + id, Map.of("parent", "minecraft:item/generated", "textures", Map.of("layer0", NS + ":item/" + id)));
         put("assets/" + NS + "/items/" + id, Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":item/" + id)));
     }
+    /**
+     * Removals the theme enforces through data: biome spawn lists and features, structure sets,
+     * village trades, advancements and the grounded source for bones.
+     */
+    private void theme() {
+        tag("entity_type/theme/removed", dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.REMOVED_ENTITIES.toArray(String[]::new));
+        // One tag covers every vanilla dimension; modded biomes rely on the runtime guards.
+        tag("worldgen/biome/theme/all_dimensions", "#minecraft:is_overworld", "#minecraft:is_nether", "#minecraft:is_end");
+        put("data/" + NS + "/neoforge/biome_modifier/remove_fantasy_spawns", Map.of(
+                "type", "neoforge:remove_spawns",
+                "biomes", "#" + NS + ":theme/all_dimensions",
+                "entity_types", "#" + NS + ":theme/removed"));
+        put("data/" + NS + "/neoforge/biome_modifier/remove_fantasy_features", Map.of(
+                "type", "neoforge:remove_features",
+                "biomes", "#" + NS + ":theme/all_dimensions",
+                "features", dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.REMOVED_FEATURES));
+        // An empty structure list removes the set from world generation entirely, so the
+        // replacement placement is never read; it only has to stay schema valid.
+        var emptySet = Map.of("structures", List.of(), "placement", Map.of(
+                "type", "minecraft:random_spread", "spacing", 32, "separation", 8, "salt", 0));
+        for (String set : dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.DISABLED_STRUCTURE_SETS) {
+            put("data/minecraft/worldgen/structure_set/" + set, emptySet);
+        }
+        // Replaced advancements keep their file path, so saved progress is simply never granted.
+        var unreachable = Map.of("criteria", Map.of("theme_removed", Map.of("trigger", "minecraft:impossible")));
+        for (String path : dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.DISABLED_ADVANCEMENTS) {
+            put("data/minecraft/advancement/" + path, unreachable);
+        }
+        dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.TRADE_TAGS.forEach((path, values) -> put(
+                "data/minecraft/tags/villager_trade/" + path, Map.of("replace", true, "values", values)));
+        // The copper bulb is an ordinary copper and redstone block whose vanilla recipe needs a
+        // blaze rod. A torch keeps every variant craftable from Overworld materials.
+        for (String copper : List.of("copper_block", "exposed_copper", "weathered_copper", "oxidized_copper",
+                "waxed_copper_block", "waxed_exposed_copper", "waxed_weathered_copper", "waxed_oxidized_copper")) {
+            String bulb = copper.replace("_block", "") + "_bulb";
+            json("data/minecraft/recipe/" + bulb, """
+                {"type":"minecraft:crafting_shaped","category":"redstone","group":"%s",
+                 "key":{"C":"minecraft:%s","T":"minecraft:torch","R":"minecraft:redstone"},
+                 "pattern":[" C ","CTC"," R "],"result":{"count":4,"id":"minecraft:%s"}}
+                """.formatted(bulb, copper, bulb));
+        }
+        bones();
+    }
+
+    /** Bones move from skeletons to animal carcasses, keeping bone meal and wolf taming usable. */
+    private void bones() {
+        var terms = new ArrayList<Map<String, Object>>();
+        for (String animal : dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.BONE_ANIMALS) {
+            terms.add(Map.of("condition", "neoforge:loot_table_id", "loot_table_id", "minecraft:entities/" + animal));
+        }
+        put("data/" + NS + "/loot_modifiers/animal_bones", Map.of(
+                "type", "neoforge:add_table",
+                "table", NS + ":gameplay/animal_bones",
+                "conditions", List.of(Map.of("condition", "minecraft:any_of", "terms", terms))));
+        json("data/" + NS + "/loot_table/gameplay/animal_bones", """
+            {"type":"minecraft:entity","pools":[{"rolls":1,"conditions":[
+                {"condition":"minecraft:random_chance","chance":0.75}],
+                "entries":[{"type":"minecraft:item","name":"minecraft:bone"}],
+                "functions":[{"function":"minecraft:set_count","count":{"type":"minecraft:uniform","min":1,"max":2}}]}]}
+            """);
+    }
+
     private void berries() {
         // NeoForge 26.2 discovers each modifier directly; no legacy global list file.
         json("data/" + NS + "/loot_modifiers/grass_berries", """
@@ -260,5 +322,7 @@ public final class ArkData implements DataProvider {
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
         put("data/" + NS + "/test_instance/debug_spyglass", Map.of("type", "minecraft:function", "function", NS + ":debug_spyglass",
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 100, "sky_access", true));
+        put("data/" + NS + "/test_instance/theme_alignment", Map.of("type", "minecraft:function", "function", NS + ":theme_alignment",
+                "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 200, "sky_access", true));
     }
 }
