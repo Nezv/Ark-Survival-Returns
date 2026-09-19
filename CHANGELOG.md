@@ -2,6 +2,19 @@
 
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
 
+## Anatomy-Driven Creature Textures — 2026-09-19
+
+- All 41 runtime creatures now ship with five procedurally painted variants: Ivory, Darken, Emerald,
+  Midnight and Burgundy. Each creature keeps one stable variant from its UUID, so its appearance survives
+  saves and is consistent for every client.
+- The shared texture pipeline classifies every rig into an anatomical body plan, derives ventral/dorsal,
+  head, jaw, limb, eye, tongue, claw, nail and horn regions from the fitted geometry, and paints seeded,
+  bilateral 3×3-pixel cells. Variant atlases and their matching UV geometry are imported into the mod.
+- Added `Creatures/Textures.py` as the complete-roster generator and `Creatures/textures.md` as its anatomy
+  and density matrix. The former Giganotosaur-only painter no longer requires SciPy.
+- Validated 205 runtime variant textures across 41 generated UV geometries, all four brush tests, and the
+  full Gradle build.
+
 ## Taming, Torpor & Riding — 2026-09-16
 
 All 41 registered creatures can now be tamed, saddled and ridden. Torpor, taming and riding share one

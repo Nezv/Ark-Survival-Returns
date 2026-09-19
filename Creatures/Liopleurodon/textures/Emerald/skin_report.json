@@ -1,0 +1,263 @@
+{
+  "creature": "Liopleurodon",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        16,
+        48,
+        11
+      ],
+      [
+        19,
+        51,
+        14
+      ],
+      [
+        22,
+        54,
+        17
+      ],
+      [
+        25,
+        57,
+        20
+      ],
+      [
+        28,
+        60,
+        23
+      ]
+    ],
+    [
+      [
+        16,
+        39,
+        7
+      ],
+      [
+        19,
+        42,
+        10
+      ],
+      [
+        22,
+        45,
+        13
+      ],
+      [
+        25,
+        48,
+        16
+      ],
+      [
+        28,
+        51,
+        19
+      ]
+    ],
+    [
+      [
+        8,
+        30,
+        2
+      ],
+      [
+        11,
+        33,
+        5
+      ],
+      [
+        14,
+        36,
+        8
+      ],
+      [
+        17,
+        39,
+        11
+      ],
+      [
+        20,
+        42,
+        14
+      ]
+    ],
+    [
+      [
+        2,
+        22,
+        0
+      ],
+      [
+        5,
+        25,
+        2
+      ],
+      [
+        8,
+        28,
+        5
+      ],
+      [
+        11,
+        31,
+        8
+      ],
+      [
+        14,
+        34,
+        11
+      ]
+    ],
+    [
+      [
+        1,
+        11,
+        0
+      ],
+      [
+        4,
+        14,
+        1
+      ],
+      [
+        7,
+        17,
+        4
+      ],
+      [
+        10,
+        20,
+        7
+      ],
+      [
+        13,
+        23,
+        10
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#163611",
+    "#162d0d",
+    "#0e2408",
+    "#081c05",
+    "#071104"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 384,
+  "cubes": 133,
+  "faces": 798,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 261,
+  "self_mirrored_faces": 276,
+  "unpaired_cubes": [],
+  "random_brush_cells": 5273,
+  "non_base_shade_fraction": 0.8026,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 1064,
+    "seam_delta_mean": 9.55,
+    "seam_delta_max": 32.0,
+    "palette_colors": 36
+  },
+  "anatomy": "Marine flipper",
+  "variant": "Emerald"
+}

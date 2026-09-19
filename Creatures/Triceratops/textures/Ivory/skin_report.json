@@ -1,0 +1,263 @@
+{
+  "creature": "Triceratops",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        206,
+        201,
+        188
+      ],
+      [
+        209,
+        204,
+        191
+      ],
+      [
+        212,
+        207,
+        194
+      ],
+      [
+        215,
+        210,
+        197
+      ],
+      [
+        218,
+        213,
+        200
+      ]
+    ],
+    [
+      [
+        195,
+        190,
+        178
+      ],
+      [
+        198,
+        193,
+        181
+      ],
+      [
+        201,
+        196,
+        184
+      ],
+      [
+        204,
+        199,
+        187
+      ],
+      [
+        207,
+        202,
+        190
+      ]
+    ],
+    [
+      [
+        183,
+        177,
+        165
+      ],
+      [
+        186,
+        180,
+        168
+      ],
+      [
+        189,
+        183,
+        171
+      ],
+      [
+        192,
+        186,
+        174
+      ],
+      [
+        195,
+        189,
+        177
+      ]
+    ],
+    [
+      [
+        170,
+        163,
+        154
+      ],
+      [
+        173,
+        166,
+        157
+      ],
+      [
+        176,
+        169,
+        160
+      ],
+      [
+        179,
+        172,
+        163
+      ],
+      [
+        182,
+        175,
+        166
+      ]
+    ],
+    [
+      [
+        153,
+        147,
+        140
+      ],
+      [
+        156,
+        150,
+        143
+      ],
+      [
+        159,
+        153,
+        146
+      ],
+      [
+        162,
+        156,
+        149
+      ],
+      [
+        165,
+        159,
+        152
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#d4cfc2",
+    "#c9c4b8",
+    "#bdb7ab",
+    "#b0a9a0",
+    "#9f9992"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 512,
+  "cubes": 258,
+  "faces": 1548,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 634,
+  "self_mirrored_faces": 280,
+  "unpaired_cubes": [],
+  "random_brush_cells": 6254,
+  "non_base_shade_fraction": 0.8022,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 2060,
+    "seam_delta_mean": 10.9,
+    "seam_delta_max": 46.0,
+    "palette_colors": 37
+  },
+  "anatomy": "Armored or horned quadruped",
+  "variant": "Ivory"
+}

@@ -1,0 +1,263 @@
+{
+  "creature": "Titanoboa",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        86,
+        86,
+        86
+      ],
+      [
+        89,
+        89,
+        89
+      ],
+      [
+        92,
+        92,
+        92
+      ],
+      [
+        95,
+        95,
+        95
+      ],
+      [
+        98,
+        98,
+        98
+      ]
+    ],
+    [
+      [
+        63,
+        63,
+        63
+      ],
+      [
+        66,
+        66,
+        66
+      ],
+      [
+        69,
+        69,
+        69
+      ],
+      [
+        72,
+        72,
+        72
+      ],
+      [
+        75,
+        75,
+        75
+      ]
+    ],
+    [
+      [
+        42,
+        42,
+        42
+      ],
+      [
+        45,
+        45,
+        45
+      ],
+      [
+        48,
+        48,
+        48
+      ],
+      [
+        51,
+        51,
+        51
+      ],
+      [
+        54,
+        54,
+        54
+      ]
+    ],
+    [
+      [
+        21,
+        21,
+        21
+      ],
+      [
+        24,
+        24,
+        24
+      ],
+      [
+        27,
+        27,
+        27
+      ],
+      [
+        30,
+        30,
+        30
+      ],
+      [
+        33,
+        33,
+        33
+      ]
+    ],
+    [
+      [
+        4,
+        4,
+        4
+      ],
+      [
+        7,
+        7,
+        7
+      ],
+      [
+        10,
+        10,
+        10
+      ],
+      [
+        13,
+        13,
+        13
+      ],
+      [
+        16,
+        16,
+        16
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#5c5c5c",
+    "#454545",
+    "#303030",
+    "#1b1b1b",
+    "#0a0a0a"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 384,
+  "cubes": 198,
+  "faces": 1188,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 470,
+  "self_mirrored_faces": 248,
+  "unpaired_cubes": [],
+  "random_brush_cells": 2252,
+  "non_base_shade_fraction": 0.8024,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 1584,
+    "seam_delta_mean": 16.94,
+    "seam_delta_max": 161.0,
+    "palette_colors": 36
+  },
+  "anatomy": "Serpentine",
+  "variant": "Darken"
+}

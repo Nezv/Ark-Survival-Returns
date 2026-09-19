@@ -9,6 +9,7 @@ from collection_catalog import COLLECTION, import_clips
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'src/main/resources/assets/arksurvivalreturns'
+TEXTURE_VARIANTS = ('Ivory', 'Darken', 'Emerald', 'Midnight', 'Burgundy')
 # source folder, runtime id, body height in blocks, idle / locomotion / attack clips
 SPECIES = [
     ('Piterodon', 'pteranodon', 1.2, 'Ptero-Ground-Idle', 'Ptero-Ground-Move-Fwd', 'Ptero-Ground-Attack'),
@@ -131,9 +132,13 @@ def main():
     report = []
     for folder, identifier, height, *clips in SPECIES:
         source = ROOT.parent / 'Creatures' / folder
-        geo_path = next((source / 'geo').glob('*.json'))
+        painted_geometry = sorted((source / 'textures').glob('*.geo.json'))
+        geo_path = painted_geometry[0] if painted_geometry else next((source / 'geo').glob('*.json'))
         anim_path = next((source / 'animations').glob('*.json'))
-        texture_path = next((source / 'textures/entity').glob('*.png'))
+        texture_paths = {variant: source / 'textures' / variant / 'skin.png' for variant in TEXTURE_VARIANTS}
+        missing = [variant for variant, path in texture_paths.items() if not path.is_file()]
+        if missing:
+            raise FileNotFoundError(f'{folder} is missing generated texture variants: {", ".join(missing)}')
         geometry = json.loads(geo_path.read_text())
         model = geometry['minecraft:geometry'][0]
         desc = model['description']
@@ -178,13 +183,18 @@ def main():
         write(ASSETS / f'geckolib/models/entity/{identifier}.geo.json', geometry)
         write(ASSETS / f'geckolib/animations/entity/{identifier}.animation.json',
               {'format_version': '1.8.0', 'geckolib_format_version': 2, 'animations': animations})
-        destination = ASSETS / f'textures/entity/{identifier}.png'
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(texture_path, destination)
+        texture_dir = ASSETS / 'textures/entity'
+        texture_dir.mkdir(parents=True, exist_ok=True)
+        for variant, texture_path in texture_paths.items():
+            shutil.copyfile(texture_path, texture_dir / f'{identifier}_{variant.lower()}.png')
         report.append({'id': identifier, 'source': f'Creatures/{folder}', 'height_blocks': height,
                        'scale': factor, 'clips': clips,
-                       'source_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (geo_path, anim_path, texture_path)}})
+                       'source_sha256': {
+                           geo_path.name: hashlib.sha256(geo_path.read_bytes()).hexdigest(),
+                           anim_path.name: hashlib.sha256(anim_path.read_bytes()).hexdigest(),
+                           **{f'texture_{variant.lower()}': hashlib.sha256(path.read_bytes()).hexdigest()
+                              for variant, path in texture_paths.items()}}})
     write(ROOT / 'docs/creature-import.json', report)
-    print(f'Imported {len(report)} creatures, {sum(len(row[3:]) for row in SPECIES)} clips, original palettes; source projects unchanged.')
+    print(f'Imported {len(report)} creatures, {sum(len(row[3:]) for row in SPECIES)} clips, and five procedural texture variants.')
 
 if __name__ == '__main__': main()

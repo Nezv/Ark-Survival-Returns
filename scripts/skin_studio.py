@@ -26,7 +26,38 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from scipy.spatial.transform import Rotation as R
+
+class R:
+    """Small Euler rotation adapter covering the studio's SciPy usage."""
+    def __init__(self, matrix):
+        self._matrix = np.asarray(matrix, dtype=float)
+
+    @classmethod
+    def from_euler(cls, axes, angles, degrees=False):
+        values = np.atleast_1d(np.asarray(angles, dtype=float))
+        if len(values) != len(axes):
+            raise ValueError("One angle is required for each Euler axis")
+        if degrees:
+            values = np.deg2rad(values)
+        result = np.eye(3)
+        for axis, angle in zip(axes, values):
+            cosine, sine = math.cos(angle), math.sin(angle)
+            if axis == "x":
+                rotation = np.array([[1, 0, 0], [0, cosine, -sine], [0, sine, cosine]])
+            elif axis == "y":
+                rotation = np.array([[cosine, 0, sine], [0, 1, 0], [-sine, 0, cosine]])
+            elif axis == "z":
+                rotation = np.array([[cosine, -sine, 0], [sine, cosine, 0], [0, 0, 1]])
+            else:
+                raise ValueError(f"Unsupported Euler axis: {axis}")
+            result = rotation @ result
+        return cls(result)
+
+    def as_matrix(self):
+        return self._matrix.copy()
+
+    def apply(self, points):
+        return np.asarray(points) @ self._matrix.T
 
 BACKGROUND = (16, 21, 20)
 TEX_SIZES = (256, 384, 512)
@@ -47,7 +78,7 @@ FACE_NORMAL = {
     "east": (1, 0, 0), "up": (0, 1, 0), "down": (0, -1, 0),
 }
 PARTS = ["bg", "torso", "neck", "tail", "head", "jaw", "tongue", "eye",
-         "legl", "legr", "arml", "armr", "footl", "footr", "claw", "horn",
+         "leg", "legl", "legr", "arm", "arml", "armr", "foot", "footl", "footr", "claw", "horn",
          "feather", "other"]
 PART_ID = {name: index for index, name in enumerate(PARTS)}
 LIGHT = np.array([-0.35, 0.72, 0.60], np.float32)

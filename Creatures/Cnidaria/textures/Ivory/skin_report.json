@@ -1,0 +1,1168 @@
+{
+  "creature": "Cnidaria",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        206,
+        201,
+        188
+      ],
+      [
+        209,
+        204,
+        191
+      ],
+      [
+        212,
+        207,
+        194
+      ],
+      [
+        215,
+        210,
+        197
+      ],
+      [
+        218,
+        213,
+        200
+      ]
+    ],
+    [
+      [
+        195,
+        190,
+        178
+      ],
+      [
+        198,
+        193,
+        181
+      ],
+      [
+        201,
+        196,
+        184
+      ],
+      [
+        204,
+        199,
+        187
+      ],
+      [
+        207,
+        202,
+        190
+      ]
+    ],
+    [
+      [
+        183,
+        177,
+        165
+      ],
+      [
+        186,
+        180,
+        168
+      ],
+      [
+        189,
+        183,
+        171
+      ],
+      [
+        192,
+        186,
+        174
+      ],
+      [
+        195,
+        189,
+        177
+      ]
+    ],
+    [
+      [
+        170,
+        163,
+        154
+      ],
+      [
+        173,
+        166,
+        157
+      ],
+      [
+        176,
+        169,
+        160
+      ],
+      [
+        179,
+        172,
+        163
+      ],
+      [
+        182,
+        175,
+        166
+      ]
+    ],
+    [
+      [
+        153,
+        147,
+        140
+      ],
+      [
+        156,
+        150,
+        143
+      ],
+      [
+        159,
+        153,
+        146
+      ],
+      [
+        162,
+        156,
+        149
+      ],
+      [
+        165,
+        159,
+        152
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#d4cfc2",
+    "#c9c4b8",
+    "#bdb7ab",
+    "#b0a9a0",
+    "#9f9992"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 384,
+  "cubes": 292,
+  "faces": 1752,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 130,
+  "self_mirrored_faces": 136,
+  "unpaired_cubes": [
+    {
+      "bone": "bodyTop1",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop14",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop2",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop2",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop2",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 5
+    },
+    {
+      "bone": "bodyTop13",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle4",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle4",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle4",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle4",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle4",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle5",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle5",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle6",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop5",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop5",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 5
+    },
+    {
+      "bone": "bodyTop10",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle7",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle8",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle8",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle9",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop3",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop3",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop15",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle10",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle10",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle10",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle10",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle11",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle11",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle12",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop6",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop6",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 5
+    },
+    {
+      "bone": "bodyTop12",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle13",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle14",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle14",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle15",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop7",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop7",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop11",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop8",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 5
+    },
+    {
+      "bone": "bodyTop9",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle19",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle19",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle19",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle20",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle20",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle20",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle21",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop4",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop4",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop4",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 0
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 1
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 2
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 3
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 4
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 5
+    },
+    {
+      "bone": "bodyTop16",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle22",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle22",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle22",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle22",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle22",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle23",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle23",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle24",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle25",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle26",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle26",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle27",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle28",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle28",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle29",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle30",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle30",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle31",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle32",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle32",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle33",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle34",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle34",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle35",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle36",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle36",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle37",
+      "cube_index": 6
+    },
+    {
+      "bone": "tentacle38",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle38",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle39",
+      "cube_index": 5
+    },
+    {
+      "bone": "tentacle40",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle40",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle45",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle45",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle45",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle45",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle46",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle46",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle46",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle46",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle46",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle47",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle47",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle47",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle47",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle49",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle49",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle49",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle49",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle50",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle50",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle50",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle50",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle50",
+      "cube_index": 4
+    },
+    {
+      "bone": "tentacle51",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle51",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle51",
+      "cube_index": 2
+    },
+    {
+      "bone": "tentacle51",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle54",
+      "cube_index": 3
+    },
+    {
+      "bone": "tentacle57",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle58",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle58",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle59",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle59",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle61",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle62",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle63",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle65",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle66",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle66",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle67",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle67",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle69",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle70",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle70",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle71",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle71",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle73",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle74",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle74",
+      "cube_index": 1
+    },
+    {
+      "bone": "tentacle75",
+      "cube_index": 0
+    },
+    {
+      "bone": "tentacle75",
+      "cube_index": 1
+    }
+  ],
+  "random_brush_cells": 2599,
+  "non_base_shade_fraction": 0.7922,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 2336,
+    "seam_delta_mean": 8.46,
+    "seam_delta_max": 29.0,
+    "palette_colors": 26
+  },
+  "anatomy": "Cnidarian",
+  "variant": "Ivory"
+}

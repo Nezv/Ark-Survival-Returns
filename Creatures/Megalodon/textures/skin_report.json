@@ -1,0 +1,280 @@
+{
+  "creature": "Megalodon",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        180,
+        117,
+        58
+      ],
+      [
+        183,
+        120,
+        61
+      ],
+      [
+        186,
+        123,
+        64
+      ],
+      [
+        189,
+        126,
+        67
+      ],
+      [
+        192,
+        129,
+        70
+      ]
+    ],
+    [
+      [
+        144,
+        79,
+        35
+      ],
+      [
+        147,
+        82,
+        38
+      ],
+      [
+        150,
+        85,
+        41
+      ],
+      [
+        153,
+        88,
+        44
+      ],
+      [
+        156,
+        91,
+        47
+      ]
+    ],
+    [
+      [
+        102,
+        53,
+        32
+      ],
+      [
+        105,
+        56,
+        35
+      ],
+      [
+        108,
+        59,
+        38
+      ],
+      [
+        111,
+        62,
+        41
+      ],
+      [
+        114,
+        65,
+        44
+      ]
+    ],
+    [
+      [
+        71,
+        36,
+        21
+      ],
+      [
+        74,
+        39,
+        24
+      ],
+      [
+        77,
+        42,
+        27
+      ],
+      [
+        80,
+        45,
+        30
+      ],
+      [
+        83,
+        48,
+        33
+      ]
+    ],
+    [
+      [
+        48,
+        24,
+        14
+      ],
+      [
+        51,
+        27,
+        17
+      ],
+      [
+        54,
+        30,
+        20
+      ],
+      [
+        57,
+        33,
+        23
+      ],
+      [
+        60,
+        36,
+        26
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#ba7b40",
+    "#965529",
+    "#6c3b26",
+    "#4d2a1b",
+    "#361e14"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 768,
+  "cubes": 103,
+  "faces": 618,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 215,
+  "self_mirrored_faces": 164,
+  "unpaired_cubes": [
+    {
+      "bone": "c_back3",
+      "cube_index": 0
+    },
+    {
+      "bone": "c_back3",
+      "cube_index": 1
+    },
+    {
+      "bone": "c_back3",
+      "cube_index": 2
+    },
+    {
+      "bone": "c_back3",
+      "cube_index": 3
+    }
+  ],
+  "random_brush_cells": 12918,
+  "non_base_shade_fraction": 0.8017,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 824,
+    "seam_delta_mean": 11.89,
+    "seam_delta_max": 144.0,
+    "palette_colors": 33
+  },
+  "anatomy": "Shark",
+  "variant": "Base"
+}

@@ -20,6 +20,13 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
     }
 
     @Override
+    public void captureDefaultRenderState(CreatureEntity creature, Void unused, EntityRenderState state, float partialTick) {
+        super.captureDefaultRenderState(creature, unused, state, partialTick);
+        ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
+                CreatureModel.TEXTURE_VARIANT, Math.floorMod(creature.getUUID().hashCode(), 5));
+    }
+
+    @Override
     @SuppressWarnings({"rawtypes", "unchecked"}) // GeckoLib adds GeoRenderState to EntityRenderState through a runtime mixin.
     protected void applyRotations(RenderPassInfo pass, PoseStack pose, float nativeScale) {
         super.applyRotations(pass, pose, nativeScale);
