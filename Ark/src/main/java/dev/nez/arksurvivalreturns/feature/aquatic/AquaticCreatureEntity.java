@@ -8,6 +8,9 @@ import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.taming.CreatureAnimationBridge;
+import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
+import dev.nez.arksurvivalreturns.feature.taming.TorporService;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -34,11 +37,25 @@ public final class AquaticCreatureEntity extends CreatureEntity {
     @Override protected WildlifeController createController() { return new AquaticGoal(this); }
     @Override public boolean canBreatheUnderwater() { return true; }
     @Override public boolean isPushedByFluid() { return false; }
-    @Override public void travel(Vec3 input) { travelFlying(Vec3.ZERO, 0); resetFallDistance(); }
+    /** A ridden swimmer follows the rider; an unconscious one simply sinks and drifts. */
+    @Override public void travel(Vec3 input) {
+        if (isRidden()) {
+            travelFlying(input, Math.max(0.03f, CreatureRideController.riddenSpeed(this, rideProfile()) * 0.25f));
+            return;
+        }
+        if (TorporService.restricted(this)) {
+            setNoGravity(false);
+            super.travel(input);
+            return;
+        }
+        travelFlying(Vec3.ZERO, 0);
+        resetFallDistance();
+    }
     @Override protected boolean swimming() { return true; }
     @Override public void tick() {
         super.tick();
         if (level().isClientSide() || !(level() instanceof ServerLevel world)) return;
+        if (TorporService.restricted(this)) return;
         if (isInWater()) { outOfWater = 0; return; }
         outOfWater++;
         // No gravity means a beached animal would hover; sink it back toward the pool instead.
@@ -48,15 +65,22 @@ public final class AquaticCreatureEntity extends CreatureEntity {
     }
     @Override public void registerControllers(AnimatableManager.ControllerRegistrar registrar) {
         registrar.add(new AnimationController<CreatureEntity>("movement", 5, state -> {
+            String sedation = CreatureAnimationBridge.sedationClip(this, 0f);
+            if (sedation != null) {
+                state.setControllerSpeed(1f);
+                return state.setAndContinue(CreatureAnimationBridge.isOneShot(this, sedation)
+                        ? oneShot(sedation)
+                        : RawAnimation.begin().thenLoop(sedation));
+            }
             var behavior = behavior();
             boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
-            state.setControllerSpeed(state.isMoving() ? 1 : 1);
+            state.setControllerSpeed(1);
             String clip = state.isMoving() ? (running ? species().swimRun() : species().swimWalk()) : species().swimIdle();
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<CreatureEntity>("reaction", 4, state -> PlayState.STOP)
-                .triggerableAnim("warn", RawAnimation.begin().thenPlay(species().warningClip())));
+                .triggerableAnim("warn", oneShot(species().warningClip())));
         registrar.add(new AnimationController<CreatureEntity>("attack", 3, state -> PlayState.STOP)
-                .triggerableAnim("strike", RawAnimation.begin().thenPlay(species().attack)));
+                .triggerableAnim("strike", oneShot(species().attack)));
     }
 }

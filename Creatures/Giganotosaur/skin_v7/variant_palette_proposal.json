@@ -1,0 +1,58 @@
+{
+  "order": "belly -> lower flank -> flank -> upper flank -> dorsal",
+  "local_shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "brush_size_pixels": 3,
+  "noise_method": "Deterministic weighted local-palette fill in contiguous 3x3 brush cells; neighbour reuse forms small mottled runs.",
+  "midnight_note": "Midnight is ordered light-to-dark; the previous out-of-order layer-2 darkest placement was removed.",
+  "palettes": {
+    "Ivory": [
+      "#d4cfc2",
+      "#c9c4b8",
+      "#bdb7ab",
+      "#b0a9a0",
+      "#9f9992"
+    ],
+    "Darken": [
+      "#353635",
+      "#2d2e2d",
+      "#252625",
+      "#1c1d1c",
+      "#121312"
+    ],
+    "Emerald": [
+      "#081a06",
+      "#061505",
+      "#041104",
+      "#030b02",
+      "#010601"
+    ],
+    "Midnight": [
+      "#101d31",
+      "#0c1829",
+      "#081323",
+      "#050c18",
+      "#02060c"
+    ],
+    "Burgundy": [
+      "#5b2935",
+      "#4d222d",
+      "#3f1b26",
+      "#30141e",
+      "#1f0a12"
+    ],
+    "Brown": [
+      "#68402b",
+      "#543327",
+      "#43291f",
+      "#321d17",
+      "#21120c"
+    ]
+  },
+  "ivory_note": "Ivory uses the muted pale body ramp directly; no salmon accent layer is included."
+}

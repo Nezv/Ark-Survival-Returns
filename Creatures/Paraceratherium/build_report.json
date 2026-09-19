@@ -4,7 +4,7 @@
   "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
   "bone_axes": "native bind axes (nonuniform scale supported)",
   "bones": 84,
-  "cubes": 3762,
+  "cubes": 222,
   "source_vertices": 10770,
   "source_triangles": 21168,
   "animations": 32,
@@ -497,7 +497,7 @@
       "fk_validation": "All frames validated after JSON write using full affine matrices."
     }
   ],
-  "model_method": "Triangle-sampled surface cells merged into cuboids per original bone/material; fine features use smaller cells",
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences",
   "attachments": [],
   "position_key_tolerance": 0.0005,
   "rotation_key_tolerance_degrees": 0.03,
@@ -507,5 +507,14 @@
     "Palette texture is generated, not the ARK texture.",
     "Loop flags are name-based suggestions; review in Blockbench.",
     "Entity controller/state transitions, sounds and Unreal notifies are not converted."
-  ]
+  ],
+  "fitting_restoration": {
+    "mesh_only": true,
+    "previous_cubes": 3762,
+    "new_cubes": 222,
+    "skeleton_sha256": "24d333fe5563959dae73957088a05feb25b1fffb71b497a8386db7391c8551f1",
+    "embedded_animations_sha256": "d93930fd7d243487a1ee2dca1509f165a42ba5893643be7e5d6f047c4f6b54eb",
+    "protected_file_count": 109,
+    "protected_files_unchanged": true
+  }
 }

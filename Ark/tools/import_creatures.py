@@ -35,6 +35,47 @@ BEHAVIOR_CLIPS = {
     'titanosaur': ['Titanosaur-Charge-Fwd', 'Titanosaur-Eat', 'Titanosaur-Startled-Lft'],
 }
 AUTHORED_SLEEP = {'velociraptor', 'giganotosaurus', 'therizinosaurus', 'brontosaurus', 'titanosaur'}
+# Source torpor sequences, imported verbatim so knockout taming can use the authored collapse, loop,
+# feeding and wake clips instead of a standing sleep pose. Rigs without a torpor sequence keep the
+# existing fallback and are listed in docs/taming-animation-matrix.json as missing assets.
+TORPOR_CLIPS = {
+    'acrocanthosaurus':  ['Acro_Torp_In', 'Acro_Torp_Loop', 'Acro_Torp_Eat', 'Acro_Torp_Out'],
+    'allosaurus':        ['Allosaurus-Torpid-In', 'Allosaurus-Torpid-Idle', 'Allosaurus-Torpid-Eat', 'Allosaurus-Torpid-Out-Tamed', 'Allosaurus-Torpid-Out-Wild'],
+    'ankylosaurus':      ['Ankylo-Torpid-In', 'Ankylo-Torpid', 'Ankylo-Torpid-Eat', 'Ankylo-Torpid-Out-Tamed', 'Ankylo-Torpid-Out-Wild'],
+    'archaeopteryx':     ['Archaeopteryx-Torpid-In', 'Archaeopteryx-Torpid-Idle', 'Archaeopteryx-Torpid-Eat', 'Archaeopteryx-Torpid-Out-Tamed', 'Archaeopteryx-Torpid-Out-Wild'],
+    'argentavis':        ['Argentavis-Torpid-In', 'Argentavis-Torpid-Idle', 'Argentavis-Torpid-Eat', 'Argentavis-Torpid-Out-Tamed', 'Argentavis-Torpid-Out-Wild'],
+    'brontosaurus':      ['Sauropod-Torpid-In', 'Sauropod-Torpid', 'Sauropod-Torpid-Eat', 'Sauropod-Torpid-Out-Tamed', 'Sauropod-Torpid-Out-Wild'],
+    'carnotaurus':       ['Carno-Torpid-In', 'Carno-Torpid-Idle', 'Carno-Torpid-Eat', 'Carno-Torpid-Out-Tamed', 'Carno-Torpid-Out-Wild'],
+    'deinosuchus':       ['Deinosuchus_Torp_In'],
+    'dilophosaur':       ['Dilo-Torpid-In', 'Dilo-Torpid', 'Dilo-Torpid-Eat', 'Dilo-Torpid-Out-Tamed', 'Dilo-Torpid-Out-Wild'],
+    'direwolf':          ['Direwolf-Torpid-In', 'Direwolf-Torpid-Idle', 'Direwolf-Torpid-Eat', 'Direwolf-Torpid-Out-Tamed', 'Direwolf-Torpid-Out-Wild'],
+    'giganotosaurus':    ['Giganotosaurus-Torpid-In', 'Giganotosaurus-Torpid-Idle', 'Giganotosaurus-Torpid-Eat', 'Giganotosaurus-Torpid-Out-Tamed', 'Giganotosaurus-Torpid-Out-Wild'],
+    'kaprosuchus':       ['Kaprosuchus-Torpid-In', 'Kaprosuchus-Torpid-Idle', 'Kaprosuchus-Torpid-Eat', 'Kaprosuchus-Torpid-Out-Tamed', 'Kaprosuchus-Torpid-Out-Wild'],
+    'liopleurodon':      ['Liopleurodon-Torpid-In', 'Liopleurodon-Torpid-Idle', 'Liopleurodon-Torpid-Eat', 'Liopleurodon-Torpid-Out-Tamed', 'Liopleurodon-Torpid-Out-Wild'],
+    'lystrosaurus':      ['Lystrosaurus-Torpid-In', 'Lystrosaurus-Torpid-Idle', 'Lystrosaurus-Torpid-Eat', 'Lystrosaurus-Torpid-Out-Tamed', 'Lystrosaurus-Torpid-Out-Wild'],
+    'mammoth':           ['Mammoth-Torpid-In', 'Mammoth-Torpid', 'Mammoth-Torpid-Eat', 'Mammoth-Torpid-Out-Tamed', 'Mammoth-Torpid-Out-Wild'],
+    'megalocerus':       ['Stag-Torpid-In', 'Stag-Torpid-Idle', 'Stag-Torpid-Eat', 'Stag-Torpid-Out-Tamed', 'Stag-Torpid-Out-Wild'],
+    'megalodon':         ['Megalodon-Torpid-In', 'Megalodon-Torpid', 'Megalodon-Torpid-Eat', 'Megalodon-Torpid-Out-Tamed', 'Megalodon-Torpid-Out-Wild'],
+    'mosasaurus':        ['Mosasaurus-Torpid-In', 'Mosasaurus-Torpid-Idle', 'Mosasaurus-Torpid-Eat', 'Mosasaurus-Torpid-Out-Tamed', 'Mosasaurus-Torpid-Out-Wild'],
+    'paraceratherium':   ['Paraceratherium-Torpid-In', 'Paraceratherium-Torpid-Idle', 'Paraceratherium-Torpid-Eat', 'Paraceratherium-Torpid-Out-Tamed', 'Paraceratherium-Torpid-Out-Wild'],
+    'parasaur':          ['Para-Torpid-In', 'Para-Torpid', 'Para-Torpid-Eat', 'Para-Torpid-Out-Tamed', 'Para-Torpid-Out-Wild'],
+    'pegomastax':        ['Pegomastax-Torpid-In', 'Pegomastax-Torpid-Idle', 'Pegomastax-Torpid-Eat', 'Pegomastax-Torpid-Out-Tamed', 'Pegomastax-Torpid-Out-Wild'],
+    'plesiosaur':        ['Plesiosaur-Torpid-In', 'Plesiosaur-Torpid-Idle', 'Plesiosaur-Torpid-Eat', 'Plesiosaur-Torpid-Out-Tamed', 'Plesiosaur-Torpid-Out-Wild'],
+    'pteranodon':        ['Ptero-Torpid-In', 'Ptero-Torpid-Idle', 'Ptero-Torpid-Eat', 'Ptero-Torpid-Out-Tamed', 'Ptero-Torpid-Out-Wild'],
+    'quetzal':           ['Quetzalcoatlus-Torpid-In', 'Quetzalcoatlus-Torpid-Idle', 'Quetzalcoatlus-Torpid-Eat', 'Quetzalcoatlus-Torpid-Out-Tamed', 'Quetzalcoatlus-Torpid-Out-Wild'],
+    'ravager':           ['CaveWolf-Torpid-In', 'CaveWolf-Torpid-Idle', 'CaveWolf-Torpid-Eat', 'CaveWolf-Torpid-Out-Tamed', 'CaveWolf-Torpid-Out-Wild'],
+    'sabertooth':        ['Saber-Torpid-In', 'Saber-Torpid-Idle', 'Saber-Torpid-Eat', 'Saber-Torpid-Out-Tamed', 'Saber-Torpid-Out-Wild'],
+    'sarco':             ['Sarco-Ground-Torpid-In', 'Sarco-Ground-Torpid-Idle', 'Sarco-Ground-Torpid-Eat', 'Sarco-Ground-Torpid-Out-Tamed', 'Sarco-Ground-Torpid-Out-Wild'],
+    'spinosaurus':       ['Spino-Torpid-In', 'Spino-Torpid-Idle', 'Spino-Torpid-Eat', 'Spino-Torpid-Out-Tamed', 'Spino-Torpid-Out-Wild'],
+    'terrorbird':        ['TerrorBird-Torpid-In', 'TerrorBird-Torpid-Idle', 'TerrorBird-Torpid-Eat', 'TerrorBird-Torpid-Out-Tamed', 'TerrorBird-Torpid-Out-Wild'],
+    'therizinosaurus':   ['Therizinosaurus-Torpid-In', 'Therizinosaurus-Torpid-Idle', 'Therizinosaurus-Torpid-Eat', 'Therizinosaurus-Torpid-Out-Tamed', 'Therizinosaurus-Torpid-Out-Wild'],
+    'titanosaur':        ['Titanosaur-Torpid-In', 'Titanosaur-Torpid-Idle', 'Titanosaur-Torpid-Eat', 'Titanosaur-Torpid-Out-Tamed', 'Titanosaur-Torpid-Out-Wild'],
+    'triceratops':       ['Trike-Torpid-In', 'Trike-Torpid', 'Trike-Torpid-Eat', 'Trike-Torpid-Out-Tamed', 'Trike-Torpid-Out-Wild'],
+    'tusoteuthis':       ['Tusoteuthis-Torpid-In', 'Tusoteuthis-Torpid-Idle', 'Tusoteuthis-Torpid-Out-Tamed', 'Tusoteuthis-Torpid-Out-Wild'],
+    'tyrannosaurus':     ['Rex-Torpid-In', 'Rex-Torpid', 'Rex-Torpid-Eat', 'Rex-Torpid-Out-Tamed', 'Rex-Torpid-Out-Wild'],
+    'unicorn':           ['Equus-Torpid-In', 'Equus-Torpid-Idle', 'Equus-Torpid-Eat', 'Equus-Torpid-Out-Tamed', 'Equus-Torpid-Out-Wild'],
+    'velociraptor':      ['Raptor-Torpid-In', 'Raptor-Torpid', 'Raptor-Torpid-Eat', 'Raptor-Torpid-Out-Tamed', 'Raptor-Torpid-Out-Wild'],
+}
 for entry in EXPANSION:
     identifier=entry['id']
     SPECIES.append(tuple(entry[k] for k in ('folder','id','height','idle','walk','attack')))
@@ -42,11 +83,12 @@ for entry in EXPANSION:
     BEHAVIOR_CLIPS[identifier]=[entry[k] for k in ('run','food','warning')]
     AUTHORED_SLEEP.add(identifier)
 SPECIES = [(folder, identifier, height * SIZE_MULTIPLIERS.get(identifier, 2), *clips, *BEHAVIOR_CLIPS[identifier],
-            *(['Ark-Sleep'] if identifier in AUTHORED_SLEEP else []))
+            *(['Ark-Sleep'] if identifier in AUTHORED_SLEEP else []), *TORPOR_CLIPS.get(identifier, []))
            for folder, identifier, height, *clips in SPECIES]
 # The collection catalog already names its final height and complete clip set.
 for entry in COLLECTION:
-    SPECIES.append((entry['folder'], entry['id'], entry['height'], *import_clips(entry)))
+    SPECIES.append((entry['folder'], entry['id'], entry['height'], *import_clips(entry),
+                    *TORPOR_CLIPS.get(entry['id'], [])))
 
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -119,7 +161,12 @@ def main():
                 animations[name] = sleep_pose(animations[clips[0]], model, identifier)
                 continue
             clip = source_animations[name]
-            clip['loop'] = index != 2 and not any(word in name for word in ('Startled', 'Roar', 'Call', 'Attack-Bite', 'Attack-Claw', 'Swoop-Out', '-Land', 'Take-Off'))
+            if 'torp' in name.lower():
+                # Torpor sequences carry their authored one-shot/loop intent; the locomotion heuristic
+                # below is calibrated for movement clips and must not rewrite a collapse or a wake.
+                clip['loop'] = clip.get('loop', False)
+            else:
+                clip['loop'] = index != 2 and not any(word in name for word in ('Startled', 'Roar', 'Call', 'Attack-Bite', 'Attack-Claw', 'Swoop-Out', '-Land', 'Take-Off'))
             for bone_name, tracks in clip.get('bones', {}).items():
                 if 'position' in tracks:
                     tracks['position'] = scale_track(tracks['position'], factor)

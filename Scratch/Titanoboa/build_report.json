@@ -1,0 +1,250 @@
+{
+  "species": "Titanoboa",
+  "bones": 55,
+  "cubes": 150,
+  "previous_cubes": 1673,
+  "animations": 21,
+  "source_hashes": {},
+  "original_resource_hashes": {
+    "Creatures\\Titanoboa\\geo\\titanoboa.geo.json": "d0c5862c5297ca2b17e4c4576a152eff8692c14d20dd4bdff70eaa8bb1deb8ac",
+    "Creatures\\Titanoboa\\Titanoboa_GeckoLib.bbmodel": "79a63d50aa12a3354e6c11717963473285bc7a00435faf335db40638ad497ba5",
+    "Creatures\\Titanoboa\\animations\\titanoboa.animation.json": "86e830634d85f3c0c145ee4d00f21e15906e2c6ec62e1ab8037a70063bcf6810",
+    "Creatures\\Titanoboa\\source\\skeleton.json": "60645b7bf9f80e5a273adfe652f4d5d7c15566ffa9cdff8ee29f3a6c5569c3fb"
+  },
+  "members": [
+    {
+      "bone": "c_back1",
+      "vertices": 453,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back2",
+      "vertices": 375,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back3",
+      "vertices": 367,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back4",
+      "vertices": 376,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back5",
+      "vertices": 361,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back6",
+      "vertices": 431,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back7",
+      "vertices": 362,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back8",
+      "vertices": 388,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back9",
+      "vertices": 366,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back10",
+      "vertices": 361,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back11",
+      "vertices": 400,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back12",
+      "vertices": 363,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back13",
+      "vertices": 390,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back14",
+      "vertices": 369,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back15",
+      "vertices": 411,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back16",
+      "vertices": 388,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back17",
+      "vertices": 361,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back18",
+      "vertices": 362,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back19",
+      "vertices": 396,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "c_back20",
+      "vertices": 395,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back21",
+      "vertices": 406,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back22",
+      "vertices": 363,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_back23",
+      "vertices": 352,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "c_back24",
+      "vertices": 530,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "c_head",
+      "vertices": 4183,
+      "cubes": 5,
+      "accessory": false
+    },
+    {
+      "bone": "l_eye",
+      "vertices": 209,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "c_jaw",
+      "vertices": 258,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_jaw",
+      "vertices": 788,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_jaw",
+      "vertices": 791,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_eye",
+      "vertices": 209,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_frillC1",
+      "vertices": 370,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "r_frillB1",
+      "vertices": 377,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_frillA1",
+      "vertices": 200,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_frillD1",
+      "vertices": 215,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_frillA1",
+      "vertices": 200,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_frillB1",
+      "vertices": 380,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_frillC1",
+      "vertices": 376,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "l_frillD1",
+      "vertices": 215,
+      "cubes": 3,
+      "accessory": false
+    }
+  ],
+  "method": "Anatomical-frame rigid cuboid fitting; preserved joints; merged facial details",
+  "limitations": [
+    "Rigid skin approximation; facial micro motions intentionally have no separate visible cubes",
+    "Original animation preservation does not prove absence of visual gaps",
+    "No runtime Blockbench/Minecraft test"
+  ]
+}

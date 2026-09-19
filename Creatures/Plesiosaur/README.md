@@ -1,6 +1,6 @@
 # Plesiosaur
 
-ARK asset: `Plesiosaur`. 42 original mesh bones, 2204 fitted cubes, 22 original animation clips.
+ARK asset: `Plesiosaur`. 42 original mesh bones, 163 fitted cubes, 22 original animation clips.
 
 Open `Plesiosaur_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

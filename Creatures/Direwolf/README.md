@@ -1,6 +1,6 @@
 # Direwolf
 
-ARK asset: `Direwolf_New`. 89 original mesh bones, 7289 fitted cubes, 34 original animation clips.
+ARK asset: `Direwolf_New`. 89 original mesh bones, 298 fitted cubes, 34 original animation clips.
 
 Open `Direwolf_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

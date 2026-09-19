@@ -1,0 +1,124 @@
+{
+  "creature": "Giganotosaur",
+  "source_geo": "Creatures\\Giganotosaur\\geo\\giganotosaur.geo.json",
+  "source_model": "Creatures\\Giganotosaur\\Giganotosaur_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      384,
+      384
+    ],
+    "pixels_per_unit": 1.8
+  },
+  "cubes": 247,
+  "faces": 1482,
+  "atlas": {
+    "packed_height": 220,
+    "used_pixels": 60648,
+    "coverage": 0.4113
+  },
+  "parts": {
+    "torso": 21,
+    "neck": 17,
+    "tail": 38,
+    "head": 7,
+    "jaw": 6,
+    "tongue": 8,
+    "eye": 4,
+    "legl": 14,
+    "legr": 14,
+    "arml": 33,
+    "armr": 35,
+    "footl": 25,
+    "footr": 25,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#865038",
+    "#b3764b",
+    "#563127",
+    "#d09a64",
+    "#efd09a",
+    "#3a211b",
+    "#dfad3c",
+    "#a65350"
+  ],
+  "style": {
+    "stripe_period": 10.5,
+    "base_scale": 1.8,
+    "detail_scale": {
+      "head": 3.2,
+      "jaw": 2.8,
+      "tongue": 2.4,
+      "eye": 4.0,
+      "claw": 3.0
+    },
+    "quantize": true,
+    "quant_palette_colors": 20,
+    "centerline": true,
+    "brush_px": 4,
+    "body_brush_s": 2.8,
+    "body_brush_d": 0.13,
+    "tail_band_period": 8.5,
+    "tail_band_width": 2.1
+  },
+  "features": {
+    "eye_centers": [
+      [
+        -1.579,
+        26.962,
+        21.913
+      ],
+      [
+        1.579,
+        26.962,
+        21.913
+      ]
+    ],
+    "nostrils": [
+      [
+        2.769,
+        25.07,
+        28.242
+      ],
+      [
+        0.093,
+        25.07,
+        28.242
+      ]
+    ],
+    "head_frame": {
+      "forward": [
+        0.0,
+        -0.335,
+        0.942
+      ],
+      "length": 12.6,
+      "half_width": 3.041,
+      "half_height": 3.275
+    },
+    "has_jaw_profile": true
+  },
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 1976,
+    "seam_delta_mean": 20.5,
+    "seam_delta_max": 171.0,
+    "palette_colors": 19,
+    "bilateral_symmetry_delta": 1.21,
+    "atlas_used_pixels": 60648,
+    "islands_1x1": 0
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true,
+    "islands_disjoint": true,
+    "palette_within_target": true
+  }
+}

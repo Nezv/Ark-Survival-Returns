@@ -1,6 +1,6 @@
 # Megalodon
 
-ARK asset: `Megalodon`. 28 original mesh bones, 1582 fitted cubes, 23 original animation clips.
+ARK asset: `Megalodon`. 28 original mesh bones, 103 fitted cubes, 23 original animation clips.
 
 Open `Megalodon_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

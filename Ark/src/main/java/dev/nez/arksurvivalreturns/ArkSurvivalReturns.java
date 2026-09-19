@@ -20,11 +20,18 @@ public final class ArkSurvivalReturns {
         ModContent.ITEMS.register(bus);
         ModContent.BLOCKS.register(bus);
         ModContent.TABS.register(bus);
+        ModContent.MENUS.register(bus);
+        dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.register(bus);
         dev.nez.arksurvivalreturns.gametest.ArkGameTests.FUNCTIONS.register(bus);
         bus.addListener(ModContent::attributes);
         bus.addListener(SpawnRules::placements);
         container.registerConfig(ModConfig.Type.SERVER, Config.SPEC);
         container.registerConfig(ModConfig.Type.CLIENT, NighttimeClientConfig.SPEC);
+    }
+
+    /** True when the taming feature is enabled by the per-world server configuration. */
+    public static boolean tamingEnabled() {
+        return Config.TAMING_ENABLED.get();
     }
 
     public static Identifier id(String path) { return Identifier.fromNamespaceAndPath(MOD_ID, path); }

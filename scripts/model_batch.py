@@ -1,13 +1,14 @@
 """Build the source-only ice, flying, aquatic and swamp creature collection."""
 import argparse
 import json
+import re
 from pathlib import Path
 from extract_dinosaurs import ROOT,CREATURES,WORKSHOP,SPECIES,extract
 from model_catalog import MODELS
 
 GROUPS={
     'ice-and-land':['Direwolf','Megalocerus','Megapithecus','Mammoth','Unicorn','Sabertooth','Paraceratherium','Terrorbird','Ravager'],
-    'flying':['Quetzal','Archaeopteryx'],
+    'flying':['Quetzal','Archaeopteryx','Dragon'],
     'aquatic':['Tusoteuthis','Cnidaria','Mosasaurus','Megalodon','Plesiosaur','Liopleurodon'],
     'swamp':['Kaprosuchus','Deinosuchus','Sarco','Titanoboa'],
 }
@@ -24,12 +25,19 @@ def report():
     output=CREATURES/'Collection';output.mkdir(exist_ok=True)
     for group,labels in GROUPS.items():contact_sheet(ROOT,labels,output/f'{group}.png')
     contact_sheet(ROOT,list(SPECIES))
-    summary={'requested':22,'completed':len(rows),'source_only':True,
-             'pending':[{'species':'Dreadnoughtus','reason':'ARK: Survival Ascended source is not installed; local ARK is Survival Evolved.'}],
+    summary={'requested':22,'completed':len(rows),'source_only':True,'pending':[],
              'total_bones':sum(r['bones'] for r in rows),'total_cubes':sum(r['cubes'] for r in rows),
              'total_clips':sum(r['clips'] for r in rows),'total_source_frames_checked':sum(r['source_frames_checked'] for r in rows),
              'species':rows}
     (output/'model_batch_report.json').write_text(json.dumps(summary,indent=2)+'\n')
+    readme=output/'README.md'
+    if readme.exists():
+        text=readme.read_text(encoding='utf-8')
+        totals=(f"The completed projects contain {summary['total_bones']:,} original bones, "
+                f"{summary['total_cubes']:,} fitted cuboids and {summary['total_clips']:,} imported clips. "
+                f"All {summary['total_source_frames_checked']:,} source animation frames passed validation.")
+        text=re.sub(r'The completed projects contain[^\n]+',totals,text)
+        readme.write_text(text,encoding='utf-8')
     write_workflow_report()
     print(f"Source collection: {len(rows)} creatures, {summary['total_bones']} bones, {summary['total_cubes']} cubes, {summary['total_clips']} clips.")
 

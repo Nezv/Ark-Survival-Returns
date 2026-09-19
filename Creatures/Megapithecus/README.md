@@ -1,6 +1,6 @@
 # Megapithecus
 
-ARK asset: `Gorilla`. 93 original mesh bones, 22412 fitted cubes, 28 original animation clips.
+ARK asset: `Gorilla`. 93 original mesh bones, 438 fitted cubes, 28 original animation clips.
 
 Open `Megapithecus_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

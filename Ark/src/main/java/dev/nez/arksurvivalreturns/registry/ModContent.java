@@ -6,15 +6,21 @@ import java.util.Map;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.taming.CreatureMountMenu;
+import dev.nez.arksurvivalreturns.feature.taming.SedativeArrow;
+import dev.nez.arksurvivalreturns.feature.taming.SedativeArrowItem;
+import dev.nez.arksurvivalreturns.feature.taming.SedativeItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.*;
 
 public final class ModContent {
@@ -24,9 +30,21 @@ public final class ModContent {
     public static final EnumMap<Species, DeferredItem<Item>> NEST_EGGS = new EnumMap<>(Species.class);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ArkSurvivalReturns.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, ArkSurvivalReturns.MOD_ID);
     public static final EnumMap<Species, DeferredHolder<EntityType<?>, EntityType<CreatureEntity>>> CREATURES = new EnumMap<>(Species.class);
     public static final Map<String, DeferredItem<Item>> BERRIES = new LinkedHashMap<>();
     public static final EnumMap<Species, DeferredItem<SpawnEggItem>> EGGS = new EnumMap<>(Species.class);
+    /** Horse-style creature inventory, opened through the vanilla open-screen path. */
+    public static final DeferredHolder<MenuType<?>, MenuType<CreatureMountMenu>> CREATURE_MOUNT_MENU = MENUS.register(
+            "creature_mount", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
+                    new CreatureMountMenu(containerId, inventory, resolve(inventory, data))));
+    public static final DeferredHolder<EntityType<?>, EntityType<SedativeArrow>> TRANQUILIZER_ARROW = ENTITIES.register(
+            "tranquilizer_arrow", () -> EntityType.Builder.<SedativeArrow>of(SedativeArrow::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("tranquilizer_arrow"))));
+    public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
+            "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
+
     static {
         for (Species s : Species.values()) {
             var type = ENTITIES.register(s.id, () -> EntityType.Builder
@@ -49,17 +67,28 @@ public final class ModContent {
                     .sound(net.minecraft.world.level.block.SoundType.GRASS)));
             NEST_EGGS.put(s, ITEMS.registerSimpleItem(s.id + "_egg", p -> p.stacksTo(16)));
         }
-        for (String id : new String[]{"tintoberry", "amarberry", "azulberry", "narcoberry"})
+        for (String id : new String[]{"tintoberry", "amarberry", "azulberry"})
             BERRIES.put(id, ITEMS.registerSimpleItem(id, p -> p.stacksTo(64)));
+        // Narcoberry is the baseline sedative: consumed, swung or crafted into a tranquilizer arrow.
+        BERRIES.put("narcoberry", ITEMS.registerItem("narcoberry", SedativeItem::new, p -> p.stacksTo(64)));
         TABS.register("main", () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.arksurvivalreturns"))
                 .icon(() -> BERRIES.get("narcoberry").get().getDefaultInstance())
                 .displayItems((parameters, output) -> {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
+                    output.accept(TRANQUILIZER_ARROW_ITEM.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());
     }
+
+    /** Client-side menu factory: the entity is resolved from the id the server wrote, never from a load. */
+    private static CreatureEntity resolve(net.minecraft.world.entity.player.Inventory inventory,
+            net.minecraft.network.RegistryFriendlyByteBuf data) {
+        int entityId = data.readVarInt();
+        return inventory.player.level().getEntity(entityId) instanceof CreatureEntity creature ? creature : null;
+    }
+
     public static Species species(EntityType<?> type) {
         for (var e : CREATURES.entrySet()) if (e.getValue().get() == type) return e.getKey();
         throw new IllegalArgumentException("Unknown creature type: " + type);

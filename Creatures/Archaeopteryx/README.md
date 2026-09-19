@@ -1,6 +1,6 @@
 # Archaeopteryx
 
-ARK asset: `Archaeopteryx`. 135 original mesh bones, 8165 fitted cubes, 35 original animation clips.
+ARK asset: `Archaeopteryx`. 135 original mesh bones, 494 fitted cubes, 35 original animation clips.
 
 Open `Archaeopteryx_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

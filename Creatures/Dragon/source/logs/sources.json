@@ -1,0 +1,266 @@
+[
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Dragon.uasset",
+    "sha256": "abc6bd53b2b2518e6f370fa5e21a219cfe77d12bbc42f26b01d9959090621ab2",
+    "size": 2466610,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Dragon_Skeleton.uasset",
+    "sha256": "5161cb95b1abb16b1b5a1cdb693918ee956ab2989bb42f270253ec770e94774c",
+    "size": 32870,
+    "export_count": 20
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-Fire.uasset",
+    "sha256": "24af5262da5694fbdf577863903c91109d8644d069ec220026dd517005371c3b",
+    "size": 30150,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-Fire_Montage.uasset",
+    "sha256": "cc87ea1b710f0e682e29a796988e3e5e41c6b7207cba1096167cba64509a8928",
+    "size": 3352,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-Fire_Scream.uasset",
+    "sha256": "c0c827592367d0a5ee540581750fd598ff1e004bdb1ffcf044e8c69945e46ad2",
+    "size": 4126,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-SpitFire-Additive_Montage.uasset",
+    "sha256": "740609db5f96c3bde32aa94e459d5edd23b82c321a699d6ed3d243c697a7cb75",
+    "size": 4980,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-SpitFire.uasset",
+    "sha256": "1cb490f51fec520e397eb21ef59fa4e8c893cd28e961a217b14b6eda728d4849",
+    "size": 28246,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-SpitFire_Montage.uasset",
+    "sha256": "d3ac4b96f6dbe85f575eb47db182df7734fdac8bdc0bc13510f0b939236aca35",
+    "size": 4961,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Attack-Swoop-Out.uasset",
+    "sha256": "bc76f163d7a15e09686828090bc02c6555685bf724b9a34256c4137981c923a3",
+    "size": 34606,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Fwd.uasset",
+    "sha256": "c317f35e9a2f1d179ba2c8c50fb03b57c5b561416ce80f43bc91f0b33bd91c21",
+    "size": 33727,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Idle.uasset",
+    "sha256": "0d1dee56b5f6f5d2abf77709652162f47b160498067d82d3cb33ef71d3e503f9",
+    "size": 60152,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Lft.uasset",
+    "sha256": "ff4ce23ff8990e731372cb5dede3db04c443a2242117001795d3732f543d1645",
+    "size": 35247,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Fly-Rit.uasset",
+    "sha256": "1bd47fb9f04d45459faf101cf4e74da4ef42a4e21bd3f332e2b44b89a7e7b9d7",
+    "size": 35347,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Center.uasset",
+    "sha256": "bd9a9039ef922b5b3f773bb78fd92171d55ea9baee8b2a979aa6aa2c567419cc",
+    "size": 11624,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Dwn-Lft.uasset",
+    "sha256": "5095c9fa2264b143ef2f9ff26b6dab9a0ee79181cd806296ed800e90f3bd7f24",
+    "size": 11674,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Dwn-Rit.uasset",
+    "sha256": "30f79aff7c81e855de65aa2115a373421c2ba4d02936487a8891f8a754168d2e",
+    "size": 11650,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Dwn.uasset",
+    "sha256": "5c24e9f8a2ca4b90628fc30705dbf0db56717b7dc7e34e76df6ae72c72d8f255",
+    "size": 11638,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Lft.uasset",
+    "sha256": "c965a7044d834e4ccf41eeb73f2f5662b5e7f47c128f18adefbbea3543a61825",
+    "size": 11654,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Rit.uasset",
+    "sha256": "da2092feff045c0f7b611a4162c250acb85545066bc8ff852b86cd820e7d705f",
+    "size": 11638,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Up-Lft.uasset",
+    "sha256": "6b7e3ad0b44b151a939c2aceaeaee2c0d8433f04c34ea8c5d28eb176c4b5f7dc",
+    "size": 11644,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Up-Rit.uasset",
+    "sha256": "40407cd295b46fb0afd80c4883c155dd6005d2167304f6419fa8a65120903a39",
+    "size": 11656,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Aim-Up.uasset",
+    "sha256": "41541b9fc26b1910a073d416a7ef059490888bdc74a78278ef52bf2cfe8a4048",
+    "size": 11636,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-Bite.uasset",
+    "sha256": "8da57c01b48fc946a80a8a5299bba71d29b43b363cd0a22145531f91c152ce0c",
+    "size": 34272,
+    "export_count": 4
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-Bite_Montage.uasset",
+    "sha256": "85023c5407b9f29b6d262f3bca13d81c9dcaaa6b876b8d76ef9db1529cba8f26",
+    "size": 2637,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-Fire.uasset",
+    "sha256": "2b0a17b61eb8cc06df87053d6e1eca6f696def41bf59734b6c01044035edc66c",
+    "size": 47856,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-Fire_Montage.uasset",
+    "sha256": "b2b0d51d4c972c57e6a1b8bfde5698fde8dd4974fdd327a26539e4e4fd041f78",
+    "size": 2635,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-FireAlt.uasset",
+    "sha256": "6a086a4698cfac161e2888b5ae934adbe93e1b159b60f1539ad70969cd24876f",
+    "size": 42893,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-FireAlt_Montage.uasset",
+    "sha256": "7f4d2ce7c95a32baa3075bfdb056cc0abb46c3833a16ef3e5cb52e08154e27c6",
+    "size": 2560,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-SpitFire_Montage.uasset",
+    "sha256": "04438b822e455cc9248f2cbc9f4e0bec650c9be7a947743d3b1f6b6c8bcf0471",
+    "size": 5053,
+    "export_count": 5
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Attack-Wing.uasset",
+    "sha256": "f9aef3609a5fe885b4b05c4677d3f5c0dc21a95ff8525f7880b8e2d4110a2a88",
+    "size": 54984,
+    "export_count": 3
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Charge-Fwd.uasset",
+    "sha256": "a19cc3038f062baaed73aa2dffeb13aba517a7ce88f4b9fbcda065f018f0a716",
+    "size": 40423,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Charge-Lft.uasset",
+    "sha256": "d5104f7e640059ccc8067ccb7c8711fa6c323a29324dee29abfec3dd2ede2b4f",
+    "size": 41391,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Charge-Rit.uasset",
+    "sha256": "59e519aeaaec9c294b717e2d07cac5b870462cb46b9b78236561de6fad85d208",
+    "size": 41627,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Die.uasset",
+    "sha256": "50547ea4ba9e5e93673e35f227e79aa10de0ca47f34eb0ce0629a9a810267265",
+    "size": 71041,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Die_Montage.uasset",
+    "sha256": "5c6f0e6987225c5511d8966ef9bebd9dffe0e012458a1181838d23277bbb532c",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Idle.uasset",
+    "sha256": "f61608b00bca1765d968c91f0058037b8d94e3137cced89f042cc7644cdcf70a",
+    "size": 71878,
+    "export_count": 2
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Move-Fwd.uasset",
+    "sha256": "f4300808a76c6cd0eff6a813d3a2308cb36208c6f4e166ab04160e9035dfd1e0",
+    "size": 36767,
+    "export_count": 8
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Turn-Lft.uasset",
+    "sha256": "5d1266cc45d1427d16c95019ea9c3c42eb3c5f8dfdbf3ce57f5dd06bd7026730",
+    "size": 36552,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Ground-Turn-Rit.uasset",
+    "sha256": "8567df8f30142a539c79617695b2806ace78b3b28d131cbe13b8ffbd8411af36",
+    "size": 37876,
+    "export_count": 7
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Land.uasset",
+    "sha256": "24d95ed99cb6afc2190a223a3a22fb2dc89f5ecae2ecec599e31b6e9c1a7cf5c",
+    "size": 51240,
+    "export_count": 9
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Land_Montage.uasset",
+    "sha256": "889d870a315d389a2755c116f58e61ade1d24270a88b0433c3bedce556645419",
+    "size": 1816,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Take-Off.uasset",
+    "sha256": "38d3bf0055298ed7fb13df866140f79bd20a13d485500f0e6cfcc0b7debe7c4f",
+    "size": 53933,
+    "export_count": 10
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon-Take-Off_Montage.uasset",
+    "sha256": "e298b565e933f7f940f37ec9bd0e5d96f8c1f681912462d8bd36a8962cad4d78",
+    "size": 1788,
+    "export_count": 1
+  },
+  {
+    "source": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK\\ShooterGame\\Content\\PrimalEarth\\Dinos\\Dragon\\Animations\\Dragon_Ground_AimOffset.uasset",
+    "sha256": "8200c55711da1bace8ccfc7fd0f0c4223a09e987cf08d18ee6018e670c6b401e",
+    "size": 8004,
+    "export_count": 1
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "defaults": {
+    "seed": 7319,
+    "base_colors": ["#ba7b40", "#965529", "#6c3b26", "#4d2a1b", "#361e14"],
+    "shade_offsets": [-6, -3, 0, 3, 6],
+    "layer_edges": [0.2, 0.4, 0.6, 0.8],
+    "pixels_per_unit": 2.0,
+    "head_density_multiplier": 2.2
+  },
+  "creatures": {
+    "Giganotosaur": {}
+  },
+  "variants": {
+    "Ivory": {
+      "base_colors": ["#d4cfc2", "#c9c4b8", "#bdb7ab", "#b0a9a0", "#9f9992"]
+    },
+    "Darken": {
+      "base_colors": ["#5c5c5c", "#454545", "#303030", "#1b1b1b", "#0a0a0a"]
+    },
+    "Emerald": {
+      "base_colors": ["#163611", "#162d0d", "#0e2408", "#081c05", "#071104"]
+    },
+    "Midnight": {
+      "base_colors": ["#4c6380", "#3b506a", "#2b3d56", "#1b2a40", "#0d1729"]
+    },
+    "Burgundy": {
+      "base_colors": ["#a65b5d", "#8d434a", "#71303a", "#541f2a", "#35121c"]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Mammoth
 
-ARK asset: `SK_Mammoth_new`. 93 original mesh bones, 9381 fitted cubes, 41 original animation clips.
+ARK asset: `SK_Mammoth_new`. 93 original mesh bones, 373 fitted cubes, 41 original animation clips.
 
 Open `Mammoth_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

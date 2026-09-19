@@ -1,6 +1,6 @@
 # Liopleurodon
 
-ARK asset: `Liopleurodon`. 43 original mesh bones, 2239 fitted cubes, 25 original animation clips.
+ARK asset: `Liopleurodon`. 43 original mesh bones, 133 fitted cubes, 25 original animation clips.
 
 Open `Liopleurodon_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

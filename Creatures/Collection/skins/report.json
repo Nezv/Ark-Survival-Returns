@@ -1,0 +1,645 @@
+{
+  "reference": "Giganotosaur",
+  "species": [
+    "Acrochantosaur",
+    "Allosaurus",
+    "Carnotaurus",
+    "Ceratosaurus",
+    "Dilophosaur",
+    "Spinosaurus",
+    "Tyranosaur",
+    "Velociraptor",
+    "Therezinosaur"
+  ],
+  "reports": [
+    {
+      "creature": "Acrochantosaur",
+      "source_geo": "Creatures\\Acrochantosaur\\geo\\acrochantosaur.geo.json",
+      "source_model": "Creatures\\Acrochantosaur\\Acrochantosaur_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          512,
+          512
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 418,
+      "faces": 2508,
+      "atlas": {
+        "packed_height": 254,
+        "used_pixels": 93948,
+        "coverage": 0.3584
+      },
+      "parts": {
+        "torso": 50,
+        "neck": 22,
+        "tail": 84,
+        "head": 43,
+        "jaw": 9,
+        "tongue": 23,
+        "eye": 3,
+        "legl": 7,
+        "legr": 7,
+        "arml": 33,
+        "armr": 33,
+        "footl": 52,
+        "footr": 52,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#796b5c",
+        "#a89978",
+        "#4c5850",
+        "#c4b497",
+        "#e3d5b6",
+        "#28312d",
+        "#d8a741",
+        "#985b47"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -1.769,
+            40.005,
+            40.596
+          ],
+          [
+            1.549,
+            39.894,
+            40.713
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Allosaurus",
+      "source_geo": "Creatures\\Allosaurus\\geo\\allosaurus.geo.json",
+      "source_model": "Creatures\\Allosaurus\\Allosaurus_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          512,
+          512
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 167,
+      "faces": 1002,
+      "atlas": {
+        "packed_height": 143,
+        "used_pixels": 52468,
+        "coverage": 0.2001
+      },
+      "parts": {
+        "torso": 27,
+        "neck": 15,
+        "tail": 11,
+        "head": 11,
+        "jaw": 7,
+        "tongue": 4,
+        "eye": 4,
+        "legl": 4,
+        "legr": 4,
+        "arml": 22,
+        "armr": 22,
+        "footl": 18,
+        "footr": 18,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#6d775d",
+        "#a3a984",
+        "#4b5b48",
+        "#c4b795",
+        "#dfd2b0",
+        "#263328",
+        "#db9a39",
+        "#a45d49"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -2.3,
+            32.677,
+            31.802
+          ],
+          [
+            2.301,
+            32.672,
+            31.802
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Carnotaurus",
+      "source_geo": "Creatures\\Carnotaurus\\geo\\carnotaurus.geo.json",
+      "source_model": "Creatures\\Carnotaurus\\Carnotaurus_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          256,
+          256
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 162,
+      "faces": 972,
+      "atlas": {
+        "packed_height": 163,
+        "used_pixels": 28148,
+        "coverage": 0.4295
+      },
+      "parts": {
+        "torso": 20,
+        "neck": 9,
+        "tail": 17,
+        "head": 9,
+        "jaw": 6,
+        "tongue": 7,
+        "eye": 4,
+        "legl": 12,
+        "legr": 12,
+        "arml": 12,
+        "armr": 12,
+        "footl": 21,
+        "footr": 21,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#976f57",
+        "#bea083",
+        "#5c564b",
+        "#cbb693",
+        "#e8dab7",
+        "#302e29",
+        "#e3aa3e",
+        "#a75846"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -1.096,
+            26.616,
+            21.979
+          ],
+          [
+            1.095,
+            26.617,
+            21.982
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Ceratosaurus",
+      "source_geo": "Creatures\\Ceratosaurus\\geo\\ceratosaurus.geo.json",
+      "source_model": "Creatures\\Ceratosaurus\\Ceratosaurus_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          256,
+          256
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 235,
+      "faces": 1410,
+      "atlas": {
+        "packed_height": 124,
+        "used_pixels": 19032,
+        "coverage": 0.2904
+      },
+      "parts": {
+        "torso": 45,
+        "neck": 29,
+        "tail": 35,
+        "head": 9,
+        "jaw": 7,
+        "tongue": 8,
+        "eye": 2,
+        "legl": 6,
+        "legr": 6,
+        "arml": 25,
+        "armr": 25,
+        "footl": 4,
+        "footr": 4,
+        "claw": 30,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#7d675b",
+        "#b1987c",
+        "#4d5751",
+        "#c7b294",
+        "#e4d5b7",
+        "#292e29",
+        "#dc9e39",
+        "#974d41"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -0.785,
+            14.282,
+            15.7
+          ],
+          [
+            0.785,
+            14.282,
+            15.7
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Dilophosaur",
+      "source_geo": "Creatures\\Dilophosaur\\geo\\dilophosaur.geo.json",
+      "source_model": "Creatures\\Dilophosaur\\Dilophosaur_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          256,
+          256
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 275,
+      "faces": 1650,
+      "atlas": {
+        "packed_height": 47,
+        "used_pixels": 4126,
+        "coverage": 0.063
+      },
+      "parts": {
+        "torso": 21,
+        "neck": 13,
+        "tail": 46,
+        "head": 12,
+        "jaw": 5,
+        "tongue": 9,
+        "eye": 4,
+        "legl": 13,
+        "legr": 13,
+        "arml": 24,
+        "armr": 25,
+        "footl": 16,
+        "footr": 16,
+        "claw": 0,
+        "horn": 58,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#607f60",
+        "#8eab74",
+        "#3e5950",
+        "#bcb786",
+        "#e0d6aa",
+        "#25352b",
+        "#e0b33e",
+        "#b9754f"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -0.771,
+            7.753,
+            7.167
+          ],
+          [
+            0.258,
+            7.83,
+            7.238
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Spinosaurus",
+      "source_geo": "Creatures\\Spinosaurus\\geo\\spinosaurus.geo.json",
+      "source_model": "Creatures\\Spinosaurus\\Spinosaurus_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          512,
+          512
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 258,
+      "faces": 1548,
+      "atlas": {
+        "packed_height": 239,
+        "used_pixels": 88944,
+        "coverage": 0.3393
+      },
+      "parts": {
+        "torso": 37,
+        "neck": 16,
+        "tail": 29,
+        "head": 13,
+        "jaw": 6,
+        "tongue": 8,
+        "eye": 4,
+        "legl": 11,
+        "legr": 12,
+        "arml": 38,
+        "armr": 38,
+        "footl": 23,
+        "footr": 23,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#687362",
+        "#98a081",
+        "#40594e",
+        "#beb393",
+        "#e4d5b2",
+        "#232f28",
+        "#dbad44",
+        "#a35b43"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -2.134,
+            29.537,
+            35.53
+          ],
+          [
+            2.134,
+            29.537,
+            35.53
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Tyranosaur",
+      "source_geo": "Creatures\\Tyranosaur\\geo\\rex_ravager.geo.json",
+      "source_model": "Creatures\\Tyranosaur\\Rex_Ravager_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          512,
+          512
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 232,
+      "faces": 1392,
+      "atlas": {
+        "packed_height": 184,
+        "used_pixels": 68546,
+        "coverage": 0.2615
+      },
+      "parts": {
+        "torso": 29,
+        "neck": 22,
+        "tail": 35,
+        "head": 11,
+        "jaw": 6,
+        "tongue": 7,
+        "eye": 4,
+        "legl": 23,
+        "legr": 23,
+        "arml": 18,
+        "armr": 18,
+        "footl": 18,
+        "footr": 18,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#68715b",
+        "#969a79",
+        "#404f43",
+        "#bdb48e",
+        "#e4d8b4",
+        "#222d25",
+        "#dda440",
+        "#985843"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -3.059,
+            36.463,
+            27.116
+          ],
+          [
+            3.059,
+            36.463,
+            27.116
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Velociraptor",
+      "source_geo": "Creatures\\Velociraptor\\geo\\velociraptor.geo.json",
+      "source_model": "Creatures\\Velociraptor\\Velociraptor_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          256,
+          256
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 226,
+      "faces": 1356,
+      "atlas": {
+        "packed_height": 40,
+        "used_pixels": 3664,
+        "coverage": 0.0559
+      },
+      "parts": {
+        "torso": 74,
+        "neck": 9,
+        "tail": 33,
+        "head": 13,
+        "jaw": 6,
+        "tongue": 5,
+        "eye": 4,
+        "legl": 0,
+        "legr": 0,
+        "arml": 27,
+        "armr": 27,
+        "footl": 3,
+        "footr": 3,
+        "claw": 8,
+        "horn": 0,
+        "feather": 14,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#786b55",
+        "#a69673",
+        "#424f48",
+        "#c4b38c",
+        "#e5d6b0",
+        "#242c29",
+        "#da9c34",
+        "#a2563e"
+      ],
+      "features": {
+        "eye_centers": [
+          [
+            -0.49,
+            10.168,
+            5.324
+          ],
+          [
+            0.49,
+            10.175,
+            5.322
+          ]
+        ],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    },
+    {
+      "creature": "Therezinosaur",
+      "source_geo": "Creatures\\Therezinosaur\\geo\\therezinosaur.geo.json",
+      "source_model": "Creatures\\Therezinosaur\\Therezinosaur_GeckoLib.bbmodel",
+      "texture": {
+        "file": "skin.png",
+        "size": [
+          512,
+          512
+        ],
+        "pixels_per_unit": 2.0
+      },
+      "cubes": 302,
+      "faces": 1812,
+      "atlas": {
+        "packed_height": 168,
+        "used_pixels": 59562,
+        "coverage": 0.2272
+      },
+      "parts": {
+        "torso": 36,
+        "neck": 27,
+        "tail": 38,
+        "head": 13,
+        "jaw": 9,
+        "tongue": 11,
+        "eye": 0,
+        "legl": 12,
+        "legr": 12,
+        "arml": 45,
+        "armr": 45,
+        "footl": 27,
+        "footr": 27,
+        "claw": 0,
+        "horn": 0,
+        "feather": 0,
+        "other": 0
+      },
+      "unclassified_bones": [],
+      "palette": [
+        "#52615b",
+        "#889183",
+        "#344b48",
+        "#c3b799",
+        "#e0d4b0",
+        "#1d2928",
+        "#ce9a46",
+        "#854e3f"
+      ],
+      "features": {
+        "eye_centers": [],
+        "has_jaw_profile": true
+      },
+      "checks": {
+        "all_faces_in_bounds": true,
+        "all_faces_positive_size": true,
+        "face_count_matches": true,
+        "atlas_fits": true
+      }
+    }
+  ],
+  "failures": []
+}

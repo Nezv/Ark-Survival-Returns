@@ -1,0 +1,71 @@
+{
+  "creature": "Carnotaurus",
+  "source_geo": "Creatures\\Carnotaurus\\geo\\carnotaurus.geo.json",
+  "source_model": "Creatures\\Carnotaurus\\Carnotaurus_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      256,
+      256
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 162,
+  "faces": 972,
+  "atlas": {
+    "packed_height": 163,
+    "used_pixels": 28148,
+    "coverage": 0.4295
+  },
+  "parts": {
+    "torso": 20,
+    "neck": 9,
+    "tail": 17,
+    "head": 9,
+    "jaw": 6,
+    "tongue": 7,
+    "eye": 4,
+    "legl": 12,
+    "legr": 12,
+    "arml": 12,
+    "armr": 12,
+    "footl": 21,
+    "footr": 21,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#976f57",
+    "#bea083",
+    "#5c564b",
+    "#cbb693",
+    "#e8dab7",
+    "#302e29",
+    "#e3aa3e",
+    "#a75846"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -1.096,
+        26.616,
+        21.979
+      ],
+      [
+        1.095,
+        26.617,
+        21.982
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

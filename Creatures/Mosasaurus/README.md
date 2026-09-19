@@ -1,6 +1,6 @@
 # Mosasaurus
 
-ARK asset: `Mosasaurus`. 30 original mesh bones, 2058 fitted cubes, 24 original animation clips.
+ARK asset: `Mosasaurus`. 30 original mesh bones, 126 fitted cubes, 24 original animation clips.
 
 Open `Mosasaurus_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

@@ -1,6 +1,6 @@
 # Deinosuchus
 
-ARK asset: `Deinosuchus_TLC_Rig`. 63 original mesh bones, 2474 fitted cubes, 46 original animation clips.
+ARK asset: `Deinosuchus_TLC_Rig`. 63 original mesh bones, 190 fitted cubes, 46 original animation clips.
 
 Open `Deinosuchus_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

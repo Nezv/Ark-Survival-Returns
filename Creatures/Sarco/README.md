@@ -1,6 +1,6 @@
 # Sarco
 
-ARK asset: `Sarco-New`. 74 original mesh bones, 2846 fitted cubes, 41 original animation clips.
+ARK asset: `Sarco-New`. 74 original mesh bones, 191 fitted cubes, 41 original animation clips.
 
 Open `Sarco_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

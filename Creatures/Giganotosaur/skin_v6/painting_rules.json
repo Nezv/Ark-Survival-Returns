@@ -1,0 +1,17 @@
+{
+  "vertical_brush_units": 1.6,
+  "longitudinal_brush_units": 2.4,
+  "stripe_spacing_units": 12.0,
+  "stripe_width_units": 3.2,
+  "stripe_lower_limit": 0.48,
+  "minimum_body_patch_texels": 12,
+  "island_padding_texels": 2,
+  "body_value_thresholds": [
+    0.2,
+    0.34,
+    0.48,
+    0.65,
+    0.83,
+    0.96
+  ]
+}

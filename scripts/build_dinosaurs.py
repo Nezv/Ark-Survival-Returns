@@ -19,7 +19,6 @@ from ark_geometry import ROOT, Skeleton
 from ark_animation import read_clips, convert_clip, animation_tracks
 from extract_dinosaurs import SPECIES, resource_names, CREATURES, asset_directory
 from model_catalog import MODELS, NATIVE_ASSETS, PALETTES as MODEL_PALETTES
-from mesh_detail import voxel_cubes
 
 PALETTES = {
  'Spinosaurus':['#687362','#98a081','#40594e','#beb393','#e4d5b2','#232f28','#dbad44','#a35b43'],
@@ -65,6 +64,12 @@ def palette_index(bone,material,section):
     if 'tail' in text: return 2 if section%4==0 else 0
     return [0,0,1,0][section%4]
 
+def fitting_method(asset):
+    method='Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences'
+    if asset=='Stag':method+='; topology-separated antler branches fitted in connected height bands'
+    if asset=='Equus':method+='; reduced slice counts and trimmed skin bounds for a lighter Unicorn'
+    return method
+
 def fitted_cubes(s):
     """Principal-axis slices preserve source proportions and bone ownership.
 
@@ -72,12 +77,20 @@ def fitted_cubes(s):
     get swallowed by body boxes. Box thickness has a small scale-relative floor.
     These are editable rigid cuboids, not a smooth skin-weighted source mesh.
     """
-    if s.asset in NATIVE_ASSETS:return native_cubes(s,voxel_cubes(s))
+    # Mesh fitting is independent of bind-axis conventions. Native rigs still
+    # pass through native_cubes below, including their original attachments.
     result=[]
+    antlers=None
+    if s.asset=='Stag':
+        from creature_mesh_details import antler_vertices
+        antlers=antler_vertices(s)
     floor = max(.035,float(np.ptp(s.source_vertices,axis=0).max())/1800)
     for bone,name in enumerate(s.names):
         for mat,material in enumerate(s.material_names):
             points=s.surface(bone,mat)
+            if antlers is not None and name=='c_neck3':
+                indices=np.unique(np.concatenate([s.triangles[(s.face_bone==bone)&(s.face_material==mat)].ravel(),np.flatnonzero((s.dominant==bone)&(s.material==mat))]))
+                points=s.source_vertices[indices[~antlers[indices]]]
             if len(points)<3: continue
             center=points.mean(0)
             _,_,vt=np.linalg.svd(points-center,full_matrices=False)
@@ -89,6 +102,7 @@ def fitted_cubes(s):
             local=(points-center)@basis
             extent=np.ptp(local,axis=0)
             slices=max(1,min(14,int(np.ceil(len(points)/45)),int(np.ceil(extent[0]/max(floor*3,extent[1]*.28)))))
+            if s.asset=='Equus':slices=max(1,int(round(slices*.4)))
             edges=np.linspace(local[:,0].min(),local[:,0].max(),slices+1)
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore',UserWarning)
@@ -98,6 +112,10 @@ def fitted_cubes(s):
                 pts=local[mask]
                 if len(pts)<2: continue
                 lo,hi=pts.min(0),pts.max(0)
+                if s.asset=='Equus' and len(pts)>=12 and not any(t in (name+' '+material).lower() for t in ['eye','horn','ear','lip','tongue']):
+                    # Trim the rounded skin's outliers instead of making fewer,
+                    # larger bounding boxes. Keeps limbs and torso lighter.
+                    lo,hi=np.quantile(pts,[.05,.95],axis=0)
                 lo[0],hi[0]=edges[j],edges[j+1]
                 # Slight overlap hides seams between slices during rotation.
                 mid=(lo+hi)/2
@@ -107,6 +125,10 @@ def fitted_cubes(s):
                 result.append({'bone':bone,'name':f'{name} / {material} / {j+1}',
                                'origin':origin,'size':size,'pivot':center,'rotation':euler,
                                'palette':palette_index(name,material,j)})
+    if antlers is not None:
+        from creature_mesh_details import antler_cubes
+        result.extend(antler_cubes(s,antlers))
+        result.sort(key=lambda cube:cube['bone'])
     assert result and all(np.all(c['size']>0) for c in result)
     return native_cubes(s,result)
 
@@ -241,8 +263,7 @@ def build(label,refresh=False):
         'bone_axes':'native bind axes (nonuniform scale supported)' if s.native_bind_axes else 'baked world bind axes',
         'bones':len(s.names),'cubes':len(cubes),'source_vertices':len(s.source_vertices),'source_triangles':s.faces,
         'animations':len(animations),'source_hashes':hashes,'clips':reports,
-        'model_method':('Triangle-sampled surface cells merged into cuboids per original bone/material; fine features use smaller cells'
-                        if asset in NATIVE_ASSETS else 'Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences'),
+        'model_method':fitting_method(asset),
         'attachments':MODELS.get(label,{}).get('extras',[]),
         'position_key_tolerance':.0005,'rotation_key_tolerance_degrees':.03,
         'timing_adjustments':[{'clip':c['name'],'note':c['timing_note']} for c in reports if c['timing_note']],

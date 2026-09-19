@@ -1,6 +1,6 @@
 # Paraceratherium
 
-ARK asset: `Paraceratherium`. 84 original mesh bones, 3762 fitted cubes, 32 original animation clips.
+ARK asset: `Paraceratherium`. 84 original mesh bones, 222 fitted cubes, 32 original animation clips.
 
 Open `Paraceratherium_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

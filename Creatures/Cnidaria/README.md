@@ -1,6 +1,6 @@
 # Cnidaria
 
-ARK asset: `Cnidaria`. 85 original mesh bones, 2539 fitted cubes, 5 original animation clips.
+ARK asset: `Cnidaria`. 85 original mesh bones, 292 fitted cubes, 5 original animation clips.
 
 Open `Cnidaria_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

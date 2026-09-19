@@ -3,7 +3,7 @@
   "clips": 34,
   "source_frames_checked": 2019,
   "bones": 133,
-  "cubes": 3889,
+  "cubes": 355,
   "max_rotation_key_error_degrees": 0.02999917976005051,
   "max_position_key_error_model_units": 0.000499778886677904,
   "max_world_bone_error_model_units": 0.10708387216037304,

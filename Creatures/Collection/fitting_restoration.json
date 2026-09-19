@@ -1,0 +1,13 @@
+{
+  "method": "principal-axis cuboid slices",
+  "species": [
+    {
+      "species": "Megalocerus",
+      "before": 299,
+      "after": 397,
+      "clips": 36,
+      "source_frames": 1812,
+      "preserved": true
+    }
+  ]
+}

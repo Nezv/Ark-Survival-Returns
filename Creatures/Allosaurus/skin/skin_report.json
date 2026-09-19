@@ -1,0 +1,71 @@
+{
+  "creature": "Allosaurus",
+  "source_geo": "Creatures\\Allosaurus\\geo\\allosaurus.geo.json",
+  "source_model": "Creatures\\Allosaurus\\Allosaurus_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      512,
+      512
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 167,
+  "faces": 1002,
+  "atlas": {
+    "packed_height": 143,
+    "used_pixels": 52468,
+    "coverage": 0.2001
+  },
+  "parts": {
+    "torso": 27,
+    "neck": 15,
+    "tail": 11,
+    "head": 11,
+    "jaw": 7,
+    "tongue": 4,
+    "eye": 4,
+    "legl": 4,
+    "legr": 4,
+    "arml": 22,
+    "armr": 22,
+    "footl": 18,
+    "footr": 18,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#6d775d",
+    "#a3a984",
+    "#4b5b48",
+    "#c4b795",
+    "#dfd2b0",
+    "#263328",
+    "#db9a39",
+    "#a45d49"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -2.3,
+        32.677,
+        31.802
+      ],
+      [
+        2.301,
+        32.672,
+        31.802
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

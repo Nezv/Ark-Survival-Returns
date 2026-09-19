@@ -1,6 +1,6 @@
 # Titanoboa
 
-ARK asset: `BoaFrill`. 55 original mesh bones, 1673 fitted cubes, 21 original animation clips.
+ARK asset: `BoaFrill`. 55 original mesh bones, 198 fitted cubes, 21 original animation clips.
 
 Open `Titanoboa_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

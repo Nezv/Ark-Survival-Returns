@@ -1,6 +1,6 @@
 # Quetzal
 
-ARK asset: `Quetzalcoatlus`. 133 original mesh bones, 3889 fitted cubes, 34 original animation clips.
+ARK asset: `Quetzalcoatlus`. 133 original mesh bones, 355 fitted cubes, 34 original animation clips.
 
 Open `Quetzal_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

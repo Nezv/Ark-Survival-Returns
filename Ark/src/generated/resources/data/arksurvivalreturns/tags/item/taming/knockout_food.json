@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#arksurvivalreturns:taming/plant_food",
+    "#arksurvivalreturns:taming/raw_meat",
+    "#arksurvivalreturns:taming/fish"
+  ]
+}

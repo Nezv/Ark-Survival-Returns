@@ -1,6 +1,10 @@
 # Taming patch proposal
 
-Prepared 2026-09-13, America/Sao_Paulo. **Stage: proposal for feedback; no gameplay implemented.**
+Prepared 2026-09-13, America/Sao_Paulo. **Stage: implemented on 2026-09-16; see
+[the taming roster](taming-roster.md) and [the debugging guide](taming-debugging.md) for what shipped.**
+The dates, counts and species list below describe the proposal as it was written, when the roster was 19
+species and no torpor assets were imported; treat this file as the design record rather than current
+documentation.
 
 [Standard.md](../../Standard.md) requires concept expansion, comparison with other projects and multiplayer estimates before implementation feedback. This report completes that stage. Proposed features are deliberately absent from the implemented-change lists in [CHANGELOG.md](../../CHANGELOG.md).
 

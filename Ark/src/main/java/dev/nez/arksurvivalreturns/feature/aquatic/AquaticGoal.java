@@ -63,6 +63,8 @@ public final class AquaticGoal extends WildlifeController {
     @Override public boolean canContinueToUse() { return canUse(); }
     @Override public boolean requiresUpdateEveryTick() { return true; }
     @Override public void tick() {
+        // A rider owns the mount's velocity; the swimming routine must not overwrite it.
+        if (mob.isRidden()) { mob.getNavigation().stop(); return; }
         if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think();
         if (mob.level() instanceof ServerLevel world) keepSubmerged(world);
     }

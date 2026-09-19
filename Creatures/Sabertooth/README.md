@@ -1,6 +1,6 @@
 # Sabertooth
 
-ARK asset: `Saber`. 91 original mesh bones, 4963 fitted cubes, 35 original animation clips.
+ARK asset: `Saber`. 91 original mesh bones, 242 fitted cubes, 35 original animation clips.
 
 Open `Sabertooth_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

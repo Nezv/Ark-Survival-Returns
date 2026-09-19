@@ -2,6 +2,46 @@
 
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
 
+## Taming, Torpor & Riding — 2026-09-16
+
+All 41 registered creatures can now be tamed, saddled and ridden. Torpor, taming and riding share one
+server-authoritative implementation, and the vanilla horse screen is reused for the creature inventory.
+
+### Added
+
+- **Torpor and unconsciousness** for mod creatures, players and ordinary living mobs, stored as per-entity data attachments. Sedative attacks, arrows and consumables all go through one service; entities are clamped to size-dependent ceilings of 60/150/350/700, recover 0.5% per second after a ten second delay, and wake below 20% of their maximum.
+- **Narcoberry as a sedative**, eaten, swung or crafted into a **tranquilizer arrow** (four arrows, one narcoberry, one bone). The arrow reuses the vanilla arrow model and texture; no new art.
+- **Three taming methods** with a complete profile for every creature: passive feeding, knock-out feeding from a creature inventory, and hunger-based aerial feeding for flying creatures. Aquatic species were assigned individually and never use the aerial rule.
+- **Nine food and storage slots per creature** plus a real saddle slot, opened with the vanilla horse GUI layout, the vanilla saddle sprite and the vanilla equipment container contract. The claimant can reach a wild unconscious creature; the owner can reach a tame.
+- **Riding for the entire roster**, including small creatures, with a measured seat per creature: the seat is derived from that creature's own back bone in its runtime model, not from one generic bounding box offset.
+- **Torpor animation assets** imported from the source projects: 174 new runtime clips across the roster, wired so the collapse, unconscious loop, feeding and wake clips are selected from synchronized state.
+- Operator commands under `/arktaming` for inspection, torpor, feeding hunger, mount inspection, roster validation and transition logging.
+
+### Changed
+
+- Berry behaviour: tintoberry, amarberry and azulberry are taming food, narcoberry is a sedative. All four were inert materials before.
+- The map entitlement message no longer says taming is unavailable; the entitlement itself still follows `progression.mapRequiresUnlock` and is unchanged.
+- New `[taming]` server configuration section with every balance value from the design: ceilings, recovery, sedative potency, feeding interval, appetite recovery and satiation, progress multiplier, damage penalty, decay grace period, claim expiry, feeding truce, rider speed, and the player movement tolerance and impulse window.
+- A creature that finishes taming stops counting as wildlife for population and despawn accounting but keeps its needs, sleep and threat behaviour.
+
+### Compatibility and known limitations
+
+- **Seat and animation review requires a client.** Seat transforms are measured from the real bones and checked against the XZ bounds of each creature's own model mesh (0 of 41 outside); the roster and riding game tests keep the seat height above the entity's feet and within the registered height, but full hitbox containment is not asserted for the 24 meshes that are not normalised. The visual seat and the four torpor clip phases need in-client playtesting.
+- **24 of 41 meshes are not normalised to their entity origin**, so the mesh-based seat check is not equivalent to the entity hitbox and those riders are not reliably aligned with the visible back (only the seat height is clamped). This is a pre-existing asset-pipeline limitation, listed per species at the end of `docs/taming-roster.md`.
+- Six rigs have no complete source torpor sequence (Ceratosaurus, Cnidaria, Dragon, Megapithecus, Titanoboa, and Deinosuchus only partially) and fall back to their authored standing sleep pose for the unconscious loop. No clip was borrowed from another skeleton.
+- A full torpor bar keeps a creature unconscious for about 160 seconds after the ten second recovery delay (about 170 seconds from the last dose), because waking happens below 20 % of the maximum, so a long knock-out tame needs the claimant to top the creature up. This is the intended maintenance loop and is documented in `docs/taming-roster.md`.
+- Knock-out feeding consumes one item per eligible opportunity rather than the whole stack, and waking early keeps the deposited food in the now-locked inventory. The attempt completes even when the claimant is away: the player who deposited the food keeps ownership after the claim lease (two minutes by default) has lapsed, while an abandoned hand-fed attempt passes to the player who resumes it. Food left behind by an abandoned attempt is not eaten at all until a player claims the creature again, so it never disappears into a tame that has no owner to award.
+- Owners are the only players who may access a tame. The project has no team or alliance system, so no team sharing is claimed.
+- `tools/verify_assets.py` fails on one pre-existing assertion about `neoforge/biome_modifier`, which `ArkData` itself generates and which is already committed. Every assertion before it passes.
+
+### Validation
+
+- Gradle `runData` passed, writing the tranquilizer arrow item, its model, the five taming food tags plus the sedative and knock-out food tags, the crafting recipe, 29 taming messages in both locales and the twelve new test instances.
+- Gradle `build` passed with 35 JUnit tests, no failures or skips.
+- All 32 required headless GameTests passed, including twelve new taming tests: roster and diet audit with manifest cross-checks, torpor knockout and the exact wake threshold, passive feeding rules, knock-out inventory feeding with the claimant away, wake-before-completion, riding and dismounting every registered creature, save/load of torpor, taming, ownership and inventory, player sedation, hunger-gated aerial feeding with the feeder-only truce, completion without a forced wake, claim-lease expiry, and goal-level restraint of an ordinary vanilla mob.
+- Creature import produced 41 creatures and 472 runtime clips, including the newly imported torpor sequences, with unchanged geometry and source hashes.
+- Remaining work is visual: seat placement, the collapse and wake poses, and the rider's appearance on the side-mounted rigs.
+
 ## Unreleased
 
 All 41 creature projects are now runtime species: the ice, flying, aquatic and swamp collection has been
@@ -29,6 +69,11 @@ registered with realms, group settings, saved homes, day routines and night rout
 - Sprint defaults now follow each species profile, so the configured default and the entity speed agree for every new species.
 - `Species` gained realms, water/browse clip sets and per-species flight policies; the flying controller, nest site policy and habitat records are now profile-driven instead of hard-coded per species.
 - New `[aquatic]` configuration section: pool depth, connected columns, search radius, per-tick probe budget, water recheck and replacement cooldown. Nine `[landHabitats]` family sections were added, and `[spawning.weights]` and `[movement.*]` gained one entry per new species.
+
+### Fixed
+
+- Flying colony markers carry the real species, so the map tooltip and rim color now identify Archaeopteryx, Quetzal and Dragon instead of labelling every non-Argentavis colony as a Pteranodon habitat.
+- Triggered one-shot clips (landing, takeoff, swoop pull-out, warning, attack and torpor transitions) are forced to play once. Several imported montages are flagged to loop in the source asset, so a perched Archaeopteryx previously kept playing its looping landing animation instead of settling into the perched pose.
 
 ### Compatibility and known limitations
 

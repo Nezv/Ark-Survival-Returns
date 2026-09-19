@@ -1,0 +1,60 @@
+{
+  "creature": "Therezinosaur",
+  "source_geo": "Creatures\\Therezinosaur\\geo\\therezinosaur.geo.json",
+  "source_model": "Creatures\\Therezinosaur\\Therezinosaur_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      512,
+      512
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 302,
+  "faces": 1812,
+  "atlas": {
+    "packed_height": 168,
+    "used_pixels": 59562,
+    "coverage": 0.2272
+  },
+  "parts": {
+    "torso": 36,
+    "neck": 27,
+    "tail": 38,
+    "head": 13,
+    "jaw": 9,
+    "tongue": 11,
+    "eye": 0,
+    "legl": 12,
+    "legr": 12,
+    "arml": 45,
+    "armr": 45,
+    "footl": 27,
+    "footr": 27,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#52615b",
+    "#889183",
+    "#344b48",
+    "#c3b799",
+    "#e0d4b0",
+    "#1d2928",
+    "#ce9a46",
+    "#854e3f"
+  ],
+  "features": {
+    "eye_centers": [],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

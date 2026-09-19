@@ -42,7 +42,13 @@ public final class XaeroHabitatOverlay {
             var p=marker.center();int x=context.worldToScreenX(p.getX()+0.5),y=context.worldToScreenY(p.getZ()+0.5);
             if (x<5 || y<5 || x>context.width()-5 || y>context.height()-5 || !exploration.contains(p.getX(),p.getZ(),p.getX(),p.getZ())) continue;
             visible.add(new Visible(marker,x,y));context.canvas().fill(x-5,y-4,x+5,y+4,0xCC182028);
-            int color=marker.argentavis()?0xFF93BE8B:0xFFE7C583;
+            int color=switch(marker.species()) {
+                case ARGENTAVIS -> 0xFF93BE8B;
+                case ARCHAEOPTERYX -> 0xFF7FA05A;
+                case QUETZAL -> 0xFFC8A165;
+                case DRAGON -> 0xFF8A8A93;
+                default -> 0xFFE7C583;
+            };
             for (int row=0;row<GLYPH.length;row++) for (int col=0;col<GLYPH[row].length();col++) {
                 char pixel=GLYPH[row].charAt(col);if(pixel!='0')context.canvas().fill(x-4+col,y-3+row,x-3+col,y-2+row,pixel=='2'?0xFFFFF4D8:color);
             }

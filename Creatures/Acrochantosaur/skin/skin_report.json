@@ -1,0 +1,71 @@
+{
+  "creature": "Acrochantosaur",
+  "source_geo": "Creatures\\Acrochantosaur\\geo\\acrochantosaur.geo.json",
+  "source_model": "Creatures\\Acrochantosaur\\Acrochantosaur_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      512,
+      512
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 418,
+  "faces": 2508,
+  "atlas": {
+    "packed_height": 254,
+    "used_pixels": 93948,
+    "coverage": 0.3584
+  },
+  "parts": {
+    "torso": 50,
+    "neck": 22,
+    "tail": 84,
+    "head": 43,
+    "jaw": 9,
+    "tongue": 23,
+    "eye": 3,
+    "legl": 7,
+    "legr": 7,
+    "arml": 33,
+    "armr": 33,
+    "footl": 52,
+    "footr": 52,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#796b5c",
+    "#a89978",
+    "#4c5850",
+    "#c4b497",
+    "#e3d5b6",
+    "#28312d",
+    "#d8a741",
+    "#985b47"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -1.769,
+        40.005,
+        40.596
+      ],
+      [
+        1.549,
+        39.894,
+        40.713
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

@@ -4,7 +4,7 @@
   "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
   "bone_axes": "native bind axes (nonuniform scale supported)",
   "bones": 59,
-  "cubes": 4574,
+  "cubes": 397,
   "source_vertices": 24429,
   "source_triangles": 29366,
   "animations": 36,
@@ -665,7 +665,7 @@
       "fk_validation": "All frames validated after JSON write using full affine matrices."
     }
   ],
-  "model_method": "Triangle-sampled surface cells merged into cuboids per original bone/material; fine features use smaller cells",
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences; topology-separated antler branches fitted in connected height bands",
   "attachments": [],
   "position_key_tolerance": 0.0005,
   "rotation_key_tolerance_degrees": 0.03,
@@ -675,5 +675,20 @@
     "Palette texture is generated, not the ARK texture.",
     "Loop flags are name-based suggestions; review in Blockbench.",
     "Entity controller/state transitions, sounds and Unreal notifies are not converted."
-  ]
+  ],
+  "fitting_restoration": {
+    "mesh_only": true,
+    "previous_cubes": 299,
+    "new_cubes": 397,
+    "skeleton_sha256": "ac2b7fdd661825cde715f58ebdf8ad52fc1475fc2792950f1dee24f7d5d96584",
+    "embedded_animations_sha256": "27f027277e829dd7ff84d346c548f5b8ffd7260a136d411451c2d8b3bc6e2c41",
+    "protected_file_count": 121,
+    "protected_files_unchanged": true
+  },
+  "art_refinement": {
+    "before_cubes": 224,
+    "after_cubes": 299,
+    "description": "Antlers are separated by source mesh topology, then fitted as connected height bands to preserve branching gaps. All antler cubes remain on c_neck3.",
+    "skeleton_and_animations_preserved": true
+  }
 }

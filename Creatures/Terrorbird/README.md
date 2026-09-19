@@ -1,6 +1,6 @@
 # Terrorbird
 
-ARK asset: `TerrorBird`. 59 original mesh bones, 6145 fitted cubes, 33 original animation clips.
+ARK asset: `TerrorBird`. 59 original mesh bones, 317 fitted cubes, 33 original animation clips.
 
 Open `Terrorbird_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

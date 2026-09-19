@@ -8,6 +8,9 @@ import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.flying.*;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
+import dev.nez.arksurvivalreturns.feature.taming.CreatureAnimationBridge;
+import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
+import dev.nez.arksurvivalreturns.feature.taming.TorporService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
@@ -61,6 +64,8 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         if (before == Phase.SWOOP && next == Phase.DEFENSE_CIRCLE) triggerAnim("transition", "pullout");
     }
     public boolean validThief(Player player) {
+        // A feeder inside the feeding truce is not a target, so the bird cannot instantly re-engage it.
+        if (feedingTruce(player)) return false;
         return player != null && player.isAlive() && player.level() == level() && !player.isCreative() && !player.isSpectator()
                 && level().getDifficulty() != Difficulty.PEACEFUL
                 && HabitatData.horizontalDistanceSqr(habitatCenter(), player.blockPosition()) <= (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get()
@@ -97,10 +102,25 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     private int roamRadius() { return species().flyerRoamRadius(); }
     @Override protected void customServerAiStep(ServerLevel world) {
-        super.customServerAiStep(world); tickFlight(world);
+        super.customServerAiStep(world);
+        tickFlight(world);
     }
     /** Also exercised by headless tests with controlled world time. */
     public void tickFlight(ServerLevel world) {
+        // An unconscious bird loses powered flight and falls under ordinary movement physics.
+        if (TorporService.restricted(this)) {
+            setNoGravity(false);
+            destination = null;
+            return;
+        }
+        // A rider drives the flight; the autonomous steering stands aside so it cannot fight the input.
+        if (isRidden()) {
+            setNoGravity(true);
+            resetFallDistance();
+            destination = null;
+            if (flightPhase() == Phase.PERCH || flightPhase() == Phase.LAND) phase(Phase.TAKEOFF);
+            return;
+        }
         setNoGravity(true); resetFallDistance(); phaseTicks++;
         if (center == null) center = wildlife().home();
         if (!orbitInitialized) {
@@ -242,7 +262,20 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         float pitch = (float)(-Math.atan2(velocity.y, Math.max(0.001, velocity.horizontalDistance()))*180/Math.PI);
         setXRot(Mth.approachDegrees(getXRot(), Math.clamp(pitch, -45, 55), 4));
     }
-    @Override public void travel(Vec3 input) { travelFlying(Vec3.ZERO, 0); resetFallDistance(); }
+    @Override public void travel(Vec3 input) {
+        if (isRidden()) {
+            travelFlying(input, Math.max(0.05f, CreatureRideController.riddenSpeed(this, rideProfile())));
+            return;
+        }
+        if (TorporService.restricted(this)) {
+            // Plain physics while unconscious: gravity applies, no powered flight, no fall-distance reset.
+            setNoGravity(false);
+            super.travel(input);
+            return;
+        }
+        travelFlying(Vec3.ZERO, 0);
+        resetFallDistance();
+    }
     @Override public boolean hurtServer(ServerLevel world, net.minecraft.world.damagesource.DamageSource source, float damage) {
         boolean hit = super.hurtServer(world, source, damage);
         if (hit && isAlive() && thiefId == null) { phase(Phase.TAKEOFF); nextPerch = tickCount + 400; }
@@ -290,17 +323,26 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     @Override public void registerControllers(AnimatableManager.ControllerRegistrar registrar) {
         registrar.add(new AnimationController<FlyingCreatureEntity>("movement", 5, state -> {
+            String sedation = CreatureAnimationBridge.sedationClip(this, 0f);
+            if (sedation != null) {
+                state.setControllerSpeed(1f);
+                return state.setAndContinue(CreatureAnimationBridge.isOneShot(this, sedation)
+                        ? oneShot(sedation)
+                        : RawAnimation.begin().thenLoop(sedation));
+            }
+            if (isRidden()) return state.setAndContinue(RawAnimation.begin()
+                    .thenLoop(state.isMoving() ? flyMoveClip() : hoverClip()));
             String clip = flightPhase() == Phase.PERCH ? perchClip()
                     : flightPhase() == Phase.SWOOP ? swoopLoopClip()
                     : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : flyMoveClip();
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<FlyingCreatureEntity>("transition", 4, state -> PlayState.STOP)
-                .triggerableAnim("takeoff", RawAnimation.begin().thenPlay(takeOffClip()))
-                .triggerableAnim("land", RawAnimation.begin().thenPlay(landClip()))
-                .triggerableAnim("pullout", RawAnimation.begin().thenPlay(swoopOutClip())));
+                .triggerableAnim("takeoff", oneShot(takeOffClip()))
+                .triggerableAnim("land", oneShot(landClip()))
+                .triggerableAnim("pullout", oneShot(swoopOutClip())));
         registrar.add(new AnimationController<FlyingCreatureEntity>("attack", 2, state -> PlayState.STOP)
-                .triggerableAnim("strike", RawAnimation.begin().thenPlay(attackClip())));
+                .triggerableAnim("strike", oneShot(attackClip())));
     }
     public static double altitudeWeight(Species species, int y, int seaLevel) {
         if (species == Species.PTERANODON) return 1;

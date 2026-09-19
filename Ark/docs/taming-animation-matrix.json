@@ -1,0 +1,2068 @@
+{
+ "generated": "2026-09-16",
+ "source_torpor_clips": {
+  "pteranodon": {
+   "eat": {
+    "phase": "eat",
+    "source": "Ptero-Torpid-Eat",
+    "runtime": "Ptero-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Ptero-Torpid-Idle",
+    "runtime": "Ptero-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Ptero-Torpid-In",
+    "runtime": "Ptero-Torpid-In",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Ptero-Torpid-Out-Tamed",
+    "runtime": "Ptero-Torpid-Out-Tamed",
+    "animation_length": 2.9999999371203763,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Ptero-Torpid-Out-Wild",
+    "runtime": "Ptero-Torpid-Out-Wild",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "velociraptor": {
+   "loop": {
+    "phase": "loop",
+    "source": "Raptor-Torpid",
+    "runtime": "Raptor-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Raptor-Torpid-Eat",
+    "runtime": "Raptor-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Raptor-Torpid-In",
+    "runtime": "Raptor-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Raptor-Torpid-Out-Tamed",
+    "runtime": "Raptor-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Raptor-Torpid-Out-Wild",
+    "runtime": "Raptor-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "argentavis": {
+   "eat": {
+    "phase": "eat",
+    "source": "Argentavis-Torpid-Eat",
+    "runtime": "Argentavis-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Argentavis-Torpid-Idle",
+    "runtime": "Argentavis-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Argentavis-Torpid-In",
+    "runtime": "Argentavis-Torpid-In",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Argentavis-Torpid-Out-Tamed",
+    "runtime": "Argentavis-Torpid-Out-Tamed",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Argentavis-Torpid-Out-Wild",
+    "runtime": "Argentavis-Torpid-Out-Wild",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "triceratops": {
+   "loop": {
+    "phase": "loop",
+    "source": "Trike-Torpid",
+    "runtime": "Trike-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Trike-Torpid-Eat",
+    "runtime": "Trike-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Trike-Torpid-In",
+    "runtime": "Trike-Torpid-In",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Trike-Torpid-Out-Tamed",
+    "runtime": "Trike-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Trike-Torpid-Out-Wild",
+    "runtime": "Trike-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "therizinosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Therizinosaurus-Torpid-Eat",
+    "runtime": "Therizinosaurus-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Therizinosaurus-Torpid-Idle",
+    "runtime": "Therizinosaurus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Therizinosaurus-Torpid-In",
+    "runtime": "Therizinosaurus-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Therizinosaurus-Torpid-Out-Tamed",
+    "runtime": "Therizinosaurus-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Therizinosaurus-Torpid-Out-Wild",
+    "runtime": "Therizinosaurus-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "brontosaurus": {
+   "loop": {
+    "phase": "loop",
+    "source": "Sauropod-Torpid",
+    "runtime": "Sauropod-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Sauropod-Torpid-Eat",
+    "runtime": "Sauropod-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Sauropod-Torpid-In",
+    "runtime": "Sauropod-Torpid-In",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Sauropod-Torpid-Out-Tamed",
+    "runtime": "Sauropod-Torpid-Out-Tamed",
+    "animation_length": 4.999999873685524,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Sauropod-Torpid-Out-Wild",
+    "runtime": "Sauropod-Torpid-Out-Wild",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "tyrannosaurus": {
+   "loop": {
+    "phase": "loop",
+    "source": "Rex-Torpid",
+    "runtime": "Rex-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Rex-Torpid-Eat",
+    "runtime": "Rex-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Rex-Torpid-In",
+    "runtime": "Rex-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Rex-Torpid-Out-Tamed",
+    "runtime": "Rex-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Rex-Torpid-Out-Wild",
+    "runtime": "Rex-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "giganotosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Giganotosaurus-Torpid-Eat",
+    "runtime": "Giganotosaurus-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Giganotosaurus-Torpid-Idle",
+    "runtime": "Giganotosaurus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Giganotosaurus-Torpid-In",
+    "runtime": "Giganotosaurus-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Giganotosaurus-Torpid-Out-Tamed",
+    "runtime": "Giganotosaurus-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Giganotosaurus-Torpid-Out-Wild",
+    "runtime": "Giganotosaurus-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "titanosaur": {
+   "eat": {
+    "phase": "eat",
+    "source": "Titanosaur-Torpid-Eat",
+    "runtime": "Titanosaur-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Titanosaur-Torpid-Idle",
+    "runtime": "Titanosaur-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Titanosaur-Torpid-In",
+    "runtime": "Titanosaur-Torpid-In",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Titanosaur-Torpid-Out-Tamed",
+    "runtime": "Titanosaur-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Titanosaur-Torpid-Out-Wild",
+    "runtime": "Titanosaur-Torpid-Out-Wild",
+    "animation_length": 1.3333333333333333,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "spinosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Spino-Torpid-Eat",
+    "runtime": "Spino-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Spino-Torpid-Idle",
+    "runtime": "Spino-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Spino-Torpid-In",
+    "runtime": "Spino-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Spino-Torpid-Out-Tamed",
+    "runtime": "Spino-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Spino-Torpid-Out-Wild",
+    "runtime": "Spino-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "parasaur": {
+   "loop": {
+    "phase": "loop",
+    "source": "Para-Torpid",
+    "runtime": "Para-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Para-Torpid-Eat",
+    "runtime": "Para-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Para-Torpid-In",
+    "runtime": "Para-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Para-Torpid-Out-Tamed",
+    "runtime": "Para-Torpid-Out-Tamed",
+    "animation_length": 2.9999999371203763,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Para-Torpid-Out-Wild",
+    "runtime": "Para-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "ceratosaurus": {},
+  "dilophosaur": {
+   "loop": {
+    "phase": "loop",
+    "source": "Dilo-Torpid",
+    "runtime": "Dilo-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Dilo-Torpid-Eat",
+    "runtime": "Dilo-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Dilo-Torpid-In",
+    "runtime": "Dilo-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Dilo-Torpid-Out-Tamed",
+    "runtime": "Dilo-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Dilo-Torpid-Out-Wild",
+    "runtime": "Dilo-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "acrocanthosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Acro_Torp_Eat",
+    "runtime": "Acro_Torp_Eat",
+    "animation_length": 4.1666667189514435,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Acro_Torp_In",
+    "runtime": "Acro_Torp_In",
+    "animation_length": 8.333333043382611,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Acro_Torp_Loop",
+    "runtime": "Acro_Torp_Loop",
+    "animation_length": 4.0,
+    "loop": true,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Acro_Torp_Out",
+    "runtime": "Acro_Torp_Out",
+    "animation_length": 5.916666692972369,
+    "loop": false,
+    "shared_exit": true
+   }
+  },
+  "allosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Allosaurus-Torpid-Eat",
+    "runtime": "Allosaurus-Torpid-Eat",
+    "animation_length": 3.3000000314712525,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Allosaurus-Torpid-Idle",
+    "runtime": "Allosaurus-Torpid-Idle",
+    "animation_length": 3.3000000314712525,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Allosaurus-Torpid-In",
+    "runtime": "Allosaurus-Torpid-In",
+    "animation_length": 1.9666666812543516,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Allosaurus-Torpid-Out-Tamed",
+    "runtime": "Allosaurus-Torpid-Out-Tamed",
+    "animation_length": 3.3000000314712525,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Allosaurus-Torpid-Out-Wild",
+    "runtime": "Allosaurus-Torpid-Out-Wild",
+    "animation_length": 1.9666666812543516,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "ankylosaurus": {
+   "loop": {
+    "phase": "loop",
+    "source": "Ankylo-Torpid",
+    "runtime": "Ankylo-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Ankylo-Torpid-Eat",
+    "runtime": "Ankylo-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Ankylo-Torpid-In",
+    "runtime": "Ankylo-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Ankylo-Torpid-Out-Tamed",
+    "runtime": "Ankylo-Torpid-Out-Tamed",
+    "animation_length": 2.500000031370866,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Ankylo-Torpid-Out-Wild",
+    "runtime": "Ankylo-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "carnotaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Carno-Torpid-Eat",
+    "runtime": "Carno-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Carno-Torpid-Idle",
+    "runtime": "Carno-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Carno-Torpid-In",
+    "runtime": "Carno-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Carno-Torpid-Out-Tamed",
+    "runtime": "Carno-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Carno-Torpid-Out-Wild",
+    "runtime": "Carno-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "pegomastax": {
+   "eat": {
+    "phase": "eat",
+    "source": "Pegomastax-Torpid-Eat",
+    "runtime": "Pegomastax-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Pegomastax-Torpid-Idle",
+    "runtime": "Pegomastax-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Pegomastax-Torpid-In",
+    "runtime": "Pegomastax-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Pegomastax-Torpid-Out-Tamed",
+    "runtime": "Pegomastax-Torpid-Out-Tamed",
+    "animation_length": 3.66666681367953,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Pegomastax-Torpid-Out-Wild",
+    "runtime": "Pegomastax-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "lystrosaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Lystrosaurus-Torpid-Eat",
+    "runtime": "Lystrosaurus-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Lystrosaurus-Torpid-Idle",
+    "runtime": "Lystrosaurus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Lystrosaurus-Torpid-In",
+    "runtime": "Lystrosaurus-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Lystrosaurus-Torpid-Out-Tamed",
+    "runtime": "Lystrosaurus-Torpid-Out-Tamed",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Lystrosaurus-Torpid-Out-Wild",
+    "runtime": "Lystrosaurus-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "cnidaria": {},
+  "plesiosaur": {
+   "eat": {
+    "phase": "eat",
+    "source": "Plesiosaur-Torpid-Eat",
+    "runtime": "Plesiosaur-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Plesiosaur-Torpid-Idle",
+    "runtime": "Plesiosaur-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Plesiosaur-Torpid-In",
+    "runtime": "Plesiosaur-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Plesiosaur-Torpid-Out-Tamed",
+    "runtime": "Plesiosaur-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Plesiosaur-Torpid-Out-Wild",
+    "runtime": "Plesiosaur-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "megalodon": {
+   "loop": {
+    "phase": "loop",
+    "source": "Megalodon-Torpid",
+    "runtime": "Megalodon-Torpid",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Megalodon-Torpid-Eat",
+    "runtime": "Megalodon-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Megalodon-Torpid-In",
+    "runtime": "Megalodon-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Megalodon-Torpid-Out-Tamed",
+    "runtime": "Megalodon-Torpid-Out-Tamed",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Megalodon-Torpid-Out-Wild",
+    "runtime": "Megalodon-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "liopleurodon": {
+   "eat": {
+    "phase": "eat",
+    "source": "Liopleurodon-Torpid-Eat",
+    "runtime": "Liopleurodon-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Liopleurodon-Torpid-Idle",
+    "runtime": "Liopleurodon-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Liopleurodon-Torpid-In",
+    "runtime": "Liopleurodon-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Liopleurodon-Torpid-Out-Tamed",
+    "runtime": "Liopleurodon-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Liopleurodon-Torpid-Out-Wild",
+    "runtime": "Liopleurodon-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "mosasaurus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Mosasaurus-Torpid-Eat",
+    "runtime": "Mosasaurus-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Mosasaurus-Torpid-Idle",
+    "runtime": "Mosasaurus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Mosasaurus-Torpid-In",
+    "runtime": "Mosasaurus-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Mosasaurus-Torpid-Out-Tamed",
+    "runtime": "Mosasaurus-Torpid-Out-Tamed",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Mosasaurus-Torpid-Out-Wild",
+    "runtime": "Mosasaurus-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "tusoteuthis": {
+   "loop": {
+    "phase": "loop",
+    "source": "Tusoteuthis-Torpid-Idle",
+    "runtime": "Tusoteuthis-Torpid-Idle",
+    "animation_length": 6.666666329269469,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Tusoteuthis-Torpid-In",
+    "runtime": "Tusoteuthis-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Tusoteuthis-Torpid-Out-Tamed",
+    "runtime": "Tusoteuthis-Torpid-Out-Tamed",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Tusoteuthis-Torpid-Out-Wild",
+    "runtime": "Tusoteuthis-Torpid-Out-Wild",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "kaprosuchus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Kaprosuchus-Torpid-Eat",
+    "runtime": "Kaprosuchus-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Kaprosuchus-Torpid-Idle",
+    "runtime": "Kaprosuchus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Kaprosuchus-Torpid-In",
+    "runtime": "Kaprosuchus-Torpid-In",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Kaprosuchus-Torpid-Out-Tamed",
+    "runtime": "Kaprosuchus-Torpid-Out-Tamed",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Kaprosuchus-Torpid-Out-Wild",
+    "runtime": "Kaprosuchus-Torpid-Out-Wild",
+    "animation_length": 1.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "sarco": {
+   "eat": {
+    "phase": "eat",
+    "source": "Sarco-Ground-Torpid-Eat",
+    "runtime": "Sarco-Ground-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Sarco-Ground-Torpid-Idle",
+    "runtime": "Sarco-Ground-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Sarco-Ground-Torpid-In",
+    "runtime": "Sarco-Ground-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Sarco-Ground-Torpid-Out-Tamed",
+    "runtime": "Sarco-Ground-Torpid-Out-Tamed",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Sarco-Ground-Torpid-Out-Wild",
+    "runtime": "Sarco-Ground-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "deinosuchus": {
+   "in": {
+    "phase": "in",
+    "source": "Deinosuchus_Torp_In",
+    "runtime": "Deinosuchus_Torp_In",
+    "animation_length": 4.125000039339066,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "titanoboa": {},
+  "megalocerus": {
+   "eat": {
+    "phase": "eat",
+    "source": "Stag-Torpid-Eat",
+    "runtime": "Stag-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Stag-Torpid-Idle",
+    "runtime": "Stag-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Stag-Torpid-In",
+    "runtime": "Stag-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Stag-Torpid-Out-Tamed",
+    "runtime": "Stag-Torpid-Out-Tamed",
+    "animation_length": 2.9999999371203763,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Stag-Torpid-Out-Wild",
+    "runtime": "Stag-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "unicorn": {
+   "eat": {
+    "phase": "eat",
+    "source": "Equus-Torpid-Eat",
+    "runtime": "Equus-Torpid-Eat",
+    "animation_length": 4.166666378151354,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Equus-Torpid-Idle",
+    "runtime": "Equus-Torpid-Idle",
+    "animation_length": 4.166666378151354,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Equus-Torpid-In",
+    "runtime": "Equus-Torpid-In",
+    "animation_length": 2.5000000390850134,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Equus-Torpid-Out-Tamed",
+    "runtime": "Equus-Torpid-Out-Tamed",
+    "animation_length": 3.750000039299766,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Equus-Torpid-Out-Wild",
+    "runtime": "Equus-Torpid-Out-Wild",
+    "animation_length": 2.5000000390850134,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "mammoth": {
+   "loop": {
+    "phase": "loop",
+    "source": "Mammoth-Torpid",
+    "runtime": "Mammoth-Torpid",
+    "animation_length": 3.3666664778017634,
+    "loop": true,
+    "shared_exit": false
+   },
+   "eat": {
+    "phase": "eat",
+    "source": "Mammoth-Torpid-Eat",
+    "runtime": "Mammoth-Torpid-Eat",
+    "animation_length": 3.3666664778017634,
+    "loop": false,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Mammoth-Torpid-In",
+    "runtime": "Mammoth-Torpid-In",
+    "animation_length": 2.0333332770357866,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Mammoth-Torpid-Out-Tamed",
+    "runtime": "Mammoth-Torpid-Out-Tamed",
+    "animation_length": 2.700000125605891,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Mammoth-Torpid-Out-Wild",
+    "runtime": "Mammoth-Torpid-Out-Wild",
+    "animation_length": 2.0333332770357866,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "direwolf": {
+   "eat": {
+    "phase": "eat",
+    "source": "Direwolf-Torpid-Eat",
+    "runtime": "Direwolf-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Direwolf-Torpid-Idle",
+    "runtime": "Direwolf-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Direwolf-Torpid-In",
+    "runtime": "Direwolf-Torpid-In",
+    "animation_length": 2.8666665158326676,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Direwolf-Torpid-Out-Tamed",
+    "runtime": "Direwolf-Torpid-Out-Tamed",
+    "animation_length": 2.9999999371203763,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Direwolf-Torpid-Out-Wild",
+    "runtime": "Direwolf-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "sabertooth": {
+   "eat": {
+    "phase": "eat",
+    "source": "Saber-Torpid-Eat",
+    "runtime": "Saber-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Saber-Torpid-Idle",
+    "runtime": "Saber-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Saber-Torpid-In",
+    "runtime": "Saber-Torpid-In",
+    "animation_length": 1.7333333166990141,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Saber-Torpid-Out-Tamed",
+    "runtime": "Saber-Torpid-Out-Tamed",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Saber-Torpid-Out-Wild",
+    "runtime": "Saber-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "megapithecus": {},
+  "paraceratherium": {
+   "eat": {
+    "phase": "eat",
+    "source": "Paraceratherium-Torpid-Eat",
+    "runtime": "Paraceratherium-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Paraceratherium-Torpid-Idle",
+    "runtime": "Paraceratherium-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Paraceratherium-Torpid-In",
+    "runtime": "Paraceratherium-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Paraceratherium-Torpid-Out-Tamed",
+    "runtime": "Paraceratherium-Torpid-Out-Tamed",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Paraceratherium-Torpid-Out-Wild",
+    "runtime": "Paraceratherium-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "terrorbird": {
+   "eat": {
+    "phase": "eat",
+    "source": "TerrorBird-Torpid-Eat",
+    "runtime": "TerrorBird-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "TerrorBird-Torpid-Idle",
+    "runtime": "TerrorBird-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "TerrorBird-Torpid-In",
+    "runtime": "TerrorBird-Torpid-In",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "TerrorBird-Torpid-Out-Tamed",
+    "runtime": "TerrorBird-Torpid-Out-Tamed",
+    "animation_length": 2.6666666666666665,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "TerrorBird-Torpid-Out-Wild",
+    "runtime": "TerrorBird-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "ravager": {
+   "eat": {
+    "phase": "eat",
+    "source": "CaveWolf-Torpid-Eat",
+    "runtime": "CaveWolf-Torpid-Eat",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "CaveWolf-Torpid-Idle",
+    "runtime": "CaveWolf-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "CaveWolf-Torpid-In",
+    "runtime": "CaveWolf-Torpid-In",
+    "animation_length": 2.3333333124390605,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "CaveWolf-Torpid-Out-Tamed",
+    "runtime": "CaveWolf-Torpid-Out-Tamed",
+    "animation_length": 3.3333332074357385,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "CaveWolf-Torpid-Out-Wild",
+    "runtime": "CaveWolf-Torpid-Out-Wild",
+    "animation_length": 2.0,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "archaeopteryx": {
+   "eat": {
+    "phase": "eat",
+    "source": "Archaeopteryx-Torpid-Eat",
+    "runtime": "Archaeopteryx-Torpid-Eat",
+    "animation_length": 2.6333334505293156,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Archaeopteryx-Torpid-Idle",
+    "runtime": "Archaeopteryx-Torpid-Idle",
+    "animation_length": 3.3000000314712525,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Archaeopteryx-Torpid-In",
+    "runtime": "Archaeopteryx-Torpid-In",
+    "animation_length": 3.3000000314712525,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Archaeopteryx-Torpid-Out-Tamed",
+    "runtime": "Archaeopteryx-Torpid-Out-Tamed",
+    "animation_length": 2.3571429855969557,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Archaeopteryx-Torpid-Out-Wild",
+    "runtime": "Archaeopteryx-Torpid-Out-Wild",
+    "animation_length": 1.4047619026354201,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "quetzal": {
+   "eat": {
+    "phase": "eat",
+    "source": "Quetzalcoatlus-Torpid-Eat",
+    "runtime": "Quetzalcoatlus-Torpid-Eat",
+    "animation_length": 6.666666329269469,
+    "loop": false,
+    "shared_exit": false
+   },
+   "loop": {
+    "phase": "loop",
+    "source": "Quetzalcoatlus-Torpid-Idle",
+    "runtime": "Quetzalcoatlus-Torpid-Idle",
+    "animation_length": 3.3333332074357385,
+    "loop": true,
+    "shared_exit": false
+   },
+   "in": {
+    "phase": "in",
+    "source": "Quetzalcoatlus-Torpid-In",
+    "runtime": "Quetzalcoatlus-Torpid-In",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_tamed": {
+    "phase": "out_tamed",
+    "source": "Quetzalcoatlus-Torpid-Out-Tamed",
+    "runtime": "Quetzalcoatlus-Torpid-Out-Tamed",
+    "animation_length": 2.9999999371203763,
+    "loop": false,
+    "shared_exit": false
+   },
+   "out_wild": {
+    "phase": "out_wild",
+    "source": "Quetzalcoatlus-Torpid-Out-Wild",
+    "runtime": "Quetzalcoatlus-Torpid-Out-Wild",
+    "animation_length": 1.6666666458894488,
+    "loop": false,
+    "shared_exit": false
+   }
+  },
+  "dragon": {}
+ },
+ "runtime_clips": {
+  "pteranodon": [
+   "Ptero-Fly-Attack-Bite",
+   "Ptero-Fly-Attack-Swoop-Loop",
+   "Ptero-Fly-Attack-Swoop-Out",
+   "Ptero-Fly-Fwd",
+   "Ptero-Fly-Hover",
+   "Ptero-Ground-Attack",
+   "Ptero-Ground-Eat",
+   "Ptero-Ground-Idle",
+   "Ptero-Ground-Move-Fwd",
+   "Ptero-Ground-Startled",
+   "Ptero-Land",
+   "Ptero-Take-Off",
+   "Ptero-Torpid-Eat",
+   "Ptero-Torpid-Idle",
+   "Ptero-Torpid-In",
+   "Ptero-Torpid-Out-Tamed",
+   "Ptero-Torpid-Out-Wild"
+  ],
+  "velociraptor": [
+   "Ark-Sleep",
+   "Raptor-Attack",
+   "Raptor-Call",
+   "Raptor-Charge-Fwd",
+   "Raptor-Eat-Additive",
+   "Raptor-Idle",
+   "Raptor-Move-Fwd",
+   "Raptor-Torpid",
+   "Raptor-Torpid-Eat",
+   "Raptor-Torpid-In",
+   "Raptor-Torpid-Out-Tamed",
+   "Raptor-Torpid-Out-Wild"
+  ],
+  "argentavis": [
+   "Argentavis-Fly-Attack-Claw",
+   "Argentavis-Fly-Attack-Swoop-Out",
+   "Argentavis-Fly-Fwd",
+   "Argentavis-Fly-Hover",
+   "Argentavis-Ground-Attack",
+   "Argentavis-Ground-Eat",
+   "Argentavis-Ground-Idle",
+   "Argentavis-Ground-Move-Fwd",
+   "Argentavis-Ground-Startled",
+   "Argentavis-Land",
+   "Argentavis-Take-Off",
+   "Argentavis-Torpid-Eat",
+   "Argentavis-Torpid-Idle",
+   "Argentavis-Torpid-In",
+   "Argentavis-Torpid-Out-Tamed",
+   "Argentavis-Torpid-Out-Wild"
+  ],
+  "triceratops": [
+   "Trike-Attack-Horn",
+   "Trike-Charge-Fwd",
+   "Trike-Graze",
+   "Trike-Idle",
+   "Trike-Move-Fwd",
+   "Trike-Sleeping",
+   "Trike-Startled",
+   "Trike-Torpid",
+   "Trike-Torpid-Eat",
+   "Trike-Torpid-In",
+   "Trike-Torpid-Out-Tamed",
+   "Trike-Torpid-Out-Wild"
+  ],
+  "therizinosaurus": [
+   "Ark-Sleep",
+   "Therizinosaurus-Attack-Claw",
+   "Therizinosaurus-Charge-Fwd",
+   "Therizinosaurus-Eat",
+   "Therizinosaurus-Idle",
+   "Therizinosaurus-Move-Fwd",
+   "Therizinosaurus-Startled",
+   "Therizinosaurus-Torpid-Eat",
+   "Therizinosaurus-Torpid-Idle",
+   "Therizinosaurus-Torpid-In",
+   "Therizinosaurus-Torpid-Out-Tamed",
+   "Therizinosaurus-Torpid-Out-Wild"
+  ],
+  "brontosaurus": [
+   "Ark-Sleep",
+   "Sauropod-Attack-FootStomp",
+   "Sauropod-Charge-Fwd",
+   "Sauropod-Graze",
+   "Sauropod-Idle",
+   "Sauropod-Move-Fwd",
+   "Sauropod-Startled-Lft",
+   "Sauropod-Torpid",
+   "Sauropod-Torpid-Eat",
+   "Sauropod-Torpid-In",
+   "Sauropod-Torpid-Out-Tamed",
+   "Sauropod-Torpid-Out-Wild"
+  ],
+  "tyrannosaurus": [
+   "Rex-Bite2",
+   "Rex-Charge-Fwd",
+   "Rex-Eat-Additive",
+   "Rex-Idle",
+   "Rex-Move-Fwd",
+   "Rex-Roar",
+   "Rex-Sleeping",
+   "Rex-Torpid",
+   "Rex-Torpid-Eat",
+   "Rex-Torpid-In",
+   "Rex-Torpid-Out-Tamed",
+   "Rex-Torpid-Out-Wild"
+  ],
+  "giganotosaurus": [
+   "Ark-Sleep",
+   "Giganotosaurus-Attack-Bite",
+   "Giganotosaurus-Charge-Fwd",
+   "Giganotosaurus-Eat",
+   "Giganotosaurus-Idle",
+   "Giganotosaurus-Move-Fwd",
+   "Giganotosaurus-Roar",
+   "Giganotosaurus-Torpid-Eat",
+   "Giganotosaurus-Torpid-Idle",
+   "Giganotosaurus-Torpid-In",
+   "Giganotosaurus-Torpid-Out-Tamed",
+   "Giganotosaurus-Torpid-Out-Wild"
+  ],
+  "titanosaur": [
+   "Ark-Sleep",
+   "Titanosaur-Attack-Footstomp",
+   "Titanosaur-Charge-Fwd",
+   "Titanosaur-Eat",
+   "Titanosaur-Idle",
+   "Titanosaur-Move-Fwd",
+   "Titanosaur-Startled-Lft",
+   "Titanosaur-Torpid-Eat",
+   "Titanosaur-Torpid-Idle",
+   "Titanosaur-Torpid-In",
+   "Titanosaur-Torpid-Out-Tamed",
+   "Titanosaur-Torpid-Out-Wild"
+  ],
+  "spinosaurus": [
+   "Ark-Sleep",
+   "Spino-Attack-Bite",
+   "Spino-Charge-Fwd",
+   "Spino-Eat",
+   "Spino-Idle",
+   "Spino-Move-Fwd",
+   "Spino-Roar",
+   "Spino-Torpid-Eat",
+   "Spino-Torpid-Idle",
+   "Spino-Torpid-In",
+   "Spino-Torpid-Out-Tamed",
+   "Spino-Torpid-Out-Wild"
+  ],
+  "parasaur": [
+   "Ark-Sleep",
+   "Para-Attack-Bite",
+   "Para-Charge-Fwd",
+   "Para-Graze",
+   "Para-Idle",
+   "Para-Move-Fwd",
+   "Para-Roar-Alert",
+   "Para-Torpid",
+   "Para-Torpid-Eat",
+   "Para-Torpid-In",
+   "Para-Torpid-Out-Tamed",
+   "Para-Torpid-Out-Wild"
+  ],
+  "ceratosaurus": [
+   "Ark-Sleep",
+   "Cerato_Attack_Bite1",
+   "Ceratosaurus_ChargeFWD_NOBOOST",
+   "Ceratosaurus_Eat",
+   "Ceratosaurus_Idle",
+   "Ceratosaurus_MoveFWD",
+   "Ceratosaurus_Roar1"
+  ],
+  "dilophosaur": [
+   "Ark-Sleep",
+   "Dilo-Attack-Bite",
+   "Dilo-Charge-Fwd",
+   "Dilo-Eat",
+   "Dilo-Idle",
+   "Dilo-Move-Fwd",
+   "Dilo-Startled",
+   "Dilo-Torpid",
+   "Dilo-Torpid-Eat",
+   "Dilo-Torpid-In",
+   "Dilo-Torpid-Out-Tamed",
+   "Dilo-Torpid-Out-Wild"
+  ],
+  "acrocanthosaurus": [
+   "Acro_Attack_Bite",
+   "Acro_Attack_Roar",
+   "Acro_Eat",
+   "Acro_Idle",
+   "Acro_Move_Charge_FWD",
+   "Acro_Move_Walk_FWD",
+   "Acro_Torp_Eat",
+   "Acro_Torp_In",
+   "Acro_Torp_Loop",
+   "Acro_Torp_Out",
+   "Ark-Sleep"
+  ],
+  "allosaurus": [
+   "Allosaurus-Attack-Bite",
+   "Allosaurus-Charge-Fwd",
+   "Allosaurus-Eat-Additive",
+   "Allosaurus-Idle",
+   "Allosaurus-Move-Fwd",
+   "Allosaurus-Roar_Anim",
+   "Allosaurus-Torpid-Eat",
+   "Allosaurus-Torpid-Idle",
+   "Allosaurus-Torpid-In",
+   "Allosaurus-Torpid-Out-Tamed",
+   "Allosaurus-Torpid-Out-Wild",
+   "Ark-Sleep"
+  ],
+  "ankylosaurus": [
+   "Ankylo-Attack-Tail-Sweep",
+   "Ankylo-Charge-Fwd",
+   "Ankylo-Graze",
+   "Ankylo-Idle",
+   "Ankylo-Move-Fwd",
+   "Ankylo-Startled",
+   "Ankylo-Torpid",
+   "Ankylo-Torpid-Eat",
+   "Ankylo-Torpid-In",
+   "Ankylo-Torpid-Out-Tamed",
+   "Ankylo-Torpid-Out-Wild",
+   "Ark-Sleep"
+  ],
+  "carnotaurus": [
+   "Ark-Sleep",
+   "Carno-Attack-Bite",
+   "Carno-Charge-Fwd",
+   "Carno-Eat",
+   "Carno-Idle",
+   "Carno-Move-Fwd",
+   "Carno-Startled",
+   "Carno-Torpid-Eat",
+   "Carno-Torpid-Idle",
+   "Carno-Torpid-In",
+   "Carno-Torpid-Out-Tamed",
+   "Carno-Torpid-Out-Wild"
+  ],
+  "pegomastax": [
+   "Ark-Sleep",
+   "Pegomastax-Attack-Bite",
+   "Pegomastax-Biped-Charge-Fwd",
+   "Pegomastax-Eat",
+   "Pegomastax-Idle",
+   "Pegomastax-Move-Fwd",
+   "Pegomastax-Roar",
+   "Pegomastax-Torpid-Eat",
+   "Pegomastax-Torpid-Idle",
+   "Pegomastax-Torpid-In",
+   "Pegomastax-Torpid-Out-Tamed",
+   "Pegomastax-Torpid-Out-Wild"
+  ],
+  "lystrosaurus": [
+   "Ark-Sleep",
+   "Lystrosaurus-Attack-Bite",
+   "Lystrosaurus-Charge-Fwd",
+   "Lystrosaurus-Eat",
+   "Lystrosaurus-Idle",
+   "Lystrosaurus-Move-Fwd",
+   "Lystrosaurus-Startled",
+   "Lystrosaurus-Torpid-Eat",
+   "Lystrosaurus-Torpid-Idle",
+   "Lystrosaurus-Torpid-In",
+   "Lystrosaurus-Torpid-Out-Tamed",
+   "Lystrosaurus-Torpid-Out-Wild"
+  ],
+  "cnidaria": [
+   "Cnidaria-Idle",
+   "Cnidaria-Shock",
+   "Cnidaria-Wide-Idle"
+  ],
+  "plesiosaur": [
+   "Plesiosaur-Attack-Bite",
+   "Plesiosaur-Eat",
+   "Plesiosaur-Idle",
+   "Plesiosaur-Move-Fwd",
+   "Plesiosaur-Torpid-Eat",
+   "Plesiosaur-Torpid-Idle",
+   "Plesiosaur-Torpid-In",
+   "Plesiosaur-Torpid-Out-Tamed",
+   "Plesiosaur-Torpid-Out-Wild"
+  ],
+  "megalodon": [
+   "Megalodon-Attack-Bite",
+   "Megalodon-Eat",
+   "Megalodon-Idle",
+   "Megalodon-Swim-Fwd",
+   "Megalodon-Torpid",
+   "Megalodon-Torpid-Eat",
+   "Megalodon-Torpid-In",
+   "Megalodon-Torpid-Out-Tamed",
+   "Megalodon-Torpid-Out-Wild"
+  ],
+  "liopleurodon": [
+   "Liopleurodon-Attack-Chomp",
+   "Liopleurodon-Idle",
+   "Liopleurodon-Spin",
+   "Liopleurodon-Swim-Charge-Fwd",
+   "Liopleurodon-Swim-Fwd",
+   "Liopleurodon-Torpid-Eat",
+   "Liopleurodon-Torpid-Idle",
+   "Liopleurodon-Torpid-In",
+   "Liopleurodon-Torpid-Out-Tamed",
+   "Liopleurodon-Torpid-Out-Wild"
+  ],
+  "mosasaurus": [
+   "Mosasaurus-Attack-Bite",
+   "Mosasaurus-Charge-Fwd",
+   "Mosasaurus-Eat",
+   "Mosasaurus-Idle",
+   "Mosasaurus-Swim-Fwd",
+   "Mosasaurus-Torpid-Eat",
+   "Mosasaurus-Torpid-Idle",
+   "Mosasaurus-Torpid-In",
+   "Mosasaurus-Torpid-Out-Tamed",
+   "Mosasaurus-Torpid-Out-Wild"
+  ],
+  "tusoteuthis": [
+   "Tusoteuthis-Attack-Bite",
+   "Tusoteuthis-Attack-Crush-Loop",
+   "Tusoteuthis-Eat",
+   "Tusoteuthis-Idle",
+   "Tusoteuthis-Swim-Fwd",
+   "Tusoteuthis-Torpid-Idle",
+   "Tusoteuthis-Torpid-In",
+   "Tusoteuthis-Torpid-Out-Tamed",
+   "Tusoteuthis-Torpid-Out-Wild"
+  ],
+  "kaprosuchus": [
+   "Ark-Sleep",
+   "Kaprosuchus-Attack-Bite",
+   "Kaprosuchus-Charge-Fwd",
+   "Kaprosuchus-Eat",
+   "Kaprosuchus-Idle",
+   "Kaprosuchus-Move-Fwd",
+   "Kaprosuchus-Startle",
+   "Kaprosuchus-Swim-Fwd",
+   "Kaprosuchus-Swim-Idle",
+   "Kaprosuchus-Torpid-Eat",
+   "Kaprosuchus-Torpid-Idle",
+   "Kaprosuchus-Torpid-In",
+   "Kaprosuchus-Torpid-Out-Tamed",
+   "Kaprosuchus-Torpid-Out-Wild"
+  ],
+  "sarco": [
+   "Ark-Sleep",
+   "Sarco-Ground-Attack-Bite",
+   "Sarco-Ground-Attack-Lunge",
+   "Sarco-Ground-Charge-Fwd",
+   "Sarco-Ground-Eat-Additive",
+   "Sarco-Ground-Idle",
+   "Sarco-Ground-Move-Fwd",
+   "Sarco-Ground-Torpid-Eat",
+   "Sarco-Ground-Torpid-Idle",
+   "Sarco-Ground-Torpid-In",
+   "Sarco-Ground-Torpid-Out-Tamed",
+   "Sarco-Ground-Torpid-Out-Wild",
+   "Sarco-Swim-Charge-Fwd",
+   "Sarco-Swim-Fwd",
+   "Sarco-Swim-Idle"
+  ],
+  "deinosuchus": [
+   "Ark-Sleep",
+   "Deinosuchus_Attack_Bite",
+   "Deinosuchus_Attack_Hiss",
+   "Deinosuchus_Charge_FWD",
+   "Deinosuchus_Eat",
+   "Deinosuchus_Idle",
+   "Deinosuchus_Move_FWD",
+   "Deinosuchus_Swim_Charge_FWD",
+   "Deinosuchus_Swim_Idle",
+   "Deinosuchus_Swim_Move_FWD",
+   "Deinosuchus_Torp_In"
+  ],
+  "titanoboa": [
+   "Ark-Sleep",
+   "BoaFrill-Attack-Lunge",
+   "BoaFrill-Charge-Fwd",
+   "BoaFrill-Eat-Additive",
+   "BoaFrill-Idle",
+   "BoaFrill-Move-Fwd",
+   "BoaFrill-Startled"
+  ],
+  "megalocerus": [
+   "Ark-Sleep",
+   "Stag-Attack-Gore",
+   "Stag-Charge-Fwd",
+   "Stag-Graze",
+   "Stag-Idle",
+   "Stag-Move-Fwd",
+   "Stag-Startled",
+   "Stag-Torpid-Eat",
+   "Stag-Torpid-Idle",
+   "Stag-Torpid-In",
+   "Stag-Torpid-Out-Tamed",
+   "Stag-Torpid-Out-Wild"
+  ],
+  "unicorn": [
+   "Ark-Sleep",
+   "Equus-Attack-Buck",
+   "Equus-Charge-Fwd",
+   "Equus-Eat",
+   "Equus-Idle2",
+   "Equus-Move-Fwd",
+   "Equus-Roar",
+   "Equus-Torpid-Eat",
+   "Equus-Torpid-Idle",
+   "Equus-Torpid-In",
+   "Equus-Torpid-Out-Tamed",
+   "Equus-Torpid-Out-Wild"
+  ],
+  "mammoth": [
+   "Ark-Sleep",
+   "Mammoth-Attack-Tusk-Jab",
+   "Mammoth-Charge-Fwd",
+   "Mammoth-Graze",
+   "Mammoth-Idle",
+   "Mammoth-Move-Fwd",
+   "Mammoth-Torpid",
+   "Mammoth-Torpid-Eat",
+   "Mammoth-Torpid-In",
+   "Mammoth-Torpid-Out-Tamed",
+   "Mammoth-Torpid-Out-Wild",
+   "Mammoth_new_Call"
+  ],
+  "direwolf": [
+   "Ark-Sleep",
+   "Direwolf-Attack-Bite",
+   "Direwolf-Charge-Fwd",
+   "Direwolf-Eat",
+   "Direwolf-Howl",
+   "Direwolf-Idle",
+   "Direwolf-Move-Fwd",
+   "Direwolf-Torpid-Eat",
+   "Direwolf-Torpid-Idle",
+   "Direwolf-Torpid-In",
+   "Direwolf-Torpid-Out-Tamed",
+   "Direwolf-Torpid-Out-Wild"
+  ],
+  "sabertooth": [
+   "Ark-Sleep",
+   "Saber-Attack-Bite",
+   "Saber-Charge-Fwd",
+   "Saber-Eat",
+   "Saber-Idle",
+   "Saber-Move-Fwd",
+   "Saber-Startled",
+   "Saber-Torpid-Eat",
+   "Saber-Torpid-Idle",
+   "Saber-Torpid-In",
+   "Saber-Torpid-Out-Tamed",
+   "Saber-Torpid-Out-Wild"
+  ],
+  "megapithecus": [
+   "Ark-Sleep",
+   "Gorilla-Attack-Pound",
+   "Gorilla-Charge-Fwd",
+   "Gorilla-Idle",
+   "Gorilla-Move-Fwd",
+   "Gorilla_Chest_Pounding"
+  ],
+  "paraceratherium": [
+   "Ark-Sleep",
+   "Paraceratherium-Attack-Footstomp",
+   "Paraceratherium-Charge-Fwd",
+   "Paraceratherium-Eat",
+   "Paraceratherium-Idle",
+   "Paraceratherium-Move-Fwd",
+   "Paraceratherium-Startled",
+   "Paraceratherium-Torpid-Eat",
+   "Paraceratherium-Torpid-Idle",
+   "Paraceratherium-Torpid-In",
+   "Paraceratherium-Torpid-Out-Tamed",
+   "Paraceratherium-Torpid-Out-Wild"
+  ],
+  "terrorbird": [
+   "Ark-Sleep",
+   "TerrorBird-Attack-Bite",
+   "TerrorBird-Charge-Fwd",
+   "TerrorBird-Eat",
+   "TerrorBird-Idle",
+   "TerrorBird-Move-Fwd",
+   "TerrorBird-Startled",
+   "TerrorBird-Torpid-Eat",
+   "TerrorBird-Torpid-Idle",
+   "TerrorBird-Torpid-In",
+   "TerrorBird-Torpid-Out-Tamed",
+   "TerrorBird-Torpid-Out-Wild"
+  ],
+  "ravager": [
+   "Ark-Sleep",
+   "CaveWolf-Attack-Bite",
+   "CaveWolf-Charge-Fwd",
+   "CaveWolf-Eat",
+   "CaveWolf-Howl",
+   "CaveWolf-Idle",
+   "CaveWolf-Torpid-Eat",
+   "CaveWolf-Torpid-Idle",
+   "CaveWolf-Torpid-In",
+   "CaveWolf-Torpid-Out-Tamed",
+   "CaveWolf-Torpid-Out-Wild",
+   "CaveWolf-Walk-Fwd"
+  ],
+  "archaeopteryx": [
+   "Archaeopteryx-Attack-Bite",
+   "Archaeopteryx-Charge-Fwd",
+   "Archaeopteryx-Eat",
+   "Archaeopteryx-Fly",
+   "Archaeopteryx-Fly-Startle",
+   "Archaeopteryx-Glide",
+   "Archaeopteryx-Idle",
+   "Archaeopteryx-Move-Fwd",
+   "Archaeopteryx-Perched",
+   "Archaeopteryx-StartPerch",
+   "Archaeopteryx-Startle",
+   "Archaeopteryx-Torpid-Eat",
+   "Archaeopteryx-Torpid-Idle",
+   "Archaeopteryx-Torpid-In",
+   "Archaeopteryx-Torpid-Out-Tamed",
+   "Archaeopteryx-Torpid-Out-Wild"
+  ],
+  "quetzal": [
+   "Quetzalcoatlus-Fly-Attack-Bite",
+   "Quetzalcoatlus-Fly-Flap-Fwd",
+   "Quetzalcoatlus-Fly-Fwd",
+   "Quetzalcoatlus-Ground-Eat",
+   "Quetzalcoatlus-Ground-Idle",
+   "Quetzalcoatlus-Ground-Platform-Move-Fwd",
+   "Quetzalcoatlus-Ground-Startled",
+   "Quetzalcoatlus-Land-Platform",
+   "Quetzalcoatlus-Take-Off-Platform",
+   "Quetzalcoatlus-Torpid-Eat",
+   "Quetzalcoatlus-Torpid-Idle",
+   "Quetzalcoatlus-Torpid-In",
+   "Quetzalcoatlus-Torpid-Out-Tamed",
+   "Quetzalcoatlus-Torpid-Out-Wild"
+  ],
+  "dragon": [
+   "Dragon-Fly-Attack-Fire",
+   "Dragon-Fly-Attack-Swoop-Out",
+   "Dragon-Fly-Fwd",
+   "Dragon-Fly-Idle",
+   "Dragon-Ground-Attack-Bite",
+   "Dragon-Ground-Attack-Fire",
+   "Dragon-Ground-Charge-Fwd",
+   "Dragon-Ground-Idle",
+   "Dragon-Ground-Move-Fwd",
+   "Dragon-Land",
+   "Dragon-Take-Off"
+  ]
+ },
+ "species_without_torpor_assets": [
+  "ceratosaurus",
+  "cnidaria",
+  "dragon",
+  "megapithecus",
+  "titanoboa"
+ ],
+ "incomplete": [
+  {
+   "id": "ceratosaurus",
+   "missing_runtime": [],
+   "has_source_sequence": false,
+   "phases": []
+  },
+  {
+   "id": "cnidaria",
+   "missing_runtime": [],
+   "has_source_sequence": false,
+   "phases": []
+  },
+  {
+   "id": "titanoboa",
+   "missing_runtime": [],
+   "has_source_sequence": false,
+   "phases": []
+  },
+  {
+   "id": "megapithecus",
+   "missing_runtime": [],
+   "has_source_sequence": false,
+   "phases": []
+  },
+  {
+   "id": "dragon",
+   "missing_runtime": [],
+   "has_source_sequence": false,
+   "phases": []
+  }
+ ]
+}

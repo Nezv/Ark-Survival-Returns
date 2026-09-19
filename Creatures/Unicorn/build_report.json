@@ -4,7 +4,7 @@
   "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
   "bone_axes": "native bind axes (nonuniform scale supported)",
   "bones": 77,
-  "cubes": 307,
+  "cubes": 148,
   "source_vertices": 14564,
   "source_triangles": 17828,
   "animations": 42,
@@ -652,7 +652,7 @@
       "fk_validation": "All frames validated after JSON write using full affine matrices."
     }
   ],
-  "model_method": "Coarse principal-axis Minecraft cuboids fitted per original bone/material; Unicorn horn remains on its native c_neck3 socket bone.",
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences; reduced slice counts and trimmed skin bounds for a lighter Unicorn",
   "attachments": [
     "SM_Unicorn_Horn_01"
   ],
@@ -671,5 +671,20 @@
     "new_cubes": 307,
     "skeleton_sha256": "4e59555f51328c3bb997b82a5c6d938375434d846df458846a2c81224b9df9d5",
     "animation_sha256": "ae67845b474d8c4ad014a09476f33c2b85711d167eacbf6e5e0e41203273dda1"
+  },
+  "fitting_restoration": {
+    "mesh_only": true,
+    "previous_cubes": 148,
+    "new_cubes": 148,
+    "skeleton_sha256": "4e59555f51328c3bb997b82a5c6d938375434d846df458846a2c81224b9df9d5",
+    "embedded_animations_sha256": "1b0d5f27cd53453465cdf552e4968b318b4cdd9f0f63c2c99ec6aef18d33fc30",
+    "protected_file_count": 145,
+    "protected_files_unchanged": true
+  },
+  "art_refinement": {
+    "before_cubes": 307,
+    "after_cubes": 148,
+    "description": "Reduced slice counts and trimmed 5th/95th-percentile bounds make the body and limbs lighter. The horn and original rig remain attached.",
+    "skeleton_and_animations_preserved": true
   }
 }

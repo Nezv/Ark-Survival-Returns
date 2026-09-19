@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); flying(); theme(); tests();
+        tags(); models(); berries(); taming(); flying(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -112,8 +112,8 @@ public final class ArkData implements DataProvider {
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
         pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
         String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3", "rank_4", "rank_5"};
-        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-5 region. Taming is not available yet.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/5", "1 - Easy", "2 - Moderate", "3 - Hard", "4 - Extreme", "5 - Severe"};
-        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regiÃ£o de perigo 5. DomesticaÃ§Ã£o ainda indisponÃ­vel.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "DimensÃ£o sem classificaÃ§Ã£o", "No cursor: %s/5", "1 - FÃ¡cil", "2 - Moderada", "3 - DifÃ­cil", "4 - Extrema", "5 - Severa"};
+        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-5 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/5", "1 - Easy", "2 - Moderate", "3 - Hard", "4 - Extreme", "5 - Severe"};
+        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regiÃ£o de perigo 5.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "DimensÃ£o sem classificaÃ§Ã£o", "No cursor: %s/5", "1 - FÃ¡cil", "2 - Moderada", "3 - DifÃ­cil", "4 - Extrema", "5 - Severa"};
         for (int i = 0; i < mapKeys.length; i++) {
             en.put("map." + NS + "." + mapKeys[i], mapEn[i]); pt.put("map." + NS + "." + mapKeys[i], mapPt[i]);
         }
@@ -138,6 +138,14 @@ public final class ArkData implements DataProvider {
         for (int i = 0; i < ids.length; i++) {
             model(ids[i]); en.put("item." + NS + "." + ids[i], names[i]); pt.put("item." + NS + "." + ids[i], portuguese[i]);
         }
+        // Tranquilizer arrow: reuses the vanilla arrow art, so no new texture is required.
+        put("assets/" + NS + "/models/item/tranquilizer_arrow", Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", "minecraft:item/arrow")));
+        put("assets/" + NS + "/items/tranquilizer_arrow", Map.of("model", Map.of("type", "minecraft:model",
+                "model", NS + ":item/tranquilizer_arrow")));
+        en.put("item." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
+        pt.put("item." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
+        tamingMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -166,6 +174,62 @@ public final class ArkData implements DataProvider {
     private void model(String id) {
         put("assets/" + NS + "/models/item/" + id, Map.of("parent", "minecraft:item/generated", "textures", Map.of("layer0", NS + ":item/" + id)));
         put("assets/" + NS + "/items/" + id, Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":item/" + id)));
+    }
+
+    /**
+     * Taming food categories as data tags, so a data pack can retune every diet without a code change.
+     * Accepted food is tag based; the per-species favourite stays a single item in the profile table.
+     */
+    private void taming() {
+        tag("item/taming/small_plant_food", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", "#minecraft:leaves");
+        tag("item/taming/high_quality_plant_food", "carrot", "apple", "wheat");
+        tag("item/taming/plant_food", "#" + NS + ":taming/small_plant_food",
+                "#" + NS + ":taming/high_quality_plant_food");
+        tag("item/taming/raw_meat", "beef", "porkchop", "chicken", "rabbit", "mutton");
+        tag("item/taming/fish", "cod", "salmon");
+        tag("item/taming/sedative", NS + ":narcoberry", NS + ":tranquilizer_arrow");
+        tag("item/taming/knockout_food", "#" + NS + ":taming/plant_food", "#" + NS + ":taming/raw_meat",
+                "#" + NS + ":taming/fish");
+        json("data/" + NS + "/recipe/tranquilizer_arrow", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"tranquilizer_arrow",
+                 "ingredients":[{"item":"minecraft:arrow"},{"item":"minecraft:arrow"},
+                                {"item":"minecraft:arrow"},{"item":"minecraft:arrow"},
+                                {"item":"%s:narcoberry"},{"item":"minecraft:bone"}],
+                 "result":{"count":4,"id":"%s:tranquilizer_arrow"}}
+                """.formatted(NS, NS));
+    }
+
+    /** Player-facing taming and sedation text, in both shipped locales. */
+    private void tamingMessages(Map<String, String> en, Map<String, String> pt) {
+        String[] keys = {"knockout", "wake", "fed", "fed_favourite", "denied", "denied_access", "claim",
+                "truce", "tamed", "unconscious", "accepted", "wrong_food", "not_hungry", "cooldown",
+                "wrong_state", "not_claimant", "already_tamed", "excluded", "denied.attack", "denied.interact",
+                "denied.use", "denied.move", "denied.mount", "mount.unconscious", "mount.wild", "mount.notowner",
+                "mount.unsaddled", "mount.occupied", "mount.noroom"};
+        String[] english = {"%s has been knocked out.", "%s is waking up.", "%s eats. Taming progress %s%%.",
+                "%s relishes the favourite food. Taming progress %s%%.", "%s refuses: %s",
+                "You cannot reach %s right now.", "You are the claimant for %s.",
+                "%s will tolerate you for a moment.", "%s trusts you now.", "You are unconscious: %s",
+                "accepted", "wrong food", "not hungry enough", "still digesting the last meal",
+                "not unconscious", "another player holds this attempt", "already tamed", "not a valid target",
+                "you cannot attack", "you cannot interact", "you cannot use items", "you cannot walk",
+                "you cannot mount", "the creature is unconscious", "you must tame it first",
+                "you do not own this creature", "it needs a saddle", "someone is already riding it",
+                "there is no room to mount here"};
+        String[] portuguese = {"%s foi nocauteado.", "%s estÃ¡ acordando.", "%s come. Progresso de domesticaÃ§Ã£o %s%%.",
+                "%s adora a comida favorita. Progresso de domesticaÃ§Ã£o %s%%.", "%s recusa: %s",
+                "VocÃª nÃ£o consegue alcanÃ§ar %s agora.", "VocÃª reivindicou %s.",
+                "%s vai tolerar vocÃª por um momento.", "%s confia em vocÃª agora.", "VocÃª estÃ¡ inconsciente: %s",
+                "aceito", "comida errada", "fome insuficiente", "ainda digerindo a Ãºltima refeiÃ§Ã£o",
+                "nÃ£o estÃ¡ inconsciente", "outro jogador detÃ©m esta tentativa", "jÃ¡ domesticado", "alvo invÃ¡lido",
+                "vocÃª nÃ£o pode atacar", "vocÃª nÃ£o pode interagir", "vocÃª nÃ£o pode usar itens", "vocÃª nÃ£o pode andar",
+                "vocÃª nÃ£o pode montar", "a criatura estÃ¡ inconsciente", "vocÃª precisa domar primeiro",
+                "vocÃª nÃ£o Ã© o dono desta criatura", "precisa de uma sela", "alguÃ©m jÃ¡ estÃ¡ montado",
+                "nÃ£o hÃ¡ espaÃ§o para montar aqui"};
+        for (int i = 0; i < keys.length; i++) {
+            en.put("taming." + NS + "." + keys[i], english[i]);
+            pt.put("taming." + NS + "." + keys[i], portuguese[i]);
+        }
     }
     /**
      * Removals the theme enforces through data: biome spawn lists and features, structure sets,
@@ -324,5 +388,16 @@ public final class ArkData implements DataProvider {
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_instance/theme_alignment", Map.of("type", "minecraft:function", "function", NS + ":theme_alignment",
                 "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 200, "sky_access", true));
+        // Taming: the roster and rule checks are quick, the riding and feeding suites own the large plot.
+        for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
+                "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
+                "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
+                "taming_claim_expiry", "taming_ordinary_mob"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
+                    "function", NS + ":" + name, "environment", NS + ":empty",
+                    "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        put("data/" + NS + "/test_instance/taming_riding", Map.of("type", "minecraft:function",
+                "function", NS + ":taming_riding", "environment", NS + ":empty",
+                "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
     }
 }

@@ -1,0 +1,12 @@
+
+******** Loading object SkeletalMesh4'Endboss_Dragon.Endboss_Dragon' ********
+
+ERROR: Package "EndGame/Dinos/Endboss/EndbossDragon/Endboss_Dragon.uasset": wrong name index -1641380927
+UnPackage::SerializeFName: pos=00000008 <- FPropertyTag<< <- CTypeInfo::SerializeUnrealProps <- UObject::Serialize <- USkeletalMesh4::Serialize <- LoadObject: SkeletalMesh4'Endboss_Dragon.Endboss_Dragon', pos=8, ver=405/10, game=ark <- UObject::EndLoad <- Main: umodel_build=1612-floxay
+
+
+******** Loading object SkeletalMesh4'Endboss_Dragon.Endboss_Dragon' ********
+
+ERROR: Package "EndGame/Dinos/Endboss/EndbossDragon/Endboss_Dragon.uasset": wrong name index -1641380927
+UnPackage::SerializeFName: pos=00000008 <- FPropertyTag<< <- CTypeInfo::SerializeUnrealProps <- UObject::Serialize <- USkeletalMesh4::Serialize <- LoadObject: SkeletalMesh4'Endboss_Dragon.Endboss_Dragon', pos=8, ver=405/10, game=ark <- UObject::EndLoad <- Main: umodel_build=1612-floxay
+

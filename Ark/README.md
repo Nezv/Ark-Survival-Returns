@@ -11,8 +11,9 @@ PowerShell alternative: `.\Start-Ark-Mod.ps1`. The launcher finds JDK 25 through
 ## Playable systems
 
 - **Debug Spyglass:** hold use while aiming at a dinosaur for a green terminal inspector of live stats, AI/flight variables and saved data. Scroll to page through values. Obtain it from the Ark creative tab or `/give @s arksurvivalreturns:debug_spyglass`. See [controls and limits](docs/debug-spyglass.md).
+- **Taming, torpor and riding:** every one of the 41 registered creatures has a taming profile and a measured rider seat. Feed berries, plants, raw meat or fish to a willing creature, or knock a large or dangerous one out with narcoberries and tranquilizer arrows and feed it from its own inventory. Tame it, saddle it and ride it. See [the roster and seat manifest](docs/taming-roster.md) and [the debugging guide](docs/taming-debugging.md).
 
-The launcher also loads the installed optional client pack: Xaero World Map with the difficulty overlay, Sodium, Iris, AmbientSounds, Sound Physics and their dependencies. Complementary Reimagined is downloaded; enable it in Video Settings → Shader Packs. The map is temporarily open to everyone (`progression.mapRequiresUnlock=false`). The saved entitlement and operator commands remain available for when the gate is re-enabled; taming is not implemented. See [installation, versions and map controls](docs/client-pack.md).
+The launcher also loads the installed optional client pack: Xaero World Map with the difficulty overlay, Sodium, Iris, AmbientSounds, Sound Physics and their dependencies. Complementary Reimagined is downloaded; enable it in Video Settings → Shader Packs. The map is temporarily open to everyone (`progression.mapRequiresUnlock=false`). The saved entitlement and operator commands remain available for when the gate is re-enabled. See [installation, versions and map controls](docs/client-pack.md).
 
 - Forty-one species using the supplied models, original palette textures and 298 movement, attack, water and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
 - Replenished natural groups across Overworld biomes, solitary large creatures, terrain checks, population limits and spacing.
@@ -155,7 +156,17 @@ Xaero's installed fullscreen World Map shows one nest glyph per discovered habit
 
 Breaking **short grass or tall grass** without shears has a **35%** chance to drop **1–2 berries of one type**, in addition to vanilla loot. Relative weights are 30 Tintoberry (red) / 30 Amarberry (yellow) / 30 Azulberry (blue) / 10 Narcoberry (dark purple, sedative).
 
-The upper half of tall grass does not make a second roll. Grass blocks, ferns, sheared grass and creative breaking do not yield bonuses. Explosions use vanilla survival filtering. All four berries are inert materials for now: no eating, sedation, recipes, taming or brewing.
+The upper half of tall grass does not make a second roll. Grass blocks, ferns, sheared grass and creative breaking do not yield bonuses. Explosions use vanilla survival filtering. Tintoberry, amarberry and azulberry are taming food; narcoberry is a sedative that can be eaten, swung or crafted into a tranquilizer arrow.
+
+## Taming, torpor and riding
+
+Every one of the 41 registered creatures can be tamed and ridden. Feeding while awake tames ordinary animals and small herbivores; large or dangerous creatures must be knocked out first and fed from their own inventory; flying creatures take fish when they are hungry. Sedation applies to creatures, players and ordinary vanilla animals through one server-authoritative system.
+
+- **Sedatives.** Narcoberries can be eaten (which sedates the user), swung at a creature, or crafted into tranquilizer arrows (four arrows, one narcoberry and one bone). Torpor is a normalized meter with size-dependent ceilings of 60/150/350/700, a ten second recovery delay and 0.5% recovery per second; an entity wakes below 20% of its maximum.
+- **Taming.** Progress comes from meals, never from waiting. A profile's target duration and the twenty second feeding interval derive the progress each meal is worth, and a species' favourite food is worth 1.5×. Damage during an attempt costs ten points, and waking early abandons the attempt while keeping the deposited food.
+- **Riding.** Tame it, put a saddle in its saddle slot, then use it to mount. Flying creatures climb and dive with the look direction; swimmers steer in three dimensions. Sneak-use opens the vanilla horse-style inventory, which also serves as the knock-out taming screen.
+
+Balance defaults, the complete roster, per-meal progress and the measured rider seat of every creature are in [the taming roster](docs/taming-roster.md). Operator diagnostics and the automated verification matrix are in [the debugging guide](docs/taming-debugging.md).
 
 Drops use NeoForge's additive loot modifier, preserving vanilla seeds. Edit the `gameplay/grass_berries` loot table in a data pack to tune probability, weights or quantities. The `berries` and `sedative_berries` item tags identify materials without giving effects.
 
@@ -220,5 +231,9 @@ python tools/verify_assets.py
 8. Walk a swamp bank and check that Sarco basks in its 2–3 group and switches to swim clips in the water.
 9. Visit a snowfield and check cold hydration, snow browsing and the Direwolf/Mammoth/Sabertooth group sizes.
 10. Find a Quetzal or Dragon roost, check the nest and egg, and confirm the apex flyer guards its airspace without chasing beyond the habitat leash.
+11. Feed a Lystrosaurus berries and watch the taming progress; then check that it ignores food while full and refuses non-food without consuming it.
+12. Shoot a Triceratops with tranquilizer arrows, use it to open its inventory, deposit carrots and watch the meals. Attacking it should cost progress, and letting it wake should reset the attempt while keeping the food.
+13. Tame a Pteranodon with fish, saddle it and fly it: climbing and diving follow the look direction, and it must never hover while unconscious.
+14. Ride every species once and confirm the seat, the rider facing and that no species stays in its idle clip while moving. The seat manifest lists which species are clamped into the hitbox because their mesh is not normalised.
 
-This pass includes the **ground wildlife behavioral model** for every species plus the water, swamp, cold and flying realms. Riding, taming, breeding, territory ecology, custom dinosaur audio, experience gain, creature harvesting and berry effects are separate future systems. Visual movement and encounter balance still require in-client playtesting; automated checks do not launch an interactive client.
+This pass includes the **ground wildlife behavioral model** for every species plus the water, swamp, cold and flying realms. Taming, torpor, riding and the horse-style creature inventory are implemented in the same release; see [the taming roster](docs/taming-roster.md). Breeding, territory ecology, custom dinosaur audio, experience gain and creature harvesting are separate future systems. Visual movement, seat placement and encounter balance still require in-client playtesting; automated checks do not launch an interactive client.

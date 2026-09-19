@@ -22,6 +22,7 @@ MODELS = {
     'Deinosuchus': dict(asset='Deinosuchus_TLC_Rig', animation_dir='Animation'),
     'Sarco': dict(asset='Sarco-New', directory='PrimalEarth/Dinos/Sarco', mesh='Sarco_New/Sarco-New', skeleton='Sarco_Skeleton'),
     'Titanoboa': dict(asset='BoaFrill'),
+    'Dragon': dict(asset='Dragon', directory='PrimalEarth/Dinos/Dragon'),
 }
 
 NATIVE_ASSETS = {m['asset'] for m in MODELS.values()}
@@ -49,4 +50,5 @@ PALETTES = {
     'Deinosuchus': ['#5e6950','#939271','#394638','#b3a17b','#dfd0a6','#263027','#d1ae45','#9b625a'],
     'Sarco': ['#586d59','#92a07a','#324c42','#b4ae84','#dfd4ac','#1e3029','#dabc47','#a16959'],
     'Titanoboa': ['#677a53','#a0ad76','#3f5440','#c6bc85','#e0d2a6','#253329','#d6b23d','#ad6d58'],
+    'Dragon': ['#6f3f32','#a66a42','#3f5541','#c5a36a','#e1d1a1','#252d28','#e0a63e','#a94d42'],
 }

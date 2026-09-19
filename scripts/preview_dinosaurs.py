@@ -100,6 +100,8 @@ def previews(out,s,cubes,animations,label):
     render(decoded,{},0,PALETTES[label],label,f'{len(s.names)} bones  |  {len(cubes)} cubes  |  {len(animations)} clips  |  bind pose').save(dest/'model.png')
     # Include a side and front view for silhouette/joint review.
     render(decoded,{},0,PALETTES[label],label,'Side view',camera=R.identity()).save(dest/'side.png')
+    if label in ['Megalocerus','Unicorn']:
+        render(decoded,{},0,PALETTES[label],label,'Front view',camera=R.from_euler('y',90,degrees=True)).save(dest/'front.png')
     desired=['fly-fwd','fly-flap','flight','move-fwd'] if label in ['Argentavis','Piterodon'] else ['move-fwd','walk','run','idle']
     clip_name=next((n for token in desired for n in animations if token in n.lower() and animations[n]['loop']),next(iter(animations)))
     clip=animations[clip_name];frames=[]

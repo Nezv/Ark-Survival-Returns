@@ -64,7 +64,8 @@ def main():
         assert entry['height_blocks'] == height
     # Spawn eggs, nest eggs, berries and the debug tool.
     definitions = list((generated/f'assets/arksurvivalreturns/items').glob('*.json'))
-    expected_items = len(SPECIES) + len(FLYERS) + 4 + 1
+    # Spawn eggs, nest eggs, the four berries, the debug tool and the tranquilizer arrow.
+    expected_items = len(SPECIES) + len(FLYERS) + 4 + 1 + 1
     assert len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}'
     for definition in definitions:
         body = json.loads(definition.read_text())['model']

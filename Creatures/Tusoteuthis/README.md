@@ -1,6 +1,6 @@
 # Tusoteuthis
 
-ARK asset: `Tusoteuthis`. 79 original mesh bones, 4039 fitted cubes, 29 original animation clips.
+ARK asset: `Tusoteuthis`. 79 original mesh bones, 295 fitted cubes, 29 original animation clips.
 
 Open `Tusoteuthis_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

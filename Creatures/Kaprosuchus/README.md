@@ -1,6 +1,6 @@
 # Kaprosuchus
 
-ARK asset: `Kaprosuchus`. 78 original mesh bones, 2410 fitted cubes, 37 original animation clips.
+ARK asset: `Kaprosuchus`. 78 original mesh bones, 275 fitted cubes, 37 original animation clips.
 
 Open `Kaprosuchus_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

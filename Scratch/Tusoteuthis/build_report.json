@@ -1,0 +1,460 @@
+{
+  "species": "Tusoteuthis",
+  "bones": 79,
+  "cubes": 150,
+  "previous_cubes": 4039,
+  "animations": 29,
+  "source_hashes": {},
+  "original_resource_hashes": {
+    "Creatures\\Tusoteuthis\\geo\\tusoteuthis.geo.json": "d620c42372176f5d9255b5c4eca25f9a9df12d33782414012397ff043f616618",
+    "Creatures\\Tusoteuthis\\Tusoteuthis_GeckoLib.bbmodel": "9491d5e764a6b43a2ef6954a6efb54d3e04f09679c7f7eeeb3d588f8bb7c572d",
+    "Creatures\\Tusoteuthis\\animations\\tusoteuthis.animation.json": "9988cddb78cc796bb3efae976a6db4e2ce8ed6f9f4b0fe7e739f6387d748f57c",
+    "Creatures\\Tusoteuthis\\source\\skeleton.json": "721f4390155673dd29a011630b391e1875a20662f340f59fd32d2e67b6e21154"
+  },
+  "members": [
+    {
+      "bone": "c_main",
+      "vertices": 511,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "c_head",
+      "vertices": 3773,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB1",
+      "vertices": 157,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB2",
+      "vertices": 235,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB3",
+      "vertices": 190,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB4",
+      "vertices": 168,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB5",
+      "vertices": 112,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB6",
+      "vertices": 176,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB7",
+      "vertices": 98,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleB8",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC1",
+      "vertices": 148,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC2",
+      "vertices": 216,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC3",
+      "vertices": 250,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC4",
+      "vertices": 234,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC5",
+      "vertices": 180,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleC6",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD1",
+      "vertices": 167,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD2",
+      "vertices": 188,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD3",
+      "vertices": 214,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD4",
+      "vertices": 190,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD5",
+      "vertices": 189,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD6",
+      "vertices": 143,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD7",
+      "vertices": 119,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD8",
+      "vertices": 86,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleD9",
+      "vertices": 77,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleE1",
+      "vertices": 86,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleE2",
+      "vertices": 188,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleE3",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleE4",
+      "vertices": 113,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleE5",
+      "vertices": 81,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleA1",
+      "vertices": 179,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleA2",
+      "vertices": 172,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleA3",
+      "vertices": 195,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "l_tentacleA4",
+      "vertices": 124,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleA1",
+      "vertices": 179,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleA2",
+      "vertices": 172,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleA3",
+      "vertices": 195,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleA4",
+      "vertices": 124,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB1",
+      "vertices": 157,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB2",
+      "vertices": 235,
+      "cubes": 4,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB3",
+      "vertices": 190,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB4",
+      "vertices": 168,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB5",
+      "vertices": 112,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB6",
+      "vertices": 176,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB7",
+      "vertices": 98,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleB8",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC1",
+      "vertices": 148,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC2",
+      "vertices": 216,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC3",
+      "vertices": 250,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC4",
+      "vertices": 234,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC5",
+      "vertices": 180,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleC6",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD1",
+      "vertices": 167,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD2",
+      "vertices": 188,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD3",
+      "vertices": 214,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD4",
+      "vertices": 190,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD5",
+      "vertices": 189,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD6",
+      "vertices": 143,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD7",
+      "vertices": 119,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD8",
+      "vertices": 86,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleD9",
+      "vertices": 77,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleE1",
+      "vertices": 86,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleE2",
+      "vertices": 188,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleE3",
+      "vertices": 149,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleE4",
+      "vertices": 113,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "r_tentacleE5",
+      "vertices": 81,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "upper_beak",
+      "vertices": 115,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "lower_beak",
+      "vertices": 138,
+      "cubes": 1,
+      "accessory": false
+    },
+    {
+      "bone": "c_body1",
+      "vertices": 364,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "c_body2",
+      "vertices": 283,
+      "cubes": 3,
+      "accessory": false
+    },
+    {
+      "bone": "c_body3",
+      "vertices": 261,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "c_body4",
+      "vertices": 218,
+      "cubes": 2,
+      "accessory": false
+    },
+    {
+      "bone": "c_body5",
+      "vertices": 443,
+      "cubes": 3,
+      "accessory": false
+    }
+  ],
+  "method": "Anatomical-frame rigid cuboid fitting; preserved joints; merged facial details",
+  "limitations": [
+    "Rigid skin approximation; facial micro motions intentionally have no separate visible cubes",
+    "Original animation preservation does not prove absence of visual gaps",
+    "No runtime Blockbench/Minecraft test"
+  ]
+}

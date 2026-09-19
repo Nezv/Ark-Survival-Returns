@@ -1,0 +1,220 @@
+{
+  "reference": "Original source triangles and vertex weights, linear blend skinning through validated exported transforms",
+  "samples": [
+    {
+      "clip": "Bind pose",
+      "time": 0,
+      "views": {
+        "side": {
+          "iou": 0.7117,
+          "source_coverage": 0.9981,
+          "excess_fraction": 0.2873
+        },
+        "top": {
+          "iou": 0.8419,
+          "source_coverage": 0.9956,
+          "excess_fraction": 0.155
+        },
+        "front": {
+          "iou": 0.664,
+          "source_coverage": 0.996,
+          "excess_fraction": 0.3342
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Ground-Move-Fwd",
+      "time": 0.3333333333333333,
+      "views": {
+        "side": {
+          "iou": 0.6554,
+          "source_coverage": 0.9977,
+          "excess_fraction": 0.3436
+        },
+        "top": {
+          "iou": 0.8106,
+          "source_coverage": 0.9998,
+          "excess_fraction": 0.1893
+        },
+        "front": {
+          "iou": 0.7015,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.2985
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Ground-Move-Fwd",
+      "time": 0.6666666666666666,
+      "views": {
+        "side": {
+          "iou": 0.6673,
+          "source_coverage": 0.9952,
+          "excess_fraction": 0.3306
+        },
+        "top": {
+          "iou": 0.8174,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.1825
+        },
+        "front": {
+          "iou": 0.5765,
+          "source_coverage": 0.9995,
+          "excess_fraction": 0.4233
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Ground-Move-Fwd",
+      "time": 1.0,
+      "views": {
+        "side": {
+          "iou": 0.655,
+          "source_coverage": 0.9984,
+          "excess_fraction": 0.3443
+        },
+        "top": {
+          "iou": 0.7959,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.2041
+        },
+        "front": {
+          "iou": 0.6754,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.3246
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Attack-Claw",
+      "time": 0.25,
+      "views": {
+        "side": {
+          "iou": 0.6873,
+          "source_coverage": 0.9993,
+          "excess_fraction": 0.3124
+        },
+        "top": {
+          "iou": 0.7495,
+          "source_coverage": 0.9864,
+          "excess_fraction": 0.2427
+        },
+        "front": {
+          "iou": 0.7132,
+          "source_coverage": 0.9957,
+          "excess_fraction": 0.2846
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Attack-Claw",
+      "time": 0.5,
+      "views": {
+        "side": {
+          "iou": 0.6927,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.3073
+        },
+        "top": {
+          "iou": 0.7647,
+          "source_coverage": 0.998,
+          "excess_fraction": 0.2341
+        },
+        "front": {
+          "iou": 0.6755,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3245
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Attack-Claw",
+      "time": 0.75,
+      "views": {
+        "side": {
+          "iou": 0.6646,
+          "source_coverage": 0.9997,
+          "excess_fraction": 0.3353
+        },
+        "top": {
+          "iou": 0.7969,
+          "source_coverage": 0.9966,
+          "excess_fraction": 0.201
+        },
+        "front": {
+          "iou": 0.5661,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.4339
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Idle-BeakHold",
+      "time": 0.5,
+      "views": {
+        "side": {
+          "iou": 0.6823,
+          "source_coverage": 0.9996,
+          "excess_fraction": 0.3175
+        },
+        "top": {
+          "iou": 0.8218,
+          "source_coverage": 0.9962,
+          "excess_fraction": 0.1756
+        },
+        "front": {
+          "iou": 0.6233,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3767
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Idle-BeakHold",
+      "time": 1.0,
+      "views": {
+        "side": {
+          "iou": 0.6878,
+          "source_coverage": 0.9993,
+          "excess_fraction": 0.3118
+        },
+        "top": {
+          "iou": 0.8246,
+          "source_coverage": 0.9966,
+          "excess_fraction": 0.1731
+        },
+        "front": {
+          "iou": 0.6524,
+          "source_coverage": 0.9995,
+          "excess_fraction": 0.3474
+        }
+      }
+    },
+    {
+      "clip": "Argentavis-Fly-Idle-BeakHold",
+      "time": 1.5,
+      "views": {
+        "side": {
+          "iou": 0.6789,
+          "source_coverage": 0.9994,
+          "excess_fraction": 0.3208
+        },
+        "top": {
+          "iou": 0.8254,
+          "source_coverage": 0.9965,
+          "excess_fraction": 0.1722
+        },
+        "front": {
+          "iou": 0.6416,
+          "source_coverage": 0.9995,
+          "excess_fraction": 0.3582
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Rasterized orthographic silhouettes at 256px; not a perceptual score",
+    "No deformation of cuboid vertices; original blend skinning becomes rigid parts",
+    "Sampled visual checks do not certify every pose"
+  ]
+}

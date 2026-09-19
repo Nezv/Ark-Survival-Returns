@@ -1,6 +1,6 @@
 # Ravager
 
-ARK asset: `CaveWolf`. 93 original mesh bones, 6513 fitted cubes, 73 original animation clips.
+ARK asset: `CaveWolf`. 93 original mesh bones, 274 fitted cubes, 73 original animation clips.
 
 Open `Ravager_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 

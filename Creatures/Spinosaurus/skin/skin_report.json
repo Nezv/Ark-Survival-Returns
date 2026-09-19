@@ -1,0 +1,71 @@
+{
+  "creature": "Spinosaurus",
+  "source_geo": "Creatures\\Spinosaurus\\geo\\spinosaurus.geo.json",
+  "source_model": "Creatures\\Spinosaurus\\Spinosaurus_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      512,
+      512
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 258,
+  "faces": 1548,
+  "atlas": {
+    "packed_height": 239,
+    "used_pixels": 88944,
+    "coverage": 0.3393
+  },
+  "parts": {
+    "torso": 37,
+    "neck": 16,
+    "tail": 29,
+    "head": 13,
+    "jaw": 6,
+    "tongue": 8,
+    "eye": 4,
+    "legl": 11,
+    "legr": 12,
+    "arml": 38,
+    "armr": 38,
+    "footl": 23,
+    "footr": 23,
+    "claw": 0,
+    "horn": 0,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#687362",
+    "#98a081",
+    "#40594e",
+    "#beb393",
+    "#e4d5b2",
+    "#232f28",
+    "#dbad44",
+    "#a35b43"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -2.134,
+        29.537,
+        35.53
+      ],
+      [
+        2.134,
+        29.537,
+        35.53
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "reference": "Original source triangles and vertex weights, linear blend skinning through validated exported transforms",
+  "samples": [
+    {
+      "clip": "Bind pose",
+      "time": 0,
+      "views": {
+        "side": {
+          "iou": 0.7773,
+          "source_coverage": 0.9968,
+          "excess_fraction": 0.2208
+        },
+        "top": {
+          "iou": 0.723,
+          "source_coverage": 0.9967,
+          "excess_fraction": 0.2752
+        },
+        "front": {
+          "iou": 0.6099,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3901
+        }
+      }
+    },
+    {
+      "clip": "Equus-Move-Fwd",
+      "time": 0.6666666666666666,
+      "views": {
+        "side": {
+          "iou": 0.7821,
+          "source_coverage": 0.9974,
+          "excess_fraction": 0.2163
+        },
+        "top": {
+          "iou": 0.7052,
+          "source_coverage": 0.9997,
+          "excess_fraction": 0.2947
+        },
+        "front": {
+          "iou": 0.5964,
+          "source_coverage": 0.9994,
+          "excess_fraction": 0.4034
+        }
+      }
+    },
+    {
+      "clip": "Equus-Move-Fwd",
+      "time": 1.3333333333333333,
+      "views": {
+        "side": {
+          "iou": 0.7886,
+          "source_coverage": 0.9969,
+          "excess_fraction": 0.2095
+        },
+        "top": {
+          "iou": 0.7165,
+          "source_coverage": 0.9993,
+          "excess_fraction": 0.2831
+        },
+        "front": {
+          "iou": 0.6196,
+          "source_coverage": 0.9998,
+          "excess_fraction": 0.3803
+        }
+      }
+    },
+    {
+      "clip": "Equus-Move-Fwd",
+      "time": 2.0,
+      "views": {
+        "side": {
+          "iou": 0.7768,
+          "source_coverage": 0.9969,
+          "excess_fraction": 0.2213
+        },
+        "top": {
+          "iou": 0.7059,
+          "source_coverage": 0.9988,
+          "excess_fraction": 0.2935
+        },
+        "front": {
+          "iou": 0.6252,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3748
+        }
+      }
+    },
+    {
+      "clip": "Equus-Swim-Fwd",
+      "time": 0.41666666020545867,
+      "views": {
+        "side": {
+          "iou": 0.7677,
+          "source_coverage": 0.9972,
+          "excess_fraction": 0.2306
+        },
+        "top": {
+          "iou": 0.6957,
+          "source_coverage": 0.9989,
+          "excess_fraction": 0.3038
+        },
+        "front": {
+          "iou": 0.6376,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.3624
+        }
+      }
+    },
+    {
+      "clip": "Equus-Swim-Fwd",
+      "time": 0.8333333204109173,
+      "views": {
+        "side": {
+          "iou": 0.7693,
+          "source_coverage": 0.9974,
+          "excess_fraction": 0.2291
+        },
+        "top": {
+          "iou": 0.7086,
+          "source_coverage": 0.9978,
+          "excess_fraction": 0.2903
+        },
+        "front": {
+          "iou": 0.6308,
+          "source_coverage": 0.9976,
+          "excess_fraction": 0.3683
+        }
+      }
+    },
+    {
+      "clip": "Equus-Swim-Fwd",
+      "time": 1.249999980616376,
+      "views": {
+        "side": {
+          "iou": 0.7722,
+          "source_coverage": 0.9978,
+          "excess_fraction": 0.2265
+        },
+        "top": {
+          "iou": 0.6846,
+          "source_coverage": 0.9994,
+          "excess_fraction": 0.3151
+        },
+        "front": {
+          "iou": 0.6127,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3873
+        }
+      }
+    },
+    {
+      "clip": "Equus-Attack-Bite",
+      "time": 0.20833332702596372,
+      "views": {
+        "side": {
+          "iou": 0.7734,
+          "source_coverage": 0.9988,
+          "excess_fraction": 0.2259
+        },
+        "top": {
+          "iou": 0.6564,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3436
+        },
+        "front": {
+          "iou": 0.6128,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.3872
+        }
+      }
+    },
+    {
+      "clip": "Equus-Attack-Bite",
+      "time": 0.41666665405192743,
+      "views": {
+        "side": {
+          "iou": 0.7466,
+          "source_coverage": 0.9998,
+          "excess_fraction": 0.2533
+        },
+        "top": {
+          "iou": 0.6602,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3398
+        },
+        "front": {
+          "iou": 0.5953,
+          "source_coverage": 0.9999,
+          "excess_fraction": 0.4047
+        }
+      }
+    },
+    {
+      "clip": "Equus-Attack-Bite",
+      "time": 0.6249999810778911,
+      "views": {
+        "side": {
+          "iou": 0.7768,
+          "source_coverage": 0.9988,
+          "excess_fraction": 0.2225
+        },
+        "top": {
+          "iou": 0.6902,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3098
+        },
+        "front": {
+          "iou": 0.6044,
+          "source_coverage": 1.0,
+          "excess_fraction": 0.3956
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Rasterized orthographic silhouettes at 256px; not a perceptual score",
+    "No deformation of cuboid vertices; original blend skinning becomes rigid parts",
+    "Sampled visual checks do not certify every pose"
+  ]
+}

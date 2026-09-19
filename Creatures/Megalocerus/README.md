@@ -1,6 +1,6 @@
 # Megalocerus
 
-ARK asset: `Stag`. 59 original mesh bones, 4574 fitted cubes, 36 original animation clips.
+ARK asset: `Stag`. 59 original mesh bones, 397 fitted cubes, 36 original animation clips.
 
 Open `Megalocerus_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.
 
@@ -13,3 +13,7 @@ Run `python rebuild.py` to rebuild using the shared scripts and saved source exp
 Keep bone names, pivots and parent links when editing cubes. The imported clips already target these bones. Choose clips in your mod animation controller; assigning matching names does not create entity behavior automatically.
 
 The mesh is an automatic cuboid approximation with an original palette. Inspect shoulders, mouths and wing joints before final art approval. Loop flags are inferred from clip names. Unreal notifies, sounds, physics and AI are outside this conversion.
+
+## Mesh refinement
+
+Antlers are separated by source mesh topology, then fitted as connected height bands to preserve branching gaps. All antler cubes remain on c_neck3.

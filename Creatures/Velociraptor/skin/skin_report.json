@@ -1,0 +1,71 @@
+{
+  "creature": "Velociraptor",
+  "source_geo": "Creatures\\Velociraptor\\geo\\velociraptor.geo.json",
+  "source_model": "Creatures\\Velociraptor\\Velociraptor_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      256,
+      256
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 226,
+  "faces": 1356,
+  "atlas": {
+    "packed_height": 40,
+    "used_pixels": 3664,
+    "coverage": 0.0559
+  },
+  "parts": {
+    "torso": 74,
+    "neck": 9,
+    "tail": 33,
+    "head": 13,
+    "jaw": 6,
+    "tongue": 5,
+    "eye": 4,
+    "legl": 0,
+    "legr": 0,
+    "arml": 27,
+    "armr": 27,
+    "footl": 3,
+    "footr": 3,
+    "claw": 8,
+    "horn": 0,
+    "feather": 14,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#786b55",
+    "#a69673",
+    "#424f48",
+    "#c4b38c",
+    "#e5d6b0",
+    "#242c29",
+    "#da9c34",
+    "#a2563e"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -0.49,
+        10.168,
+        5.324
+      ],
+      [
+        0.49,
+        10.175,
+        5.322
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

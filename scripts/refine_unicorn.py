@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 from ark_geometry import Skeleton
-from build_dinosaurs import CREATURES, PALETTES, NATIVE_ASSETS, blockbench, fitted_cubes, write_json
+from build_dinosaurs import CREATURES, PALETTES, blockbench, fitted_cubes, write_json
 from extract_dinosaurs import SPECIES, resource_names
 
 
@@ -48,16 +48,11 @@ def refine():
     old_skeleton_digest = digest(old_bone_projection)
     old_source_skeleton = (out / 'source/skeleton.json').read_bytes()
 
-    # Skeleton() must see Equus in the native set so the source horn is loaded
-    # and native bind rotations/pivots remain available. Fitting itself is then
-    # deliberately switched to the coarse principal-axis path.
+    # The standard fitter now uses cuboid slices for native rigs as well.
+    # Skeleton loading still retains the horn and original bind transforms.
     skeleton = Skeleton(SPECIES[label], out / 'source')
-    NATIVE_ASSETS.discard(SPECIES[label])
-    try:
-        cubes = fitted_cubes(skeleton)
-    finally:
-        NATIVE_ASSETS.add(SPECIES[label])
-    assert 200 <= len(cubes) <= 500, len(cubes)
+    cubes = fitted_cubes(skeleton)
+    assert 120 <= len(cubes) <= 180, len(cubes)
 
     from build_dinosaurs import geometry
     fitted_geo = geometry(skeleton, cubes, identifier)
@@ -91,14 +86,16 @@ def refine():
 
     report = json.loads(report_path.read_text(encoding='utf-8'))
     report['cubes'] = len(cubes)
-    report['model_method'] = 'Coarse principal-axis Minecraft cuboids fitted per original bone/material; Unicorn horn remains on its native c_neck3 socket bone.'
+    from build_dinosaurs import fitting_method
+    report['model_method'] = fitting_method(SPECIES[label])
     report.setdefault('refinement', {})['mesh_only'] = True
     report['refinement']['previous_cubes'] = len(old_bb['elements'])
     report['refinement']['new_cubes'] = len(cubes)
     report['refinement']['skeleton_sha256'] = old_skeleton_digest
     report['refinement']['animation_sha256'] = old_anim_digest
     write_json(report_path, report, pretty=True)
-    (out / 'README.md').write_text((out / 'README.md').read_text(encoding='utf-8').replace('6172 fitted cubes', f'{len(cubes)} fitted cubes'), encoding='utf-8')
+    import re
+    (out / 'README.md').write_text(re.sub(r'\d[\d,]* fitted cubes', f'{len(cubes)} fitted cubes', (out / 'README.md').read_text(encoding='utf-8')), encoding='utf-8')
 
     # Refresh previews from the new geometry while retaining the existing
     # animation resource itself. This is an image/GIF output only.

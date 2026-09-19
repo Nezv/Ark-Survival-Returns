@@ -1,0 +1,71 @@
+{
+  "creature": "Dilophosaur",
+  "source_geo": "Creatures\\Dilophosaur\\geo\\dilophosaur.geo.json",
+  "source_model": "Creatures\\Dilophosaur\\Dilophosaur_GeckoLib.bbmodel",
+  "texture": {
+    "file": "skin.png",
+    "size": [
+      256,
+      256
+    ],
+    "pixels_per_unit": 2.0
+  },
+  "cubes": 275,
+  "faces": 1650,
+  "atlas": {
+    "packed_height": 47,
+    "used_pixels": 4126,
+    "coverage": 0.063
+  },
+  "parts": {
+    "torso": 21,
+    "neck": 13,
+    "tail": 46,
+    "head": 12,
+    "jaw": 5,
+    "tongue": 9,
+    "eye": 4,
+    "legl": 13,
+    "legr": 13,
+    "arml": 24,
+    "armr": 25,
+    "footl": 16,
+    "footr": 16,
+    "claw": 0,
+    "horn": 58,
+    "feather": 0,
+    "other": 0
+  },
+  "unclassified_bones": [],
+  "palette": [
+    "#607f60",
+    "#8eab74",
+    "#3e5950",
+    "#bcb786",
+    "#e0d6aa",
+    "#25352b",
+    "#e0b33e",
+    "#b9754f"
+  ],
+  "features": {
+    "eye_centers": [
+      [
+        -0.771,
+        7.753,
+        7.167
+      ],
+      [
+        0.258,
+        7.83,
+        7.238
+      ]
+    ],
+    "has_jaw_profile": true
+  },
+  "checks": {
+    "all_faces_in_bounds": true,
+    "all_faces_positive_size": true,
+    "face_count_matches": true,
+    "atlas_fits": true
+  }
+}

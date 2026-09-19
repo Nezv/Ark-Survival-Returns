@@ -42,6 +42,25 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue PERCHING;
     public static final EnumMap<BiomeTier, ModConfigSpec.IntValue> MIN_LEVEL = new EnumMap<>(BiomeTier.class);
     public static final EnumMap<BiomeTier, ModConfigSpec.IntValue> MAX_LEVEL = new EnumMap<>(BiomeTier.class);
+    // ------------------------------------------------------------------------------- taming
+    public static final ModConfigSpec.BooleanValue TAMING_ENABLED;
+    public static final ModConfigSpec.BooleanValue TAMING_DEBUG_LOG;
+    public static final ModConfigSpec.IntValue PLAYER_MAX_TORPOR;
+    public static final ModConfigSpec.DoubleValue PLAYER_TORPOR_RESISTANCE;
+    public static final EnumMap<dev.nez.arksurvivalreturns.feature.taming.CreatureSize, ModConfigSpec.IntValue> MAX_TORPOR =
+            new EnumMap<>(dev.nez.arksurvivalreturns.feature.taming.CreatureSize.class);
+    public static final ModConfigSpec.DoubleValue WAKE_THRESHOLD_RATIO, TORPOR_RECOVERY_PER_SECOND;
+    public static final ModConfigSpec.IntValue TORPOR_RECOVERY_DELAY, TORPOR_SYNC_INTERVAL;
+    public static final ModConfigSpec.DoubleValue BASIC_SEDATIVE_POTENCY, TRANQUILIZER_ARROW_POTENCY;
+    public static final ModConfigSpec.IntValue TORPOR_COLLAPSE_FALLBACK_TICKS, TORPOR_WAKE_FALLBACK_TICKS, TORPOR_FEED_FALLBACK_TICKS;
+    public static final ModConfigSpec.DoubleValue FEED_HUNGER_THRESHOLD, WILD_HUNGER_MIN, WILD_HUNGER_MAX;
+    public static final ModConfigSpec.DoubleValue HUNGER_INCREASE_PER_SECOND, HUNGER_REDUCTION_PER_MEAL;
+    public static final ModConfigSpec.IntValue MINIMUM_FEED_INTERVAL, FOOD_UNITS_PER_MEAL, CLAIM_EXPIRY, FEEDING_TRUCE_TICKS;
+    public static final ModConfigSpec.DoubleValue PREFERRED_FOOD_MULTIPLIER, DAMAGE_PROGRESS_PENALTY;
+    public static final ModConfigSpec.IntValue PASSIVE_PROGRESS_GRACE, PASSIVE_PROGRESS_DECAY_PERIOD;
+    public static final ModConfigSpec.DoubleValue PASSIVE_PROGRESS_DECAY, PLAYER_MOVEMENT_TOLERANCE;
+    public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
+    public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
@@ -74,6 +93,88 @@ public final class Config {
             MAX_LEVEL.put(tier, b.comment("Reversed endpoints are sorted automatically.").defineInRange("max", tier.maxLevel, 1, 100));
             b.pop();
         }
+        b.pop().push("taming");
+        TAMING_ENABLED = b.comment("Master switch for torpor, taming, riding and the creature inventory.")
+                .define("enabled", true);
+        TAMING_DEBUG_LOG = b.comment("Log sedation and feeding transitions with their reasons. Never logs every tick.")
+                .define("debugLog", false);
+        PLAYER_MAX_TORPOR = b.comment("Player knockout threshold in normalized torpor units.")
+                .defineInRange("playerMaxTorpor", 100, 1, 10000);
+        PLAYER_TORPOR_RESISTANCE = b.comment("Incoming sedative potency multiplier for players; lower is more resistant.")
+                .defineInRange("playerSedativeResistance", 1.0, 0.05, 10.0);
+        for (var size : dev.nez.arksurvivalreturns.feature.taming.CreatureSize.values()) {
+            int fallback = switch (size) {
+                case SMALL -> 60;
+                case MEDIUM -> 150;
+                case LARGE -> 350;
+                case GIANT -> 700;
+            };
+            MAX_TORPOR.put(size, b.comment("Torpor ceiling for a " + size.name().toLowerCase(java.util.Locale.ROOT)
+                    + " creature; sizes come from the registered hitbox height.")
+                    .defineInRange(size.name().toLowerCase(java.util.Locale.ROOT) + "MaxTorpor", fallback, 1, 100000));
+        }
+        WAKE_THRESHOLD_RATIO = b.comment("Wake below this share of the maximum torpor.")
+                .defineInRange("wakeThresholdRatio", 0.20, 0.01, 0.95);
+        TORPOR_RECOVERY_DELAY = b.comment("Ticks of no further sedation before recovery starts (200 = 10 seconds).")
+                .defineInRange("torporRecoveryDelayTicks", 200, 0, 24000);
+        TORPOR_RECOVERY_PER_SECOND = b.comment("Recovery per second as a share of the maximum, after the delay.")
+                .defineInRange("torporRecoveryPerSecond", 0.005, 0.0, 1.0);
+        TORPOR_SYNC_INTERVAL = b.comment("Maximum normal tick interval between relevant client updates.")
+                .defineInRange("torporSyncIntervalTicks", 5, 1, 100);
+        BASIC_SEDATIVE_POTENCY = b.comment("Dose of the baseline sedative in normalized torpor units.")
+                .defineInRange("basicSedativePotency", 25.0, 0.1, 100000.0);
+        TRANQUILIZER_ARROW_POTENCY = b.comment("Dose delivered by one tranquilizer arrow. The ranged route has to be "
+                        + "worth the crafting cost, because recovery continues during a knock-out.")
+                .defineInRange("tranquilizerArrowPotency", 75.0, 0.1, 100000.0);
+        TORPOR_COLLAPSE_FALLBACK_TICKS = b.comment("Collapse length for rigs with no imported torpor sequence.")
+                .defineInRange("collapseFallbackTicks", 40, 1, 400);
+        TORPOR_WAKE_FALLBACK_TICKS = b.comment("Wake length for rigs with no imported torpor sequence.")
+                .defineInRange("wakeFallbackTicks", 40, 1, 400);
+        TORPOR_FEED_FALLBACK_TICKS = b.comment("Feeding animation length for rigs with no imported feeding clip.")
+                .defineInRange("feedFallbackTicks", 40, 1, 400);
+        FEED_HUNGER_THRESHOLD = b.comment("Minimum feeding hunger needed to eat. 0 is full, 100 is very hungry.")
+                .defineInRange("feedHungerThreshold", 40.0, 0.0, 100.0);
+        WILD_HUNGER_MIN = b.comment("Lower bound of the feeding hunger a newly spawned wild creature starts with.")
+                .defineInRange("wildHungerMinimum", 55.0, 0.0, 100.0);
+        WILD_HUNGER_MAX = b.comment("Upper bound of that range; avoid every spawn behaving identically.")
+                .defineInRange("wildHungerMaximum", 95.0, 0.0, 100.0);
+        HUNGER_INCREASE_PER_SECOND = b.comment("Appetite recovered per second, so a meal takes about "
+                        + "hungerReductionPerMeal / this value to become possible again.")
+                .defineInRange("hungerIncreasePerSecond", 1.0, 0.05, 20.0);
+        HUNGER_REDUCTION_PER_MEAL = b.comment("Satiation of one meal.")
+                .defineInRange("hungerReductionPerMeal", 20.0, 0.1, 100.0);
+        MINIMUM_FEED_INTERVAL = b.comment("Minimum ticks between meals (400 = 20 seconds). This is also the meal "
+                        + "budget a profile spends its target duration on.")
+                .defineInRange("minimumFeedIntervalTicks", 400, 20, 24000);
+        FOOD_UNITS_PER_MEAL = b.comment("Items consumed by one successful meal.")
+                .defineInRange("foodUnitsPerMeal", 1, 1, 16);
+        PREFERRED_FOOD_MULTIPLIER = b.comment("Taming progress multiplier for a species' favourite food.")
+                .defineInRange("preferredFoodMultiplier", 1.5, 1.0, 10.0);
+        DAMAGE_PROGRESS_PENALTY = b.comment("Percentage points lost when a wild creature being tamed takes damage.")
+                .defineInRange("damageProgressPenalty", 10.0, 0.0, 100.0);
+        PASSIVE_PROGRESS_GRACE = b.comment("Ticks before an abandoned passive or aerial attempt starts to decay "
+                        + "(2400 = 120 seconds).")
+                .defineInRange("passiveProgressGraceTicks", 2400, 0, 24000);
+        PASSIVE_PROGRESS_DECAY_PERIOD = b.comment("Decay period in ticks (200 = 10 seconds).")
+                .defineInRange("passiveProgressDecayPeriodTicks", 200, 20, 24000);
+        PASSIVE_PROGRESS_DECAY = b.comment("Percentage points lost per decay period.")
+                .defineInRange("passiveProgressDecay", 1.0, 0.0, 100.0);
+        CLAIM_EXPIRY = b.comment("Ticks of inactivity after which a claim on a wild creature expires "
+                        + "(2400 = two minutes).")
+                .defineInRange("claimExpiryTicks", 2400, 200, 24000);
+        FEEDING_TRUCE_TICKS = b.comment("Feeder-specific truce granted by a successful aerial feeding "
+                        + "(300 = 15 seconds).")
+                .defineInRange("feedingTruceTicks", 300, 0, 2400);
+        RIDDEN_FLIGHT_SPEED_MULTIPLIER = b.comment("Flight speed of a ridden flyer, as a multiple of its movement speed.")
+                .defineInRange("riddenFlightSpeedMultiplier", 2.0, 0.2, 12.0);
+        RIDDEN_SWIM_SPEED_MULTIPLIER = b.comment("Swim speed of a ridden water creature, as a multiple of its movement speed.")
+                .defineInRange("riddenSwimSpeedMultiplier", 1.0, 0.2, 12.0);
+        PLAYER_MOVEMENT_TOLERANCE = b.comment("Horizontal drift an unconscious player may accumulate before the "
+                        + "server pulls them back to where they fell asleep, in blocks.")
+                .defineInRange("playerMovementTolerance", 0.35, 0.05, 4.0);
+        PLAYER_IMPULSE_TICKS = b.comment("Ticks of unimpeded movement granted to an unconscious player after taking "
+                        + "damage, so knockback still works.")
+                .defineInRange("playerImpulseTicks", 12, 0, 100);
         b.pop().push("nighttime");
         NIGHTTIME = b.comment("Land wildlife only; flying species retain their existing behavior. Requires a dimension with a normal sky clock.").define("enabled", true);
         NIGHT_START = b.defineInRange("nightStartTick", 13000, 0, 23999);

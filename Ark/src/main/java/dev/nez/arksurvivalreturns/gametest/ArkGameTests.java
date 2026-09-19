@@ -42,6 +42,18 @@ public final class ArkGameTests {
         FUNCTIONS.register("collection_registration", () -> CollectionGameTests::registration);
         FUNCTIONS.register("collection_cold", () -> CollectionGameTests::cold);
         FUNCTIONS.register("theme_alignment", () -> ThemeGameTests::run);
+        FUNCTIONS.register("taming_roster", () -> TamingGameTests::roster);
+        FUNCTIONS.register("taming_torpor", () -> TamingGameTests::torpor);
+        FUNCTIONS.register("taming_passive_feeding", () -> TamingGameTests::passiveFeeding);
+        FUNCTIONS.register("taming_knockout_feeding", () -> TamingGameTests::knockoutFeeding);
+        FUNCTIONS.register("taming_wake_before_completion", () -> TamingGameTests::wakeBeforeCompletion);
+        FUNCTIONS.register("taming_riding", () -> TamingGameTests::riding);
+        FUNCTIONS.register("taming_persistence", () -> TamingGameTests::persistence);
+        FUNCTIONS.register("taming_player_sedation", () -> TamingGameTests::playerSedation);
+        FUNCTIONS.register("taming_aerial_feeding", () -> TamingGameTests::aerialFeeding);
+        FUNCTIONS.register("taming_completion", () -> TamingGameTests::completionKeepsSleep);
+        FUNCTIONS.register("taming_claim_expiry", () -> TamingGameTests::claimExpiry);
+        FUNCTIONS.register("taming_ordinary_mob", () -> TamingGameTests::ordinaryMobRestraint);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

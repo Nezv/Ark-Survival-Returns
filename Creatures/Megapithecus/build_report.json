@@ -4,7 +4,7 @@
   "unit_scale": "1 Unreal cm = 0.1 Blockbench units",
   "bone_axes": "native bind axes (nonuniform scale supported)",
   "bones": 93,
-  "cubes": 22412,
+  "cubes": 438,
   "source_vertices": 60950,
   "source_triangles": 62578,
   "animations": 28,
@@ -442,7 +442,7 @@
       "fk_validation": "All frames validated after JSON write using full affine matrices."
     }
   ],
-  "model_method": "Triangle-sampled surface cells merged into cuboids per original bone/material; fine features use smaller cells",
+  "model_method": "Material-separated principal-axis cuboid slices fitted to dominant bone vertex influences",
   "attachments": [
     "Gorilla_fur"
   ],
@@ -454,5 +454,14 @@
     "Palette texture is generated, not the ARK texture.",
     "Loop flags are name-based suggestions; review in Blockbench.",
     "Entity controller/state transitions, sounds and Unreal notifies are not converted."
-  ]
+  ],
+  "fitting_restoration": {
+    "mesh_only": true,
+    "previous_cubes": 22412,
+    "new_cubes": 438,
+    "skeleton_sha256": "b8a8ca03d8fd430525bc189e2b5b022d224bdb2e74c4899b87581d0acb09d43d",
+    "embedded_animations_sha256": "7cad2ea9de2b903d5d70d9dea0d3a004270dd0b7078662f4295a2369259333c9",
+    "protected_file_count": 103,
+    "protected_files_unchanged": true
+  }
 }

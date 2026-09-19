@@ -1,0 +1,27 @@
+{
+  "seed": 7319,
+  "base_colors": [
+    "#ba7b40",
+    "#965529",
+    "#6c3b26",
+    "#4d2a1b",
+    "#361e14"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "layer_edges": [
+    0.2,
+    0.4,
+    0.6,
+    0.8
+  ],
+  "pixels_per_unit": 2.0,
+  "head_density_multiplier": 2.2,
+  "brush_size_pixels": 3,
+  "symmetry_axis": "X=0"
+}

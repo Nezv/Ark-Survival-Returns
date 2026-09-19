@@ -38,7 +38,7 @@ public final class HabitatSync {
         }
         boolean unlocked = MapUnlockData.get(world).hasAccess(player.getUUID(),Config.MAP_REQUIRES_UNLOCK.get());
         var markers = unlocked ? data.discovered(player.getUUID(),player.blockPosition(),HabitatPayload.MAX_MARKERS).stream()
-                .map(h -> new HabitatPayload.Marker(h.id(),h.species()==dev.nez.arksurvivalreturns.feature.creature.Species.ARGENTAVIS,h.center())).toList()
+                .map(h -> new HabitatPayload.Marker(h.id(),h.species(),h.center())).toList()
                 : List.<HabitatPayload.Marker>of();
         return new HabitatPayload(world.dimension().identifier().toString(),markers);
     }

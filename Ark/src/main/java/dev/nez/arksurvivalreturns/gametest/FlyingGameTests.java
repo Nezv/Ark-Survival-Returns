@@ -60,7 +60,7 @@ final class FlyingGameTests {
         }
         var buf=new net.minecraft.network.RegistryFriendlyByteBuf(io.netty.buffer.Unpooled.buffer(),world.registryAccess());
         try {
-            var packet=new HabitatPayload(world.dimension().identifier().toString(),List.of(new HabitatPayload.Marker(habitat.id(),false,habitat.center())));
+            var packet=new HabitatPayload(world.dimension().identifier().toString(),List.of(new HabitatPayload.Marker(habitat.id(),habitat.species(),habitat.center())));
             HabitatPayload.STREAM_CODEC.encode(buf,packet);h.assertTrue(packet.equals(HabitatPayload.STREAM_CODEC.decode(buf)),"Habitat packet round trip failed");
             buf.clear();buf.writeUtf("minecraft:overworld",256);buf.writeVarInt(HabitatPayload.MAX_MARKERS+1);
             boolean rejected=false;try{HabitatPayload.STREAM_CODEC.decode(buf);}catch(IllegalArgumentException e){rejected=true;}
