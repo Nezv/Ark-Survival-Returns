@@ -56,11 +56,21 @@ neoForge {
     }
     mods { "${mod_id}" { sourceSet sourceSets.main } }
 }
+// These projects are embedded in Ark Survival Returns. Keep any stale downloaded
+// copies out of the runtime classpath so their mod containers cannot load twice.
+def integratedStandaloneJars = [
+    'AmbientSounds_*.jar',
+    'CreativeCore_*.jar',
+    'sound-physics-remastered-*.jar',
+    'PresenceFootsteps*.jar',
+    'Presence-Footsteps*.jar'
+]
+def installedPack = fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)
 dependencies {
     implementation "maven.modrinth:geckolib:${geckolib_version}"
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'
     compileOnly 'maven.modrinth:xaeros-world-map:pKatKnls'
-    immersiveClientRuntimeOnly fileTree(dir: 'client-mods', include: ['*.jar'])
+    immersiveClientRuntimeOnly installedPack
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -68,7 +78,6 @@ dependencies {
 tasks.named('test') { useJUnitPlatform() }
 def clientPackClasspath = neoForge.runs.client.sourceSet.get().runtimeClasspath
 def serverPackClasspath = neoForge.runs.gameTestServer.sourceSet.get().runtimeClasspath
-def installedPack = fileTree(dir: 'client-mods', include: ['*.jar'])
 tasks.register('verifyClientPack') {
     group = 'verification'
     description = 'Checks that installed presentation mods load only with the interactive client.'

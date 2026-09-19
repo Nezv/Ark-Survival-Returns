@@ -2,11 +2,19 @@
 from pathlib import Path
 from io import BytesIO
 import hashlib
+import fnmatch
 import json
 import tomllib
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+INTEGRATED_STANDALONE_GLOBS = (
+    "AmbientSounds_*.jar",
+    "CreativeCore_*.jar",
+    "sound-physics-remastered-*.jar",
+    "PresenceFootsteps*.jar",
+    "Presence-Footsteps*.jar",
+)
 
 
 def verify():
@@ -45,7 +53,11 @@ def verify():
         else:
             with zipfile.ZipFile(BytesIO(content)) as shader:
                 assert any(name.startswith("shaders/") for name in shader.namelist()), "Invalid shader ZIP"
-    actual = {path.name for path in (ROOT / "client-mods").glob("*.jar")}
+    actual = {
+        path.name
+        for path in (ROOT / "client-mods").glob("*.jar")
+        if not any(fnmatch.fnmatchcase(path.name, pattern) for pattern in INTEGRATED_STANDALONE_GLOBS)
+    }
     assert actual == expected, f"Unreviewed/missing client JARs: {actual ^ expected}"
     for owner, required in requirements:
         assert required in mods or required in {"minecraft", "neoforge"}, f"{owner} requires missing {required}"

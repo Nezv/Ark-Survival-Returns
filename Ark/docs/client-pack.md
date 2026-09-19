@@ -9,11 +9,8 @@ Installed and checked on 7 September 2026 for Minecraft 26.2 / NeoForge 26.2.0.1
 | [Sodium](https://modrinth.com/mod/sodium/version/KHPycol7) | 0.9.1, NeoForge 26.2 | Rendering performance and Iris dependency |
 | [Iris](https://modrinth.com/mod/iris/version/bXt6zsZT) | 1.11.2, NeoForge 26.2 | Shader loader |
 | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/version/111gsk0f) | r5.9 | Shader pack, available in Video Settings → Shader Packs |
-| [AmbientSounds](https://modrinth.com/mod/ambientsounds/version/odflTtI0) | 6.3.6, NeoForge 26.2 | Environmental ambience |
-| [CreativeCore](https://modrinth.com/mod/creativecore/version/Mwk5iw3d) | 2.14.16, NeoForge 26.2 | AmbientSounds dependency |
-| [Sound Physics Remastered](https://modrinth.com/mod/sound-physics-remastered/version/T2rk5I7r) | 1.5.1, NeoForge 26.2 | Sound occlusion, attenuation and reverberation |
 
-The shader ZIP is downloaded but is not forced on. Select **Complementary Reimagined** in Video Settings → Shader Packs; start with its Medium preset and adjust during play. Existing graphics, sound and shader settings are preserved. AmbientSounds offers `/cmdclientconfig` and `/ambient-debug`; keep ambience quiet enough that dinosaur warnings remain audible. Sound Physics changes presentation, while Ark's server-side hearing decisions remain governed by its own behavior model.
+The shader ZIP is downloaded but is not forced on. Select **Complementary Reimagined** in Video Settings → Shader Packs; start with its Medium preset and adjust during play. Existing graphics, sound and shader settings are preserved. Environmental ambience, material-aware footsteps and sound physics are built into Ark Survival Returns; do not install their standalone source mods alongside it. Ark's server-side hearing decisions remain governed by its own behavior model.
 
 No terrain generator, extra creature pack, minimap entity radar or combat overhaul was added. The existing biome layout, spawn ecology and combat rules stay consistent with the Ark work.
 
@@ -21,7 +18,9 @@ No terrain generator, extra creature pack, minimap entity radar or combat overha
 
 The local installation is already complete. On another checkout, double-click **`Install-Ark-Extras.bat`**, then **`Start-Ark-Mod.bat`**. The installer downloads fixed files from Modrinth's HTTPS CDN, verifies SHA-512 hashes, and reuses matching files. It never overwrites changed files silently or modifies saves/configs.
 
-`config/client-mods.lock.json` records versions, download URLs, file sizes and hashes. Third-party JARs are kept in `Ark/client-mods`, excluded from source control and from Ark's published JAR. The shader resides in `Ark/run/shaderpacks`. The Gradle `immersiveClient` runtime includes these mods only for `runClient`; dedicated servers, GameTests and datagen use the core mod and GeckoLib. Installing the Ark JAR into another launcher does not automatically install this optional pack; copy the seven pinned JARs into that instance's `mods` folder and the shader ZIP into `shaderpacks`.
+`config/client-mods.lock.json` records versions, download URLs, file sizes and hashes. Third-party JARs are kept in `Ark/client-mods`, excluded from source control and from Ark's published JAR. The shader resides in `Ark/run/shaderpacks`. The Gradle `immersiveClient` runtime includes these mods only for `runClient`; dedicated servers, GameTests and datagen use the core mod and GeckoLib. Installing the Ark JAR into another launcher does not automatically install this optional pack; copy the four pinned JARs into that instance's `mods` folder and the shader ZIP into `shaderpacks`.
+
+Old standalone AmbientSounds, CreativeCore, Presence Footsteps and Sound Physics Remastered JARs are ignored by the managed development runtime because those systems now live inside Ark Survival Returns. They can be deleted after Minecraft and Gradle release their file handles.
 
 Offline verification:
 
@@ -74,10 +73,14 @@ No interactive client was launched. Check these in the normal launcher:
 
 The map gate is a progression feature for this client pack, not an anti-cheat boundary against modified clients.
 
-## Flying habitat markers
+## Habitat markers removed
 
-The separate **Nests: on/off** toggle displays one nest glyph per discovered flying colony on the fullscreen World Map. Hover for species and coordinates. Discovery is saved per player and dimension; the difficulty toggle can remain off. The current dimension's nearest 128 discoveries are available, and unexplored terrain remains hidden. No minimap API is used. See [Flying Ecosystem](flying-ecosystem.md) for placement rules and validation limits.
+The flying and land habitat marker overlays were removed together with the habitat stores. The map now
+shows only the difficulty tint; finding nests and herds is done by exploring. See
+[Flying Ecosystem](flying-ecosystem.md) and [collection ecosystems](collection-ecosystem.md) for the
+current spawn and nesting rules.
 
-## Land habitat markers and dev settings
+## Dev settings
 
-The separate **Land habitats: on/off** control uses leaf/fang symbols for discovered land homes. Hover shows species, coordinates and site status; nearby screen markers cluster. See [land behavior](land-ecosystem.md) and the [dev dependency list](dev-dependencies.md) for the 16 GB / 24-chunk settings and River Redux availability.
+See the [dev dependency list](dev-dependencies.md) for the 16 GB / 24-chunk settings and River Redux
+availability.

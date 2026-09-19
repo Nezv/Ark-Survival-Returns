@@ -7,7 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import com.sonicether.soundphysics.SoundPhysicsMod;
+import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysicsMod;
 
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class ArkClient {

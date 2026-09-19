@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8.4",
-  "package": "com.sonicether.soundphysics.mixin",
+  "package": "dev.nez.arksurvivalreturns.client.audio.physics.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": ["EntityMixin", "SoundEventMixin"],
   "client": [

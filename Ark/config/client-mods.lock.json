@@ -48,39 +48,6 @@
       "source": "https://modrinth.com/mod/iris"
     },
     {
-      "project": "ambientsounds",
-      "version": "6.3.6",
-      "versionId": "odflTtI0",
-      "filename": "AmbientSounds_NEOFORGE_v6.3.6_mc26.2.jar",
-      "url": "https://cdn.modrinth.com/data/fM515JnW/versions/odflTtI0/AmbientSounds_NEOFORGE_v6.3.6_mc26.2.jar",
-      "sha512": "90a3c905d70d1ca150f34e44e74324e1d4b8d696708562d94ca1c53109e6b0bd078477bfc30640a590c8b94c659343d1b3dfd175e238a2991f1f58fd27ed159a",
-      "size": 84813650,
-      "kind": "mod",
-      "source": "https://modrinth.com/mod/ambientsounds"
-    },
-    {
-      "project": "creativecore",
-      "version": "2.14.16",
-      "versionId": "Mwk5iw3d",
-      "filename": "CreativeCore_NEOFORGE_v2.14.16_mc26.2.jar",
-      "url": "https://cdn.modrinth.com/data/OsZiaDHq/versions/Mwk5iw3d/CreativeCore_NEOFORGE_v2.14.16_mc26.2.jar",
-      "sha512": "f34975eee977e2e2ec2af78603526638df8e668135189e64af15517c6941f1f6744e48f1cee3aa80c66c85c5d2608a2ea564eeec48fa3de8e49a3ede2fbef93b",
-      "size": 1345747,
-      "kind": "mod",
-      "source": "https://modrinth.com/mod/creativecore"
-    },
-    {
-      "project": "sound-physics-remastered",
-      "version": "neoforge-1.5.1+26.2",
-      "versionId": "T2rk5I7r",
-      "filename": "sound-physics-remastered-neoforge-1.5.1+26.2.jar",
-      "url": "https://cdn.modrinth.com/data/qyVF9oeo/versions/T2rk5I7r/sound-physics-remastered-neoforge-1.5.1%2B26.2.jar",
-      "sha512": "b5d3e5ccf6e73c7d4b603dfc5516357bcfce3938d3c939fed4a281de27953d32c8c075e7a50d7cb8be6ba2ecdfa4b41338cbf058b4afecab0b6251bdb8024466",
-      "size": 201519,
-      "kind": "mod",
-      "source": "https://modrinth.com/mod/sound-physics-remastered"
-    },
-    {
       "project": "complementary-reimagined",
       "version": "r5.9",
       "versionId": "111gsk0f",
