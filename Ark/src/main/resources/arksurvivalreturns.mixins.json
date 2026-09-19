@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8.4",
+  "package": "com.sonicether.soundphysics.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["EntityMixin", "SoundEventMixin"],
+  "client": [
+    "SoundSystemMixin", "SourceMixin", "DebugRendererMixin", "LibraryMixin",
+    "ChannelAccessor", "ClientLevelMixin", "LocalPlayerMixin", "MinecraftMixin",
+    "ClientPacketListenerMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}

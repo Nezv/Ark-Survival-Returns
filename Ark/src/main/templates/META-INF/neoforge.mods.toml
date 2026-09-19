@@ -5,6 +5,8 @@ version="${mod_version}"
 displayName="${mod_name}"
 authors="Nez"
 description='Prehistoric wildlife, biome danger, creature levels and wild berries.'
+[[mixins]]
+config="arksurvivalreturns.mixins.json"
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"

@@ -2,6 +2,18 @@
 
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
 
+## Unified Spatial Audio — 2026-09-19
+
+- Merged Sound Physics Remastered's OpenAL EFX reverb, occlusion, absorption and reflected directionality
+  into the Ark client runtime, ported directly to NeoForge 26.2 without a second mod container.
+- Added material-aware positional footsteps backed by the Presence Footsteps recording library, with
+  separate walking/running cadence and profiles for terrain, wood, stone, metal, glass, snow and mud.
+- Added biome-, dimension-, weather-, time-, cave- and underwater-aware ambience backed by the full
+  AmbientSounds catalog. A single resource-pack JSON controls all surface mappings and environment rules.
+- Removed Fabric and CreativeCore runtime coupling, retained all upstream license texts and provenance,
+  and changed the combined work's declared license to GPL-3.0-only. Validated all 48 configured events and
+  the full Gradle build.
+
 ## Anatomy-Driven Creature Textures — 2026-09-19
 
 - All 41 runtime creatures now ship with five procedurally painted variants: Ivory, Darken, Emerald,

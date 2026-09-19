@@ -1,0 +1,40 @@
+{
+  "fallbackMaterial": "stone",
+  "footsteps": {
+    "grass": { "walk": "presencefootsteps:pf_presence.grass.grass_walk", "run": "presencefootsteps:pf_presence.grass.grass_run", "volume": 0.48, "pitchVariance": 0.05 },
+    "dirt": { "walk": "presencefootsteps:pf_presence.dirt.dirt_walk", "run": "presencefootsteps:pf_presence.dirt.dirt_run", "volume": 0.50, "pitchVariance": 0.06 },
+    "gravel": { "walk": "presencefootsteps:pf_presence.gravel.gravel_walk", "run": "presencefootsteps:pf_presence.gravel.gravel_run", "volume": 0.50, "pitchVariance": 0.05 },
+    "sand": { "walk": "presencefootsteps:pf_presence.sand.sand_walk", "run": "presencefootsteps:pf_presence.sand.sand_run", "volume": 0.48, "pitchVariance": 0.05 },
+    "snow": { "walk": "presencefootsteps:pf_presence.snow.snow_walk", "run": "presencefootsteps:pf_presence.snow.snow_run", "volume": 0.46, "pitchVariance": 0.05 },
+    "stone": { "walk": "presencefootsteps:pf_presence.stone.stone_walk", "run": "presencefootsteps:pf_presence.stone.stone_run", "volume": 0.48, "pitchVariance": 0.04 },
+    "wood": { "walk": "presencefootsteps:pf_presence.wood.wood_walk", "run": "presencefootsteps:pf_presence.deckwood.deckwood_run", "volume": 0.50, "pitchVariance": 0.05 },
+    "metal": { "walk": "presencefootsteps:pf_presence.metalbar.metalbar_walk", "run": "presencefootsteps:pf_presence.metalbar.metalbar_run", "volume": 0.46, "pitchVariance": 0.04 },
+    "glass": { "walk": "presencefootsteps:pf_presence.glass.glass_hit", "run": "presencefootsteps:pf_presence.glass.glass_hard", "volume": 0.38, "pitchVariance": 0.04 },
+    "mud": { "walk": "presencefootsteps:pf_presence.mud.mud_walk", "run": "presencefootsteps:pf_presence.mud.mud_walk", "volume": 0.50, "pitchVariance": 0.06 },
+    "wool": { "walk": "presencefootsteps:pf_presence.rug.rug_walk", "run": "presencefootsteps:pf_presence.rug.rug_walk", "volume": 0.38, "pitchVariance": 0.05 }
+  },
+  "soundTypes": {
+    "GRASS": "grass", "WET_GRASS": "grass", "MOSS": "grass", "MOSS_CARPET": "grass", "AZALEA_LEAVES": "grass",
+    "ROOTED_DIRT": "dirt", "GRAVEL": "gravel", "SUSPICIOUS_GRAVEL": "gravel",
+    "SAND": "sand", "SUSPICIOUS_SAND": "sand", "SOUL_SAND": "sand",
+    "SNOW": "snow", "POWDER_SNOW": "snow",
+    "STONE": "stone", "DEEPSLATE": "stone", "TUFF": "stone", "CALCITE": "stone", "BASALT": "stone", "NETHERRACK": "stone",
+    "WOOD": "wood", "BAMBOO_WOOD": "wood", "CHERRY_WOOD": "wood", "NETHER_WOOD": "wood",
+    "METAL": "metal", "IRON": "metal", "COPPER": "metal", "CHAIN": "metal", "ANVIL": "metal",
+    "GLASS": "glass", "MUD": "mud", "MUD_BRICKS": "mud", "PACKED_MUD": "mud", "WOOL": "wool"
+  },
+  "ambience": [
+    { "sounds": ["ambientsounds:water.underwater", "ambientsounds:water.underwater-deep"], "underwater": true, "minimumDelay": 400, "maximumDelay": 900, "volume": 0.36 },
+    { "sounds": ["ambientsounds:cave.cave1", "ambientsounds:cave.cave2", "ambientsounds:cave.cave3", "ambientsounds:cave.cave-large1"], "underwater": false, "maximumSkyLight": 4, "minimumDelay": 500, "maximumDelay": 1200, "volume": 0.32 },
+    { "sounds": ["ambientsounds:weather.rain1", "ambientsounds:weather.rain2"], "raining": true, "minimumDelay": 500, "maximumDelay": 1000, "volume": 0.30 },
+    { "sounds": ["ambientsounds:animals.bird-ambience-jungle", "ambientsounds:animals.bird-ambience-jungle2", "ambientsounds:animals.cricket-jungle"], "biomeContains": ["jungle", "rainforest", "bamboo"], "night": false, "minimumDelay": 600, "maximumDelay": 1400, "volume": 0.34 },
+    { "sounds": ["ambientsounds:animals.cricket-jungle-night", "ambientsounds:animals.frog1", "ambientsounds:animals.frog2"], "biomeContains": ["jungle", "swamp", "rainforest"], "night": true, "minimumDelay": 500, "maximumDelay": 1200, "volume": 0.34 },
+    { "sounds": ["ambientsounds:animals.bird-ambience1", "ambientsounds:animals.bird-ambience2", "ambientsounds:wind.wind-in-leaves"], "biomeContains": ["forest", "grove", "taiga"], "night": false, "minimumDelay": 700, "maximumDelay": 1600, "volume": 0.30 },
+    { "sounds": ["ambientsounds:animals.cricket-night", "ambientsounds:animals.owl"], "biomeContains": ["forest", "plains", "savanna"], "night": true, "minimumDelay": 700, "maximumDelay": 1600, "volume": 0.28 },
+    { "sounds": ["ambientsounds:water.beach", "ambientsounds:animals.seagull"], "biomeContains": ["beach", "shore"], "minimumDelay": 700, "maximumDelay": 1500, "volume": 0.32 },
+    { "sounds": ["ambientsounds:water.ocean", "ambientsounds:animals.whale"], "biomeContains": ["ocean"], "minimumDelay": 800, "maximumDelay": 1800, "volume": 0.30 },
+    { "sounds": ["ambientsounds:suspense.nether", "ambientsounds:cave.underworld"], "dimension": "the_nether", "minimumDelay": 800, "maximumDelay": 1800, "volume": 0.30 },
+    { "sounds": ["ambientsounds:suspense.end"], "dimension": "the_end", "minimumDelay": 900, "maximumDelay": 2000, "volume": 0.30 },
+    { "sounds": ["ambientsounds:wind.light-wind", "ambientsounds:wind.light-wind2"], "dimension": "overworld", "night": false, "minimumDelay": 900, "maximumDelay": 2000, "volume": 0.22 }
+  ]
+}
