@@ -24,7 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -500,7 +500,7 @@ final class TamingGameTests {
         TorporService.clear(player);
         h.assertTrue(!TorporService.restricted(player), "Player stayed unconscious after a clear");
         h.assertTrue(!TorporService.eligible(new net.minecraft.world.entity.decoration.ArmorStand(
-                net.minecraft.world.entity.EntityTypes.ARMOR_STAND, h.getLevel())), "Armor stands must be excluded");
+                net.minecraft.world.entity.EntityType.ARMOR_STAND, h.getLevel())), "Armor stands must be excluded");
         h.succeed();
     }
 
@@ -683,7 +683,7 @@ final class TamingGameTests {
      * goal-level, so gravity, fluids and knockback keep moving the body.
      */
     static void ordinaryMobRestraint(GameTestHelper h) {
-        Mob mob = EntityTypes.HUSK.create(h.getLevel(), EntitySpawnReason.COMMAND);
+        Mob mob = EntityType.HUSK.create(h.getLevel(), EntitySpawnReason.COMMAND);
         h.assertTrue(mob != null, "The ordinary mob could not be created");
         // A husk is not sun-sensitive, so daylight cannot interfere with the fall below.
         mob.setPos(Vec3.atCenterOf(h.absolutePos(new BlockPos(8, 6, 8))));

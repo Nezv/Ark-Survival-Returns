@@ -1,19 +1,19 @@
 # Dev-run dependencies and settings
 
-Reviewed 2026-09-14 for Minecraft 26.2 / NeoForge 26.2.0.11-beta, Java 25.
+Reviewed 2026-09-20 for Minecraft 26.1.2 / NeoForge 26.1.2.109, Java 25.
 
 | Dependency | Dev status | Scope |
 |---|---|---|
-| [Iris 1.11.2](https://modrinth.com/mod/iris/version/bXt6zsZT) | Installed; pinned SHA-512 verified | Interactive client |
-| [Sodium 0.9.1](https://modrinth.com/mod/sodium/version/KHPycol7) | Installed; Iris dependency; pinned SHA-512 verified | Interactive client |
-| [River Redux](https://modrinth.com/mod/river-redux/versions) | No published 26.2 NeoForge artifact; not installed | Future world generation |
+| [Iris 1.11.4](https://modrinth.com/mod/iris/version/qE5Y7GrZ) | Installed; pinned SHA-512 verified | Interactive client |
+| [Sodium 0.9.2](https://modrinth.com/mod/sodium/version/zg4YQ9EL) | Installed; Iris dependency; pinned SHA-512 verified | Interactive client |
+| [River Redux](https://modrinth.com/mod/river-redux/versions) | No published 26.1.2 NeoForge artifact; not installed | Future world generation |
 | [TerraBlender](https://modrinth.com/mod/terrablender) | Deferred with River Redux | Future world generation dependency |
 
 `config/dev-dependencies.json` is the dependency/status list. Exact active downloads and hashes remain in `config/client-mods.lock.json`. `Install-Ark-Extras.bat` fetches or reuses those compatible files; `Install-Ark-Extras.ps1 -VerifyOnly` checks them offline. The installer reports the unavailable/deferred entries. Third-party JARs, shader archives and saves are excluded from Git.
 
-River Redux's available NeoForge line targets 1.21.x, not this 26.2 runtime. Do not install its older JAR or silently change Minecraft versions. The land habitat planner works with ordinary exposed water blocks and requires no River Redux API. When a compatible release appears, verify the artifact, exact TerraBlender requirement, loader sides and world-generation behavior before adding it. New terrain generation must be tested in a disposable world first.
+River Redux's available NeoForge line targets 1.21.x, not this 26.1.2 runtime. Do not install its older JAR or silently change Minecraft versions. The land habitat planner works with ordinary exposed water blocks and requires no River Redux API. When a compatible release appears, verify the artifact, exact TerraBlender requirement, loader sides and world-generation behavior before adding it. New terrain generation must be tested in a disposable world first.
 
-Iris's published dependency link names a mismatched Fabric Sodium artifact; this pack uses the correct NeoForge Sodium release and satisfies the Iris JAR's embedded version range. The existing development GL-validation workaround remains client-only. See [the client pack](client-pack.md) for that compatibility detail and the other presentation mods.
+Iris 1.11.4's published dependency link names the NeoForge Sodium 0.9.2 artifact this pack already installs, satisfying the Iris JAR's embedded version range. The existing development GL-validation workaround remains client-only. See [the client pack](client-pack.md) for that compatibility detail and the other presentation mods.
 
 ## Runtime defaults
 

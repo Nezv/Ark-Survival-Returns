@@ -1,6 +1,6 @@
 # Ark Survival Returns
 
-A prehistoric wildlife mod for Minecraft Java **26.2**, NeoForge **26.2.0.11-beta**, Java **25** and GeckoLib **5.5.3**. Mod ID: `arksurvivalreturns`.
+A prehistoric wildlife mod for Minecraft Java **26.1.2**, NeoForge **26.1.2.109**, Java **25** and GeckoLib **5.5.2**. Mod ID: `arksurvivalreturns`.
 
 ## Play on Windows
 
@@ -204,9 +204,9 @@ $env:JAVA_HOME = 'C:/Users/Nez/.jbang/cache/jdks/25'
 ./gradlew.bat runGameTestServer
 ```
 
-Run data generation before the build in a separate Gradle invocation so the build packages newly generated resources. The resulting JAR is `build/libs/arksurvivalreturns-0.1.0.jar`. Install it alongside GeckoLib 5.5.3 on matching NeoForge 26.2.
+Run data generation before the build in a separate Gradle invocation so the build packages newly generated resources. The resulting JAR is `build/libs/arksurvivalreturns-0.1.0.jar`. Install it alongside GeckoLib 5.5.2 on matching NeoForge 26.1.2.
 
-Thirty-two JUnit tests cover growth curves, recurring danger regions, behavioral decisions and map raster correspondence. Nineteen Ark headless GameTests cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, packet codecs, unloaded-chunk safeguards, 2,000 real loot rolls for each tested grass/tool case, water pool validation and containment, realm/group/clip invariants for all 41 species, and the cold hydration policy. See `docs/verification.md`.
+Thirty-nine JUnit tests cover growth curves, recurring danger regions, behavioral decisions and map raster correspondence. Thirty-seven headless GameTests, including the framework's own, cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, packet codecs, unloaded-chunk safeguards, 2,000 real loot rolls for each tested grass/tool case, water pool validation and containment, realm/group/clip invariants for all 41 species, and the cold hydration policy. See `docs/verification.md`.
 
 Asset rebuild (Python 3.12, Pillow for sprites):
 

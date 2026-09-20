@@ -39,14 +39,14 @@ public final class DinoDebugClient {
     }
     @SubscribeEvent public static void scroll(InputEvent.MouseScrollingEvent event) {
         var mc = Minecraft.getInstance();
-        if (!DebugSpyglass.using(mc.player) || mc.gui.screen() != null) return;
+        if (!DebugSpyglass.using(mc.player) || mc.screen != null) return;
         event.setCanceled(true); // Keep the scoped item selected while browsing.
         if (snapshot != null && matchesTarget && event.getScrollDeltaY() != 0)
             ClientPacketDistributor.sendToServer(new DinoDebugPayload.TurnPage(snapshot.target(), event.getScrollDeltaY() < 0 ? 1 : -1));
     }
     private static void render(GuiGraphicsExtractor g) {
         var mc = Minecraft.getInstance();
-        if (!DebugSpyglass.using(mc.player) || mc.gui.hud.isHidden() || mc.gui.screen() != null || !mc.options.getCameraType().isFirstPerson()) return;
+        if (!DebugSpyglass.using(mc.player) || mc.options.hideGui || mc.screen != null || !mc.options.getCameraType().isFirstPerson()) return;
         var font = mc.font;
         boolean valid = snapshot != null && matchesTarget && System.nanoTime() - receivedAt < 2_000_000_000L;
         int width = Math.min(370, g.guiWidth() < 520 ? g.guiWidth() - 16 : (int) (g.guiWidth() * 0.46));

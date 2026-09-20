@@ -23,7 +23,7 @@ public final class DangerMapClient {
     @SubscribeEvent public static void register(RegisterClientPayloadHandlersEvent event) {
         event.register(DangerMapPayload.TYPE, (payload, context) -> {
             profile = payload.unlocked() && payload.bandWidth() >= 96 && payload.bandWidth() <= 1024 ? payload : null;
-            if (!unlocked() && isMap(Minecraft.getInstance().gui.screen())) Minecraft.getInstance().gui.setScreen(null);
+            if (!unlocked() && isMap(Minecraft.getInstance().screen)) Minecraft.getInstance().setScreen(null);
         });
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
@@ -40,7 +40,7 @@ public final class DangerMapClient {
         var player = Minecraft.getInstance().player;
         long now = System.nanoTime();
         if (player != null && now - lastMessage > 2_000_000_000L) {
-            Minecraft.getInstance().gui.hud.getChat().addClientSystemMessage(Component.translatable("map.arksurvivalreturns.locked"));
+            Minecraft.getInstance().gui.getChat().addClientSystemMessage(Component.translatable("map.arksurvivalreturns.locked"));
             lastMessage = now;
         }
     }

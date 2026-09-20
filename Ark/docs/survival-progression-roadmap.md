@@ -2,6 +2,8 @@
 
 Prepared 20 September 2026 for a two-player cooperative Ark Survival Returns campaign. **Proposal, not implemented gameplay.** Recommendations assume the current Minecraft 26.2 / NeoForge 26.2 project, the existing Overworld-only theme, and the current creature roster. All durations, quantities, capacities and balance targets below are design hypotheses to test with the two players, not research findings or measured project performance.
 
+> **Decision update, 20 September 2026.** The pack was migrated to Minecraft 26.1.2 / NeoForge 26.1.2.109 with GeckoLib 5.5.2 to use the FTB Quests 26.1.2 line, taking the migration route described in section 5. P01 therefore delivers the survival journal as FTB quest content with FTB Teams as the shared tribe, plus a native Ark permission layer for tames. The section 5 recommendation to build a native journal instead of using FTB is superseded for the quest framework only; the rest of this roadmap is unchanged.
+
 The central recommendation is to make progress change what you do: **hand gathering → creature-assisted production → organized expeditions → industrial preparation → mastery encounters.** Build an experience where a remembered hardship becomes a solved problem, and solving it makes a new adventure possible.
 
 ## 1. What your preferences suggest
@@ -265,9 +267,9 @@ For any selected integration, maintain a manifest of exact Minecraft/loader vers
 
 These names describe proposed work packages, not releases or estimates of developer days. Complexity and server impact are qualitative estimates. Every patch includes UI, persistence, configuration, recipes, localization and acceptance checks appropriate to its mechanics; a registered item alone is not completion.
 
-| Order / proposed patch | Concrete scope and dependencies | Definition of done | Complexity / multiplayer impact |
+| Order / proposed patch | Concrete scope and dependencies | Deliverables | Complexity / multiplayer impact |
 |---|---|---|---|
-| **P01 — Tribe and Survival Journal** | Shared tribe IDs/permissions, four chapter definitions, discovery records, pinned objective, contextual recipe information; audit stale docs and vanilla progression bypasses. | Two players join, leave and reconnect without duplicate rewards or lost research; first objectives work on fresh saves; existing tames retain ownership. | Medium; low overhead using saved state and event-driven updates. |
+| **P01 — Tribe and Survival Journal** | Fetch FTB mods. Set shared tribe IDs/permissions, four chapter definitions, discovery records, pinned objective, contextual recipe information; audit stale docs and vanilla progression bypasses. | Two players join, leave and reconnect without duplicate rewards or lost research; first objectives work on fresh saves; existing tames retain ownership. | Medium; low overhead using saved state and event-driven updates. |
 | **P02 — Camp and Recovery** | Field bedroll, fallback spawn, recovery container, bandages/revive policy, first-hour resource routes and Primitive recipes. Depends on tribe identity. | Fresh duo establishes camp; forced death/relog yields exactly one recoverable inventory; no unrecoverable starting seed in the test set. | Medium; low normally, bounded recovery-container storage. |
 | **P03 — Weight and Working Tames** | Configurable mass, visible thresholds, harnesses, species cargo, Trike/Anky harvest jobs, shared commands, fast unloading. Depends on P01–02. | Measured useful hauling advantage; no nested-storage mass bypass; harvest jobs respect protected/player-built blocks and chunk bounds; flight overload recovers safely. | High; medium risk from job pathfinding. Bound searches and recalculate mass on mutations. |
 | **P04 — Homestead Economy** | Crops, compost, irrigation, troughs, preservation, cooking, sedative production, forge/smithy, optional storage integration. Depends on P03 balance. | Farm supports a two-person expedition; no offline care obligation; no mandatory ingredient relies on random trader arrival. | Medium–high; medium if many ticking farm blocks. Batch updates. |

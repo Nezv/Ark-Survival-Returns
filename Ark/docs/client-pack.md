@@ -1,13 +1,13 @@
 # Optional client pack and difficulty map
 
-Installed and checked on 7 September 2026 for Minecraft 26.2 / NeoForge 26.2.0.11-beta. The normal `Start-Ark-Mod.bat` launcher loads the extras. No separate launcher or VS Code is needed.
+Installed and checked on 20 September 2026 for Minecraft 26.1.2 / NeoForge 26.1.2.109. The normal `Start-Ark-Mod.bat` launcher loads the extras. No separate launcher or VS Code is needed.
 
 | Component | Pinned version | Purpose |
 |---|---|---|
-| [Xaero's World Map](https://modrinth.com/mod/xaeros-world-map/version/pKatKnls) | 1.44.2, NeoForge 26.2 | Fullscreen terrain map; includes XaeroLib 1.7.1 |
-| [Xaero World Map Bridge](https://modrinth.com/mod/xaero-world-map-bridge/version/xvbOh80a) | 0.1.1, NeoForge 26.2 | Hook for Ark's colored danger overlay |
-| [Sodium](https://modrinth.com/mod/sodium/version/KHPycol7) | 0.9.1, NeoForge 26.2 | Rendering performance and Iris dependency |
-| [Iris](https://modrinth.com/mod/iris/version/bXt6zsZT) | 1.11.2, NeoForge 26.2 | Shader loader |
+| [Xaero's World Map](https://modrinth.com/mod/xaeros-world-map/version/9x5f2L12) | 1.46.0, NeoForge 26.1.2 | Fullscreen terrain map; includes XaeroLib |
+| [Xaero World Map Bridge](https://modrinth.com/mod/xaero-world-map-bridge/version/4UvyllQl) | 0.1.2, NeoForge 26.1.2 | Hook for Ark's colored danger overlay |
+| [Sodium](https://modrinth.com/mod/sodium/version/zg4YQ9EL) | 0.9.2, NeoForge 26.1.2 | Rendering performance and Iris dependency |
+| [Iris](https://modrinth.com/mod/iris/version/qE5Y7GrZ) | 1.11.4, NeoForge 26.1.2 | Shader loader |
 | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/version/111gsk0f) | r5.9 | Shader pack, available in Video Settings → Shader Packs |
 
 The shader ZIP is downloaded but is not forced on. Select **Complementary Reimagined** in Video Settings → Shader Packs; start with its Medium preset and adjust during play. Existing graphics, sound and shader settings are preserved. Environmental ambience, material-aware footsteps and sound physics are built into Ark Survival Returns; do not install their standalone source mods alongside it. Ark's server-side hearing decisions remain governed by its own behavior model.
@@ -31,9 +31,9 @@ Offline verification:
 python tools/verify_client_pack.py
 ```
 
-The selected Iris release's Modrinth dependency link points to Sodium `vf7UgZpC`, which is a Fabric 26.1.2 artifact. That file is deliberately not installed. This pack instead uses stable Sodium 0.9.1 for NeoForge 26.2, satisfying the Iris JAR's declared Sodium version range. This metadata correction is not a substitute for a graphical compatibility test.
+The selected Iris release declares Sodium `zg4YQ9EL`, which is the stable NeoForge 0.9.2 artifact this pack installs; the mismatched Fabric Sodium metadata link from the earlier release line no longer applies. This metadata check is not a substitute for a graphical compatibility test.
 
-Xaero is pinned to 1.44.2 because the bridge's published compatibility matrix covers that series. The installed bridge's bytecode insertion descriptor matches exactly one invocation in the installed Xaero `GuiMap` renderer; camera, scale and viewed-dimension fields also exist. The bridge labels NeoForge support experimental. Keep the pair pinned until a later combination is checked. [Bridge API and compatibility](https://github.com/billstark001/xaero-world-map-bridge).
+Xaero is pinned to 1.46.0 with bridge 0.1.2, whose bytecode-verified compatibility baseline covers the 1.46 release line. The installed bridge's bytecode insertion descriptor matches exactly one invocation in the installed Xaero `GuiMap` renderer; camera, scale and viewed-dimension fields also exist. The bridge labels NeoForge support experimental. Keep the pair pinned until a later combination is checked. [Bridge API and compatibility](https://github.com/billstark001/xaero-world-map-bridge).
 
 ## Difficulty map and unlock
 

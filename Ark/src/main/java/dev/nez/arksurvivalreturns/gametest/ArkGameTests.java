@@ -248,7 +248,7 @@ public final class ArkGameTests {
         for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
         var raptor = create(h, Species.VELOCIRAPTOR);
         world.addFreshEntity(raptor);
-        var pig = net.minecraft.world.entity.EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND);
+        var pig = net.minecraft.world.entity.EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
         pig.setNoAi(true);
         pig.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);
         pig.setHealth(1000);
@@ -289,7 +289,7 @@ public final class ArkGameTests {
         predator.wildlife().mind().restoreNeeds(0.8, 0.1, 0.1);
         predator.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(5, 2, 4))));
         predator.setYRot(0); predator.yBodyRot = 0; predator.yHeadRot = 0; predator.setOnGround(true);
-        var prey = net.minecraft.world.entity.EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND);
+        var prey = net.minecraft.world.entity.EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
         prey.setNoAi(true);
         prey.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(5, 2, 12))));
         world.addFreshEntity(predator); world.addFreshEntity(prey);

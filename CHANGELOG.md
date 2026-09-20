@@ -2,6 +2,20 @@
 
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
 
+## Minecraft 26.1.2 Migration — 2026-09-20
+
+- Moved the runtime to Minecraft 26.1.2, NeoForge 26.1.2.109 and GeckoLib 5.5.2 to use the FTB Quests
+  26.1.2 line for the survival journal. Existing worlds were backed up; the downgrade is a fresh-world migration.
+- Ported the 26.2 API deltas: `EntityType` statics, the `Criterion` package, `GameRenderer.getMainCamera` and
+  `getGameRenderState`, `Minecraft.screen`, `Gui.getChat`, `WeatheringCopper.getFirst` and named `TextColor` values.
+- Hardened `ThemePolicy` against defaulted registries: an absent entity id no longer resolves to the default
+  entity, and the generated removed-creature tag lists only variants this version has (26.2's sulfur cube is excluded).
+- Refreshed the pinned client pack to Sodium 0.9.2, Iris 1.11.4, Xaero's World Map 1.46.0 and bridge 0.1.2 for 26.1.2.
+- Compatibility and known limitations: worlds saved on 26.2 cannot be opened by 26.1.2; existing saves were backed up
+  and play continues from a fresh world. The FTB Quests stack and the survival journal arrive in the following P01 work.
+- Validation: `runData` produced no changes except the removed-creature tag; the full `build` (39 JUnit tests) and all
+  37 headless GameTests pass. No interactive client was launched; shader, audio and visual checks remain for the user.
+
 ## Unified Spatial Audio — 2026-09-19
 
 - Merged Sound Physics Remastered's OpenAL EFX reverb, occlusion, absorption and reflected directionality

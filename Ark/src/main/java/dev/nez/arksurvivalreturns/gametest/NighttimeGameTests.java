@@ -28,7 +28,7 @@ final class NighttimeGameTests {
             int chunks = world.getChunkSource().getLoadedChunksCount();
             world.clockManager().setTotalTicks(clock, 6000);
             var rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
-            var pig = EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND);
+            var pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
             pig.setNoAi(true); pig.setPos(rex.position().add(0, 0, 20)); world.addFreshEntity(pig); entities.add(pig);
             rex.wildlife().mind().restoreNeeds(0.8, 0.1, 0);
             for (int i = 0; i < 8; i++) rex.wildlife().think();
@@ -40,7 +40,7 @@ final class NighttimeGameTests {
             h.assertTrue(rex.behavior() == BehaviorState.SLEEP, "Distant player prevented daytime sleep");
             var crowd = new ArrayList<Entity>();
             for (int i = 0; i < 30; i++) {
-                var animal = EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND);
+                var animal = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
                 animal.setNoAi(true); animal.setPos(rex.position().add(i % 5 * 0.1, 0, 2));
                 world.addFreshEntity(animal); crowd.add(animal); entities.add(animal);
             }
@@ -67,7 +67,7 @@ final class NighttimeGameTests {
             world.clockManager().setTotalTicks(clock, 18000);
             rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
             rex.wildlife().mind().restoreNeeds(0.8, 0.1, 0);
-            pig = EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND); pig.setNoAi(true);
+            pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND); pig.setNoAi(true);
             double range = world.isRaining() ? 45 : 56;
             pig.setPos(rex.position().add(0, 0, range)); world.addFreshEntity(pig); entities.add(pig);
             h.assertTrue(Math.abs(WildlifeSenses.sightRange(rex) - 62.4) < 0.001, "Rex night range is not 1.3x daytime");

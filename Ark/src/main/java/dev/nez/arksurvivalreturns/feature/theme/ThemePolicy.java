@@ -216,6 +216,18 @@ public final class ThemePolicy {
     /** Removed entity ids in the full {@code namespace:path} form used by data and signatures. */
     public static final Set<String> REMOVED_ENTITY_IDS = qualified(REMOVED_ENTITIES);
 
+    /**
+     * The removed entity ids that resolve in the running game version. Data generation cannot
+     * reference a creature the target version does not have, so the canonical list above may
+     * name variants from a later release; the runtime guard and the generated tag only use
+     * the ones that exist here.
+     */
+    public static List<String> presentRemovedEntities() {
+        return REMOVED_ENTITIES.stream()
+                .filter(id -> BuiltInRegistries.ENTITY_TYPE.containsKey(Identifier.parse(id)))
+                .toList();
+    }
+
     private ThemePolicy() {}
 
     /** True when the creature family is removed from survival gameplay. */
@@ -223,7 +235,11 @@ public final class ThemePolicy {
         if (removedTypes == null) {
             var found = new LinkedHashSet<EntityType<?>>();
             for (String id : REMOVED_ENTITIES) {
-                var type2 = BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(id));
+                // Entity types use a defaulted registry: getValue returns the default for an
+                // absent key, so membership must be tested with containsKey first.
+                var key = Identifier.parse(id);
+                if (!BuiltInRegistries.ENTITY_TYPE.containsKey(key)) continue;
+                var type2 = BuiltInRegistries.ENTITY_TYPE.getValue(key);
                 if (type2 != null) found.add(type2);
             }
             removedTypes = Set.copyOf(found);
@@ -281,7 +297,9 @@ public final class ThemePolicy {
     private static <T> Set<T> resolve(net.minecraft.core.Registry<T> registry, List<String> ids) {
         var found = new LinkedHashSet<T>();
         for (String id : ids) {
-            var value = registry.getValue(Identifier.parse(id));
+            var key = Identifier.parse(id);
+            if (!registry.containsKey(key)) continue;
+            var value = registry.getValue(key);
             if (value != null) found.add(value);
         }
         return Set.copyOf(found);

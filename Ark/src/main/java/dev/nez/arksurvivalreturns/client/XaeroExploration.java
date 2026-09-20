@@ -13,7 +13,7 @@ public final class XaeroExploration implements DangerMapView.Exploration {
     private final Map<Long, Boolean> known = new HashMap<>();
     private XaeroExploration(MapProcessor processor) { this.processor = processor; layer = processor.getCurrentCaveLayer(); }
     public static DangerMapView.Exploration current(String dimension) {
-        var screen = Minecraft.getInstance().gui.screen();
+        var screen = Minecraft.getInstance().screen;
         if (!DangerMapClient.isMap(screen)) return (a,b,c,d) -> false;
         try {
             // Avoid importing GuiMap's XaeroLib superclass into the optional compile dependency.

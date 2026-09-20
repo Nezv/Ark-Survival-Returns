@@ -252,7 +252,7 @@ public final class ArkData implements DataProvider {
      * village trades, advancements and the grounded source for bones.
      */
     private void theme() {
-        tag("entity_type/theme/removed", dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.REMOVED_ENTITIES.toArray(String[]::new));
+        tag("entity_type/theme/removed", dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.presentRemovedEntities().toArray(String[]::new));
         // One tag covers every vanilla dimension; modded biomes rely on the runtime guards.
         tag("worldgen/biome/theme/all_dimensions", "#minecraft:is_overworld", "#minecraft:is_nether", "#minecraft:is_end");
         put("data/" + NS + "/neoforge/biome_modifier/remove_fantasy_spawns", Map.of(

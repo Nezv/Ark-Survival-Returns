@@ -6,7 +6,7 @@ Ark Survival Returns embeds three complementary audio systems behind one client-
 - Presence Footsteps supplies the positional material recordings used by the stride engine.
 - AmbientSounds supplies the streamed environmental recordings selected from world context.
 
-The Java runtime is native NeoForge 26.2 code. It does not load Fabric, CreativeCore, or a second mod container. Dedicated servers can load the jar without touching client audio classes.
+The Java runtime is native NeoForge 26.1.2 code. It does not load Fabric, CreativeCore, or a second mod container. Dedicated servers can load the jar without touching client audio classes.
 
 ## Resource-pack API
 

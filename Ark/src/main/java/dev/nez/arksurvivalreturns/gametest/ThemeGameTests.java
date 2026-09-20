@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import dev.nez.arksurvivalreturns.feature.theme.DimensionGuard;
 import dev.nez.arksurvivalreturns.feature.theme.ThemePolicy;
-import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,7 +24,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.cow.Cow;
@@ -73,9 +72,10 @@ final class ThemeGameTests {
         var server = world.getServer();
         var registries = server.registryAccess();
 
-        // Every listed creature id must resolve in this game version; a typo would silently
-        // leave a family alive, so the list itself is checked.
-        for (String id : ThemePolicy.REMOVED_ENTITIES) {
+        // Every listed creature id that this game version has must resolve; a typo would silently
+        // leave a family alive, so the list itself is checked. Later-version variants stay in the
+        // canonical list but are skipped here.
+        for (String id : ThemePolicy.presentRemovedEntities()) {
             var type = BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(id));
             h.assertTrue(type != null, "Unknown removed creature id: " + id);
             h.assertTrue(ThemePolicy.removed(type), "Removal policy lost " + id);
@@ -88,14 +88,14 @@ final class ThemeGameTests {
         }
 
         // A control animal joins, every removed family is refused at the level boundary.
-        var control = EntityTypes.COW.create(world, EntitySpawnReason.COMMAND);
+        var control = EntityType.COW.create(world, EntitySpawnReason.COMMAND);
         control.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(6, 3, 6))));
         h.assertTrue(world.addFreshEntity(control), "Control animal could not join the level");
         control.discard();
         for (EntityType<? extends Mob> type : List.<EntityType<? extends Mob>>of(
-                EntityTypes.ZOMBIE, EntityTypes.SKELETON, EntityTypes.CREEPER, EntityTypes.ENDERMAN,
-                EntityTypes.CAVE_SPIDER, EntityTypes.PHANTOM, EntityTypes.SHULKER, EntityTypes.WARDEN,
-                EntityTypes.CREAKING, EntityTypes.IRON_GOLEM)) {
+                EntityType.ZOMBIE, EntityType.SKELETON, EntityType.CREEPER, EntityType.ENDERMAN,
+                EntityType.CAVE_SPIDER, EntityType.PHANTOM, EntityType.SHULKER, EntityType.WARDEN,
+                EntityType.CREAKING, EntityType.IRON_GOLEM)) {
             var mob = type.create(world, EntitySpawnReason.COMMAND);
             h.assertTrue(mob != null, "Removed creature could not be constructed: " + type);
             mob.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(6, 3, 6))));
@@ -211,7 +211,7 @@ final class ThemeGameTests {
         h.assertTrue(ThemePolicy.isGolemHead(Blocks.CARVED_PUMPKIN.defaultBlockState())
                 && ThemePolicy.golemBase(Blocks.IRON_BLOCK.defaultBlockState())
                 && ThemePolicy.golemBase(Blocks.SNOW_BLOCK.defaultBlockState())
-                && ThemePolicy.golemBase(Blocks.COPPER_BLOCK.weathering().unaffected().defaultBlockState()),
+                && ThemePolicy.golemBase(net.minecraft.world.level.block.WeatheringCopper.getFirst(Blocks.COPPER_BLOCK.defaultBlockState())),
                 "Golem build detection missed a base");
         h.assertFalse(ThemePolicy.golemBase(Blocks.STONE.defaultBlockState()), "Ordinary base treated as a golem build");
         h.assertTrue(ThemePolicy.witherBase(Blocks.SOUL_SAND.defaultBlockState())
@@ -276,7 +276,7 @@ final class ThemeGameTests {
         var pos = h.absolutePos(new BlockPos(8, 3, 8));
         int spawned = 0;
         for (int i = 0; i < 10; i++) {
-            Cow cow = EntityTypes.COW.create(world, EntitySpawnReason.COMMAND);
+            Cow cow = EntityType.COW.create(world, EntitySpawnReason.COMMAND);
             h.assertTrue(cow != null, "Cow could not be created");
             cow.setNoAi(true);
             cow.setPos(Vec3.atBottomCenterOf(pos));

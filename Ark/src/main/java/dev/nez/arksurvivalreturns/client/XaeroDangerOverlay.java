@@ -53,10 +53,10 @@ public final class XaeroDangerOverlay {
             refreshedAt = now;
         }
         // Xaero submits a framebuffer blit; keep GUI batching from sorting the tint behind it.
-        Minecraft.getInstance().gameRenderer.gameRenderState().guiRenderState.nextStratum();
+        Minecraft.getInstance().gameRenderer.getGameRenderState().guiRenderState.nextStratum();
         for (var cell : cachedCells) context.canvas().fill(cell.left(), cell.top(), cell.right(), cell.bottom(),
                 (COLORS[cell.danger() - 1] & 0xFFFFFF) | 0x48000000);
-        Minecraft.getInstance().gameRenderer.gameRenderState().guiRenderState.nextStratum();
+        Minecraft.getInstance().gameRenderer.getGameRenderState().guiRenderState.nextStratum();
     }
     public static void legend(ScreenEvent.Render.Post event) {
         if (!enabled || !DangerMapClient.isMap(event.getScreen()) || !DangerMapClient.unlocked() || cachedView == null) return;
