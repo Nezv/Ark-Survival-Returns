@@ -72,6 +72,13 @@ public final class ModContent {
                             .sound(net.minecraft.world.level.block.SoundType.WOOL));
     public static final DeferredItem<net.minecraft.world.item.BlockItem> BEDROLL_ITEM =
             ITEMS.registerSimpleBlockItem(BEDROLL, p -> p.stacksTo(1));
+    /** Recovery cache marker: the death haul lives in world SavedData, not in this block. */
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.recovery.RecoveryCacheBlock> RECOVERY_CACHE =
+            BLOCKS.registerBlock("recovery_cache", dev.nez.arksurvivalreturns.feature.recovery.RecoveryCacheBlock::new,
+                    p -> p.strength(1.5f).explosionResistance(1200f)
+                            .sound(net.minecraft.world.level.block.SoundType.WOOD));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> RECOVERY_CACHE_ITEM =
+            ITEMS.registerSimpleBlockItem(RECOVERY_CACHE, p -> p.stacksTo(1));
 
     static {
         for (Species s : Species.values()) {
@@ -112,6 +119,7 @@ public final class ModContent {
                     output.accept(FLINT_KNIFE.get());
                     output.accept(SPEAR.get());
                     output.accept(BEDROLL_ITEM.get());
+                    output.accept(RECOVERY_CACHE_ITEM.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

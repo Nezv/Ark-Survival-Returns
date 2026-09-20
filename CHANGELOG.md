@@ -5,6 +5,7 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 ## Unreleased
 
 - **Camp gear and a survivor's start.** Plant fiber now drops from grass alongside berries. A fiber bandage heals health, a flint knife and a longer-reaching flint spear cover primitive weapons, and the placeable field bedroll sets the personal respawn point without risking it when the block is destroyed. Every player receives a one-time starter kit (bedroll, two bandages, eight fiber, flint knife) on their first join. New `[camp]` settings control the kit, the bedroll and bandage values.
+- **Recovery caches.** Player death drops now become a placed Recovery Cache instead of loose items. The owner and their FTB Teams tribe see the coordinates, right-click collects the whole haul, and the items live in world data, so breaking or exploding the marker never destroys them. Up to three caches per player under `[recovery]`; the oldest folds into the newest instead of being lost. Void and lava deaths fall back to safe ground or the bedroll, and `/arkrecover list|claim|clear` inspects and recovers anything that could not be placed.
 
 ## Survival Journal and Tribes — 2026-09-20
 
