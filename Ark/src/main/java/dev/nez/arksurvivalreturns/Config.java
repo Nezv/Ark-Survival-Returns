@@ -48,7 +48,8 @@ public final class Config {
             new EnumMap<>(dev.nez.arksurvivalreturns.feature.taming.CreatureSize.class);
     public static final ModConfigSpec.DoubleValue WAKE_THRESHOLD_RATIO, TORPOR_RECOVERY_PER_SECOND;
     public static final ModConfigSpec.IntValue TORPOR_RECOVERY_DELAY, TORPOR_SYNC_INTERVAL;
-    public static final ModConfigSpec.DoubleValue BASIC_SEDATIVE_POTENCY, TRANQUILIZER_ARROW_POTENCY;
+    public static final ModConfigSpec.DoubleValue BASIC_SEDATIVE_POTENCY, CONCENTRATED_SEDATIVE_POTENCY,
+            TRANQUILIZER_ARROW_POTENCY;
     public static final ModConfigSpec.IntValue TORPOR_COLLAPSE_FALLBACK_TICKS, TORPOR_WAKE_FALLBACK_TICKS, TORPOR_FEED_FALLBACK_TICKS;
     public static final ModConfigSpec.DoubleValue FEED_HUNGER_THRESHOLD, WILD_HUNGER_MIN, WILD_HUNGER_MAX;
     public static final ModConfigSpec.DoubleValue HUNGER_INCREASE_PER_SECOND, HUNGER_REDUCTION_PER_MEAL;
@@ -328,6 +329,8 @@ public final class Config {
                 .defineInRange("torporSyncIntervalTicks", 5, 1, 100);
         BASIC_SEDATIVE_POTENCY = b.comment("Dose of the baseline sedative in normalized torpor units.")
                 .defineInRange("basicSedativePotency", 25.0, 0.1, 100000.0);
+        CONCENTRATED_SEDATIVE_POTENCY = b.comment("Dose of the concentrated sedative in normalized torpor units.")
+                .defineInRange("concentratedSedativePotency", 100.0, 0.1, 100000.0);
         TRANQUILIZER_ARROW_POTENCY = b.comment("Dose delivered by one tranquilizer arrow. The ranged route has to be "
                         + "worth the crafting cost, because recovery continues during a knock-out.")
                 .defineInRange("tranquilizerArrowPotency", 75.0, 0.1, 100000.0);

@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); recovery(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -584,6 +584,23 @@ public final class ArkData implements DataProvider {
         }
     }
 
+    /** Concentration without a station: narcoberries and fiber become a stronger dose at the crafting table. */
+    private void medicine() {
+        vanillaModel("concentrated_sedative", "minecraft:item/gunpowder");
+        vanillaModel("improved_tranquilizer_arrow", "minecraft:item/spectral_arrow");
+        json("data/" + NS + "/recipe/concentrated_sedative", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"concentrated_sedative",
+                 "ingredients":["%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:concentrated_sedative"}}
+                """.formatted(NS, NS, NS, NS, NS));
+        json("data/" + NS + "/recipe/improved_tranquilizer_arrow", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"improved_tranquilizer_arrow",
+                 "ingredients":["%s:tranquilizer_arrow","%s:tranquilizer_arrow","%s:tranquilizer_arrow",
+                                "%s:tranquilizer_arrow","%s:concentrated_sedative"],
+                 "result":{"count":4,"id":"%s:improved_tranquilizer_arrow"}}
+                """.formatted(NS, NS, NS, NS, NS, NS));
+    }
+
     /** Recovery cache visuals and the two hidden discovery advancements. */
     private void recovery() {
         // A crate-like marker; no new PNGs, the barrel texture reads as a survivor's cache.
@@ -750,6 +767,10 @@ public final class ArkData implements DataProvider {
         pt.put("block." + NS + ".azulberry_bush", "Arbusto de azulberry");
         en.put("block." + NS + ".narcoberry_bush", "Narcoberry Bush");
         pt.put("block." + NS + ".narcoberry_bush", "Arbusto de narcoberry");
+        en.put("item." + NS + ".concentrated_sedative", "Concentrated Sedative");
+        pt.put("item." + NS + ".concentrated_sedative", "Sedativo concentrado");
+        en.put("item." + NS + ".improved_tranquilizer_arrow", "Improved Tranquilizer Arrow");
+        pt.put("item." + NS + ".improved_tranquilizer_arrow", "Flecha tranquilizante melhorada");
     }
 
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
@@ -821,7 +842,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

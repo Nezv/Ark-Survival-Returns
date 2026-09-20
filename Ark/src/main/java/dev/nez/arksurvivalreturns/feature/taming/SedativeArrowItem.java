@@ -16,12 +16,20 @@ import org.jspecify.annotations.Nullable;
  * dose comes from the configured item potency rather than from the client.
  */
 public final class SedativeArrowItem extends ArrowItem {
+    private final java.util.function.DoubleSupplier potency;
+
     public SedativeArrowItem(Properties properties) {
+        this(properties, Config.TRANQUILIZER_ARROW_POTENCY::get);
+    }
+
+    /** A stronger ammunition line supplies its own configured dose. */
+    public SedativeArrowItem(Properties properties, java.util.function.DoubleSupplier potency) {
         super(properties);
+        this.potency = potency;
     }
 
     public double potency() {
-        return Config.TRANQUILIZER_ARROW_POTENCY.get();
+        return potency.getAsDouble();
     }
 
     @Override public AbstractArrow createArrow(Level level, ItemStack itemStack, LivingEntity owner,

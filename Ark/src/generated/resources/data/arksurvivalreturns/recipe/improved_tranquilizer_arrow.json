@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "improved_tranquilizer_arrow",
+  "ingredients": [
+    "arksurvivalreturns:tranquilizer_arrow",
+    "arksurvivalreturns:tranquilizer_arrow",
+    "arksurvivalreturns:tranquilizer_arrow",
+    "arksurvivalreturns:tranquilizer_arrow",
+    "arksurvivalreturns:concentrated_sedative"
+  ],
+  "result": {
+    "count": 4,
+    "id": "arksurvivalreturns:improved_tranquilizer_arrow"
+  }
+}

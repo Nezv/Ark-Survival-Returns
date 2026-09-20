@@ -90,6 +90,20 @@ final class FarmGameTests {
         h.succeed();
     }
 
+    /** Medicine without a station: the concentrated dose outranks the berry and the improved arrow. */
+    static void medicine(GameTestHelper h) {
+        var berry = (dev.nez.arksurvivalreturns.feature.taming.SedativeItem) ModContent.BERRIES.get("narcoberry").get();
+        var concentrated = ModContent.CONCENTRATED_SEDATIVE.get();
+        var basicArrow = ModContent.TRANQUILIZER_ARROW_ITEM.get();
+        var improvedArrow = ModContent.IMPROVED_TRANQUILIZER_ARROW_ITEM.get();
+        h.assertTrue(concentrated.potency() > berry.potency(), "The concentrated sedative must be stronger");
+        h.assertTrue(basicArrow.potency() == Config.TRANQUILIZER_ARROW_POTENCY.get(),
+                "The baseline arrow must use the configured arrow dose");
+        h.assertTrue(improvedArrow.potency() == Config.CONCENTRATED_SEDATIVE_POTENCY.get(),
+                "The improved arrow must use the concentrated dose");
+        h.succeed();
+    }
+
     private static int count(Player player, Item item) {
         int total = 0;
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {

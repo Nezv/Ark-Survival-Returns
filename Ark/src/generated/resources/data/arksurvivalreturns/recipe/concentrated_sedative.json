@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "concentrated_sedative",
+  "ingredients": [
+    "arksurvivalreturns:narcoberry",
+    "arksurvivalreturns:narcoberry",
+    "arksurvivalreturns:narcoberry",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:concentrated_sedative"
+  }
+}

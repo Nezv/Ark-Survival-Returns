@@ -44,6 +44,15 @@ public final class ModContent {
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("tranquilizer_arrow"))));
     public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
+    /** Concentrated sedative: crafted from narcoberries and fiber, a stronger dose than the berry itself. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem> CONCENTRATED_SEDATIVE =
+            ITEMS.registerItem("concentrated_sedative",
+                    dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem::new, p -> p.stacksTo(16));
+    /** Improved tranquilizer arrow: the concentrated dose in arrow form. */
+    public static final DeferredItem<SedativeArrowItem> IMPROVED_TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
+            "improved_tranquilizer_arrow",
+            p -> new SedativeArrowItem(p, dev.nez.arksurvivalreturns.Config.CONCENTRATED_SEDATIVE_POTENCY::get),
+            p -> p.stacksTo(64));
     /** Companion order whistle: cycles FOLLOW/STAY/WANDER on a tamed creature, sneak-use pets it. */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem> COMPANION_WHISTLE =
             ITEMS.registerItem("companion_whistle",
@@ -162,6 +171,8 @@ public final class ModContent {
                 .displayItems((parameters, output) -> {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
+                    output.accept(CONCENTRATED_SEDATIVE.get());
+                    output.accept(IMPROVED_TRANQUILIZER_ARROW_ITEM.get());
                     output.accept(COMPANION_WHISTLE.get());
                     output.accept(FIELD_JOURNAL.get());
                     output.accept(PLANT_FIBER.get());
