@@ -207,7 +207,7 @@ $env:JAVA_HOME = 'C:/Users/Nez/.jbang/cache/jdks/25'
 
 Run data generation before the build in a separate Gradle invocation so the build packages newly generated resources. The resulting JAR is `build/libs/arksurvivalreturns-0.1.0.jar`. Install it alongside GeckoLib 5.5.2 on matching NeoForge 26.1.2.
 
-Forty-one JUnit tests cover growth curves, recurring danger regions, behavioral decisions, tribe flags and map raster correspondence. Thirty-nine headless GameTests, including the framework's own, cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, the rank-5 tame unlock, tribe permissions, journal pack loading, packet codecs, unloaded-chunk safeguards, 2,000 real loot rolls for each tested grass/tool case, water pool validation and containment, realm/group/clip invariants for all 41 species, and the cold hydration policy. See `docs/verification.md`.
+Forty-one JUnit tests cover growth curves, recurring danger regions, behavioral decisions, tribe flags and map raster correspondence. Forty headless GameTests cover all species' save/load behavior, pack identity, actual combat damage, surface restrictions, population replenishment, saved progression, announcement transitions, map entitlement persistence/player isolation, the rank-5 tame unlock, tribe permissions, journal pack loading, packet codecs, unloaded-chunk safeguards, 2,000 real loot rolls for each tested grass/tool case, water pool validation and containment, realm/group/clip invariants for all 41 species, and the cold hydration policy. See `docs/verification.md`.
 
 Asset rebuild (Python 3.12, Pillow for sprites):
 
