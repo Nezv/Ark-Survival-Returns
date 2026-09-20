@@ -59,7 +59,12 @@ public final class Config {
     public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
     public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue TRIBE_DEFAULT_RIDE, TRIBE_DEFAULT_CARGO, TRIBE_DEFAULT_COMMANDS,
-            TRIBE_DEFAULT_BREEDING;
+            TRIBE_DEFAULT_BREEDING, TRIBE_DEFAULT_WORK;
+    // ----------------------------------------------------------------------------- work
+    public static final ModConfigSpec.BooleanValue WORK_ENABLED, WORK_RESPECT_PLACED;
+    public static final ModConfigSpec.IntValue WORK_RADIUS, WORK_SUPERVISION_RADIUS, WORK_ACTION_INTERVAL,
+            WORK_SCAN_ATTEMPTS;
+    public static final ModConfigSpec.DoubleValue WORK_FIBER_PER_ACTION, WORK_BERRY_CHANCE, WORK_MINERAL_BONUS;
     // ----------------------------------------------------------------------------- mass
     public static final ModConfigSpec.BooleanValue MASS_ENABLED;
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
@@ -187,6 +192,29 @@ public final class Config {
                 .define("defaultCommands", true);
         TRIBE_DEFAULT_BREEDING = b.comment("Reserved for the husbandry work: breeding permission for party members.")
                 .define("defaultBreeding", false);
+        TRIBE_DEFAULT_WORK = b.comment("Default permission for party members to supervise a teammate's tame while "
+                        + "it runs a harvest job. The owner always keeps every permission.")
+                .define("defaultWork", true);
+        b.pop().push("work");
+        WORK_ENABLED = b.comment("Allow work orders: Triceratops forages plants, Ankylosaurus mines stone and ores.")
+                .define("enabled", true);
+        WORK_RADIUS = b.comment("Blocks around the work anchor a job searches for targets.")
+                .defineInRange("radius", 12, 4, 32);
+        WORK_SUPERVISION_RADIUS = b.comment("An authorized survivor must be this close for a job to run; walking "
+                        + "away pauses it, so jobs never become unattended automation.")
+                .defineInRange("supervisionRadius", 48, 16, 96);
+        WORK_ACTION_INTERVAL = b.comment("Ticks between harvest actions once the worker reaches its target.")
+                .defineInRange("actionIntervalTicks", 40, 10, 200);
+        WORK_SCAN_ATTEMPTS = b.comment("Candidate samples per search; every sample checks loaded chunks only.")
+                .defineInRange("scanAttempts", 24, 4, 64);
+        WORK_FIBER_PER_ACTION = b.comment("Plant fiber gathered per forage action.")
+                .defineInRange("fiberPerAction", 1.0, 1.0, 8.0);
+        WORK_BERRY_CHANCE = b.comment("Chance a forage action also yields one mod berry.")
+                .defineInRange("berryChance", 0.35, 0.0, 1.0);
+        WORK_MINERAL_BONUS = b.comment("Chance a mined ore block yields one extra drop.")
+                .defineInRange("mineralBonusChance", 0.25, 0.0, 1.0);
+        WORK_RESPECT_PLACED = b.comment("Never harvest a block a player placed.")
+                .define("respectPlacedBlocks", true);
         b.pop().push("mass");
         MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
                         + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")

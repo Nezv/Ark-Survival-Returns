@@ -36,6 +36,11 @@ public final class TribeService {
         return allowed(creature, player, TribePermission.BREEDING);
     }
 
+    /** Work permission: supervising a teammate's tame while it runs a harvest job. */
+    public static boolean canWork(CreatureEntity creature, Player player) {
+        return allowed(creature, player, TribePermission.WORK);
+    }
+
     /** True when the player shares the owner's party, whether or not this action is permitted. */
     public static boolean isTribeMember(CreatureEntity creature, Player player) {
         UUID owner = TamingService.of(creature).owner();
@@ -78,7 +83,7 @@ public final class TribeService {
 
     public static int defaultMask() {
         return TribePermission.mask(Config.TRIBE_DEFAULT_RIDE.get(), Config.TRIBE_DEFAULT_CARGO.get(),
-                Config.TRIBE_DEFAULT_COMMANDS.get(), Config.TRIBE_DEFAULT_BREEDING.get());
+                Config.TRIBE_DEFAULT_COMMANDS.get(), Config.TRIBE_DEFAULT_BREEDING.get(), Config.TRIBE_DEFAULT_WORK.get());
     }
 
     public static TribePermissions permissions(net.minecraft.world.level.Level level) {

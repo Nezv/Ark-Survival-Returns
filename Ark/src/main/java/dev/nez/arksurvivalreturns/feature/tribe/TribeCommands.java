@@ -20,7 +20,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class TribeCommands {
-    private static final String[] PERMISSIONS = {"ride", "cargo", "commands", "breeding"};
+    private static final String[] PERMISSIONS = {"ride", "cargo", "commands", "breeding", "work"};
 
     @SubscribeEvent public static void register(RegisterCommandsEvent event) {
         var root = Commands.literal("arktribe");

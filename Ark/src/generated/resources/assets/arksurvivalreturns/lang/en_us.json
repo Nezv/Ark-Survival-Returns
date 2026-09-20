@@ -34,6 +34,7 @@
   "companion.arksurvivalreturns.order.follow": "Your companion follows you",
   "companion.arksurvivalreturns.order.stay": "Your companion stays here",
   "companion.arksurvivalreturns.order.wander": "Your companion wanders nearby",
+  "companion.arksurvivalreturns.order.work": "Your companion starts working here",
   "debug.arksurvivalreturns.aim": "Aim at a dinosaur to read its state.",
   "debug.arksurvivalreturns.page": "PAGE %s/%s | Mouse wheel to browse",
   "debug.arksurvivalreturns.range": "RANGE %s blocks | Hold use to scan",
@@ -220,6 +221,7 @@
   "taming.arksurvivalreturns.denied.mount": "you cannot mount",
   "taming.arksurvivalreturns.denied.move": "you cannot walk",
   "taming.arksurvivalreturns.denied.use": "you cannot use items",
+  "taming.arksurvivalreturns.denied.work": "[ARK] Your tribe has not granted you work access to %s",
   "taming.arksurvivalreturns.denied_access": "You cannot reach %s right now.",
   "taming.arksurvivalreturns.excluded": "not a valid target",
   "taming.arksurvivalreturns.fed": "%s eats. Taming progress %s%%.",
@@ -248,5 +250,7 @@
   "tribe.arksurvivalreturns.permission_set": "%s for %s set to %s.",
   "tribe.arksurvivalreturns.status_party": "Tribe %s | %s member(s)",
   "tribe.arksurvivalreturns.status_solo": "No tribe yet for %s. Create one with /ftbteams party create, then invite your partner.",
-  "tribe.arksurvivalreturns.unknown": "Unknown option: %s"
+  "tribe.arksurvivalreturns.unknown": "Unknown option: %s",
+  "work.arksurvivalreturns.blocked": "[ARK] %s pauses: a permitted survivor must stay nearby.",
+  "work.arksurvivalreturns.full": "[ARK] %s's hold is full."
 }

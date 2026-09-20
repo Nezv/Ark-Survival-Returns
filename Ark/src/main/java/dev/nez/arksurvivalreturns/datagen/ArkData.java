@@ -108,6 +108,9 @@ public final class ArkData implements DataProvider {
                 NS + ":flint_knife", NS + ":spear");
         tag("item/mass/armor", "#c:armors", "shield", "elytra", "leather_horse_armor", "iron_horse_armor",
                 "golden_horse_armor", "diamond_horse_armor", "wolf_armor");
+        // Work job targets, so a data pack can retune what each worker harvests.
+        tag("block/work/forage", "grass_block", "short_grass", "tall_grass", "fern", "large_fern", "sweet_berry_bush");
+        tag("block/work/mineral", "#c:ores", "#c:stones");
     }
     private void models() {
         Map<String, String> en = new TreeMap<>(), pt = new TreeMap<>();
@@ -221,6 +224,7 @@ public final class ArkData implements DataProvider {
         recoveryMessages(en, pt);
         downedMessages(en, pt);
         massMessages(en, pt);
+        workMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -645,6 +649,18 @@ public final class ArkData implements DataProvider {
         pt.put("hud." + NS + ".overload.surface", "[ARK] Subindo \u00e0 superf\u00edcie antes que o ar acabe.");
     }
 
+    /** Work orders: the extra companion order, its permission denial and the job feedback. */
+    private void workMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("companion." + NS + ".order.work", "Your companion starts working here");
+        pt.put("companion." + NS + ".order.work", "Seu companheiro come\u00e7a a trabalhar aqui");
+        en.put("taming." + NS + ".denied.work", "[ARK] Your tribe has not granted you work access to %s");
+        pt.put("taming." + NS + ".denied.work", "[ARK] Sua tribo n\u00e3o concedeu acesso de trabalho a %s");
+        en.put("work." + NS + ".full", "[ARK] %s's hold is full.");
+        pt.put("work." + NS + ".full", "[ARK] O compartimento de %s est\u00e1 cheio.");
+        en.put("work." + NS + ".blocked", "[ARK] %s pauses: a permitted survivor must stay nearby.");
+        pt.put("work." + NS + ".blocked", "[ARK] %s pausa: um sobrevivente autorizado precisa ficar perto.");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -714,7 +730,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

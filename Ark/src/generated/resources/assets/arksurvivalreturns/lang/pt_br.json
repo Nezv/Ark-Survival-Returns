@@ -34,6 +34,7 @@
   "companion.arksurvivalreturns.order.follow": "Seu companheiro segue você",
   "companion.arksurvivalreturns.order.stay": "Seu companheiro fica aqui",
   "companion.arksurvivalreturns.order.wander": "Seu companheiro vaga por perto",
+  "companion.arksurvivalreturns.order.work": "Seu companheiro começa a trabalhar aqui",
   "debug.arksurvivalreturns.aim": "Mire em um dinossauro para ler seu estado.",
   "debug.arksurvivalreturns.page": "PÁGINA %s/%s | Role para navegar",
   "debug.arksurvivalreturns.range": "ALCANCE %s blocos | Segure usar",
@@ -220,6 +221,7 @@
   "taming.arksurvivalreturns.denied.mount": "você não pode montar",
   "taming.arksurvivalreturns.denied.move": "você não pode andar",
   "taming.arksurvivalreturns.denied.use": "você não pode usar itens",
+  "taming.arksurvivalreturns.denied.work": "[ARK] Sua tribo não concedeu acesso de trabalho a %s",
   "taming.arksurvivalreturns.denied_access": "Você não consegue alcançar %s agora.",
   "taming.arksurvivalreturns.excluded": "alvo inválido",
   "taming.arksurvivalreturns.fed": "%s come. Progresso de domesticação %s%%.",
@@ -248,5 +250,7 @@
   "tribe.arksurvivalreturns.permission_set": "%s de %s definida como %s.",
   "tribe.arksurvivalreturns.status_party": "Tribo %s | %s membro(s)",
   "tribe.arksurvivalreturns.status_solo": "Ainda sem tribo para %s. Crie uma com /ftbteams party create e convide seu parceiro.",
-  "tribe.arksurvivalreturns.unknown": "Opção desconhecida: %s"
+  "tribe.arksurvivalreturns.unknown": "Opção desconhecida: %s",
+  "work.arksurvivalreturns.blocked": "[ARK] %s pausa: um sobrevivente autorizado precisa ficar perto.",
+  "work.arksurvivalreturns.full": "[ARK] O compartimento de %s está cheio."
 }

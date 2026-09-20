@@ -38,7 +38,8 @@ public final class CompanionGoal extends Goal {
     }
 
     @Override public boolean canUse() {
-        return mob.isAlive() && mob.isTamed() && !TorporService.restricted(mob);
+        return mob.isAlive() && mob.isTamed() && !TorporService.restricted(mob)
+                && CompanionService.of(mob).order() != CompanionOrder.WORK;
     }
     @Override public boolean canContinueToUse() { return canUse(); }
     @Override public boolean requiresUpdateEveryTick() { return true; }

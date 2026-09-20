@@ -12,7 +12,9 @@ public enum TribePermission {
     RIDE,
     CARGO,
     COMMANDS,
-    BREEDING;
+    BREEDING,
+    /** Harvest work: supervising a teammate's tame while it works a job site. */
+    WORK;
 
     public int mask() {
         return 1 << ordinal();
@@ -35,11 +37,16 @@ public enum TribePermission {
     }
 
     public static int mask(boolean ride, boolean cargo, boolean commands, boolean breeding) {
+        return mask(ride, cargo, commands, breeding, false);
+    }
+
+    public static int mask(boolean ride, boolean cargo, boolean commands, boolean breeding, boolean work) {
         int mask = 0;
         if (ride) mask |= RIDE.mask();
         if (cargo) mask |= CARGO.mask();
         if (commands) mask |= COMMANDS.mask();
         if (breeding) mask |= BREEDING.mask();
+        if (work) mask |= WORK.mask();
         return mask;
     }
 }

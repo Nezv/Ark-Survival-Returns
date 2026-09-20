@@ -71,6 +71,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);
         FUNCTIONS.register("overload_flight", () -> CargoGameTests::overloadFlight);
         FUNCTIONS.register("overload_swim", () -> CargoGameTests::overloadSwim);
+        FUNCTIONS.register("work_harvest", () -> WorkGameTests::harvest);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

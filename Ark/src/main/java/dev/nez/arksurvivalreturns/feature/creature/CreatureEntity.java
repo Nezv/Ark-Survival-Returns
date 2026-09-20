@@ -17,6 +17,7 @@ import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
 import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
+import dev.nez.arksurvivalreturns.feature.work.WorkGoal;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
@@ -370,6 +371,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         goalSelector.addGoal(1, wildlife);
         // Same priority as the wild routine; taming makes the two mutually exclusive through canUse.
         goalSelector.addGoal(1, new CompanionGoal(this));
+        // Work orders hand the creature to the harvest routine instead of the companion routine.
+        goalSelector.addGoal(1, new WorkGoal(this));
     }
     /** Realm hook: water-bound species replace the land adapter with their own steering goal. */
     protected WildlifeController createController() { return new WildlifeGoal(this); }

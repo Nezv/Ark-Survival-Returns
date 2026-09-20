@@ -4,6 +4,8 @@ import java.util.Locale;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.taming.TamingAttachments;
 import dev.nez.arksurvivalreturns.feature.taming.TamingService;
+import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
+import dev.nez.arksurvivalreturns.feature.work.WorkProfiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -27,7 +29,15 @@ public final class CompanionService {
 
     /** Cycles the order and reports it on the action bar. Server-side only. */
     public static void orderCommand(CreatureEntity creature, Player player) {
-        CompanionOrder next = of(creature).order().next();
+        boolean workCapable = WorkProfiles.of(creature.species()).job() != WorkProfiles.Job.NONE;
+        CompanionOrder next = of(creature).order().next(workCapable);
+        if (next == CompanionOrder.WORK && !TribeService.canWork(creature, player)) {
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+                server.sendSystemMessage(Component.translatable("taming.arksurvivalreturns.denied.work",
+                        creature.getDisplayName()), true);
+            }
+            return;
+        }
         setOrder(creature, next);
         if (player instanceof net.minecraft.server.level.ServerPlayer server) {
             server.sendSystemMessage(Component.translatable(
