@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); recovery(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -226,6 +226,7 @@ public final class ArkData implements DataProvider {
         massMessages(en, pt);
         workMessages(en, pt);
         farmMessages(en, pt);
+        kitchenMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -584,6 +585,33 @@ public final class ArkData implements DataProvider {
         }
     }
 
+    /** The cooking pot and its two prepared meals. Vanilla textures again. */
+    private void kitchen() {
+        var potFaces = new LinkedHashMap<String, Object>();
+        for (String side : List.of("north", "south", "east", "west", "down")) potFaces.put(side, Map.of("texture", "#side"));
+        potFaces.put("up", Map.of("texture", "#top"));
+        put("assets/" + NS + "/models/block/cooking_pot", Map.of(
+                "textures", Map.of("side", "minecraft:block/cauldron_side", "top", "minecraft:block/cauldron_top",
+                        "particle", "minecraft:block/cauldron_side"),
+                "elements", List.of(Map.of("from", List.of(0, 0, 0), "to", List.of(16, 12, 16), "faces", potFaces))));
+        put("assets/" + NS + "/blockstates/cooking_pot", Map.of("variants", Map.of("", Map.of("model", NS + ":block/cooking_pot"))));
+        put("assets/" + NS + "/models/item/cooking_pot", Map.of("parent", NS + ":block/cooking_pot"));
+        put("assets/" + NS + "/items/cooking_pot", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/cooking_pot")));
+        json("data/" + NS + "/loot_table/blocks/cooking_pot", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:cooking_pot"}]}]}
+            """.formatted(NS));
+        json("data/" + NS + "/recipe/cooking_pot", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"cooking_pot",
+                 "ingredients":["minecraft:cobblestone","minecraft:cobblestone","minecraft:cobblestone",
+                                "minecraft:cobblestone","%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:cooking_pot"}}
+                """.formatted(NS, NS, NS));
+        vanillaModel("hearty_stew", "minecraft:item/rabbit_stew");
+        vanillaModel("trail_mix", "minecraft:item/cookie");
+    }
+
     /** Concentration without a station: narcoberries and fiber become a stronger dose at the crafting table. */
     private void medicine() {
         vanillaModel("concentrated_sedative", "minecraft:item/gunpowder");
@@ -773,6 +801,18 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".improved_tranquilizer_arrow", "Flecha tranquilizante melhorada");
     }
 
+    /** Kitchen names: the pot and the two prepared meals. */
+    private void kitchenMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("block." + NS + ".cooking_pot", "Cooking Pot");
+        pt.put("block." + NS + ".cooking_pot", "Panela de cozinha");
+        en.put("item." + NS + ".cooking_pot", "Cooking Pot");
+        pt.put("item." + NS + ".cooking_pot", "Panela de cozinha");
+        en.put("item." + NS + ".hearty_stew", "Hearty Stew");
+        pt.put("item." + NS + ".hearty_stew", "Ensopado refor\u00e7ado");
+        en.put("item." + NS + ".trail_mix", "Trail Mix");
+        pt.put("item." + NS + ".trail_mix", "Mistura de trilha");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -842,7 +882,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

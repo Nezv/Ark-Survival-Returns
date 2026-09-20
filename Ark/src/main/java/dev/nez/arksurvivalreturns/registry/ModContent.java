@@ -93,6 +93,9 @@ public final class ModContent {
                             .sound(net.minecraft.world.level.block.SoundType.WOOD));
     public static final DeferredItem<net.minecraft.world.item.BlockItem> RECOVERY_CACHE_ITEM =
             ITEMS.registerSimpleBlockItem(RECOVERY_CACHE, p -> p.stacksTo(1));
+    public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu>> COOKING_POT_MENU =
+            MENUS.register("cooking_pot", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
+                    new dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu(containerId, inventory, data.readBlockPos())));
     /** Homestead stations are interaction-only (no menus): food in, feeding out; raw in, ration out. */
     public static final DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ArkSurvivalReturns.MOD_ID);
@@ -138,6 +141,33 @@ public final class ModContent {
             DRYING_RACK_BLOCK_ENTITY = BLOCK_ENTITIES.register("drying_rack",
                     () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity::new, DRYING_RACK.get()));
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock> COOKING_POT =
+            BLOCKS.registerBlock("cooking_pot", dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock::new,
+                    p -> p.strength(1.5f).sound(net.minecraft.world.level.block.SoundType.WOOD));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> COOKING_POT_ITEM =
+            ITEMS.registerSimpleBlockItem(COOKING_POT);
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlockEntity>>
+            COOKING_POT_BLOCK_ENTITY = BLOCK_ENTITIES.register("cooking_pot",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlockEntity::new, COOKING_POT.get()));
+    /** Prepared meals: one clear activity benefit each, no nutrient bars. */
+    public static final DeferredItem<Item> HEARTY_STEW = ITEMS.registerSimpleItem("hearty_stew", p -> p.stacksTo(16)
+            .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(8).saturationModifier(0.8f).build(),
+                    meal(net.minecraft.world.effect.MobEffects.REGENERATION, 200)));
+    public static final DeferredItem<Item> TRAIL_MIX = ITEMS.registerSimpleItem("trail_mix", p -> p.stacksTo(64)
+            .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationModifier(0.6f).build(),
+                    meal(net.minecraft.world.effect.MobEffects.SPEED, 300)));
+
+    private static net.minecraft.world.item.component.Consumable meal(
+            net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect, int ticks) {
+        return net.minecraft.world.item.component.Consumable.builder()
+                .consumeSeconds(1.6f)
+                .animation(net.minecraft.world.item.ItemUseAnimation.EAT)
+                .onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                        new net.minecraft.world.effect.MobEffectInstance(effect, ticks, 0), 1.0f))
+                .build();
+    }
 
     static {
         for (Species s : Species.values()) {
@@ -186,6 +216,9 @@ public final class ModContent {
                     output.accept(TROUGH_ITEM.get());
                     output.accept(DRYING_RACK_ITEM.get());
                     output.accept(DRIED_RATION.get());
+                    output.accept(COOKING_POT_ITEM.get());
+                    output.accept(HEARTY_STEW.get());
+                    output.accept(TRAIL_MIX.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

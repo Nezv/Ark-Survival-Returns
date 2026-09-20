@@ -72,6 +72,9 @@ public final class Config {
             FARM_TROUGH_MAX_PER_BATCH, FARM_DRYING_BATCHES, FARM_DRYING_CAPACITY;
     public static final ModConfigSpec.DoubleValue FARM_TROUGH_HUNGER, FARM_TROUGH_FEED, FARM_TROUGH_HEAL,
             FARM_BERRY_GROWTH;
+    // -------------------------------------------------------------------------- kitchen
+    public static final ModConfigSpec.BooleanValue KITCHEN_ENABLED;
+    public static final ModConfigSpec.IntValue KITCHEN_COOK_BATCHES;
     // ----------------------------------------------------------------------------- mass
     public static final ModConfigSpec.BooleanValue MASS_ENABLED;
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
@@ -246,6 +249,11 @@ public final class Config {
                 .defineInRange("dryingCapacity", 8, 1, 64);
         FARM_BERRY_GROWTH = b.comment("Chance per random tick that a planted Ark berry bush advances one age.")
                 .defineInRange("berryGrowthChance", 0.2, 0.01, 1.0);
+        b.pop().push("kitchen");
+        KITCHEN_ENABLED = b.comment("Enable the cooking pot and its prepared meals.")
+                .define("enabled", true);
+        KITCHEN_COOK_BATCHES = b.comment("Batches a matching set of ingredients needs to become a meal.")
+                .defineInRange("cookBatches", 4, 1, 60);
         b.pop().push("mass");
         MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
                         + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")
