@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/mammoth",
+  "spawners": {
+    "type": "arksurvivalreturns:mammoth",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 7
+  }
+}

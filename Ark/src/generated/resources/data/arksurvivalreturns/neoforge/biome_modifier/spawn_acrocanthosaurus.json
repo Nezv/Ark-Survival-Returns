@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/acrocanthosaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:acrocanthosaurus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 6
+  }
+}

@@ -8,10 +8,6 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 /** Per-world server configuration; habitat preferences and protected biomes live in data packs. */
 public final class Config {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue LAND_HABITATS;
-    public static final ModConfigSpec.IntValue LAND_PROBES, LAND_WATER_PATCH, LAND_RECHECK, LAND_REPOPULATE;
-    public static final ModConfigSpec.BooleanValue AQUATIC_HABITATS;
-    public static final ModConfigSpec.IntValue AQUATIC_PROBES, AQUATIC_DEPTH, AQUATIC_COLUMNS, AQUATIC_RADIUS, AQUATIC_RECHECK, AQUATIC_REPOPULATE;
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_ROAM = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_LEASH = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_WATER_MAX = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
@@ -21,16 +17,14 @@ public final class Config {
     public static final EnumMap<Species, ModConfigSpec.DoubleValue> WATER_RETENTION = new EnumMap<>(Species.class);
     public static final EnumMap<Species, ModConfigSpec.DoubleValue> STRIDE_SCALE = new EnumMap<>(Species.class);
     public static final ModConfigSpec.BooleanValue NATURAL_SPAWNS;
-    public static final ModConfigSpec.IntValue LOCAL_CAP;
-    public static final ModConfigSpec.IntValue SOLITARY_SPACING;
-    public static final ModConfigSpec.IntValue MIN_GROUPS;
-    public static final ModConfigSpec.IntValue SPAWN_INTERVAL;
-    public static final ModConfigSpec.IntValue GROUPS_PER_PASS;
+    public static final ModConfigSpec.IntValue WILDLIFE_WATER_DEPTH;
+    public static final ModConfigSpec.BooleanValue POPULATION_BUDGET;
+    public static final ModConfigSpec.IntValue POPULATION_TARGET, POPULATION_RADIUS, POPULATION_GLOBAL_CAP,
+            POPULATION_INTERVAL, POPULATION_ATTEMPTS, POPULATION_CULL_MARGIN, POPULATION_MIN_DISTANCE;
     public static final ModConfigSpec.IntValue BAND_WIDTH;
     public static final ModConfigSpec.BooleanValue BIOME_MESSAGES;
     public static final ModConfigSpec.BooleanValue THEME_DIMENSIONS, THEME_MONSTERS, THEME_MECHANICS;
     public static final ModConfigSpec.BooleanValue MAP_REQUIRES_UNLOCK;
-    public static final EnumMap<Species, ModConfigSpec.IntValue> WEIGHTS = new EnumMap<>(Species.class);
     public static final ModConfigSpec.DoubleValue HEALTH_GROWTH;
     public static final ModConfigSpec.DoubleValue DAMAGE_GROWTH;
     public static final ModConfigSpec.BooleanValue HEALTH_BAR;
@@ -61,18 +55,33 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue PASSIVE_PROGRESS_DECAY, PLAYER_MOVEMENT_TOLERANCE;
     public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
     public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
+    // --------------------------------------------------------------------------- combat
+    public static final ModConfigSpec.DoubleValue COMBAT_HIT_FRACTION, COMBAT_RECOVERY_FRACTION;
+    // ------------------------------------------------------------------------ companion
+    public static final ModConfigSpec.IntValue COMPANION_FOLLOW_DISTANCE, COMPANION_WANDER_RADIUS,
+            COMPANION_PET_COOLDOWN_TICKS;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
-        NATURAL_SPAWNS = b.comment("Enable natural creature spawns. Spawn eggs and commands still work.").define("enabled", true);
-        LOCAL_CAP = b.comment("Maximum Ark creatures within 96 blocks. Independent of vanilla animal caps.").defineInRange("localCap", 24, 1, 128);
-        SOLITARY_SPACING = b.comment("Minimum distance between naturally spawning large creatures.").defineInRange("solitarySpacing", 24, 16, 128);
-        MIN_GROUPS = b.comment("Target minimum wild groups per player within 96 blocks; retries when safe loaded ground is unavailable.").defineInRange("minimumGroups", 3, 1, 20);
-        SPAWN_INTERVAL = b.comment("Ticks between population checks (20 ticks = 1 second).").defineInRange("checkIntervalTicks", 100, 20, 1200);
-        GROUPS_PER_PASS = b.comment("Maximum groups added across a dimension per check; players are served round-robin.").defineInRange("groupsPerPass", 2, 1, 8);
-        b.push("weights");
-        for (var species : Species.values()) WEIGHTS.put(species, b.defineInRange(species.id, species.weight, 0, 100));
-        b.pop().pop().push("progression");
+        NATURAL_SPAWNS = b.comment("Enable natural creature spawns through the vanilla spawner. Spawn eggs and commands still work.").define("enabled", true);
+        WILDLIFE_WATER_DEPTH = b.comment("Minimum swimmable depth for a water-bound creature spawn.").defineInRange("minimumWaterDepth", 6, 3, 24);
+        POPULATION_BUDGET = b.comment("Independent budget that tops up mod wildlife near players without competing for the vanilla mob cap.")
+                .define("populationBudget", true);
+        POPULATION_TARGET = b.comment("Natural mod creatures kept around each player by the budget.")
+                .defineInRange("populationTargetPerPlayer", 10, 0, 64);
+        POPULATION_RADIUS = b.comment("Radius in blocks around a player that the budget counts and fills.")
+                .defineInRange("populationRadius", 128, 32, 256);
+        POPULATION_GLOBAL_CAP = b.comment("Maximum natural mod creatures loaded in one dimension.")
+                .defineInRange("populationGlobalCap", 80, 16, 512);
+        POPULATION_INTERVAL = b.comment("Ticks between budget checks (100 = 5 seconds).")
+                .defineInRange("populationIntervalTicks", 100, 20, 2400);
+        POPULATION_ATTEMPTS = b.comment("Group placement attempts per player per check while under target.")
+                .defineInRange("populationAttempts", 2, 1, 8);
+        POPULATION_CULL_MARGIN = b.comment("Extra creatures over target tolerated before the budget culls the farthest.")
+                .defineInRange("populationCullMargin", 4, 0, 32);
+        POPULATION_MIN_DISTANCE = b.comment("Never spawn natural creatures closer than this to a player.")
+                .defineInRange("populationMinPlayerDistance", 32, 8, 128);
+        b.pop().push("progression");
         MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. Disabled during development while taming is unavailable; restart/rejoin after changing.").define("mapRequiresUnlock", false);
         BAND_WIDTH = b.comment("Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
         b.pop().push("movement");
@@ -84,6 +93,19 @@ public final class Config {
             STRIDE_SCALE.put(species, b.comment("Visual stride length multiplier; larger values slow the animation at the same ground speed.").defineInRange("strideScale", 1.0, 0.5, 2.0));
             b.pop();
         }
+        b.pop().push("combat");
+        COMBAT_HIT_FRACTION = b.comment("Share of the authored attack clip that plays before the hit lands.")
+                .defineInRange("hitFrameFraction", 0.4, 0.1, 0.9);
+        COMBAT_RECOVERY_FRACTION = b.comment("Recovery after the attack clip, as a share of its length; larger "
+                        + "values slow the attack rate instead of shortening the animation.")
+                .defineInRange("recoveryFraction", 0.35, 0.0, 2.0);
+        b.pop().push("companion");
+        COMPANION_FOLLOW_DISTANCE = b.comment("A companion following its owner stops this close, in blocks.")
+                .defineInRange("followStopDistance", 6, 2, 24);
+        COMPANION_WANDER_RADIUS = b.comment("WANDER order: farthest offset from the anchor a destination may use.")
+                .defineInRange("wanderRadius", 20, 4, 64);
+        COMPANION_PET_COOLDOWN_TICKS = b.comment("Ticks between pet responses for one creature (40 = two seconds).")
+                .defineInRange("petCooldownTicks", 40, 10, 200);
         b.pop().push("levels");
         HEALTH_GROWTH = b.comment("HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.").defineInRange("healthGrowth", 0.10, 0.0, 0.20);
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);
@@ -117,7 +139,8 @@ public final class Config {
                 .defineInRange("wakeThresholdRatio", 0.20, 0.01, 0.95);
         TORPOR_RECOVERY_DELAY = b.comment("Ticks of no further sedation before recovery starts (200 = 10 seconds).")
                 .defineInRange("torporRecoveryDelayTicks", 200, 0, 24000);
-        TORPOR_RECOVERY_PER_SECOND = b.comment("Recovery per second as a share of the maximum, after the delay.")
+        TORPOR_RECOVERY_PER_SECOND = b.comment("Recovery per second as a share of the maximum, after the delay. "
+                        + "Zero wakes the entity as soon as the recovery delay expires.")
                 .defineInRange("torporRecoveryPerSecond", 0.005, 0.0, 1.0);
         TORPOR_SYNC_INTERVAL = b.comment("Maximum normal tick interval between relevant client updates.")
                 .defineInRange("torporSyncIntervalTicks", 5, 1, 100);
@@ -185,20 +208,7 @@ public final class Config {
         DAY_SLEEP = b.comment("Share of undisturbed daytime routine spent sleeping; urgent needs and danger override.").defineInRange("carnivoreDaySleepFraction", 0.7, 0.0, 1.0);
         WAKE_DISTANCE = b.comment("Distance from body bounds for ordinary player approach; noisy actions can wake from farther away.").defineInRange("playerWakeDistance", 8.0, 2.0, 24.0);
         SLEEP_CALM = b.comment("Simulated ticks without relevant danger before sleep is allowed again.").defineInRange("calmBeforeSleepTicks", 200, 20, 1200);
-        b.pop().push("aquatic");
-        AQUATIC_HABITATS = b.comment("Saved water bodies for water-bound species; solo groups that roam one home pool.").define("enabled", true);
-        AQUATIC_PROBES = b.comment("Maximum water-column reads per dimension tick while planning a home pool.").defineInRange("waterProbesPerTick", 2048, 256, 8192);
-        AQUATIC_DEPTH = b.comment("Minimum swimmable depth for a valid pool; shallow water is rejected or retried.").defineInRange("minimumDepth", 6, 3, 24);
-        AQUATIC_COLUMNS = b.comment("Connected deep-water columns a pool needs before it can host a resident.").defineInRange("minimumColumns", 12, 4, 64);
-        AQUATIC_RADIUS = b.comment("How far a pool is sampled from the spawn point, in blocks.").defineInRange("searchRadius", 32, 8, 64);
-        AQUATIC_RECHECK = b.defineInRange("waterRecheckTicks", 1200, 200, 12000);
-        AQUATIC_REPOPULATE = b.comment("Cooldown after a confirmed permanent removal; unloading does not free a slot.").defineInRange("replacementCooldownTicks", 12000, 200, 72000);
-        b.pop().push("landHabitats");
-        LAND_HABITATS = b.comment("Persistent water-associated land groups; legacy local behavior remains available when disabled.").define("enabled", true);
-        LAND_PROBES = b.comment("Maximum surface-water planning block/height reads per dimension tick.").defineInRange("waterProbesPerTick", 256, 32, 2048);
-        LAND_WATER_PATCH = b.comment("Connected surface water cells, including a 2x2 patch. Lower for narrow rivers.").defineInRange("minimumWaterCells", 8, 4, 16);
-        LAND_RECHECK = b.defineInRange("waterRecheckTicks", 1200, 200, 12000);
-        LAND_REPOPULATE = b.comment("Cooldown after a confirmed permanent member removal; unloading does not free a slot.").defineInRange("replacementCooldownTicks", 12000, 200, 72000);
+        b.pop().push("wildlife");
         for (var family : dev.nez.arksurvivalreturns.feature.land.LandFamily.values()) {
             b.push(family.name().toLowerCase(java.util.Locale.ROOT));
             LAND_ROAM.put(family, b.defineInRange("roamRadius", family.roam, 24, 160));

@@ -26,7 +26,7 @@ import net.minecraft.world.phys.*;
 public final class FlyingCreatureEntity extends CreatureEntity {
     public enum Phase { ROAM, DEFENSE_CIRCLE, SWOOP, RETURN_HOME, LAND, PERCH, TAKEOFF }
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(FlyingCreatureEntity.class, EntityDataSerializers.INT);
-    private UUID habitatId, thiefId;
+    private UUID thiefId;
     private BlockPos center, nest;
     private Vec3 destination;
     private long defenseUntil, nextSwoop, lastSeen;
@@ -41,13 +41,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) { super.defineSynchedData(builder); builder.define(PHASE, 0); }
     public Phase flightPhase() { return Phase.values()[Math.clamp(entityData.get(PHASE), 0, Phase.values().length - 1)]; }
-    public UUID habitatId() { return habitatId; }
     public UUID eggThief() { return thiefId; }
     public BlockPos habitatCenter() { return center == null ? wildlife().home() : center; }
     public BlockPos nestPosition() { return nest; }
-    public void assignHabitat(HabitatData.Habitat h, BlockPos perch) {
-        habitatId = h.id(); center = h.center(); nest = perch; assignHabitatPack(h.id());
-        destination = null; orbitInitialized = false;
+    /** Claims the local perch this bird owns. */
+    public void assignNest(BlockPos perch) {
+        nest = perch; destination = null; orbitInitialized = false;
     }
     private void phase(Phase next) {
         if (flightPhase() == next) return;
@@ -66,13 +65,15 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     public boolean validThief(Player player) {
         // A feeder inside the feeding truce is not a target, so the bird cannot instantly re-engage it.
         if (feedingTruce(player)) return false;
+        // The owner is never a thief, even before the taming wake finishes.
+        if (dev.nez.arksurvivalreturns.feature.taming.TamingService.ownedBy(this, player)) return false;
         return player != null && player.isAlive() && player.level() == level() && !player.isCreative() && !player.isSpectator()
                 && level().getDifficulty() != Difficulty.PEACEFUL
-                && HabitatData.horizontalDistanceSqr(habitatCenter(), player.blockPosition()) <= (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get()
+                && dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(habitatCenter(), player.blockPosition()) <= (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get()
                 && Math.abs(player.getY() - habitatCenter().getY()) < 64;
     }
     public void defendEgg(Player thief) {
-        if (habitatId == null || !validThief(thief)) return;
+        if (!validThief(thief)) return;
         engage(thief);
         playSound(net.minecraft.sounds.SoundEvents.PARROT_AMBIENT, 0.8f, species() == Species.ARGENTAVIS ? 0.7f : 1.2f);
     }
@@ -95,7 +96,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         double best = Double.MAX_VALUE;
         for (var player : world.players()) {
             if (!validThief(player)) continue;
-            double distance = HabitatData.horizontalDistanceSqr(habitatCenter(), player.blockPosition());
+            double distance = dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(habitatCenter(), player.blockPosition());
             if (distance < best) { best = distance; nearest = player; }
         }
         if (nearest != null && seesPlayer(world, nearest)) engage(nearest);
@@ -121,6 +122,13 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             if (flightPhase() == Phase.PERCH || flightPhase() == Phase.LAND) phase(Phase.TAKEOFF);
             return;
         }
+        // A tamed bird obeys its companion order; no roaming, defense or egg aggression.
+        if (isTamed()) {
+            setNoGravity(true);
+            resetFallDistance();
+            if (destination != null) steer(world);
+            return;
+        }
         setNoGravity(true); resetFallDistance(); phaseTicks++;
         if (center == null) center = wildlife().home();
         if (!orbitInitialized) {
@@ -131,15 +139,14 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         }
         if (tickCount >= nextAdoption) {
             nextAdoption = tickCount + 200 + Math.floorMod(getId(), 40);
-            var h = habitatId == null ? null : HabitatData.get(world).byId(habitatId);
-            if (h == null) { habitatId = null; nest = null; if (thiefId != null) endDefense(); }
-            else if (!h.nests().contains(nest)) nest = h.nests().getFirst();
-            if (habitatId == null && isNaturalWildlife()) FlyerHabitats.adopt(world, this);
+            if (nest != null && !(world.getBlockState(nest).getBlock() instanceof NestBlock)) { nest = null; if (thiefId != null) endDefense(); }
+            // A natural flyer claims one local nest of its own; no colony record is kept.
+            if (nest == null && isNaturalWildlife()) nest = Nests.placeNear(world, this);
         }
         considerTerritorialDefense(world);
         Player thief = thiefId != null && world.getEntity(thiefId) instanceof Player player ? player : null;
         if (thiefId != null && (!validThief(thief) || world.getGameTime() >= defenseUntil
-                || HabitatData.horizontalDistanceSqr(center, blockPosition()) > (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get())) endDefense();
+                || dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) > (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get())) endDefense();
         if (thiefId != null) {
             setTarget(thief);
             if (Math.floorMod(tickCount + getId(), 5) == 0) {
@@ -172,12 +179,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             destination = position().add(0, 4, 0);
             if (phaseTicks > (species() == Species.ARGENTAVIS ? 28 : 48)) phase(Phase.ROAM);
         }
-        if (flightPhase() == Phase.ROAM && HabitatData.horizontalDistanceSqr(center, blockPosition()) > (double)roamRadius() * roamRadius()) phase(Phase.RETURN_HOME);
+        if (flightPhase() == Phase.ROAM && dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) > (double)roamRadius() * roamRadius()) phase(Phase.RETURN_HOME);
         if (flightPhase() == Phase.RETURN_HOME) {
             destination = Vec3.atBottomCenterOf(center).add(0, orbitHeight, 0);
-            if (HabitatData.horizontalDistanceSqr(center, blockPosition()) < 100) phase(Phase.ROAM);
+            if (dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) < 100) phase(Phase.ROAM);
         }
-        if (flightPhase() == Phase.ROAM && tickCount >= nextPerch && Config.PERCHING.get()) {
+        if (flightPhase() == Phase.ROAM && tickCount >= nextPerch && Config.PERCHING.get() && nest != null) {
             nextPerch = tickCount + 200;
             beginPerching(world);
         }
@@ -193,10 +200,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         steer(world);
     }
     private boolean seesPlayer(ServerLevel world, Player player) {
-        return SpawnRules.loaded(world, new AABB(position(), player.position()).inflate(1)) && hasLineOfSight(player);
+        return player != null && SpawnRules.loaded(world, new AABB(position(), player.position()).inflate(1)) && hasLineOfSight(player);
     }
+    /** Starts the swoop bite; the flyer's own {@code doHurtTarget} revalidates and flags the hit when it lands. */
     private boolean doContact(ServerLevel world, Player thief) {
-        return !struck && isWithinMeleeAttackRange(thief) && seesPlayer(world, thief) && doHurtTarget(world, thief);
+        if (thief != null && !struck && isWithinMeleeAttackRange(thief) && seesPlayer(world, thief)) strike(thief);
+        return false;
     }
     @Override public boolean doHurtTarget(ServerLevel world, Entity target) {
         if (!(target instanceof Player p) || thiefId == null || !thiefId.equals(p.getUUID()) || !validThief(p)
@@ -221,7 +230,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         var sweep = getBoundingBox().expandTowards(delta).deflate(0.01);
         if (!SpawnRules.loaded(world, sweep.inflate(1)) || !world.getWorldBorder().isWithinBounds(sweep)
                 || sweep.minY <= world.getMinY() || sweep.maxY >= world.getMaxY()) return false;
-        // Keep collision recovery inside the colony's counted vertical extent, allowing displaced birds back down.
+        // Keep collision recovery inside the counted vertical extent, allowing displaced birds back down.
         if (point.y > habitatCenter().getY()+56 && point.y >= getY()) return false;
         int steps = Math.max(1, (int)Math.ceil(delta.length()/2));
         if (steps > 64) return false;
@@ -262,6 +271,20 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         float pitch = (float)(-Math.atan2(velocity.y, Math.max(0.001, velocity.horizontalDistance()))*180/Math.PI);
         setXRot(Mth.approachDegrees(getXRot(), Math.clamp(pitch, -45, 55), 4));
     }
+    /** Companion steering: a tamed bird flies to the point while its flight phase owns the pose. */
+    @Override protected void steerCompanion(Vec3 point, double speed) { destination = point; }
+    @Override protected void stopCompanion() { destination = null; setDeltaMovement(getDeltaMovement().scale(0.8)); }
+    /**
+     * The swoop gate is checked when the strike starts ({@code doContact}); the wind-up can outlast the
+     * dive, so the impact only needs the resolved target to still be in reach and sight. A wild bird
+     * damages only the player it is defending against; a tamed one uses the shared melee rule.
+     */
+    @Override protected boolean applyStrikeDamage(ServerLevel world, Entity target) {
+        if (!isTamed() && !(target instanceof Player)) return false;
+        boolean hit = super.doHurtTarget(world, target);
+        if (hit && !isTamed()) struck = true;
+        return hit;
+    }
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
             travelFlying(input, Math.max(0.05f, CreatureRideController.riddenSpeed(this, rideProfile())));
@@ -284,14 +307,13 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     @Override protected void addAdditionalSaveData(ValueOutput out) {
         super.addAdditionalSaveData(out);
         BlockPos home = habitatCenter(); out.putLong("FlightHome", home.asLong());
-        if (habitatId != null) out.putString("FlightHabitat", habitatId.toString());
         if (nest != null) out.putLong("FlightNest", nest.asLong());
     }
     @Override protected void readAdditionalSaveData(ValueInput in) {
         super.readAdditionalSaveData(in);
         center = BlockPos.of(in.getLongOr("FlightHome", wildlife().home().asLong()));
-        try { habitatId = UUID.fromString(in.getStringOr("FlightHabitat", "")); } catch (IllegalArgumentException e) { habitatId = null; }
-        nest = habitatId == null ? null : BlockPos.of(in.getLongOr("FlightNest", center.asLong()));
+        long perch = in.getLongOr("FlightNest", Long.MIN_VALUE);
+        nest = perch == Long.MIN_VALUE ? null : BlockPos.of(perch);
         thiefId = null; setTarget(null); entityData.set(PHASE, Phase.ROAM.ordinal()); setBehavior(BehaviorState.ROAM); setNoGravity(true);
         orbitInitialized = false; destination = null;
     }
@@ -331,7 +353,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
                         : RawAnimation.begin().thenLoop(sedation));
             }
             if (isRidden()) return state.setAndContinue(RawAnimation.begin()
-                    .thenLoop(state.isMoving() ? flyMoveClip() : hoverClip()));
+                    .thenLoop(isLocomoting() ? flyMoveClip() : hoverClip()));
             String clip = flightPhase() == Phase.PERCH ? perchClip()
                     : flightPhase() == Phase.SWOOP ? swoopLoopClip()
                     : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : flyMoveClip();

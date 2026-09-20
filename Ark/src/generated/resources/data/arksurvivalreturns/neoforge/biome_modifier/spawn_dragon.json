@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/dragon",
+  "spawners": {
+    "type": "arksurvivalreturns:dragon",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 1
+  }
+}

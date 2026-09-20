@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/pegomastax",
+  "spawners": {
+    "type": "arksurvivalreturns:pegomastax",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 10
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/triceratops",
+  "spawners": {
+    "type": "arksurvivalreturns:triceratops",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 12
+  }
+}

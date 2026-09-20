@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/sabertooth",
+  "spawners": {
+    "type": "arksurvivalreturns:sabertooth",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 6
+  }
+}

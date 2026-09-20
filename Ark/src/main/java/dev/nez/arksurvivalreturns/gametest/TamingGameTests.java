@@ -1,5 +1,7 @@
 package dev.nez.arksurvivalreturns.gametest;
 
+import java.util.List;
+import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.FlyingCreatureEntity;
@@ -16,7 +18,9 @@ import dev.nez.arksurvivalreturns.feature.taming.TorporState;
 import dev.nez.arksurvivalreturns.feature.taming.UnconsciousBehavior;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -27,6 +31,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -121,8 +127,28 @@ final class TamingGameTests {
                 h.assertTrue(profile.method() != dev.nez.arksurvivalreturns.feature.taming.TamingMethod.AERIAL,
                         "Aerial feeding outside the flying realm: " + species.id);
         }
+        tranquilizerRecipe(h);
         manifestMatchesTheTables(h);
         h.succeed();
+    }
+
+    /** The ranged sedative route is a shipped recipe; a data-pack regression must fail this suite. */
+    private static void tranquilizerRecipe(GameTestHelper h) {
+        var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id("tranquilizer_arrow"));
+        var recipe = h.getLevel().getServer().getRecipeManager().byKey(key);
+        h.assertTrue(recipe.isPresent(), "Tranquilizer arrow recipe did not load from the data pack");
+        h.assertTrue(recipe.get().value() instanceof ShapelessRecipe,
+                "Tranquilizer arrow recipe is not the expected shapeless recipe");
+        var shapeless = (ShapelessRecipe) recipe.get().value();
+        var input = CraftingInput.of(3, 2, List.of(
+                new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
+                new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
+                new ItemStack(ModContent.BERRIES.get("narcoberry").get()), new ItemStack(Items.BONE)));
+        h.assertTrue(shapeless.matches(input, h.getLevel()),
+                "Tranquilizer arrow recipe no longer matches four arrows, narcoberry and bone");
+        var crafted = shapeless.assemble(input);
+        h.assertTrue(crafted.is(ModContent.TRANQUILIZER_ARROW_ITEM.get()) && crafted.getCount() == 4,
+                "Tranquilizer arrow recipe result changed: " + crafted);
     }
 
     /** The generated Java tables must still agree with the on-disk audit reports. */

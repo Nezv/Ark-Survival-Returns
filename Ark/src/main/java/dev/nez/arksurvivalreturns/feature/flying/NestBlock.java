@@ -51,15 +51,11 @@ public final class NestBlock extends Block {
         return true;
     }
     public static void disturb(ServerLevel world, BlockPos pos, Player thief) {
-        var habitat = HabitatData.get(world).atNest(pos); if (habitat == null) return;
-        for (var bird : world.getEntitiesOfClass(FlyingCreatureEntity.class, new AABB(habitat.center()).inflate(96),
-                b -> b.isAlive() && habitat.id().equals(b.habitatId()))) bird.defendEgg(thief);
+        for (var bird : world.getEntitiesOfClass(FlyingCreatureEntity.class, new AABB(pos).inflate(48),
+                b -> b.isAlive() && pos.equals(b.nestPosition()))) bird.defendEgg(thief);
     }
     @Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (state.getValue(EGG) && level instanceof ServerLevel world) disturb(world, pos, player);
         return super.playerWillDestroy(level, pos, state, player);
-    }
-    @Override protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-        HabitatData.get(level).removeNest(pos);
     }
 }

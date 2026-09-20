@@ -29,6 +29,8 @@ public abstract class WildlifeController extends Goal {
     public abstract void save(ValueOutput out);
     public abstract void load(ValueInput in);
     public abstract void interruptSleep();
+    /** Called when this controller's own strike kills its prey, so the mind can record the meal. */
+    public void onStrikeKill() {}
     /** Current group prey link, or null. */
     public UUID preyHerd() { return null; }
     public void followPreyHerd(UUID herd) {}

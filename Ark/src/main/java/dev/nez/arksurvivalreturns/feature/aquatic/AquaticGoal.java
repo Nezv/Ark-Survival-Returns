@@ -9,8 +9,7 @@ import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
-import dev.nez.arksurvivalreturns.feature.land.LandHabitatData;
-import dev.nez.arksurvivalreturns.feature.land.LandHabitats;
+import dev.nez.arksurvivalreturns.feature.land.LandWildlife;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -28,20 +27,18 @@ import net.minecraft.world.phys.Vec3;
  * Water adapter over the shared decision model.
  *
  * Perception, warnings, hunting, fleeing, satiation and the saved home are the same contract the
- * ground adapter uses, so a shark reports status and routines like every other creature. Only the
- * movement and the destination rules differ: the body steers inside one saved pool and never
- * leaves the water column on its own.
+ * ground adapter uses. Only the movement and the destination rules differ: the body steers inside
+ * the local water column and never leaves the water on its own.
  */
 public final class AquaticGoal extends WildlifeController {
     private static final double SWIM_SPEED = 0.26;
     private WildlifeMind mind;
-    private LandHabitatData.Habitat habitat;
-    private BlockPos home;
+    private BlockPos home, transientHome;
     private Vec3 lastKnown, destination;
     private LivingEntity focus, herdThreat;
     private UUID preyHerd;
     private int herdThreatTicks, alarmTicks, corneredTicks, failedPaths, damageStamp = -1;
-    private long nextRoutine, nextAttack, nextAlarm;
+    private long nextRoutine, nextAlarm;
 
     public AquaticGoal(CreatureEntity mob) { super(mob); setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
 
@@ -55,11 +52,11 @@ public final class AquaticGoal extends WildlifeController {
         return mind;
     }
     @Override public BlockPos home() {
-        if (habitat != null) return habitat.center;
+        if (transientHome != null) return transientHome;
         if (home == null) home = mob.blockPosition();
         return home;
     }
-    @Override public boolean canUse() { return mob.isAlive() && mob.species().aquatic(); }
+    @Override public boolean canUse() { return mob.isAlive() && mob.species().aquatic() && !mob.isTamed(); }
     @Override public boolean canContinueToUse() { return canUse(); }
     @Override public boolean requiresUpdateEveryTick() { return true; }
     @Override public void tick() {
@@ -81,17 +78,15 @@ public final class AquaticGoal extends WildlifeController {
     @Override public void think() {
         if (!(mob.level() instanceof ServerLevel world) || !mob.species().aquatic()) return;
         var brain = mind();
-        habitat = AquaticHabitats.think(mob);
-        if (habitat != null) home = habitat.center;
         boolean cycle = WildlifeSenses.hasNightCycle(mob);
-        boolean night = cycle && (habitat == null ? WildlifeSenses.night(mob) : LandHabitats.night(world, habitat));
+        boolean night = cycle && WildlifeSenses.night(mob);
         corneredTicks = Math.max(0, corneredTicks - 10);
         mob.setNightActive(night && mob.species().predator);
         home();
-        if (preyHerd != null && habitat == null) {
+        if (preyHerd != null) {
             var herd = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(96),
                     c -> c.isAlive() && c.packId().equals(preyHerd));
-            if (!herd.isEmpty()) home = herd.getFirst().blockPosition();
+            if (!herd.isEmpty()) transientHome = herd.getFirst().blockPosition();
         }
         if ((herdThreatTicks -= 10) <= 0) herdThreat = null;
         boolean peaceful = world.getDifficulty() == Difficulty.PEACEFUL;
@@ -134,14 +129,12 @@ public final class AquaticGoal extends WildlifeController {
         boolean intruding = visible && sensed instanceof Player && WildlifeSenses.bodyDistance(mob, sensed) < Config.WAKE_DISTANCE.get();
         boolean danger = attacked || herdThreat != null || alarmTicks > 0
                 || visible && sensed instanceof net.minecraft.world.entity.Mob enemy && enemy.getTarget() == mob;
-        boolean far = Math.hypot(mob.getX() - home().getX(), mob.getZ() - home().getZ())
-                > AquaticHabitats.leash(mob.species());
+        boolean far = Math.hypot(mob.getX() - home().getX(), mob.getZ() - home().getZ()) > LandWildlife.leash(mob.species());
         BehaviorState before = brain.state();
         var routine = new WildlifeMind.Routine(true, night, false, true, danger, false,
                 corneredTicks > 0, Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), false);
         var state = brain.step(new WildlifeMind.Observation(signal, visible, visible && prey(sensed), intruding, attacked,
-                false, far, false, false, night, mob.getHealth() / mob.getMaxHealth()), 10, routine,
-                habitat == null ? null : new WildlifeMind.GroupRoutine(habitat.needs.hunger(), habitat.routine));
+                false, far, false, false, night, mob.getHealth() / mob.getMaxHealth()), 10, routine, null);
         if (!brain.remembers()) { lastKnown = null; focus = null; }
         mob.setBehavior(state);
         if (state != before) {
@@ -162,14 +155,8 @@ public final class AquaticGoal extends WildlifeController {
         if (state.combat() && visible && sensed != null) {
             if (mob.isWithinMeleeAttackRange(sensed)) {
                 mob.setDeltaMovement(mob.getDeltaMovement().scale(0.6));
-                if (world.getGameTime() >= nextAttack && mob.hasLineOfSight(sensed)) {
-                    nextAttack = world.getGameTime() + 20;
-                    mob.doHurtTarget(world, sensed);
-                    if (!sensed.isAlive() && mob.species().predator && !(sensed instanceof Player)) {
-                        if (habitat != null) LandHabitats.feed(mob, sensed);
-                        brain.ate(); focus = null; mob.setTarget(null);
-                    }
-                }
+                // The strike schedules its damage on the clip's hit frame; onStrikeKill feeds the mind.
+                mob.strike(sensed);
             } else swimTo(world, sensed.position(), 1.0);
         } else switch (state) {
             case INVESTIGATE -> { if (lastKnown != null) swimTo(world, lastKnown, 0.7); }
@@ -178,10 +165,10 @@ public final class AquaticGoal extends WildlifeController {
                     nextRoutine = mob.tickCount + 40 + Math.floorMod(mob.getId(), 10);
                     Vec3 away = lastKnown == null ? mob.position().subtract(Vec3.atBottomCenterOf(home())) : mob.position().subtract(lastKnown);
                     var point = mob.position().add(away.normalize().scale(16));
-                    if (AquaticHabitats.column(world, BlockPos.containing(point)) == null) {
+                    if (Water.column(world, BlockPos.containing(point)) == null) {
                         failedPaths++;
                         if (failedPaths >= 3) corneredTicks = 100;
-                        point = habitat != null ? Vec3.atCenterOf(habitat.water) : point;
+                        point = Vec3.atCenterOf(home());
                     } else failedPaths = 0;
                     swimTo(world, point, 1.0);
                 }
@@ -191,6 +178,8 @@ public final class AquaticGoal extends WildlifeController {
             default -> roam(world);
         }
     }
+    /** A landed strike that killed the target satisfies the predator exactly like the old instant hit did. */
+    @Override public void onStrikeKill() { mind().ate(); focus = null; mob.setTarget(null); }
     private boolean prey(LivingEntity other) {
         if (other == null || !mob.species().predator) return false;
         if (other instanceof Player) return true;
@@ -200,20 +189,13 @@ public final class AquaticGoal extends WildlifeController {
         return (other instanceof Animal || other instanceof WaterAnimal) && other.getBbWidth() <= mob.getBbWidth() * 1.3;
     }
     private void roam(ServerLevel world) {
-        if (habitat != null) {
-            if (world.getGameTime() < nextRoutine) return;
-            nextRoutine = world.getGameTime() + 40 + Math.floorMod(mob.getUUID().hashCode(), 10);
-            var point = habitat.destination != null ? habitat.destination : AquaticHabitats.destination(world, habitat, mob);
-            if (point != null) swimTo(world, point, mob.species().predator ? 0.6 : 0.5);
-            return;
-        }
         if (destination == null || mob.position().distanceToSqr(destination) < 4 || mob.tickCount >= nextRoutine) {
             nextRoutine = mob.tickCount + 100 + mob.getRandom().nextInt(100);
             double angle = mob.getRandom().nextDouble() * Math.PI * 2;
             double radius = 6 + mob.getRandom().nextDouble() * 10;
             var point = mob.position().add(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
-            // A loose resident without a saved pool still refuses to plan onto dry land.
-            if (AquaticHabitats.column(world, BlockPos.containing(point)) == null) return;
+            // A loose resident still refuses to plan onto dry land.
+            if (Water.column(world, BlockPos.containing(point)) == null) return;
             destination = point;
         }
         swimTo(world, destination, 0.5);
@@ -236,7 +218,7 @@ public final class AquaticGoal extends WildlifeController {
     }
     /** Never swim above the surface or through the floor of the local column. */
     private Vec3 keepInsideColumn(ServerLevel world, Vec3 velocity) {
-        var column = AquaticHabitats.column(world, mob.blockPosition());
+        var column = Water.column(world, mob.blockPosition());
         if (column == null) return mob.isInWater() ? velocity : velocity.add(0, -0.05, 0);
         if (mob.getY() > column[0] - 1) return velocity.add(0, -0.05, 0);
         if (mob.getY() < column[1]) return velocity.add(0, 0.05, 0);
@@ -251,7 +233,9 @@ public final class AquaticGoal extends WildlifeController {
         mob.setDeltaMovement(keepInsideColumn(world, mob.getDeltaMovement()));
     }
     @Override public void save(ValueOutput out) {
-        var p = home();
+        // The permanent anchor is saved; the prey-herd anchor is transient by design.
+        if (home == null) home = mob.blockPosition();
+        var p = home;
         out.putInt("WildHomeX", p.getX()); out.putInt("WildHomeY", p.getY()); out.putInt("WildHomeZ", p.getZ());
         if (preyHerd != null) out.putString("WildPreyHerd", preyHerd.toString());
         out.putDouble("WildHunger", mind().hunger()); out.putDouble("WildThirst", mind().thirst()); out.putDouble("WildFatigue", mind().fatigue());
@@ -259,7 +243,8 @@ public final class AquaticGoal extends WildlifeController {
     }
     @Override public void load(ValueInput in) {
         home = new BlockPos(in.getIntOr("WildHomeX", mob.blockPosition().getX()), in.getIntOr("WildHomeY", mob.blockPosition().getY()), in.getIntOr("WildHomeZ", mob.blockPosition().getZ()));
-        mind = null; // Reset transient pursuit state on reload; needs are restored below.
+        transientHome = null;
+        mind = null; // Reset transient pursuit and reload state.
         mind().restoreNeeds(in.getDoubleOr("WildHunger", 0.55), in.getDoubleOr("WildThirst", 0.35), in.getDoubleOr("WildFatigue", 0.15));
         mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
         focus = null; lastKnown = null; destination = null;

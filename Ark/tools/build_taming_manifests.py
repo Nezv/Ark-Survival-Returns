@@ -127,12 +127,15 @@ def roster():
         sizes[id] = 1
     rows = []
     entry = re.compile(r'^\s{4}([A-Z_]+)\("([a-z_]+)", "([^"]+)",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),'
-                       r'\s*([\d.]+)f,\s*([\d.]+)f,', re.M)
+                       r'\s*([\d.]+)f,\s*([\d.]+)f,\s*(\d+),\s*(\d+),\s*(\d+),\s*(?:true|false),'
+                       r'\s*"([^"]*)",\s*"([^"]*)",\s*"([^"]*)"', re.M)
     for match in entry.finditer(text):
-        enum, ident, name, _hp, _dmg, _speed, width, height = match.groups()
+        (enum, ident, name, _hp, _dmg, _speed, width, height, _min, _max, _weight,
+         idle, walk, attack) = match.groups()
         size = sizes.get(ident, 2)
         rows.append({'enum': enum, 'id': ident, 'display': name,
-                     'width': round(float(width) * size, 4), 'height': round(float(height) * size, 4)})
+                     'width': round(float(width) * size, 4), 'height': round(float(height) * size, 4),
+                     'idle': idle, 'walk': walk, 'attack': attack})
     if len(rows) != len(set(r['id'] for r in rows)):
         raise SystemExit('Species parse produced duplicates: ' + repr([r['id'] for r in rows]))
     return rows
@@ -311,6 +314,29 @@ def emit_java(seat_rows, animation_rows):
               '    private CreatureTorporClips() {}', '}', '']
     (target / 'CreatureTorporClips.java').write_text('\n'.join(clips), encoding='utf-8')
 
+    attacks = ['package dev.nez.arksurvivalreturns.feature.creature;', '',
+               'import java.util.EnumMap;', 'import java.util.Map;', '',
+               '/**',
+               ' * Imported melee clip names and their authored lengths, read from the runtime animation files by',
+               ' * {@code tools/build_taming_manifests.py}. Generated file: do not edit by hand. The length drives',
+               ' * the wind-up before a strike lands and the attack recovery that gates the next one.',
+               ' */',
+               'public final class CreatureAttackClips {',
+               '    private static final Map<Species, Clips> CLIPS = build();', '',
+               '    private static Map<Species, Clips> build() {',
+               '        var map = new EnumMap<Species, Clips>(Species.class);']
+    for row in animation_rows:
+        attack = row['attack']
+        attacks.append('        map.put(Species.%s, new Clips("%s", %d));' % (
+            row['enum'], attack['clip'], attack['ticks']))
+    attacks += ['        return Map.copyOf(map);', '    }', '',
+                '    public static Clips of(Species species) { return CLIPS.get(species); }', '',
+                '    /** @param attack authored melee clip; @param attackTicks its length in ticks */',
+                '    public record Clips(String attack, int attackTicks) {}',
+                '    private CreatureAttackClips() {}', '}', '']
+    (ROOT / 'src/main/java/dev/nez/arksurvivalreturns/feature/creature/CreatureAttackClips.java'
+     ).write_text('\n'.join(attacks), encoding='utf-8')
+
 
 def main():
     rows, animation_matrix, missing = [], {}, []
@@ -343,6 +369,16 @@ def main():
         animation_matrix[ident] = {
             'torpor': clips, 'runtime_clip_count': len(runtime), 'runtime_clips': sorted(runtime),
             'enum': species['enum'],
+        }
+
+        # --- melee timing ---
+        attack_name = species['attack']
+        attack_clip = runtime.get(attack_name)
+        if attack_clip is None:
+            raise SystemExit(f'{ident}: attack clip {attack_name!r} is not imported')
+        animation_matrix[ident]['attack'] = {
+            'clip': attack_name,
+            'ticks': max(1, round(attack_clip['animation_length'] * 20)),
         }
 
         # --- seat ---
@@ -416,11 +452,13 @@ def main():
         'generated': date.today().isoformat(),
         'source_torpor_clips': {ident: row['torpor'] for ident, row in animation_matrix.items()},
         'runtime_clips': {ident: row['runtime_clips'] for ident, row in animation_matrix.items()},
+        'melee_clips': {ident: row['attack'] for ident, row in animation_matrix.items()},
         'species_without_torpor_assets': sorted(entry['id'] for entry in missing if not entry['has_source_sequence']),
         'incomplete': missing,
     }, indent=1) + '\n', encoding='utf-8')
     print(f'{len(rows)} species. Species with an incomplete torpor set: {len(missing)}. '
-          f'Wrote docs/taming-seat-manifest.json, docs/taming-animation-matrix.json, CreatureSeats.java and CreatureTorporClips.java.')
+          f'Wrote docs/taming-seat-manifest.json, docs/taming-animation-matrix.json, CreatureSeats.java, '
+          f'CreatureTorporClips.java and CreatureAttackClips.java.')
     print(f'Meshes not seated on the entity origin: {len(ungrounded)} -> {", ".join(ungrounded)}')
     print(f'Seats clamped into the hitbox: {len(unseated)} -> {", ".join(unseated)}')
     for entry in missing:

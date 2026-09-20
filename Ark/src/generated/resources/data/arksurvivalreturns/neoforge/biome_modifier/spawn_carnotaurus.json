@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/carnotaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:carnotaurus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 10
+  }
+}

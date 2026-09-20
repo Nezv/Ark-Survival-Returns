@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/titanoboa",
+  "spawners": {
+    "type": "arksurvivalreturns:titanoboa",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 6
+  }
+}

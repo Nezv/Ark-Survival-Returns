@@ -9,15 +9,15 @@ Implementation: pending client playtesting per `Ark/AGENTS.md`; the checks liste
 
 ## Realms
 
-A species belongs to one realm, and the realm decides where it lives, how it moves and which
-habitat store keeps its home.
+A species belongs to one realm, and the realm decides where it lives, how it moves and where it spawns.
+Creatures spawn through the vanilla spawner via per-species biome tags; no habitat record is saved.
 
-| Realm | Species | Habitat | Movement |
-|---|---|---:|---|
-| `WATER` | Cnidaria, Plesiosaur, Megalodon, Liopleurodon, Mosasaurus, Tusoteuthis | Saved home pool | Gravity-free in-pool steering |
-| `AMPHIBIOUS` | Kaprosuchus, Sarco, Deinosuchus, Titanoboa | Saved shoreline habitat with exposed water | Ground navigation, swim clip set in water |
-| `LAND` | Megalocerus, Unicorn, Mammoth, Direwolf, Sabertooth, Megapithecus, Paraceratherium, Terrorbird, Ravager | Saved land habitat | Ground navigation |
-| `AIR` | Archaeopteryx, Quetzal, Dragon | Saved nest colony | Habitat-anchored flight |
+| Realm | Species | Spawning and home | Movement |
+|---|---|---|---|
+| `WATER` | Cnidaria, Plesiosaur, Megalodon, Liopleurodon, Mosasaurus, Tusoteuthis | Vanilla `IN_WATER` spawns in deep columns; local saved home | Gravity-free local water steering |
+| `AMPHIBIOUS` | Kaprosuchus, Sarco, Deinosuchus, Titanoboa | Vanilla surface spawns; local water seeking | Ground navigation, swim clip set in water |
+| `LAND` | Megalocerus, Unicorn, Mammoth, Direwolf, Sabertooth, Megapithecus, Paraceratherium, Terrorbird, Ravager | Vanilla ground spawns; local saved home | Ground navigation |
+| `AIR` | Archaeopteryx, Quetzal, Dragon | Vanilla ground spawns; one local nest per bird | Home-anchored flight with perching |
 
 `Species.realm()` is derived from the profile, so a species cannot silently lose its realm:
 `LandFamily.AQUATIC` means water, a swim clip set means amphibious, a flight policy means air.
@@ -55,23 +55,21 @@ pack hunters share a home.
 
 ## Geolocation
 
-- **Pools.** A water home is a bounded sample of connected deep water: at least
-  `aquatic.minimumDepth` (6) and `aquatic.minimumColumns` (12) deep columns inside
-  `aquatic.searchRadius` (32). A one-block puddle, a shallow river and a rejected sample are
-  never a home. The body is re-checked on `aquatic.waterRecheckTicks` and relocated to a nearby
-  pool if it is filled in.
-- **Shorelines.** Semi-aquatic species reuse the land habitat system, which already requires
-  exposed water and a reachable dry approach. They bask, roam and sleep on the bank and swim the
-  water between them.
+- **Pools.** A water creature spawns through the vanilla `IN_WATER` placement in a loaded column at
+  least `spawning.minimumWaterDepth` (6) deep, and remembers where it spawned as its home. It steers
+  only inside the local water column; a shallow puddle is never accepted.
+- **Shorelines.** Semi-aquatic species spawn on supported ground with exposed water at hand. They
+  bask, roam and sleep on the bank and swim the water between them, keeping the same local water
+  search the land adapter uses.
 - **Snow.** Cold species accept snow cover, powder snow, or ice that a bounded check confirms
-  sits over water as their hydration point (`LandHabitats.coldHydration`). Bare packed ice is
+  sits over water as their hydration point (`LandWildlife.coldHydration`). Bare packed ice is
   never a drink source, ice is never broken, and snow cover over valid browse ground is used for
   foraging as an abstraction rather than terrain damage.
 - **Rarity.** Rare species keep the ordinary cap and group target; they are not given a second
   quota. Megapithecus and Unicorn stay solitary so a valley cannot fill with guardians.
-- **Map.** Water and shoreline homes reuse the saved land marker payload, so discovered homes
-  appear on Xaero's fullscreen map with the existing leaf/fang glyphs and tooltips. Nest colonies
-  keep the separate nest toggle.
+- **Map.** The habitat marker overlays were removed with the habitat stores; only the difficulty
+  map, biome messages and map entitlement remain. Finding nests and herds is now a matter of
+  exploration.
 
 ## Day and night
 
@@ -101,13 +99,12 @@ pack hunters share a home.
 
 ## Configuration
 
-- `[aquatic]`: `enabled`, `waterProbesPerTick`, `minimumDepth`, `minimumColumns`, `searchRadius`,
-  `waterRecheckTicks`, `replacementCooldownTicks`.
-- `[landHabitats]`: nine new family sections (`aquatic`, `amphibious`, `swamp_pack`,
-  `cold_predator`, `cold_grazer`, `cold_browser`, `cold_stalker`, `guardian`, `rare_grazer`)
-  with the usual `roamRadius`, `returnRadius`, `preferredWaterDistance` and
-  `maximumWaterDistance`.
-- `[spawning.weights]` and `[movement.*]` gained one section per new species.
+- `[spawning]`: `enabled` and `minimumWaterDepth`; spawn weights are baked into the generated biome
+  modifiers, so there is no `[spawning.weights]` section.
+- `[wildlife]`: one family section per land family (`big_carnivore`, `amphibious`, `swamp_pack`,
+  `cold_predator`, `cold_grazer`, `cold_browser`, `cold_stalker`, `guardian`, `rare_grazer`, ...)
+  with `roamRadius`, `returnRadius`, `preferredWaterDistance` and `maximumWaterDistance`.
+- `[movement.*]` gained one section per new species.
 - `[nighttime]` and `[flying]` are unchanged; the flying keys still drive Pteranodon and
   Argentavis, and the other flyers carry their own profile values.
 

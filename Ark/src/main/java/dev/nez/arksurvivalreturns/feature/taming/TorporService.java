@@ -122,6 +122,7 @@ public final class TorporService {
         var state = of(target);
         state.setMaximum(maximumFor(target));
         state.setTorpor(value);
+        installSuppression(target);
         log("command", target, "torpor set to " + round(state.torpor()));
         return true;
     }
@@ -154,6 +155,8 @@ public final class TorporService {
         TamingService.tick(living);
         var state = of(living);
         state.setMaximum(maximumFor(living));
+        // A goal selector is rebuilt on reload, so the restraint is re-installed while any phase holds.
+        if (state.restricted()) installSuppression(living);
         var transition = state.tick();
         switch (transition) {
             case COLLAPSE_STARTED -> collapse(living, state);

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/unicorn",
+  "spawners": {
+    "type": "arksurvivalreturns:unicorn",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 3
+  }
+}

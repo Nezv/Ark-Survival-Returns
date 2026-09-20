@@ -32,8 +32,7 @@ public class SedativeItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (!TorporService.eligible(player)) return InteractionResult.FAIL;
-        TorporService.sedate(player, potency(), player, "consumed");
-        consume(stack, player);
+        if (TorporService.sedate(player, potency(), player, "consumed")) consume(stack, player);
         return InteractionResult.SUCCESS_SERVER;
     }
 
@@ -45,6 +44,7 @@ public class SedativeItem extends Item {
 
     private void consume(ItemStack stack, @Nullable LivingEntity owner) {
         if (owner instanceof Player player && player.getAbilities().instabuild) return;
-        stack.consume(Config.FOOD_UNITS_PER_MEAL.get(), owner);
+        // One item per dose: the meal-size config belongs to feeding, not to sedation.
+        stack.consume(1, owner);
     }
 }

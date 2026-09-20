@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/archaeopteryx",
+  "spawners": {
+    "type": "arksurvivalreturns:archaeopteryx",
+    "maxCount": 4,
+    "minCount": 3,
+    "weight": 8
+  }
+}

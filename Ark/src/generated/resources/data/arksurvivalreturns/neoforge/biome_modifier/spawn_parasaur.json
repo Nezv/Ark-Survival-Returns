@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/parasaur",
+  "spawners": {
+    "type": "arksurvivalreturns:parasaur",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 14
+  }
+}

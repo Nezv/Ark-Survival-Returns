@@ -223,6 +223,19 @@ public enum Species {
     public boolean solitary() { return maxGroup == 1; }
     public boolean flyer() { return realm == Realm.AIR; }
     public boolean aquatic() { return realm == Realm.WATER; }
+    /** Vanilla spawn category: water residents use the water cap, everything else the livestock cap. */
+    public net.minecraft.world.entity.MobCategory spawnCategory() {
+        return realm == Realm.WATER
+                ? net.minecraft.world.entity.MobCategory.WATER_CREATURE
+                : net.minecraft.world.entity.MobCategory.CREATURE;
+    }
+    /**
+     * Whether the vanilla chunk-generation spawner may place this species. Vanilla clamps its spawn
+     * box as {@code clamp(x, chunkMin + width, chunkMax - width)} and then queries collisions against
+     * the world-generation region; a body wider than one chunk lands outside that region and crashes
+     * chunk generation. Wider species spawn only through the population budget instead.
+     */
+    public boolean chunkSpawnSafe() { return width <= 10.0f; }
     public boolean amphibious() { return realm == Realm.AMPHIBIOUS; }
     public boolean swimmer() { return realm == Realm.WATER || realm == Realm.AMPHIBIOUS; }
     /** Realm LAND and AMPHIBIOUS species keep a saved land habitat and shared group satiation. */

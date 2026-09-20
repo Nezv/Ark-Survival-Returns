@@ -91,8 +91,22 @@ and `TamingService.of(entity)`.
 2. `CreatureAnimationBridge` maps `COLLAPSING` → collapse clip, `TORPID` → feeding clip while
    `TorporState.feedTicks > 0` else the unconscious loop, `WAKING_*` → the wake clip, and returns null when
    the caller should choose its ordinary clip.
-3. Ridden creatures use real movement (`state.isMoving()`), not AI navigation state, so a mounted creature
-   can never be stuck in its idle clip.
+3. Ridden and wild creatures pick their locomotion clip from `CreatureEntity.isLocomoting()`, the
+   `LocomotionSignal` hysteresis over each creature's own measured per-tick travel. It enters locomotion
+   above 1.0 blocks/second and only leaves after three consecutive ticks at or below 0.25, so a mounted
+   creature can never be stuck in its idle clip and a stopped creature (pressed against a hitbox, jostled
+   by packmates or between short navigation hops) reaches its standing clip instead of holding the walk
+   or charge clip through GeckoLib's smoothed render-state movement flag.
+4. Melee damage is tied to the attack clip: `CreatureEntity.strike` starts the swing and schedules the hit
+   for `CreatureAttackClips`' authored length times `[combat] hitFrameFraction`, then revalidates range and
+   sight on landing. A target that steps away makes the swing whiff, and the per-species cooldown gates the
+   next one. `WildlifeGoal`, `AquaticGoal` and the flyer swoop all use `strike`; direct `doHurtTarget`
+   calls still play the clip and land immediately.
+5. Tamed creatures run `CompanionGoal` (same priority as the wild routine, mutually exclusive by taming):
+   FOLLOW, STAY and WANDER come from the `CompanionState` attachment, which is persisted and synced. The
+   whistle cycles orders and sneak-use pets. A companion never teleports and never loads a chunk: an
+   absent, unreachable or other-dimensional owner leaves it holding position until the owner returns, and
+   `CreatureEntity.companionTravel`/`companionHold` delegate to per-realm steering hooks.
 4. The client renderer only draws the model in the authored 180-degree corrected space; it never decides a
    rider position.
 
@@ -145,6 +159,10 @@ listed `saved.*` data, and only when the attachment exists; use `/arktaming insp
 | Lost ownership after reload | `TamingState.deserialize`, `CreatureEntity.applyTameState` | The owner UUID is written as a string; a malformed value is dropped silently by design |
 | Rider position clipping | `CreatureEntity.getPassengerAttachmentPoint`, `docs/taming-seat-manifest.json` | Compare the local offset with the manifest row; the "Known model defects" section lists the species whose mesh is not normalised |
 | Mounted creature playing idle animations | `CreatureAnimationBridge.sedationClip`, `FlyingCreatureEntity.registerControllers` | The ridden branch must be reached before the idle fallback; check `riddenTicks` and `isRidden` |
+| Stopped creature keeps its walk/charge clip | `CreatureEntity.isLocomoting`, `LocomotionSignal.update` | If the predicate stays true while the creature holds position, the signal is reading travel that is not real locomotion; verify the per-tick displacement in the debug spyglass velocity row |
+| Bite lands before or after the animation | `CreatureEntity.strike`, `CreatureEntity.resolveStrike`, `CreatureAttackClips` | The wind-up is `attackTicks * [combat] hitFrameFraction`; set a breakpoint in `resolveStrike` and compare with the rendered contact frame |
+| Companion ignores the whistle | `CreatureEntity.mobInteract`, `CompanionService.orderCommand`, `CompanionGoal.canUse` | The whistle requires ownership; check that the creature is tamed, conscious and not currently ridden |
+| Companion left behind | `CompanionService.owner`, `CompanionGoal.follow` | There is deliberately no teleport: the owner must be loaded in the same dimension, and the creature paths at sprint pace when far |
 | Client and server disagree | `TorporService.sync`, `TamingService.sync`, `TamingAttachments` | The attachment sync handlers are the only channel; a phase that changes without `syncData` reaching the client means `dirty` was never set |
 | Inventory duplication | `CreatureMountMenu.quickMoveStack`, `CreatureInventory.deserialize`, `CreatureEntity.dropCustomDeathLoot` | Shift-click paths mirror the vanilla horse menu; death drops the contents exactly once through `dropCustomDeathLoot` |
 
@@ -170,6 +188,8 @@ plus one shipped by the loader in the `minecraft:default` environment.
 | Second player feeds the final meal → ownership not stolen | automated: a live claim is refused to everybody else, and an automatic knock-out tame keeps the depositing claimant even after the lease lapses | `taming_passive_feeding`, `taming_claim_expiry` |
 | An abandoned claim expires → the player who resumes it takes the attempt over | automated | `taming_claim_expiry` |
 | Ride every registered creature → controls, seat, animations | partly automated: `taming_riding` mounts, seats, sedates and dismounts all 41 species with a real passenger; rendered seat and clip review needs the client | `taming_riding` |
+| Hit-frame combat | automated: `combat_timing` starts a raptor strike, asserts the bite lands only after the authored wind-up, holds the cooldown and whiffs when the target steps out of reach | `combat_timing` |
+| Companions and orders | automated: `companion` cycles FOLLOW/STAY/WANDER, checks anchors and save/load, resolves the owner, refuses owner threats, ignores orders while unconscious and sweeps every species and realm through the steering hooks | `companion` |
 | Knock out rider or mount → safe dismount, movement transition | automated | `taming_riding` |
 | Reload chunk/server → state and inventory restored | automated | `taming_persistence` |
 | Reconnect an unconscious player → sedation cannot be bypassed | partly automated: the sleeping anchor is persisted for as long as the player stays unconscious and is cleared when the restriction lifts or on a reset; the reconnect itself needs a client | `taming_player_sedation`, `TorporState` |

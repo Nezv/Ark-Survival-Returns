@@ -9,9 +9,12 @@ import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.LoopType;
 import com.geckolib.util.GeckoLibUtil;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.companion.CompanionGoal;
+import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
+import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -45,9 +48,17 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private UUID packId = UUID.randomUUID();
     private boolean naturalWildlife;
     private WildlifeController wildlife;
+    private final LocomotionSignal locomotion = new LocomotionSignal();
     private double animationBlocksPerSecond;
+    private @Nullable Vec3 companionDestination;
+    private boolean companionTraveling;
+    private int petCooldown;
     private float eyeGlow, previousEyeGlow;
     private transient int riddenTicks;
+    private @Nullable LivingEntity pendingStrike;
+    private int strikeWindup;
+    private int strikeCooldown;
+    private boolean applyingStrike;
 
     public CreatureEntity(EntityType<? extends CreatureEntity> type, Level level, Species species) {
         super(type, level);
@@ -81,6 +92,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public void onUnconsciousnessChanged(boolean unconscious) {
         if (unconscious) {
             stopTriggeredAnim("attack", null);
+            pendingStrike = null;
+            strikeWindup = 0;
             setBehavior(BehaviorState.REST);
             setSprinting(false);
         } else {
@@ -176,7 +189,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     @Override protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         var state = TamingService.of(this);
         if (TorporService.restricted(this)) return interactWhileUnconscious(player);
-        if (state.tamed()) return interactWhileTamed(player);
+        if (state.tamed()) return interactWhileTamed(player, hand);
         if (player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (level().isClientSide()) {
             // Client-side prediction only: the server decides the real outcome and consumes the item.
@@ -207,9 +220,15 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return InteractionResult.SUCCESS;
     }
 
-    private InteractionResult interactWhileTamed(Player player) {
+    private InteractionResult interactWhileTamed(Player player, InteractionHand hand) {
         if (!isOwnedBy(player)) return InteractionResult.PASS;
         if (level().isClientSide()) return InteractionResult.SUCCESS;
+        // The whistle owns orders and petting; everything else keeps the mount and inventory contract.
+        if (player.getItemInHand(hand).is(ModContent.COMPANION_WHISTLE.get())) {
+            if (player.isSecondaryUseActive()) pet(player);
+            else CompanionService.orderCommand(this, player);
+            return InteractionResult.SUCCESS;
+        }
         if (player.isSecondaryUseActive()) {
             openInventory(player);
             return InteractionResult.SUCCESS;
@@ -238,6 +257,15 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
+    /** A short affectionate response: hearts, a call and attention, on a cooldown to avoid spam. */
+    private void pet(Player player) {
+        if (petCooldown > 0) return;
+        petCooldown = Config.COMPANION_PET_COOLDOWN_TICKS.get();
+        TamingFeedback.hearts(this);
+        playSound(getAmbientSound(), 0.8f, 1.1f);
+        getLookControl().setLookAt(player, 30, 30);
+    }
+
     /** Hearts on success, smoke on a failed attempt: the vanilla horse presentation. */
     @Override public void handleEntityEvent(byte id) {
         if (id == 7) TamingFeedback.particles(this, net.minecraft.core.particles.ParticleTypes.HEART);
@@ -253,13 +281,6 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
     public int creatureLevel() { return entityData.get(LEVEL); }
     public UUID packId() { return packId; }
-    public void assignHabitatPack(UUID id) { if (species.flyer()) packId = id; }
-    public void assignLandHabitat(UUID id) { if (species.landHabitat()) packId = id; }
-    public void assignAquaticHabitat(UUID id) { if (species.aquatic()) packId = id; }
-    @Override public void remove(Entity.RemovalReason reason) {
-        if (!isRemoved() && species != null) dev.nez.arksurvivalreturns.feature.land.LandHabitats.removed(this, reason);
-        super.remove(reason);
-    }
     public boolean isNaturalWildlife() { return naturalWildlife && !isPersistenceRequired(); }
     public WildlifeController wildlife() { return wildlife; }
     public BehaviorState behavior() { return BehaviorState.values()[Math.clamp(entityData.get(BEHAVIOR), 0, BehaviorState.values().length - 1)]; }
@@ -297,6 +318,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             goalSelector.addGoal(0, new FloatGoal(this));
         wildlife = createController();
         goalSelector.addGoal(1, wildlife);
+        // Same priority as the wild routine; taming makes the two mutually exclusive through canUse.
+        goalSelector.addGoal(1, new CompanionGoal(this));
     }
     /** Realm hook: water-bound species replace the land adapter with their own steering goal. */
     protected WildlifeController createController() { return new WildlifeGoal(this); }
@@ -309,7 +332,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         levelInitialized = true;
     }
     private void rollLevel() {
-        var tier = level() instanceof ServerLevel world ? BiomeTier.at(world, blockPosition()) : BiomeTier.EASY;
+        // Reads the thread-safe danger view: chunk-generation workers must not touch saved data.
+        int danger = level() instanceof ServerLevel world
+                ? dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.dangerAt(world, blockPosition()) : -1;
+        var tier = danger >= 1 && danger <= BiomeTier.values().length
+                ? BiomeTier.values()[danger - 1] : BiomeTier.EASY;
         int a = Config.MIN_LEVEL.get(tier).get(), b = Config.MAX_LEVEL.get(tier).get();
         initializeLevel(Math.min(a, b) + random.nextInt(Math.abs(a - b) + 1));
     }
@@ -327,7 +354,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (!level().isClientSide() && !levelInitialized) rollLevel(); // Covers /summon and external spawners.
         if (!level().isClientSide() && tickCount % 20 == 0) applyMovementTuning();
         if (riddenTicks > 0) riddenTicks--;
+        if (petCooldown > 0) petCooldown--;
+        if (strikeWindup > 0) strikeWindup--;
+        if (strikeCooldown > 0) strikeCooldown--;
         super.tick();
+        if (!level().isClientSide()) resolveStrike();
         if (!species.flyer()) {
             if (level().isClientSide()) {
                 previousEyeGlow = eyeGlow;
@@ -338,6 +369,32 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         }
         double distance = Math.hypot(getX() - xo, getZ() - zo);
         animationBlocksPerSecond += (Math.min(30, distance * 20) - animationBlocksPerSecond) * 0.35;
+        double dx = getX() - xo, dy = getY() - yo, dz = getZ() - zo;
+        locomotion.update(Math.sqrt(dx * dx + dy * dy + dz * dz) * 20);
+    }
+    /** Real travel with hysteresis; never GeckoLib's smoothed render-state movement flag. */
+    public boolean isLocomoting() { return locomotion.moving(); }
+    /** Companion steering entry point; realm classes override the hooks, never this contract. */
+    public final void companionTravel(Vec3 point, double speed) {
+        companionTraveling = true;
+        steerCompanion(point, speed);
+    }
+    /** Stops companion steering without touching any other navigation owner. */
+    public final void companionHold() {
+        companionTraveling = false;
+        stopCompanion();
+    }
+    /** True while the companion goal holds a movement intent, whatever the realm. */
+    public boolean isCompanionTraveling() { return companionTraveling; }
+    /** Realm hook: walkers and amphibious species path toward the point. */
+    protected void steerCompanion(Vec3 point, double speed) {
+        if (companionDestination != null && companionDestination.distanceToSqr(point) < 4 && !getNavigation().isDone()) return;
+        companionDestination = point;
+        getNavigation().moveTo(point.x, point.y, point.z, speed);
+    }
+    protected void stopCompanion() {
+        companionDestination = null;
+        getNavigation().stop();
     }
     private void applyMovementTuning() {
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(MovementTuning.attribute(Config.SPRINT_RATIO.get(species).get(), Config.PLAYER_SPRINT_REFERENCE.get()));
@@ -358,7 +415,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             setDeltaMovement(velocity.x, 0.3, velocity.z);
     }
     @Override public int getMaxSpawnClusterSize() { return species.maxGroup; }
-    @Override public boolean removeWhenFarAway(double distance) { return true; }
+    // Natural wildlife persists like vanilla animals; the population budget owns culling.
+    @Override public boolean removeWhenFarAway(double distance) { return !isNaturalWildlife(); }
     @Override protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putInt("CreatureLevel", creatureLevel());
@@ -381,10 +439,70 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         catch (IllegalArgumentException ignored) { packId = UUID.randomUUID(); }
         // Vanilla persists attributes and current HP. Never reroll or heal saved creatures.
     }
+    /** True when this creature may begin a new melee attack. */
+    public boolean canStrike() {
+        return pendingStrike == null && strikeCooldown <= 0 && !TorporService.restricted(this);
+    }
+
+    /** True while a scheduled strike is still in its wind-up. */
+    public boolean isStriking() { return pendingStrike != null; }
+
+    /**
+     * Begins a melee attack: the attack clip starts now and its damage lands on the authored hit frame,
+     * so the bite connects with the animation instead of the instant the AI decided to attack. The AI
+     * must never call {@code doHurtTarget} directly, or the two desynchronize again.
+     */
+    public boolean strike(Entity target) {
+        if (!(level() instanceof ServerLevel) || !(target instanceof LivingEntity living)
+                || !living.isAlive() || living.level() != level() || !canStrike() || !hasLineOfSight(living)) return false;
+        var clips = CreatureAttackClips.of(species);
+        if (clips == null) return false;
+        triggerAnim("attack", "strike");
+        pendingStrike = living;
+        strikeWindup = hitDelayTicks(clips);
+        strikeCooldown = cooldownTicks(clips);
+        return true;
+    }
+
+    private static int hitDelayTicks(CreatureAttackClips.Clips clips) {
+        int delay = (int)Math.round(clips.attackTicks() * Config.COMBAT_HIT_FRACTION.get());
+        return Math.clamp(delay, 1, Math.max(1, clips.attackTicks() - 1));
+    }
+
+    private static int cooldownTicks(CreatureAttackClips.Clips clips) {
+        return Math.max(clips.attackTicks(),
+                clips.attackTicks() + (int)Math.round(clips.attackTicks() * Config.COMBAT_RECOVERY_FRACTION.get()));
+    }
+
+    /** Resolves a scheduled strike once its wind-up has elapsed; an evasive target makes it whiff. */
+    private void resolveStrike() {
+        if (pendingStrike == null || strikeWindup > 0) return;
+        LivingEntity target = pendingStrike;
+        pendingStrike = null;
+        if (!(level() instanceof ServerLevel world) || !isAlive() || !target.isAlive()
+                || target.level() != level() || TorporService.restricted(this)
+                || !isWithinMeleeAttackRange(target) || !hasLineOfSight(target)) return;
+        applyingStrike = true;
+        try {
+            if (applyStrikeDamage(world, target)) world.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT,
+                    target.getX(), target.getY(0.5), target.getZ(), 6, 0.2, 0.2, 0.2, 0.08);
+        } finally {
+            applyingStrike = false;
+        }
+    }
+    /** Applies a resolved strike; realm classes with their own damage gates may replace the rule. */
+    protected boolean applyStrikeDamage(ServerLevel level, Entity target) {
+        return doHurtTarget(level, target);
+    }
     @Override public boolean doHurtTarget(ServerLevel level, Entity target) {
         boolean hit = super.doHurtTarget(level, target);
-        if (hit) triggerAnim("attack", "strike");
-        return hit;
+        if (!hit) return false;
+        // A scheduled strike already played its clip; a direct call still needs the swing animation.
+        if (!applyingStrike) triggerAnim("attack", "strike");
+        // Any lethal hit feeds the mind, whether it landed via the wind-up or a direct call.
+        if (target instanceof LivingEntity living && !living.isAlive() && species.predator
+                && !(living instanceof Player) && wildlife != null) wildlife.onStrikeKill();
+        return true;
     }
     @Override public boolean hurtServer(ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float damage) {
         boolean hit = super.hurtServer(level, source, damage);
@@ -409,17 +527,19 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                         : RawAnimation.begin().thenLoop(sedation));
             }
             if (isRidden() || riddenTicks > 0) {
-                state.setControllerSpeed(state.isMoving()
+                boolean moving = isLocomoting();
+                state.setControllerSpeed(moving
                         ? (float) MovementTuning.animationRate(animationBlocksPerSecond, species.height,
                                 species.strideCycleSeconds(true), true, Config.STRIDE_SCALE.get(species).get())
                         : 1f);
-                return state.setAndContinue(RawAnimation.begin().thenLoop(riddenClip(state.isMoving())));
+                return state.setAndContinue(RawAnimation.begin().thenLoop(riddenClip(moving)));
             }
             var behavior = behavior();
             boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
-            state.setControllerSpeed(state.isMoving() ? (float)MovementTuning.animationRate(animationBlocksPerSecond,
+            boolean moving = isLocomoting();
+            state.setControllerSpeed(moving ? (float)MovementTuning.animationRate(animationBlocksPerSecond,
                     species.height, species.strideCycleSeconds(running), running, Config.STRIDE_SCALE.get(species).get()) : 1);
-            String clip = state.isMoving() ? movingClip(running)
+            String clip = moving ? movingClip(running)
                     : behavior == BehaviorState.SLEEP ? species.sleepClip()
                     : behavior == BehaviorState.REST ? restingClip()
                     : (behavior == BehaviorState.FORAGE || behavior == BehaviorState.FEED || behavior == BehaviorState.DRINK)
@@ -451,7 +571,14 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     @Override protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) { return net.minecraft.sounds.SoundEvents.SNIFFER_HURT; }
     @Override protected net.minecraft.sounds.SoundEvent getDeathSound() { return net.minecraft.sounds.SoundEvents.SNIFFER_DEATH; }
     @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState block) {
-        playSound(net.minecraft.sounds.SoundEvents.SNIFFER_STEP, species.solitary() ? 0.7f : 0.2f, species.solitary() ? 0.65f : 1.25f);
+        boolean heavy = species.height >= 2.5f;
+        playSound(heavy ? net.minecraft.sounds.SoundEvents.RAVAGER_STEP : net.minecraft.sounds.SoundEvents.SNIFFER_STEP,
+                species.solitary() ? 0.7f : 0.25f,
+                heavy ? Math.clamp(1.3f - species.height * 0.05f, 0.55f, 0.9f)
+                        : species.solitary() ? 0.65f : 1.25f);
+        // A heavy body kicks dust where the foot lands; client-only, so the server never fakes particles.
+        if (heavy && level().isClientSide() && onGround())
+            level().addParticle(net.minecraft.core.particles.ParticleTypes.POOF, getX(), getY() + 0.05, getZ(), 0.0, 0.02, 0.0);
     }
     private record PackData(UUID id) implements SpawnGroupData {}
 }

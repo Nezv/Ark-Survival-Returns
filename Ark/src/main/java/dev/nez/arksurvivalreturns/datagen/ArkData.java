@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); flying(); theme(); tests();
+        tags(); models(); berries(); taming(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -112,22 +112,25 @@ public final class ArkData implements DataProvider {
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
         pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
         String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3", "rank_4", "rank_5"};
-        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-5 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/5", "1 - Easy", "2 - Moderate", "3 - Hard", "4 - Extreme", "5 - Severe"};
-        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regiÃ£o de perigo 5.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "DimensÃ£o sem classificaÃ§Ã£o", "No cursor: %s/5", "1 - FÃ¡cil", "2 - Moderada", "3 - DifÃ­cil", "4 - Extrema", "5 - Severa"};
+        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-5 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/5", "1 - Easy", "2 - Moderate", "3 - Hard", "4 - Severe", "5 - Extreme"};
+        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regi\u00e3o de perigo 5.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "Dimens\u00e3o sem classifica\u00e7\u00e3o", "No cursor: %s/5", "1 - F\u00e1cil", "2 - Moderada", "3 - Dif\u00edcil", "4 - Severa", "5 - Extrema"};
         for (int i = 0; i < mapKeys.length; i++) {
             en.put("map." + NS + "." + mapKeys[i], mapEn[i]); pt.put("map." + NS + "." + mapKeys[i], mapPt[i]);
         }
         en.put("hud." + NS + ".creature", "%s | Lv. %s | %s / %s HP"); pt.put("hud." + NS + ".creature", "%s | Nv. %s | %s / %s PV");
+        en.put("screen." + NS + ".taming", "Taming %s"); pt.put("screen." + NS + ".taming", "Domestica\u00e7\u00e3o %s");
+        en.put("screen." + NS + ".hunger", "Hunger %s"); pt.put("screen." + NS + ".hunger", "Fome %s");
+        en.put("screen." + NS + ".torpor", "Torpor %s/%s"); pt.put("screen." + NS + ".torpor", "Torpor %s/%s");
         en.put("chat." + NS + ".biome", "[ARK] %s | Danger %s/5 | Wild levels %s-%s");
-        pt.put("chat." + NS + ".biome", "[ARK] %s | Perigo %s/5 | NÃ­veis selvagens %s-%s");
+        pt.put("chat." + NS + ".biome", "[ARK] %s | Perigo %s/5 | N\u00edveis selvagens %s-%s");
         en.put("chat." + NS + ".biome_unrated", "[ARK] %s | Outside Overworld danger zones");
         String[] states = {"roam", "forage", "drink", "rest", "alert", "investigate", "threaten", "hunt", "defend", "flee", "return_home", "feed"};
         String[] stateEn = {"Roaming", "Foraging", "Drinking", "Resting", "Alert", "Investigating", "Warning", "Hunting", "Defending", "Fleeing", "Returning home", "Feeding"};
-        String[] statePt = {"Vagando", "Pastando", "Bebendo", "Descansando", "Alerta", "Investigando", "AmeaÃ§ando", "CaÃ§ando", "Defendendo", "Fugindo", "Voltando para casa", "Comendo"};
+        String[] statePt = {"Vagando", "Pastando", "Bebendo", "Descansando", "Alerta", "Investigando", "Amea\u00e7ando", "Ca\u00e7ando", "Defendendo", "Fugindo", "Voltando para casa", "Comendo"};
         for (int i = 0; i < states.length; i++) {
             en.put("behavior." + NS + "." + states[i], stateEn[i]); pt.put("behavior." + NS + "." + states[i], statePt[i]);
         }
-        en.put("behavior." + NS + ".seek_water", "Seeking water"); pt.put("behavior." + NS + ".seek_water", "Procurando Ã¡gua");
+        en.put("behavior." + NS + ".seek_water", "Seeking water"); pt.put("behavior." + NS + ".seek_water", "Procurando \u00e1gua");
         en.put("behavior." + NS + ".sleep", "Sleeping"); pt.put("behavior." + NS + ".sleep", "Dormindo");
         en.put("behavior." + NS + ".search", "Searching for prey"); pt.put("behavior." + NS + ".search", "Procurando presas");
         en.put("behavior." + NS + ".regroup", "Regrouping"); pt.put("behavior." + NS + ".regroup", "Reagrupando");
@@ -145,6 +148,19 @@ public final class ArkData implements DataProvider {
                 "model", NS + ":item/tranquilizer_arrow")));
         en.put("item." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
         pt.put("item." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
+        // Companion whistle: reuses the vanilla goat horn art, so no new texture is required.
+        put("assets/" + NS + "/models/item/companion_whistle", Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", "minecraft:item/goat_horn")));
+        put("assets/" + NS + "/items/companion_whistle", Map.of("model", Map.of("type", "minecraft:model",
+                "model", NS + ":item/companion_whistle")));
+        en.put("item." + NS + ".companion_whistle", "Companion Whistle");
+        pt.put("item." + NS + ".companion_whistle", "Apito de companheiro");
+        en.put("companion." + NS + ".order.follow", "Your companion follows you");
+        pt.put("companion." + NS + ".order.follow", "Seu companheiro segue voc\u00ea");
+        en.put("companion." + NS + ".order.stay", "Your companion stays here");
+        pt.put("companion." + NS + ".order.stay", "Seu companheiro fica aqui");
+        en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
+        pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
         tamingMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
@@ -192,9 +208,9 @@ public final class ArkData implements DataProvider {
                 "#" + NS + ":taming/fish");
         json("data/" + NS + "/recipe/tranquilizer_arrow", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"tranquilizer_arrow",
-                 "ingredients":[{"item":"minecraft:arrow"},{"item":"minecraft:arrow"},
-                                {"item":"minecraft:arrow"},{"item":"minecraft:arrow"},
-                                {"item":"%s:narcoberry"},{"item":"minecraft:bone"}],
+                 "ingredients":["minecraft:arrow","minecraft:arrow",
+                                "minecraft:arrow","minecraft:arrow",
+                                "%s:narcoberry","minecraft:bone"],
                  "result":{"count":4,"id":"%s:tranquilizer_arrow"}}
                 """.formatted(NS, NS));
     }
@@ -216,16 +232,16 @@ public final class ArkData implements DataProvider {
                 "you cannot mount", "the creature is unconscious", "you must tame it first",
                 "you do not own this creature", "it needs a saddle", "someone is already riding it",
                 "there is no room to mount here"};
-        String[] portuguese = {"%s foi nocauteado.", "%s estÃ¡ acordando.", "%s come. Progresso de domesticaÃ§Ã£o %s%%.",
-                "%s adora a comida favorita. Progresso de domesticaÃ§Ã£o %s%%.", "%s recusa: %s",
-                "VocÃª nÃ£o consegue alcanÃ§ar %s agora.", "VocÃª reivindicou %s.",
-                "%s vai tolerar vocÃª por um momento.", "%s confia em vocÃª agora.", "VocÃª estÃ¡ inconsciente: %s",
-                "aceito", "comida errada", "fome insuficiente", "ainda digerindo a Ãºltima refeiÃ§Ã£o",
-                "nÃ£o estÃ¡ inconsciente", "outro jogador detÃ©m esta tentativa", "jÃ¡ domesticado", "alvo invÃ¡lido",
-                "vocÃª nÃ£o pode atacar", "vocÃª nÃ£o pode interagir", "vocÃª nÃ£o pode usar itens", "vocÃª nÃ£o pode andar",
-                "vocÃª nÃ£o pode montar", "a criatura estÃ¡ inconsciente", "vocÃª precisa domar primeiro",
-                "vocÃª nÃ£o Ã© o dono desta criatura", "precisa de uma sela", "alguÃ©m jÃ¡ estÃ¡ montado",
-                "nÃ£o hÃ¡ espaÃ§o para montar aqui"};
+        String[] portuguese = {"%s foi nocauteado.", "%s est\u00e1 acordando.", "%s come. Progresso de domestica\u00e7\u00e3o %s%%.",
+                "%s adora a comida favorita. Progresso de domestica\u00e7\u00e3o %s%%.", "%s recusa: %s",
+                "Voc\u00ea n\u00e3o consegue alcan\u00e7ar %s agora.", "Voc\u00ea reivindicou %s.",
+                "%s vai tolerar voc\u00ea por um momento.", "%s confia em voc\u00ea agora.", "Voc\u00ea est\u00e1 inconsciente: %s",
+                "aceito", "comida errada", "fome insuficiente", "ainda digerindo a \u00faltima refei\u00e7\u00e3o",
+                "n\u00e3o est\u00e1 inconsciente", "outro jogador det\u00e9m esta tentativa", "j\u00e1 domesticado", "alvo inv\u00e1lido",
+                "voc\u00ea n\u00e3o pode atacar", "voc\u00ea n\u00e3o pode interagir", "voc\u00ea n\u00e3o pode usar itens", "voc\u00ea n\u00e3o pode andar",
+                "voc\u00ea n\u00e3o pode montar", "a criatura est\u00e1 inconsciente", "voc\u00ea precisa domar primeiro",
+                "voc\u00ea n\u00e3o \u00e9 o dono desta criatura", "precisa de uma sela", "algu\u00e9m j\u00e1 est\u00e1 montado",
+                "n\u00e3o h\u00e1 espa\u00e7o para montar aqui"};
         for (int i = 0; i < keys.length; i++) {
             en.put("taming." + NS + "." + keys[i], english[i]);
             pt.put("taming." + NS + "." + keys[i], portuguese[i]);
@@ -364,11 +380,29 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS,id,NS,species.id));
         }
     }
+    /**
+     * Vanilla-style biome spawn lists. The compiled weight and group size are baked here; the
+     * runtime placement predicate still applies the danger/level gate.
+     */
+    private void spawns() {
+        for (var species : Species.values()) {
+            // Oversized bodies break vanilla's single-chunk spawn clamp; the population budget spawns them.
+            if (species.weight <= 0 || !species.chunkSpawnSafe()) continue;
+            put("data/" + NS + "/neoforge/biome_modifier/spawn_" + species.id, Map.of(
+                    "type", "neoforge:add_spawns",
+                    "biomes", "#" + NS + ":spawns/" + species.id,
+                    "spawners", Map.of(
+                            "type", NS + ":" + species.id,
+                            "weight", species.weight,
+                            "minCount", species.minGroup,
+                            "maxCount", species.maxGroup)));
+        }
+    }
     private void tests() {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "creature_expansion"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);
@@ -392,12 +426,21 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
-                "taming_claim_expiry", "taming_ordinary_mob"))
+                "taming_claim_expiry", "taming_ordinary_mob", "companion"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
         put("data/" + NS + "/test_instance/taming_riding", Map.of("type", "minecraft:function",
                 "function", NS + ":taming_riding", "environment", NS + ":empty",
+                "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        put("data/" + NS + "/test_instance/spawn_pipeline", Map.of("type", "minecraft:function",
+                "function", NS + ":spawn_pipeline", "environment", NS + ":empty",
+                "structure", NS + ":test_empty", "max_ticks", 200, "sky_access", true));
+        put("data/" + NS + "/test_instance/spawn_budget", Map.of("type", "minecraft:function",
+                "function", NS + ":spawn_budget", "environment", NS + ":population",
+                "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
+        put("data/" + NS + "/test_instance/spawn_apex", Map.of("type", "minecraft:function",
+                "function", NS + ":spawn_apex", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
     }
 }

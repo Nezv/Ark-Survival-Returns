@@ -227,7 +227,9 @@ public final class TorporState implements ValueIOSerializable {
             recoveryDelay--;
             dirty = true;
         } else if (torpor > 0.0) {
-            torpor = Math.max(0.0, torpor - maximum * Config.TORPOR_RECOVERY_PER_SECOND.get() / 20.0);
+            double recovery = maximum * Config.TORPOR_RECOVERY_PER_SECOND.get() / 20.0;
+            // A zero rate cannot hold a dose forever: once the delay is over, the meter clears.
+            torpor = recovery > 0.0 ? Math.max(0.0, torpor - recovery) : 0.0;
             dirty = true;
         }
         switch (phase) {

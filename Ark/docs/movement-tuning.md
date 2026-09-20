@@ -19,4 +19,6 @@ The land conversion accounts for vanilla Mob applying its controlled speed both 
 
 Animation timing uses measured horizontal travel, body height and each imported clip's duration. Large bodies therefore take slower, longer strides at the same ground speed. Increase `strideScale` to slow the visual cadence without changing movement. This is a tunable stride approximation; visual foot placement still needs playtesting.
 
+Locomotion clip selection (walk/run versus idle) uses `LocomotionSignal`, a hysteresis over the same measured travel with a 1.0 blocks/second start and a three-tick, 0.25 blocks/second stop. It deliberately ignores GeckoLib's render-state movement flag, which counts collision creep, pack jostle and sub-walking drift as travel and keeps the walk clip alive after the creature has stopped.
+
 Therizinosaurus is now 2× original size. Titanosaur is 6× original size (50% larger than the previous 4× version). Rex/Giga stay 3× and remaining species 2×. Mesh, animation translation tracks and collision dimensions are imported together. Existing entities receive the new speed baseline without healing or rerolling levels.

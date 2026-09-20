@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-16",
+ "generated": "2026-09-19",
  "source_torpor_clips": {
   "pteranodon": {
    "eat": {
@@ -2025,6 +2025,172 @@
    "Dragon-Land",
    "Dragon-Take-Off"
   ]
+ },
+ "melee_clips": {
+  "pteranodon": {
+   "clip": "Ptero-Ground-Attack",
+   "ticks": 21
+  },
+  "velociraptor": {
+   "clip": "Raptor-Attack",
+   "ticks": 13
+  },
+  "argentavis": {
+   "clip": "Argentavis-Ground-Attack",
+   "ticks": 27
+  },
+  "triceratops": {
+   "clip": "Trike-Attack-Horn",
+   "ticks": 20
+  },
+  "therizinosaurus": {
+   "clip": "Therizinosaurus-Attack-Claw",
+   "ticks": 20
+  },
+  "brontosaurus": {
+   "clip": "Sauropod-Attack-FootStomp",
+   "ticks": 53
+  },
+  "tyrannosaurus": {
+   "clip": "Rex-Bite2",
+   "ticks": 28
+  },
+  "giganotosaurus": {
+   "clip": "Giganotosaurus-Attack-Bite",
+   "ticks": 20
+  },
+  "titanosaur": {
+   "clip": "Titanosaur-Attack-Footstomp",
+   "ticks": 53
+  },
+  "spinosaurus": {
+   "clip": "Spino-Attack-Bite",
+   "ticks": 20
+  },
+  "parasaur": {
+   "clip": "Para-Attack-Bite",
+   "ticks": 20
+  },
+  "ceratosaurus": {
+   "clip": "Cerato_Attack_Bite1",
+   "ticks": 23
+  },
+  "dilophosaur": {
+   "clip": "Dilo-Attack-Bite",
+   "ticks": 20
+  },
+  "acrocanthosaurus": {
+   "clip": "Acro_Attack_Bite",
+   "ticks": 71
+  },
+  "allosaurus": {
+   "clip": "Allosaurus-Attack-Bite",
+   "ticks": 20
+  },
+  "ankylosaurus": {
+   "clip": "Ankylo-Attack-Tail-Sweep",
+   "ticks": 33
+  },
+  "carnotaurus": {
+   "clip": "Carno-Attack-Bite",
+   "ticks": 20
+  },
+  "pegomastax": {
+   "clip": "Pegomastax-Attack-Bite",
+   "ticks": 17
+  },
+  "lystrosaurus": {
+   "clip": "Lystrosaurus-Attack-Bite",
+   "ticks": 20
+  },
+  "cnidaria": {
+   "clip": "Cnidaria-Shock",
+   "ticks": 20
+  },
+  "plesiosaur": {
+   "clip": "Plesiosaur-Attack-Bite",
+   "ticks": 20
+  },
+  "megalodon": {
+   "clip": "Megalodon-Attack-Bite",
+   "ticks": 27
+  },
+  "liopleurodon": {
+   "clip": "Liopleurodon-Attack-Chomp",
+   "ticks": 27
+  },
+  "mosasaurus": {
+   "clip": "Mosasaurus-Attack-Bite",
+   "ticks": 27
+  },
+  "tusoteuthis": {
+   "clip": "Tusoteuthis-Attack-Bite",
+   "ticks": 57
+  },
+  "kaprosuchus": {
+   "clip": "Kaprosuchus-Attack-Bite",
+   "ticks": 20
+  },
+  "sarco": {
+   "clip": "Sarco-Ground-Attack-Bite",
+   "ticks": 20
+  },
+  "deinosuchus": {
+   "clip": "Deinosuchus_Attack_Bite",
+   "ticks": 30
+  },
+  "titanoboa": {
+   "clip": "BoaFrill-Attack-Lunge",
+   "ticks": 33
+  },
+  "megalocerus": {
+   "clip": "Stag-Attack-Gore",
+   "ticks": 20
+  },
+  "unicorn": {
+   "clip": "Equus-Attack-Buck",
+   "ticks": 25
+  },
+  "mammoth": {
+   "clip": "Mammoth-Attack-Tusk-Jab",
+   "ticks": 17
+  },
+  "direwolf": {
+   "clip": "Direwolf-Attack-Bite",
+   "ticks": 20
+  },
+  "sabertooth": {
+   "clip": "Saber-Attack-Bite",
+   "ticks": 20
+  },
+  "megapithecus": {
+   "clip": "Gorilla-Attack-Pound",
+   "ticks": 27
+  },
+  "paraceratherium": {
+   "clip": "Paraceratherium-Attack-Footstomp",
+   "ticks": 30
+  },
+  "terrorbird": {
+   "clip": "TerrorBird-Attack-Bite",
+   "ticks": 20
+  },
+  "ravager": {
+   "clip": "CaveWolf-Attack-Bite",
+   "ticks": 23
+  },
+  "archaeopteryx": {
+   "clip": "Archaeopteryx-Attack-Bite",
+   "ticks": 13
+  },
+  "quetzal": {
+   "clip": "Quetzalcoatlus-Fly-Attack-Bite",
+   "ticks": 27
+  },
+  "dragon": {
+   "clip": "Dragon-Ground-Attack-Bite",
+   "ticks": 27
+  }
  },
  "species_without_torpor_assets": [
   "ceratosaurus",

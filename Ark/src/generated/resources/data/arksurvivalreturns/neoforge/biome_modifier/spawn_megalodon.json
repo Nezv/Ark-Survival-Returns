@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/megalodon",
+  "spawners": {
+    "type": "arksurvivalreturns:megalodon",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 7
+  }
+}

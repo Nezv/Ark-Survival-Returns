@@ -53,14 +53,13 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
 
     @Override protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         super.extractLabels(graphics, mouseX, mouseY);
-        int xo = (this.width - this.imageWidth) / 2;
-        int yo = (this.height - this.imageHeight) / 2;
+        // extractLabels runs inside the pose already translated by leftPos/topPos, so these stay panel-relative.
         int progress = this.menu.rawProgress();
-        graphics.text(this.font, Component.literal("Taming " + (progress / 100) + "." + ((progress % 100) / 10) + "%"),
-                xo + 8, yo + 6, LABEL, false);
-        graphics.text(this.font, Component.literal("Hunger " + this.menu.rawHunger()),
-                xo + 90, yo + 6, LABEL, false);
-        graphics.text(this.font, Component.literal("Torpor " + this.menu.rawTorpor() + "/" + this.menu.rawTorporMax()),
-                xo + 90, yo + 58, LABEL, false);
+        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.taming",
+                progress / 100 + "." + (progress % 100) / 10 + "%"), 8, 56, LABEL, false);
+        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.hunger",
+                this.menu.rawHunger()), 90, 6, LABEL, false);
+        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.torpor",
+                this.menu.rawTorpor(), this.menu.rawTorporMax()), 90, 74, LABEL, false);
     }
 }

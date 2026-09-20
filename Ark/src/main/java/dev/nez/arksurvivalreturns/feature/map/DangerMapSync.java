@@ -31,7 +31,6 @@ public final class DangerMapSync {
     public static void setUnlocked(ServerPlayer player, boolean value) {
         MapUnlockData.get(player.level()).setUnlocked(player.getUUID(), value);
         send(player);
-        dev.nez.arksurvivalreturns.feature.flying.HabitatSync.send(player, true);
     }
     @SubscribeEvent public static void login(PlayerEvent.PlayerLoggedInEvent e) {
         if (e.getEntity() instanceof ServerPlayer p) send(p);

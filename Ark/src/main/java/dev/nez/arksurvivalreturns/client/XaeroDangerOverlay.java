@@ -20,7 +20,7 @@ public final class XaeroDangerOverlay {
     private static boolean overworld;
     private static boolean enabled;
     private static long refreshedAt;
-    private static DangerMapView.Exploration exploration = (a,b,c,d) -> false;
+    private static DangerMapView.Exploration exploration;
     public static void register() {
         XaeroWorldMapBridge.registerMapOverlay("arksurvivalreturns:danger", 100, XaeroDangerOverlay::render);
         NeoForge.EVENT_BUS.addListener(XaeroDangerOverlay::legend);
@@ -29,6 +29,7 @@ public final class XaeroDangerOverlay {
     public static void init(ScreenEvent.Init.Post event) {
         if (!DangerMapClient.isMap(event.getScreen())) return;
         cachedView = null;
+        exploration = null;
         event.addListener(net.minecraft.client.gui.components.Button.builder(toggleText(), button -> {
             enabled = !enabled; cachedView = null; button.setMessage(toggleText());
         }).bounds(8, 25, 146, 20).build());
@@ -38,13 +39,18 @@ public final class XaeroDangerOverlay {
         overworld = context.dimension().equals("minecraft:overworld");
         if (!enabled || !DangerMapClient.unlocked() || !overworld) return;
         var profile = DangerMapClient.profile();
-        var view = new View(context.width(), context.height(), context.cameraX(), context.cameraZ(), context.pixelsPerBlock(), profile);
-        if (!view.equals(cachedView) || System.nanoTime() - refreshedAt > 250_000_000L) {
-            exploration = XaeroExploration.current(context.dimension());
+        // Quantized camera key plus a minimum rebuild interval keep pan/zoom from rasterizing every frame.
+        var view = new View(context.width(), context.height(), Math.floor(context.cameraX()), Math.floor(context.cameraZ()),
+                Math.round(context.pixelsPerBlock() * 1000.0) / 1000.0, profile);
+        if (exploration == null) exploration = XaeroExploration.current(context.dimension());
+        long now = System.nanoTime();
+        boolean moved = !view.equals(cachedView);
+        boolean stale = now - refreshedAt > 250_000_000L;
+        if ((moved && now - refreshedAt >= 100_000_000L) || stale) {
             cachedCells = DangerMapView.cells(view.width, view.height, view.x, view.z, view.scale,
                     profile.originX(), profile.originZ(), profile.bandWidth(), exploration);
             cachedView = view;
-            refreshedAt = System.nanoTime();
+            refreshedAt = now;
         }
         // Xaero submits a framebuffer blit; keep GUI batching from sorting the tint behind it.
         Minecraft.getInstance().gameRenderer.gameRenderState().guiRenderState.nextStratum();

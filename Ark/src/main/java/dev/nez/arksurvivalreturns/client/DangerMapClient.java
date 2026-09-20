@@ -27,7 +27,7 @@ public final class DangerMapClient {
         });
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
-        if (ModList.get().isLoaded("xaero_world_map_bridge")) event.enqueueWork(() -> { XaeroDangerOverlay.register(); XaeroHabitatOverlay.register(); XaeroLandHabitatOverlay.register(); });
+        if (ModList.get().isLoaded("xaero_world_map_bridge")) event.enqueueWork(XaeroDangerOverlay::register);
     }
     public static boolean isMap(Screen screen) {
         for (Class<?> type = screen == null ? null : screen.getClass(); type != null; type = type.getSuperclass())

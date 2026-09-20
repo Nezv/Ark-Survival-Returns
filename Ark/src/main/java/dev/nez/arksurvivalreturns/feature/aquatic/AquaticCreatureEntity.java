@@ -13,6 +13,7 @@ import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
 import dev.nez.arksurvivalreturns.feature.taming.TorporService;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.level.Level;
@@ -52,6 +53,28 @@ public final class AquaticCreatureEntity extends CreatureEntity {
         resetFallDistance();
     }
     @Override protected boolean swimming() { return true; }
+    /** Companion steering: a tamed swimmer heads to the point without leaving its water column. */
+    @Override protected void steerCompanion(Vec3 point, double speed) {
+        if (!(level() instanceof ServerLevel world)) return;
+        var to = point.subtract(position());
+        if (to.length() < 1.2) { setDeltaMovement(getDeltaMovement().scale(0.7)); return; }
+        var desired = to.normalize().scale(0.26 * speed);
+        var next = getDeltaMovement().lerp(desired, 0.18);
+        var column = Water.column(world, blockPosition());
+        if (column != null) {
+            if (getY() > column[0] - 1) next = next.add(0, -0.05, 0);
+            else if (getY() < column[1]) next = next.add(0, 0.05, 0);
+        } else if (!isInWater()) {
+            next = next.add(0, -0.05, 0);
+        }
+        setDeltaMovement(next);
+        if (next.horizontalDistanceSqr() > 0.0001) {
+            float yaw = (float)(Math.atan2(next.z, next.x) * 180 / Math.PI) - 90;
+            setYRot(Mth.approachDegrees(getYRot(), yaw, 8));
+            yBodyRot = getYRot(); yHeadRot = getYRot();
+        }
+    }
+    @Override protected void stopCompanion() { setDeltaMovement(getDeltaMovement().scale(0.8)); }
     @Override public void tick() {
         super.tick();
         if (level().isClientSide() || !(level() instanceof ServerLevel world)) return;
@@ -75,7 +98,7 @@ public final class AquaticCreatureEntity extends CreatureEntity {
             var behavior = behavior();
             boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
             state.setControllerSpeed(1);
-            String clip = state.isMoving() ? (running ? species().swimRun() : species().swimWalk()) : species().swimIdle();
+            String clip = isLocomoting() ? (running ? species().swimRun() : species().swimWalk()) : species().swimIdle();
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<CreatureEntity>("reaction", 4, state -> PlayState.STOP)

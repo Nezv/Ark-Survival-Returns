@@ -44,6 +44,10 @@ public final class ModContent {
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("tranquilizer_arrow"))));
     public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
+    /** Companion order whistle: cycles FOLLOW/STAY/WANDER on a tamed creature, sneak-use pets it. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem> COMPANION_WHISTLE =
+            ITEMS.registerItem("companion_whistle",
+                    dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem::new, p -> p.stacksTo(1));
 
     static {
         for (Species s : Species.values()) {
@@ -53,7 +57,7 @@ public final class ModContent {
                         case WATER -> new dev.nez.arksurvivalreturns.feature.aquatic.AquaticCreatureEntity(t, l, s);
                         case AMPHIBIOUS -> new dev.nez.arksurvivalreturns.feature.creature.AmphibiousCreatureEntity(t, l, s);
                         case LAND -> new CreatureEntity(t, l, s);
-                    }, MobCategory.CREATURE)
+                    }, s.spawnCategory())
                     .sized(s.width, s.height).eyeHeight(s.height * 0.85f).clientTrackingRange(12)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id(s.id))));
             CREATURES.put(s, type);
@@ -77,6 +81,7 @@ public final class ModContent {
                 .displayItems((parameters, output) -> {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
+                    output.accept(COMPANION_WHISTLE.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

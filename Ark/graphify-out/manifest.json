@@ -102,15 +102,15 @@
     "semantic_hash": ""
   },
   "src/generated/resources/assets/arksurvivalreturns/lang/en_us.json": {
-    "mtime": 1789611486.7291515,
-    "seen": 1789776494.4783666,
-    "ast_hash": "1dbc7bdbed5685c90d1c985d1012d58a",
+    "mtime": 1789837311.3757515,
+    "seen": 1789837466.77223,
+    "ast_hash": "59cbbe79f07d09a2e0989d867b4de732",
     "semantic_hash": ""
   },
   "src/generated/resources/assets/arksurvivalreturns/lang/pt_br.json": {
-    "mtime": 1789611486.699149,
-    "seen": 1789776494.4783666,
-    "ast_hash": "b5bdf2cf27e21949c08702234a5b7dd4",
+    "mtime": 1789837311.3777585,
+    "seen": 1789837466.77223,
+    "ast_hash": "40dfe204caabd058d540779e5ed118e4",
     "semantic_hash": ""
   },
   "src/generated/resources/assets/arksurvivalreturns/models/item/amarberry.json": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/Config.java": {
-    "mtime": 1789612729.9941626,
-    "seen": 1789776494.500936,
-    "ast_hash": "a1b493ebba4403a26f280cadd7c9c702",
+    "mtime": 1789837145.1789463,
+    "seen": 1789837466.8094623,
+    "ast_hash": "0e26c1a821b32b501f53b89aa14cc0cb",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/ArkClient.java": {
@@ -408,21 +408,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/datagen/ArkData.java": {
-    "mtime": 1789614607.5393746,
-    "seen": 1789776494.5039022,
-    "ast_hash": "27901ad49c9ab1be5faa6e992c007245",
+    "mtime": 1789840035.5380619,
+    "seen": 1789840257.2840223,
+    "ast_hash": "64d45084eb3190b167d94fd25f88f4b9",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/CreatureEntity.java": {
-    "mtime": 1789776065.422971,
-    "seen": 1789776494.5049012,
-    "ast_hash": "d52741f20d8e2f63beb187fe7cddbf12",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/creature/FollowPackGoal.java": {
-    "mtime": 1788656557.6368434,
-    "seen": 1788657106.9291244,
-    "ast_hash": "7242a18697a7b87c3adc3b21b01dbf60",
+    "mtime": 1789837361.8576608,
+    "seen": 1789837466.811334,
+    "ast_hash": "6630046eef732e9317dd681820f7663c",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/LevelScaling.java": {
@@ -432,9 +426,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/Species.java": {
-    "mtime": 1789520968.6619465,
-    "seen": 1789776494.505902,
-    "ast_hash": "41c430b0c470e9624d8d3d4ff891e045",
+    "mtime": 1789831932.8317573,
+    "seen": 1789832049.3096535,
+    "ast_hash": "39c87a8abfa4922fe27fb0c0488a0b1a",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/TargetHealthBar.java": {
@@ -450,21 +444,21 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/spawn/SpawnRules.java": {
-    "mtime": 1789078466.292432,
-    "seen": 1789167045.2234764,
-    "ast_hash": "37025efff7dd6d5f220109b70255f2ac",
+    "mtime": 1789839919.0634508,
+    "seen": 1789840257.2930355,
+    "ast_hash": "1afd238a3d06c2ca7efe427aee59b959",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/ArkGameTests.java": {
-    "mtime": 1789614607.400841,
-    "seen": 1789776494.5099294,
-    "ast_hash": "de207c8464b3e6fac03875ef62ef6de0",
+    "mtime": 1789840032.1603265,
+    "seen": 1789840257.2990413,
+    "ast_hash": "6104c0ce25955c69b4d6d2229cbce234",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/registry/ModContent.java": {
-    "mtime": 1789611252.4885154,
-    "seen": 1789776494.5114763,
-    "ast_hash": "a91c0ae0e041bb832bc94518a9a05805",
+    "mtime": 1789837154.4646645,
+    "seen": 1789837466.817543,
+    "ast_hash": "4939f4c51127e4880c7618f9f2fc6da6",
     "semantic_hash": ""
   },
   "src/main/resources/assets/arksurvivalreturns/geckolib/animations/entity/argentavis.animation.json": {
@@ -809,16 +803,10 @@
     "ast_hash": "7815feb48a704a1da72e6c62bc7f5a97",
     "semantic_hash": ""
   },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/spawn/PopulationDirector.java": {
-    "mtime": 1789520204.1399837,
-    "seen": 1789776494.5099294,
-    "ast_hash": "16cd9a5c5b76b5aeff5b7e14e2c72ae9",
-    "semantic_hash": ""
-  },
   "src/main/java/dev/nez/arksurvivalreturns/feature/spawn/ProgressionData.java": {
-    "mtime": 1788704924.346134,
-    "seen": 1788706076.7017248,
-    "ast_hash": "a74ebf185f21f5598111e8cc59c6b8aa",
+    "mtime": 1789826595.5515864,
+    "seen": 1789827293.8758469,
+    "ast_hash": "675a1337c228cfff55e90a31f9c2618f",
     "semantic_hash": ""
   },
   "src/test/java/dev/nez/arksurvivalreturns/feature/spawn/DangerBandsTest.java": {
@@ -858,9 +846,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/behavior/WildlifeGoal.java": {
-    "mtime": 1789520210.9454174,
-    "seen": 1789776494.5049012,
-    "ast_hash": "884e385d020d87c787f9f74c540896d3",
+    "mtime": 1789836440.3537123,
+    "seen": 1789837466.810361,
+    "ast_hash": "7aaecb6cae259887f5d9017f807ca586",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/behavior/WildlifeMind.java": {
@@ -900,9 +888,9 @@
     "semantic_hash": ""
   },
   "docs/behavior-research.md": {
-    "mtime": 1788820069.231474,
-    "seen": 1788820085.2698314,
-    "ast_hash": "80d6c90e9c43c9d13fe4cd2171cccec5",
+    "mtime": 1789840213.8433673,
+    "seen": 1789840257.3226316,
+    "ast_hash": "0db1c79808c96573358e64135e39a954",
     "semantic_hash": ""
   },
   "docs/difficulty-map.png": {
@@ -918,15 +906,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/DangerMapClient.java": {
-    "mtime": 1789428652.9085422,
-    "seen": 1789429781.2828362,
-    "ast_hash": "1b57a1d2cfe75025463e3000b4590e89",
+    "mtime": 1789782210.1060884,
+    "seen": 1789782853.743433,
+    "ast_hash": "daaa5c7db34ef36bed3b94c1c6eeb2dc",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/XaeroDangerOverlay.java": {
-    "mtime": 1788785958.9629028,
-    "seen": 1788820085.2642765,
-    "ast_hash": "2a24a5c93d75100eff7edf5ea6859db0",
+    "mtime": 1789826477.1113133,
+    "seen": 1789827293.8717892,
+    "ast_hash": "680d662b9e2b78a5c2b1eb071832ddc6",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/map/DangerMapPayload.java": {
@@ -936,9 +924,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/map/DangerMapSync.java": {
-    "mtime": 1789078613.09398,
-    "seen": 1789167045.2234764,
-    "ast_hash": "b46c76e31c937f489985fa2a25f7fb30",
+    "mtime": 1789782218.954115,
+    "seen": 1789782853.7464328,
+    "ast_hash": "405ab1d928149d38f776f7ad5c41eb20",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/map/DangerMapView.java": {
@@ -966,9 +954,9 @@
     "semantic_hash": ""
   },
   "docs/client-pack.md": {
-    "mtime": 1789429975.0144658,
-    "seen": 1789776494.5155172,
-    "ast_hash": "0b78f0c58005a95cf0d700a35afa0279",
+    "mtime": 1789782803.6141808,
+    "seen": 1789782853.7615285,
+    "ast_hash": "8376a52bc1b9623254a5e2a1e24d378e",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/XaeroExploration.java": {
@@ -978,9 +966,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/FlyingCreatureEntity.java": {
-    "mtime": 1789776078.4609663,
-    "seen": 1789776494.5049012,
-    "ast_hash": "5c98a62300baead5aa166db6d24801fd",
+    "mtime": 1789840331.3727503,
+    "seen": 1789840453.6996255,
+    "ast_hash": "cd74c1651a6052b8f5a8cb99fe7a9c6e",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/MovementTuning.java": {
@@ -996,9 +984,9 @@
     "semantic_hash": ""
   },
   "docs/movement-tuning.md": {
-    "mtime": 1788820069.244048,
-    "seen": 1788820085.2698314,
-    "ast_hash": "420aa1df27c4d6002de9021e70148f62",
+    "mtime": 1789834114.815925,
+    "seen": 1789834173.176512,
+    "ast_hash": "ebd88840aaf1431461810840074ff3e0",
     "semantic_hash": ""
   },
   "src/generated/resources/assets/arksurvivalreturns/blockstates/argentavis_nest.json": {
@@ -1098,27 +1086,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/NighttimeClientConfig.java": {
-    "mtime": 1788999904.3438299,
-    "seen": 1789167045.221476,
-    "ast_hash": "986d9e6499e0dd75d4f9818707b6300f",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/client/HabitatMapClient.java": {
-    "mtime": 1789428652.8955374,
-    "seen": 1789429781.2838345,
-    "ast_hash": "2f902afc07adab0fa9bb56f75c2837d7",
+    "mtime": 1789839865.7700253,
+    "seen": 1789840257.2820146,
+    "ast_hash": "a824fe2c819a0e86f0ff71e56a58d57b",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/NightEyesLayer.java": {
-    "mtime": 1789520329.6309888,
-    "seen": 1789776494.5029027,
-    "ast_hash": "056a21c6d9bd7a78863815f2b1516305",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/client/XaeroHabitatOverlay.java": {
-    "mtime": 1789776140.107982,
-    "seen": 1789776494.5039022,
-    "ast_hash": "976f3c4d535a61b9c2840bf3e8526df5",
+    "mtime": 1789839860.7036264,
+    "seen": 1789840257.2830212,
+    "ast_hash": "3cfd4c0c03ad74f5d1b9353cdb037112",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/behavior/NighttimeCycle.java": {
@@ -1127,40 +1103,16 @@
     "ast_hash": "4679abdbeaf76057623cd4e8fceabe6d",
     "semantic_hash": ""
   },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/flying/FlyerHabitats.java": {
-    "mtime": 1789520159.500806,
-    "seen": 1789776494.507409,
-    "ast_hash": "b1b81cfeab9da955ba6d7879a2652c3c",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/flying/HabitatData.java": {
-    "mtime": 1789520159.6888063,
-    "seen": 1789776494.507409,
-    "ast_hash": "1e4ce44ccc1aa531445086a9f6db495b",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/flying/HabitatPayload.java": {
-    "mtime": 1789776118.3031726,
-    "seen": 1789776494.507409,
-    "ast_hash": "0eddb97635164faaf9bfad1e8f88c14f",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/flying/HabitatSync.java": {
-    "mtime": 1789776123.6206818,
-    "seen": 1789776494.507409,
-    "ast_hash": "f14799f946159bd50a1be32945ff22aa",
-    "semantic_hash": ""
-  },
   "src/main/java/dev/nez/arksurvivalreturns/feature/flying/NestBlock.java": {
-    "mtime": 1789520174.8542376,
-    "seen": 1789776494.507409,
-    "ast_hash": "a795c8f6704d78ac96716fc72010e035",
+    "mtime": 1789782171.3621008,
+    "seen": 1789782853.7464328,
+    "ast_hash": "333239465012857559ea5a0a70e370c4",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/FlyingGameTests.java": {
-    "mtime": 1789776146.3319488,
-    "seen": 1789776494.5099294,
-    "ast_hash": "94516133392bd8fde73409ad5ea034a0",
+    "mtime": 1789782545.7650433,
+    "seen": 1789782853.7504337,
+    "ast_hash": "a0aa7c7fe38fb126da3936c49caeba4e",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/NighttimeGameTests.java": {
@@ -1188,9 +1140,9 @@
     "semantic_hash": ""
   },
   "docs/flying-ecosystem.md": {
-    "mtime": 1789776412.3195992,
-    "seen": 1789776494.5155172,
-    "ast_hash": "ee26e7c1d334a121f187c9eb785081f4",
+    "mtime": 1789782791.9784746,
+    "seen": 1789782853.7615285,
+    "ast_hash": "f4d62ee2ea202d6d19266da0dfa7e950",
     "semantic_hash": ""
   },
   "docs/land-ecosystem-proposal.md": {
@@ -1475,34 +1427,10 @@
     "ast_hash": "1431f2d19006c9631c911b99784dc779",
     "semantic_hash": ""
   },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/GroupNeeds.java": {
-    "mtime": 1789168532.433312,
-    "seen": 1789216341.398504,
-    "ast_hash": "8f992a834d29c685c8fea1fbbf442a2f",
-    "semantic_hash": ""
-  },
   "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandFamily.java": {
     "mtime": 1789519947.3970697,
     "seen": 1789776494.507409,
     "ast_hash": "70688ce87cd7df3818b2be09641479b0",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandHabitatData.java": {
-    "mtime": 1789520489.892864,
-    "seen": 1789776494.507409,
-    "ast_hash": "d2fc27cfba06ebd674a25b45d9edf605",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandHabitats.java": {
-    "mtime": 1789520743.070822,
-    "seen": 1789776494.5084174,
-    "ast_hash": "af60f7d528973763760bac8ae3aec4da",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandWaterIndex.java": {
-    "mtime": 1789429722.663458,
-    "seen": 1789429781.302024,
-    "ast_hash": "53e7ccf4d1cf13fccfa050eee072de5a",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/CreatureExpansionGameTests.java": {
@@ -1847,46 +1775,16 @@
     "ast_hash": "2ce48b0171592a5b636c29e3aa71c38d",
     "semantic_hash": ""
   },
-  "src/main/java/dev/nez/arksurvivalreturns/client/LandHabitatSymbols.java": {
-    "mtime": 1789428652.1724608,
-    "seen": 1789429781.2838345,
-    "ast_hash": "24a5c46406e76b8b8b571f16f36bddf5",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/client/XaeroLandHabitatOverlay.java": {
-    "mtime": 1789428652.1734586,
-    "seen": 1789429781.2858343,
-    "ast_hash": "ee3c35ec622975c72a32f2373ac8c8be",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandHabitatPayload.java": {
-    "mtime": 1789428652.1714506,
-    "seen": 1789429781.302024,
-    "ast_hash": "9ab8f63fdcbc31780df93d51c0cdd43c",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandHabitatSync.java": {
-    "mtime": 1789520211.202414,
-    "seen": 1789776494.5084174,
-    "ast_hash": "05780dee81b0278f3a1b5cc18d05807f",
-    "semantic_hash": ""
-  },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/LandGameTests.java": {
-    "mtime": 1789429722.663458,
-    "seen": 1789429781.3065567,
-    "ast_hash": "4e467dfd1091e385593a78ebaadfade5",
+    "mtime": 1789782555.179689,
+    "seen": 1789782853.7504337,
+    "ast_hash": "b5d4eaf07674feaa468779fa624bd6da",
     "semantic_hash": ""
   },
   "src/test/java/dev/nez/arksurvivalreturns/feature/land/LandModelTest.java": {
-    "mtime": 1789429110.5009851,
-    "seen": 1789429781.3366861,
-    "ast_hash": "500abbac6049cab12c0674ec1a8af5de",
-    "semantic_hash": ""
-  },
-  "src/test/java/dev/nez/arksurvivalreturns/feature/land/LandSymbolsTest.java": {
-    "mtime": 1789429110.5019958,
-    "seen": 1789429781.3366861,
-    "ast_hash": "94e211bd7a77b9afb9876865f003e60a",
+    "mtime": 1789782406.6773908,
+    "seen": 1789782853.759474,
+    "ast_hash": "efa677e88914bf3db7c89ef5d9ef28ff",
     "semantic_hash": ""
   },
   "docs/snow-ecosystem-proposal.md": {
@@ -1902,15 +1800,15 @@
     "semantic_hash": ""
   },
   "docs/taming-animation-matrix.json": {
-    "mtime": 1789613804.2096746,
-    "seen": 1789776494.4718583,
-    "ast_hash": "9a55ef3cb343cf6de19a04be381f9d2a",
+    "mtime": 1789837481.6273313,
+    "seen": 1789840257.18023,
+    "ast_hash": "27e15f8ffd7a4260314db7de156bd71a",
     "semantic_hash": ""
   },
   "docs/taming-seat-manifest.json": {
-    "mtime": 1789613804.2066748,
-    "seen": 1789776494.4718583,
-    "ast_hash": "ca3240d04238a1dd9d99d4461bc120fc",
+    "mtime": 1789837481.6253388,
+    "seen": 1789840257.18023,
+    "ast_hash": "c6a67f63ebbe5524cc2fdcf2dac5de9e",
     "semantic_hash": ""
   },
   "src/generated/resources/assets/arksurvivalreturns/blockstates/archaeopteryx_nest.json": {
@@ -2454,9 +2352,9 @@
     "semantic_hash": ""
   },
   "src/generated/resources/data/arksurvivalreturns/recipe/tranquilizer_arrow.json": {
-    "mtime": 1789611486.7011497,
-    "seen": 1789776494.4903846,
-    "ast_hash": "bc59e7fee2e58fd474846962aa85f4eb",
+    "mtime": 1789826698.855691,
+    "seen": 1789827293.8348231,
+    "ast_hash": "bddbfb0c023f9460986825b0b3f33e4e",
     "semantic_hash": ""
   },
   "src/generated/resources/data/arksurvivalreturns/tags/entity_type/theme/removed.json": {
@@ -3396,9 +3294,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/CreatureMountScreen.java": {
-    "mtime": 1789611614.2570045,
-    "seen": 1789776494.5019019,
-    "ast_hash": "a5d51ccb32a1280cf8da938498f1da27",
+    "mtime": 1789826469.5508249,
+    "seen": 1789827293.870715,
+    "ast_hash": "a9ba186c3ea38dcdece4b95097818bca",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/client/SedativeArrowRenderer.java": {
@@ -3414,27 +3312,21 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/aquatic/AquaticCreatureEntity.java": {
-    "mtime": 1789776088.5218465,
-    "seen": 1789776494.5039022,
-    "ast_hash": "8b5565f519525f7af5b89c9a4c1feb7a",
+    "mtime": 1789837258.0066586,
+    "seen": 1789837466.810361,
+    "ast_hash": "bd7a8d4656b32025de1f2ad031d990c0",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/aquatic/AquaticGoal.java": {
-    "mtime": 1789613768.6324275,
-    "seen": 1789776494.5039022,
-    "ast_hash": "70e1da10df34a3842ae8e31f1007b7b0",
-    "semantic_hash": ""
-  },
-  "src/main/java/dev/nez/arksurvivalreturns/feature/aquatic/AquaticHabitats.java": {
-    "mtime": 1789520647.6843188,
-    "seen": 1789776494.5039022,
-    "ast_hash": "3d295ce32fba1f07763d2aa9cf78b961",
+    "mtime": 1789836450.4172132,
+    "seen": 1789837466.810361,
+    "ast_hash": "a4646a05a44b9d8ff1b15eb59847928e",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/behavior/WildlifeController.java": {
-    "mtime": 1789520314.920471,
-    "seen": 1789776494.5049012,
-    "ast_hash": "f2d1ed327ab5c3177a2fd3e533eaa3c2",
+    "mtime": 1789836430.0459378,
+    "seen": 1789837466.810361,
+    "ast_hash": "5eaa845229a7749702d11a0d0f099499",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/creature/AmphibiousCreatureEntity.java": {
@@ -3480,8 +3372,8 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/CreatureSeats.java": {
-    "mtime": 1789613804.2016819,
-    "seen": 1789776494.5099294,
+    "mtime": 1789837481.622854,
+    "seen": 1789840257.2940354,
     "ast_hash": "a953429836fcd17af7ba9a9b8a6c2375",
     "semantic_hash": ""
   },
@@ -3498,15 +3390,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/CreatureTorporClips.java": {
-    "mtime": 1789613804.2026777,
-    "seen": 1789776494.5099294,
+    "mtime": 1789837481.622854,
+    "seen": 1789840257.2940354,
     "ast_hash": "ffdff338e540ba8e1f54db265f99ec54",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/PlayerUnconsciousHandler.java": {
-    "mtime": 1789611397.411862,
-    "seen": 1789776494.5099294,
-    "ast_hash": "1a07c6973cd1a70139986e5cf09c41b4",
+    "mtime": 1789826456.7740178,
+    "seen": 1789827293.8778443,
+    "ast_hash": "0ab24a70d0721f0c17b36dfd35f2770f",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/SedativeArrow.java": {
@@ -3522,15 +3414,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/SedativeItem.java": {
-    "mtime": 1789611245.8962474,
-    "seen": 1789776494.5099294,
-    "ast_hash": "cc4663f777ca95ce462602bc6702c7ae",
+    "mtime": 1789826461.3530593,
+    "seen": 1789827293.8778443,
+    "ast_hash": "69710e0b22b8eb1cef6b4b0271899059",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TamingAttachments.java": {
-    "mtime": 1789611077.647165,
-    "seen": 1789776494.5099294,
-    "ast_hash": "e8afaad9fa03bca694db27a0cff4538d",
+    "mtime": 1789837065.4837842,
+    "seen": 1789837466.8145266,
+    "ast_hash": "e512dbd32b027bc704773bb40fa20d15",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TamingCommands.java": {
@@ -3546,9 +3438,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TamingFeedback.java": {
-    "mtime": 1789611381.2052515,
-    "seen": 1789776494.5099294,
-    "ast_hash": "e0e8a91f28673860ba7a693989468940",
+    "mtime": 1789826467.562223,
+    "seen": 1789827293.8784091,
+    "ast_hash": "0e072e893c02d6b1e74148b7e7b472f4",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TamingMethod.java": {
@@ -3576,15 +3468,15 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TorporService.java": {
-    "mtime": 1789615905.5942261,
-    "seen": 1789776494.5099294,
-    "ast_hash": "da6f62787db54a81da2b5b3a652848d5",
+    "mtime": 1789826455.5133107,
+    "seen": 1789827293.8784091,
+    "ast_hash": "8c41cf50d389e76dd144b13e17d470d9",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/TorporState.java": {
-    "mtime": 1789615893.3476813,
-    "seen": 1789776494.5099294,
-    "ast_hash": "800f4c9f43d14920af117c8cba9abda5",
+    "mtime": 1789826462.4928112,
+    "seen": 1789827293.8784091,
+    "ast_hash": "f746aeef4958eb6f1da12ad8d1e7369e",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/taming/UnconsciousBehavior.java": {
@@ -3606,9 +3498,9 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/theme/LootGuard.java": {
-    "mtime": 1789606650.9571767,
-    "seen": 1789776494.5099294,
-    "ast_hash": "cb750edb4f5ca59677e062973972ef1f",
+    "mtime": 1789826482.0222323,
+    "seen": 1789827293.8784091,
+    "ast_hash": "718deaa2e5bce3d9d073b1c318ae6da4",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/feature/theme/MechanicGuard.java": {
@@ -3630,21 +3522,21 @@
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/AquaticGameTests.java": {
-    "mtime": 1789520826.2773952,
-    "seen": 1789776494.5099294,
-    "ast_hash": "2f9b3b42521be4f4a8054f716b38164d",
+    "mtime": 1789782254.3612819,
+    "seen": 1789782853.7504337,
+    "ast_hash": "be082e85f84090536a440726f5735122",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/CollectionGameTests.java": {
-    "mtime": 1789520752.1522994,
-    "seen": 1789776494.5099294,
-    "ast_hash": "d5273a7c33edf9f5b863567a78c279be",
+    "mtime": 1789836545.6334617,
+    "seen": 1789837466.8165839,
+    "ast_hash": "a86981d8c3bc4f2a2e168279ac4e5252",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/TamingGameTests.java": {
-    "mtime": 1789616050.364904,
-    "seen": 1789776494.5114763,
-    "ast_hash": "7c376ae5911689be8fc911826d1bf94f",
+    "mtime": 1789840726.9627328,
+    "seen": 1789840777.354598,
+    "ast_hash": "f90c09c4160484fa42994efe1956bc31",
     "semantic_hash": ""
   },
   "src/main/java/dev/nez/arksurvivalreturns/gametest/ThemeGameTests.java": {
@@ -3876,9 +3768,9 @@
     "semantic_hash": ""
   },
   "tools/build_taming_manifests.py": {
-    "mtime": 1789613798.6498635,
-    "seen": 1789776494.513518,
-    "ast_hash": "8deadf508d1d4425c665b59fd40285ac",
+    "mtime": 1789837474.323156,
+    "seen": 1789840257.317593,
+    "ast_hash": "309573b10eb244df4d252f5bc994185d",
     "semantic_hash": ""
   },
   "tools/build_taming_roster.py": {
@@ -3894,9 +3786,9 @@
     "semantic_hash": ""
   },
   "docs/collection-ecosystem.md": {
-    "mtime": 1789521165.6790268,
-    "seen": 1789776494.5155172,
-    "ast_hash": "cb81e64a185446b886f2352488c149c9",
+    "mtime": 1789782780.8274808,
+    "seen": 1789782853.7615285,
+    "ast_hash": "b21fe8d0cc161aed81177b7b7ae563a4",
     "semantic_hash": ""
   },
   "docs/dev-dependencies.md": {
@@ -3912,9 +3804,9 @@
     "semantic_hash": ""
   },
   "docs/taming-debugging.md": {
-    "mtime": 1789616118.6295311,
-    "seen": 1789776494.5170596,
-    "ast_hash": "cdf2f5cd94bf4bb51178335ac0fb8f6a",
+    "mtime": 1789837437.722871,
+    "seen": 1789837466.827163,
+    "ast_hash": "c96f9b9297514807a4a2ca812e51a276",
     "semantic_hash": ""
   },
   "docs/taming-roster.md": {
@@ -4191,6 +4083,384 @@
     "mtime": 1789520994.3418148,
     "seen": 1789776494.518103,
     "ast_hash": "b7d62a7f2945a83c8f2baf23a7e17288",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_acrocanthosaurus.json": {
+    "mtime": 1789782433.8077242,
+    "seen": 1789782853.7184484,
+    "ast_hash": "697957678b7e93d14854f3479d0a9e3e",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_allosaurus.json": {
+    "mtime": 1789782433.8097224,
+    "seen": 1789782853.7184484,
+    "ast_hash": "3889e2d09a831dbef9250b6cde5c2a59",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_ankylosaurus.json": {
+    "mtime": 1789782433.8107212,
+    "seen": 1789782853.7184484,
+    "ast_hash": "1193bfe72b61ad4c867fbd31ffda749c",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_archaeopteryx.json": {
+    "mtime": 1789782433.829721,
+    "seen": 1789782853.7184484,
+    "ast_hash": "7c52032705accbf87cc5d06e071b850b",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_argentavis.json": {
+    "mtime": 1789782433.7997212,
+    "seen": 1789782853.7184484,
+    "ast_hash": "faec024ced6d4d27eeeee71d53a2f30c",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_brontosaurus.json": {
+    "mtime": 1789782433.805725,
+    "seen": 1789782853.7184484,
+    "ast_hash": "7064c182f2f2ad1e59074d8e69d0fc82",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_carnotaurus.json": {
+    "mtime": 1789782433.8127222,
+    "seen": 1789782853.7184484,
+    "ast_hash": "6b7132c5d8e27e6af5dbf3c2e91f2834",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_ceratosaurus.json": {
+    "mtime": 1789782433.8077242,
+    "seen": 1789782853.7184484,
+    "ast_hash": "3475f8bca4849d3b8562d6207a519f9c",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_cnidaria.json": {
+    "mtime": 1789782433.8137288,
+    "seen": 1789782853.7184484,
+    "ast_hash": "e9699cded20c779193c7fd82bb40c5f0",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_deinosuchus.json": {
+    "mtime": 1789782433.8197217,
+    "seen": 1789782853.7184484,
+    "ast_hash": "68c900205b957a285a85630d5e64e8d5",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_dilophosaur.json": {
+    "mtime": 1789782433.8077242,
+    "seen": 1789782853.7184484,
+    "ast_hash": "dbda265bd88007a4e308d307aa19323b",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_direwolf.json": {
+    "mtime": 1789782433.8227236,
+    "seen": 1789782853.7184484,
+    "ast_hash": "372eba18152a311abc7777b022961162",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_dragon.json": {
+    "mtime": 1789782433.8287265,
+    "seen": 1789782853.7184484,
+    "ast_hash": "07de44c217e1f7a1c088f6385e57f54a",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_kaprosuchus.json": {
+    "mtime": 1789782433.8177226,
+    "seen": 1789782853.7184484,
+    "ast_hash": "8c9bbaf7d4ce0831a43e0b10451823ac",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_liopleurodon.json": {
+    "mtime": 1789782433.8157253,
+    "seen": 1789782853.7184484,
+    "ast_hash": "79352eb4c0e24dda01766bee3e6963a8",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_lystrosaurus.json": {
+    "mtime": 1789782433.8127222,
+    "seen": 1789782853.7184484,
+    "ast_hash": "0b5424aedafbd34dc71b19e27dd41b0e",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_mammoth.json": {
+    "mtime": 1789782433.8217244,
+    "seen": 1789782853.7184484,
+    "ast_hash": "e279489e99b80caa1ec00e92a0d54259",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_megalocerus.json": {
+    "mtime": 1789782433.8207214,
+    "seen": 1789782853.7184484,
+    "ast_hash": "480f7c23596e911ec7e733f1336ffd94",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_megalodon.json": {
+    "mtime": 1789782433.814725,
+    "seen": 1789782853.7184484,
+    "ast_hash": "e962487312d8fdac24ea7bb23d20c06e",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_megapithecus.json": {
+    "mtime": 1789782433.8227236,
+    "seen": 1789782853.7184484,
+    "ast_hash": "62a9b17b3718aa8e86c206239437d66f",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_mosasaurus.json": {
+    "mtime": 1789782433.8167236,
+    "seen": 1789782853.7184484,
+    "ast_hash": "f2022ae01ec895de68ef59ebb7999f9d",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_paraceratherium.json": {
+    "mtime": 1789782433.8237245,
+    "seen": 1789782853.7184484,
+    "ast_hash": "13d6717b2e6b0a24d7f42c9dfe916d36",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_parasaur.json": {
+    "mtime": 1789782433.8047268,
+    "seen": 1789782853.7184484,
+    "ast_hash": "576bc2250db09a0aa95cd6b9c015a212",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_pegomastax.json": {
+    "mtime": 1789782433.8127222,
+    "seen": 1789782853.7184484,
+    "ast_hash": "e538a0c6965f9abe356b8fc4602f8958",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_plesiosaur.json": {
+    "mtime": 1789782433.814725,
+    "seen": 1789782853.7184484,
+    "ast_hash": "dc74b7904f807514be1f21ac42619b7f",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_pteranodon.json": {
+    "mtime": 1789782433.8047268,
+    "seen": 1789782853.7184484,
+    "ast_hash": "9c2731867e00ecdd4c3bf45d82a1d9a9",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_quetzal.json": {
+    "mtime": 1789782433.8307345,
+    "seen": 1789782853.7184484,
+    "ast_hash": "9efb29fb44886066a0b823a0c505f5c0",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_ravager.json": {
+    "mtime": 1789782433.8267694,
+    "seen": 1789782853.7184484,
+    "ast_hash": "f08d7036dce2e5fbb55aa6073d1d99f6",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_sabertooth.json": {
+    "mtime": 1789782433.8237245,
+    "seen": 1789782853.7184484,
+    "ast_hash": "2f2ec3371d16da7646d9b7474b4bc35d",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_sarco.json": {
+    "mtime": 1789782433.8177226,
+    "seen": 1789782853.7184484,
+    "ast_hash": "15464fe4bd47ff6e9944dfc0ae49eff7",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_spinosaurus.json": {
+    "mtime": 1789782433.8067276,
+    "seen": 1789782853.7184484,
+    "ast_hash": "0544559ca88e61ef205e33950bce9a41",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_terrorbird.json": {
+    "mtime": 1789782433.8247225,
+    "seen": 1789782853.7184484,
+    "ast_hash": "fb8c0420ac0baa2d56e78d499f1e8de4",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_therizinosaurus.json": {
+    "mtime": 1789782433.8037226,
+    "seen": 1789782853.7184484,
+    "ast_hash": "0fe7efc8f2103dae6ce3364db169b10d",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_titanoboa.json": {
+    "mtime": 1789782433.8197217,
+    "seen": 1789782853.7184484,
+    "ast_hash": "8f7e5ba5ff6b5d0f10f271e66e283fc7",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_triceratops.json": {
+    "mtime": 1789782433.8037226,
+    "seen": 1789782853.7184484,
+    "ast_hash": "d30507e30788e32c4e43ae06ed640346",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_tusoteuthis.json": {
+    "mtime": 1789782433.8157253,
+    "seen": 1789782853.7184484,
+    "ast_hash": "d86727d99f00206ade51671ed1649256",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_tyrannosaurus.json": {
+    "mtime": 1789782433.8017242,
+    "seen": 1789782853.7184484,
+    "ast_hash": "dba5321a2f830e3a971070b45f43865e",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_unicorn.json": {
+    "mtime": 1789782433.8217244,
+    "seen": 1789782853.7184484,
+    "ast_hash": "cdfb952125168bc2b52f9d20930e705d",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier/spawn_velociraptor.json": {
+    "mtime": 1789782433.7967198,
+    "seen": 1789782853.7184484,
+    "ast_hash": "e6d18f8257ec2397291d1da9a2ef2074",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/aquatic/Water.java": {
+    "mtime": 1789782037.0820293,
+    "seen": 1789782853.7444327,
+    "ast_hash": "364267cb9060acd534c646c20d306687",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/flying/Nests.java": {
+    "mtime": 1789782141.9241471,
+    "seen": 1789782853.7464328,
+    "ast_hash": "f169d11f07781134554d70251151331a",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/land/LandWildlife.java": {
+    "mtime": 1789782086.1171978,
+    "seen": 1789782853.7464328,
+    "ast_hash": "dab4b1721f01af8345cd7de2b899b755",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/test_instance/spawn_budget.json": {
+    "mtime": 1789826957.7144456,
+    "seen": 1789827293.8484366,
+    "ast_hash": "c65bc8264515afad95837e84d67ca5ac",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/test_instance/spawn_pipeline.json": {
+    "mtime": 1789826957.7134478,
+    "seen": 1789827293.8484366,
+    "ast_hash": "1f5ef0501d6be72bcc35c5edd29e9f55",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/spawn/NaturalPopulations.java": {
+    "mtime": 1789839978.7467446,
+    "seen": 1789840257.292035,
+    "ast_hash": "bb262ee91828d7dae5fd3d1f7d345710",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/gametest/SpawnerGameTests.java": {
+    "mtime": 1789840135.96331,
+    "seen": 1789840257.3010411,
+    "ast_hash": "c08f88107bc28fdc95e22bd95fb28a25",
+    "semantic_hash": ""
+  },
+  "docs/inspection-report-2026-09-19.md": {
+    "mtime": 1789823248.490555,
+    "seen": 1789827293.8948689,
+    "ast_hash": "c52b9c4ec1334fb2f2cc7f3d36a48899",
+    "semantic_hash": ""
+  },
+  "docs/spawn-inspection-2026-09-19.md": {
+    "mtime": 1789840222.860933,
+    "seen": 1789840257.3256311,
+    "ast_hash": "0768c13e317a9c9a3863912907d14ea7",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/creature/LocomotionSignal.java": {
+    "mtime": 1789834072.0689383,
+    "seen": 1789834173.1638284,
+    "ast_hash": "5399d9acadbd1d433c6485cbddbe4927",
+    "semantic_hash": ""
+  },
+  "src/test/java/dev/nez/arksurvivalreturns/feature/creature/LocomotionSignalTest.java": {
+    "mtime": 1789834073.4956813,
+    "seen": 1789834173.1745124,
+    "ast_hash": "95f25e28600722d7e141e756d98321d7",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/assets/arksurvivalreturns/items/companion_whistle.json": {
+    "mtime": 1789837311.3978093,
+    "seen": 1789837466.7682474,
+    "ast_hash": "6027b1adc3c9d8d09e27ef46098afdcf",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/assets/arksurvivalreturns/models/item/companion_whistle.json": {
+    "mtime": 1789837311.364699,
+    "seen": 1789837466.7753372,
+    "ast_hash": "1706dc90b8b0f3477acf57c10260d3a3",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/test_instance/combat_timing.json": {
+    "mtime": 1789836520.793786,
+    "seen": 1789837466.7954774,
+    "ast_hash": "a4aa8e8c679bec0fa77d49a436ee08fc",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/test_instance/companion.json": {
+    "mtime": 1789837311.3978093,
+    "seen": 1789837466.7954774,
+    "ast_hash": "4c25fae7289899fb63c6eaa0f8c51c81",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/companion/CompanionGoal.java": {
+    "mtime": 1789837056.7414565,
+    "seen": 1789837466.811334,
+    "ast_hash": "d66c5ae1384bbd6457ba4b8dbfab984b",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/companion/CompanionOrder.java": {
+    "mtime": 1789837040.9220667,
+    "seen": 1789837466.811334,
+    "ast_hash": "0dc89ea33f6ece70b9397cd98241fa40",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/companion/CompanionService.java": {
+    "mtime": 1789837262.4260461,
+    "seen": 1789837466.811334,
+    "ast_hash": "4ea25b53d74ff74bfd69ea7594b45dcd",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/companion/CompanionState.java": {
+    "mtime": 1789837042.7126858,
+    "seen": 1789837466.811334,
+    "ast_hash": "2919877ca4f954487bd9f7c88986a481",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/companion/CompanionWhistleItem.java": {
+    "mtime": 1789837060.9647174,
+    "seen": 1789837466.811334,
+    "ast_hash": "bd172c81585fa024deac6c09e4154373",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/creature/CreatureAttackClips.java": {
+    "mtime": 1789837481.6243043,
+    "seen": 1789840257.2880282,
+    "ast_hash": "f37cabc0e2b84275cf41df61189c869f",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/gametest/CompanionGameTests.java": {
+    "mtime": 1789837295.4469936,
+    "seen": 1789837466.8165839,
+    "ast_hash": "8a918e5ba39dc090b4d3acebb22976f7",
+    "semantic_hash": ""
+  },
+  "src/generated/resources/data/arksurvivalreturns/test_instance/spawn_apex.json": {
+    "mtime": 1789840060.3424394,
+    "seen": 1789840257.2493045,
+    "ast_hash": "d225538bdb4021eaaef6263ab9ccda3b",
+    "semantic_hash": ""
+  },
+  "src/main/java/dev/nez/arksurvivalreturns/feature/spawn/WildlifeCommand.java": {
+    "mtime": 1789840013.7143307,
+    "seen": 1789840257.2930355,
+    "ast_hash": "c37f510b633dbbe4080a79af92f4e169",
     "semantic_hash": ""
   }
 }

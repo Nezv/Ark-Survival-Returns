@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/plesiosaur",
+  "spawners": {
+    "type": "arksurvivalreturns:plesiosaur",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 8
+  }
+}

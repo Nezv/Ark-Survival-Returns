@@ -30,6 +30,13 @@ public final class TamingAttachments {
                     .sync(TamingState.STREAM_CODEC)
                     .build());
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<
+            dev.nez.arksurvivalreturns.feature.companion.CompanionState>> COMPANION =
+            ATTACHMENTS.register("companion", () -> AttachmentType.serializable(
+                            dev.nez.arksurvivalreturns.feature.companion.CompanionState::new)
+                    .sync(dev.nez.arksurvivalreturns.feature.companion.CompanionState.STREAM_CODEC)
+                    .build());
+
     public static void register(net.neoforged.bus.api.IEventBus bus) {
         ATTACHMENTS.register(bus);
     }

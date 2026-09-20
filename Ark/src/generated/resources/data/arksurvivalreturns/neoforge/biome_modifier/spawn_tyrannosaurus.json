@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/tyrannosaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:tyrannosaurus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 12
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/sarco",
+  "spawners": {
+    "type": "arksurvivalreturns:sarco",
+    "maxCount": 3,
+    "minCount": 2,
+    "weight": 8
+  }
+}

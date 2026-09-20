@@ -1,11 +1,11 @@
 package dev.nez.arksurvivalreturns.gametest;
 
-import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
+import dev.nez.arksurvivalreturns.feature.creature.CreatureAttackClips;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.land.LandFamily;
-import dev.nez.arksurvivalreturns.feature.land.LandHabitats;
+import dev.nez.arksurvivalreturns.feature.land.LandWildlife;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -27,10 +27,13 @@ final class CollectionGameTests {
             h.assertTrue(entity != null && entity.species() == species, "Registration mismatch: " + species);
             h.assertTrue(ModContent.EGGS.get(species).get() != null, "Missing spawn egg: " + species);
             h.assertTrue(Math.abs(entity.getBbHeight() - species.height) < .001, "Hitbox mismatch: " + species);
+            h.assertFalse(entity.isLocomoting(), "Fresh creature already reported travel: " + species);
             h.assertTrue(entity.wildlife() != null && entity.wildlife().mind() != null, "Missing routine controller: " + species);
             h.assertTrue(species.strideCycleSeconds(false) > 0 && species.strideCycleSeconds(true) > 0, "Invalid cadence: " + species);
             h.assertTrue(species.runClip() != null && species.foodClip() != null && species.warningClip() != null,
                     "Missing role clip: " + species);
+            h.assertTrue(CreatureAttackClips.of(species) != null && CreatureAttackClips.of(species).attackTicks() > 0,
+                    "Missing melee timing: " + species);
             h.assertTrue(species.minimumDanger() >= 1 && species.minimumDanger() <= 5, "Danger outside 1-5: " + species);
             h.assertTrue(species.eyeBones().length == 0 || species.eyeBones().length == 2, "Eye bones must be empty or a pair: " + species);
             switch (species.realm()) {
@@ -89,45 +92,31 @@ final class CollectionGameTests {
 
     static void cold(GameTestHelper h) {
         var world = h.getLevel();
-        boolean enabled = Config.LAND_HABITATS.get();
-        try {
-            Config.LAND_HABITATS.set(true);
-            for (int x = 16; x < 48; x++) for (int z = 16; z < 48; z++) {
-                h.setBlock(x, 0, z, Blocks.STONE);
-                h.setBlock(x, 1, z, Blocks.SNOW_BLOCK);
-            }
-            var snow = h.absolutePos(new BlockPos(30, 1, 30));
-            h.assertTrue(Boolean.TRUE.equals(LandHabitats.coldHydration(world, snow)), "Snow block hydration rejected");
-            h.setBlock(31, 2, 31, Blocks.SNOW);
-            h.assertTrue(Boolean.TRUE.equals(LandHabitats.coldHydration(world, h.absolutePos(new BlockPos(31, 2, 31)))),
-                    "Snow layer hydration rejected");
-            h.setBlock(31, 2, 31, Blocks.AIR);
-
-            // A frozen crossing is useful only when a bounded check confirms water beneath the ice.
-            h.setBlock(40, 1, 20, Blocks.WATER);
-            h.setBlock(40, 2, 20, Blocks.WATER);
-            h.setBlock(40, 3, 20, Blocks.ICE);
-            var iceOverWater = h.absolutePos(new BlockPos(40, 3, 20));
-            h.assertTrue(Boolean.TRUE.equals(LandHabitats.coldHydration(world, iceOverWater)), "Ice over water rejected");
-            for (int y = 1; y <= 3; y++) h.setBlock(41, y, 21, Blocks.ICE);
-            h.assertFalse(Boolean.TRUE.equals(LandHabitats.coldHydration(world, h.absolutePos(new BlockPos(41, 3, 21)))),
-                    "Bare ice accepted as water");
-
-            // Snow browsing is a cold-adapted abstraction, never a warm-species one.
-            var browse = h.absolutePos(new BlockPos(32, 2, 32));
-            h.assertTrue(LandHabitats.forage(world, Species.MAMMOTH, browse), "Cold browser cannot use snow cover");
-            h.assertFalse(LandHabitats.forage(world, Species.PARASAUR, browse), "Warm species browsed snow");
-
-            // A cold herd accepts a snow-only site; a warm species still requires an exposed shore.
-            var origin = h.absolutePos(new BlockPos(28, 2, 28));
-            var site = LandHabitats.planCold(world, Species.MAMMOTH, origin);
-            h.assertTrue(site != null, "Cold herd site rejected on a snowfield");
-            h.assertTrue(Boolean.TRUE.equals(LandHabitats.coldHydration(world, site.water())), "Cold site has no hydration point");
-            h.assertTrue(site.weight() <= 0.6, "Cold site outweighed an exposed shore");
-            h.assertTrue(LandHabitats.planCold(world, Species.PARASAUR, origin) == null, "Warm species accepted a snow-only site");
-        } finally {
-            Config.LAND_HABITATS.set(enabled);
+        for (int x = 16; x < 48; x++) for (int z = 16; z < 48; z++) {
+            h.setBlock(x, 0, z, Blocks.STONE);
+            h.setBlock(x, 1, z, Blocks.SNOW_BLOCK);
         }
+        var snow = h.absolutePos(new BlockPos(30, 1, 30));
+        h.assertTrue(Boolean.TRUE.equals(LandWildlife.coldHydration(world, snow)), "Snow block hydration rejected");
+        h.setBlock(31, 2, 31, Blocks.SNOW);
+        h.assertTrue(Boolean.TRUE.equals(LandWildlife.coldHydration(world, h.absolutePos(new BlockPos(31, 2, 31)))),
+                "Snow layer hydration rejected");
+        h.setBlock(31, 2, 31, Blocks.AIR);
+
+        // A frozen crossing is useful only when a bounded check confirms water beneath the ice.
+        h.setBlock(40, 1, 20, Blocks.WATER);
+        h.setBlock(40, 2, 20, Blocks.WATER);
+        h.setBlock(40, 3, 20, Blocks.ICE);
+        var iceOverWater = h.absolutePos(new BlockPos(40, 3, 20));
+        h.assertTrue(Boolean.TRUE.equals(LandWildlife.coldHydration(world, iceOverWater)), "Ice over water rejected");
+        for (int y = 1; y <= 3; y++) h.setBlock(41, y, 21, Blocks.ICE);
+        h.assertFalse(Boolean.TRUE.equals(LandWildlife.coldHydration(world, h.absolutePos(new BlockPos(41, 3, 21)))),
+                "Bare ice accepted as water");
+
+        // Snow browsing is a cold-adapted abstraction, never a warm-species one.
+        var browse = h.absolutePos(new BlockPos(32, 2, 32));
+        h.assertTrue(LandWildlife.forage(world, Species.MAMMOTH, browse), "Cold browser cannot use snow cover");
+        h.assertFalse(LandWildlife.forage(world, Species.PARASAUR, browse), "Warm species browsed snow");
         h.succeed();
     }
     private CollectionGameTests() {}

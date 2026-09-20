@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/ankylosaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:ankylosaurus",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 10
+  }
+}

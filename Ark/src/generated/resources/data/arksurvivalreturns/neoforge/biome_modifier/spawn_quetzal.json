@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/quetzal",
+  "spawners": {
+    "type": "arksurvivalreturns:quetzal",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 2
+  }
+}

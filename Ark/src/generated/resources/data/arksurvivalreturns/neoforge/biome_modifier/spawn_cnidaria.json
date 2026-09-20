@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/cnidaria",
+  "spawners": {
+    "type": "arksurvivalreturns:cnidaria",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 8
+  }
+}

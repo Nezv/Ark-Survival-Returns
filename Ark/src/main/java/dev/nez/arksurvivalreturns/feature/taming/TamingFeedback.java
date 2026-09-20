@@ -4,7 +4,6 @@ import java.util.UUID;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -92,7 +91,7 @@ public final class TamingFeedback {
     public static void completed(Player player, CreatureEntity creature) {
         tell(player, Component.translatable("taming.arksurvivalreturns.tamed",
                 creature.getDisplayName()), false);
-        particles(creature, ParticleTypes.HEART);
+        hearts(creature);
     }
 
     public static void claimed(Player player, CreatureEntity creature) {

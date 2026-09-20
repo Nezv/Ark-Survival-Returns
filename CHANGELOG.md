@@ -27,6 +27,103 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 - Validated 205 runtime variant textures across 41 generated UV geometries, all four brush tests, and the
   full Gradle build.
 
+## Apex Encounters and Night Eyes — 2026-09-19
+
+- Regional large species (Tyrannosaurus, Giganotosaurus, Titanosaur, Spinosaurus, Acrocanthosaurus,
+  Brontosaurus, Therizinosaurus) treat their biome tag as a weight instead of a hard requirement: triple
+  odds in their habitat, base odds outside it, so a level-4/5 area can produce an apex even when no biome
+  tag covers it. The population budget also biases its first placement each pass toward one regional large
+  that is missing near the player — bounded, and never a forced spawn.
+- Giant bodies no longer need a collision-free adult volume to spawn. Placement checks a feet slab plus
+  solid-free headroom, ignores leaves, and keeps logs and terrain blocking, so an apex can stand under a
+  canopy. `/arkwildlife [radius]` (gamemaster) reports the danger band, biome, local population and the
+  exact placement failure tally per regional large species.
+- Night eyes redraw with a slightly inflated eyeball and a translucent-emissive render type so the glow is
+  not hidden inside the eyelid geometry, including under shaders. `nightEyeDebugLog` on the client prints
+  the first draw per species. The glow remains wild-only.
+- Validated with `runData`, `build` and all 37 headless GameTests, including the new `spawn_apex` suite.
+
+## Hit-Frame Combat and Companion Orders — 2026-09-19
+
+- Melee damage now lands on each attack clip's authored hit frame instead of the instant the AI decides to
+  attack. Wind-up and recovery come from the imported clip length (new `[combat]` settings), a target that
+  steps away makes the bite whiff, and attack speed now differs per species: the Velociraptor bites about
+  every 13 ticks, the Tyrannosaurus about every 28, the Acrocanthosaurus about every 71. Large bodies kick
+  dust and use heavier footstep sounds.
+- Tamed creatures gain standing orders: FOLLOW, STAY and WANDER, cycled with the new Companion Whistle
+  (sneak-use pets the creature with hearts). Orders are saved with the creature and moderated by new
+  `[companion]` settings. There is deliberately no teleport: a companion left behind waits where it stands
+  and resumes following when its owner is back in the same dimension.
+- Tamed creatures now defend themselves and their owner against attackers, and never target the owner or
+  another owned creature. Ground and amphibious companions path normally, flyers use their flight steering
+  and swimmers stay inside their water column.
+- Validated with `runData`, `build` and all 36 headless GameTests, including the new `combat_timing` and
+  `companion` suites.
+
+## Inspection Fixes — 2026-09-19
+
+1. Tamed creatures no longer run wild routines and can never attack their owner or rider.
+2. Tranquilizer arrow recipe repaired so it loads and can be crafted again.
+3. Torpor restraint is re-applied after a sedated ordinary mob reloads, and command torpor restrains too.
+4. Mount screen readouts now render inside the panel instead of at a doubled offset.
+5. All Brazilian Portuguese text replaced with correctly encoded accents.
+6. Unconscious players can no longer swim away from their anchor in water or lava.
+7. Titanosaur water search fixed so it can detect the water it walks to and drink.
+8. Wildlife hearing rejects out-of-range sounds before raycasts and chunk checks.
+9. Land wildlife decisions reuse pack scans and only probe water/forage terrain when needed.
+10. Xaero danger overlay reuses its exploration snapshot and throttles redraws while panning.
+11. Map legend now names danger ranks 4 and 5 consistently with biome announcements.
+12. Zero torpor recovery no longer leaves entities unconscious forever.
+13. Sedatives are consumed only when accepted, and always one item.
+14. Taming completion now shows the hearts burst.
+15. Saved wildlife homes no longer follow the temporary prey-herd anchor.
+16. Disabled-structure exploration maps no longer drop blank maps.
+17. Removed the unused FollowPackGoal.
+18. Mount screen Taming, Hunger and Torpor labels are localized in both shipped locales.
+19. Players without taming state no longer carry unused torpor/taming attachments.
+20. Added regression coverage for category mapping, world-generation spawning, natural persistence and the population budget.
+
+### Natural spawning rework
+
+- Chunk-generation spawn rules now accept the world-generation accessor, water-bound species use the
+  water-creature category, ground placement tolerates ordinary uneven terrain, and the danger gate is
+  served from a thread-safe layout snapshot so world generation never touches saved data.
+- Natural wildlife persists like vanilla animals; an independent population budget (new `[spawning]`
+  settings) tops up each player's surroundings without competing for the vanilla mob cap, and culls only
+  over-budget or abandoned wilds. Tames, spawn eggs and commands are unaffected.
+- Titanosaur and Giganotosaurus are budget-only: vanilla's world-generation spawner crashes when a body
+  is wider than one chunk, so these two no longer join the generated biome spawn tables and rely on the
+  population budget, eggs and commands instead.
+- Validated with `runData`, `build` and all 34 headless GameTests, including the two new spawn suites.
+
+## Vanilla Spawning — 2026-09-18
+
+Creatures now spawn through Minecraft's own spawner instead of a saved-habitat population director. The
+difficulty map, danger gating and per-species level scaling are unchanged; only the habitat system and the
+creature's relation to it were removed. Pack identity, herd defense, alarms, nighttime routines and taming
+are untouched.
+
+### Changed
+
+- **Spawning is vanilla-style.** Every species is added to its existing `spawns/<id>` biome tags through generated `neoforge:add_spawns` biome modifiers, carrying the previous weights and group sizes. The runtime placement predicate still enforces the danger/level gate, biome tag, surface support, body clearance and the water-column depth for water species.
+- **The population director is gone.** `PopulationDirector`, the per-dimension `checkIntervalTicks` budget, the local cap and the direct placement code were removed; vanilla mob caps and despawn now own density.
+- **Flyers keep nests and perching without colonies.** A natural flyer claims a single local nest of its own through the same site rules as before, lays an egg there, and defends it on theft. No colony record or map marker is saved, so discovery is by exploration.
+- **Land and water wildlife keep their behavior without habitat records.** Each creature roams from its saved per-creature home, finds local water for thirst, forages with the same cold/warm rules and sleeps on the same clock. The shared group hunger clock was replaced by the existing per-creature needs clock.
+- **Habitat map markers removed.** The nest, land and aquatic marker overlays and their payloads were deleted; the difficulty map, biome entry messages and map entitlement remain.
+
+### Removed
+
+- Saved habitat data and sync: `LandHabitatData`, `LandHabitatSync`, `LandHabitatPayload`, `LandWaterIndex`, `AquaticHabitats`, `HabitatData`, `HabitatSync`, `HabitatPayload`, `FlyerHabitats`, `GroupNeeds`.
+- Client overlays `XaeroHabitatOverlay`, `XaeroLandHabitatOverlay`, `LandHabitatSymbols` and `HabitatMapClient`.
+- Configuration: `[spawning]` now keeps only `enabled` and `minimumWaterDepth`; `[spawning.weights]`, the `[aquatic]` pool section and the `[landHabitats]` habitat keys were removed. The family roam/return/water distances moved to a new `[wildlife]` section.
+
+### Compatibility and known limitations
+
+- Both sides need the update: the habitat payloads and map marker overlays are gone.
+- Existing worlds keep their creatures; stale `*_habitats.dat` files are simply ignored.
+- The prior base required a valid water-adjacent habitat site before a land creature could spawn; that gate is what made the world feel sparse, and it is gone. Density now follows vanilla mob caps, so the per-species `enabled`/weight balance should be reviewed in play.
+- No interactive client was launched; nest appearance, perching, spawn density and the removal of the map markers need playtesting.
+
 ## Taming, Torpor & Riding — 2026-09-16
 
 All 41 registered creatures can now be tamed, saddled and ridden. Torpor, taming and riding share one

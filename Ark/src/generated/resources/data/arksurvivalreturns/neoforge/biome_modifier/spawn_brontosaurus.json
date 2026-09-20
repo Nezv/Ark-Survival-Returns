@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/brontosaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:brontosaurus",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 10
+  }
+}

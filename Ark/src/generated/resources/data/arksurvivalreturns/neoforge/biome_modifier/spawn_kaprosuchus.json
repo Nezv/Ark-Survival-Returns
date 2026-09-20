@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/kaprosuchus",
+  "spawners": {
+    "type": "arksurvivalreturns:kaprosuchus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 7
+  }
+}

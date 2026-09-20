@@ -3,24 +3,12 @@
   "category": "misc",
   "group": "tranquilizer_arrow",
   "ingredients": [
-    {
-      "item": "minecraft:arrow"
-    },
-    {
-      "item": "minecraft:arrow"
-    },
-    {
-      "item": "minecraft:arrow"
-    },
-    {
-      "item": "minecraft:arrow"
-    },
-    {
-      "item": "arksurvivalreturns:narcoberry"
-    },
-    {
-      "item": "minecraft:bone"
-    }
+    "minecraft:arrow",
+    "minecraft:arrow",
+    "minecraft:arrow",
+    "minecraft:arrow",
+    "arksurvivalreturns:narcoberry",
+    "minecraft:bone"
   ],
   "result": {
     "count": 4,

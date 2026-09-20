@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/dilophosaur",
+  "spawners": {
+    "type": "arksurvivalreturns:dilophosaur",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 12
+  }
+}

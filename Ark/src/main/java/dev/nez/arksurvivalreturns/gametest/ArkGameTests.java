@@ -33,6 +33,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("land_movement", () -> LandGameTests::movement);
         FUNCTIONS.register("population", () -> ArkGameTests::population);
         FUNCTIONS.register("behavior", () -> ArkGameTests::behavior);
+        FUNCTIONS.register("combat_timing", () -> ArkGameTests::combatTiming);
         FUNCTIONS.register("flying_ecology", () -> FlyingGameTests::ecology);
         FUNCTIONS.register("flying_pteranodon", () -> h -> FlyingGameTests.flight(h, Species.PTERANODON));
         FUNCTIONS.register("flying_argentavis", () -> h -> FlyingGameTests.flight(h, Species.ARGENTAVIS));
@@ -54,6 +55,10 @@ public final class ArkGameTests {
         FUNCTIONS.register("taming_completion", () -> TamingGameTests::completionKeepsSleep);
         FUNCTIONS.register("taming_claim_expiry", () -> TamingGameTests::claimExpiry);
         FUNCTIONS.register("taming_ordinary_mob", () -> TamingGameTests::ordinaryMobRestraint);
+        FUNCTIONS.register("companion", () -> CompanionGameTests::run);
+        FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
+        FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
+        FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);
@@ -127,11 +132,12 @@ public final class ArkGameTests {
         h.setBlock(8, 7, 8, Blocks.OAK_LEAVES);
         h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, pos, world.getRandom()), "Safe forest canopy rejected");
         h.setBlock(8, 7, 8, Blocks.AIR);
-        var large = create(h, Species.TRICERATOPS);
-        large.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), EntitySpawnReason.NATURAL, null);
-        world.addFreshEntity(large);
-        h.assertTrue(PopulationDirector.trySpawnGroup(world, pos, Species.TRICERATOPS, 4, world.getRandom()).isEmpty(), "New herd overlaps an existing creature");
-        large.discard();
+        var first = create(h, Species.TRICERATOPS);
+        var pack = first.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), EntitySpawnReason.NATURAL, null);
+        var second = create(h, Species.TRICERATOPS);
+        second.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), EntitySpawnReason.NATURAL, pack);
+        h.assertTrue(first.packId().equals(second.packId()), "Spawn cluster did not share one pack");
+        first.discard(); second.discard();
         h.succeed();
     }
     private static void progression(GameTestHelper h) {
@@ -139,11 +145,9 @@ public final class ArkGameTests {
         var profile = ProgressionData.get(world);
         h.assertTrue(create(h, Species.ARGENTAVIS) instanceof FlyingCreatureEntity, "Argentavis missing flying classification");
         h.assertTrue(create(h, Species.PTERANODON) instanceof FlyingCreatureEntity, "Pteranodon missing flying classification");
-        h.assertTrue(PopulationDirector.selectionWeight(Species.ARGENTAVIS, 4, true, 64, 63)
-                < PopulationDirector.selectionWeight(Species.ARGENTAVIS, 4, false, 110, 63), "Lowland habitat bonus defeated flyer altitude penalty");
         h.assertTrue(Species.ARGENTAVIS.cohesionDistance() >= 30, "Argent flock collapses into a tight pack");
-        h.assertTrue(!PopulationDirector.prioritySpecies(1).contains(Species.TYRANNOSAURUS)
-                && PopulationDirector.prioritySpecies(5).containsAll(java.util.List.of(Species.GIGANOTOSAURUS, Species.TITANOSAUR, Species.THERIZINOSAURUS)), "Priority population violates difficulty");
+        h.assertTrue(FlyingCreatureEntity.altitudeWeight(Species.ARGENTAVIS, 63 + 8, 63)
+                < FlyingCreatureEntity.altitudeWeight(Species.ARGENTAVIS, 63 + 40, 63), "Lowland altitude penalty defeated");
         // GameTestServer moves world spawn to its random test arena after ServerStartedEvent.
         // The original anchor must stay easy and must not follow that later spawn change.
         var spawn = new BlockPos(profile.originX(), 64, profile.originZ());
@@ -204,129 +208,75 @@ public final class ArkGameTests {
         h.succeed();
     }
     private static void population(GameTestHelper h) {
-        for (int x = 0; x < 128; x++) for (int z = 0; z < 128; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        for (int x = 0; x < 64; x++) for (int z = 0; z < 64; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
         var world = h.getLevel();
-        var viewer = h.absolutePos(new BlockPos(64, 2, 64));
-        var area = new net.minecraft.world.phys.AABB(viewer).inflate(PopulationDirector.RADIUS);
-        var weights = new java.util.EnumMap<Species, Integer>(Species.class);
-        Config.WEIGHTS.forEach((s, v) -> { weights.put(s, v.get()); v.set(s == Species.TRICERATOPS ? 12 : 0); });
-        var random = net.minecraft.util.RandomSource.create(812763L);
-        var storage = world.getServer().overworld().getDataStorage();
-        var originalProgression = ProgressionData.get(world);
-        boolean originalLandHabitats = Config.LAND_HABITATS.get();
+        var viewer = h.absolutePos(new BlockPos(32, 2, 32));
+        var oldProgression = ProgressionData.get(world);
+        var animals = new java.util.ArrayList<CreatureEntity>();
         try {
-            // This dry, synchronous fixture verifies the supported legacy replenishment mode.
-            // Water-associated habitats use asynchronous surveys and replacement cooldowns.
-            Config.LAND_HABITATS.set(false);
-            h.assertTrue(PopulationDirector.trySpawnGroup(world, viewer, Species.PTERANODON, 1, random).isEmpty(), "Created lone pack animal at cap");
-            int chunks = world.getChunkSource().getLoadedChunksCount();
-            for (int i = 0; i < 12; i++) {
-                int added = PopulationDirector.replenish(world, viewer, 2, random);
-                h.assertTrue(added <= 2, "Per-pass budget exceeded");
+            world.getDataStorage().set(ProgressionData.TYPE, new ProgressionData(viewer.getX() - 512, viewer.getZ(), 256, true));
+            h.assertTrue(BiomeTier.at(world, viewer).dangerLevel() == 5, "Fixture is not danger 5");
+            var trike = ModContent.CREATURES.get(Species.TRICERATOPS).get();
+            h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer, world.getRandom()), "Valid danger-5 trike spawn rejected");
+            h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer.above(4), world.getRandom()) == false, "Covered spawn accepted");
+            h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(viewer), 1), "Apex allowed at danger 1");
+            h.assertTrue(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(viewer), 5), "Apex rejected at danger 5");
+            // A vanilla spawn cluster shares one pack identity and stays inside the local level band.
+            var difficulty = world.getCurrentDifficultyAt(viewer);
+            net.minecraft.world.entity.SpawnGroupData pack = null;
+            for (int i = 0; i < 3; i++) {
+                var mob = ModContent.CREATURES.get(Species.TRICERATOPS).get().create(world, EntitySpawnReason.NATURAL);
+                mob.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(viewer.offset(i, 0, 0)));
+                pack = mob.finalizeSpawn(world, difficulty, EntitySpawnReason.NATURAL, pack);
+                world.addFreshEntity(mob);
+                animals.add(mob);
             }
-            var wildlife = world.getEntitiesOfClass(CreatureEntity.class, area, CreatureEntity::isNaturalWildlife);
-            h.assertTrue(PopulationDirector.groupCount(wildlife) == Config.MIN_GROUPS.get(), "Minimum groups not replenished: " + PopulationDirector.groupCount(wildlife));
-            h.assertTrue(wildlife.size() <= Config.LOCAL_CAP.get(), "Population cap exceeded");
-            var packs = wildlife.stream().collect(java.util.stream.Collectors.groupingBy(CreatureEntity::packId));
-            for (var pack : packs.values()) {
-                h.assertTrue(pack.size() >= 2 && pack.size() <= 4, "Partial/oversized pack");
-                for (var creature : pack) {
-                    var tier = BiomeTier.at(world, creature.blockPosition());
-                    h.assertTrue(creature.creatureLevel() >= Config.MIN_LEVEL.get(tier).get()
-                            && creature.creatureLevel() <= Config.MAX_LEVEL.get(tier).get(), "Level outside local danger range");
-                }
+            h.assertTrue(animals.stream().allMatch(c -> c.packId().equals(animals.getFirst().packId())), "Spawn cluster split its pack");
+            for (var creature : animals) {
+                var tier = BiomeTier.at(world, creature.blockPosition());
+                h.assertTrue(creature.creatureLevel() >= Config.MIN_LEVEL.get(tier).get()
+                        && creature.creatureLevel() <= Config.MAX_LEVEL.get(tier).get(), "Level outside local danger range");
             }
-            h.assertTrue(PopulationDirector.replenish(world, viewer.offset(1, 0, 1), 2, random) == 0, "Overlapping player duplicated population");
-            packs.values().iterator().next().forEach(net.minecraft.world.entity.Entity::discard);
-            world.getGameRules().set(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS, false, world.getServer());
-            try {
-                h.assertTrue(PopulationDirector.replenish(world, viewer, 2, random) == 0, "Spawn game rule ignored");
-            } finally {
-                world.getGameRules().set(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS, true, world.getServer());
-            }
-            for (int i = 0; i < 12; i++) PopulationDirector.replenish(world, viewer, 2, random);
-            wildlife = world.getEntitiesOfClass(CreatureEntity.class, area, CreatureEntity::isNaturalWildlife);
-            h.assertTrue(PopulationDirector.groupCount(wildlife) == Config.MIN_GROUPS.get(), "Lost pack was not replaced");
-            h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks, "Population refill loaded chunks");
-            storage.set(ProgressionData.TYPE, new ProgressionData(viewer.getX() - 512, viewer.getZ(), 256, true));
-            h.assertTrue(BiomeTier.at(world, viewer).dangerLevel() == 5, "Apex test setup was not danger 5");
-            Config.WEIGHTS.get(Species.GIGANOTOSAURUS).set(8);
-            for (int i = 0; i < 20; i++) PopulationDirector.replenish(world, viewer, 2, random);
-            h.assertTrue(world.getEntitiesOfClass(CreatureEntity.class, area, c -> c.species() == Species.GIGANOTOSAURUS).size() >= 1,
-                    "Common groups prevented priority apex replenishment");
-            PopulationDirector.prioritySpecies(5).forEach(s -> Config.WEIGHTS.get(s).set(s.weight));
-            for (int i = 0; i < 8; i++)
-                h.assertTrue(PopulationDirector.replenish(world, viewer, 2, random) == 0,
-                        "Established high-danger population was expanded into a roster of every large species");
-            world.getEntitiesOfClass(CreatureEntity.class, area, CreatureEntity::isNaturalWildlife).forEach(net.minecraft.world.entity.Entity::discard);
-            for (var species : new Species[]{Species.TYRANNOSAURUS, Species.GIGANOTOSAURUS, Species.TITANOSAUR}) {
-                var group = PopulationDirector.trySpawnGroup(world, viewer, species, 32, random);
-                h.assertTrue(group.size() == 1, "Valid high-danger apex spawn failed: " + species);
-                group.forEach(net.minecraft.world.entity.Entity::discard);
-            }
-            // A gently stepped footprint used to reject every large animal unless perfectly flat.
-            h.setBlock(60, 2, 60, Blocks.GRASS_BLOCK);
-            h.setBlock(60, 2, 61, Blocks.GRASS_BLOCK);
-            h.setBlock(61, 2, 60, Blocks.GRASS_BLOCK);
-            h.setBlock(61, 2, 61, Blocks.GRASS_BLOCK);
-            for (int x = 59; x <= 63; x++) for (int z = 59; z <= 63; z++) h.setBlock(x, 2, z, Blocks.GRASS_BLOCK);
-            var uneven = SpawnRules.placementSurface(world, Species.TRICERATOPS, viewer.getX() - 3, viewer.getZ() - 3);
-            h.assertTrue(uneven != null && SpawnRules.canSpawn(ModContent.CREATURES.get(Species.TRICERATOPS).get(), world,
-                    EntitySpawnReason.NATURAL, uneven, random), "Safe uneven footprint rejected");
-            for (int x = 59; x <= 63; x++) for (int z = 59; z <= 63; z++) h.setBlock(x, 2, z, Blocks.AIR);
-            var trikes = PopulationDirector.trySpawnGroup(world, viewer, Species.TRICERATOPS, 4, random);
-            h.assertTrue(trikes.size() >= 2 && trikes.size() <= 4, "Trike herd size wrong");
-            trikes.forEach(net.minecraft.world.entity.Entity::discard);
-            Config.WEIGHTS.get(Species.TYRANNOSAURUS).set(12);
-            var encounter = PopulationDirector.trySpawnBrontoEncounter(world, viewer, 5, random);
-            var brontos = encounter.stream().filter(c -> c.species() == Species.BRONTOSAURUS).toList();
-            var rex = encounter.stream().filter(c -> c.species() == Species.TYRANNOSAURUS).findFirst().orElse(null);
-            h.assertTrue(brontos.size() >= 2 && brontos.size() <= 4 && rex != null, "Bronto encounter lacks herd or Rex");
-            h.assertTrue(rex.wildlife().preyHerd().equals(brontos.getFirst().packId()) && rex.distanceTo(brontos.getFirst()) <= 64,
-                    "Rex is not linked to a nearby prey herd");
-            encounter.forEach(c -> c.setNoAi(true));
-            var first = brontos.getFirst(); var defender = brontos.get(1);
-            first.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(viewer));
-            // Remain inside night/rain sight range as well as daytime range.
-            defender.setPos(first.position().add(0, 0, 12));
-            rex.setPos(first.position().add(12, 0, 0));
-            rex.yBodyRot = 90; first.yBodyRot = -90; defender.yBodyRot = -90;
-            rex.wildlife().mind().restoreNeeds(0.9, 0.1, 0.1);
-            for (int i = 0; i < 8; i++) rex.wildlife().think();
-            h.assertFalse(rex.behavior().combat(), "Rex immediately attacked a healthy defended herd");
-            h.assertTrue(rex.doHurtTarget(world, first), "Herd test attack failed");
-            first.wildlife().think(); defender.wildlife().think();
-            h.assertTrue(defender.behavior() == dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.DEFEND, "Herd did not defend attacked member");
-            rex.setHealth(rex.getMaxHealth() * 0.2f); rex.wildlife().think();
-            h.assertTrue(rex.behavior() == dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.FLEE, "Injured Rex did not retreat");
-            encounter.forEach(net.minecraft.world.entity.Entity::discard);
-            // Measure actual travel, not just attribute values. Ordinary flat land is the sprint reference.
-            for (var species : new Species[]{Species.TYRANNOSAURUS, Species.GIGANOTOSAURUS, Species.VELOCIRAPTOR, Species.TITANOSAUR}) {
-                var probe = new MovementProbe(world, species);
-                probe.setNoAi(true); probe.setNoGravity(true); probe.setYRot(0);
-                probe.setSpeed((float)MovementTuning.attribute(Config.SPRINT_RATIO.get(species).get(), Config.PLAYER_SPRINT_REFERENCE.get()));
-                double target = Config.PLAYER_SPRINT_REFERENCE.get() * Config.SPRINT_RATIO.get(species).get();
-                for (boolean water : new boolean[]{false, true}) {
-                    probe.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(viewer));
-                    probe.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
-                    var input = new net.minecraft.world.phys.Vec3(0, 0, probe.getSpeed() * 0.98);
-                    for (int i = 0; i < 15; i++) { probe.setOnGround(true); if (water) probe.waterStep(input); else probe.travel(input); }
-                    double start = probe.getZ();
-                    for (int i = 0; i < 20; i++) { probe.setOnGround(true); if (water) probe.waterStep(input); else probe.travel(input); }
-                    double expected = target * (water ? Config.WATER_RETENTION.get(species).get() : 1);
-                    h.assertTrue(Math.abs((probe.getZ() - start) - expected) < expected * 0.04,
-                            "Travel speed mismatch for " + species + (water ? " water " : " land ") + (probe.getZ() - start) + " vs " + expected);
-                }
-                probe.discard();
-            }
-            h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks, "Herd/roster spawning loaded chunks");
         } finally {
-            Config.LAND_HABITATS.set(originalLandHabitats);
-            storage.set(ProgressionData.TYPE, originalProgression);
-            weights.forEach((s, v) -> Config.WEIGHTS.get(s).set(v));
-            world.getEntitiesOfClass(CreatureEntity.class, area, CreatureEntity::isNaturalWildlife).forEach(net.minecraft.world.entity.Entity::discard);
+            animals.forEach(net.minecraft.world.entity.Entity::discard);
+            world.getDataStorage().set(ProgressionData.TYPE, oldProgression);
         }
         h.succeed();
+    }
+    private static void combatTiming(GameTestHelper h) {
+        var world = h.getLevel();
+        for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var raptor = create(h, Species.VELOCIRAPTOR);
+        world.addFreshEntity(raptor);
+        var pig = net.minecraft.world.entity.EntityTypes.PIG.create(world, EntitySpawnReason.COMMAND);
+        pig.setNoAi(true);
+        pig.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);
+        pig.setHealth(1000);
+        pig.setPos(raptor.position().add(0, 0, 1.0));
+        world.addFreshEntity(pig);
+        var clips = CreatureAttackClips.of(Species.VELOCIRAPTOR);
+        int hitDelay = (int)Math.round(clips.attackTicks() * Config.COMBAT_HIT_FRACTION.get());
+        int cooldown = clips.attackTicks() + (int)Math.round(clips.attackTicks() * Config.COMBAT_RECOVERY_FRACTION.get());
+        float before = pig.getHealth();
+        float[] baseline = {before};
+        h.assertTrue(raptor.strike(pig), "Raptor strike was rejected");
+        h.assertTrue(pig.getHealth() == before, "Damage landed before the wind-up");
+        h.runAfterDelay(hitDelay + 2, () -> {
+            h.assertTrue(pig.getHealth() < baseline[0], "The bite never landed on its hit frame");
+            baseline[0] = pig.getHealth();
+            h.assertFalse(raptor.canStrike(), "Attack cooldown ended with the clip");
+        });
+        h.runAfterDelay(cooldown + 4, () -> {
+            h.assertTrue(raptor.canStrike(), "Attack cooldown never ended");
+            // Within sight but out of melee reach: the wind-up starts, the hit has to whiff.
+            pig.setPos(raptor.position().add(0, 0, 6));
+            h.assertTrue(raptor.strike(pig), "Out-of-reach wind-up was rejected (line of sight is clear)");
+        });
+        h.runAfterDelay(cooldown + 4 + clips.attackTicks() + 2, () -> {
+            h.assertTrue(pig.getHealth() == baseline[0], "A whiffed swing still landed damage");
+            raptor.discard(); pig.discard();
+            h.succeed();
+        });
     }
     private static void behavior(GameTestHelper h) {
         var world = h.getLevel();
@@ -359,9 +309,13 @@ public final class ArkGameTests {
             for (int x = 0; x < 16; x++) for (int y = 2; y <= 10; y++) h.setBlock(x, y, 8, Blocks.AIR);
             prey.setPos(predator.position().add(0, 0, 2)); prey.setHealth(0.1f);
             for (int i = 0; i < 8; i++) predator.wildlife().think();
+            h.assertTrue(predator.isStriking(), "Close visible predator never began its strike");
+            // combat_timing covers the wind-up; land the bite directly to verify the kill feeds the mind.
+            h.assertTrue(predator.doHurtTarget(world, prey), "Close visible attack failed");
             h.assertFalse(prey.isAlive(), "Close visible attack failed");
             h.assertTrue(predator.wildlife().mind().hunger() < 0.1, "Kill did not satisfy predator hunger");
-            h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks, "Behavior loaded chunks");
+            h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks,
+                    "Behavior loaded chunks: was=" + chunks + " now=" + world.getChunkSource().getLoadedChunksCount());
         } finally { predator.discard(); prey.discard(); world.clockManager().setTotalTicks(clock, originalTime); }
         h.succeed();
     }

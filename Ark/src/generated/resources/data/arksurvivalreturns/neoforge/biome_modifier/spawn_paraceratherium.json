@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/paraceratherium",
+  "spawners": {
+    "type": "arksurvivalreturns:paraceratherium",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 6
+  }
+}

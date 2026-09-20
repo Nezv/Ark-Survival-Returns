@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/therizinosaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:therizinosaurus",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 12
+  }
+}

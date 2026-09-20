@@ -1,16 +1,16 @@
-# Graph Report - Ark  (2026-09-14)
+# Graph Report - Ark  (2026-09-18)
 
 ## Corpus Check
-- 269 files · ~121,231 words
+- 615 files · ~188,275 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1118 nodes · 2698 edges · 52 communities (48 shown, 4 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 113 edges (avg confidence: 0.82)
+- 1988 nodes · 5238 edges · 95 communities (81 shown, 14 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 171 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ddf39929`
+- Built from commit: `0406b43b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,124 +20,163 @@
 - net.minecraft.server.level.ServerPlayer
 - XaeroLandHabitatOverlay
 - ArkData
-- XaeroDangerOverlay
+- DangerMapClient
 - Snow Biome Patch — proposal
 - FlyingCreatureEntity
 - Ark Survival Returns
-- BehaviorState
+- WildlifeMind
 - import_creatures.py
 - build_test_structure.py
 - gradlew
 - Land Ecosystem & Behavior Patch — proposal
 - net.minecraft.server.level.ServerLevel
-- ProgressionData.java
-- flying-ecosystem.md
-- net.minecraft.gametest.framework.GameTestHelper
+- SpawnRules.java
+- Verification — 2026-09-07
+- BiomeTier
 - preview_danger_map.py
 - Species.java
 - NestBlock
 - verify_client_pack.py
-- ModContent
+- Config
 - NightEyesLayer.java
 - net.minecraft.core.BlockPos
 - DinoDebugClient
-- ArkSurvivalReturns.java
-- DinoDebugSnapshot
-- DangerMapClient
-- TargetHealthBar
-- XaeroDangerOverlay.java
-- HabitatPayload
+- net.neoforged.fml.common.EventBusSubscriber
+- .capture
+- net.minecraft.network.chat.Component
 - net.neoforged.bus.api.SubscribeEvent
-- SpawnRules.java
+- .level
+- net.minecraft.network.RegistryFriendlyByteBuf
+- HabitatPayload
+- net.minecraft.world.level.Level
 - Land Ecosystem & Behavior Patch: flying habitats
-- Wildlife behavior: research and implemented model
+- README.md
 - org.junit.jupiter.api.Test
-- WildlifeGoal.java
+- UnconsciousBehavior
 - Nighttime patch proposal
 - dev-dependencies.json
-- DinoDebugSync.java
+- DinoDebugSync
 - Creature expansion — 2026-09-12
 - Optional client pack and difficulty map
-- Flying Ecosystem — 2026-09-11
-- WildlifeSenses
-- HabitatMapClient
-- DangerMapView
-- DangerMapPayload
+- net.minecraft.world.entity.LivingEntity
+- CreatureMountMenu
+- TamingState
+- Exploration
+- AquaticHabitats
 - CreatureEntity.java
-- README.md
+- Species
+- net.minecraft.world.entity.player.Player
+- ThemeGameTests.java
+- .replenish
+- HostileGuard.java
+- net.minecraft.world.entity.Entity
+- net.minecraft.world.item.ItemStack
+- TorporState
+- net.minecraft.world.phys.Vec3
+- AquaticCreatureEntity.java
+- TamingGameTests.java
+- LandFamily
+- build_taming_manifests.py
+- WildlifeController
+- BehaviorState
+- LandWaterIndex
+- Observation
+- 2. Execution paths
+- .of
+- CreatureRideProfile
+- Land Ecosystem & Behavior Patch
+- .initializeLevel
+- CreatureRenderer.java
+- Taming patch proposal
+- Theme alignment
+- Phase
+- MovementTuning
+- .spawn
+- build_taming_roster.py
+- Collection ecosystem — ice, flying, aquatic and swamp
+- taming-proposal.md
+- TamingAttachments
+- GroupNeeds
+- CreatureSize
+- Event
+- LandSymbolsTest.java
+- herd
+- .hold
+- BehaviorState.java
+- Realm
+- MovementProbe
+- sleepClip
+- .run
+- CollectionGameTests
 
 ## God Nodes (most connected - your core abstractions)
-1. `CreatureEntity` - 98 edges
-2. `Species` - 77 edges
-3. `FlyingCreatureEntity` - 37 edges
-4. `WildlifeGoal` - 35 edges
-5. `LandHabitats` - 32 edges
-6. `ArkSurvivalReturns` - 31 edges
-7. `ModContent` - 31 edges
-8. `BehaviorState` - 27 edges
-9. `Habitat` - 27 edges
-10. `Config` - 26 edges
+1. `CreatureEntity` - 204 edges
+2. `Species` - 140 edges
+3. `TamingState` - 55 edges
+4. `TorporState` - 51 edges
+5. `FlyingCreatureEntity` - 49 edges
+6. `ArkSurvivalReturns` - 48 edges
+7. `Config` - 48 edges
+8. `ModContent` - 45 edges
+9. `LandHabitats` - 38 edges
+10. `TorporService` - 37 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `View` --references--> `DangerMapPayload`  [EXTRACTED]
+  src/main/java/dev/nez/arksurvivalreturns/client/XaeroDangerOverlay.java → src/main/java/dev/nez/arksurvivalreturns/feature/map/DangerMapPayload.java
 - `Config` --references--> `Species`  [EXTRACTED]
   src/main/java/dev/nez/arksurvivalreturns/Config.java → src/main/java/dev/nez/arksurvivalreturns/feature/creature/Species.java
 - `Config` --references--> `LandFamily`  [EXTRACTED]
   src/main/java/dev/nez/arksurvivalreturns/Config.java → src/main/java/dev/nez/arksurvivalreturns/feature/land/LandFamily.java
 - `Config` --references--> `BiomeTier`  [EXTRACTED]
   src/main/java/dev/nez/arksurvivalreturns/Config.java → src/main/java/dev/nez/arksurvivalreturns/feature/spawn/BiomeTier.java
-- `CreatureModel` --references--> `CreatureEntity`  [EXTRACTED]
-  src/main/java/dev/nez/arksurvivalreturns/client/CreatureModel.java → src/main/java/dev/nez/arksurvivalreturns/feature/creature/CreatureEntity.java
-- `CreatureModel` --references--> `Species`  [EXTRACTED]
-  src/main/java/dev/nez/arksurvivalreturns/client/CreatureModel.java → src/main/java/dev/nez/arksurvivalreturns/feature/creature/Species.java
+- `Config` --references--> `CreatureSize`  [EXTRACTED]
+  src/main/java/dev/nez/arksurvivalreturns/Config.java → src/main/java/dev/nez/arksurvivalreturns/feature/taming/CreatureSize.java
 
 ## Import Cycles
 - None detected.
 
-## Communities (52 total, 4 thin omitted)
+## Communities (95 total, 14 thin omitted)
 
 ### Community 0 - "WildlifeGoal"
-Cohesion: 0.16
-Nodes (6): net.minecraft.world.entity.LivingEntity, net.minecraft.world.phys.Vec3, Habitat, Override, WildlifeGoal, Noise
+Cohesion: 0.05
+Nodes (16): net.neoforged.neoforge.event.level.block.BreakBlockEvent, AquaticGoal, BlockPos, Habitat, Override, NighttimeCycle, BlockPos, Habitat (+8 more)
 
 ### Community 1 - "CreatureEntity"
-Cohesion: 0.08
-Nodes (14): com.geckolib.animatable.instance.AnimatableInstanceCache, PathfinderMob, SoundEvent, CreatureEntity, BlockPos, BlockState, Builder, ControllerRegistrar (+6 more)
+Cohesion: 0.06
+Nodes (17): com.geckolib.animatable.instance.AnimatableInstanceCache, MoveFunction, PathfinderMob, SoundEvent, CreatureEntity, BlockPos, BlockState, Builder (+9 more)
 
 ### Community 2 - "net.minecraft.server.level.ServerPlayer"
 Cohesion: 0.10
-Nodes (13): CommandSourceStack, net.minecraft.server.level.ServerPlayer, Marker, PlayerChangedDimensionEvent, PlayerLoggedInEvent, PlayerLoggedOutEvent, PlayerRespawnEvent, Post (+5 more)
+Nodes (14): net.minecraft.server.level.ServerPlayer, net.neoforged.neoforge.event.RegisterCommandsEvent, Marker, PlayerChangedDimensionEvent, PlayerLoggedInEvent, PlayerLoggedOutEvent, PlayerRespawnEvent, Post (+6 more)
 
 ### Community 3 - "XaeroLandHabitatOverlay"
-Cohesion: 0.25
+Cohesion: 0.23
 Nodes (5): MapOverlayContext, Marker, Post, Visible, XaeroLandHabitatOverlay
 
 ### Community 4 - "ArkData"
-Cohesion: 0.18
-Nodes (7): CachedOutput, Client, DataProvider, JsonElement, PackOutput, ArkData, Override
+Cohesion: 0.17
+Nodes (7): CachedOutput, Client, DataProvider, PackOutput, ArkData, JsonElement, Override
 
-### Community 5 - "XaeroDangerOverlay"
-Cohesion: 0.22
-Nodes (3): net.neoforged.fml.event.lifecycle.FMLClientSetupEvent, Post, XaeroDangerOverlay
+### Community 5 - "DangerMapClient"
+Cohesion: 0.12
+Nodes (9): io.github.billstark001.xaerobridge.api.MapOverlayContext, net.minecraft.client.gui.screens.Screen, net.neoforged.fml.event.lifecycle.FMLClientSetupEvent, Opening, DangerMapClient, LoggingOut, Post, View (+1 more)
 
 ### Community 6 - "Snow Biome Patch — proposal"
-Cohesion: 0.20
+Cohesion: 0.22
 Nodes (9): Current assets and integration gap, Direction, Habitats: rivers plus shelter, Implementation after feedback, Optional freezing-mod integration, Population, map and performance, Recommended species behavior, Routines and survival gameplay (+1 more)
 
 ### Community 7 - "FlyingCreatureEntity"
 Cohesion: 0.08
-Nodes (21): net.minecraft.world.entity.player.Player, FlyingCreatureEntity, Builder, ControllerRegistrar, DamageSource, Entity, EntityDataAccessor, EntityType (+13 more)
+Nodes (19): FlyingCreatureEntity, Builder, ControllerRegistrar, DamageSource, Entity, EntityDataAccessor, Habitat, Override (+11 more)
 
 ### Community 8 - "Ark Survival Returns"
-Cohesion: 0.18
-Nodes (11): Ark Survival Returns, Berries, Build and verification, Configuration, Difficulty and levels, Flying habitats and eggs, Play on Windows, Playable systems (+3 more)
-
-### Community 9 - "BehaviorState"
-Cohesion: 0.05
-Nodes (22): alarm(), BehaviorState, ALERT, DEFEND, DRINK, FEED, FLEE, FORAGE (+14 more)
+Cohesion: 0.15
+Nodes (13): Ark Survival Returns, Berries, Build and verification, Configuration, Difficulty and levels, Flying habitats and eggs, Play on Windows, Playable systems (+5 more)
 
 ### Community 10 - "import_creatures.py"
-Cohesion: 0.09
-Nodes (18): berry(), main(), Author crisp 32px item sprites from pixel shapes, and an inventory review sheet., Asset/controller contracts for the September 12 creature expansion. Family…, main(), Import only runtime clips; normalize geometry and position tracks together.…, Authored quiet standing sleep: stable feet, lowered head, closed eyes and slow…, scale_track() (+10 more)
+Cohesion: 0.08
+Nodes (27): berry(), main(), Author crisp 32px item sprites from pixel shapes, and an inventory review sheet., import_clips(), Asset/controller contracts for the ice, flying, aquatic and swamp collection.…, Ordered clip names the importer must copy. Index 0 is idle, 2 is the attack…, Asset/controller contracts for the September 12 creature expansion. Family…, main() (+19 more)
 
 ### Community 11 - "build_test_structure.py"
 Cohesion: 0.60
@@ -148,92 +187,96 @@ Cohesion: 0.83
 Nodes (3): gradlew script, die(), warn()
 
 ### Community 13 - "Land Ecosystem & Behavior Patch — proposal"
-Cohesion: 0.08
-Nodes (23): Ark Survival Returns, Design precedents and scope choices, Existing behavior compared with the request, Families and initial distances, Group decisions and satiation, Habitat lifecycle and save migration, Implementation and acceptance checks after feedback, Land Ecosystem & Behavior Patch — proposal (+15 more)
+Cohesion: 0.14
+Nodes (12): Ark Survival Returns, Design precedents and scope choices, Existing behavior compared with the request, Families and initial distances, Group decisions and satiation, Habitat lifecycle and save migration, Implementation and acceptance checks after feedback, Land Ecosystem & Behavior Patch — proposal (+4 more)
 
 ### Community 16 - "net.minecraft.server.level.ServerLevel"
-Cohesion: 0.05
-Nodes (47): AABB, EntityLeaveLevelEvent, net.minecraft.server.level.ServerLevel, net.minecraft.util.RandomSource, Pre, Species, ACROCANTHOSAURUS, ALLOSAURUS (+39 more)
+Cohesion: 0.19
+Nodes (8): net.minecraft.server.level.ServerLevel, Budget, BlockPos, Vec3, LandHabitats, Shore, Site, BlockPos
 
-### Community 17 - "ProgressionData.java"
-Cohesion: 0.15
-Nodes (6): net.minecraft.world.level.saveddata.SavedData, net.minecraft.world.level.saveddata.SavedDataType, net.neoforged.neoforge.event.RegisterCommandsEvent, net.neoforged.neoforge.event.server.ServerStartedEvent, MapUnlockData, ProgressionData
+### Community 17 - "SpawnRules.java"
+Cohesion: 0.10
+Nodes (8): net.minecraft.world.level.saveddata.SavedData, net.minecraft.world.level.saveddata.SavedDataType, net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent, net.neoforged.neoforge.event.server.ServerStartedEvent, net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent, MapUnlockData, ProgressionData, SpawnRules
 
-### Community 18 - "flying-ecosystem.md"
-Cohesion: 0.29
+### Community 18 - "Verification — 2026-09-07"
+Cohesion: 0.40
 Nodes (4): Gameplay coverage, Map and client pack coverage, Verification — 2026-09-07, World compatibility and scope
 
-### Community 19 - "net.minecraft.gametest.framework.GameTestHelper"
-Cohesion: 0.07
-Nodes (24): net.minecraft.ChatFormatting, net.minecraft.core.Holder, net.minecraft.gametest.framework.GameTestHelper, net.minecraft.world.level.biome.Biome, net.neoforged.neoforge.registries.DeferredRegister, BiomeAnnouncements, PlayerLoggedOutEvent, Post (+16 more)
+### Community 19 - "BiomeTier"
+Cohesion: 0.23
+Nodes (10): net.minecraft.core.Holder, net.minecraft.world.level.biome.Biome, at(), BiomeTier, EASY, EXTREME, HARD, MODERATE (+2 more)
 
 ### Community 20 - "preview_danger_map.py"
 Cohesion: 0.67
 Nodes (3): danger(), main(), Plot the production danger-region formula and its discrete area shares.
 
 ### Community 21 - "Species.java"
-Cohesion: 0.09
-Nodes (21): additiveFood(), cohesionDistance(), defaultSprintRatio(), defensiveHerd(), family(), flyer(), foodClip(), groupHeightRange() (+13 more)
+Cohesion: 0.10
+Nodes (9): additiveFood(), defaultSprintRatio(), eyeBones(), FlyerProfile, foodClip(), glowingEyes(), runClip(), sprintRatioDefault() (+1 more)
 
 ### Community 22 - "NestBlock"
-Cohesion: 0.14
-Nodes (19): Block, BlockHitResult, CollisionContext, com.mojang.serialization.MapCodec, Direction, InteractionHand, InteractionResult, LevelReader (+11 more)
+Cohesion: 0.12
+Nodes (20): Block, BlockHitResult, CollisionContext, com.mojang.serialization.MapCodec, LevelReader, net.minecraft.world.level.block.state.properties.BooleanProperty, ScheduledTickAccess, BlockGetter (+12 more)
 
-### Community 24 - "ModContent"
+### Community 24 - "Config"
 Cohesion: 0.11
-Nodes (18): Blocks, BooleanValue, DeferredBlock, DeferredHolder, DeferredItem, IntValue, Items, net.minecraft.world.entity.EntityType (+10 more)
+Nodes (19): Blocks, BooleanValue, DeferredBlock, DeferredItem, IntValue, Item, Items, net.minecraft.world.entity.SpawnGroupData (+11 more)
 
 ### Community 25 - "NightEyesLayer.java"
-Cohesion: 0.08
-Nodes (24): com.geckolib.cache.model.GeoBone, com.geckolib.constant.dataticket.DataTicket, com.geckolib.model.GeoModel, com.geckolib.renderer.base.GeoRenderState, com.geckolib.renderer.base.RenderPassInfo, com.geckolib.renderer.GeoEntityRenderer, com.geckolib.renderer.layer.GeoRenderLayer, com.mojang.blaze3d.vertex.PoseStack (+16 more)
+Cohesion: 0.15
+Nodes (11): com.geckolib.cache.model.GeoBone, com.geckolib.constant.dataticket.DataTicket, com.geckolib.renderer.layer.GeoRenderLayer, GeoRenderer, net.neoforged.neoforge.common.ModConfigSpec, PerBoneRender, Override, RenderPassInfo (+3 more)
 
 ### Community 26 - "net.minecraft.core.BlockPos"
-Cohesion: 0.07
-Nodes (13): com.mojang.serialization.Codec, net.minecraft.core.BlockPos, SavedData, Habitat, HabitatData, SavedDataType, GroupNeeds, Habitat (+5 more)
+Cohesion: 0.14
+Nodes (9): com.mojang.serialization.Codec, net.minecraft.core.BlockPos, SavedData, Habitat, HabitatData, SavedDataType, Habitat, SavedDataType (+1 more)
 
 ### Community 27 - "DinoDebugClient"
+Cohesion: 0.12
+Nodes (9): MouseScrollingEvent, net.minecraft.resources.ResourceKey, net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent, net.neoforged.neoforge.registries.RegisterEvent, RegisterGuiLayersEvent, DinoDebugClient, LoggingOut, Post (+1 more)
+
+### Community 28 - "net.neoforged.fml.common.EventBusSubscriber"
 Cohesion: 0.11
-Nodes (11): MouseScrollingEvent, net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.resources.ResourceKey, net.minecraft.world.item.Item, net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent, net.neoforged.neoforge.registries.RegisterEvent, RegisterGuiLayersEvent, DinoDebugClient (+3 more)
+Nodes (14): net.neoforged.bus.api.IEventBus, net.neoforged.fml.common.EventBusSubscriber, net.neoforged.fml.common.Mod, net.neoforged.fml.ModContainer, net.neoforged.neoforge.client.event.RegisterMenuScreensEvent, net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent, net.neoforged.neoforge.event.ModifyRecipeJsonsEvent, org.jspecify.annotations.Nullable (+6 more)
 
-### Community 28 - "ArkSurvivalReturns.java"
-Cohesion: 0.15
-Nodes (11): net.minecraft.world.entity.SpawnGroupData, net.neoforged.bus.api.IEventBus, net.neoforged.fml.common.EventBusSubscriber, net.neoforged.fml.common.Mod, net.neoforged.fml.ModContainer, net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent, net.neoforged.neoforge.event.entity.player.AttackEntityEvent, net.neoforged.neoforge.event.level.block.BreakBlockEvent (+3 more)
+### Community 30 - "net.minecraft.network.chat.Component"
+Cohesion: 0.24
+Nodes (6): net.minecraft.network.chat.Component, Marker, Post, Visible, XaeroHabitatOverlay, message()
 
-### Community 30 - "DangerMapClient"
-Cohesion: 0.14
-Nodes (9): net.minecraft.client.gui.screens.Screen, Opening, DangerMapClient, LoggingOut, MapOverlayContext, Marker, Post, Visible (+1 more)
+### Community 31 - "net.neoforged.bus.api.SubscribeEvent"
+Cohesion: 0.10
+Nodes (13): net.minecraft.server.level.ServerBossEvent, net.neoforged.bus.api.SubscribeEvent, net.neoforged.neoforge.event.entity.player.AttackEntityEvent, net.neoforged.neoforge.event.server.ServerStoppedEvent, ServerBossEvent, RegisterRenderers, LoggingOut, RegisterRenderers (+5 more)
 
-### Community 31 - "TargetHealthBar"
-Cohesion: 0.20
-Nodes (7): net.minecraft.server.level.ServerBossEvent, ServerBossEvent, PlayerChangedDimensionEvent, PlayerLoggedOutEvent, PlayerRespawnEvent, Post, TargetHealthBar
+### Community 32 - ".level"
+Cohesion: 0.16
+Nodes (5): Cell, DangerMapView, DangerBands, DangerMapViewTest, DangerBandsTest
 
-### Community 33 - "HabitatPayload"
+### Community 33 - "net.minecraft.network.RegistryFriendlyByteBuf"
 Cohesion: 0.19
-Nodes (13): net.minecraft.network.codec.StreamCodec, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.RegistryFriendlyByteBuf, DinoDebugPayload, Override, Type, TurnPage, HabitatPayload (+5 more)
+Nodes (13): net.minecraft.network.codec.StreamCodec, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.RegistryFriendlyByteBuf, DinoDebugPayload, Override, Type, TurnPage, Override (+5 more)
 
-### Community 34 - "net.neoforged.bus.api.SubscribeEvent"
-Cohesion: 0.11
-Nodes (10): net.neoforged.bus.api.SubscribeEvent, net.neoforged.neoforge.event.server.ServerStoppedEvent, net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent, RegisterRenderers, HabitatSync, PlayerChangedDimensionEvent, PlayerLoggedInEvent, PlayerLoggedOutEvent (+2 more)
+### Community 34 - "HabitatPayload"
+Cohesion: 0.15
+Nodes (10): HabitatPayload, Override, Type, Marker, HabitatSync, PlayerChangedDimensionEvent, PlayerLoggedInEvent, PlayerLoggedOutEvent (+2 more)
 
-### Community 35 - "SpawnRules.java"
-Cohesion: 0.33
-Nodes (5): net.minecraft.tags.TagKey, net.minecraft.world.level.block.Block, net.minecraft.world.phys.AABB, net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent, SpawnRules
+### Community 35 - "net.minecraft.world.level.Level"
+Cohesion: 0.07
+Nodes (23): EntityPlaceEvent, net.minecraft.core.Direction, net.minecraft.core.Position, net.minecraft.world.entity.EntityType, net.minecraft.world.entity.projectile.arrow.AbstractArrow, net.minecraft.world.entity.projectile.Projectile, net.minecraft.world.item.ArrowItem, net.minecraft.world.level.block.Block (+15 more)
 
 ### Community 36 - "Land Ecosystem & Behavior Patch: flying habitats"
-Cohesion: 0.18
-Nodes (11): Current implementation versus requested behavior, Design precedents, Egg-taking contract, Habitat and nest defaults, Implementation and validation sequence, Land Ecosystem & Behavior Patch: flying habitats, Performance estimates and bounds, Phantom and extracted-animation reuse (+3 more)
+Cohesion: 0.11
+Nodes (17): Animation and map assets, Behavior, Flying Ecosystem — 2026-09-11, Placement and persistence, Current implementation versus requested behavior, Design precedents, Egg-taking contract, Habitat and nest defaults (+9 more)
 
-### Community 37 - "Wildlife behavior: research and implemented model"
-Cohesion: 0.20
-Nodes (10): Acceptance evidence, ARK methods, properties and registration concepts, Bounded simulation and limits, Difficulty and apex correction, Implemented behavior contract, Main finding, Player-facing development priorities after this model, What I inspected in the installed ARK files (+2 more)
+### Community 37 - "README.md"
+Cohesion: 0.11
+Nodes (13): Acceptance evidence, ARK methods, properties and registration concepts, Bounded simulation and limits, Difficulty and apex correction, Implemented behavior contract, Main finding, Player-facing development priorities after this model, What I inspected in the installed ARK files (+5 more)
 
 ### Community 38 - "org.junit.jupiter.api.Test"
-Cohesion: 0.06
-Nodes (13): org.junit.jupiter.api.Test, LandHabitatSymbols, NighttimeCycle, Observation, LevelScaling, MovementTuning, NighttimeMindTest, WildlifeMindTest (+5 more)
+Cohesion: 0.16
+Nodes (4): org.junit.jupiter.api.Test, WildlifeMindTest, LandModelTest, CreatureSizeTest
 
-### Community 39 - "WildlifeGoal.java"
-Cohesion: 0.27
-Nodes (3): net.minecraft.world.entity.ai.goal.Goal, FollowPackGoal, Override
+### Community 39 - "UnconsciousBehavior"
+Cohesion: 0.16
+Nodes (6): net.minecraft.world.entity.ai.goal.Goal, net.minecraft.world.entity.Mob, FollowPackGoal, Override, Override, UnconsciousBehavior
 
 ### Community 40 - "Nighttime patch proposal"
 Cohesion: 0.22
@@ -243,9 +286,9 @@ Nodes (8): Behavior rules and implementation boundaries, Existing foundation, Le
 Cohesion: 0.40
 Nodes (4): checked, dependencies, loader, minecraft
 
-### Community 42 - "DinoDebugSync.java"
-Cohesion: 0.11
-Nodes (13): net.minecraft.world.level.block.entity.BlockEntity, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.world.level.Level, net.minecraft.world.level.material.FluidState, DinoDebugSync, Override, PlayerChangedDimensionEvent (+5 more)
+### Community 42 - "DinoDebugSync"
+Cohesion: 0.18
+Nodes (6): DinoDebugSync, PlayerChangedDimensionEvent, PlayerLoggedOutEvent, PlayerRespawnEvent, Post, View
 
 ### Community 43 - "Creature expansion — 2026-09-12"
 Cohesion: 0.40
@@ -253,51 +296,183 @@ Nodes (4): Creature expansion — 2026-09-12, Scope, Sources and reproducibility
 
 ### Community 44 - "Optional client pack and difficulty map"
 Cohesion: 0.29
-Nodes (6): Difficulty map and unlock, Flying habitat markers, Installation and reproducibility, Iris development-run crash workaround, Optional client pack and difficulty map, Verification and playtest
+Nodes (7): Difficulty map and unlock, Flying habitat markers, Installation and reproducibility, Iris development-run crash workaround, Land habitat markers and dev settings, Optional client pack and difficulty map, Verification and playtest
 
-### Community 45 - "Flying Ecosystem — 2026-09-11"
-Cohesion: 0.33
-Nodes (6): Animation and map assets, Behavior, Flying Ecosystem — 2026-09-11, Placement and persistence, Validation, Work limits
+### Community 45 - "net.minecraft.world.entity.LivingEntity"
+Cohesion: 0.05
+Nodes (27): Clone, EntityInteract, EntityInteractSpecific, ItemTossEvent, LeftClickBlock, net.minecraft.gametest.framework.GameTestHelper, net.minecraft.world.entity.LivingEntity, net.neoforged.neoforge.event.entity.EntityMountEvent (+19 more)
 
-### Community 46 - "WildlifeSenses"
-Cohesion: 0.26
-Nodes (3): Detection, WildlifeSenses, NighttimeGameTests
+### Community 46 - "CreatureMountMenu"
+Cohesion: 0.05
+Nodes (30): ArrowRenderState, com.geckolib.model.GeoModel, com.geckolib.renderer.base.GeoRenderState, net.minecraft.ChatFormatting, net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.gui.screens.inventory.AbstractContainerScreen, net.minecraft.client.renderer.entity.ArrowRenderer, net.minecraft.client.renderer.entity.state.ArrowRenderState (+22 more)
 
-### Community 48 - "DangerMapView"
-Cohesion: 0.18
-Nodes (8): FunctionalInterface, Override, XaeroExploration, Cell, DangerMapView, Exploration, DangerMapViewTest, xaero.map.MapProcessor
+### Community 47 - "TamingState"
+Cohesion: 0.05
+Nodes (11): Result, ACCEPTED, ALREADY_TAMED, COOLDOWN, EXCLUDED, NOT_CLAIMANT, NOT_HUNGRY, WRONG_FOOD (+3 more)
 
-### Community 49 - "DangerMapPayload"
-Cohesion: 0.29
-Nodes (5): io.github.billstark001.xaerobridge.api.MapOverlayContext, View, DangerMapPayload, Override, Type
+### Community 48 - "Exploration"
+Cohesion: 0.22
+Nodes (6): FunctionalInterface, Override, XaeroExploration, MapOverlayContext, Exploration, xaero.map.MapProcessor
+
+### Community 49 - "AquaticHabitats"
+Cohesion: 0.12
+Nodes (13): EntityLeaveLevelEvent, net.minecraft.world.phys.AABB, AquaticHabitats, Budget, AABB, BlockPos, Habitat, Vec3 (+5 more)
 
 ### Community 50 - "CreatureEntity.java"
-Cohesion: 0.14
-Nodes (11): com.geckolib.animatable.GeoEntity, Goal, net.minecraft.world.DifficultyInstance, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.level.storage.ValueInput, net.minecraft.world.level.storage.ValueOutput, SpawnGroupData, BlockPos (+3 more)
+Cohesion: 0.24
+Nodes (7): com.geckolib.animatable.GeoEntity, Goal, net.minecraft.world.DifficultyInstance, net.minecraft.world.level.ServerLevelAccessor, SpawnGroupData, EntitySpawnReason, PackData
 
-### Community 51 - "README.md"
+### Community 51 - "Species"
+Cohesion: 0.05
+Nodes (42): Species, ACROCANTHOSAURUS, ALLOSAURUS, ANKYLOSAURUS, ARCHAEOPTERYX, ARGENTAVIS, BRONTOSAURUS, CARNOTAURUS (+34 more)
+
+### Community 52 - "net.minecraft.world.entity.player.Player"
+Cohesion: 0.12
+Nodes (8): net.minecraft.core.particles.ParticleOptions, net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.InteractionResult, LivingEntity, Override, Component, TamingFeedback
+
+### Community 53 - "ThemeGameTests.java"
+Cohesion: 0.12
+Nodes (13): com.google.gson.JsonElement, com.google.gson.JsonObject, net.minecraft.advancements.triggers.Criterion, net.minecraft.core.RegistryAccess, net.minecraft.resources.RegistryOps, net.minecraft.server.MinecraftServer, net.minecraft.world.item.crafting.RecipeManager, net.minecraft.world.item.trading.VillagerTrade (+5 more)
+
+### Community 54 - ".replenish"
+Cohesion: 0.13
+Nodes (10): net.minecraft.util.RandomSource, Pre, Habitat, Post, PopulationDirector, AABB, EntitySpawnReason, EntityType (+2 more)
+
+### Community 55 - "HostileGuard.java"
+Cohesion: 0.08
+Nodes (15): net.minecraft.world.item.SpawnEggItem, net.neoforged.neoforge.event.entity.EntityJoinLevelEvent, net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent, net.neoforged.neoforge.event.entity.living.LivingUseTotemEvent, net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent, net.neoforged.neoforge.event.level.ModifyCustomSpawnersEvent, net.neoforged.neoforge.event.village.VillageSiegeEvent, PositionCheck (+7 more)
+
+### Community 56 - "net.minecraft.world.entity.Entity"
+Cohesion: 0.16
+Nodes (9): net.minecraft.commands.CommandSourceStack, net.minecraft.world.entity.Entity, net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent, PortalSpawnEvent, TamingCommands, DimensionGuard, PlayerLoggedInEvent, PlayerRespawnEvent (+1 more)
+
+### Community 57 - "net.minecraft.world.item.ItemStack"
+Cohesion: 0.13
+Nodes (4): net.minecraft.world.item.ItemStack, CreatureInventory, Override, CreatureTamingProfile
+
+### Community 59 - "net.minecraft.world.phys.Vec3"
+Cohesion: 0.16
+Nodes (6): EntityDimensions, net.minecraft.world.phys.Vec3, Vec3, CreatureRideController, Vec3, RiderInput
+
+### Community 60 - "AquaticCreatureEntity.java"
+Cohesion: 0.13
+Nodes (6): com.geckolib.animation.RawAnimation, AquaticCreatureEntity, Builder, ControllerRegistrar, Override, CreatureAnimationBridge
+
+### Community 61 - "TamingGameTests.java"
+Cohesion: 0.19
+Nodes (9): net.minecraft.tags.TagKey, net.minecraft.world.item.Item, net.minecraft.world.item.Items, CreatureProfileRegistry, TamingMethod, AERIAL, KNOCKOUT, PASSIVE (+1 more)
+
+### Community 62 - "LandFamily"
+Cohesion: 0.11
+Nodes (18): family(), LandProfile, SwimProfile, LandFamily, AMPHIBIOUS, AQUATIC, BIG_CARNIVORE, BIG_HERBIVORE (+10 more)
+
+### Community 63 - "build_taming_manifests.py"
+Cohesion: 0.19
+Nodes (18): classify_torpor(), cube_top(), emit_java(), forward_axis(), geometry(), head_bone(), main(), mesh_bounds() (+10 more)
+
+### Community 65 - "BehaviorState"
+Cohesion: 0.12
+Nodes (17): BehaviorState, ALERT, DEFEND, DRINK, FEED, FLEE, FORAGE, HUNT (+9 more)
+
+### Community 66 - "LandWaterIndex"
+Cohesion: 0.21
+Nodes (3): BlockPos, LandWaterIndex, Samples
+
+### Community 67 - "Observation"
+Cohesion: 0.32
+Nodes (4): Observation, Routine, CreatureExpansionGameTests, NighttimeMindTest
+
+### Community 68 - "2. Execution paths"
+Cohesion: 0.14
+Nodes (14): 1. Where the state lives, 2.1 Sedative hit, validation, torpor, knockout, synchronization, 2.2 Feeding interaction, food and hunger validation, consumption, progress, ownership, 2.3 Inventory feeding tick, eligibility, one meal, progress, 2.4 Mount request, permission, passenger attachment, rider input, movement, 2.5 Movement and state to animation, and rider positioning, 2.6 Save, load, restoration, 2. Execution paths (+6 more)
+
+### Community 69 - ".of"
+Cohesion: 0.21
+Nodes (3): Nullable Path, Clips, CreatureTorporClips
+
+### Community 70 - "CreatureRideProfile"
+Cohesion: 0.18
+Nodes (6): CreatureRideProfile, MovementMode, FLIGHT, GROUND, SWIM, CreatureSeats
+
+### Community 71 - "Land Ecosystem & Behavior Patch"
+Cohesion: 0.18
+Nodes (8): Dev-run dependencies and settings, Runtime defaults, Families and water-associated homes, Group behavior, Land Ecosystem & Behavior Patch, Verification and remaining playtest, Work bounds and configuration, Xaero habitats
+
+### Community 73 - "CreatureRenderer.java"
+Cohesion: 0.27
+Nodes (8): com.geckolib.renderer.base.RenderPassInfo, com.geckolib.renderer.GeoEntityRenderer, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.entity.state.EntityRenderState, CreatureRenderer, Context, Override, SuppressWarnings
+
+### Community 74 - "Taming patch proposal"
+Cohesion: 0.18
+Nodes (11): Animation audit and implementation contract, Familiarity and a more dangerous feeding alternative, Feedback needed before execution, Inventory, ownership and riding, Lessons from other games and mods, Multiplayer budgets and verification plan, Proposed species and food rules, Taming patch proposal (+3 more)
+
+### Community 75 - "Theme alignment"
+Cohesion: 0.18
+Nodes (10): Compatibility and known limitations, Disabled or replaced (rating 4), Enforcement summary, Materials that survive, Removed (rating 5), Step 1 — the Nether and the End, Step 2 — fantasy hostile creatures, Step 3 — content decisions (+2 more)
+
+### Community 76 - "Phase"
+Cohesion: 0.18
+Nodes (7): Override, Phase, AWAKE, COLLAPSING, TORPID, WAKING_TAMED, WAKING_WILD
+
+### Community 79 - "build_taming_roster.py"
 Cohesion: 0.29
-Nodes (3): Debug Spyglass, Verification, Movement tuning
+Nodes (9): main(), profiles(), Render the taming roster and rider-seat tables from the code and the generated…, Registry id, display name and already size-multiplied hitbox from Species.java., One entry per `add(...)` call in the registry, keyed by the Species constant…, Realm per species, so the table can state where each method came from., realm_source(), size_band() (+1 more)
+
+### Community 80 - "Collection ecosystem — ice, flying, aquatic and swamp"
+Cohesion: 0.22
+Nodes (9): Behavior and status, Collection ecosystem — ice, flying, aquatic and swamp, Compatibility and known limitations, Configuration, Day and night, Geolocation, Group settings, Realms (+1 more)
+
+### Community 81 - "taming-proposal.md"
+Cohesion: 0.22
+Nodes (6): How to read this table, Known model defects that affect seating, Per-meal progress, Rider seat manifest, Taming roster and rider seats, Torpor assets
+
+### Community 82 - "TamingAttachments"
+Cohesion: 0.33
+Nodes (5): net.neoforged.neoforge.attachment.AttachmentType, net.neoforged.neoforge.registries.DeferredHolder, net.neoforged.neoforge.registries.DeferredRegister, IEventBus, TamingAttachments
+
+### Community 84 - "CreatureSize"
+Cohesion: 0.29
+Nodes (6): CreatureSize, GIANT, LARGE, MEDIUM, SMALL, of()
+
+### Community 85 - "Event"
+Cohesion: 0.25
+Nodes (6): Event, COLLAPSE_STARTED, NONE, TORPID_ENTERED, WAKE_REQUESTED, WOKE
+
+### Community 87 - "herd"
+Cohesion: 0.33
+Nodes (7): cohesionDistance(), defensiveHerd(), flyer(), groupHeightRange(), groupRadius(), herd(), timid()
+
+### Community 90 - "Realm"
+Cohesion: 0.40
+Nodes (5): Realm, AIR, AMPHIBIOUS, LAND, WATER
+
+### Community 91 - "MovementProbe"
+Cohesion: 0.40
+Nodes (3): ServerLevel, Vec3, MovementProbe
+
+### Community 92 - "sleepClip"
+Cohesion: 0.50
+Nodes (4): landHabitat(), restClip(), sleepClip(), sleeps()
 
 ## Knowledge Gaps
-- **138 isolated node(s):** `minecraft`, `loader`, `checked`, `dependencies`, `ROAM` (+133 more)
+- **240 isolated node(s):** `minecraft`, `loader`, `checked`, `dependencies`, `ROAM` (+235 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `CreatureEntity` connect `CreatureEntity` to `WildlifeGoal`, `SpawnRules.java`, `WildlifeGoal.java`, `FlyingCreatureEntity`, `DinoDebugSync.java`, `WildlifeSenses`, `net.minecraft.server.level.ServerLevel`, `CreatureEntity.java`, `net.minecraft.gametest.framework.GameTestHelper`, `ModContent`, `NightEyesLayer.java`, `net.minecraft.core.BlockPos`, `ArkSurvivalReturns.java`, `DinoDebugSnapshot`, `TargetHealthBar`?**
-  _High betweenness centrality (0.172) - this node is a cross-community bridge._
-- **Why does `Species` connect `net.minecraft.server.level.ServerLevel` to `WildlifeGoal`, `CreatureEntity`, `HabitatPayload`, `net.minecraft.server.level.ServerPlayer`, `SpawnRules.java`, `org.junit.jupiter.api.Test`, `WildlifeGoal.java`, `FlyingCreatureEntity`, `WildlifeSenses`, `net.minecraft.gametest.framework.GameTestHelper`, `Species.java`, `NestBlock`, `ModContent`, `NightEyesLayer.java`, `net.minecraft.core.BlockPos`, `ArkSurvivalReturns.java`?**
-  _High betweenness centrality (0.114) - this node is a cross-community bridge._
-- **Why does `FlyingCreatureEntity` connect `FlyingCreatureEntity` to `net.minecraft.server.level.ServerLevel`, `CreatureEntity`, `net.minecraft.core.BlockPos`, `SpawnRules.java`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **Why does `CreatureEntity` connect `CreatureEntity` to `WildlifeGoal`, `FlyingCreatureEntity`, `net.minecraft.server.level.ServerLevel`, `SpawnRules.java`, `Config`, `NightEyesLayer.java`, `net.minecraft.core.BlockPos`, `net.neoforged.fml.common.EventBusSubscriber`, `.capture`, `net.neoforged.bus.api.SubscribeEvent`, `net.minecraft.world.level.Level`, `UnconsciousBehavior`, `net.minecraft.world.entity.LivingEntity`, `CreatureMountMenu`, `TamingState`, `AquaticHabitats`, `CreatureEntity.java`, `Species`, `net.minecraft.world.entity.player.Player`, `.replenish`, `net.minecraft.world.item.ItemStack`, `net.minecraft.world.phys.Vec3`, `AquaticCreatureEntity.java`, `TamingGameTests.java`, `WildlifeController`, `.initializeLevel`, `CreatureRenderer.java`, `.spawn`, `MovementProbe`, `.run`?**
+  _High betweenness centrality (0.234) - this node is a cross-community bridge._
+- **Why does `Species` connect `Species` to `WildlifeGoal`, `CreatureEntity`, `net.minecraft.server.level.ServerPlayer`, `ArkData`, `FlyingCreatureEntity`, `net.minecraft.server.level.ServerLevel`, `SpawnRules.java`, `Species.java`, `NestBlock`, `Config`, `NightEyesLayer.java`, `net.minecraft.core.BlockPos`, `net.neoforged.fml.common.EventBusSubscriber`, `net.minecraft.network.RegistryFriendlyByteBuf`, `HabitatPayload`, `net.minecraft.world.level.Level`, `net.minecraft.world.entity.LivingEntity`, `CreatureMountMenu`, `AquaticHabitats`, `.replenish`, `net.minecraft.world.item.ItemStack`, `AquaticCreatureEntity.java`, `TamingGameTests.java`, `LandFamily`, `.of`, `CreatureRideProfile`, `CreatureRenderer.java`, `MovementTuning`, `.spawn`, `GroupNeeds`, `MovementProbe`, `.run`, `CollectionGameTests`?**
+  _High betweenness centrality (0.135) - this node is a cross-community bridge._
+- **Why does `TorporState` connect `TorporState` to `net.minecraft.network.RegistryFriendlyByteBuf`, `Phase`, `net.minecraft.world.entity.LivingEntity`, `TamingAttachments`, `Event`, `.hold`, `Config`, `AquaticCreatureEntity.java`, `TamingGameTests.java`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **What connects `minecraft`, `loader`, `checked` to the rest of the system?**
-  _138 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _240 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `WildlifeGoal` be split into smaller, more focused modules?**
+  _Cohesion score 0.050980392156862744 - nodes in this community are weakly interconnected._
 - **Should `CreatureEntity` be split into smaller, more focused modules?**
-  _Cohesion score 0.08362369337979095 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06203007518796992 - nodes in this community are weakly interconnected._
 - **Should `net.minecraft.server.level.ServerPlayer` be split into smaller, more focused modules?**
-  _Cohesion score 0.1010752688172043 - nodes in this community are weakly interconnected._
-- **Should `FlyingCreatureEntity` be split into smaller, more focused modules?**
-  _Cohesion score 0.08078431372549019 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10080645161290322 - nodes in this community are weakly interconnected._

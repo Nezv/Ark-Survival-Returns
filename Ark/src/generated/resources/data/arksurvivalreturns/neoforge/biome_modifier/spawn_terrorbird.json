@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/terrorbird",
+  "spawners": {
+    "type": "arksurvivalreturns:terrorbird",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 8
+  }
+}

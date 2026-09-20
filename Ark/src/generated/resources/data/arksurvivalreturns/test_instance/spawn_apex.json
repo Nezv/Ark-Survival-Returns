@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:spawn_apex",
+  "max_ticks": 400,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

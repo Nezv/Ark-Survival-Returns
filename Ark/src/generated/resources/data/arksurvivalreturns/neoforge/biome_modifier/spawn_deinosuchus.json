@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/deinosuchus",
+  "spawners": {
+    "type": "arksurvivalreturns:deinosuchus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 4
+  }
+}

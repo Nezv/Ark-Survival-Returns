@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/direwolf",
+  "spawners": {
+    "type": "arksurvivalreturns:direwolf",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 9
+  }
+}

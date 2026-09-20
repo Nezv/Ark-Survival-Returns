@@ -28,6 +28,8 @@ import dev.nez.arksurvivalreturns.Config;
 public final class PlayerUnconsciousHandler {
     @SubscribeEvent public static void tick(PlayerTickEvent.Pre event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        // Never create sedation state for a player who has never been sedated.
+        if (!TorporService.tracked(player)) return;
         var state = TorporService.of(player);
         if (!TorporService.restricted(player)) {
             if (state.hasAnchor()) state.clearAnchor();
@@ -59,10 +61,6 @@ public final class PlayerUnconsciousHandler {
         }
         Vec3 anchor = state.anchor();
         double drift = Math.hypot(player.getX() - anchor.x, player.getZ() - anchor.z);
-        if (player.isInWater() || player.isInLava()) {
-            state.setAnchor(player.position());
-            return;
-        }
         if (!intent && drift <= Config.PLAYER_MOVEMENT_TOLERANCE.get()) return;
         player.connection.teleport(anchor.x, player.getY(), anchor.z, player.getYRot(), player.getXRot());
         player.setDeltaMovement(0.0, player.getDeltaMovement().y, 0.0);

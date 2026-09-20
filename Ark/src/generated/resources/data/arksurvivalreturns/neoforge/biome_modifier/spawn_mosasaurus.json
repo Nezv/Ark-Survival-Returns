@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#arksurvivalreturns:spawns/mosasaurus",
+  "spawners": {
+    "type": "arksurvivalreturns:mosasaurus",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 3
+  }
+}

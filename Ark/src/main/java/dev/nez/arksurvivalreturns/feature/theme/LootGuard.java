@@ -80,10 +80,28 @@ public final class LootGuard {
 
     private static boolean droppableEntry(JsonObject object) {
         var type = object.get("type");
+        if (type == null || !type.isJsonPrimitive() || !"minecraft:item".equals(type.getAsString())) return false;
         var name = object.get("name");
-        return type != null && type.isJsonPrimitive() && "minecraft:item".equals(type.getAsString())
-                && name != null && name.isJsonPrimitive()
-                && ThemePolicy.REMOVED_ITEM_IDS.contains(name.getAsString());
+        if (name != null && name.isJsonPrimitive() && ThemePolicy.REMOVED_ITEM_IDS.contains(name.getAsString()))
+            return true;
+        // A map pointing at a disabled structure is dropped whole, not blanked into a plain map.
+        return hasDisabledExplorationMap(object);
+    }
+
+    private static boolean hasDisabledExplorationMap(JsonObject entry) {
+        var functions = entry.get("functions");
+        if (functions == null || !functions.isJsonArray()) return false;
+        for (var element : functions.getAsJsonArray()) {
+            if (!(element instanceof JsonObject function)) continue;
+            if (!"minecraft:exploration_map".equals(asString(function.get("function")))) continue;
+            String destination = asString(function.get("destination"));
+            if (destination != null && DISABLED_MAP_TAGS.contains(destination)) return true;
+        }
+        return false;
+    }
+
+    private static String asString(JsonElement element) {
+        return element != null && element.isJsonPrimitive() ? element.getAsString() : null;
     }
 
     private static boolean droppableFunction(JsonObject object) {
