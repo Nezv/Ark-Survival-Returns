@@ -1,6 +1,6 @@
 # Changelog
 
-Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
+Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md). In-game checks that are still outstanding live in [Verify.md](Verify.md).
 
 ## Unreleased
 
@@ -10,7 +10,7 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 - **Recovery caches.** Player death drops now become a placed Recovery Cache instead of loose items. The owner and their FTB Teams tribe see the coordinates, right-click collects the whole haul, and the items live in world data, so breaking or exploding the marker never destroys them. Up to three caches per player under `[recovery]`; the oldest folds into the newest instead of being lost. Void and lava deaths fall back to safe ground or the bedroll, and `/arkrecover list|claim|clear` inspects and recovers anything that could not be placed.
 - **Downed state and revive.** A hit that would kill now leaves the player downed for a minute (configurable under `[downed]`) instead of dead: a countdown HUD appears, actions and movement are locked, and further damage shortens the rescue window until a tribe member revives them with a fiber bandage at 30% health. Void, lava, `/kill` and overkill hits stay fatal, and any death then produces a recovery cache.
 - **Camp and Recovery chapter.** A second journal chapter tracks the bedroll, fiber, bandages, flint tools, the first cache recovery and the first revive, with per-player rewards for both tribe members.
-- **Validation.** Data generation, the build with 47 JUnit tests and all 44 headless GameTests pass, and FTB Quests loads two chapters and twelve quests with every item task and recipe resolving. No interactive client was launched: the downed HUD, bandage revives, cache collection, the bedroll interaction and the hidden discovery advancements remain on the manual playtest list. Known limitation: `tools/verify_assets.py` still stops on the pre-existing creature texture-size mismatch (it is not part of CI), and NeoForge rejects advancement grants for test fake players, so those awards are only covered by playtesting.
+- **Validation.** Data generation, the build with 47 JUnit tests and all 44 headless GameTests pass, and FTB Quests loads two chapters and twelve quests with every item task and recipe resolving. The full in-client checklist is in [Verify.md](Verify.md). Known limitation: `tools/verify_assets.py` still stops on the pre-existing creature texture-size mismatch (it is not part of CI).
 
 ## Survival Journal and Tribes — 2026-09-20
 
@@ -18,7 +18,7 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 - **Field Journal.** Craft a Field Journal from a book and two leather, then press **J** or use it to open the tribe's survival journal. The journal is the FTB Quests book, so progress and rewards are shared per tribe and granted exactly once per survivor.
 - **Primitive chapter.** Six starter objectives cover camp, stone tools, forage and bone, sedation with tranquilizer arrows, the first tame and the journal itself. Taming your first creature also awards a hidden personal discovery advancement that the journal reads.
 - **Map entitlement from taming.** Each creature saves the danger band where it first appeared. Taming one from a difficulty-5 region unlocks the Xaero map for its owner and awards the hidden `journal/rank5_tame` discovery. `/arkmap` still grants or revokes access for operators, and the map stays open while `progression.mapRequiresUnlock=false`.
-- **Validation.** `runData` generates the recipe, advancements and item assets; the build passes with 41 JUnit tests and all 40 headless GameTests, and FTB Quests loads the Primitive chapter without errors. No interactive client was launched: journal layout, the J keybind, party invitations and shader checks remain for playtesting. Known limitation: FTB Quests reads its pack from the instance `config/ftbquests/quests/`, so copies for other launchers must be placed there manually.
+- **Validation.** `runData` generates the recipe, advancements and item assets; the build passes with 41 JUnit tests and all 40 headless GameTests, and FTB Quests loads the Primitive chapter without errors. The full in-client checklist is in [Verify.md](Verify.md). Known limitation: FTB Quests reads its pack from the instance `config/ftbquests/quests/`, so copies for other launchers must be placed there manually.
 
 ## Minecraft 26.1.2 Migration — 2026-09-20
 
@@ -32,7 +32,7 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 - Compatibility and known limitations: worlds saved on 26.2 cannot be opened by 26.1.2; existing saves were backed up
   and play continues from a fresh world. The FTB Quests stack and the survival journal arrive in the following P01 work.
 - Validation: `runData` produced no changes except the removed-creature tag; the full `build` (39 JUnit tests) and all
-  37 headless GameTests pass. No interactive client was launched; shader, audio and visual checks remain for the user.
+  37 headless GameTests pass.
 
 ## Unified Spatial Audio — 2026-09-19
 
@@ -154,7 +154,6 @@ are untouched.
 - Both sides need the update: the habitat payloads and map marker overlays are gone.
 - Existing worlds keep their creatures; stale `*_habitats.dat` files are simply ignored.
 - The prior base required a valid water-adjacent habitat site before a land creature could spawn; that gate is what made the world feel sparse, and it is gone. Density now follows vanilla mob caps, so the per-species `enabled`/weight balance should be reviewed in play.
-- No interactive client was launched; nest appearance, perching, spawn density and the removal of the map markers need playtesting.
 
 ## Taming, Torpor & Riding — 2026-09-16
 
@@ -180,7 +179,7 @@ server-authoritative implementation, and the vanilla horse screen is reused for 
 
 ### Compatibility and known limitations
 
-- **Seat and animation review requires a client.** Seat transforms are measured from the real bones and checked against the XZ bounds of each creature's own model mesh (0 of 41 outside); the roster and riding game tests keep the seat height above the entity's feet and within the registered height, but full hitbox containment is not asserted for the 24 meshes that are not normalised. The visual seat and the four torpor clip phases need in-client playtesting.
+- **Seat and animation review requires a client.** Seat transforms are measured from the real bones and checked against the XZ bounds of each creature's own model mesh (0 of 41 outside); the roster and riding game tests keep the seat height above the entity's feet and within the registered height, but full hitbox containment is not asserted for the 24 meshes that are not normalised.
 - **24 of 41 meshes are not normalised to their entity origin**, so the mesh-based seat check is not equivalent to the entity hitbox and those riders are not reliably aligned with the visible back (only the seat height is clamped). This is a pre-existing asset-pipeline limitation, listed per species at the end of `docs/taming-roster.md`.
 - Six rigs have no complete source torpor sequence (Ceratosaurus, Cnidaria, Dragon, Megapithecus, Titanoboa, and Deinosuchus only partially) and fall back to their authored standing sleep pose for the unconscious loop. No clip was borrowed from another skeleton.
 - A full torpor bar keeps a creature unconscious for about 160 seconds after the ten second recovery delay (about 170 seconds from the last dose), because waking happens below 20 % of the maximum, so a long knock-out tame needs the claimant to top the creature up. This is the intended maintenance loop and is documented in `docs/taming-roster.md`.
@@ -194,7 +193,6 @@ server-authoritative implementation, and the vanilla horse screen is reused for 
 - Gradle `build` passed with 35 JUnit tests, no failures or skips.
 - All 32 required headless GameTests passed, including twelve new taming tests: roster and diet audit with manifest cross-checks, torpor knockout and the exact wake threshold, passive feeding rules, knock-out inventory feeding with the claimant away, wake-before-completion, riding and dismounting every registered creature, save/load of torpor, taming, ownership and inventory, player sedation, hunger-gated aerial feeding with the feeder-only truce, completion without a forced wake, claim-lease expiry, and goal-level restraint of an ordinary vanilla mob.
 - Creature import produced 41 creatures and 472 runtime clips, including the newly imported torpor sequences, with unchanged geometry and source hashes.
-- Remaining work is visual: seat placement, the collapse and wake poses, and the rider's appearance on the side-mounted rigs.
 
 ## Unreleased
 
@@ -231,13 +229,12 @@ registered with realms, group settings, saved homes, day routines and night rout
 
 ### Compatibility and known limitations
 
-- Implementation in progress. Existing levels, health, homes, packs and hunger are retained. New sleep poses and eye rendering require client playtesting; they are not visually verified.
+- Implementation in progress. Existing levels, health, homes, packs and hunger are retained.
 - Both server and clients need the update: 22 entities, 3 nests, 3 egg items and new payload fields are not optional.
 - An existing server config keeps its stored sprint values, so a species added earlier can retain the previous default until its section is removed or edited.
 - Deinosuchus, Dragon and Mosasaurus own eye bones without usable cube geometry and therefore do not receive the emissive eye layer.
 - Titanoboa has no separate swim animation in the ARK library and reuses its ground clips in water.
 - ARK abilities remain out of scope: Cnidaria shock, venom, throws, fire breath and platform saddles are not implemented. Water species never dive under ice and no creature breaks blocks.
-- Water, swamp, snow and nest visuals, marker readability and cold-biome balance need interactive playtesting. No client was launched.
 
 ### Validation
 
@@ -246,7 +243,6 @@ registered with realms, group settings, saved homes, day routines and night rout
 - All 19 required headless GameTests passed, including three new collection tests: water pool validation, occupancy, containment and save/load; realm, group, clip and registry invariants for all 41 species; and the cold hydration, snow-browsing and site policy checks.
 - Creature import produced 41 creatures and 298 unique runtime clips; 41 spawn egg sprites were rebuilt.
 - Asset validation passed for 41 creatures, 298 clips, 5 nests and 51 item definitions with unchanged source hashes; the expansion validator checked 411 sampled poses against the source rigs.
-- Remaining work is visual: movement and containment in real terrain, nest and egg appearance, cold-biome balance and marker readability.
 
 ## Theme Alignment — 2026-09-16
 
@@ -307,8 +303,6 @@ retained material sources and limitations are in
 - Tridents, prismarine, sponge, shulker boxes, nautilus shells, hearts of the sea, fire
   charges and the Mojang banner pattern have no source left, and no replacement recipe was
   invented for them beyond the copper bulb.
-- Interactive balance, the new bone supply and the return positions of player-owned worlds
-  still need playtesting. No client was launched.
 
 ### Validation
 
@@ -346,7 +340,6 @@ Persistent water-associated homes, coordinated herds and discoverable land habit
 ### Compatibility and known limitations
 
 - Both server and clients need the updated mod. A separate versioned land save preserves pack identity and player discoveries; disabling land habitats retains those records.
-- Narrow water, wide-creature slopes/banks, natural population balance and marker appearance still need interactive playtesting. No client was launched or multiplayer performance measured.
 - River Redux has no compatible published artifact for this runtime and was not installed. Ordinary exposed water supports habitats. The six cold creatures remain source-only in the separate snow proposal.
 - See [behavior and work bounds](Ark/docs/land-ecosystem.md) and [dev dependencies](Ark/docs/dev-dependencies.md). The separate Unreleased nighttime work remains unfinished.
 
@@ -370,7 +363,6 @@ A separate scope for inspecting dinosaur state through a green terminal overlay.
 
 - Restart clients and server to load the item. No crafting recipe or dinosaur save migration. Vanilla Spyglass behavior is unchanged.
 - Mod runtime fields and saved data are exposed; private Minecraft/GeckoLib engine fields and animation-cache internals are outside the inspector. Oversized/deep saved data has visible limits. See [controls, bounds and visual checklist](Ark/docs/debug-spyglass.md).
-- Overlay appearance and live two-player interaction require in-client playtesting; automated checks did not launch the client.
 
 ### Validation
 
@@ -391,7 +383,7 @@ Detailed ice, flying, aquatic and swamp source art, with no new gameplay integra
 ### Compatibility and known limitations
 
 - These twenty-one projects are source assets only; this collection adds no runtime entities, behavior or spawn rules. The playable roster remains nineteen.
-- Cuboids approximate the original skins with rigid bone ownership. Palette textures replace the original materials; shader transparency and Unreal animation events are not converted. No interactive game or Blockbench test was run.
+- Cuboids approximate the original skins with rigid bone ownership. Palette textures replace the original materials; shader transparency and Unreal animation events are not converted.
 
 ### Validation
 
@@ -413,7 +405,6 @@ Ten additional creatures reuse the established wildlife behavior families.
 
 - Existing entity and family IDs are preserved. Both server and clients need the updated mod for the new entity registrations.
 - Models are fitted cuboid approximations with generated palettes. ARK-specific spit, venom, stealing, stance changes, buffs and resource harvesting are not implemented. See [creature mappings and workflow](Ark/docs/creature-expansion.md).
-- No interactive client was launched. Visual quality, combat balance, natural habitat selection and multiplayer performance still require playtesting.
 
 ### Validation
 
@@ -446,12 +437,12 @@ Nest-centered Pteranodon and Argentavis colonies with independent flight and egg
 ### Compatibility and known limitations
 
 - Existing levels/HP persist; legacy flyer needs become inactive. Named/manual birds do not create nests in player builds. Empty nests/discoveries persist; eggs do not hatch or refill automatically.
-- Uses the installed optional Xaero World Map bridge; no minimap integration. Nest/flight visuals, audio balance and target-machine performance still need interactive playtesting.
+- Uses the installed optional Xaero World Map bridge; no minimap integration.
 
 ### Validation
 
 - Data generation and build passed; all 26 JUnit tests and all 12 required headless GameTests passed. Both flyers are tested for actual flight, perching, swoop damage, bystander safety, cover and defense expiry. See [details](Ark/docs/flying-ecosystem.md).
-- No interactive client was launched. The existing Unreleased land-nighttime entry remains separate.
+- The existing Unreleased land-nighttime entry remains separate.
 
 ## Beta baseline — 2026-09-09
 
@@ -496,11 +487,11 @@ Consolidated record of the implemented mod as of this date. This is a retrospect
 - Berries have no usage effects yet. Actual flight, riding, breeding, harvesting, custom dinosaur audio and expanded ecosystem simulation remain future work.
 - Difficulty is an overlay on existing terrain, not biome regeneration. Existing creature levels and injuries remain; loaded creatures adopt movement tuning without healing or rerolling levels.
 - Existing populations are not culled. Lower density takes effect through replenishment and normal despawning. Existing creatures can wander across difficulty boundaries.
-- Restart the client to load code, assets and launch settings. Natural encounter frequency, animation/foot placement, map visuals, shader performance and actual GPU selection still require client playtesting.
+- Restart the client to load code, assets and launch settings.
 - Optional presentation mods are separate from the Ark JAR and are loaded only by the development client configuration. See [client-pack instructions](Ark/docs/client-pack.md).
 
 ### Validation
 
 - Recorded September 7 checks passed: Gradle build, 18 unit tests, all eight headless GameTests, data generation, creature/item asset checks, client-pack checksums and launcher preparation.
 - Coverage includes spawn groups/caps, high-danger encounter replenishment, herd defense, low-health retreat, save persistence, difficulty transitions, unexplored-map masking and measured land/water movement.
-- No interactive client was launched for those checks. This September 9 documentation update does not represent a new gameplay test run. See [verification details](Ark/docs/verification.md).
+- See [verification details](Ark/docs/verification.md).
