@@ -1,0 +1,50 @@
+{
+  "chapter.0000000000000300.title": "Feras Trabalhadoras",
+  "chapter.0000000000000300.chapter_subtitle": [
+    "Transforme um companheiro em produtor."
+  ],
+
+  "quest.0000000000000301.title": "Preparar para Carga",
+  "quest.0000000000000301.quest_subtitle": "Uma sela n\u00e3o \u00e9 um arn\u00eas de carga.",
+  "quest.0000000000000301.quest_desc": [
+    "Crie um arn\u00eas de carga com couro e fibra vegetal.",
+    "O arn\u00eas refor\u00e7ado usa um arn\u00eas de carga, couro, s\u00edlex e fibra; s\u00f3 ele serve para os grandes transportadores."
+  ],
+  "task.00000000000003A1.title": "Crie um arn\u00eas de carga",
+  "task.00000000000003A2.title": "Crie um arn\u00eas refor\u00e7ado",
+
+  "quest.0000000000000302.title": "Encaixar o Arn\u00eas",
+  "quest.0000000000000302.quest_subtitle": "A capacidade segue o equipamento.",
+  "quest.0000000000000302.quest_desc": [
+    "Abra uma criatura domesticada e coloque o arn\u00eas no encaixe.",
+    "A capacidade da esp\u00e9cie s\u00f3 vale com o arn\u00eas exigido; sem ele, resta o limite b\u00e1sico.",
+    "O visor de Carga e os bot\u00f5es Carregar/Descarregar movem itens para o armazenamento pr\u00f3ximo."
+  ],
+  "task.00000000000003A3.title": "Encaixe um arn\u00eas e abra a tela de carga",
+
+  "quest.0000000000000303.title": "A Primeira Ordem de Trabalho",
+  "quest.0000000000000303.quest_subtitle": "Aponte um trabalhador para o servi\u00e7o.",
+  "quest.0000000000000303.quest_desc": [
+    "Leve um Triceratops ou Anquilossauro at\u00e9 o local e use o apito agachado at\u00e9 a ordem TRABALHAR aparecer.",
+    "O trabalho fica ancorado onde a ordem foi dada e pausa se nenhum sobrevivente autorizado ficar perto."
+  ],
+  "task.00000000000003A4.title": "D\u00ea a ordem TRABALHAR a uma fera trabalhadora",
+
+  "quest.0000000000000304.title": "Forragem e Palha",
+  "quest.0000000000000304.quest_subtitle": "A terra paga em fibra e frutas.",
+  "quest.0000000000000304.quest_desc": [
+    "Um Triceratops trabalhando pasta o capim no lugar, corta tufos e renova arbustos maduros.",
+    "Recolha o compartimento antes de encher: fibra e frutas s\u00e3o a base de amarra\u00e7\u00e3o e seda\u00e7\u00e3o."
+  ],
+  "task.00000000000003A5.title": "Recolha 16 fibras vegetais",
+  "task.00000000000003A6.title": "Recolha 4 tintoberries",
+
+  "quest.0000000000000305.title": "Min\u00e9rio e Descarga",
+  "quest.0000000000000305.quest_subtitle": "Trabalho em pedra, transporte pesado.",
+  "quest.0000000000000305.quest_desc": [
+    "Um Anquilossauro trabalhando minera pedra natural e min\u00e9rios; blocos colocados por jogadores nunca s\u00e3o tocados.",
+    "Descarregue em um ba\u00fa pr\u00f3ximo, ou use Carregar para puxar uma carga de volta."
+  ],
+  "task.00000000000003A7.title": "Minere 8 ferros brutos com um trabalhador",
+  "task.00000000000003A8.title": "Junte 32 pedregulhos"
+}

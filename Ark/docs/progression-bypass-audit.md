@@ -30,13 +30,17 @@ those removals, including village trade and loot rewrites.
 | Death item loss | Recovery Cache returns the whole haul at the death spot (P02) | Intended | The cache is a place to walk back to, not a free item return; it deliberately softens loss into a rescue trip |
 | Respawn positioning | Field bedroll sets a personal respawn point that survives the block (P02) | Intended | Reachable fallback is a P02 acceptance rule; it grants no material advantage |
 | Lethal damage | Downed state with a rescue window; void/lava/overkill stay fatal (P02) | Intended | The distinction is documented and configurable; a rescue costs a fiber bandage and a trip |
+| Cargo capacity and harnesses | A saddle or a loose item never raises capacity; both harnesses are crafted from leather and fiber (P03) | Closed | Capacity is a movement budget, not a resource shortcut |
+| Harvester tames | Work orders require the WORK flag, a nearby authorized survivor and only loaded chunks (P03) | Closed | Jobs pause without supervision and stop at the cargo ceiling; no unattended automation |
+| Overloading | Slots are never blocked, so manually exceeding capacity is intended (P03) | Intended | Capacity only shapes the movement penalty and the automated fill ceiling |
 
 ## Deferred work
 
-- **P03 (weight and working tames) and P04 (homestead):** decide whether stone and metal tool tiers
-  need a stricter source than structure loot, and whether saddles become craftable. Any change must
-  keep the two-player campaign free of forced grinding.
+- **P04 (homestead):** decide whether stone and metal tool tiers need a stricter source than
+  structure loot. Any change must keep the two-player campaign free of forced grinding.
 - **P04 (industry and economy):** audit automated production against the remaining gather loops,
   and revisit fishing junk, villager restocking and loot-table densities with measured play data.
+- A saddle craft remains optional: the quest reward still guarantees one, and P03 offers harnesses
+  rather than a second saddle source.
 - Any future theme additions should extend `ThemeGameTests` with the same pattern used here: one
   assertion per removed route, so a game update cannot silently reopen it.

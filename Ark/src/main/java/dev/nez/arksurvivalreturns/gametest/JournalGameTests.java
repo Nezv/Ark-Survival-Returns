@@ -15,13 +15,16 @@ import net.minecraft.world.level.GameType;
 final class JournalGameTests {
     private static final String PRIMITIVE = "0000000000000100";
     private static final String CAMP = "0000000000000200";
+    private static final String WORK = "0000000000000300";
 
     static void pack(GameTestHelper h) {
         h.assertTrue(ServerQuestFile.exists(), "The survival journal did not load");
         var file = ServerQuestFile.getInstance();
         verify(h, file, PRIMITIVE, 6);
         verify(h, file, CAMP, 6);
-        for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear"}) {
+        verify(h, file, WORK, 5);
+        for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear",
+                "pack_harness", "reinforced_harness"}) {
             var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id(recipe));
             h.assertFalse(h.getLevel().recipeAccess().byKey(key).isEmpty(), "Recipe is missing: " + recipe);
         }

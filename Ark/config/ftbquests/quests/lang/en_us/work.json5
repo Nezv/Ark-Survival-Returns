@@ -1,0 +1,50 @@
+{
+  "chapter.0000000000000300.title": "Working Tames",
+  "chapter.0000000000000300.chapter_subtitle": [
+    "Turn a companion into a producer."
+  ],
+
+  "quest.0000000000000301.title": "Rig for Hauling",
+  "quest.0000000000000301.quest_subtitle": "A saddle is not a cargo rig.",
+  "quest.0000000000000301.quest_desc": [
+    "Craft a pack harness from leather and plant fiber.",
+    "The reinforced harness is built from a pack harness, leather, flint and fiber; only it satisfies the heavy haulers."
+  ],
+  "task.00000000000003A1.title": "Craft a pack harness",
+  "task.00000000000003A2.title": "Craft a reinforced harness",
+
+  "quest.0000000000000302.title": "Fit the Harness",
+  "quest.0000000000000302.quest_subtitle": "Capacity follows the rig.",
+  "quest.0000000000000302.quest_desc": [
+    "Open a tamed creature and place the harness in its rig slot.",
+    "The species capacity applies only with the required harness; without it the bare allowance stays.",
+    "The Cargo readout and the Load/Unload buttons move goods to and from nearby storage."
+  ],
+  "task.00000000000003A3.title": "Fit a harness and open the cargo screen",
+
+  "quest.0000000000000303.title": "The First Work Order",
+  "quest.0000000000000303.quest_subtitle": "Point a worker at a job site.",
+  "quest.0000000000000303.quest_desc": [
+    "Lead a Triceratops or Ankylosaurus to the site and sneak-use the whistle until the WORK order appears.",
+    "The job anchors where you gave the order and pauses if no authorized survivor stays nearby."
+  ],
+  "task.00000000000003A4.title": "Give the WORK order to a worker tame",
+
+  "quest.0000000000000304.title": "Forage and Thatch",
+  "quest.0000000000000304.quest_subtitle": "The land pays in fiber and berries.",
+  "quest.0000000000000304.quest_desc": [
+    "A working Triceratops grazes grass in place, cuts tufts and resets ripe berry bushes.",
+    "Collect its hold before it fills: plant fiber and berries are the primitive binding and sedation stock."
+  ],
+  "task.00000000000003A5.title": "Collect 16 plant fiber",
+  "task.00000000000003A6.title": "Collect 4 tintoberries",
+
+  "quest.0000000000000305.title": "Ore and Unloading",
+  "quest.0000000000000305.quest_subtitle": "Stone work, heavy hauling.",
+  "quest.0000000000000305.quest_desc": [
+    "A working Ankylosaurus mines natural stone and ores; player-placed blocks are never touched.",
+    "Unload at a storage chest, or press Load to pull a load back out."
+  ],
+  "task.00000000000003A7.title": "Mine 8 raw iron with a worker",
+  "task.00000000000003A8.title": "Gather 32 cobblestone"
+}

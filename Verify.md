@@ -8,6 +8,40 @@ the matching changelog validation.
 
 Entries are grouped by patch, newest first. Each says what to do and what to look for.
 
+## Weight and Working Tames (P03) — added 2026-09-20
+
+- **Mass gauge and bands.** Fill the inventory to ~75%: gauge turns amber with one warning, and
+  sprint must still work. Cross 100%: sprint stops and movement begins to slow; at 125% the slowdown
+  should bottom out but walking, jumping and dropping items must still work. Empty the inventory and
+  the modifier must clear.
+- **Manual overloading.** Drag items into a tame's hold past its capacity: insertion must always be
+  allowed, and only movement suffers. `mass.preset=RELAXED` and `OFF` should respectively shift and
+  remove every effect after a config reload.
+- **Harnesses and capacity.** A tamed Triceratops shows bare capacity until the pack harness is in
+  the rig slot; a Brontosaurus should demand the reinforced harness. Both harness recipes craft in a
+  survival inventory; the rig drops on death.
+- **Mount load and HUD.** Ride a loaded tame: the HUD should switch to the mount bar and count your
+  carried inventory; dismounting returns the bar to the player and the mount should keep its own
+  slowdown.
+- **Fast Load / Unload.** With a chest beside a tamed creature, Load must fill the hold up to the
+  automation ceiling and leave the overflow; Unload must empty the hold into the storage. Both must
+  ignore unloaded chunks, and the buttons must be visible and clickable in the tame screen.
+- **Flight overload.** Fill a flyer past capacity: takeoff must be refused with a warning; if it is
+  already airborne when overloaded, it must descend under control and land without falling.
+- **Swim overload.** Fill an aquatic mount past capacity: it must not dive and should drift upward;
+  with the rider at low air it must surface before drowning them.
+- **Work orders.** Give a Triceratops the WORK order on a grass/Tuft/berry field: it should cut
+  tufts, graze grass in place, reset ripe bushes and fill its hold with fiber/berries. Walk away and
+  it must pause; a non-owner tribe member without the WORK flag must not supervise.
+  `/arktribe perm <player> work on` should allow it.
+- **Ankylosaurus mining.** The worker should mine natural stone and ores, receive vanilla drops plus
+  the configured ore bonus, ignore blocks it cannot reach in loaded chunks, and never break a block
+  you placed yourself.
+- **Work journal chapter.** The third chapter (Working Tames) should show 5 quests, both languages,
+  and its item tasks should tick from the creature-gathered materials.
+
+Automated so far: 52 JUnit tests, all 50 headless GameTests, FTB loading 3 chapters / 17 quests.
+
 ## Camp and Recovery (P02) — added 2026-09-20
 
 - **Downed HUD.** Take lethal damage from an ordinary hit: red vignette, countdown bar, "DOWNED" label
