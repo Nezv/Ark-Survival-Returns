@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bedroll",
+  "ingredients": [
+    "minecraft:red_wool",
+    "minecraft:red_wool",
+    "minecraft:red_wool",
+    "minecraft:string",
+    "minecraft:string"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bedroll"
+  }
+}

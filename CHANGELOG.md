@@ -4,6 +4,8 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 ## Unreleased
 
+- **Camp gear and a survivor's start.** Plant fiber now drops from grass alongside berries. A fiber bandage heals health, a flint knife and a longer-reaching flint spear cover primitive weapons, and the placeable field bedroll sets the personal respawn point without risking it when the block is destroyed. Every player receives a one-time starter kit (bedroll, two bandages, eight fiber, flint knife) on their first join. New `[camp]` settings control the kit, the bedroll and bandage values.
+
 ## Survival Journal and Tribes — 2026-09-20
 
 - **Tribe permissions.** A tame stays owned by the survivor who tamed it, and members of that owner's FTB Teams party can be granted riding, cargo, order and (later) breeding permissions. The owner always keeps every permission. Party creation and invitations stay with `/ftbteams`; `/arktribe status`, `/arktribe perm` and `/arktribe reset` inspect and edit the flags. Four new server config defaults under `[tribe]` control what party members receive by default.

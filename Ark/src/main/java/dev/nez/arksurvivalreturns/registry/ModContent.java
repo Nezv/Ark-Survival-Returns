@@ -52,6 +52,26 @@ public final class ModContent {
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem> FIELD_JOURNAL =
             ITEMS.registerItem("field_journal",
                     dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem::new, p -> p.stacksTo(1));
+    /** Plant fiber: the primitive binding material, harvested from grass. */
+    public static final DeferredItem<Item> PLANT_FIBER = ITEMS.registerSimpleItem("plant_fiber", p -> p.stacksTo(64));
+    /** Fiber bandage: field medicine; the downed revive is wired with the downed state. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.camp.FiberBandageItem> FIBER_BANDAGE =
+            ITEMS.registerItem("fiber_bandage",
+                    dev.nez.arksurvivalreturns.feature.camp.FiberBandageItem::new, p -> p.stacksTo(16));
+    /** Flint knife: fast, fragile and repairable with flint. */
+    public static final DeferredItem<Item> FLINT_KNIFE = ITEMS.registerItem("flint_knife", Item::new,
+            p -> p.sword(dev.nez.arksurvivalreturns.feature.camp.CampMaterials.FLINT, 1.0f, -1.6f));
+    /** Spear: extra reach at the cost of swing speed. */
+    public static final DeferredItem<Item> SPEAR = ITEMS.registerItem("spear", Item::new,
+            dev.nez.arksurvivalreturns.feature.camp.CampMaterials::spear);
+    /** Bedroll: sets the personal respawn point; the saved point survives the block. */
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.camp.BedrollBlock> BEDROLL =
+            BLOCKS.registerBlock("bedroll", dev.nez.arksurvivalreturns.feature.camp.BedrollBlock::new,
+                    p -> p.strength(0.4f).noOcclusion().noCollision()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                            .sound(net.minecraft.world.level.block.SoundType.WOOL));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> BEDROLL_ITEM =
+            ITEMS.registerSimpleBlockItem(BEDROLL, p -> p.stacksTo(1));
 
     static {
         for (Species s : Species.values()) {
@@ -87,6 +107,11 @@ public final class ModContent {
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
                     output.accept(COMPANION_WHISTLE.get());
                     output.accept(FIELD_JOURNAL.get());
+                    output.accept(PLANT_FIBER.get());
+                    output.accept(FIBER_BANDAGE.get());
+                    output.accept(FLINT_KNIFE.get());
+                    output.accept(SPEAR.get());
+                    output.accept(BEDROLL_ITEM.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

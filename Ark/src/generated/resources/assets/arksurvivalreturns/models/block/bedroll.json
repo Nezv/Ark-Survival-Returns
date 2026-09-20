@@ -1,0 +1,40 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#wool"
+        },
+        "east": {
+          "texture": "#wool"
+        },
+        "north": {
+          "texture": "#wool"
+        },
+        "south": {
+          "texture": "#wool"
+        },
+        "up": {
+          "texture": "#wool"
+        },
+        "west": {
+          "texture": "#wool"
+        }
+      },
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        2.0,
+        16.0
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "minecraft:block/red_wool",
+    "wool": "minecraft:block/red_wool"
+  }
+}

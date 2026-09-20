@@ -62,6 +62,10 @@ public final class Config {
     // ------------------------------------------------------------------------ companion
     public static final ModConfigSpec.IntValue COMPANION_FOLLOW_DISTANCE, COMPANION_WANDER_RADIUS,
             COMPANION_PET_COOLDOWN_TICKS;
+    // ----------------------------------------------------------------------------- camp
+    public static final ModConfigSpec.BooleanValue CAMP_STARTER_KIT, CAMP_BEDROLL_SETS_SPAWN, CAMP_BEDROLL_PICKUP;
+    public static final ModConfigSpec.DoubleValue CAMP_BANDAGE_HEAL;
+    public static final ModConfigSpec.IntValue CAMP_BANDAGE_COOLDOWN;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
@@ -108,6 +112,19 @@ public final class Config {
                 .defineInRange("wanderRadius", 20, 4, 64);
         COMPANION_PET_COOLDOWN_TICKS = b.comment("Ticks between pet responses for one creature (40 = two seconds).")
                 .defineInRange("petCooldownTicks", 40, 10, 200);
+        b.pop().push("camp");
+        CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (bedroll, bandages, fiber and a flint knife) "
+                        + "on their first join in a world.")
+                .define("starterKit", true);
+        CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the field bedroll to set the personal respawn point.")
+                .define("bedrollSetsSpawn", true);
+        CAMP_BEDROLL_PICKUP = b.comment("Allow sneak-use to roll the bedroll back into an item. The saved respawn "
+                        + "point survives either way.")
+                .define("bedrollPickup", true);
+        CAMP_BANDAGE_HEAL = b.comment("Health restored by one fiber bandage.")
+                .defineInRange("bandageHeal", 4.0, 1.0, 20.0);
+        CAMP_BANDAGE_COOLDOWN = b.comment("Ticks before the same bandage stack can heal again (100 = five seconds).")
+                .defineInRange("bandageCooldownTicks", 100, 0, 1200);
         b.pop().push("tribe");
         TRIBE_DEFAULT_RIDE = b.comment("Default riding permission for members of the tame owner's FTB Teams party. "
                         + "The owner always keeps every permission.")

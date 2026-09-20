@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "flint_knife",
+  "ingredients": [
+    "minecraft:flint",
+    "minecraft:stick",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:flint_knife"
+  }
+}

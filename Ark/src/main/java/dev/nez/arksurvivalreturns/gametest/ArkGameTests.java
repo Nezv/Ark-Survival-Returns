@@ -59,6 +59,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("tribe_permissions", () -> TribeGameTests::permissions);
         FUNCTIONS.register("journal_pack", () -> JournalGameTests::pack);
         FUNCTIONS.register("journal_taming_unlock", () -> JournalGameTests::tamingUnlock);
+        FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
+        FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
@@ -331,24 +333,28 @@ public final class ArkGameTests {
         var world = h.getLevel();
         var pos = h.absolutePos(new BlockPos(8, 2, 8));
         var found = new HashSet<Item>();
-        int berryRolls = 0, seeds = 0, tallRolls = 0;
+        int berryRolls = 0, seeds = 0, tallRolls = 0, fiberRolls = 0;
         world.getRandom().setSeed(73921L);
         for (int i = 0; i < 2000; i++) {
             var drops = Block.getDrops(Blocks.SHORT_GRASS.defaultBlockState(), world, pos, null, null, ItemStack.EMPTY);
             for (var stack : drops) {
                 if (berry(stack)) { found.add(stack.getItem()); berryRolls++; h.assertTrue(stack.getCount() >= 1 && stack.getCount() <= 2, "Invalid berry stack size"); }
+                if (stack.is(ModContent.PLANT_FIBER.get())) fiberRolls++;
                 if (stack.is(Items.WHEAT_SEEDS)) seeds++;
             }
             var sheared = Block.getDrops(Blocks.SHORT_GRASS.defaultBlockState(), world, pos, null, null, new ItemStack(Items.SHEARS));
             h.assertTrue(sheared.stream().noneMatch(ArkGameTests::berry), "Shears duplicated berries");
+            h.assertTrue(sheared.stream().noneMatch(s -> s.is(ModContent.PLANT_FIBER.get())), "Shears duplicated plant fiber");
             var upper = Block.getDrops(Blocks.TALL_GRASS.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), world, pos, null, null, ItemStack.EMPTY);
             h.assertTrue(upper.stream().noneMatch(ArkGameTests::berry), "Tall grass upper half duplicated berries");
+            h.assertTrue(upper.stream().noneMatch(s -> s.is(ModContent.PLANT_FIBER.get())), "Tall grass upper half duplicated fiber");
             var lower = Block.getDrops(Blocks.TALL_GRASS.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER), world, pos, null, null, ItemStack.EMPTY);
             if (lower.stream().anyMatch(ArkGameTests::berry)) tallRolls++;
         }
         h.assertTrue(found.size() == 4, "Not all four berries are obtainable");
         h.assertTrue(berryRolls > 500 && berryRolls < 900, "Unexpected berry drop rate: " + berryRolls);
         h.assertTrue(tallRolls > 500 && tallRolls < 900, "Tall grass did not yield one normal berry roll");
+        h.assertTrue(fiberRolls > 700 && fiberRolls < 1100, "Unexpected plant fiber drop rate: " + fiberRolls);
         h.assertTrue(seeds > 0, "Vanilla seed drops were lost");
         var dirt = Block.getDrops(Blocks.GRASS_BLOCK.defaultBlockState(), world, pos, null, null, ItemStack.EMPTY);
         h.assertTrue(dirt.stream().noneMatch(ArkGameTests::berry), "Grass blocks should not drop berries");

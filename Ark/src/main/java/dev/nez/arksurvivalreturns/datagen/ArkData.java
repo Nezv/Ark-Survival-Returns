@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -168,12 +168,25 @@ public final class ArkData implements DataProvider {
                 "model", NS + ":item/field_journal")));
         en.put("item." + NS + ".field_journal", "Field Journal");
         pt.put("item." + NS + ".field_journal", "Di\u00e1rio de campo");
+        en.put("item." + NS + ".plant_fiber", "Plant Fiber");
+        pt.put("item." + NS + ".plant_fiber", "Fibra vegetal");
+        en.put("item." + NS + ".fiber_bandage", "Fiber Bandage");
+        pt.put("item." + NS + ".fiber_bandage", "Bandagem de fibra");
+        en.put("item." + NS + ".flint_knife", "Flint Knife");
+        pt.put("item." + NS + ".flint_knife", "Faca de s\u00edlex");
+        en.put("item." + NS + ".spear", "Flint Spear");
+        pt.put("item." + NS + ".spear", "Lan\u00e7a de s\u00edlex");
+        en.put("block." + NS + ".bedroll", "Field Bedroll");
+        pt.put("block." + NS + ".bedroll", "Rolo de dormir");
+        en.put("item." + NS + ".bedroll", "Field Bedroll");
+        pt.put("item." + NS + ".bedroll", "Rolo de dormir");
         en.put("key." + NS + ".journal", "Open Field Journal");
         pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
         pt.put("key.category." + NS + ".keys", "Ark Survival Returns");
         tamingMessages(en, pt);
         tribeMessages(en, pt);
+        campMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -386,6 +399,88 @@ public final class ArkData implements DataProvider {
                 "functions":[{"function":"minecraft:set_count","count":{"type":"minecraft:uniform","min":1,"max":2}}]}]}
             """);
     }
+
+    /** Camp gear: bedroll, field medicine, primitive tools and the plant fiber route. */
+    private void camp() {
+        // No new PNGs: each model reuses a vanilla texture that reads as the primitive equivalent.
+        vanillaModel("plant_fiber", "minecraft:item/wheat");
+        vanillaModel("fiber_bandage", "minecraft:item/paper");
+        vanillaModel("flint_knife", "minecraft:item/flint");
+        vanillaModel("spear", "minecraft:item/trident");
+        // Bedroll: a two-pixel wool mat. The block has no properties, so one state is enough.
+        put("assets/" + NS + "/models/block/bedroll", Map.of("textures",
+                Map.of("wool", "minecraft:block/red_wool", "particle", "minecraft:block/red_wool"),
+                "elements", List.of(nestBox(0, 0, 0, 16, 2, 16, "wool"))));
+        put("assets/" + NS + "/blockstates/bedroll", Map.of("variants", Map.of("", Map.of("model", NS + ":block/bedroll"))));
+        put("assets/" + NS + "/models/item/bedroll", Map.of("parent", NS + ":block/bedroll"));
+        put("assets/" + NS + "/items/bedroll", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/bedroll")));
+        json("data/" + NS + "/loot_table/blocks/bedroll", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:bedroll"}]}]}
+            """.formatted(NS));
+        // Plant fiber shares the grass route with the berries; shears still suppress it.
+        json("data/" + NS + "/loot_modifiers/grass_fiber", """
+            {"type":"neoforge:add_table","table":"arksurvivalreturns:gameplay/grass_fiber","conditions":[
+                {"condition":"minecraft:any_of","terms":[
+                    {"condition":"neoforge:loot_table_id","loot_table_id":"minecraft:blocks/short_grass"},
+                    {"condition":"neoforge:loot_table_id","loot_table_id":"minecraft:blocks/tall_grass"}]},
+                {"condition":"minecraft:any_of","terms":[
+                    {"condition":"minecraft:block_state_property","block":"minecraft:short_grass"},
+                    {"condition":"minecraft:block_state_property","block":"minecraft:tall_grass","properties":{"half":"lower"}}]},
+                {"condition":"minecraft:inverted","term":{"condition":"minecraft:match_tool","predicate":{"items":"minecraft:shears"}}}
+            ]}
+            """);
+        json("data/" + NS + "/loot_table/gameplay/grass_fiber", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+                {"condition":"minecraft:random_chance","chance":0.45},{"condition":"minecraft:survives_explosion"}],
+                "entries":[{"type":"minecraft:item","name":"%s:plant_fiber"}],
+                "functions":[{"function":"minecraft:set_count","count":{"type":"minecraft:uniform","min":1,"max":2}}]}]}
+            """.formatted(NS));
+        tag("item/camp/flint_materials", "flint");
+        json("data/" + NS + "/recipe/flint_knife", """
+                {"type":"minecraft:crafting_shapeless","category":"equipment","group":"flint_knife",
+                 "ingredients":["minecraft:flint","minecraft:stick","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:flint_knife"}}
+                """.formatted(NS, NS));
+        json("data/" + NS + "/recipe/spear", """
+                {"type":"minecraft:crafting_shapeless","category":"equipment","group":"spear",
+                 "ingredients":["minecraft:stick","minecraft:stick","minecraft:flint","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:spear"}}
+                """.formatted(NS, NS));
+        json("data/" + NS + "/recipe/fiber_bandage", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"fiber_bandage",
+                 "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","minecraft:string"],
+                 "result":{"count":2,"id":"%s:fiber_bandage"}}
+                """.formatted(NS, NS, NS, NS));
+        json("data/" + NS + "/recipe/bedroll", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"bedroll",
+                 "ingredients":["minecraft:red_wool","minecraft:red_wool","minecraft:red_wool",
+                                "minecraft:string","minecraft:string"],
+                 "result":{"count":1,"id":"%s:bedroll"}}
+                """.formatted(NS));
+    }
+
+    private void vanillaModel(String id, String texture) {
+        put("assets/" + NS + "/models/item/" + id, Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", texture)));
+        put("assets/" + NS + "/items/" + id, Map.of("model", Map.of("type", "minecraft:model",
+                "model", NS + ":item/" + id)));
+    }
+
+    private void campMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("camp." + NS + ".starter_kit", "A survivor's kit: a bedroll, fiber bandages, plant fiber and a flint knife.");
+        pt.put("camp." + NS + ".starter_kit", "Um kit de sobrevivente: rolo de dormir, bandagens de fibra, fibra vegetal e uma faca de s\u00edlex.");
+        en.put("camp." + NS + ".bedroll_set", "Respawn point set. It stays here even if the bedroll is destroyed.");
+        pt.put("camp." + NS + ".bedroll_set", "Ponto de renascimento definido. Ele permanece mesmo se o rolo for destru\u00eddo.");
+        en.put("camp." + NS + ".bedroll_picked", "Bedroll rolled up.");
+        pt.put("camp." + NS + ".bedroll_picked", "Rolo de dormir recolhido.");
+        en.put("camp." + NS + ".bedroll_disabled", "Setting respawn with a bedroll is disabled on this server.");
+        pt.put("camp." + NS + ".bedroll_disabled", "Definir o renascimento com um rolo de dormir est\u00e1 desativado neste servidor.");
+        en.put("camp." + NS + ".bandaged", "Bandaged +%s health.");
+        pt.put("camp." + NS + ".bandaged", "Bandagem recuperou +%s de vida.");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -480,7 +575,7 @@ public final class ArkData implements DataProvider {
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
-                "journal_taming_unlock"))
+                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
