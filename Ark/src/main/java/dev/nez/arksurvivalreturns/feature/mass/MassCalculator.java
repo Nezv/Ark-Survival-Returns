@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import dev.nez.arksurvivalreturns.Config;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +43,13 @@ public final class MassCalculator {
         Inventory inventory = player.getInventory();
         for (ItemStack stack : inventory.getNonEquipmentItems()) total += massOf(stack);
         for (EquipmentSlot slot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) total += massOf(player.getItemBySlot(slot));
+        return total;
+    }
+
+    /** Cargo contents of one container; used for creature holds. */
+    public static double cargoMass(Container container) {
+        double total = 0.0;
+        for (int slot = 0; slot < container.getContainerSize(); slot++) total += massOf(container.getItem(slot));
         return total;
     }
 

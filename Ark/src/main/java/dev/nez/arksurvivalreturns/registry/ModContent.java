@@ -54,6 +54,11 @@ public final class ModContent {
                     dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem::new, p -> p.stacksTo(1));
     /** Plant fiber: the primitive binding material, harvested from grass. */
     public static final DeferredItem<Item> PLANT_FIBER = ITEMS.registerSimpleItem("plant_fiber", p -> p.stacksTo(64));
+    /** Pack harness: unlocks the species cargo capacity for ordinary haulers. */
+    public static final DeferredItem<Item> PACK_HARNESS = ITEMS.registerSimpleItem("pack_harness", p -> p.stacksTo(1));
+    /** Reinforced harness: required by the heavy haulers and giants. */
+    public static final DeferredItem<Item> REINFORCED_HARNESS =
+            ITEMS.registerSimpleItem("reinforced_harness", p -> p.stacksTo(1));
     /** Fiber bandage: field medicine; the downed revive is wired with the downed state. */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.camp.FiberBandageItem> FIBER_BANDAGE =
             ITEMS.registerItem("fiber_bandage",
@@ -115,6 +120,8 @@ public final class ModContent {
                     output.accept(COMPANION_WHISTLE.get());
                     output.accept(FIELD_JOURNAL.get());
                     output.accept(PLANT_FIBER.get());
+                    output.accept(PACK_HARNESS.get());
+                    output.accept(REINFORCED_HARNESS.get());
                     output.accept(FIBER_BANDAGE.get());
                     output.accept(FLINT_KNIFE.get());
                     output.accept(SPEAR.get());

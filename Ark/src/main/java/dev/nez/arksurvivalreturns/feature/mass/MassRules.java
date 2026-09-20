@@ -32,6 +32,11 @@ public final class MassRules {
         return Math.max(1.0, Config.MASS_PLAYER_CAPACITY.get() * profile().capacityMultiplier());
     }
 
+    /** Fast Load and work jobs stop before crossing this ratio; manual loading may exceed it. */
+    public static double automationCeiling() {
+        return Config.MASS_AUTOMATION_CEILING.get();
+    }
+
     public static Band band(double ratio) {
         return band(ratio, profile());
     }

@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); camp(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); recovery(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -187,6 +187,20 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".field_journal", "Di\u00e1rio de campo");
         en.put("item." + NS + ".plant_fiber", "Plant Fiber");
         pt.put("item." + NS + ".plant_fiber", "Fibra vegetal");
+        en.put("item." + NS + ".pack_harness", "Pack Harness");
+        pt.put("item." + NS + ".pack_harness", "Arn\u00eas de carga");
+        en.put("item." + NS + ".reinforced_harness", "Reinforced Harness");
+        pt.put("item." + NS + ".reinforced_harness", "Arn\u00eas refor\u00e7ado");
+        en.put("screen." + NS + ".cargo", "Cargo %s / %s");
+        pt.put("screen." + NS + ".cargo", "Carga %s / %s");
+        en.put("screen." + NS + ".unload", "Unload");
+        pt.put("screen." + NS + ".unload", "Descarregar");
+        en.put("screen." + NS + ".load", "Load");
+        pt.put("screen." + NS + ".load", "Carregar");
+        en.put("cargo." + NS + ".moved", "[ARK] Moved %s items.");
+        pt.put("cargo." + NS + ".moved", "[ARK] %s itens movidos.");
+        en.put("cargo." + NS + ".none", "[ARK] No nearby storage accepted the transfer.");
+        pt.put("cargo." + NS + ".none", "[ARK] Nenhum armazenamento pr\u00f3ximo aceitou a transfer\u00eancia.");
         en.put("item." + NS + ".fiber_bandage", "Fiber Bandage");
         pt.put("item." + NS + ".fiber_bandage", "Bandagem de fibra");
         en.put("item." + NS + ".flint_knife", "Flint Knife");
@@ -481,6 +495,22 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS));
     }
 
+    /** Cargo rigs: the two harness tiers and their primitive recipes. Vanilla textures stand in. */
+    private void cargo() {
+        vanillaModel("pack_harness", "minecraft:item/saddle");
+        vanillaModel("reinforced_harness", "minecraft:item/iron_horse_armor");
+        json("data/" + NS + "/recipe/pack_harness", """
+                {"type":"minecraft:crafting_shapeless","category":"equipment","group":"pack_harness",
+                 "ingredients":["minecraft:leather","minecraft:leather","minecraft:leather","%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:pack_harness"}}
+                """.formatted(NS, NS, NS));
+        json("data/" + NS + "/recipe/reinforced_harness", """
+                {"type":"minecraft:crafting_shapeless","category":"equipment","group":"reinforced_harness",
+                 "ingredients":["%s:pack_harness","minecraft:leather","minecraft:flint","%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:reinforced_harness"}}
+                """.formatted(NS, NS, NS, NS));
+    }
+
     /** Recovery cache visuals and the two hidden discovery advancements. */
     private void recovery() {
         // A crate-like marker; no new PNGs, the barrel texture reads as a survivor's cache.
@@ -595,6 +625,8 @@ public final class ArkData implements DataProvider {
     private void massMessages(Map<String, String> en, Map<String, String> pt) {
         en.put("hud." + NS + ".mass", "Load %s / %s");
         pt.put("hud." + NS + ".mass", "Carga %s / %s");
+        en.put("hud." + NS + ".mass.mount", "Mount %s / %s");
+        pt.put("hud." + NS + ".mass.mount", "Montaria %s / %s");
         en.put("hud." + NS + ".mass.warn", "[ARK] Heavy load: %s / %s");
         pt.put("hud." + NS + ".mass.warn", "[ARK] Carga pesada: %s / %s");
         en.put("hud." + NS + ".mass.overload", "[ARK] Overburdened: sprint disabled and movement slowing.");
@@ -674,7 +706,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

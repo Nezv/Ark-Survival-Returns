@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:cargo_transfer",
+  "max_ticks": 100,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_empty"
+}

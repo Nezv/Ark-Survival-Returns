@@ -1,6 +1,7 @@
 package dev.nez.arksurvivalreturns.feature.taming;
 
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
@@ -89,6 +90,10 @@ public final class CreatureInventory extends SimpleContainer implements ValueIOS
             if (profile.accepts(stack)) total += stack.getCount();
         }
         return total;
+    }
+
+    @Override public void setChanged() {
+        if (owner.level() != null && !owner.level().isClientSide()) MassService.markDirty(owner);
     }
 
     @Override public void serialize(ValueOutput output) {

@@ -9,8 +9,10 @@ import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.LoopType;
 import com.geckolib.util.GeckoLibUtil;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionGoal;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
+import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
@@ -19,10 +21,12 @@ import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -45,6 +49,15 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Species species;
     private final CreatureInventory tamingInventory = new CreatureInventory(this);
+    /** One rig slot: the harness tier decides whether the species cargo capacity or the bare allowance applies. */
+    private final SimpleContainer harnessSlot = new SimpleContainer(1) {
+        @Override public boolean canPlaceItem(int slot, ItemStack stack) {
+            return CargoProfiles.tier(stack) != CargoProfiles.Harness.NONE;
+        }
+        @Override public void setChanged() {
+            if (level() != null && !level().isClientSide()) MassService.markDirty(CreatureEntity.this);
+        }
+    };
     private boolean levelInitialized;
     private int originDanger = -1;
     private UUID packId = UUID.randomUUID();
@@ -82,6 +95,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public TamingState taming() { return TamingService.of(this); }
 
     public CreatureInventory tamingInventory() { return tamingInventory; }
+
+    /** One-slot rig container; cargo capacity derives from the harness tier it holds. */
+    public SimpleContainer harnessSlot() { return harnessSlot; }
+
+    public CargoProfiles.Harness harnessTier() { return CargoProfiles.tier(harnessSlot.getItem(0)); }
 
     /** The saddle lives in the real equipment slot, so vanilla persists, syncs and drops it. */
     public boolean isSaddled() { return getItemBySlot(EquipmentSlot.SADDLE).is(Items.SADDLE); }
@@ -303,6 +321,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             boolean hitByPlayer) {
         super.dropCustomDeathLoot(level, source, hitByPlayer);
         tamingInventory.dropAll(level, position());
+        if (!harnessSlot.isEmpty()) {
+            ItemStack rig = harnessSlot.removeItemNoUpdate(0);
+            var drop = new net.minecraft.world.entity.item.ItemEntity(level, getX(), getY(), getZ(), rig);
+            drop.setDefaultPickUpDelay();
+            level.addFreshEntity(drop);
+            harnessSlot.setChanged();
+        }
     }
     public int creatureLevel() { return entityData.get(LEVEL); }
     public UUID packId() { return packId; }
@@ -457,6 +482,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         output.putString("PackId", packId.toString());
         output.putBoolean("NaturalWildlife", naturalWildlife);
         tamingInventory.serialize(output.child("TamingInventory"));
+        ContainerHelper.saveAllItems(output.child("Harness"), harnessSlot.getItems());
         wildlife.save(output);
     }
     @Override protected void readAdditionalSaveData(ValueInput input) {
@@ -466,6 +492,10 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         originDanger = input.getIntOr("OriginDanger", -1);
         naturalWildlife = input.getBooleanOr("NaturalWildlife", !isPersistenceRequired());
         input.child("TamingInventory").ifPresent(tamingInventory::deserialize);
+        input.child("Harness").ifPresent(harness -> {
+            harnessSlot.clearContent();
+            ContainerHelper.loadAllItems(harness, harnessSlot.getItems());
+        });
         // Adopt the new movement baseline for old saves without stacking a multiplier on each load.
         applyMovementTuning();
         wildlife.load(input);

@@ -1,6 +1,9 @@
 package dev.nez.arksurvivalreturns.feature.taming;
 
+import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.mass.MassCalculator;
+import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -28,7 +31,8 @@ import org.jspecify.annotations.Nullable;
  */
 public final class CreatureMountMenu extends AbstractContainerMenu {
     public static final int SADDLE_SLOT = 0;
-    public static final int STORAGE_START = 1;
+    public static final int HARNESS_SLOT = 1;
+    public static final int STORAGE_START = 2;
     public static final int STORAGE_COLUMNS = 3;
     public static final int STORAGE_ROWS = 3;
     public static final int MOUNT_SLOTS = STORAGE_START + CreatureInventory.STORAGE_SIZE;
@@ -40,7 +44,9 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
     public static final int DATA_TORPOR_MAX = 3;
     public static final int DATA_PHASE = 4;
     public static final int DATA_METHOD = 5;
-    public static final int DATA_COUNT = 6;
+    public static final int DATA_CARGO = 6;
+    public static final int DATA_CARGO_MAX = 7;
+    public static final int DATA_COUNT = 8;
 
     private final @Nullable CreatureEntity creature;
     private final Container storage;
@@ -54,6 +60,12 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(saddle, 0, 8, 18) {
             @Override public boolean mayPlace(ItemStack stack) {
                 return stack.is(Items.SADDLE);
+            }
+        });
+        Container harness = creature == null ? new SimpleContainer(1) : creature.harnessSlot();
+        this.addSlot(new Slot(harness, 0, 8, 36) {
+            @Override public boolean mayPlace(ItemStack stack) {
+                return CargoProfiles.tier(stack) != CargoProfiles.Harness.NONE;
             }
         });
         for (int row = 0; row < STORAGE_ROWS; row++) {
@@ -80,6 +92,9 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
                     case DATA_TORPOR_MAX -> (int) Math.round(torpor.maximum());
                     case DATA_PHASE -> torpor.phase().ordinal();
                     case DATA_METHOD -> creature.profile().method().ordinal();
+                    case DATA_CARGO -> (int) Math.round(MassCalculator.cargoMass(creature.tamingInventory())
+                            + MassCalculator.massOf(creature.harnessSlot().getItem(0)));
+                    case DATA_CARGO_MAX -> (int) Math.round(MassService.creatureCapacity(creature));
                     default -> 0;
                 };
             }
@@ -110,6 +125,14 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
         return containerData().get(DATA_TORPOR_MAX);
     }
 
+    public int rawCargoMass() {
+        return containerData().get(DATA_CARGO);
+    }
+
+    public int rawCargoMax() {
+        return containerData().get(DATA_CARGO_MAX);
+    }
+
     public static int inventoryColumns() {
         return STORAGE_COLUMNS;
     }
@@ -132,6 +155,8 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
             if (!this.moveItemStackTo(stack, MOUNT_SLOTS, this.slots.size(), true)) return ItemStack.EMPTY;
         } else if (this.getSlot(SADDLE_SLOT).mayPlace(stack) && !this.getSlot(SADDLE_SLOT).hasItem()) {
             if (!this.moveItemStackTo(stack, SADDLE_SLOT, STORAGE_START, false)) return ItemStack.EMPTY;
+        } else if (this.getSlot(HARNESS_SLOT).mayPlace(stack) && !this.getSlot(HARNESS_SLOT).hasItem()) {
+            if (!this.moveItemStackTo(stack, HARNESS_SLOT, STORAGE_START, false)) return ItemStack.EMPTY;
         } else if (!this.moveItemStackTo(stack, STORAGE_START, MOUNT_SLOTS, false)) {
             int playerStart = MOUNT_SLOTS;
             int hotbarStart = playerStart + 27;
@@ -147,6 +172,12 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
         if (stack.isEmpty()) slot.setByPlayer(ItemStack.EMPTY);
         else slot.setChanged();
         return clicked;
+    }
+
+    /** Every slot edit, including feeding and transfers, refreshes the creature load once per tick. */
+    @Override public void slotsChanged(Container container) {
+        super.slotsChanged(container);
+        if (creature != null && !creature.level().isClientSide()) MassService.markDirty(creature);
     }
 
     /** A deposited item is the moment a wild attempt becomes this player's; claiming happens on open. */

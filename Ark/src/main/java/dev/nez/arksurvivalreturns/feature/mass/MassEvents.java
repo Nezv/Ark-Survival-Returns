@@ -1,10 +1,13 @@
 package dev.nez.arksurvivalreturns.feature.mass;
 
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
+import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
@@ -33,6 +36,15 @@ public final class MassEvents {
     @SubscribeEvent public static void changedDimension(PlayerEvent.PlayerChangedDimensionEvent event) { mark(event.getEntity()); }
     @SubscribeEvent public static void loggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) MassService.clear(player);
+    }
+    /** A reloaded creature recomputes its cargo load without any persisted mass value. */
+    @SubscribeEvent public static void joinedLevel(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof CreatureEntity creature) MassService.markDirty(creature);
+    }
+    /** Mount and dismount both move the rider's load between the player and the animal. */
+    @SubscribeEvent public static void mounted(EntityMountEvent event) {
+        if (event.getEntity() instanceof CreatureEntity creature) MassService.markDirty(creature);
+        if (event.getEntityMounting() instanceof ServerPlayer player) MassService.markDirty(player);
     }
     @SubscribeEvent public static void serverTick(ServerTickEvent.Post event) { MassService.tick(event.getServer()); }
 

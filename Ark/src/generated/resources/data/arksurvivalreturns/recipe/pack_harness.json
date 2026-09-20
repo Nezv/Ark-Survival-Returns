@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "pack_harness",
+  "ingredients": [
+    "minecraft:leather",
+    "minecraft:leather",
+    "minecraft:leather",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:pack_harness"
+  }
+}

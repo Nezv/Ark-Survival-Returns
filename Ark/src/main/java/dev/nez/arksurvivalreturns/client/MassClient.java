@@ -22,6 +22,7 @@ public final class MassClient {
     private static float capacity;
     private static int band;
     private static boolean visible;
+    private static boolean mount;
 
     @SubscribeEvent public static void register(RegisterClientPayloadHandlersEvent event) {
         event.register(MassPayload.TYPE, (payload, context) -> {
@@ -29,6 +30,7 @@ public final class MassClient {
             capacity = payload.capacity();
             band = payload.band();
             visible = payload.visible();
+            mount = payload.mount();
         });
     }
 
@@ -46,7 +48,8 @@ public final class MassClient {
             case OVERLOAD -> 0xFFFF8C1A;
             case HEAVY -> 0xFFFF4040;
         };
-        String text = I18n.get("hud.arksurvivalreturns.mass", Math.round(mass), Math.round(capacity));
+        String text = I18n.get(mount ? "hud.arksurvivalreturns.mass.mount" : "hud.arksurvivalreturns.mass",
+                Math.round(mass), Math.round(capacity));
         graphics.text(font, text, 6, 6, color);
         int x = 6;
         int y = 18;
@@ -62,6 +65,7 @@ public final class MassClient {
 
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
         visible = false;
+        mount = false;
         mass = 0f;
         capacity = 0f;
         band = 0;

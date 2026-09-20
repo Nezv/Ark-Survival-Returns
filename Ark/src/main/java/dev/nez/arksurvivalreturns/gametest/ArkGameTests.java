@@ -67,6 +67,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
+        FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
+        FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

@@ -1,13 +1,16 @@
 package dev.nez.arksurvivalreturns.client;
 
+import dev.nez.arksurvivalreturns.feature.cargo.CargoTransferPayload;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureMountMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 /**
  * The vanilla horse GUI reused for a creature: same texture, same slot coordinates, same 3x3 chest block
@@ -22,6 +25,10 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
     private static final Identifier SLOT_SPRITE = Identifier.withDefaultNamespace("container/slot");
     private static final Identifier CHEST_SLOTS_SPRITE = Identifier.withDefaultNamespace("container/horse/chest_slots");
     private static final int LABEL = -12566464;
+    private static final int BUTTON_WIDTH = 36;
+    private static final int BUTTON_HEIGHT = 14;
+    private static final int UNLOAD_X = 136, UNLOAD_Y = 36;
+    private static final int LOAD_X = 136, LOAD_Y = 54;
     private float xMouse;
     private float yMouse;
 
@@ -44,6 +51,9 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CHEST_SLOTS_SPRITE, 90, 54, 0, 0,
                 xo + 79, yo + 17, CreatureMountMenu.STORAGE_COLUMNS * 18, 54);
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE, xo + 7, yo + 17, 18, 18);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE, xo + 7, yo + 35, 18, 18);
+        drawButton(graphics, xo + UNLOAD_X, yo + UNLOAD_Y, "screen.arksurvivalreturns.unload");
+        drawButton(graphics, xo + LOAD_X, yo + LOAD_Y, "screen.arksurvivalreturns.load");
         var creature = this.menu.creature();
         if (creature != null) {
             InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, xo + 26, yo + 18, xo + 78, yo + 70, 17,
@@ -61,5 +71,36 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
                 this.menu.rawHunger()), 90, 6, LABEL, false);
         graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.torpor",
                 this.menu.rawTorpor(), this.menu.rawTorporMax()), 90, 74, LABEL, false);
+        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.cargo",
+                this.menu.rawCargoMass(), this.menu.rawCargoMax()), 8, 68, LABEL, false);
+    }
+
+    /** Bulk transfer buttons; disabled while the creature is not resolvable on this side. */
+    private void drawButton(GuiGraphicsExtractor graphics, int x, int y, String key) {
+        boolean enabled = this.menu.creature() != null;
+        boolean hover = enabled && inside(this.xMouse, this.yMouse, x, y);
+        graphics.fill(x - 4, y, x + BUTTON_WIDTH + 4, y + BUTTON_HEIGHT, hover ? 0xFF5A5A5A : 0xFF3A3A3A);
+        Component text = Component.translatable(key);
+        graphics.text(this.font, text, x + (BUTTON_WIDTH + 8 - this.font.width(text)) / 2, y + 3,
+                enabled ? 0xFFEDEDED : 0xFF777777, false);
+    }
+
+    private static boolean inside(double mouseX, double mouseY, int x, int y) {
+        return mouseX >= x - 4 && mouseX < x + BUTTON_WIDTH + 4 && mouseY >= y && mouseY < y + BUTTON_HEIGHT;
+    }
+
+    @Override public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        if (event.button() == 0 && this.menu.creature() != null) {
+            double mouseX = event.x(), mouseY = event.y();
+            if (inside(mouseX, mouseY, this.leftPos + UNLOAD_X, this.topPos + UNLOAD_Y)) {
+                ClientPacketDistributor.sendToServer(new CargoTransferPayload(this.menu.creature().getId(), false));
+                return true;
+            }
+            if (inside(mouseX, mouseY, this.leftPos + LOAD_X, this.topPos + LOAD_Y)) {
+                ClientPacketDistributor.sendToServer(new CargoTransferPayload(this.menu.creature().getId(), true));
+                return true;
+            }
+        }
+        return super.mouseClicked(event, doubleClick);
     }
 }

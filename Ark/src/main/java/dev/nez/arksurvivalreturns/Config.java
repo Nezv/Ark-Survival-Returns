@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns;
 import java.util.EnumMap;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.mass.MassRules;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -64,7 +65,9 @@ public final class Config {
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
     public static final ModConfigSpec.DoubleValue MASS_PLAYER_CAPACITY, MASS_MULTIPLIER, MASS_WARNING_RATIO,
             MASS_SLOW_RATIO, MASS_HEAVY_RATIO, MASS_SPEED_FLOOR, MASS_UNKNOWN_CONTAINER, MASS_CONTAINER_CONTENT_CAP,
-            MASS_AUTOMATION_CEILING;
+            MASS_AUTOMATION_CEILING, MASS_BARE_CAPACITY;
+    public static final ModConfigSpec.IntValue CARGO_TRANSFER_RADIUS;
+    public static final EnumMap<Species, ModConfigSpec.DoubleValue> CARGO_CAPACITY = new EnumMap<>(Species.class);
     // --------------------------------------------------------------------------- combat
     public static final ModConfigSpec.DoubleValue COMBAT_HIT_FRACTION, COMBAT_RECOVERY_FRACTION;
     // ------------------------------------------------------------------------ companion
@@ -215,6 +218,18 @@ public final class Config {
         MASS_AUTOMATION_CEILING = b.comment("Fast Load and work jobs stop at this load ratio; manual loading may "
                         + "exceed it up to the heavy band.")
                 .defineInRange("automationCeiling", 1.0, 1.0, 1.25);
+        MASS_BARE_CAPACITY = b.comment("Capacity of a tame without its required harness; the harness raises it to "
+                        + "the species value below.")
+                .defineInRange("bareCapacity", 100.0, 10.0, 1000.0);
+        CARGO_TRANSFER_RADIUS = b.comment("Radius the Load and Unload buttons search for containers in. Only loaded "
+                        + "chunks are read; a larger radius never forces a chunk to load.")
+                .defineInRange("transferRadius", 8, 2, 16);
+        for (var species : Species.values()) {
+            b.push(species.id);
+            CARGO_CAPACITY.put(species, b.comment("Species cargo capacity with its required harness.")
+                    .defineInRange("capacity", CargoProfiles.of(species).capacity(), 50.0, 2000.0));
+            b.pop();
+        }
         b.pop().push("levels");
         HEALTH_GROWTH = b.comment("HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.").defineInRange("healthGrowth", 0.10, 0.0, 0.20);
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);
