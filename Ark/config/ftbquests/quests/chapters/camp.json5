@@ -1,0 +1,181 @@
+{
+  "id": "0000000000000200",
+  "group": "",
+  "order_index": 1,
+  "icon": {
+    "id": "arksurvivalreturns:bedroll"
+  },
+  "quests": [
+    {
+      "id": "0000000000000201",
+      "x": 0.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "00000000000002A1",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:bedroll"
+          },
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B1",
+          "type": "item",
+          "item": {
+            "id": "minecraft:campfire"
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000202",
+      "x": 1.5,
+      "y": -1.0,
+      "dependencies": [
+        "0000000000000201"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000002A2",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:plant_fiber"
+          },
+          "count": 8
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B2",
+          "type": "item",
+          "item": {
+            "id": "minecraft:cooked_beef",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000203",
+      "x": 1.5,
+      "y": 1.0,
+      "dependencies": [
+        "0000000000000202"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000002A3",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:fiber_bandage"
+          },
+          "count": 2,
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B3",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:plant_fiber",
+            "count": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000204",
+      "x": 3.0,
+      "y": -1.0,
+      "dependencies": [
+        "0000000000000202"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000002A4",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:flint_knife"
+          },
+          "only_from_crafting": true
+        },
+        {
+          "id": "00000000000002A5",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:spear"
+          },
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B4",
+          "type": "item",
+          "item": {
+            "id": "minecraft:flint",
+            "count": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000205",
+      "x": 0.0,
+      "y": -2.0,
+      "dependencies": [
+        "0000000000000201"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000002A6",
+          "type": "advancement",
+          "advancement": "arksurvivalreturns:journal/first_recovery",
+          "criterion": "discovered"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B5",
+          "type": "item",
+          "item": {
+            "id": "minecraft:cooked_beef",
+            "count": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000206",
+      "x": 3.0,
+      "y": 1.0,
+      "dependencies": [
+        "0000000000000203"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000002A7",
+          "type": "advancement",
+          "advancement": "arksurvivalreturns:journal/first_revive",
+          "criterion": "discovered"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000002B6",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:fiber_bandage",
+            "count": 2
+          }
+        }
+      ]
+    }
+  ],
+  "quest_links": [],
+  "images": []
+}

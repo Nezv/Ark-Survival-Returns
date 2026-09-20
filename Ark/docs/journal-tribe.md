@@ -26,7 +26,8 @@ license, so the artifacts are downloaded at runtime and never redistributed with
    `/ftbteams` or the invitation screen. FTB Teams owns membership, ranks and team chat.
 2. **Open the journal.** Craft the Field Journal from a book and two leather, then press **J** or
    right-click with it. The Primitive chapter starts with camp, tools, forage, sedation, the first
-   tame and the journal itself.
+   tame and the journal itself; Camp and Recovery follows with the bedroll, fiber, bandages, flint
+   tools, cache recovery and a revive.
 3. **Share progress.** Quest progress is per tribe; rewards are per player and granted exactly once.
    Pin an objective in the book to keep it on the HUD tracker.
 4. **Grant tame access.** `/arktribe status` shows the party and the caller's resolved flags.
@@ -43,7 +44,9 @@ members, breeding is reserved for the husbandry work and defaults off.
 Advancements are the per-player record. Taming a first creature awards the hidden
 `journal/first_tame`; a tame whose saved origin band is 5 also awards `journal/rank5_tame` and
 grants the map entitlement. The origin band is recorded when a creature first spawns, so
-transporting an animal later never changes its provenance.
+transporting an animal later never changes its provenance. Death and rescue add `journal/first_loss`,
+`journal/first_recovery`, `journal/first_downed` and `journal/first_revive`; see
+[Camp and recovery](recovery.md) for their systems and commands.
 
 ## Authoring the quest pack
 
@@ -60,7 +63,7 @@ the authored pack lives in `Ark/config/ftbquests/quests/` and `prepareDevRuntime
   reset player progress as long as ids do not change.
 
 `JournalGameTests.journal_pack` fails the build if the pack stops loading, changes size or leaves an
-item task unresolved; the server log line `Loaded 1 chapter groups, 1 chapters, 6 quests` confirms a
+item task unresolved; the server log line `Loaded 1 chapter groups, 2 chapters, 12 quests` confirms a
 clean load. Add later chapters the same way as their patches land.
 
 ## Installing elsewhere

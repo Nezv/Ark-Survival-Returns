@@ -11,18 +11,31 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.GameType;
 
-/** The shipped quest pack loads, and every Primitive objective resolves its content. */
+/** The shipped quest pack loads, and every shipped objective resolves its content. */
 final class JournalGameTests {
     private static final String PRIMITIVE = "0000000000000100";
+    private static final String CAMP = "0000000000000200";
 
     static void pack(GameTestHelper h) {
         h.assertTrue(ServerQuestFile.exists(), "The survival journal did not load");
         var file = ServerQuestFile.getInstance();
+        verify(h, file, PRIMITIVE, 6);
+        verify(h, file, CAMP, 6);
+        for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear"}) {
+            var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id(recipe));
+            h.assertFalse(h.getLevel().recipeAccess().byKey(key).isEmpty(), "Recipe is missing: " + recipe);
+        }
+        h.succeed();
+    }
+
+    /** Every quest in a chapter must carry a reward and resolve any item task. */
+    private static void verify(GameTestHelper h, ServerQuestFile file, String chapterId, int expectedQuests) {
         var chapter = file.getAllChapters().stream()
-                .filter(candidate -> candidate.getCodeString().equals(PRIMITIVE))
+                .filter(candidate -> candidate.getCodeString().equals(chapterId))
                 .findFirst().orElse(null);
-        h.assertTrue(chapter != null, "The Primitive chapter is missing");
-        h.assertTrue(chapter.getQuests().size() == 6, "Primitive chapter changed size: " + chapter.getQuests().size());
+        h.assertTrue(chapter != null, "The chapter is missing: " + chapterId);
+        h.assertTrue(chapter.getQuests().size() == expectedQuests,
+                "Chapter " + chapterId + " changed size: " + chapter.getQuests().size());
         for (var quest : chapter.getQuests()) {
             h.assertFalse(quest.getTasks().isEmpty(), "Quest has no tasks: " + quest.getCodeString());
             h.assertFalse(quest.getRewards().isEmpty(), "Quest has no rewards: " + quest.getCodeString());
@@ -32,9 +45,6 @@ final class JournalGameTests {
                 }
             }
         }
-        var recipeKey = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id("field_journal"));
-        h.assertFalse(h.getLevel().recipeAccess().byKey(recipeKey).isEmpty(), "Field Journal recipe is missing");
-        h.succeed();
     }
 
     /** A tame that came from the rank-5 band grants the map entitlement; other origins do not. */

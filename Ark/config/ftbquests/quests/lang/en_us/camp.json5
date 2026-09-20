@@ -1,0 +1,55 @@
+{
+  "chapter.0000000000000200.title": "Camp and Recovery",
+  "chapter.0000000000000200.chapter_subtitle": [
+    "Prepare, stumble, and come back."
+  ],
+
+  "quest.0000000000000201.title": "A Place to Return To",
+  "quest.0000000000000201.quest_subtitle": "Camp first.",
+  "quest.0000000000000201.quest_desc": [
+    "Craft a field bedroll from three red wool and two string.",
+    "Place it and use it to set your respawn point; the point stays even if the bedroll is destroyed."
+  ],
+  "task.00000000000002A1.title": "Craft the field bedroll",
+
+  "quest.0000000000000202.title": "Fiber from the Land",
+  "quest.0000000000000202.quest_subtitle": "The land provides the binding.",
+  "quest.0000000000000202.quest_desc": [
+    "Break short and tall grass for plant fiber; shears skip it.",
+    "Fiber ties tools, bandages and the bedroll together."
+  ],
+  "task.00000000000002A2.title": "Gather 8 plant fiber",
+
+  "quest.0000000000000203.title": "Field Medicine",
+  "quest.0000000000000203.quest_subtitle": "A wound is a delay, not an ending.",
+  "quest.0000000000000203.quest_desc": [
+    "Craft fiber bandages from three plant fiber and a string.",
+    "A bandage heals you, and revives a downed tribe member."
+  ],
+  "task.00000000000002A3.title": "Craft 2 fiber bandages",
+
+  "quest.0000000000000204.title": "Flint and Sinew",
+  "quest.0000000000000204.quest_subtitle": "Edge without metal.",
+  "quest.0000000000000204.quest_desc": [
+    "Craft a flint knife and a flint spear.",
+    "The spear reaches further; the knife is fast and fragile."
+  ],
+  "task.00000000000002A4.title": "Craft a flint knife",
+  "task.00000000000002A5.title": "Craft a flint spear",
+
+  "quest.0000000000000205.title": "Nothing Is Really Lost",
+  "quest.0000000000000205.quest_subtitle": "Walk back and collect.",
+  "quest.0000000000000205.quest_desc": [
+    "Die once, then find your Recovery Cache and collect it.",
+    "Your tribe sees the coordinates; break the marker if you must, the items stay claimable."
+  ],
+  "task.00000000000002A6.title": "Recover your first cache",
+
+  "quest.0000000000000206.title": "Lift Your Partner Up",
+  "quest.0000000000000206.quest_subtitle": "Nobody bleeds out on your watch.",
+  "quest.0000000000000206.quest_desc": [
+    "When a tribe member is downed, use a fiber bandage on them before the timer ends.",
+    "Void, lava and overkill hits are still fatal \u2014 reach them fast."
+  ],
+  "task.00000000000002A7.title": "Revive a downed tribe member"
+}

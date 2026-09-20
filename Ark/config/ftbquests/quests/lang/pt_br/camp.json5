@@ -1,0 +1,55 @@
+{
+  "chapter.0000000000000200.title": "Acampamento e Recupera\u00e7\u00e3o",
+  "chapter.0000000000000200.chapter_subtitle": [
+    "Prepare-se, tropece e volte."
+  ],
+
+  "quest.0000000000000201.title": "Um lugar para voltar",
+  "quest.0000000000000201.quest_subtitle": "Acampe primeiro.",
+  "quest.0000000000000201.quest_desc": [
+    "Crie um rolo de dormir com tr\u00eas l\u00e3s vermelhas e dois fios.",
+    "Coloque-o e use-o para definir seu ponto de renascimento; o ponto permanece mesmo se o rolo for destru\u00eddo."
+  ],
+  "task.00000000000002A1.title": "Crie o rolo de dormir",
+
+  "quest.0000000000000202.title": "Fibra da terra",
+  "quest.0000000000000202.quest_subtitle": "A terra fornece a amarra\u00e7\u00e3o.",
+  "quest.0000000000000202.quest_desc": [
+    "Quebre grama curta e alta para obter fibra vegetal; tesouras n\u00e3o a coletam.",
+    "A fibra une ferramentas, bandagens e o rolo de dormir."
+  ],
+  "task.00000000000002A2.title": "Junte 8 fibras vegetais",
+
+  "quest.0000000000000203.title": "Medicina de campo",
+  "quest.0000000000000203.quest_subtitle": "Um ferimento \u00e9 um atraso, n\u00e3o um fim.",
+  "quest.0000000000000203.quest_desc": [
+    "Crie bandagens de fibra com tr\u00eas fibras vegetais e um fio.",
+    "Uma bandagem cura voc\u00ea e reanima um membro da tribo ca\u00eddo."
+  ],
+  "task.00000000000002A3.title": "Crie 2 bandagens de fibra",
+
+  "quest.0000000000000204.title": "S\u00edlex e tend\u00e3o",
+  "quest.0000000000000204.quest_subtitle": "Fio sem metal.",
+  "quest.0000000000000204.quest_desc": [
+    "Crie uma faca de s\u00edlex e uma lan\u00e7a de s\u00edlex.",
+    "A lan\u00e7a alcan\u00e7a mais longe; a faca \u00e9 r\u00e1pida e fr\u00e1gil."
+  ],
+  "task.00000000000002A4.title": "Crie uma faca de s\u00edlex",
+  "task.00000000000002A5.title": "Crie uma lan\u00e7a de s\u00edlex",
+
+  "quest.0000000000000205.title": "Nada se perde de verdade",
+  "quest.0000000000000205.quest_subtitle": "Volte e recolha.",
+  "quest.0000000000000205.quest_desc": [
+    "Morra uma vez e encontre seu Cache de recupera\u00e7\u00e3o para recolh\u00ea-lo.",
+    "Sua tribo v\u00ea as coordenadas; quebre o marcador se precisar, os itens continuam resgat\u00e1veis."
+  ],
+  "task.00000000000002A6.title": "Recupere seu primeiro cache",
+
+  "quest.0000000000000206.title": "Levante seu parceiro",
+  "quest.0000000000000206.quest_subtitle": "Ningu\u00e9m sangra sob sua vigil\u00e2ncia.",
+  "quest.0000000000000206.quest_desc": [
+    "Quando um membro da tribo cair, use uma bandagem de fibra nele antes do fim do tempo.",
+    "Vazio, lava e dano excessivo ainda matam \u2014 chegue r\u00e1pido."
+  ],
+  "task.00000000000002A7.title": "Reanime um membro da tribo ca\u00eddo"
+}

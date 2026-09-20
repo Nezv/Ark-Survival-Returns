@@ -62,10 +62,9 @@ def main():
             path = next(original.rglob(name))
             assert hashlib.sha256(path.read_bytes()).hexdigest() == checksum, f'Original changed: {path}'
         assert entry['height_blocks'] == height
-    # Spawn eggs, nest eggs, berries and the debug tool.
-    definitions = list((generated/f'assets/arksurvivalreturns/items').glob('*.json'))
-    # Spawn eggs, nest eggs, the four berries, the debug tool and the tranquilizer arrow.
-    expected_items = len(SPECIES) + len(FLYERS) + 4 + 1 + 1
+    # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion
+    # whistle, the field journal, five camp items and the recovery cache marker.
+    expected_items = len(SPECIES) + len(FLYERS) + 14
     assert len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}'
     for definition in definitions:
         body = json.loads(definition.read_text())['model']
@@ -73,7 +72,9 @@ def main():
             continue  # Shaped definitions such as the debug scope select a vanilla model per context.
         model_id = body['model'].split(':')[1]
         model = json.loads((generated/f'assets/arksurvivalreturns/models/{model_id}.json').read_text())
-        texture=model['textures']['layer0']
+        texture = model.get('textures', {}).get('layer0')
+        if texture is None:
+            continue  # Block-parent item models are checked through their block assets below.
         if texture.startswith('minecraft:'):continue
         tex = texture.split(':')[1]
         with Image.open(ASSETS/f'textures/{tex}.png') as image:
@@ -92,6 +93,12 @@ def main():
                          f'assets/arksurvivalreturns/models/item/{identifier}_egg.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}_nest.json'):
             assert (generated/relative).is_file(), f'Missing nest asset: {relative}'
+    # Camp blocks: the bedroll and the recovery cache marker own a state, a model and a loot table.
+    for identifier in ('bedroll', 'recovery_cache'):
+        for relative in (f'assets/arksurvivalreturns/blockstates/{identifier}.json',
+                         f'assets/arksurvivalreturns/models/block/{identifier}.json',
+                         f'data/arksurvivalreturns/loot_table/blocks/{identifier}.json'):
+            assert (generated/relative).is_file(), f'Missing block asset: {relative}'
     surfaces = json.loads((generated/'data/arksurvivalreturns/tags/block/spawn_surfaces.json').read_text())['values']
     assert {'minecraft:grass_block', 'minecraft:podzol', 'minecraft:mycelium'} <= set(surfaces)
     for locale in ['en_us', 'pt_br']:
@@ -102,6 +109,8 @@ def main():
             assert f'entity.arksurvivalreturns.{identifier}' in lang, f'Missing name: {locale}/{identifier}'
         for identifier in FLYERS:
             assert f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}'
+        assert f'block.arksurvivalreturns.bedroll' in lang
+        assert f'block.arksurvivalreturns.recovery_cache' in lang
     print(f'PASS: {len(SPECIES)} creatures, {sum(len(row[3:]) for row in SPECIES)} valid clips, {len(FLYERS)} nests, '
           f'unchanged originals, {len(definitions)} item definitions, JSON and spawn resource references.')
 
