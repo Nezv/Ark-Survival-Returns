@@ -6,7 +6,10 @@ import com.geckolib.animation.*;
 import com.geckolib.animation.object.PlayState;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
+import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.flying.*;
+import dev.nez.arksurvivalreturns.feature.mass.MassRules;
+import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureAnimationBridge;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
@@ -247,6 +250,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         if (destination == null) { setDeltaMovement(getDeltaMovement().scale(0.8)); return; }
         Vec3 to = destination.subtract(position());
         double speed = flightPhase() == Phase.SWOOP ? 0.48 : flightPhase() == Phase.LAND ? Math.min(0.18, to.length()*0.2) : 0.27;
+        if (MassService.overloaded(this)) speed *= MassRules.speedFactor(MassService.creatureLoad(this).ratio());
         Vec3 desired = to.normalize().scale(speed);
         Vec3 velocity = getDeltaMovement().lerp(desired, 0.18);
         var ahead = position().add(velocity.scale(4));
@@ -287,7 +291,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
-            travelFlying(input, Math.max(0.05f, CreatureRideController.riddenSpeed(this, rideProfile())));
+            travelFlying(overloadAdjusted(input), Math.max(0.05f, CreatureRideController.riddenSpeed(this, rideProfile())));
             return;
         }
         if (TorporService.restricted(this)) {
@@ -299,6 +303,20 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         travelFlying(Vec3.ZERO, 0);
         resetFallDistance();
     }
+    /**
+     * Overload flight rules: an overloaded bird refuses to take off, and one already airborne descends
+     * under control. Both keep powered flight, so overload never becomes a no-gravity freefall.
+     */
+    private Vec3 overloadAdjusted(Vec3 input) {
+        if (!MassService.overloaded(this)) return input;
+        if (onGround()) {
+            if (input.y > 0) MassService.warn(this, "hud.arksurvivalreturns.overload.takeoff");
+            return new Vec3(input.x, Math.min(input.y, 0.0), input.z);
+        }
+        MassService.warn(this, "hud.arksurvivalreturns.overload.descent");
+        return new Vec3(input.x, Math.min(input.y, -0.35), input.z);
+    }
+
     @Override public boolean hurtServer(ServerLevel world, net.minecraft.world.damagesource.DamageSource source, float damage) {
         boolean hit = super.hurtServer(world, source, damage);
         if (hit && isAlive() && thiefId == null) { phase(Phase.TAKEOFF); nextPerch = tickCount + 400; }

@@ -46,6 +46,20 @@ public final class MassRules {
         return sprintAllowed(ratio, profile());
     }
 
+    /** True from the overload line up: the band where sprint is denied and behavior changes. */
+    public static boolean overloaded(double ratio) {
+        return overloaded(ratio, profile());
+    }
+
+    public static boolean overloaded(double ratio, Profile profile) {
+        return ratio >= profile.slow();
+    }
+
+    /** A rider this low on air forces an overloaded swimmer to surface instead of holding depth. */
+    public static boolean forcedSurface(double air, double maxAir) {
+        return maxAir > 0.0 && air <= maxAir * 0.3;
+    }
+
     public static double speedFactor(double ratio) {
         return speedFactor(ratio, profile());
     }

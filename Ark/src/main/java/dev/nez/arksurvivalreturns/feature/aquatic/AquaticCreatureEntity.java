@@ -8,6 +8,8 @@ import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.mass.MassRules;
+import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureAnimationBridge;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
 import dev.nez.arksurvivalreturns.feature.taming.TorporService;
@@ -16,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -41,7 +44,8 @@ public final class AquaticCreatureEntity extends CreatureEntity {
     /** A ridden swimmer follows the rider; an unconscious one simply sinks and drifts. */
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
-            travelFlying(input, Math.max(0.03f, CreatureRideController.riddenSpeed(this, rideProfile()) * 0.25f));
+            travelFlying(overloadAdjusted(input),
+                    Math.max(0.03f, CreatureRideController.riddenSpeed(this, rideProfile()) * 0.25f));
             return;
         }
         if (TorporService.restricted(this)) {
@@ -53,6 +57,21 @@ public final class AquaticCreatureEntity extends CreatureEntity {
         resetFallDistance();
     }
     @Override protected boolean swimming() { return true; }
+
+    /**
+     * Overload swim rules: an overloaded mount cannot dive and becomes slightly buoyant; when the
+     * rider's air runs low it surfaces outright, so overburdening never causes an unavoidable drowning.
+     */
+    private Vec3 overloadAdjusted(Vec3 input) {
+        if (!MassService.overloaded(this)) return input;
+        if (getFirstPassenger() instanceof Player rider
+                && MassRules.forcedSurface(rider.getAirSupply(), rider.getMaxAirSupply())) {
+            MassService.warn(this, "hud.arksurvivalreturns.overload.surface");
+            return new Vec3(input.x, 1.0, input.z);
+        }
+        if (input.y < 0) MassService.warn(this, "hud.arksurvivalreturns.overload.dive");
+        return new Vec3(input.x, Math.max(0.12, input.y), input.z);
+    }
     /** Companion steering: a tamed swimmer heads to the point without leaving its water column. */
     @Override protected void steerCompanion(Vec3 point, double speed) {
         if (!(level() instanceof ServerLevel world)) return;

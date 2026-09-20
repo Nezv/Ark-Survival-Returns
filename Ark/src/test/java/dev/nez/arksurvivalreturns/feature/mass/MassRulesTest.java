@@ -39,4 +39,12 @@ final class MassRulesTest {
         assertEquals(MassRules.Band.HEAVY, MassRules.band(1.5, MassRules.RELAXED));
         assertEquals(0.6, MassRules.speedFactor(1.5, MassRules.RELAXED), 1e-9);
     }
+
+    @Test void overloadLineAndForcedSurface() {
+        assertFalse(MassRules.overloaded(0.99, STANDARD));
+        assertTrue(MassRules.overloaded(1.0, STANDARD));
+        assertTrue(MassRules.forcedSurface(89.0, 300.0));
+        assertFalse(MassRules.forcedSurface(91.0, 300.0));
+        assertFalse(MassRules.forcedSurface(0.0, 0.0), "A missing air pool never forces a surface");
+    }
 }

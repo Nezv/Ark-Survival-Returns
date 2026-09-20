@@ -17,9 +17,12 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -120,6 +123,48 @@ final class CargoGameTests {
         h.assertTrue(level.getChunkSource().getLoadedChunksCount() == chunks,
                 "Cargo transfer must never load a chunk");
         trike.discard();
+        h.succeed();
+    }
+
+    static void overloadFlight(GameTestHelper h) {
+        Player rider = h.makeMockPlayer(GameType.SURVIVAL);
+        CreatureEntity bird = create(h, Species.PTERANODON, new BlockPos(8, 3, 8));
+        TamingService.of(bird).setOwner(rider.getUUID());
+        bird.applyTameState();
+        bird.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+        bird.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
+        bird.tamingInventory().setItem(0, new ItemStack(Items.STONE, 64));
+        bird.tamingInventory().setItem(1, new ItemStack(Items.STONE, 64));
+        MassService.refreshCreature(bird);
+        h.assertTrue(MassService.overloaded(bird), "128 units must overload a 100-capacity scout");
+        h.assertTrue(rider.startRiding(bird), "The rider must mount");
+
+        bird.setOnGround(true);
+        bird.travel(new Vec3(0, 1, 0));
+        h.assertTrue(bird.getDeltaMovement().y <= 0.001, "An overloaded bird must not take off");
+
+        bird.setOnGround(false);
+        bird.travel(new Vec3(0, 1, 0));
+        h.assertTrue(bird.getDeltaMovement().y < 0.0, "An airborne overloaded bird must descend in control");
+        bird.discard();
+        h.succeed();
+    }
+
+    static void overloadSwim(GameTestHelper h) {
+        Player rider = h.makeMockPlayer(GameType.SURVIVAL);
+        CreatureEntity shark = create(h, Species.MEGALODON, new BlockPos(8, 3, 8));
+        TamingService.of(shark).setOwner(rider.getUUID());
+        shark.applyTameState();
+        shark.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+        shark.tamingInventory().setItem(0, new ItemStack(Items.STONE, 64));
+        shark.tamingInventory().setItem(1, new ItemStack(Items.STONE, 64));
+        MassService.refreshCreature(shark);
+        h.assertTrue(MassService.overloaded(shark), "128 units must overload the bare 100 allowance");
+        h.assertTrue(rider.startRiding(shark), "The rider must mount");
+
+        shark.travel(new Vec3(0, -1, 0));
+        h.assertTrue(shark.getDeltaMovement().y >= 0.0, "An overloaded swimmer must not dive");
+        shark.discard();
         h.succeed();
     }
 

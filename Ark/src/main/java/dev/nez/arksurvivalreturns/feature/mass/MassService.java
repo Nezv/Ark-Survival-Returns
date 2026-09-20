@@ -44,6 +44,7 @@ public final class MassService {
     private static final Map<UUID, Long> SENT_TICK = new HashMap<>();
     private static final Set<UUID> DIRTY = new HashSet<>();
     private static final Set<UUID> DIRTY_CREATURES = new HashSet<>();
+    private static final Map<UUID, Long> WARN_TICKS = new HashMap<>();
     private static int rulesHash;
 
     public static void markDirty(Player player) {
@@ -65,6 +66,20 @@ public final class MassService {
     /** Effective capacity for the creature's fitted harness; bare allowance without the required tier. */
     public static double creatureCapacity(CreatureEntity creature) {
         return CargoProfiles.capacity(creature.species(), creature.harnessTier());
+    }
+
+    /** True when the creature's tracked load is at or past its overload line. */
+    public static boolean overloaded(CreatureEntity creature) {
+        return MassRules.enabled() && MassRules.overloaded(creatureLoad(creature).ratio());
+    }
+
+    /** Rate-limited rider warning for overload behavior; at most one every three seconds. */
+    public static void warn(CreatureEntity mount, String key) {
+        if (!(mount.getFirstPassenger() instanceof ServerPlayer rider)) return;
+        long last = WARN_TICKS.getOrDefault(mount.getUUID(), Long.MIN_VALUE);
+        if (mount.tickCount - last < 60) return;
+        WARN_TICKS.put(mount.getUUID(), (long) mount.tickCount);
+        rider.sendSystemMessage(Component.translatable(key), true);
     }
 
     /** Drops all tracked state and the movement modifier, e.g. on logout or with mass disabled. */

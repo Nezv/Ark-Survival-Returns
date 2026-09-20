@@ -635,6 +635,14 @@ public final class ArkData implements DataProvider {
         pt.put("hud." + NS + ".mass.heavy", "[ARK] Muito sobrecarregado: movimento fortemente reduzido.");
         en.put("hud." + NS + ".mass.eased", "[ARK] Load eased.");
         pt.put("hud." + NS + ".mass.eased", "[ARK] Carga aliviada.");
+        en.put("hud." + NS + ".overload.takeoff", "[ARK] The load is too heavy for takeoff.");
+        pt.put("hud." + NS + ".overload.takeoff", "[ARK] A carga \u00e9 pesada demais para decolar.");
+        en.put("hud." + NS + ".overload.descent", "[ARK] Overloaded: descending under control.");
+        pt.put("hud." + NS + ".overload.descent", "[ARK] Sobrecarregado: descendo sob controle.");
+        en.put("hud." + NS + ".overload.dive", "[ARK] Overloaded: this mount will not dive.");
+        pt.put("hud." + NS + ".overload.dive", "[ARK] Sobrecarregado: esta montaria n\u00e3o mergulha.");
+        en.put("hud." + NS + ".overload.surface", "[ARK] Surfacing before the rider runs out of air.");
+        pt.put("hud." + NS + ".overload.surface", "[ARK] Subindo \u00e0 superf\u00edcie antes que o ar acabe.");
     }
 
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
@@ -706,7 +714,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);
