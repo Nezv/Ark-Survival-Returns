@@ -128,17 +128,30 @@ def sleep_pose(idle, model, identifier):
             tracks.setdefault(name, {})['scale'] = {'0': [0.02, 0.02, 0.02]}
     return {'loop': True, 'animation_length': 4, 'bones': tracks}
 
+def source_files(folder):
+    """Resolve the read-only originals the importer reads. Keys match the report's source_sha256 names.
+
+    Painted geometry, when present, supersedes the plain exporter file. verify_assets.py imports this
+    resolver, so a provenance check always hashes the exact file the import recorded.
+    """
+    source = ROOT.parent / 'Creatures' / folder
+    painted_geometry = sorted((source / 'textures').glob('*.geo.json'))
+    geometry = painted_geometry[0] if painted_geometry else next((source / 'geo').glob('*.json'))
+    animation = next((source / 'animations').glob('*.json'))
+    files = {geometry.name: geometry, animation.name: animation}
+    files.update({f'texture_{variant.lower()}': source / 'textures' / variant / 'skin.png'
+                  for variant in TEXTURE_VARIANTS})
+    return geometry, animation, files
+
+
 def main():
     report = []
     for folder, identifier, height, *clips in SPECIES:
-        source = ROOT.parent / 'Creatures' / folder
-        painted_geometry = sorted((source / 'textures').glob('*.geo.json'))
-        geo_path = painted_geometry[0] if painted_geometry else next((source / 'geo').glob('*.json'))
-        anim_path = next((source / 'animations').glob('*.json'))
-        texture_paths = {variant: source / 'textures' / variant / 'skin.png' for variant in TEXTURE_VARIANTS}
-        missing = [variant for variant, path in texture_paths.items() if not path.is_file()]
+        geo_path, anim_path, sources = source_files(folder)
+        texture_paths = {variant: sources[f'texture_{variant.lower()}'] for variant in TEXTURE_VARIANTS}
+        missing = [name for name, path in sources.items() if not path.is_file()]
         if missing:
-            raise FileNotFoundError(f'{folder} is missing generated texture variants: {", ".join(missing)}')
+            raise FileNotFoundError(f'{folder} is missing source files: {", ".join(missing)}')
         geometry = json.loads(geo_path.read_text())
         model = geometry['minecraft:geometry'][0]
         desc = model['description']
@@ -189,11 +202,8 @@ def main():
             shutil.copyfile(texture_path, texture_dir / f'{identifier}_{variant.lower()}.png')
         report.append({'id': identifier, 'source': f'Creatures/{folder}', 'height_blocks': height,
                        'scale': factor, 'clips': clips,
-                       'source_sha256': {
-                           geo_path.name: hashlib.sha256(geo_path.read_bytes()).hexdigest(),
-                           anim_path.name: hashlib.sha256(anim_path.read_bytes()).hexdigest(),
-                           **{f'texture_{variant.lower()}': hashlib.sha256(path.read_bytes()).hexdigest()
-                              for variant, path in texture_paths.items()}}})
+                       'source_sha256': {name: hashlib.sha256(path.read_bytes()).hexdigest()
+                                         for name, path in sources.items()}})
     write(ROOT / 'docs/creature-import.json', report)
     print(f'Imported {len(report)} creatures, {sum(len(row[3:]) for row in SPECIES)} clips, and five procedural texture variants.')
 

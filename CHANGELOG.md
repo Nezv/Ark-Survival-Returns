@@ -4,13 +4,15 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 ## Unreleased
 
+- **Asset verification repaired.** `tools/verify_assets.py` now validates the runtime texture contract (the five `<species>_<variant>.png` files against the geometry's declared texture size, plus the 64x8 offline preview palette), resolves read-only provenance through the same `source_files` helper as the importer instead of guessing filenames, and collects every failure before exiting instead of stopping at the first one. It also checks that biome modifiers only add Ark species, never vanilla spawns. All 41 creatures, 472 clips, 60 item definitions, nests, camp blocks, both language files, spawn tags and unchanged originals verify.
+
 ## Camp and Recovery — 2026-09-20
 
 - **Camp gear and a survivor's start.** Plant fiber now drops from grass alongside berries. A fiber bandage heals health, a flint knife and a longer-reaching flint spear cover primitive weapons, and the placeable field bedroll sets the personal respawn point without risking it when the block is destroyed. Every player receives a one-time starter kit (bedroll, two bandages, eight fiber, flint knife) on their first join. New `[camp]` settings control the kit, the bedroll and bandage values.
 - **Recovery caches.** Player death drops now become a placed Recovery Cache instead of loose items. The owner and their FTB Teams tribe see the coordinates, right-click collects the whole haul, and the items live in world data, so breaking or exploding the marker never destroys them. Up to three caches per player under `[recovery]`; the oldest folds into the newest instead of being lost. Void and lava deaths fall back to safe ground or the bedroll, and `/arkrecover list|claim|clear` inspects and recovers anything that could not be placed.
 - **Downed state and revive.** A hit that would kill now leaves the player downed for a minute (configurable under `[downed]`) instead of dead: a countdown HUD appears, actions and movement are locked, and further damage shortens the rescue window until a tribe member revives them with a fiber bandage at 30% health. Void, lava, `/kill` and overkill hits stay fatal, and any death then produces a recovery cache.
 - **Camp and Recovery chapter.** A second journal chapter tracks the bedroll, fiber, bandages, flint tools, the first cache recovery and the first revive, with per-player rewards for both tribe members.
-- **Validation.** Data generation, the build with 47 JUnit tests and all 44 headless GameTests pass, and FTB Quests loads two chapters and twelve quests with every item task and recipe resolving. The full in-client checklist is in [Verify.md](Verify.md). Known limitation: `tools/verify_assets.py` still stops on the pre-existing creature texture-size mismatch (it is not part of CI).
+- **Validation.** Data generation, the build with 47 JUnit tests and all 44 headless GameTests pass, and FTB Quests loads two chapters and twelve quests with every item task and recipe resolving. The full in-client checklist is in [Verify.md](Verify.md).
 
 ## Survival Journal and Tribes — 2026-09-20
 
