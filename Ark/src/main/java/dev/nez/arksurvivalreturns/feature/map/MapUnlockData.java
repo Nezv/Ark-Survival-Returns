@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
-/** World-scoped, per-player entitlement. No taming listener exists yet. */
+/** World-scoped, per-player entitlement. A rank-5-origin tame or /arkmap grants it. */
 public final class MapUnlockData extends SavedData {
     public static final Codec<MapUnlockData> CODEC = UUIDUtil.CODEC.listOf().xmap(MapUnlockData::new,
             data -> data.unlocked.stream().sorted().toList()).fieldOf("unlocked_players").codec();

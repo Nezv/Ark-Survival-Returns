@@ -84,7 +84,7 @@ public final class Config {
         POPULATION_MIN_DISTANCE = b.comment("Never spawn natural creatures closer than this to a player.")
                 .defineInRange("populationMinPlayerDistance", 32, 8, 128);
         b.pop().push("progression");
-        MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. Disabled during development while taming is unavailable; restart/rejoin after changing.").define("mapRequiresUnlock", false);
+        MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame whose origin band is 5 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
         BAND_WIDTH = b.comment("Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
         b.pop().push("movement");
         PLAYER_SPRINT_REFERENCE = b.comment("Normal player sprint benchmark in blocks/second; does not chase temporary player potion buffs.").defineInRange("playerSprintBlocksPerSecond", 5.612, 1.0, 20.0);

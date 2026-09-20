@@ -185,11 +185,29 @@ public final class TamingService {
         state.setOwner(owner);
         state.releaseClaim();
         creature.onTamed(owner);
+        applyTameEffects(creature, owner);
+        TorporService.log("tamed", creature, "owner " + owner);
+    }
+
+    /**
+     * Completion side effects that do not depend on who fed the final meal: the origin-band map
+     * entitlement and the per-player discovery records.
+     */
+    public static void applyTameEffects(CreatureEntity creature, UUID owner) {
+        if (creature.originDanger() == 5 && creature.level() instanceof ServerLevel level) {
+            // The entitlement follows the region the creature came from, not its individual level.
+            dev.nez.arksurvivalreturns.feature.map.MapUnlockData.get(level).setUnlocked(owner, true);
+        }
         if (creature.level() instanceof ServerLevel level && level.getEntity(owner) instanceof Player player) {
             TamingFeedback.completed(player, creature);
-            if (player instanceof net.minecraft.server.level.ServerPlayer server) discovery(server, "journal/first_tame");
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+                discovery(server, "journal/first_tame");
+                if (creature.originDanger() == 5) {
+                    discovery(server, "journal/rank5_tame");
+                    dev.nez.arksurvivalreturns.feature.map.DangerMapSync.send(server);
+                }
+            }
         }
-        TorporService.log("tamed", creature, "owner " + owner);
     }
 
     /**

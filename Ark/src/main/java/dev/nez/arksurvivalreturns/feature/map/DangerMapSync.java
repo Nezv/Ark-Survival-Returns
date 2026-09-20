@@ -27,7 +27,7 @@ public final class DangerMapSync {
                 unlocked ? profile.originX() : 0, unlocked ? profile.originZ() : 0,
                 unlocked ? profile.bandWidth() : 0));
     }
-    /** Future taming code may call this after confirming a difficulty-5 origin. */
+    /** Called when a completed tame originates from the difficulty-5 band. */
     public static void setUnlocked(ServerPlayer player, boolean value) {
         MapUnlockData.get(player.level()).setUnlocked(player.getUUID(), value);
         send(player);

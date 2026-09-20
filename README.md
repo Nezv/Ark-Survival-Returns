@@ -1,8 +1,13 @@
 # ARK → GeckoLib dinosaur workflow
 
+For repository ownership, generated-output rules, validation gates and the
+safe change path for each subsystem, read the [codebase guide](CODEBASE.md).
+The shared creature conversion tools are catalogued in
+[`scripts/README.md`](scripts/README.md).
+
 To play the mod on Windows, double-click **Start-Ark-Mod.bat** in this folder. It builds and launches Minecraft with the mod; VS Code is not required. See [the mod README](Ark/README.md) for gameplay and configuration.
 
-The optional Xaero difficulty map, shader loader, shader pack and ambience mods are installed locally. **Install-Ark-Extras.bat** reproduces the pinned downloads on another checkout. The map is temporarily open to everyone while taming is deferred. See [client pack and map instructions](Ark/docs/client-pack.md).
+The optional Xaero difficulty map, shader loader, shader pack and pinned FTB/JEI journal stack are installed locally. **Install-Ark-Extras.bat** reproduces the pinned downloads on another checkout. The map is open while `progression.mapRequiresUnlock=false`; taming a creature from a rank-5 region grants the saved entitlement. See [client pack and map instructions](Ark/docs/client-pack.md) and [the journal and tribe stack](Ark/docs/journal-tribe.md).
 
 The editable projects in `Creatures/` retain the installed ARK mesh skeletons and original animation clips bound to those exact bone names. `Tyranosaur` retains its original `rex_ravager` resource filenames and geometry identifier. All forty-one creatures are integrated into the playable mod; see [creature expansion](Ark/docs/creature-expansion.md) and [collection ecosystem](Ark/docs/collection-ecosystem.md).
 

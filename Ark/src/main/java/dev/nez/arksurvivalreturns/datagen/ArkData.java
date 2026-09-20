@@ -239,6 +239,10 @@ public final class ArkData implements DataProvider {
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);
+        json("data/" + NS + "/advancement/journal/rank5_tame", """
+                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
+                 "requirements":[["discovered"]]}
+                """);
     }
 
     /** Player-facing taming and sedation text, in both shipped locales. */
@@ -475,7 +479,8 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
-                "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack"))
+                "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
+                "journal_taming_unlock"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

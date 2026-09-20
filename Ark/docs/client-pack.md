@@ -37,9 +37,9 @@ Xaero is pinned to 1.46.0 with bridge 0.1.2, whose bytecode-verified compatibili
 
 ## Difficulty map and unlock
 
-The **whole Xaero fullscreen map is temporarily open to everyone**, including existing saves, because `progression.mapRequiresUnlock` defaults to `false`. Set it to `true` and restart/rejoin to restore the progression gate. The following unlock rules apply only when that gate is enabled. Pressing its map key (normally **M**) displays the unlock condition. The intended future milestone is **taming a creature originating in a difficulty-5 region**, not taming any creature whose individual level happens to be 5.
+The **whole Xaero fullscreen map is open while `progression.mapRequiresUnlock` is `false`** (the development default). Set it to `true` and restart/rejoin to restore the progression gate; the following unlock rules apply only when that gate is enabled. Pressing its map key (normally **M**) displays the unlock condition. The milestone is **taming a creature that originated in a difficulty-5 region**, recorded when the creature first spawned — not a creature whose individual level happens to be 5.
 
-There is no taming implementation or taming event listener in this change. Consequently normal play cannot yet unlock the map. For testing, an operator or a singleplayer user with cheats can run:
+Completing the first tame whose saved origin band is 5 grants the entitlement automatically, and the same completion awards the hidden `journal/rank5_tame` discovery advancement. A rank-1 creature never grants the map, however it is transported later. Operators can still grant or revoke access for testing:
 
 ```text
 /arkmap unlock
@@ -54,7 +54,7 @@ When map access is available, the **Difficulty: off/on** button at the top left 
 
 A bounded raster reads cached exploration heights without loading chunks or generating terrain. Separate GUI strata put the filter above the terrain image. The exploration mask refreshes at most every 250 ms; coarse pixels spanning unknown chunks are omitted, conservatively hiding the filter at extreme zoom. Blocking the map screen does not disable Xaero's background terrain recording.
 
-The future taming system can grant the entitlement through `DangerMapSync.setUnlocked(player, true)` after it verifies the creature's recorded difficulty-5 origin. Recording creature provenance and deciding how taming grants credit are intentionally deferred with taming.
+The entitlement is granted by the taming completion path through `DangerMapSync.setUnlocked`. Each creature saves the danger band of the position where it first appeared, so relocating an animal never changes its provenance, and operators can always fall back to `/arkmap`.
 
 ## Verification and playtest
 
@@ -62,11 +62,11 @@ The future taming system can grant the entitlement through `DangerMapSync.setUnl
 
 The user's 7 September crash occurred after enabling Complementary, in `GlCommandEncoder.validateDraw`, with `Index 1 out of bounds for length 1`. This matches [Iris issue 3304](https://github.com/IrisShaders/Iris/issues/3304): Iris supplies a short vertex-binding array while the development validator checks 16 slots. The local Minecraft source confirms that `neoforge.disableGlValidation` controls this validator. The interactive client run now sets `-Dneoforge.disableGlValidation=true`, matching the reported workaround. Iris, Sodium, the selected shader and graphics preferences remain intact. This disables development GL validation for that run; it does not patch Iris itself. The generated client JVM arguments and build checks pass; confirming shader rendering after this change still requires a client playtest.
 
-The build, 18 JUnit tests, all eight headless GameTests, installer checksum checks, client-only classpath check, and client preparation pass. Automated coverage includes regional raster correspondence across panning/zoom, invalid-view bounds, map entitlement save/load, player isolation, revocation, and network codec round trips. Datagen and the dedicated GameTest server load successfully without Xaero or the presentation mods.
+The build, 41 JUnit tests, all 39 headless GameTests, installer checksum checks, classpath checks, and client preparation pass. Automated coverage includes regional raster correspondence across panning/zoom, invalid-view bounds, map entitlement save/load, player isolation, revocation, network codec round trips, and the rank-5-origin tame unlock. Datagen and the dedicated GameTest server run without Xaero or the presentation mods; the shared journal stack loads on both sides.
 
 No interactive client was launched. Check these in the normal launcher:
 
-1. With the default development settings, M opens immediately. To test the progression gate, enable `progression.mapRequiresUnlock` and restart/rejoin; `/arkmap unlock` grants access and `/arkmap lock` revokes it.
+1. With the default development settings, M opens immediately. To test the progression gate, enable `progression.mapRequiresUnlock` and restart/rejoin; `/arkmap unlock` grants access, `/arkmap lock` revokes it, and taming a creature from a rank-5 region grants it through normal play.
 2. Toggle Difficulty on and off. Confirm only explored map receives the tint, including after exploring more terrain without moving the map camera. Compare the cursor's difficulty with the biome announcement at the same coordinates, including negative coordinates. Pan, zoom and change viewed dimensions; inspect the legend against Xaero controls.
 3. With the progression gate enabled, reconnect and respawn: the saved unlock survives. A second player stays locked until independently granted access.
 4. Enable the shader pack and inspect dinosaur materials, water, shadows and frame rate. Confirm warning calls remain audible with both sound mods enabled.

@@ -46,6 +46,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private final Species species;
     private final CreatureInventory tamingInventory = new CreatureInventory(this);
     private boolean levelInitialized;
+    private int originDanger = -1;
     private UUID packId = UUID.randomUUID();
     private boolean naturalWildlife;
     private WildlifeController wildlife;
@@ -359,11 +360,18 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         // Reads the thread-safe danger view: chunk-generation workers must not touch saved data.
         int danger = level() instanceof ServerLevel world
                 ? dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.dangerAt(world, blockPosition()) : -1;
+        recordOrigin(danger);
         var tier = danger >= 1 && danger <= BiomeTier.values().length
                 ? BiomeTier.values()[danger - 1] : BiomeTier.EASY;
         int a = Config.MIN_LEVEL.get(tier).get(), b = Config.MAX_LEVEL.get(tier).get();
         initializeLevel(Math.min(a, b) + random.nextInt(Math.abs(a - b) + 1));
     }
+    /** Records the danger band where this creature first appeared; -1 when unknown. */
+    public void recordOrigin(int danger) {
+        if (originDanger < 0) originDanger = danger;
+    }
+    /** Origin band used by the map entitlement: a rank-5 tame opens the map once. */
+    public int originDanger() { return originDanger; }
     @Override public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         super.finalizeSpawn(level, difficulty, reason, data);
@@ -445,6 +453,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         super.addAdditionalSaveData(output);
         output.putInt("CreatureLevel", creatureLevel());
         output.putBoolean("LevelInitialized", levelInitialized);
+        output.putInt("OriginDanger", originDanger);
         output.putString("PackId", packId.toString());
         output.putBoolean("NaturalWildlife", naturalWildlife);
         tamingInventory.serialize(output.child("TamingInventory"));
@@ -454,6 +463,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         super.readAdditionalSaveData(input);
         entityData.set(LEVEL, LevelScaling.clamp(input.getIntOr("CreatureLevel", 1)));
         levelInitialized = input.getBooleanOr("LevelInitialized", false);
+        originDanger = input.getIntOr("OriginDanger", -1);
         naturalWildlife = input.getBooleanOr("NaturalWildlife", !isPersistenceRequired());
         input.child("TamingInventory").ifPresent(tamingInventory::deserialize);
         // Adopt the new movement baseline for old saves without stacking a multiplier on each load.
