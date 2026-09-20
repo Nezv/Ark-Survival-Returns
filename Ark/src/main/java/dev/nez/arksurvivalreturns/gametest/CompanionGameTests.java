@@ -84,6 +84,33 @@ final class CompanionGameTests {
         follower.setLastHurtByMob(null);
         follower.discard();
 
+        // --- WANDER selects a destination, walks it, pauses and drops stale plans ---
+        var wanderer = tamed(h, Species.PTERANODON, owner);
+        CompanionService.setOrder(wanderer, CompanionOrder.WANDER);
+        var wanderGoal = new CompanionGoal(wanderer);
+        wanderer.tickCount = 0;
+        wanderGoal.tick();
+        Vec3 walked = wanderTarget(wanderGoal);
+        h.assertTrue(walked != null && wanderer.isCompanionTraveling(), "WANDER never selected a destination");
+        wanderer.setPos(walked);
+        wanderer.tickCount = 1;
+        wanderGoal.tick();
+        h.assertFalse(wanderer.isCompanionTraveling(), "WANDER did not stop on arrival");
+        h.assertTrue(wanderTarget(wanderGoal) == null, "WANDER kept the arrived destination");
+        wanderer.tickCount = 2;
+        wanderGoal.tick();
+        h.assertFalse(wanderer.isCompanionTraveling(), "WANDER did not idle after arrival");
+        wanderer.tickCount = 1000;
+        wanderGoal.tick();
+        h.assertTrue(wanderTarget(wanderGoal) != null, "WANDER never picked a destination after the idle pause");
+        CompanionService.setOrder(wanderer, CompanionOrder.STAY);
+        wanderer.tickCount = 1001;
+        wanderGoal.tick();
+        h.assertTrue(wanderTarget(wanderGoal) == null, "An order change kept a stale wander destination");
+        wanderGoal.stop();
+        h.assertTrue(wanderTarget(wanderGoal) == null, "Stopping the goal kept a stale wander destination");
+        wanderer.discard();
+
         // --- unconscious companions ignore orders ---
         var sleeper = tamed(h, Species.VELOCIRAPTOR, owner);
         var sleeperGoal = new CompanionGoal(sleeper);
@@ -108,6 +135,17 @@ final class CompanionGameTests {
         }
         owner.discard();
         h.succeed();
+    }
+
+    /** The goal's remembered wander destination; asserts what the goal actually decided. */
+    private static Vec3 wanderTarget(CompanionGoal goal) {
+        try {
+            var field = CompanionGoal.class.getDeclaredField("wanderTarget");
+            field.setAccessible(true);
+            return (Vec3) field.get(goal);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("CompanionGoal.wanderTarget is not readable", e);
+        }
     }
     private CompanionGameTests() {}
 }

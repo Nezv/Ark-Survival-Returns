@@ -21,11 +21,16 @@ import org.jspecify.annotations.Nullable;
  * chunk: when the owner is gone, unreachable or in another dimension it waits where it stands and
  * resumes when the owner is back in the same dimension. Realm steering is delegated to
  * {@link CreatureEntity#companionTravel}, so walkers, flyers and swimmers all obey the same orders.
+ *
+ * <p>WANDER owns its own timer. The idle pause starts when a walk is chosen, so a completed walk still
+ * pauses; an order change, a moved anchor or stopping the goal forgets the plan instead of resuming it.
  */
 public final class CompanionGoal extends Goal {
     private final CreatureEntity mob;
     private @Nullable Vec3 wanderTarget;
-    private long nextDecision;
+    private @Nullable BlockPos wanderAnchor;
+    private @Nullable CompanionOrder lastOrder;
+    private long nextWanderTick;
 
     public CompanionGoal(CreatureEntity mob) {
         this.mob = mob;
@@ -40,7 +45,8 @@ public final class CompanionGoal extends Goal {
 
     @Override public void stop() {
         mob.companionHold();
-        wanderTarget = null;
+        forgetWander();
+        lastOrder = null;
     }
 
     @Override public void tick() {
@@ -48,8 +54,13 @@ public final class CompanionGoal extends Goal {
         if (mob.isRidden()) { mob.companionHold(); return; }
         LivingEntity threat = threat();
         if (threat != null) { fight(threat); return; }
-        if (mob.tickCount >= nextDecision) nextDecision = mob.tickCount + 10;
-        switch (CompanionService.of(mob).order()) {
+        CompanionOrder order = CompanionService.of(mob).order();
+        if (order != lastOrder) {
+            // Every order anchors where it was given, so a plan from the previous order is stale.
+            lastOrder = order;
+            forgetWander();
+        }
+        switch (order) {
             case FOLLOW -> follow();
             case STAY -> stay();
             case WANDER -> wander();
@@ -108,30 +119,46 @@ public final class CompanionGoal extends Goal {
         }
     }
 
+    /** Drops any remembered wander plan; the next walk starts from scratch. */
+    private void forgetWander() {
+        wanderTarget = null;
+        wanderAnchor = null;
+    }
+
     private void wander() {
         BlockPos anchor = CompanionService.of(mob).anchor();
         if (anchor == null) { CompanionService.setOrder(mob, CompanionOrder.WANDER); return; }
-        if (wanderTarget != null) {
-            if (mob.position().distanceToSqr(wanderTarget) < 4) { wanderTarget = null; mob.companionHold(); return; }
-            mob.companionTravel(wanderTarget, 0.6);
+        if (wanderTarget != null && !anchor.equals(wanderAnchor)) forgetWander();
+        if (wanderTarget == null) {
+            mob.companionHold();
+            if (mob.tickCount < nextWanderTick) return; // Idle pause between two walks.
+            nextWanderTick = mob.tickCount + 100 + mob.getRandom().nextInt(120);
+            wanderTarget = chooseWanderTarget(anchor);
+            wanderAnchor = wanderTarget == null ? null : anchor;
+            if (wanderTarget == null) return;
+        }
+        if (mob.position().distanceToSqr(wanderTarget) < 4) {
+            forgetWander();
+            mob.companionHold();
             return;
         }
-        mob.companionHold();
-        if (mob.tickCount < nextDecision) return;
-        nextDecision = mob.tickCount + 100 + mob.getRandom().nextInt(120);
-        if (!(mob.level() instanceof ServerLevel world)) return;
+        mob.companionTravel(wanderTarget, 0.6);
+    }
+
+    /** Picks a reachable point near the anchor; flyers and swimmers stay off the terrain. */
+    private @Nullable Vec3 chooseWanderTarget(BlockPos anchor) {
+        if (!(mob.level() instanceof ServerLevel world)) return null;
         double angle = mob.getRandom().nextDouble() * Math.PI * 2;
         int radius = Math.max(4, Config.COMPANION_WANDER_RADIUS.get());
         BlockPos point = anchor.offset((int)Math.round(Math.cos(angle) * radius), 0, (int)Math.round(Math.sin(angle) * radius));
         if (mob.species().landHabitat() && !mob.isInWater()) {
             BlockPos ground = SpawnRules.surface(world, point.getX(), point.getZ());
-            if (ground == null || Math.abs(ground.getY() - anchor.getY()) > 6) return;
+            if (ground == null || Math.abs(ground.getY() - anchor.getY()) > 6) return null;
             var box = SpawnRules.bounds(mob.species(), ground);
-            if (!SpawnRules.loaded(world, box.inflate(1)) || !world.noCollision(mob, box, true)) return;
-            wanderTarget = Vec3.atBottomCenterOf(ground);
-        } else {
-            // Flyers and swimmers roam around the anchor at their own altitude or depth.
-            wanderTarget = Vec3.atBottomCenterOf(point).add(0, mob.getBbHeight() * 0.5, 0);
+            if (!SpawnRules.loaded(world, box.inflate(1)) || !world.noCollision(mob, box, true)) return null;
+            return Vec3.atBottomCenterOf(ground);
         }
+        // Flyers and swimmers roam around the anchor at their own altitude or depth.
+        return Vec3.atBottomCenterOf(point).add(0, mob.getBbHeight() * 0.5, 0);
     }
 }
