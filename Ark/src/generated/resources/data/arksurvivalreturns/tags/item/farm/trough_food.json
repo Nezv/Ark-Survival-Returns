@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:tintoberry",
+    "arksurvivalreturns:amarberry",
+    "arksurvivalreturns:azulberry",
+    "arksurvivalreturns:narcoberry",
+    "minecraft:wheat",
+    "minecraft:wheat_seeds",
+    "minecraft:carrot",
+    "minecraft:potato",
+    "minecraft:beetroot",
+    "#minecraft:meat",
+    "#minecraft:fishes"
+  ]
+}

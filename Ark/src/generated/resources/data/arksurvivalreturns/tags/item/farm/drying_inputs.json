@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:tintoberry",
+    "arksurvivalreturns:amarberry",
+    "arksurvivalreturns:azulberry",
+    "arksurvivalreturns:narcoberry",
+    "minecraft:sweet_berries",
+    "#minecraft:meat",
+    "#minecraft:fishes"
+  ]
+}

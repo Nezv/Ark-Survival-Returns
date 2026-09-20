@@ -1,0 +1,105 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#post"
+        },
+        "east": {
+          "texture": "#post"
+        },
+        "north": {
+          "texture": "#post"
+        },
+        "south": {
+          "texture": "#post"
+        },
+        "up": {
+          "texture": "#post"
+        },
+        "west": {
+          "texture": "#post"
+        }
+      },
+      "from": [
+        1.0,
+        0.0,
+        6.0
+      ],
+      "to": [
+        3.0,
+        12.0,
+        10.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#post"
+        },
+        "east": {
+          "texture": "#post"
+        },
+        "north": {
+          "texture": "#post"
+        },
+        "south": {
+          "texture": "#post"
+        },
+        "up": {
+          "texture": "#post"
+        },
+        "west": {
+          "texture": "#post"
+        }
+      },
+      "from": [
+        13.0,
+        0.0,
+        6.0
+      ],
+      "to": [
+        15.0,
+        12.0,
+        10.0
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#bar"
+        },
+        "east": {
+          "texture": "#bar"
+        },
+        "north": {
+          "texture": "#bar"
+        },
+        "south": {
+          "texture": "#bar"
+        },
+        "up": {
+          "texture": "#bar"
+        },
+        "west": {
+          "texture": "#bar"
+        }
+      },
+      "from": [
+        0.0,
+        12.0,
+        6.0
+      ],
+      "to": [
+        16.0,
+        14.0,
+        10.0
+      ]
+    }
+  ],
+  "textures": {
+    "bar": "minecraft:block/oak_fence",
+    "particle": "minecraft:block/oak_planks",
+    "post": "minecraft:block/oak_planks"
+  }
+}

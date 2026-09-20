@@ -84,6 +84,51 @@ public final class ModContent {
                             .sound(net.minecraft.world.level.block.SoundType.WOOD));
     public static final DeferredItem<net.minecraft.world.item.BlockItem> RECOVERY_CACHE_ITEM =
             ITEMS.registerSimpleBlockItem(RECOVERY_CACHE, p -> p.stacksTo(1));
+    /** Homestead stations are interaction-only (no menus): food in, feeding out; raw in, ration out. */
+    public static final DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ArkSurvivalReturns.MOD_ID);
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.TroughBlock> TROUGH =
+            BLOCKS.registerBlock("trough", dev.nez.arksurvivalreturns.feature.farm.TroughBlock::new,
+                    p -> p.strength(1.0f).sound(net.minecraft.world.level.block.SoundType.WOOD));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> TROUGH_ITEM = ITEMS.registerSimpleBlockItem(TROUGH);
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.DryingRackBlock> DRYING_RACK =
+            BLOCKS.registerBlock("drying_rack", dev.nez.arksurvivalreturns.feature.farm.DryingRackBlock::new,
+                    p -> p.strength(0.8f).noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> DRYING_RACK_ITEM = ITEMS.registerSimpleBlockItem(DRYING_RACK);
+    public static final DeferredItem<net.minecraft.world.item.Item> DRIED_RATION = ITEMS.registerSimpleItem("dried_ration",
+            p -> p.stacksTo(64).food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6)
+                    .saturationModifier(0.6f).build()));
+    // Four mechanically distinct Ark berry bushes over shared vanilla stage art; they drop berries, not items.
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock> TINTOBERRY_BUSH =
+            BLOCKS.registerBlock("tintoberry_bush",
+                    p -> new dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock(() -> BERRIES.get("tintoberry").get(), p),
+                    p -> p.noCollision().instabreak().randomTicks()
+                            .sound(net.minecraft.world.level.block.SoundType.SWEET_BERRY_BUSH));
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock> AMARBERRY_BUSH =
+            BLOCKS.registerBlock("amarberry_bush",
+                    p -> new dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock(() -> BERRIES.get("amarberry").get(), p),
+                    p -> p.noCollision().instabreak().randomTicks()
+                            .sound(net.minecraft.world.level.block.SoundType.SWEET_BERRY_BUSH));
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock> AZULBERRY_BUSH =
+            BLOCKS.registerBlock("azulberry_bush",
+                    p -> new dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock(() -> BERRIES.get("azulberry").get(), p),
+                    p -> p.noCollision().instabreak().randomTicks()
+                            .sound(net.minecraft.world.level.block.SoundType.SWEET_BERRY_BUSH));
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock> NARCOBERRY_BUSH =
+            BLOCKS.registerBlock("narcoberry_bush",
+                    p -> new dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock(() -> BERRIES.get("narcoberry").get(), p),
+                    p -> p.noCollision().instabreak().randomTicks()
+                            .sound(net.minecraft.world.level.block.SoundType.SWEET_BERRY_BUSH));
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.farm.TroughBlockEntity>>
+            TROUGH_BLOCK_ENTITY = BLOCK_ENTITIES.register("trough",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.farm.TroughBlockEntity::new, TROUGH.get()));
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity>>
+            DRYING_RACK_BLOCK_ENTITY = BLOCK_ENTITIES.register("drying_rack",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity::new, DRYING_RACK.get()));
 
     static {
         for (Species s : Species.values()) {
@@ -127,6 +172,9 @@ public final class ModContent {
                     output.accept(SPEAR.get());
                     output.accept(BEDROLL_ITEM.get());
                     output.accept(RECOVERY_CACHE_ITEM.get());
+                    output.accept(TROUGH_ITEM.get());
+                    output.accept(DRYING_RACK_ITEM.get());
+                    output.accept(DRIED_RATION.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

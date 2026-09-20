@@ -65,6 +65,12 @@ public final class Config {
     public static final ModConfigSpec.IntValue WORK_RADIUS, WORK_SUPERVISION_RADIUS, WORK_ACTION_INTERVAL,
             WORK_SCAN_ATTEMPTS;
     public static final ModConfigSpec.DoubleValue WORK_FIBER_PER_ACTION, WORK_BERRY_CHANCE, WORK_MINERAL_BONUS;
+    // ----------------------------------------------------------------------------- farm
+    public static final ModConfigSpec.BooleanValue FARM_ENABLED;
+    public static final ModConfigSpec.IntValue FARM_BATCH_TICKS, FARM_TROUGH_RADIUS, FARM_TROUGH_CAPACITY,
+            FARM_TROUGH_MAX_PER_BATCH, FARM_DRYING_BATCHES, FARM_DRYING_CAPACITY;
+    public static final ModConfigSpec.DoubleValue FARM_TROUGH_HUNGER, FARM_TROUGH_FEED, FARM_TROUGH_HEAL,
+            FARM_BERRY_GROWTH;
     // ----------------------------------------------------------------------------- mass
     public static final ModConfigSpec.BooleanValue MASS_ENABLED;
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
@@ -215,6 +221,30 @@ public final class Config {
                 .defineInRange("mineralBonusChance", 0.25, 0.0, 1.0);
         WORK_RESPECT_PLACED = b.comment("Never harvest a block a player placed.")
                 .define("respectPlacedBlocks", true);
+        b.pop().push("farm");
+        FARM_ENABLED = b.comment("Enable the homestead stations: troughs, drying racks and plantable Ark berry bushes.")
+                .define("enabled", true);
+        FARM_BATCH_TICKS = b.comment("Ticks between station batch updates. Stations never tick per tick and never "
+                        + "process unloaded chunks, so there is no offline catch-up.")
+                .defineInRange("batchTicks", 100, 20, 1200);
+        FARM_TROUGH_RADIUS = b.comment("Blocks around a trough it feeds tamed creatures in.")
+                .defineInRange("troughRadius", 8, 2, 24);
+        FARM_TROUGH_CAPACITY = b.comment("Items a trough holds per feeding stack.")
+                .defineInRange("troughCapacity", 32, 1, 64);
+        FARM_TROUGH_MAX_PER_BATCH = b.comment("Creatures a single trough feeds per batch.")
+                .defineInRange("troughMaxPerBatch", 4, 1, 16);
+        FARM_TROUGH_HUNGER = b.comment("A tamed creature is fed when its hunger is at least this value.")
+                .defineInRange("troughHungerThreshold", 60.0, 0.0, 1000.0);
+        FARM_TROUGH_FEED = b.comment("Hunger removed by one trough feeding.")
+                .defineInRange("troughFeedAmount", 30.0, 1.0, 1000.0);
+        FARM_TROUGH_HEAL = b.comment("Health restored by one trough feeding, capped at the creature's maximum.")
+                .defineInRange("troughHeal", 2.0, 0.0, 20.0);
+        FARM_DRYING_BATCHES = b.comment("Batches a drying rack needs per item before it becomes a dried ration.")
+                .defineInRange("dryingBatches", 6, 1, 60);
+        FARM_DRYING_CAPACITY = b.comment("Raw food a drying rack accepts per load.")
+                .defineInRange("dryingCapacity", 8, 1, 64);
+        FARM_BERRY_GROWTH = b.comment("Chance per random tick that a planted Ark berry bush advances one age.")
+                .defineInRange("berryGrowthChance", 0.2, 0.01, 1.0);
         b.pop().push("mass");
         MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
                         + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")

@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); camp(); cargo(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); recovery(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -225,6 +225,7 @@ public final class ArkData implements DataProvider {
         downedMessages(en, pt);
         massMessages(en, pt);
         workMessages(en, pt);
+        farmMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -515,6 +516,74 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS, NS, NS, NS));
     }
 
+    /** Homestead stations and the four plantable berry bushes, all over vanilla textures. */
+    private void farm() {
+        // Trough: a low plank box that reads as a feeding lip.
+        var troughFaces = new LinkedHashMap<String, Object>();
+        for (String side : List.of("north", "south", "east", "west", "up", "down")) troughFaces.put(side, Map.of("texture", "#planks"));
+        put("assets/" + NS + "/models/block/trough", Map.of(
+                "textures", Map.of("planks", "minecraft:block/oak_planks", "particle", "minecraft:block/oak_planks"),
+                "elements", List.of(Map.of("from", List.of(0, 0, 0), "to", List.of(16, 6, 16), "faces", troughFaces))));
+        put("assets/" + NS + "/blockstates/trough", Map.of("variants", Map.of("", Map.of("model", NS + ":block/trough"))));
+        put("assets/" + NS + "/models/item/trough", Map.of("parent", NS + ":block/trough"));
+        put("assets/" + NS + "/items/trough", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/trough")));
+        json("data/" + NS + "/loot_table/blocks/trough", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:trough"}]}]}
+            """.formatted(NS));
+        // Drying rack: four posts and a crossbar.
+        put("assets/" + NS + "/models/block/drying_rack", Map.of(
+                "textures", Map.of("post", "minecraft:block/oak_planks", "bar", "minecraft:block/oak_fence",
+                        "particle", "minecraft:block/oak_planks"),
+                "elements", List.of(
+                        nestBox(1, 0, 6, 3, 12, 10, "post"),
+                        nestBox(13, 0, 6, 15, 12, 10, "post"),
+                        nestBox(0, 12, 6, 16, 14, 10, "bar"))));
+        put("assets/" + NS + "/blockstates/drying_rack", Map.of("variants", Map.of("", Map.of("model", NS + ":block/drying_rack"))));
+        put("assets/" + NS + "/models/item/drying_rack", Map.of("parent", NS + ":block/drying_rack"));
+        put("assets/" + NS + "/items/drying_rack", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/drying_rack")));
+        json("data/" + NS + "/loot_table/blocks/drying_rack", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:drying_rack"}]}]}
+            """.formatted(NS));
+        vanillaModel("dried_ration", "minecraft:item/bread");
+        json("data/" + NS + "/recipe/trough", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"trough",
+                 "ingredients":["#minecraft:planks","#minecraft:planks","#minecraft:planks","#minecraft:planks","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:trough"}}
+                """.formatted(NS, NS));
+        json("data/" + NS + "/recipe/drying_rack", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"drying_rack",
+                 "ingredients":["minecraft:stick","minecraft:stick","minecraft:stick","minecraft:stick","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:drying_rack"}}
+                """.formatted(NS, NS));
+        tag("item/farm/trough_food", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry",
+                "wheat", "wheat_seeds", "carrot", "potato", "beetroot", "#minecraft:meat", "#minecraft:fishes");
+        tag("item/farm/drying_inputs", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry",
+                "sweet_berries", "#minecraft:meat", "#minecraft:fishes");
+        tag("block/farm/plantable_on", "dirt", "grass_block", "farmland", "coarse_dirt", "rooted_dirt", "podzol",
+                "mycelium", "moss_block");
+        // The four bushes share vanilla stage art; the berry field on the block decides what they yield.
+        for (String id : List.of("tintoberry", "amarberry", "azulberry", "narcoberry")) {
+            for (int age = 0; age < 4; age++) {
+                put("assets/" + NS + "/models/block/" + id + "_bush_stage" + age, Map.of(
+                        "parent", "minecraft:block/cross",
+                        "textures", Map.of("cross", "minecraft:block/sweet_berry_bush_stage" + age)));
+            }
+            var stages = new LinkedHashMap<String, Object>();
+            for (int age = 0; age < 4; age++) stages.put("age=" + age, Map.of("model", NS + ":block/" + id + "_bush_stage" + age));
+            put("assets/" + NS + "/blockstates/" + id + "_bush", Map.of("variants", stages));
+            json("data/" + NS + "/loot_table/blocks/" + id + "_bush", """
+                {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+                 {"condition":"minecraft:block_state_property","block":"%s:%s_bush","properties":{"age":"3"}}],
+                 "entries":[{"type":"minecraft:item","name":"%s:%s"}],
+                 "functions":[{"function":"minecraft:set_count","count":{"type":"minecraft:uniform","min":2,"max":3}}]}]}
+                """.formatted(NS, id, NS, id));
+        }
+    }
+
     /** Recovery cache visuals and the two hidden discovery advancements. */
     private void recovery() {
         // A crate-like marker; no new PNGs, the barrel texture reads as a survivor's cache.
@@ -661,6 +730,28 @@ public final class ArkData implements DataProvider {
         pt.put("work." + NS + ".blocked", "[ARK] %s pausa: um sobrevivente autorizado precisa ficar perto.");
     }
 
+    /** Homestead station and crop names. */
+    private void farmMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("block." + NS + ".trough", "Feeding Trough");
+        pt.put("block." + NS + ".trough", "Cocho de alimenta\u00e7\u00e3o");
+        en.put("item." + NS + ".trough", "Feeding Trough");
+        pt.put("item." + NS + ".trough", "Cocho de alimenta\u00e7\u00e3o");
+        en.put("block." + NS + ".drying_rack", "Drying Rack");
+        pt.put("block." + NS + ".drying_rack", "Varal de secagem");
+        en.put("item." + NS + ".drying_rack", "Drying Rack");
+        pt.put("item." + NS + ".drying_rack", "Varal de secagem");
+        en.put("item." + NS + ".dried_ration", "Dried Ration");
+        pt.put("item." + NS + ".dried_ration", "Ra\u00e7\u00e3o seca");
+        en.put("block." + NS + ".tintoberry_bush", "Tintoberry Bush");
+        pt.put("block." + NS + ".tintoberry_bush", "Arbusto de tintoberry");
+        en.put("block." + NS + ".amarberry_bush", "Amarberry Bush");
+        pt.put("block." + NS + ".amarberry_bush", "Arbusto de amarberry");
+        en.put("block." + NS + ".azulberry_bush", "Azulberry Bush");
+        pt.put("block." + NS + ".azulberry_bush", "Arbusto de azulberry");
+        en.put("block." + NS + ".narcoberry_bush", "Narcoberry Bush");
+        pt.put("block." + NS + ".narcoberry_bush", "Arbusto de narcoberry");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -730,7 +821,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

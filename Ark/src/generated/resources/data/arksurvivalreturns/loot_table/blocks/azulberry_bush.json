@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "block": "arksurvivalreturns:azulberry_bush",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "3"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arksurvivalreturns:azulberry"
+        }
+      ],
+      "functions": [
+        {
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 3,
+            "min": 2
+          },
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

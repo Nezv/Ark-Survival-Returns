@@ -4,6 +4,8 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 
 ## Unreleased
 
+- **Homestead stations, first phase (P04).** The four Ark berries are now plantable: use a berry on dirt, grass or farmland to plant its bush, which grows through four stages by random tick and yields two to three berries when ripe. A **feeding trough** holds one food stack and, every batch, feeds hungry tamed creatures in range, removing hunger and healing them; wild creatures are never fed, and there is no offline catch-up because stations do not tick in unloaded chunks. A **drying rack** turns raw meat, fish or berries into portable **dried rations** over a configured number of batches. New `[farm]` settings cover batch timing, feeding radius, trough load and heal, drying time and bush growth.
+
 - **Asset verification repaired.** `tools/verify_assets.py` now validates the runtime texture contract (the five `<species>_<variant>.png` files against the geometry's declared texture size, plus the 64x8 offline preview palette), resolves read-only provenance through the same `source_files` helper as the importer instead of guessing filenames, and collects every failure before exiting instead of stopping at the first one. It also checks that biome modifiers only add Ark species, never vanilla spawns. All 41 creatures, 472 clips, 60 item definitions, nests, camp blocks, both language files, spawn tags and unchanged originals verify.
 
 ## Weight and Working Tames — 2026-09-20

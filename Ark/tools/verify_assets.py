@@ -107,9 +107,10 @@ def main():
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion
-    # whistle, the field journal, five camp items, two cargo harnesses and the recovery cache marker.
+    # whistle, the field journal, five camp items, two cargo harnesses, the recovery cache marker and
+    # three homestead items (trough, drying rack, dried ration).
     definitions = list((generated/'assets/arksurvivalreturns/items').glob('*.json'))
-    expected_items = len(SPECIES) + len(FLYERS) + 16
+    expected_items = len(SPECIES) + len(FLYERS) + 19
     check(len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}')
     for definition in definitions:
         try:
