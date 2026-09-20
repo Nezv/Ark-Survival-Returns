@@ -56,6 +56,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("taming_claim_expiry", () -> TamingGameTests::claimExpiry);
         FUNCTIONS.register("taming_ordinary_mob", () -> TamingGameTests::ordinaryMobRestraint);
         FUNCTIONS.register("companion", () -> CompanionGameTests::run);
+        FUNCTIONS.register("tribe_permissions", () -> TribeGameTests::permissions);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);

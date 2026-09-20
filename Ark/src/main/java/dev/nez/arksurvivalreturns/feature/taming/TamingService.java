@@ -236,12 +236,12 @@ public final class TamingService {
      *
      * <p>A wild creature is reachable only while it is unconscious, only through the knock-out method, and
      * only by the player holding the attempt. An absent or expired claim is open to everyone, and the player
-     * who opens the inventory then takes the lease over. After taming the owner has access; this project has
-     * no team or alliance system, so ownership is deliberately owner-only rather than team-shared.
+     * who opens the inventory then takes the lease over. After taming the owner always has access, and
+     * members of the owner's FTB Teams party gain it through the tribe cargo permission.
      */
     public static boolean canAccess(CreatureEntity creature, Player player) {
         var state = of(creature);
-        if (state.tamed()) return player.getUUID().equals(state.owner());
+        if (state.tamed()) return dev.nez.arksurvivalreturns.feature.tribe.TribeService.canAccessCargo(creature, player);
         if (creature.profile().method() != TamingMethod.KNOCKOUT) return false;
         if (!TorporService.feedable(creature)) return false;
         if (state.claimant() == null || state.claimExpired() || state.claimedBy(player.getUUID())) return true;

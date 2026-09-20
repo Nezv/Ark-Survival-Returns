@@ -14,6 +14,7 @@ import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
+import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
@@ -221,33 +222,56 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
 
     private InteractionResult interactWhileTamed(Player player, InteractionHand hand) {
-        if (!isOwnedBy(player)) return InteractionResult.PASS;
-        if (level().isClientSide()) return InteractionResult.SUCCESS;
+        boolean client = level().isClientSide();
+        boolean owner = isOwnedBy(player);
+        // Non-owners are decided server-side; the client only predicts for the owner.
+        if (!owner && client) return InteractionResult.PASS;
         // The whistle owns orders and petting; everything else keeps the mount and inventory contract.
         if (player.getItemInHand(hand).is(ModContent.COMPANION_WHISTLE.get())) {
+            if (!owner && !TribeService.canCommand(this, player)) {
+                denied(player, "taming.arksurvivalreturns.denied.command");
+                return InteractionResult.PASS;
+            }
+            if (client) return InteractionResult.SUCCESS;
             if (player.isSecondaryUseActive()) pet(player);
             else CompanionService.orderCommand(this, player);
             return InteractionResult.SUCCESS;
         }
         if (player.isSecondaryUseActive()) {
+            if (!owner && !TribeService.canAccessCargo(this, player)) {
+                denied(player, "taming.arksurvivalreturns.denied.cargo");
+                return InteractionResult.PASS;
+            }
+            if (client) return InteractionResult.SUCCESS;
             openInventory(player);
             return InteractionResult.SUCCESS;
         }
         if (!CreatureRideController.canMount(this, player)) {
+            if (client) return InteractionResult.PASS;
             if (player instanceof ServerPlayer server) {
                 server.sendSystemMessage(CreatureRideController.mountFailure(this, player), true);
             }
             return InteractionResult.SUCCESS;
         }
         if (!CreatureRideController.hasRoomForRider(this, player)) {
+            if (client) return InteractionResult.PASS;
             if (player instanceof ServerPlayer server) {
                 server.sendSystemMessage(net.minecraft.network.chat.Component.translatable(
                         "taming.arksurvivalreturns.mount.noroom"), true);
             }
             return InteractionResult.SUCCESS;
         }
+        if (client) return InteractionResult.SUCCESS;
         player.startRiding(this);
         return InteractionResult.SUCCESS;
+    }
+
+    /** Tells a tribe member why an action is not permitted; strangers stay silent. */
+    private void denied(Player player, String key) {
+        if (level().isClientSide() || !TribeService.isTribeMember(this, player)) return;
+        if (player instanceof ServerPlayer server) {
+            server.sendSystemMessage(net.minecraft.network.chat.Component.translatable(key, getDisplayName()), true);
+        }
     }
 
     private void openInventory(Player player) {

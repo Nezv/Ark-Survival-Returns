@@ -159,6 +159,8 @@
   "taming.arksurvivalreturns.cooldown": "still digesting the last meal",
   "taming.arksurvivalreturns.denied": "%s refuses: %s",
   "taming.arksurvivalreturns.denied.attack": "you cannot attack",
+  "taming.arksurvivalreturns.denied.cargo": "your tribe has not granted you cargo access to %s",
+  "taming.arksurvivalreturns.denied.command": "your tribe has not granted you order permission for %s",
   "taming.arksurvivalreturns.denied.interact": "you cannot interact",
   "taming.arksurvivalreturns.denied.mount": "you cannot mount",
   "taming.arksurvivalreturns.denied.move": "you cannot walk",
@@ -171,6 +173,7 @@
   "taming.arksurvivalreturns.mount.noroom": "there is no room to mount here",
   "taming.arksurvivalreturns.mount.notowner": "you do not own this creature",
   "taming.arksurvivalreturns.mount.occupied": "someone is already riding it",
+  "taming.arksurvivalreturns.mount.permission": "your tribe has not granted you riding permission for %s",
   "taming.arksurvivalreturns.mount.unconscious": "the creature is unconscious",
   "taming.arksurvivalreturns.mount.unsaddled": "it needs a saddle",
   "taming.arksurvivalreturns.mount.wild": "you must tame it first",
@@ -181,5 +184,14 @@
   "taming.arksurvivalreturns.unconscious": "You are unconscious: %s",
   "taming.arksurvivalreturns.wake": "%s is waking up.",
   "taming.arksurvivalreturns.wrong_food": "wrong food",
-  "taming.arksurvivalreturns.wrong_state": "not unconscious"
+  "taming.arksurvivalreturns.wrong_state": "not unconscious",
+  "tribe.arksurvivalreturns.flag": "%s: %s",
+  "tribe.arksurvivalreturns.off": "off",
+  "tribe.arksurvivalreturns.on": "on",
+  "tribe.arksurvivalreturns.permission_cleared": "Tribe permissions for %s reset to defaults.",
+  "tribe.arksurvivalreturns.permission_denied": "Only a tribe owner or a gamemaster may change tribe permissions.",
+  "tribe.arksurvivalreturns.permission_set": "%s for %s set to %s.",
+  "tribe.arksurvivalreturns.status_party": "Tribe %s | %s member(s)",
+  "tribe.arksurvivalreturns.status_solo": "No tribe yet for %s. Create one with /ftbteams party create, then invite your partner.",
+  "tribe.arksurvivalreturns.unknown": "Unknown option: %s"
 }

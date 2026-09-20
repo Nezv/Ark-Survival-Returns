@@ -73,7 +73,7 @@ public final class CreatureRideController {
     public static boolean canMount(CreatureEntity creature, Player player) {
         if (!ArkSurvivalReturns.tamingEnabled()) return false;
         if (!creature.isAlive() || TorporService.restricted(creature)) return false;
-        if (!TamingService.ownedBy(creature, player)) return false;
+        if (!dev.nez.arksurvivalreturns.feature.tribe.TribeService.canRide(creature, player)) return false;
         if (!creature.isSaddled()) return false;
         if (!creature.getPassengers().isEmpty()) return false;
         return player.getVehicle() == null;
@@ -129,7 +129,11 @@ public final class CreatureRideController {
     public static net.minecraft.network.chat.Component mountFailure(CreatureEntity creature, Player player) {
         if (TorporService.restricted(creature)) return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.unconscious");
         if (!TamingService.of(creature).tamed()) return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.wild");
-        if (!TamingService.ownedBy(creature, player)) return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.notowner");
+        if (!TamingService.ownedBy(creature, player)
+                && !dev.nez.arksurvivalreturns.feature.tribe.TribeService.isTribeMember(creature, player))
+            return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.notowner");
+        if (!dev.nez.arksurvivalreturns.feature.tribe.TribeService.canRide(creature, player))
+            return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.permission", creature.getDisplayName());
         if (!creature.isSaddled()) return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.unsaddled");
         if (!creature.getPassengers().isEmpty()) return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.occupied");
         return net.minecraft.network.chat.Component.translatable("taming.arksurvivalreturns.mount.noroom");

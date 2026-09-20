@@ -162,6 +162,7 @@ public final class ArkData implements DataProvider {
         en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
         pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
         tamingMessages(en, pt);
+        tribeMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -221,7 +222,8 @@ public final class ArkData implements DataProvider {
                 "truce", "tamed", "unconscious", "accepted", "wrong_food", "not_hungry", "cooldown",
                 "wrong_state", "not_claimant", "already_tamed", "excluded", "denied.attack", "denied.interact",
                 "denied.use", "denied.move", "denied.mount", "mount.unconscious", "mount.wild", "mount.notowner",
-                "mount.unsaddled", "mount.occupied", "mount.noroom"};
+                "mount.unsaddled", "mount.occupied", "mount.noroom", "mount.permission", "denied.cargo",
+                "denied.command"};
         String[] english = {"%s has been knocked out.", "%s is waking up.", "%s eats. Taming progress %s%%.",
                 "%s relishes the favourite food. Taming progress %s%%.", "%s refuses: %s",
                 "You cannot reach %s right now.", "You are the claimant for %s.",
@@ -231,7 +233,9 @@ public final class ArkData implements DataProvider {
                 "you cannot attack", "you cannot interact", "you cannot use items", "you cannot walk",
                 "you cannot mount", "the creature is unconscious", "you must tame it first",
                 "you do not own this creature", "it needs a saddle", "someone is already riding it",
-                "there is no room to mount here"};
+                "there is no room to mount here", "your tribe has not granted you riding permission for %s",
+                "your tribe has not granted you cargo access to %s",
+                "your tribe has not granted you order permission for %s"};
         String[] portuguese = {"%s foi nocauteado.", "%s est\u00e1 acordando.", "%s come. Progresso de domestica\u00e7\u00e3o %s%%.",
                 "%s adora a comida favorita. Progresso de domestica\u00e7\u00e3o %s%%.", "%s recusa: %s",
                 "Voc\u00ea n\u00e3o consegue alcan\u00e7ar %s agora.", "Voc\u00ea reivindicou %s.",
@@ -241,12 +245,32 @@ public final class ArkData implements DataProvider {
                 "voc\u00ea n\u00e3o pode atacar", "voc\u00ea n\u00e3o pode interagir", "voc\u00ea n\u00e3o pode usar itens", "voc\u00ea n\u00e3o pode andar",
                 "voc\u00ea n\u00e3o pode montar", "a criatura est\u00e1 inconsciente", "voc\u00ea precisa domar primeiro",
                 "voc\u00ea n\u00e3o \u00e9 o dono desta criatura", "precisa de uma sela", "algu\u00e9m j\u00e1 est\u00e1 montado",
-                "n\u00e3o h\u00e1 espa\u00e7o para montar aqui"};
+                "n\u00e3o h\u00e1 espa\u00e7o para montar aqui", "sua tribo n\u00e3o lhe deu permiss\u00e3o de montaria em %s",
+                "sua tribo n\u00e3o lhe deu acesso \u00e0 carga de %s",
+                "sua tribo n\u00e3o lhe deu permiss\u00e3o de ordens para %s"};
         for (int i = 0; i < keys.length; i++) {
             en.put("taming." + NS + "." + keys[i], english[i]);
             pt.put("taming." + NS + "." + keys[i], portuguese[i]);
         }
     }
+    /** Player-facing tribe permission text, in both shipped locales. */
+    private void tribeMessages(Map<String, String> en, Map<String, String> pt) {
+        String[] keys = {"status_solo", "status_party", "flag", "permission_set", "permission_cleared",
+                "permission_denied", "unknown", "on", "off"};
+        String[] english = {"No tribe yet for %s. Create one with /ftbteams party create, then invite your partner.",
+                "Tribe %s | %s member(s)", "%s: %s", "%s for %s set to %s.",
+                "Tribe permissions for %s reset to defaults.",
+                "Only a tribe owner or a gamemaster may change tribe permissions.", "Unknown option: %s", "on", "off"};
+        String[] portuguese = {"Ainda sem tribo para %s. Crie uma com /ftbteams party create e convide seu parceiro.",
+                "Tribo %s | %s membro(s)", "%s: %s", "%s de %s definida como %s.",
+                "Permiss\u00f5es de tribo de %s restauradas ao padr\u00e3o.",
+                "Somente o dono da tribo ou um gamemaster pode mudar permiss\u00f5es.", "Op\u00e7\u00e3o desconhecida: %s", "ligada", "desligada"};
+        for (int i = 0; i < keys.length; i++) {
+            en.put("tribe." + NS + "." + keys[i], english[i]);
+            pt.put("tribe." + NS + "." + keys[i], portuguese[i]);
+        }
+    }
+
     /**
      * Removals the theme enforces through data: biome spawn lists and features, structure sets,
      * village trades, advancements and the grounded source for bones.
@@ -426,7 +450,7 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
-                "taming_claim_expiry", "taming_ordinary_mob", "companion"))
+                "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

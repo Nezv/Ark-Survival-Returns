@@ -55,6 +55,8 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue PASSIVE_PROGRESS_DECAY, PLAYER_MOVEMENT_TOLERANCE;
     public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
     public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
+    public static final ModConfigSpec.BooleanValue TRIBE_DEFAULT_RIDE, TRIBE_DEFAULT_CARGO, TRIBE_DEFAULT_COMMANDS,
+            TRIBE_DEFAULT_BREEDING;
     // --------------------------------------------------------------------------- combat
     public static final ModConfigSpec.DoubleValue COMBAT_HIT_FRACTION, COMBAT_RECOVERY_FRACTION;
     // ------------------------------------------------------------------------ companion
@@ -106,6 +108,16 @@ public final class Config {
                 .defineInRange("wanderRadius", 20, 4, 64);
         COMPANION_PET_COOLDOWN_TICKS = b.comment("Ticks between pet responses for one creature (40 = two seconds).")
                 .defineInRange("petCooldownTicks", 40, 10, 200);
+        b.pop().push("tribe");
+        TRIBE_DEFAULT_RIDE = b.comment("Default riding permission for members of the tame owner's FTB Teams party. "
+                        + "The owner always keeps every permission.")
+                .define("defaultRide", true);
+        TRIBE_DEFAULT_CARGO = b.comment("Default cargo and creature-inventory access for party members.")
+                .define("defaultCargo", true);
+        TRIBE_DEFAULT_COMMANDS = b.comment("Default permission to give companion orders to a teammate's tame.")
+                .define("defaultCommands", true);
+        TRIBE_DEFAULT_BREEDING = b.comment("Reserved for the husbandry work: breeding permission for party members.")
+                .define("defaultBreeding", false);
         b.pop().push("levels");
         HEALTH_GROWTH = b.comment("HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.").defineInRange("healthGrowth", 0.10, 0.0, 0.20);
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);

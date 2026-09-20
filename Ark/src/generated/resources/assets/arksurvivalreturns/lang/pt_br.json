@@ -159,6 +159,8 @@
   "taming.arksurvivalreturns.cooldown": "ainda digerindo a última refeição",
   "taming.arksurvivalreturns.denied": "%s recusa: %s",
   "taming.arksurvivalreturns.denied.attack": "você não pode atacar",
+  "taming.arksurvivalreturns.denied.cargo": "sua tribo não lhe deu acesso à carga de %s",
+  "taming.arksurvivalreturns.denied.command": "sua tribo não lhe deu permissão de ordens para %s",
   "taming.arksurvivalreturns.denied.interact": "você não pode interagir",
   "taming.arksurvivalreturns.denied.mount": "você não pode montar",
   "taming.arksurvivalreturns.denied.move": "você não pode andar",
@@ -171,6 +173,7 @@
   "taming.arksurvivalreturns.mount.noroom": "não há espaço para montar aqui",
   "taming.arksurvivalreturns.mount.notowner": "você não é o dono desta criatura",
   "taming.arksurvivalreturns.mount.occupied": "alguém já está montado",
+  "taming.arksurvivalreturns.mount.permission": "sua tribo não lhe deu permissão de montaria em %s",
   "taming.arksurvivalreturns.mount.unconscious": "a criatura está inconsciente",
   "taming.arksurvivalreturns.mount.unsaddled": "precisa de uma sela",
   "taming.arksurvivalreturns.mount.wild": "você precisa domar primeiro",
@@ -181,5 +184,14 @@
   "taming.arksurvivalreturns.unconscious": "Você está inconsciente: %s",
   "taming.arksurvivalreturns.wake": "%s está acordando.",
   "taming.arksurvivalreturns.wrong_food": "comida errada",
-  "taming.arksurvivalreturns.wrong_state": "não está inconsciente"
+  "taming.arksurvivalreturns.wrong_state": "não está inconsciente",
+  "tribe.arksurvivalreturns.flag": "%s: %s",
+  "tribe.arksurvivalreturns.off": "desligada",
+  "tribe.arksurvivalreturns.on": "ligada",
+  "tribe.arksurvivalreturns.permission_cleared": "Permissões de tribo de %s restauradas ao padrão.",
+  "tribe.arksurvivalreturns.permission_denied": "Somente o dono da tribo ou um gamemaster pode mudar permissões.",
+  "tribe.arksurvivalreturns.permission_set": "%s de %s definida como %s.",
+  "tribe.arksurvivalreturns.status_party": "Tribo %s | %s membro(s)",
+  "tribe.arksurvivalreturns.status_solo": "Ainda sem tribo para %s. Crie uma com /ftbteams party create e convide seu parceiro.",
+  "tribe.arksurvivalreturns.unknown": "Opção desconhecida: %s"
 }

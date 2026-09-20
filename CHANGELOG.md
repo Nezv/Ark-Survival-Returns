@@ -2,6 +2,10 @@
 
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md).
 
+## Unreleased — Survival Journal and Tribes
+
+- **Tribe permissions.** A tame stays owned by the survivor who tamed it, and members of that owner's FTB Teams party can be granted riding, cargo, order and (later) breeding permissions. The owner always keeps every permission. Party creation and invitations stay with `/ftbteams`; `/arktribe status`, `/arktribe perm` and `/arktribe reset` inspect and edit the flags. Four new server config defaults under `[tribe]` control what party members receive by default.
+
 ## Minecraft 26.1.2 Migration — 2026-09-20
 
 - Moved the runtime to Minecraft 26.1.2, NeoForge 26.1.2.109 and GeckoLib 5.5.2 to use the FTB Quests
