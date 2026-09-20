@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); forge(); storage(); recovery(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -227,6 +227,7 @@ public final class ArkData implements DataProvider {
         workMessages(en, pt);
         farmMessages(en, pt);
         kitchenMessages(en, pt);
+        forgeMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -585,6 +586,78 @@ public final class ArkData implements DataProvider {
         }
     }
 
+    /** Charcoal kiln and primitive forge: fuel-free batch processing over vanilla textures. */
+    private void forge() {
+        put("assets/" + NS + "/models/block/charcoal_kiln", Map.of(
+                "textures", Map.of("side", "minecraft:block/smoker_side", "top", "minecraft:block/smoker_top",
+                        "bottom", "minecraft:block/smoker_bottom", "particle", "minecraft:block/smoker_side"),
+                "elements", List.of(boxWithFaces(0, 0, 0, 16, 14, 16, "side", "top", "bottom"))));
+        put("assets/" + NS + "/blockstates/charcoal_kiln", Map.of("variants", Map.of("", Map.of("model", NS + ":block/charcoal_kiln"))));
+        put("assets/" + NS + "/models/item/charcoal_kiln", Map.of("parent", NS + ":block/charcoal_kiln"));
+        put("assets/" + NS + "/items/charcoal_kiln", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/charcoal_kiln")));
+        json("data/" + NS + "/loot_table/blocks/charcoal_kiln", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:charcoal_kiln"}]}]}
+            """.formatted(NS));
+        put("assets/" + NS + "/models/block/primitive_forge", Map.of(
+                "textures", Map.of("side", "minecraft:block/blast_furnace_side", "top", "minecraft:block/blast_furnace_top",
+                        "bottom", "minecraft:block/blast_furnace_top", "particle", "minecraft:block/blast_furnace_side"),
+                "elements", List.of(boxWithFaces(0, 0, 0, 16, 12, 16, "side", "top", "bottom"))));
+        put("assets/" + NS + "/blockstates/primitive_forge", Map.of("variants", Map.of("", Map.of("model", NS + ":block/primitive_forge"))));
+        put("assets/" + NS + "/models/item/primitive_forge", Map.of("parent", NS + ":block/primitive_forge"));
+        put("assets/" + NS + "/items/primitive_forge", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/primitive_forge")));
+        json("data/" + NS + "/loot_table/blocks/primitive_forge", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:primitive_forge"}]}]}
+            """.formatted(NS));
+        json("data/" + NS + "/recipe/charcoal_kiln", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"charcoal_kiln",
+                 "ingredients":["minecraft:cobblestone","minecraft:cobblestone","minecraft:cobblestone",
+                                "minecraft:cobblestone","minecraft:cobblestone","minecraft:cobblestone",
+                                "%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:charcoal_kiln"}}
+                """.formatted(NS, NS, NS));
+        json("data/" + NS + "/recipe/primitive_forge", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"primitive_forge",
+                 "ingredients":["minecraft:stone","minecraft:stone","minecraft:stone","minecraft:stone",
+                                "minecraft:cobblestone","minecraft:cobblestone","%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:primitive_forge"}}
+                """.formatted(NS, NS, NS));
+    }
+
+    /** The storage crate reuses the barrel look and the shulker-box layout. */
+    private void storage() {
+        put("assets/" + NS + "/models/block/storage_crate", Map.of(
+                "textures", Map.of("side", "minecraft:block/barrel_side", "top", "minecraft:block/barrel_top",
+                        "bottom", "minecraft:block/barrel_bottom", "particle", "minecraft:block/barrel_side"),
+                "elements", List.of(boxWithFaces(0, 0, 0, 16, 15, 16, "side", "top", "bottom"))));
+        put("assets/" + NS + "/blockstates/storage_crate", Map.of("variants", Map.of("", Map.of("model", NS + ":block/storage_crate"))));
+        put("assets/" + NS + "/models/item/storage_crate", Map.of("parent", NS + ":block/storage_crate"));
+        put("assets/" + NS + "/items/storage_crate", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/storage_crate")));
+        json("data/" + NS + "/loot_table/blocks/storage_crate", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:storage_crate"}]}]}
+            """.formatted(NS));
+        json("data/" + NS + "/recipe/storage_crate", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"storage_crate",
+                 "ingredients":["minecraft:chest","#minecraft:planks","#minecraft:planks","#minecraft:planks",
+                                "#minecraft:planks","%s:plant_fiber","%s:plant_fiber"],
+                 "result":{"count":1,"id":"%s:storage_crate"}}
+                """.formatted(NS, NS, NS));
+    }
+
+    private static Map<String, Object> boxWithFaces(double x, double y, double z, double xx, double yy, double zz,
+            String side, String top, String bottom) {
+        var faces = new LinkedHashMap<String, Object>();
+        for (String direction : List.of("north", "south", "east", "west")) faces.put(direction, Map.of("texture", "#" + side));
+        faces.put("up", Map.of("texture", "#" + top));
+        faces.put("down", Map.of("texture", "#" + bottom));
+        return Map.of("from", List.of(x, y, z), "to", List.of(xx, yy, zz), "faces", faces);
+    }
+
     /** The cooking pot and its two prepared meals. Vanilla textures again. */
     private void kitchen() {
         var potFaces = new LinkedHashMap<String, Object>();
@@ -813,6 +886,22 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".trail_mix", "Mistura de trilha");
     }
 
+    /** Forge and storage names. */
+    private void forgeMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("block." + NS + ".charcoal_kiln", "Charcoal Kiln");
+        pt.put("block." + NS + ".charcoal_kiln", "Fornalha de carv\u00e3o");
+        en.put("item." + NS + ".charcoal_kiln", "Charcoal Kiln");
+        pt.put("item." + NS + ".charcoal_kiln", "Fornalha de carv\u00e3o");
+        en.put("block." + NS + ".primitive_forge", "Primitive Forge");
+        pt.put("block." + NS + ".primitive_forge", "Forja primitiva");
+        en.put("item." + NS + ".primitive_forge", "Primitive Forge");
+        pt.put("item." + NS + ".primitive_forge", "Forja primitiva");
+        en.put("block." + NS + ".storage_crate", "Storage Crate");
+        pt.put("block." + NS + ".storage_crate", "Caixote de armazenamento");
+        en.put("item." + NS + ".storage_crate", "Storage Crate");
+        pt.put("item." + NS + ".storage_crate", "Caixote de armazenamento");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -882,7 +971,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook", "forge_batch", "storage_crate"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

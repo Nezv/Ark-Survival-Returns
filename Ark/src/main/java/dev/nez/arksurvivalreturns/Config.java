@@ -75,6 +75,9 @@ public final class Config {
     // -------------------------------------------------------------------------- kitchen
     public static final ModConfigSpec.BooleanValue KITCHEN_ENABLED;
     public static final ModConfigSpec.IntValue KITCHEN_COOK_BATCHES;
+    // ---------------------------------------------------------------------------- forge
+    public static final ModConfigSpec.BooleanValue FORGE_ENABLED;
+    public static final ModConfigSpec.IntValue FORGE_BATCHES, KILN_BATCHES;
     // ----------------------------------------------------------------------------- mass
     public static final ModConfigSpec.BooleanValue MASS_ENABLED;
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
@@ -254,6 +257,13 @@ public final class Config {
                 .define("enabled", true);
         KITCHEN_COOK_BATCHES = b.comment("Batches a matching set of ingredients needs to become a meal.")
                 .defineInRange("cookBatches", 4, 1, 60);
+        b.pop().push("forge");
+        FORGE_ENABLED = b.comment("Enable the charcoal kiln and the primitive forge.")
+                .define("enabled", true);
+        FORGE_BATCHES = b.comment("Batches the primitive forge needs per ore or heating recipe.")
+                .defineInRange("forgeBatches", 6, 1, 120);
+        KILN_BATCHES = b.comment("Batches the charcoal kiln needs per log.")
+                .defineInRange("kilnBatches", 4, 1, 120);
         b.pop().push("mass");
         MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
                         + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "primitive_forge",
+  "ingredients": [
+    "minecraft:stone",
+    "minecraft:stone",
+    "minecraft:stone",
+    "minecraft:stone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:primitive_forge"
+  }
+}

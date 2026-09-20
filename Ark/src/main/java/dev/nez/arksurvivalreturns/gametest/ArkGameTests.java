@@ -75,6 +75,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("farm_batch", () -> FarmGameTests::batch);
         FUNCTIONS.register("medicine_dose", () -> FarmGameTests::medicine);
         FUNCTIONS.register("kitchen_cook", () -> KitchenGameTests::cook);
+        FUNCTIONS.register("forge_batch", () -> ForgeGameTests::batch);
+        FUNCTIONS.register("storage_crate", () -> StorageGameTests::slots);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

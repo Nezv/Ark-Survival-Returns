@@ -96,6 +96,9 @@ public final class ModContent {
     public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu>> COOKING_POT_MENU =
             MENUS.register("cooking_pot", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
                     new dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu(containerId, inventory, data.readBlockPos())));
+    public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.storage.StorageCrateMenu>> STORAGE_CRATE_MENU =
+            MENUS.register("storage_crate", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
+                    new dev.nez.arksurvivalreturns.feature.storage.StorageCrateMenu(containerId, inventory, data.readBlockPos())));
     /** Homestead stations are interaction-only (no menus): food in, feeding out; raw in, ration out. */
     public static final DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ArkSurvivalReturns.MOD_ID);
@@ -151,6 +154,36 @@ public final class ModContent {
             COOKING_POT_BLOCK_ENTITY = BLOCK_ENTITIES.register("cooking_pot",
                     () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlockEntity::new, COOKING_POT.get()));
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.forge.CharcoalKilnBlock> CHARCOAL_KILN =
+            BLOCKS.registerBlock("charcoal_kiln", dev.nez.arksurvivalreturns.feature.forge.CharcoalKilnBlock::new,
+                    p -> p.strength(1.5f).sound(net.minecraft.world.level.block.SoundType.STONE));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> CHARCOAL_KILN_ITEM =
+            ITEMS.registerSimpleBlockItem(CHARCOAL_KILN);
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.forge.PrimitiveForgeBlock> PRIMITIVE_FORGE =
+            BLOCKS.registerBlock("primitive_forge", dev.nez.arksurvivalreturns.feature.forge.PrimitiveForgeBlock::new,
+                    p -> p.strength(2.0f).sound(net.minecraft.world.level.block.SoundType.STONE));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> PRIMITIVE_FORGE_ITEM =
+            ITEMS.registerSimpleBlockItem(PRIMITIVE_FORGE);
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.storage.StorageCrateBlock> STORAGE_CRATE =
+            BLOCKS.registerBlock("storage_crate", dev.nez.arksurvivalreturns.feature.storage.StorageCrateBlock::new,
+                    p -> p.strength(1.5f).sound(net.minecraft.world.level.block.SoundType.WOOD));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> STORAGE_CRATE_ITEM =
+            ITEMS.registerSimpleBlockItem(STORAGE_CRATE);
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.forge.CharcoalKilnBlockEntity>>
+            CHARCOAL_KILN_BLOCK_ENTITY = BLOCK_ENTITIES.register("charcoal_kiln",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.forge.CharcoalKilnBlockEntity::new, CHARCOAL_KILN.get()));
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.forge.PrimitiveForgeBlockEntity>>
+            PRIMITIVE_FORGE_BLOCK_ENTITY = BLOCK_ENTITIES.register("primitive_forge",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.forge.PrimitiveForgeBlockEntity::new, PRIMITIVE_FORGE.get()));
+    public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
+            net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.storage.StorageCrateBlockEntity>>
+            STORAGE_CRATE_BLOCK_ENTITY = BLOCK_ENTITIES.register("storage_crate",
+                    () -> new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            dev.nez.arksurvivalreturns.feature.storage.StorageCrateBlockEntity::new, STORAGE_CRATE.get()));
     /** Prepared meals: one clear activity benefit each, no nutrient bars. */
     public static final DeferredItem<Item> HEARTY_STEW = ITEMS.registerSimpleItem("hearty_stew", p -> p.stacksTo(16)
             .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(8).saturationModifier(0.8f).build(),
@@ -219,6 +252,9 @@ public final class ModContent {
                     output.accept(COOKING_POT_ITEM.get());
                     output.accept(HEARTY_STEW.get());
                     output.accept(TRAIL_MIX.get());
+                    output.accept(CHARCOAL_KILN_ITEM.get());
+                    output.accept(PRIMITIVE_FORGE_ITEM.get());
+                    output.accept(STORAGE_CRATE_ITEM.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

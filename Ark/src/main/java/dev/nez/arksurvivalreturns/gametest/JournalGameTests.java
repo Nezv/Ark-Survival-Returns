@@ -25,6 +25,7 @@ final class JournalGameTests {
         verify(h, file, WORK, 5);
         for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear",
                 "pack_harness", "reinforced_harness", "trough", "drying_rack", "cooking_pot",
+                "charcoal_kiln", "primitive_forge", "storage_crate",
                 "concentrated_sedative", "improved_tranquilizer_arrow"}) {
             var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id(recipe));
             h.assertFalse(h.getLevel().recipeAccess().byKey(key).isEmpty(), "Recipe is missing: " + recipe);

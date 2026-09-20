@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "storage_crate",
+  "ingredients": [
+    "minecraft:chest",
+    "#minecraft:planks",
+    "#minecraft:planks",
+    "#minecraft:planks",
+    "#minecraft:planks",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:storage_crate"
+  }
+}
