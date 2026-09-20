@@ -16,6 +16,7 @@ final class JournalGameTests {
     private static final String PRIMITIVE = "0000000000000100";
     private static final String CAMP = "0000000000000200";
     private static final String WORK = "0000000000000300";
+    private static final String HOMESTEAD = "0000000000000400";
 
     static void pack(GameTestHelper h) {
         h.assertTrue(ServerQuestFile.exists(), "The survival journal did not load");
@@ -23,6 +24,7 @@ final class JournalGameTests {
         verify(h, file, PRIMITIVE, 6);
         verify(h, file, CAMP, 6);
         verify(h, file, WORK, 5);
+        verify(h, file, HOMESTEAD, 6);
         for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear",
                 "pack_harness", "reinforced_harness", "trough", "drying_rack", "cooking_pot",
                 "charcoal_kiln", "primitive_forge", "storage_crate",

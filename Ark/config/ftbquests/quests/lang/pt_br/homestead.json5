@@ -1,0 +1,62 @@
+{
+  "chapter.0000000000000400.title": "Ref\u00fagio",
+  "chapter.0000000000000400.chapter_subtitle": [
+    "Transforme um acampamento em uma base de suprimentos."
+  ],
+
+  "quest.0000000000000401.title": "Plante o Primeiro Arbusto",
+  "quest.0000000000000401.quest_subtitle": "Estoque renov\u00e1vel para domar come\u00e7a aqui.",
+  "quest.0000000000000401.quest_desc": [
+    "Use uma fruta Ark em terra, grama ou terra arada para plantar o arbusto dela.",
+    "O arbusto cresce em quatro est\u00e1gios e rende duas ou tr\u00eas frutas quando maduro."
+  ],
+  "task.00000000000004A1.title": "Plante e colha um arbusto de frutas Ark",
+
+  "quest.0000000000000402.title": "Um Lugar para a Ra\u00e7\u00e3o",
+  "quest.0000000000000402.quest_subtitle": "Pare de alimentar cada fera na m\u00e3o.",
+  "quest.0000000000000402.quest_desc": [
+    "Crie um cocho com quatro t\u00e1buas e uma fibra.",
+    "Encha de comida e mantenha perto das feras: ele alimenta os animais famintos a cada lote enquanto voc\u00ea fica por perto."
+  ],
+  "task.00000000000004A2.title": "Crie um cocho de alimenta\u00e7\u00e3o",
+  "task.00000000000004A3.title": "Junte 8 fibras vegetais",
+
+  "quest.0000000000000403.title": "Seque o Excedente",
+  "quest.0000000000000403.quest_subtitle": "Comida que viaja bem.",
+  "quest.0000000000000403.quest_desc": [
+    "Crie um varal de secagem com gravetos e fibra.",
+    "Carne crua, peixe ou frutas viram ra\u00e7\u00f5es secas em alguns lotes; uma ra\u00e7\u00e3o guarda uma refei\u00e7\u00e3o em um s\u00f3 espa\u00e7o."
+  ],
+  "task.00000000000004A4.title": "Crie um varal de secagem",
+  "task.00000000000004A5.title": "Produza 2 ra\u00e7\u00f5es secas",
+
+  "quest.0000000000000404.title": "Cozinhe uma Refei\u00e7\u00e3o de Verdade",
+  "quest.0000000000000404.quest_subtitle": "Efeitos curtos que importam na expedi\u00e7\u00e3o.",
+  "quest.0000000000000404.quest_desc": [
+    "Crie uma panela de cozinha com pedregulho e fibra.",
+    "O ensopado refor\u00e7ado leva duas ra\u00e7\u00f5es, uma carne e uma cenoura; a mistura de trilha leva duas ra\u00e7\u00f5es e duas frutas Ark.",
+    "Encha todos os espa\u00e7os; a panela consome um item de cada."
+  ],
+  "task.00000000000004A6.title": "Crie uma panela de cozinha",
+  "task.00000000000004A7.title": "Cozinhe um ensopado refor\u00e7ado",
+  "task.00000000000004A8.title": "Prepare uma mistura de trilha",
+
+  "quest.0000000000000405.title": "Carv\u00e3o e Ferro",
+  "quest.0000000000000405.quest_subtitle": "Processamento sem combust\u00edvel.",
+  "quest.0000000000000405.quest_desc": [
+    "A fornalha de carv\u00e3o transforma toras em carv\u00e3o sem combust\u00edvel; a forja primitiva processa min\u00e9rio bruto sem combust\u00edvel.",
+    "A fornalha comum continua funcionando - as esta\u00e7\u00f5es apenas economizam o carv\u00e3o quando voc\u00ea quiser."
+  ],
+  "task.00000000000004A9.title": "Crie uma fornalha de carv\u00e3o",
+  "task.00000000000004AA.title": "Crie uma forja primitiva",
+  "task.00000000000004AB.title": "Produza 4 carv\u00f5es",
+
+  "quest.0000000000000406.title": "Guarde a Carga",
+  "quest.0000000000000406.quest_subtitle": "Um caixote \u00e9 um caixote.",
+  "quest.0000000000000406.quest_desc": [
+    "Crie um caixote de armazenamento com um ba\u00fa, t\u00e1buas e fibra.",
+    "Ele guarda 27 pilhas, nada mais; o conte\u00fado cai quando ele \u00e9 quebrado."
+  ],
+  "task.00000000000004AC.title": "Crie um caixote de armazenamento",
+  "task.00000000000004AD.title": "Junte 6 ferros brutos"
+}

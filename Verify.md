@@ -8,6 +8,33 @@ the matching changelog validation.
 
 Entries are grouped by patch, newest first. Each says what to do and what to look for.
 
+## Homestead Economy (P04) — added 2026-09-20
+
+- **Berry bushes.** Use each of the four berries on grass/dirt/farmland: the right bush appears and
+  the berry is consumed. Watch one grow through its four stages, harvest a ripe one (berries appear,
+  bush resets), and break another to confirm the drop. Bone meal and shears should do nothing special.
+- **Feeding trough.** Fill it with cooked meat next to a hungry tame: every few seconds one item
+  should disappear and the animal should heal. A wild creature nearby must never eat from it.
+  Empty-hand takes the stack back; breaking the trough drops it.
+- **Drying rack.** Insert raw meat/fish/berries, wait the configured batches, and take a dried ration.
+  Eating one should restore nutrition; verify the rack's contents drop when broken.
+- **Cooking pot.** The screen opens with four slots and a meal slot; placing an invalid combination
+  must never consume anything. Cook a hearty stew and a trail mix, eat both and confirm the
+  regeneration and speed effects, then shift-click the meal out.
+- **Concentrated sedative.** Craft it (3 narcoberries + fiber), eat one to confirm the stronger
+  knock-out, and craft improved tranquilizer arrows (4 arrows + 1 concentrate). Fire one at a large
+  creature and confirm the torpor gain is clearly above the base arrow.
+- **Charcoal kiln.** Insert logs, wait the batches, take charcoal; the block must not need fuel.
+  Inserting dirt must be refused.
+- **Primitive forge.** Insert raw ore and confirm the ingot comes out without fuel; the vanilla
+  furnace must still smelt the same ore with fuel.
+- **Storage crate.** Craft it, open the 27-slot screen, move stacks in and out, break it and confirm
+  the contents drop, then place it again and confirm a server restart preserves the contents.
+- **Homestead chapter.** The fourth journal chapter (six quests) should show both languages, and its
+  item tasks should tick from station outputs; both tribe members share progress.
+
+Automated so far: 52 JUnit tests, all 55 headless GameTests, FTB loading 4 chapters / 23 quests.
+
 ## Weight and Working Tames (P03) — added 2026-09-20
 
 - **Mass gauge and bands.** Fill the inventory to ~75%: gauge turns amber with one warning, and

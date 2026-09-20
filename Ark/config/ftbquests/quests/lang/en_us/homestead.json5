@@ -1,0 +1,62 @@
+{
+  "chapter.0000000000000400.title": "Homestead",
+  "chapter.0000000000000400.chapter_subtitle": [
+    "Turn a camp into a supply base."
+  ],
+
+  "quest.0000000000000401.title": "Plant the First Bush",
+  "quest.0000000000000401.quest_subtitle": "Renewable taming stock starts here.",
+  "quest.0000000000000401.quest_desc": [
+    "Use an Ark berry on dirt, grass or farmland to plant its bush.",
+    "The bush grows through four stages and yields two or three berries when ripe."
+  ],
+  "task.00000000000004A1.title": "Plant and harvest an Ark berry bush",
+
+  "quest.0000000000000402.title": "A Place for Feed",
+  "quest.0000000000000402.quest_subtitle": "Stop hand-feeding every tame.",
+  "quest.0000000000000402.quest_desc": [
+    "Craft a feeding trough from four planks and a fiber.",
+    "Fill it with food, then keep it near your tames: it feeds hungry animals every batch while you stay in the area."
+  ],
+  "task.00000000000004A2.title": "Craft a feeding trough",
+  "task.00000000000004A3.title": "Gather 8 plant fiber",
+
+  "quest.0000000000000403.title": "Dry the Surplus",
+  "quest.0000000000000403.quest_subtitle": "Food that travels well.",
+  "quest.0000000000000403.quest_desc": [
+    "Craft a drying rack from sticks and fiber.",
+    "Raw meat, fish or berries become dried rations over a few batches; rations keep a meal's worth in a single slot."
+  ],
+  "task.00000000000004A4.title": "Craft a drying rack",
+  "task.00000000000004A5.title": "Produce 2 dried rations",
+
+  "quest.0000000000000404.title": "Cook a Proper Meal",
+  "quest.0000000000000404.quest_subtitle": "Short effects that matter on a trip.",
+  "quest.0000000000000404.quest_desc": [
+    "Craft a cooking pot from cobblestone and fiber.",
+    "Hearty stew takes two dried rations, one meat and one carrot; trail mix takes two rations and two Ark berries.",
+    "Fill every slot; the pot consumes one item from each."
+  ],
+  "task.00000000000004A6.title": "Craft a cooking pot",
+  "task.00000000000004A7.title": "Cook a hearty stew",
+  "task.00000000000004A8.title": "Cook a trail mix",
+
+  "quest.0000000000000405.title": "Charcoal and Iron",
+  "quest.0000000000000405.quest_subtitle": "Fuel-free processing.",
+  "quest.0000000000000405.quest_desc": [
+    "The charcoal kiln turns logs into charcoal with no fuel; the primitive forge processes raw ore without fuel.",
+    "The vanilla furnace still works - the stations simply save the coal when you want it."
+  ],
+  "task.00000000000004A9.title": "Craft a charcoal kiln",
+  "task.00000000000004AA.title": "Craft a primitive forge",
+  "task.00000000000004AB.title": "Produce 4 charcoal",
+
+  "quest.0000000000000406.title": "Store the Haul",
+  "quest.0000000000000406.quest_subtitle": "A crate is a crate.",
+  "quest.0000000000000406.quest_desc": [
+    "Craft a storage crate from a chest, planks and fiber.",
+    "It holds 27 stacks, nothing more; contents drop when it is broken."
+  ],
+  "task.00000000000004AC.title": "Craft a storage crate",
+  "task.00000000000004AD.title": "Gather 6 raw iron"
+}
