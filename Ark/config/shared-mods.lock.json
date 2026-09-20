@@ -1,0 +1,64 @@
+{
+  "minecraft": "26.1.2",
+  "loader": "neoforge",
+  "verified": "2026-09-20",
+  "note": "Client and server gameplay stack for the survival journal. Files are downloaded from the publisher, never redistributed.",
+  "entries": [
+    {
+      "project": "ftb-quests",
+      "version": "26.1.2.8",
+      "filename": "ftb-quests-neoforge-26.1.2.8.jar",
+      "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-quests-neoforge/26.1.2.8/ftb-quests-neoforge-26.1.2.8.jar",
+      "sha512": "18d785dd24fd83a436a02b1f50e07d611048d5533b13fa12e5169a4281f3ac74af3ca237ccf79e027a46d670721b9a59f8c4d6e6dcbdbde14370b055516e9135",
+      "size": 1638936,
+      "kind": "shared",
+      "license": "All Rights Reserved",
+      "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-quests-forge"
+    },
+    {
+      "project": "ftb-teams",
+      "version": "26.1.2.4",
+      "filename": "ftb-teams-neoforge-26.1.2.4.jar",
+      "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-teams-neoforge/26.1.2.4/ftb-teams-neoforge-26.1.2.4.jar",
+      "sha512": "10f78fe12fb7ece111cf43481cbefd5b00b17d992323cae01894f28660b4b7741b45b51b672da46af5b2b3209e29b62a1eaff3f8a355792decda531921085a93",
+      "size": 340674,
+      "kind": "shared",
+      "license": "All Rights Reserved",
+      "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-teams-forge"
+    },
+    {
+      "project": "ftb-library",
+      "version": "26.1.2.8",
+      "filename": "ftb-library-neoforge-26.1.2.8.jar",
+      "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-neoforge/26.1.2.8/ftb-library-neoforge-26.1.2.8.jar",
+      "sha512": "e9cebb95116945c4b69a252813ac666423c4876338c634b71ba8f4004e0f50403d79fe37fc2736f984d79b74a84b073b38031947afdc4c7439ddcf59f7baf62e",
+      "size": 1640653,
+      "kind": "shared",
+      "license": "All Rights Reserved",
+      "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-library-forge"
+    },
+    {
+      "project": "ftb-xmod-compat",
+      "version": "26.1.2.4",
+      "filename": "ftb-xmod-compat-neoforge-26.1.2.4.jar",
+      "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-xmod-compat-neoforge/26.1.2.4/ftb-xmod-compat-neoforge-26.1.2.4.jar",
+      "sha512": "5848ff312fcbd6553f93e53273a19ef3960d845424ef2972151b13f1cd262bc5d29b6c1f9fb8f9cd3d65abea7f9ef9628379f24f1d57e55b581eda8fa443471f",
+      "size": 158730,
+      "kind": "shared",
+      "license": "All Rights Reserved",
+      "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-xmod-compat"
+    },
+    {
+      "project": "jei",
+      "version": "29.34.0.90",
+      "versionId": "AisPQmQz",
+      "filename": "jei-26.1.2-neoforge-29.34.0.90.jar",
+      "url": "https://cdn.modrinth.com/data/u6dRKJwZ/versions/AisPQmQz/jei-26.1.2-neoforge-29.34.0.90.jar",
+      "sha512": "dac4fcb7fe5b19d223c2138e14b84808f1e3afbfaf66247f131ce39d2ce8de5736a95b1c415554ecc5a81244708cb131788ab8dccd26cb3a9bda7a1daf481b18",
+      "size": 1828696,
+      "kind": "shared",
+      "license": "MIT",
+      "source": "https://modrinth.com/mod/jei"
+    }
+  ]
+}

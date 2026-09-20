@@ -66,8 +66,11 @@ def integratedStandaloneJars = [
     'Presence-Footsteps*.jar'
 ]
 def installedPack = fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)
+// Client and server gameplay mods (survival journal stack). Loaded on every dev run.
+def sharedPack = fileTree(dir: 'shared-mods', include: ['*.jar'])
 dependencies {
     implementation "maven.modrinth:geckolib:${geckolib_version}"
+    implementation sharedPack
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'
     compileOnly 'maven.modrinth:xaeros-world-map:pKatKnls'
     immersiveClientRuntimeOnly installedPack
@@ -80,8 +83,8 @@ def clientPackClasspath = neoForge.runs.client.sourceSet.get().runtimeClasspath
 def serverPackClasspath = neoForge.runs.gameTestServer.sourceSet.get().runtimeClasspath
 tasks.register('verifyClientPack') {
     group = 'verification'
-    description = 'Checks that installed presentation mods load only with the interactive client.'
-    inputs.files(clientPackClasspath, serverPackClasspath, installedPack)
+    description = 'Checks that presentation mods load only with the client and shared gameplay mods load on both sides.'
+    inputs.files(clientPackClasspath, serverPackClasspath, installedPack, sharedPack)
     doLast {
         def clientFiles = clientPackClasspath.files
         def serverFiles = serverPackClasspath.files
@@ -89,7 +92,11 @@ tasks.register('verifyClientPack') {
             if (!clientFiles.contains(artifact)) throw new GradleException("Missing client dependency: ${artifact.name}")
             if (serverFiles.contains(artifact)) throw new GradleException("Client dependency leaked into server: ${artifact.name}")
         }
-        logger.lifecycle("Verified ${installedPack.files.size()} presentation mods on client classpath only.")
+        sharedPack.files.each { artifact ->
+            if (!clientFiles.contains(artifact)) throw new GradleException("Missing shared dependency on client: ${artifact.name}")
+            if (!serverFiles.contains(artifact)) throw new GradleException("Missing shared dependency on server: ${artifact.name}")
+        }
+        logger.lifecycle("Verified ${installedPack.files.size()} presentation mods on client classpath only and ${sharedPack.files.size()} shared mods on both sides.")
     }
 }
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
@@ -108,18 +115,20 @@ idea { module { downloadSources = true; downloadJavadoc = true } }
 // List the reviewed dev dependencies before launch, and verify active pins locally.
 def devManifest = file('config/dev-dependencies.json')
 def clientManifest = file('config/client-mods.lock.json')
+def sharedManifest = file('config/shared-mods.lock.json')
 tasks.register('verifyDevDependencies') {
     group = 'verification'
-    description = 'Lists the dev-run dependencies and verifies installed compatible Iris/Sodium pins.'
-    inputs.files(devManifest, clientManifest, installedPack)
+    description = 'Lists the dev-run dependencies and verifies every pinned artifact and checksum.'
+    inputs.files(devManifest, clientManifest, sharedManifest, installedPack, sharedPack)
     doLast {
         def plan = new groovy.json.JsonSlurper().parse(devManifest)
-        def pins = new groovy.json.JsonSlurper().parse(clientManifest).entries
+        def pins = [clientManifest, sharedManifest].collectMany { new groovy.json.JsonSlurper().parse(it).entries }
         plan.dependencies.each { dependency ->
             if (dependency.status == 'pinned') {
                 def pin = pins.find { it.project == dependency.project }
                 if (pin == null) throw new GradleException("Missing dependency pin: ${dependency.project}")
-                def artifact = new File(devManifest.parentFile.parentFile, "client-mods/${pin.filename}")
+                def folder = pin.kind == 'shader' ? 'run/shaderpacks' : (pin.kind == 'shared' ? 'shared-mods' : 'client-mods')
+                def artifact = new File(devManifest.parentFile.parentFile, "${folder}/${pin.filename}")
                 if (!artifact.isFile()) throw new GradleException("Missing ${pin.filename}; run Install-Ark-Extras.bat")
                 def actual = java.security.MessageDigest.getInstance('SHA-512').digest(artifact.bytes).encodeHex().toString()
                 if (!actual.equalsIgnoreCase(pin.sha512)) throw new GradleException("Checksum mismatch: ${pin.filename}")
