@@ -1,0 +1,57 @@
+{
+  "chapter.0000000000000100.title": "Primitivo",
+  "chapter.0000000000000100.chapter_subtitle": [
+    "Aprenda a terra e firme seu primeiro acampamento."
+  ],
+
+  "quest.0000000000000101.title": "Um Lugar para Voltar",
+  "quest.0000000000000101.quest_subtitle": "Primeiro, o acampamento.",
+  "quest.0000000000000101.quest_desc": [
+    "Coloque uma cama de dormir e uma fogueira onde voc\u00ea possa voltar.",
+    "O acampamento \u00e9 o ponto de retorno depois de cada risco."
+  ],
+  "task.00000000000001A1.title": "Monte o acampamento com cama e fogueira",
+
+  "quest.0000000000000102.title": "Ferramentas do Sobrevivente",
+  "quest.0000000000000102.quest_subtitle": "A pedra muda o que \u00e9 poss\u00edvel.",
+  "quest.0000000000000102.quest_desc": [
+    "Crie uma picareta e um machado de pedra em uma bancada de trabalho.",
+    "A madeira garante o primeiro pedregulho; o machado abre madeira e couro."
+  ],
+  "task.00000000000001A2.title": "Crie uma picareta de pedra",
+  "task.00000000000001A3.title": "Crie um machado de pedra",
+
+  "quest.0000000000000103.title": "Coleta e Ossos",
+  "quest.0000000000000103.quest_subtitle": "Comida e ferramentas da terra.",
+  "quest.0000000000000103.quest_desc": [
+    "Quebre grama baixa e alta para colher berries.",
+    "Ossos v\u00eam de carca\u00e7as de animais comuns; cace com uma ferramenta de pedra."
+  ],
+  "task.00000000000001A4.title": "Junte 3 tintoberries",
+  "task.00000000000001A5.title": "Junte 2 ossos",
+
+  "quest.0000000000000104.title": "Sedação e Captura",
+  "quest.0000000000000104.quest_subtitle": "Derrube algo maior que voc\u00ea.",
+  "quest.0000000000000104.quest_desc": [
+    "Crie flechas tranquilizantes: quatro flechas, uma narcoberry e um osso.",
+    "Nocauteie uma criatura grande, abra seu invent\u00e1rio e alimente-a por ele."
+  ],
+  "task.00000000000001A6.title": "Junte uma narcoberry",
+  "task.00000000000001A7.title": "Crie 2 flechas tranquilizantes",
+
+  "quest.0000000000000105.title": "Um Companheiro de Confiança",
+  "quest.0000000000000105.quest_subtitle": "A primeira doma resolve um problema.",
+  "quest.0000000000000105.quest_desc": [
+    "Alimente uma criatura disposta at\u00e9 que ela confie em voc\u00ea.",
+    "A doma continua sua. Sua tribo pode receber permiss\u00f5es de montaria, carga e ordens com /arktribe."
+  ],
+  "task.00000000000001A8.title": "Dome sua primeira criatura",
+
+  "quest.0000000000000106.title": "Reivindique seu Diário",
+  "quest.0000000000000106.quest_subtitle": "Anote o que a terra ensina.",
+  "quest.0000000000000106.quest_desc": [
+    "Crie o Di\u00e1rio de Campo com um livro e dois couros.",
+    "Pressione J ou use o di\u00e1rio para abrir o di\u00e1rio da tribo."
+  ],
+  "task.00000000000001A9.title": "Crie o Di\u00e1rio de Campo"
+}

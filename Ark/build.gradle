@@ -139,10 +139,13 @@ tasks.register('verifyDevDependencies') {
 }
 def devOptions = file('run/options.txt')
 def devServerProperties = file('run/server.properties')
+def questSource = file('config/ftbquests')
+def questTarget = file('run/config/ftbquests')
 tasks.register('prepareDevRuntime') {
     group = 'application'
-    description = 'Applies the explicit dev render/simulation distances while preserving other game settings.'
+    description = 'Applies explicit dev distances and syncs the authored quest pack into the instance config.'
     inputs.file(devRuntimeFile)
+    if (questSource.isDirectory()) inputs.dir(questSource)
     outputs.files(devOptions, devServerProperties)
     doLast {
         def settings = new Properties()
@@ -158,7 +161,20 @@ tasks.register('prepareDevRuntime') {
         }
         update(devOptions, ':', [renderDistance:settings.renderDistance, simulationDistance:settings.simulationDistance])
         update(devServerProperties, '=', ['view-distance':settings.renderDistance, 'simulation-distance':settings.simulationDistance])
+        // FTB Quests reads its pack from the instance config folder, never from a data pack.
+        if (questSource.isDirectory()) {
+            questSource.eachFileRecurse { sourceFile ->
+                if (sourceFile.isFile()) {
+                    def relative = questSource.toPath().relativize(sourceFile.toPath()).toString()
+                    def target = new File(questTarget, relative)
+                    target.parentFile.mkdirs()
+                    target.bytes = sourceFile.bytes
+                }
+            }
+            logger.lifecycle('Synced the authored quest pack into run/config/ftbquests.')
+        }
     }
 }
 tasks.named('runClient') { dependsOn 'verifyDevDependencies', 'verifyClientPack', 'prepareDevRuntime' }
 tasks.named('runServer') { dependsOn 'prepareDevRuntime' }
+tasks.named('runGameTestServer') { dependsOn 'prepareDevRuntime' }

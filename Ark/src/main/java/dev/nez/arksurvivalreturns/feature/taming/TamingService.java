@@ -187,8 +187,20 @@ public final class TamingService {
         creature.onTamed(owner);
         if (creature.level() instanceof ServerLevel level && level.getEntity(owner) instanceof Player player) {
             TamingFeedback.completed(player, creature);
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) discovery(server, "journal/first_tame");
         }
         TorporService.log("tamed", creature, "owner " + owner);
+    }
+
+    /**
+     * Awards a hidden advancement. Advancements are the per-player discovery record: the map
+     * entitlement and the tribe journal read them, and each player records the find once.
+     */
+    public static void discovery(net.minecraft.server.level.ServerPlayer player, String path) {
+        if (player.level().getServer() == null) return;
+        var holder = player.level().getServer().getAdvancements().get(
+                dev.nez.arksurvivalreturns.ArkSurvivalReturns.id(path));
+        if (holder != null) player.getAdvancements().award(holder, "discovered");
     }
 
     /** Damage during an attempt costs a bounded share of the progress and cancels an aerial truce. */

@@ -48,6 +48,10 @@ public final class ModContent {
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem> COMPANION_WHISTLE =
             ITEMS.registerItem("companion_whistle",
                     dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem::new, p -> p.stacksTo(1));
+    /** Field Journal: opens the tribe's survival journal (the FTB Quests book). */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem> FIELD_JOURNAL =
+            ITEMS.registerItem("field_journal",
+                    dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem::new, p -> p.stacksTo(1));
 
     static {
         for (Species s : Species.values()) {
@@ -82,6 +86,7 @@ public final class ModContent {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
                     output.accept(COMPANION_WHISTLE.get());
+                    output.accept(FIELD_JOURNAL.get());
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());

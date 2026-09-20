@@ -1,0 +1,194 @@
+{
+  "id": "0000000000000100",
+  "group": "",
+  "order_index": 0,
+  "icon": {
+    "id": "minecraft:campfire"
+  },
+  "quests": [
+    {
+      "id": "0000000000000101",
+      "x": 0.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "00000000000001A1",
+          "type": "checkmark"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B1",
+          "type": "item",
+          "item": {
+            "id": "minecraft:campfire"
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000102",
+      "x": 1.5,
+      "y": -1.0,
+      "dependencies": [
+        "0000000000000101"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000001A2",
+          "type": "item",
+          "item": {
+            "id": "minecraft:stone_pickaxe"
+          },
+          "only_from_crafting": true
+        },
+        {
+          "id": "00000000000001A3",
+          "type": "item",
+          "item": {
+            "id": "minecraft:stone_axe"
+          },
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B2",
+          "type": "item",
+          "item": {
+            "id": "minecraft:torch",
+            "count": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000103",
+      "x": 0.0,
+      "y": 1.5,
+      "dependencies": [
+        "0000000000000101"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000001A4",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:tintoberry"
+          },
+          "count": 3
+        },
+        {
+          "id": "00000000000001A5",
+          "type": "item",
+          "item": {
+            "id": "minecraft:bone"
+          },
+          "count": 2
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B3",
+          "type": "item",
+          "item": {
+            "id": "minecraft:cooked_beef",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000104",
+      "x": 1.5,
+      "y": 1.0,
+      "dependencies": [
+        "0000000000000102",
+        "0000000000000103"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000001A6",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:narcoberry"
+          }
+        },
+        {
+          "id": "00000000000001A7",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:tranquilizer_arrow"
+          },
+          "count": 2,
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B4",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:tranquilizer_arrow",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000105",
+      "x": 3.0,
+      "y": 0.0,
+      "dependencies": [
+        "0000000000000103"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000001A8",
+          "type": "advancement",
+          "advancement": "arksurvivalreturns:journal/first_tame",
+          "criterion": "discovered"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B5",
+          "type": "item",
+          "item": {
+            "id": "minecraft:saddle"
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000106",
+      "x": 0.0,
+      "y": 3.0,
+      "dependencies": [
+        "0000000000000101"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000001A9",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:field_journal"
+          },
+          "only_from_crafting": true
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000001B6",
+          "type": "item",
+          "item": {
+            "id": "minecraft:leather",
+            "count": 3
+          }
+        }
+      ]
+    }
+  ],
+  "quest_links": [],
+  "images": []
+}

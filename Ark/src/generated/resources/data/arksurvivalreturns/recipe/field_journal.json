@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "field_journal",
+  "ingredients": [
+    "minecraft:book",
+    "minecraft:leather",
+    "minecraft:leather"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:field_journal"
+  }
+}

@@ -5,6 +5,8 @@ Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patc
 ## Unreleased — Survival Journal and Tribes
 
 - **Tribe permissions.** A tame stays owned by the survivor who tamed it, and members of that owner's FTB Teams party can be granted riding, cargo, order and (later) breeding permissions. The owner always keeps every permission. Party creation and invitations stay with `/ftbteams`; `/arktribe status`, `/arktribe perm` and `/arktribe reset` inspect and edit the flags. Four new server config defaults under `[tribe]` control what party members receive by default.
+- **Field Journal.** Craft a Field Journal from a book and two leather, then press **J** or use it to open the tribe's survival journal. The journal is the FTB Quests book, so progress and rewards are shared per tribe and granted exactly once per survivor.
+- **Primitive chapter.** Six starter objectives cover camp, stone tools, forage and bone, sedation with tranquilizer arrows, the first tame and the journal itself. Taming your first creature also awards a hidden personal discovery advancement that the journal reads.
 
 ## Minecraft 26.1.2 Migration — 2026-09-20
 

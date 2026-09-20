@@ -1,0 +1,57 @@
+{
+  "chapter.0000000000000100.title": "Primitive",
+  "chapter.0000000000000100.chapter_subtitle": [
+    "Learn the land and build a foothold."
+  ],
+
+  "quest.0000000000000101.title": "A Place to Return To",
+  "quest.0000000000000101.quest_subtitle": "Camp first.",
+  "quest.0000000000000101.quest_desc": [
+    "Place a bedroll and a fire where you can come back to.",
+    "Camp is the point you return to after every risk."
+  ],
+  "task.00000000000001A1.title": "Set up camp with a bedroll and a fire",
+
+  "quest.0000000000000102.title": "Tools of the Survivor",
+  "quest.0000000000000102.quest_subtitle": "Stone changes what is possible.",
+  "quest.0000000000000102.quest_desc": [
+    "Craft a stone pickaxe and a stone axe at a crafting table.",
+    "Wood gets you the first cobblestone; the axe opens wood and hide."
+  ],
+  "task.00000000000001A2.title": "Craft a stone pickaxe",
+  "task.00000000000001A3.title": "Craft a stone axe",
+
+  "quest.0000000000000103.title": "Forage and Bone",
+  "quest.0000000000000103.quest_subtitle": "Food and tools from the land.",
+  "quest.0000000000000103.quest_desc": [
+    "Break short and tall grass for berries.",
+    "Bones come from ordinary animal carcasses; hunt with a stone tool."
+  ],
+  "task.00000000000001A4.title": "Gather 3 tintoberries",
+  "task.00000000000001A5.title": "Gather 2 bones",
+
+  "quest.0000000000000104.title": "Sedation and Capture",
+  "quest.0000000000000104.quest_subtitle": "Bring down something bigger than you.",
+  "quest.0000000000000104.quest_desc": [
+    "Craft tranquilizer arrows: four arrows, one narcoberry and a bone.",
+    "Knock out a large creature, open it, and feed it from its own inventory."
+  ],
+  "task.00000000000001A6.title": "Gather a narcoberry",
+  "task.00000000000001A7.title": "Craft 2 tranquilizer arrows",
+
+  "quest.0000000000000105.title": "A Trusted Companion",
+  "quest.0000000000000105.quest_subtitle": "The first tame solves a problem.",
+  "quest.0000000000000105.quest_desc": [
+    "Feed a willing creature until it trusts you.",
+    "A tame stays yours. Your tribe can be granted riding, cargo and order permissions with /arktribe."
+  ],
+  "task.00000000000001A8.title": "Tame your first creature",
+
+  "quest.0000000000000106.title": "Claim Your Journal",
+  "quest.0000000000000106.quest_subtitle": "Write down what the land teaches you.",
+  "quest.0000000000000106.quest_desc": [
+    "Craft the Field Journal from a book and two leather.",
+    "Press J or use the journal to open the tribe's survival journal."
+  ],
+  "task.00000000000001A9.title": "Craft the Field Journal"
+}

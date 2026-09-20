@@ -21,7 +21,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        tags(); models(); berries(); taming(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); flying(); spawns(); theme(); tests();
         return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
                 output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
     }
@@ -161,6 +161,17 @@ public final class ArkData implements DataProvider {
         pt.put("companion." + NS + ".order.stay", "Seu companheiro fica aqui");
         en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
         pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
+        // Field Journal: reuses the vanilla book art, so no new texture is required.
+        put("assets/" + NS + "/models/item/field_journal", Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", "minecraft:item/book")));
+        put("assets/" + NS + "/items/field_journal", Map.of("model", Map.of("type", "minecraft:model",
+                "model", NS + ":item/field_journal")));
+        en.put("item." + NS + ".field_journal", "Field Journal");
+        pt.put("item." + NS + ".field_journal", "Di\u00e1rio de campo");
+        en.put("key." + NS + ".journal", "Open Field Journal");
+        pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
+        en.put("key.category." + NS + ".keys", "Ark Survival Returns");
+        pt.put("key.category." + NS + ".keys", "Ark Survival Returns");
         tamingMessages(en, pt);
         tribeMessages(en, pt);
         for (Species s : Species.values()) {
@@ -214,6 +225,20 @@ public final class ArkData implements DataProvider {
                                 "%s:narcoberry","minecraft:bone"],
                  "result":{"count":4,"id":"%s:tranquilizer_arrow"}}
                 """.formatted(NS, NS));
+    }
+
+    /** Field Journal crafting and the hidden discovery advancements the quest book reads. */
+    private void journal() {
+        json("data/" + NS + "/recipe/field_journal", """
+                {"type":"minecraft:crafting_shapeless","category":"misc","group":"field_journal",
+                 "ingredients":["minecraft:book","minecraft:leather","minecraft:leather"],
+                 "result":{"count":1,"id":"%s:field_journal"}}
+                """.formatted(NS));
+        // Awarded by the taming code; hidden so it is a discovery record, not a popup.
+        json("data/" + NS + "/advancement/journal/first_tame", """
+                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
+                 "requirements":[["discovered"]]}
+                """);
     }
 
     /** Player-facing taming and sedation text, in both shipped locales. */
@@ -450,7 +475,7 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
-                "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions"))
+                "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
