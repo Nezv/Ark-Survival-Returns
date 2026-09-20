@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#c:tools",
+    "minecraft:shears",
+    "minecraft:flint_and_steel",
+    "minecraft:fishing_rod",
+    "minecraft:bow",
+    "minecraft:crossbow",
+    "minecraft:trident",
+    "arksurvivalreturns:flint_knife",
+    "arksurvivalreturns:spear"
+  ]
+}

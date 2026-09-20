@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns;
 import java.util.EnumMap;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.mass.MassRules;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /** Per-world server configuration; habitat preferences and protected biomes live in data packs. */
@@ -28,6 +29,7 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue HEALTH_GROWTH;
     public static final ModConfigSpec.DoubleValue DAMAGE_GROWTH;
     public static final ModConfigSpec.BooleanValue HEALTH_BAR;
+    public static final ModConfigSpec.BooleanValue MASS_GAUGE;
     public static final ModConfigSpec.BooleanValue NIGHTTIME;
     public static final ModConfigSpec.IntValue NIGHT_START, NIGHT_END, NIGHT_TRANSITION, SLEEP_CALM;
     public static final ModConfigSpec.DoubleValue NIGHT_HUNGER, NIGHT_VISION, DAY_SLEEP, WAKE_DISTANCE;
@@ -57,6 +59,12 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue TRIBE_DEFAULT_RIDE, TRIBE_DEFAULT_CARGO, TRIBE_DEFAULT_COMMANDS,
             TRIBE_DEFAULT_BREEDING;
+    // ----------------------------------------------------------------------------- mass
+    public static final ModConfigSpec.BooleanValue MASS_ENABLED;
+    public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
+    public static final ModConfigSpec.DoubleValue MASS_PLAYER_CAPACITY, MASS_MULTIPLIER, MASS_WARNING_RATIO,
+            MASS_SLOW_RATIO, MASS_HEAVY_RATIO, MASS_SPEED_FLOOR, MASS_UNKNOWN_CONTAINER, MASS_CONTAINER_CONTENT_CAP,
+            MASS_AUTOMATION_CEILING;
     // --------------------------------------------------------------------------- combat
     public static final ModConfigSpec.DoubleValue COMBAT_HIT_FRACTION, COMBAT_RECOVERY_FRACTION;
     // ------------------------------------------------------------------------ companion
@@ -176,6 +184,37 @@ public final class Config {
                 .define("defaultCommands", true);
         TRIBE_DEFAULT_BREEDING = b.comment("Reserved for the husbandry work: breeding permission for party members.")
                 .define("defaultBreeding", false);
+        b.pop().push("mass");
+        MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
+                        + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")
+                .define("enabled", true);
+        MASS_PRESET = b.comment("STANDARD uses the ratios below. RELAXED raises capacities by half and starts every "
+                        + "penalty 25 points later. OFF disables mass and the gauge entirely.")
+                .defineEnum("preset", MassRules.Preset.STANDARD);
+        MASS_PLAYER_CAPACITY = b.comment("Player capacity in mass units. A working kit should use roughly a quarter "
+                        + "to a third, leaving room for a useful haul.")
+                .defineInRange("playerCapacity", 100.0, 10.0, 1000.0);
+        MASS_MULTIPLIER = b.comment("Global multiplier for every item mass; lower makes all loads lighter.")
+                .defineInRange("massMultiplier", 1.0, 0.1, 5.0);
+        MASS_WARNING_RATIO = b.comment("Load ratio that warns and colors the gauge, with no movement penalty.")
+                .defineInRange("warningRatio", 0.75, 0.25, 1.5);
+        MASS_SLOW_RATIO = b.comment("Load ratio where sprint is denied and movement starts slowing. This is the "
+                        + "overload line; the warning band below it stays penalty-free.")
+                .defineInRange("slowRatio", 1.0, 0.5, 2.0);
+        MASS_HEAVY_RATIO = b.comment("Load ratio where slowdown reaches its floor. Walking and dropping cargo always "
+                        + "remain possible.")
+                .defineInRange("heavyRatio", 1.25, 0.75, 3.0);
+        MASS_SPEED_FLOOR = b.comment("Lowest fraction of normal movement speed; overload never immobilizes.")
+                .defineInRange("speedFloor", 0.35, 0.1, 0.9);
+        MASS_UNKNOWN_CONTAINER = b.comment("Flat mass for container items the model cannot inspect "
+                        + "(tag arksurvivalreturns:mass/unknown_container).")
+                .defineInRange("unknownContainerMass", 16.0, 1.0, 128.0);
+        MASS_CONTAINER_CONTENT_CAP = b.comment("Most mass counted from one container's contents. Nested containers "
+                        + "count only their own base mass, so reductions can never multiply recursively.")
+                .defineInRange("containerContentCap", 128.0, 0.0, 1024.0);
+        MASS_AUTOMATION_CEILING = b.comment("Fast Load and work jobs stop at this load ratio; manual loading may "
+                        + "exceed it up to the heavy band.")
+                .defineInRange("automationCeiling", 1.0, 1.0, 1.25);
         b.pop().push("levels");
         HEALTH_GROWTH = b.comment("HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.").defineInRange("healthGrowth", 0.10, 0.0, 0.20);
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);
@@ -303,6 +342,7 @@ public final class Config {
         BIOME_MESSAGES = b.define("biomeEntryMessages", true);
         HEALTH_BAR = b.define("targetHealthBar", true);
         HEALTH_BAR_RANGE = b.defineInRange("targetRange", 32, 8, 64);
+        MASS_GAUGE = b.comment("Show the carried-load gauge in the top-left of the HUD.").define("massGauge", true);
         b.pop();
         SPEC = b.build();
     }

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:string",
+    "minecraft:feather",
+    "minecraft:torch",
+    "minecraft:stick",
+    "minecraft:flint",
+    "minecraft:bone",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:fiber_bandage",
+    "arksurvivalreturns:companion_whistle"
+  ]
+}

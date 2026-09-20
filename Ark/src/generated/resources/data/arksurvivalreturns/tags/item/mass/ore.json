@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ores",
+    "#c:raw_materials",
+    "#c:ingots",
+    "minecraft:coal",
+    "minecraft:charcoal",
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "minecraft:lapis_lazuli",
+    "minecraft:redstone",
+    "minecraft:quartz",
+    "minecraft:amethyst_shard",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_ingot",
+    "minecraft:ancient_debris"
+  ]
+}

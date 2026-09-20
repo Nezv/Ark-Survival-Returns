@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:tintoberry",
+    "arksurvivalreturns:amarberry",
+    "arksurvivalreturns:azulberry",
+    "arksurvivalreturns:narcoberry",
+    "arksurvivalreturns:field_journal",
+    "minecraft:sweet_berries",
+    "minecraft:glow_berries",
+    "minecraft:egg",
+    "minecraft:snowball",
+    "minecraft:paper",
+    "minecraft:wheat_seeds",
+    "minecraft:beetroot_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:torchflower_seeds",
+    "minecraft:pitcher_pod"
+  ]
+}

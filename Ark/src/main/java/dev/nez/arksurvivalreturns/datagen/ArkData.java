@@ -91,6 +91,23 @@ public final class ArkData implements DataProvider {
         }
         tag("item/berries", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry");
         tag("item/sedative_berries", NS + ":narcoberry");
+        // Carried-mass categories. NeoForge common groups cover whole material families; block items
+        // without a category default to one unit and everything else scales with its stack size.
+        tag("item/mass/light", "string", "feather", "torch", "stick", "flint", "bone",
+                NS + ":plant_fiber", NS + ":fiber_bandage", NS + ":companion_whistle");
+        tag("item/mass/bulk", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry",
+                NS + ":field_journal", "sweet_berries", "glow_berries", "egg", "snowball", "paper",
+                "wheat_seeds", "beetroot_seeds", "melon_seeds", "pumpkin_seeds", "torchflower_seeds", "pitcher_pod");
+        tag("item/mass/food", "#c:foods");
+        tag("item/mass/unit", "minecart", "chest_minecart", "furnace_minecart", "hopper_minecart", "tnt_minecart",
+                "bucket", "water_bucket", "lava_bucket", "milk_bucket", "powder_snow_bucket");
+        tag("item/mass/ore", "#c:ores", "#c:raw_materials", "#c:ingots", "coal", "charcoal", "diamond", "emerald",
+                "lapis_lazuli", "redstone", "quartz", "amethyst_shard", "netherite_scrap", "netherite_ingot",
+                "ancient_debris");
+        tag("item/mass/tool", "#c:tools", "shears", "flint_and_steel", "fishing_rod", "bow", "crossbow", "trident",
+                NS + ":flint_knife", NS + ":spear");
+        tag("item/mass/armor", "#c:armors", "shield", "elytra", "leather_horse_armor", "iron_horse_armor",
+                "golden_horse_armor", "diamond_horse_armor", "wolf_armor");
     }
     private void models() {
         Map<String, String> en = new TreeMap<>(), pt = new TreeMap<>();
@@ -189,6 +206,7 @@ public final class ArkData implements DataProvider {
         campMessages(en, pt);
         recoveryMessages(en, pt);
         downedMessages(en, pt);
+        massMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -573,6 +591,20 @@ public final class ArkData implements DataProvider {
         pt.put("hud.downed." + NS + ".seconds", "%ss");
     }
 
+    /** Carried-mass gauge and the warning/overload messages; the warning band itself has no penalty. */
+    private void massMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("hud." + NS + ".mass", "Load %s / %s");
+        pt.put("hud." + NS + ".mass", "Carga %s / %s");
+        en.put("hud." + NS + ".mass.warn", "[ARK] Heavy load: %s / %s");
+        pt.put("hud." + NS + ".mass.warn", "[ARK] Carga pesada: %s / %s");
+        en.put("hud." + NS + ".mass.overload", "[ARK] Overburdened: sprint disabled and movement slowing.");
+        pt.put("hud." + NS + ".mass.overload", "[ARK] Sobrecarregado: corrida desativada e movimento mais lento.");
+        en.put("hud." + NS + ".mass.heavy", "[ARK] Severely overburdened: movement heavily slowed.");
+        pt.put("hud." + NS + ".mass.heavy", "[ARK] Muito sobrecarregado: movimento fortemente reduzido.");
+        en.put("hud." + NS + ".mass.eased", "[ARK] Load eased.");
+        pt.put("hud." + NS + ".mass.eased", "[ARK] Carga aliviada.");
+    }
+
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
         var faces = new LinkedHashMap<String, Object>();
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
@@ -642,7 +674,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);
