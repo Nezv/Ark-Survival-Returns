@@ -62,6 +62,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
         FUNCTIONS.register("recovery_cache", () -> RecoveryGameTests::recoveryCache);
+        FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);

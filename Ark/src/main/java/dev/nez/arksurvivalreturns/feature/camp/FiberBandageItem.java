@@ -20,6 +20,23 @@ public final class FiberBandageItem extends Item {
         super(properties);
     }
 
+    @Override public InteractionResult interactLivingEntity(ItemStack stack, Player player, net.minecraft.world.entity.LivingEntity target, InteractionHand hand) {
+        if (!(target instanceof net.minecraft.server.level.ServerPlayer downed)
+                || !(player instanceof net.minecraft.server.level.ServerPlayer reviver)) {
+            return InteractionResult.PASS;
+        }
+        var state = downed.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED);
+        if (!state.downed()) return InteractionResult.PASS;
+        if (Config.DOWNED_REQUIRE_TRIBE.get()
+                && !dev.nez.arksurvivalreturns.feature.tribe.TribeService.sameTribe(downed.getUUID(), reviver.getUUID())) {
+            reviver.sendSystemMessage(Component.translatable("downed.arksurvivalreturns.not_tribe"), true);
+            return InteractionResult.FAIL;
+        }
+        dev.nez.arksurvivalreturns.feature.recovery.DownedHandler.revive(downed, reviver);
+        if (!reviver.getAbilities().instabuild) stack.consume(1, reviver);
+        return InteractionResult.SUCCESS_SERVER;
+    }
+
     @Override public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) return InteractionResult.SUCCESS;

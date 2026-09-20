@@ -188,6 +188,7 @@ public final class ArkData implements DataProvider {
         tribeMessages(en, pt);
         campMessages(en, pt);
         recoveryMessages(en, pt);
+        downedMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -488,6 +489,14 @@ public final class ArkData implements DataProvider {
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);
+        json("data/" + NS + "/advancement/journal/first_downed", """
+                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
+                 "requirements":[["discovered"]]}
+                """);
+        json("data/" + NS + "/advancement/journal/first_revive", """
+                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
+                 "requirements":[["discovered"]]}
+                """);
     }
 
     private void vanillaModel(String id, String texture) {
@@ -541,6 +550,27 @@ public final class ArkData implements DataProvider {
         pt.put("recovery." + NS + ".cleared", "Removeu %s cache(s) de %s.");
         en.put("recovery." + NS + ".invalid_index", "No cache with index %s.");
         pt.put("recovery." + NS + ".invalid_index", "Nenhum cache com \u00edndice %s.");
+    }
+
+    private void downedMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("downed." + NS + ".downed", "You are down! %s seconds until you bleed out; a tribe member can revive you with a fiber bandage.");
+        pt.put("downed." + NS + ".downed", "Voc\u00ea caiu! %s segundos at\u00e9 sangrar; um membro da tribo pode reanimar voc\u00ea com uma bandagem de fibra.");
+        en.put("downed." + NS + ".tribe_down", "%s is down at %s, %s, %s with %s seconds left.");
+        pt.put("downed." + NS + ".tribe_down", "%s caiu em %s, %s, %s com %s segundos restantes.");
+        en.put("downed." + NS + ".revived", "%s pulled you back up.");
+        pt.put("downed." + NS + ".revived", "%s levantou voc\u00ea de volta.");
+        en.put("downed." + NS + ".revived_self", "You revived %s.");
+        pt.put("downed." + NS + ".revived_self", "Voc\u00ea reanimou %s.");
+        en.put("downed." + NS + ".not_tribe", "Only a tribe member can revive them.");
+        pt.put("downed." + NS + ".not_tribe", "S\u00f3 um membro da tribo pode reanimar.");
+        en.put("downed." + NS + ".denied", "You cannot do that while down.");
+        pt.put("downed." + NS + ".denied", "Voc\u00ea n\u00e3o pode fazer isso ca\u00eddo.");
+        en.put("hud.downed." + NS + ".title", "DOWNED");
+        pt.put("hud.downed." + NS + ".title", "CA\u00cdDO");
+        en.put("hud.downed." + NS + ".hint", "A tribe member must use a fiber bandage");
+        pt.put("hud.downed." + NS + ".hint", "Um membro da tribo precisa usar uma bandagem de fibra");
+        en.put("hud.downed." + NS + ".seconds", "%ss");
+        pt.put("hud.downed." + NS + ".seconds", "%ss");
     }
 
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
@@ -637,7 +667,8 @@ public final class ArkData implements DataProvider {
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
-                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn", "recovery_cache"))
+                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn", "recovery_cache",
+                "downed_revive"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

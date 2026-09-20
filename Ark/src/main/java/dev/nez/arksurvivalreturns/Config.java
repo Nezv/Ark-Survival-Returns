@@ -69,6 +69,11 @@ public final class Config {
     // ------------------------------------------------------------------------- recovery
     public static final ModConfigSpec.BooleanValue RECOVERY_ENABLED, RECOVERY_NOTIFY_TRIBE;
     public static final ModConfigSpec.IntValue RECOVERY_MAX_CACHES, RECOVERY_SEARCH_RADIUS;
+    // --------------------------------------------------------------------------- downed
+    public static final ModConfigSpec.BooleanValue DOWNED_ENABLED, DOWNED_NOTIFY_TRIBE, DOWNED_REQUIRE_TRIBE,
+            DOWNED_LAVA_LETHAL, DOWNED_VOID_LETHAL;
+    public static final ModConfigSpec.IntValue DOWNED_WINDOW;
+    public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
@@ -139,6 +144,28 @@ public final class Config {
                 .defineInRange("searchRadius", 12, 4, 32);
         RECOVERY_NOTIFY_TRIBE = b.comment("Tell online FTB Teams tribe members where a cache appeared.")
                 .define("notifyTribe", true);
+        b.pop().push("downed");
+        DOWNED_ENABLED = b.comment("Lethal damage leaves a player downed with a rescue window instead of killing "
+                        + "them outright. Void, lava, /kill and overkill hits stay fatal.")
+                .define("enabled", true);
+        DOWNED_WINDOW = b.comment("Rescue window in ticks before a downed player bleeds out (1200 = one minute).")
+                .defineInRange("windowTicks", 1200, 100, 6000);
+        DOWNED_REVIVE_FRACTION = b.comment("Share of maximum health restored when a fiber bandage revives a player.")
+                .defineInRange("reviveHealthFraction", 0.3, 0.1, 1.0);
+        DOWNED_BLEED_FACTOR = b.comment("Rescue ticks lost per point of damage taken while downed (0 disables the "
+                        + "escalating pressure).")
+                .defineInRange("damageBleedFactor", 1.0, 0.0, 5.0);
+        DOWNED_OVERKILL = b.comment("A single hit at or above this multiple of maximum health kills outright.")
+                .defineInRange("overkillMultiplier", 1.5, 1.0, 5.0);
+        DOWNED_LAVA_LETHAL = b.comment("Lava and fire kill outright instead of downing the player.")
+                .define("lavaLethal", true);
+        DOWNED_VOID_LETHAL = b.comment("Void damage kills outright instead of downing the player.")
+                .define("voidLethal", true);
+        DOWNED_NOTIFY_TRIBE = b.comment("Tell online FTB Teams tribe members when someone goes down.")
+                .define("notifyTribe", true);
+        DOWNED_REQUIRE_TRIBE = b.comment("Only tribe members may revive with a fiber bandage. Disable to let any "
+                        + "player revive.")
+                .define("requireTribe", true);
         b.pop().push("tribe");
         TRIBE_DEFAULT_RIDE = b.comment("Default riding permission for members of the tame owner's FTB Teams party. "
                         + "The owner always keeps every permission.")
