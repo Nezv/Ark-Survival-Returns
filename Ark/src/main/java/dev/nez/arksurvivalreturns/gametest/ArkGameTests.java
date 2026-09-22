@@ -75,6 +75,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("farm_batch", () -> FarmGameTests::batch);
         FUNCTIONS.register("medicine_dose", () -> FarmGameTests::medicine);
         FUNCTIONS.register("kitchen_cook", () -> KitchenGameTests::cook);
+        FUNCTIONS.register("guardian_heart", () -> GuardianGameTests::heartDrop);
+        FUNCTIONS.register("guardian_policy", () -> GuardianGameTests::policy);
+        FUNCTIONS.register("guardian_registration", () -> GuardianGameTests::registration);
+        FUNCTIONS.register("guardian_persistence", () -> GuardianGameTests::persistence);
+        FUNCTIONS.register("guardian_rewards", () -> GuardianGameTests::rewards);
         FUNCTIONS.register("forge_batch", () -> ForgeGameTests::batch);
         FUNCTIONS.register("storage_crate", () -> StorageGameTests::slots);
     }

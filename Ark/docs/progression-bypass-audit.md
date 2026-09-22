@@ -37,6 +37,10 @@ those removals, including village trade and loot rewrites.
 | Dried rations | Only the drying rack converts raw food (P04) | Closed | Raw ingredients still come from hunting, fishing and farms |
 | Charcoal and iron | The kiln and forge save fuel but the vanilla furnace still reaches the same results (P04) | Intended | Efficiency station, not a gate; structure loot and trades are unchanged |
 | Storage crate | Fixed 27 slots, no upgrades, no automation, mass-aware when carried (P04) | Intended | It replaces chest sprawl, not storage progression |
+| First Guardian activation | One Allosaur Heart per ritual; retreat and retry are free (P05) | Intended | A failed attempt costs supplies, never progression; the heart is consumed only after the boss exists |
+| Guardian Giganotosaurus | Untamable, sedation-immune, never wildlife; no loot-table entries (P05) | Closed | Trophy and schematic are placed once per victory by the encounter service |
+| Workshop Schematic | The tribe flag is authoritative and the physical item is a memento (P05) | Closed | `/arkguardian grant` re-issues a lost schematic; losing it cannot block the campaign |
+| Guardian encounter location | Requires an Ancient Remnants structure start with its monolith nearby (P05) | Closed | No arbitrary block qualifies; the structure is verified through the structure manager |
 
 ## Deferred work
 
@@ -44,6 +48,9 @@ those removals, including village trade and loot rewrites.
   structure loot. Any change must keep the two-player campaign free of forced grinding.
 - **P04 (industry and economy):** audit automated production against the remaining gather loops,
   and revisit fishing junk, villager restocking and loot-table densities with measured play data.
+- **P05 (First Guardian):** run the full manual integration pass with Ancient Remnants 26.1-1.3.1 and
+  fragmentum 26.1-4.0.5 in a real instance, because the headless suite cannot generate the
+  third-party structure or its monolith entity.
 - A saddle craft remains optional: the quest reward still guarantees one, and P03 offers harnesses
   rather than a second saddle source.
 - Sophisticated Storage stays an optional, deferred integration: the fixed P04 crate covers the

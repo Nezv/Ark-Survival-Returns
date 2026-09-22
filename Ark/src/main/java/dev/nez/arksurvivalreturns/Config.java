@@ -1,6 +1,7 @@
 package dev.nez.arksurvivalreturns;
 
 import java.util.EnumMap;
+import java.util.List;
 import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
@@ -103,6 +104,14 @@ public final class Config {
             DOWNED_LAVA_LETHAL, DOWNED_VOID_LETHAL;
     public static final ModConfigSpec.IntValue DOWNED_WINDOW;
     public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL;
+    // ------------------------------------------------------------------------- guardian
+    public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED, GUARDIAN_ANNOUNCE;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> GUARDIAN_STRUCTURES;
+    public static final ModConfigSpec.IntValue GUARDIAN_ACTIVATION_RADIUS, GUARDIAN_ARENA_RADIUS, GUARDIAN_JOIN_RADIUS,
+            GUARDIAN_GRACE_TICKS, GUARDIAN_RESET_DELAY_TICKS, GUARDIAN_MAX_TAME_CONTRIBUTION, GUARDIAN_TAME_RADIUS,
+            GUARDIAN_BAR_RANGE, GUARDIAN_SPAWN_RADIUS;
+    public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, GUARDIAN_HEALTH_PER_PLAYER,
+            GUARDIAN_HEALTH_PER_TAME, GUARDIAN_DAMAGE_MULTIPLIER, GUARDIAN_ARMOR, GUARDIAN_TAME_DAMAGE_FACTOR;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
@@ -437,6 +446,49 @@ public final class Config {
         HEALTH_BAR = b.define("targetHealthBar", true);
         HEALTH_BAR_RANGE = b.defineInRange("targetRange", 32, 8, 64);
         MASS_GAUGE = b.comment("Show the carried-load gauge in the top-left of the HUD.").define("massGauge", true);
+        b.pop().push("guardian");
+        GUARDIAN_ENABLED = b.comment("Enable the First Guardian ritual encounter at Ancient Remnants monoliths. "
+                        + "When the mod is absent, the journal explains that the encounter is unavailable.")
+                .define("enabled", true);
+        GUARDIAN_ANNOUNCE = b.comment("Tell the tribe when the Guardian awakens, resets or falls.")
+                .define("announce", true);
+        GUARDIAN_STRUCTURES = b.comment("Ancient Remnants structures whose floating monolith accepts the Allosaur Heart.")
+                .defineList("structures", List.of("ancient_remnants:sentinel_monolith"),
+                        () -> "ancient_remnants:sentinel_monolith",
+                        value -> value instanceof String text && net.minecraft.resources.Identifier.tryParse(text) != null);
+        GUARDIAN_ACTIVATION_RADIUS = b.comment("The heart must be offered on a block this close to the structure's monolith.")
+                .defineInRange("activationRadius", 16, 4, 48);
+        GUARDIAN_ARENA_RADIUS = b.comment("The Guardian returns to its lair when farther than this from the ritual anchor.")
+                .defineInRange("arenaRadius", 40, 16, 96);
+        GUARDIAN_JOIN_RADIUS = b.comment("Tribe members inside this radius become encounter participants.")
+                .defineInRange("joinRadius", 48, 16, 128);
+        GUARDIAN_GRACE_TICKS = b.comment("Ticks without a living participant in the arena before the attempt resets "
+                        + "(600 = thirty seconds).")
+                .defineInRange("graceTicks", 600, 100, 12000);
+        GUARDIAN_RESET_DELAY_TICKS = b.comment("Ticks between the retreat reset and the free retry window (200 = ten seconds).")
+                .defineInRange("resetDelayTicks", 200, 20, 6000);
+        GUARDIAN_MAX_TAME_CONTRIBUTION = b.comment("Registered combat tames that add health to the Guardian; further "
+                        + "tames are still registered but add no health.")
+                .defineInRange("maxTameContribution", 4, 0, 8);
+        GUARDIAN_TAME_RADIUS = b.comment("Radius around the ritual anchor where tribe tames are registered at activation.")
+                .defineInRange("tameRegistrationRadius", 24, 4, 64);
+        GUARDIAN_BAR_RANGE = b.comment("Players within this radius of the Guardian see the encounter bar.")
+                .defineInRange("barRange", 64, 16, 128);
+        GUARDIAN_SPAWN_RADIUS = b.comment("Horizontal radius searched for clear, loaded ground when the Guardian rises.")
+                .defineInRange("spawnRadius", 16, 4, 48);
+        GUARDIAN_BASE_HEALTH = b.comment("Guardian health with one participant.")
+                .defineInRange("baseHealth", 400.0, 20.0, 5000.0);
+        GUARDIAN_HEALTH_PER_PLAYER = b.comment("Additional health for each participant after the first.")
+                .defineInRange("healthPerExtraPlayer", 200.0, 0.0, 5000.0);
+        GUARDIAN_HEALTH_PER_TAME = b.comment("Additional health for each registered combat tame, up to the contribution cap.")
+                .defineInRange("healthPerTame", 60.0, 0.0, 2000.0);
+        GUARDIAN_DAMAGE_MULTIPLIER = b.comment("Guardian attack damage as a multiple of the ordinary Giganotosaurus.")
+                .defineInRange("damageMultiplier", 1.0, 0.1, 5.0);
+        GUARDIAN_ARMOR = b.comment("Guardian armor points.")
+                .defineInRange("armor", 8.0, 0.0, 30.0);
+        GUARDIAN_TAME_DAMAGE_FACTOR = b.comment("Damage dealt by tames that were not registered for the encounter "
+                        + "(0 disables their damage entirely).")
+                .defineInRange("unregisteredTameDamageFactor", 0.1, 0.0, 1.0);
         b.pop();
         SPEC = b.build();
     }

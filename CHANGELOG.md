@@ -1,10 +1,40 @@
 # Changelog
 
+
+## Cozy camp models - 2026-09-20
+
+- Replaced the bedroll, trough, drying rack and pot placeholders with 26 original native models
+  and 25 pixel materials. The bedroll has a rolled inventory model; placed objects turn with
+  the player. [Offline model preview](Ark/docs/camp-assets.png).
+- Added ten wood troughs, inventory-driven feed, matching collision and recipes requiring
+  four matching planks, resin and fiber. The old trough id remains oak. One spruce log plus one
+  flint produces two resin clumps without the removed creaking mechanic.
+- Racks stack into aligned, independently working tiers. Meat, fish and berry pouches show
+  raw contents; finished rations appear on the shelf. Displays rebuild from saved inventory.
+- Pots use a trivet over campfires and require a lit fire to cook. Extinguishing pauses progress;
+  relighting resumes it. English and Portuguese heat labels and journal instructions explain use.
+- Validation: runData, build (52 JUnit tests), all 53 headless GameTests and verify_assets.py pass.
+  Asset checks cover 79 item definitions and all 176 camp multipart combinations. The first run
+  exposed a test dinosaur obstructing rack placement; the fixture now clears the animals first.
+  A separate combat-timing failure passed on the final full run. Interactive visual testing
+  remains in [Verify.md](Verify.md); Minecraft was not launched interactively.
+
 Player-facing changes to Ark Survival Returns. Dates use America/Sao_Paulo. Patch names describe development milestones, not published releases. Maintenance rules are in [Standard.md](Standard.md). In-game checks that are still outstanding live in [Verify.md](Verify.md).
 
 ## Unreleased
 
 - **Asset verification repaired.** `tools/verify_assets.py` now validates the runtime texture contract (the five `<species>_<variant>.png` files against the geometry's declared texture size, plus the 64x8 offline preview palette), resolves read-only provenance through the same `source_files` helper as the importer instead of guessing filenames, and collects every failure before exiting instead of stopping at the first one. It also checks that biome modifiers only add Ark species, never vanilla spawns. All 41 creatures, 472 clips, 60 item definitions, nests, camp blocks, both language files, spawn tags and unchanged originals verify.
+- **Removed redundant homestead blocks.** Removed the Charcoal Kiln and Primitive Forge because Minecraft's furnace already covers their processing role. Removed the Storage Crate in preparation for Tom's Storage integration; ordinary chests and barrels remain compatible with tame Load/Unload in the meantime. Their recipes, assets, configuration, journal quests and GameTests were removed as well.
+- **Compatibility and known limitations.** Existing Charcoal Kiln, Primitive Forge and Storage Crate blocks/items become missing registry entries after updating. Empty or move any placed Storage Crates before opening an existing world on this version, because their stored contents cannot be recovered after the block entity is removed. Tom's Storage is planned but is not installed by this change.
+
+## First Guardian — 2026-09-21
+
+- **The Allosaur Heart (P05).** A natural wild Allosaurus killed by a player or that player's tame now drops exactly one **Allosaur Heart**. Looting cannot multiply it, and tamed, spawn-egg or command-spawned Allosaurs never drop one. The heart is the ritual key, is visible in JEI with English and Portuguese names and original art, is consumed only after the Guardian actually spawns, and a failed summon retains it.
+- **Ancient Remnants ritual binding (P05).** The encounter anchors on a loaded block inside a configured structure start (`ancient_remnants:sentinel_monolith` by default) that also stands within `guardian.activationRadius` of the structure's floating monolith, verified through the structure manager. Ancient Remnants is untouched and optional: without it Ark still loads, and the journal explains the mod requirement. The manual test instance needs fragmentum 26.1-4.0.5 alongside Ancient Remnants 26.1-1.3.1.
+- **Encounter lifecycle (P05).** One persistent record per ritual anchor runs `LOCKED -> READY -> ACTIVE -> RESETTING -> READY`, and a victory ends in `DEFEATED`. A failed attempt costs supplies but never another heart; a retreat resets the boss after a grace period; a deliberate rematch consumes a new heart. Restarts and chunk unloads cannot duplicate the boss, consume a second heart or pay rewards twice.
+- **Guardian Giganotosaurus (P05).** A dedicated untamable, sedation-immune boss entity using the Giga model and authored hit frames. It never joins wildlife accounting, never despawns, targets only encounter participants and their registered tames inside a configurable arena, returns to its lair when leashed out and drops no farmable loot. At activation it registers up to four nearby tribe tames and snapshots health from player and tame counts; tames that were not registered deal a heavily reduced damage share. A purple boss bar follows the fight within the encounter range, returns after reconnecting and disappears on reset or death. New `[guardian]` settings cover the structure list, radii, timers, health, damage and armor.
+- **Victory and journal (P05).** Victory grants the tribe the authoritative **Workshop Schematic** flag, drops the physical schematic and a Guardian Trophy, completes the shared **First Guardian** FTB chapter (three quests, both languages) and awards each participant the hidden `journal/first_guardian` discovery. `/arkguardian status|reset|clear|grant` diagnoses and recovers the encounter; losing the schematic item cannot block the campaign.
+- **Validation.** Data generation, the full build and all 58 headless GameTests pass, including five new guardian tests. The guardian suite runs in its own `arksurvivalreturns:guardian` test environment so its oversized boss no longer shares the timing-sensitive batch. The full in-client checklist is in [Verify.md](Verify.md).
 
 ## Homestead Economy — 2026-09-20
 

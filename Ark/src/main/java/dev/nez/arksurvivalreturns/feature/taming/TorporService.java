@@ -55,6 +55,7 @@ public final class TorporService {
     /** True when this entity is a legal sedation target. */
     public static boolean eligible(@Nullable LivingEntity entity) {
         if (entity == null || !entity.isAlive() || entity instanceof ArmorStand) return false;
+        if (entity instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity) return false;
         if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return true;
     }

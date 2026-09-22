@@ -44,7 +44,9 @@ public final class TargetHealthBar {
         double nearest = start.distanceToSqr(end);
         CreatureEntity selected = null;
         for (var creature : player.level().getEntitiesOfClass(CreatureEntity.class,
-                player.getBoundingBox().expandTowards(end.subtract(start)).inflate(1), c -> c.isAlive() && !c.isInvisible())) {
+                player.getBoundingBox().expandTowards(end.subtract(start)).inflate(1),
+                c -> c.isAlive() && !c.isInvisible()
+                        && !(c instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity))) {
             var box = creature.getBoundingBox().inflate(0.2);
             var point = box.contains(start) ? java.util.Optional.of(start) : box.clip(start, end);
             if (point.isPresent() && start.distanceToSqr(point.get()) <= nearest) {

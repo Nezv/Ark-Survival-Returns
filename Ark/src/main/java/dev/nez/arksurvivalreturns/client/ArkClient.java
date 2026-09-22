@@ -18,6 +18,8 @@ public final class ArkClient {
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         ModContent.CREATURES.forEach((species, type) -> event.registerEntityRenderer(type.get(), context ->
                 new CreatureRenderer(context, species)));
+        event.registerEntityRenderer(ModContent.GUARDIAN_GIGANOTOSAURUS.get(), context ->
+                new CreatureRenderer(context, dev.nez.arksurvivalreturns.feature.creature.Species.GIGANOTOSAURUS));
     }
     private ArkClient() {}
 }

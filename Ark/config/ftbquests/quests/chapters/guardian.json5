@@ -1,0 +1,88 @@
+{
+  "id": "0000000000000500",
+  "filename": "guardian",
+  "group": "",
+  "order_index": 4,
+  "icon": {
+    "id": "arksurvivalreturns:allosaur_heart"
+  },
+  "quests": [
+    {
+      "id": "0000000000000501",
+      "x": 0.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "00000000000005A1",
+          "type": "item",
+          "item": {
+            "id": "arksurvivalreturns:allosaur_heart"
+          }
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000005B1",
+          "type": "item",
+          "item": {
+            "id": "minecraft:cooked_beef",
+            "count": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000502",
+      "x": 2.0,
+      "y": 0.0,
+      "dependencies": [
+        "0000000000000501"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000005A2",
+          "type": "structure",
+          "structure": "ancient_remnants:sentinel_monolith"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000005B2",
+          "type": "item",
+          "item": {
+            "id": "minecraft:iron_ingot",
+            "count": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "0000000000000503",
+      "x": 4.0,
+      "y": 0.0,
+      "dependencies": [
+        "0000000000000502"
+      ],
+      "tasks": [
+        {
+          "id": "00000000000005A3",
+          "type": "advancement",
+          "advancement": "arksurvivalreturns:journal/first_guardian",
+          "criterion": "discovered"
+        }
+      ],
+      "rewards": [
+        {
+          "id": "00000000000005B3",
+          "type": "item",
+          "item": {
+            "id": "minecraft:golden_apple",
+            "count": 2
+          }
+        }
+      ]
+    }
+  ],
+  "quest_links": [],
+  "images": []
+}

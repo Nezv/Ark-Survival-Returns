@@ -1,0 +1,34 @@
+{
+  "chapter.0000000000000500.title": "O Primeiro Guardi\u00e3o",
+  "chapter.0000000000000500.chapter_subtitle": [
+    "Algo mais antigo que as tribos protege os mon\u00f3litos."
+  ],
+
+  "quest.0000000000000501.title": "O Cora\u00e7\u00e3o de Alossauro",
+  "quest.0000000000000501.quest_subtitle": "A chave est\u00e1 dentro de um predador.",
+  "quest.0000000000000501.quest_desc": [
+    "Cace um Alossauro selvagem e d\u00ea o golpe fatal voc\u00ea mesmo ou com um animal domesticado da tribo.",
+    "Um cora\u00e7\u00e3o \u00e9 garantido. Pilhagem nunca adiciona mais, e Alossauros domesticados ou gerados nunca soltam um.",
+    "O cora\u00e7\u00e3o \u00e9 a chave do ritual: s\u00f3 \u00e9 consumido quando o Guardi\u00e3o realmente responde."
+  ],
+  "task.00000000000005A1.title": "Obter um Cora\u00e7\u00e3o de Alossauro",
+
+  "quest.0000000000000502.title": "O Mon\u00f3lito Adormecido",
+  "quest.0000000000000502.quest_subtitle": "Encontre o santu\u00e1rio do guardi\u00e3o.",
+  "quest.0000000000000502.quest_desc": [
+    "Este passo exige o mod Ancient Remnants. Suas estruturas de Mon\u00f3lito Sentinela t\u00eam um mon\u00f3lito flutuante sobre um altar de pedra.",
+    "Leve o Cora\u00e7\u00e3o de Alossauro e use-o em um bloco sob o mon\u00f3lito.",
+    "Se a invoca\u00e7\u00e3o falhar, voc\u00ea mant\u00e9m o cora\u00e7\u00e3o: leia a mensagem e tente de novo."
+  ],
+  "task.00000000000005A2.title": "Visitar um Mon\u00f3lito Sentinela",
+
+  "quest.0000000000000503.title": "Primeiro Guardi\u00e3o",
+  "quest.0000000000000503.quest_subtitle": "Prove que a tribo sabe lutar junta.",
+  "quest.0000000000000503.quest_desc": [
+    "Enfrente o Giganotossauro Guardi\u00e3o com membros da tribo e seus animais de combate registrados.",
+    "At\u00e9 quatro animais pr\u00f3ximos da tribo s\u00e3o registrados quando o ritual come\u00e7a e lutam com for\u00e7a total.",
+    "Recuar \u00e9 permitido: quando todos saem, o Guardi\u00e3o reinicia e a tribo pode retomar sem outro cora\u00e7\u00e3o.",
+    "A vit\u00f3ria concede \u00e0 tribo o Esquema da Oficina e completa este cap\u00edtulo."
+  ],
+  "task.00000000000005A3.title": "Derrotar o Giganotossauro Guardi\u00e3o"
+}

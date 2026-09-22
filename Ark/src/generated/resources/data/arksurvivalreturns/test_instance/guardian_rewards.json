@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:guardian",
+  "function": "arksurvivalreturns:guardian_rewards",
+  "max_ticks": 300,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

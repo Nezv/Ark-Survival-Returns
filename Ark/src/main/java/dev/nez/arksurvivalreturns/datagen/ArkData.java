@@ -227,6 +227,7 @@ public final class ArkData implements DataProvider {
         workMessages(en, pt);
         farmMessages(en, pt);
         kitchenMessages(en, pt);
+        guardianMessages(en, pt);
         forgeMessages(en, pt);
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
@@ -251,6 +252,9 @@ public final class ArkData implements DataProvider {
             en.put("item." + NS + "." + bird.id + "_egg", bird.displayName + " Egg");
             pt.put("item." + NS + "." + bird.id + "_egg", "Ovo de " + bird.displayName);
         }
+        model("allosaur_heart");
+        model("workshop_schematic");
+        model("guardian_trophy");
         put("assets/" + NS + "/lang/en_us", en); put("assets/" + NS + "/lang/pt_br", pt);
     }
     private void model(String id) {
@@ -294,6 +298,11 @@ public final class ArkData implements DataProvider {
                  "requirements":[["discovered"]]}
                 """);
         json("data/" + NS + "/advancement/journal/rank5_tame", """
+                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
+                 "requirements":[["discovered"]]}
+                """);
+        // Awarded by the guardian service when the tribe wins the First Guardian encounter.
+        json("data/" + NS + "/advancement/journal/first_guardian", """
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);
@@ -953,6 +962,75 @@ public final class ArkData implements DataProvider {
      * Vanilla-style biome spawn lists. The compiled weight and group size are baked here; the
      * runtime placement predicate still applies the danger/level gate.
      */
+    /** First Guardian encounter text: the item names, the bar and every activation outcome. */
+    private void guardianMessages(Map<String, String> en, Map<String, String> pt) {
+        en.put("item." + NS + ".allosaur_heart", "Allosaur Heart");
+        pt.put("item." + NS + ".allosaur_heart", "Cora\u00e7\u00e3o de Alossauro");
+        en.put("item." + NS + ".workshop_schematic", "Workshop Schematic");
+        pt.put("item." + NS + ".workshop_schematic", "Esquema da Oficina");
+        en.put("item." + NS + ".guardian_trophy", "Guardian Trophy");
+        pt.put("item." + NS + ".guardian_trophy", "Trofeu do Guardi\u00e3o");
+        en.put("tooltip." + NS + ".allosaur_heart",
+                "Encounter key. Offer it at a block beneath an Ancient Remnants monolith to summon the First Guardian.");
+        pt.put("tooltip." + NS + ".allosaur_heart",
+                "Chave do ritual. Ofere\u00e7a-a em um bloco sob um mon\u00f3lito de Ancient Remnants para invocar o Primeiro Guardi\u00e3o.");
+        en.put("tooltip." + NS + ".workshop_schematic",
+                "Proof of the First Guardian's defeat. The tribe's workshop research is already recorded; this is a memento.");
+        pt.put("tooltip." + NS + ".workshop_schematic",
+                "Prova da derrota do Primeiro Guardi\u00e3o. A pesquisa da tribo j\u00e1 est\u00e1 registrada; isto \u00e9 uma lembran\u00e7a.");
+        en.put("tooltip." + NS + ".guardian_trophy", "Trophy taken from the Guardian Giganotosaurus.");
+        pt.put("tooltip." + NS + ".guardian_trophy", "Trofeu tomado do Giganotossauro Guardi\u00e3o.");
+        en.put("guardian." + NS + ".name", "Guardian Giganotosaurus");
+        pt.put("guardian." + NS + ".name", "Giganotossauro Guardi\u00e3o");
+        en.put("guardian." + NS + ".bar", "%s | %s/%s");
+        pt.put("guardian." + NS + ".bar", "%s | %s/%s");
+        String[] keys = {"requires_mod", "no_monolith", "active", "resetting", "downed", "chunks", "no_room",
+                "failed", "awakened", "reawakened", "retreated", "victory", "status_line", "status_health",
+                "status_none", "command.reset", "command.clear", "command.grant"};
+        String[] english = {
+                "[ARK] The First Guardian sleeps inside Ancient Remnants monoliths. Install the mod to continue this hunt.",
+                "[ARK] Offer the heart at a block directly beneath the monolith.",
+                "[ARK] A Guardian already owns this monolith.",
+                "[ARK] The monolith is still calming. The rite resumes shortly.",
+                "[ARK] You cannot perform the rite while downed.",
+                "[ARK] The arena is not fully loaded yet.",
+                "[ARK] There is no clear ground for the Guardian to rise here.",
+                "[ARK] The rite failed; your heart is untouched.",
+                "[ARK] The Allosaur Heart burns away. The Guardian awakens!",
+                "[ARK] The rite flares again. The Guardian returns!",
+                "[ARK] The Guardian loses interest and returns to its slumber. The rite remains unlocked.",
+                "[ARK] The First Guardian falls. The tribe earns the Workshop Schematic.",
+                "[ARK] Guardian %s at %s, %s, %s",
+                "| %s/%s HP",
+                "[ARK] No guardian encounter is recorded for your tribe.",
+                "[ARK] The nearest encounter was reset to a free retry.",
+                "[ARK] The nearest encounter record was removed.",
+                "[ARK] Granted the Workshop Schematic to %s."};
+        String[] portuguese = {
+                "[ARK] O Primeiro Guardi\u00e3o dorme dentro dos mon\u00f3litos de Ancient Remnants. Instale o mod para continuar esta ca\u00e7ada.",
+                "[ARK] Ofere\u00e7a o cora\u00e7\u00e3o em um bloco logo abaixo do mon\u00f3lito.",
+                "[ARK] Um Guardi\u00e3o j\u00e1 domina este mon\u00f3lito.",
+                "[ARK] O mon\u00f3lito ainda est\u00e1 se acalmando. O ritual recome\u00e7a em instantes.",
+                "[ARK] Voc\u00ea n\u00e3o pode realizar o ritual ca\u00eddo.",
+                "[ARK] A arena ainda n\u00e3o est\u00e1 totalmente carregada.",
+                "[ARK] N\u00e3o h\u00e1 terreno livre para o Guardi\u00e3o surgir aqui.",
+                "[ARK] O ritual falhou; seu cora\u00e7\u00e3o est\u00e1 intacto.",
+                "[ARK] O Cora\u00e7\u00e3o de Alossauro se consome. O Guardi\u00e3o desperta!",
+                "[ARK] O ritual brilha de novo. O Guardi\u00e3o retorna!",
+                "[ARK] O Guardi\u00e3o perde o interesse e volta a dormir. O ritual continua desbloqueado.",
+                "[ARK] O Primeiro Guardi\u00e3o cai. A tribo conquista o Esquema da Oficina.",
+                "[ARK] Guardi\u00e3o %s em %s, %s, %s",
+                "| %s/%s de vida",
+                "[ARK] Nenhum encontro de guardi\u00e3o est\u00e1 registrado para sua tribo.",
+                "[ARK] O encontro mais pr\u00f3ximo foi reiniciado para uma nova tentativa gratuita.",
+                "[ARK] O registro do encontro mais pr\u00f3ximo foi removido.",
+                "[ARK] Esquema da Oficina concedido a %s."};
+        for (int i = 0; i < keys.length; i++) {
+            en.put("guardian." + NS + "." + keys[i], english[i]);
+            pt.put("guardian." + NS + "." + keys[i], portuguese[i]);
+        }
+    }
+
     private void spawns() {
         for (var species : Species.values()) {
             // Oversized bodies break vanilla's single-chunk spawn clamp; the population budget spawns them.
@@ -975,6 +1053,9 @@ public final class ArkData implements DataProvider {
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);
+        // Guardian tests own a small batch: the encounter spawns an oversized boss and must not
+        // contend with the timing-sensitive combat suite in the shared empty batch.
+        put("data/" + NS + "/test_environment/guardian", spawningRules);
         put("data/" + NS + "/test_instance/population", Map.of("type", "minecraft:function", "function", NS + ":population",
                 "environment", NS + ":population", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
         for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis", "land_ecology", "land_movement"))
@@ -1013,5 +1094,10 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_instance/spawn_apex", Map.of("type", "minecraft:function",
                 "function", NS + ":spawn_apex", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        for (String name : List.of("guardian_heart", "guardian_policy", "guardian_registration",
+                "guardian_persistence", "guardian_rewards"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
+                    "function", NS + ":" + name, "environment", NS + ":guardian",
+                    "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
     }
 }

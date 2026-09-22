@@ -8,6 +8,33 @@ the matching changelog validation.
 
 Entries are grouped by patch, newest first. Each says what to do and what to look for.
 
+## First Guardian (P05) — added 2026-09-21
+
+- **Install the integration mods.** Load Ancient Remnants 26.1-1.3.1 plus fragmentum 26.1-4.0.5 (or
+  newer) in the instance before testing; the journal's second quest explains the requirement.
+- **Heart drop.** Kill a wild Allosaurus with a spear and with a tribe tame: each should drop exactly
+  one heart. Kill a tamed and a command-spawned one and confirm neither drops a heart.
+- **Structure binding.** Find a Sentinel Monolith, stand beneath the floating monolith and use the
+  heart on an altar block: one Guardian should spawn, the heart should be consumed and the purple bar
+  should appear. Use a heart on a block outside the structure and confirm it is retained with no
+  reaction.
+- **Duo and tame scaling.** Start the fight with two players and two to four registered tames;
+  confirm the boss engages, follows targets inside the arena and drops aggro after a retreat. Check
+  the bar health against the boss and confirm an unrelated player outside the arena sees no bar.
+- **Retreat and retry.** Leave the arena, wait for the reset grace, then activate the anchor again
+  with an empty hand: the Guardian should return without another heart. Kill one of two players while
+  the other keeps fighting and confirm no reset happens.
+- **Restart safety.** Restart the server during an ACTIVE attempt and reconnect: exactly one Guardian
+  must remain and the bar must return.
+- **Victory.** Defeat the Guardian and confirm the schematic and trophy drops, the tribe flag, the
+  journal completion and the participant advancement, then use another heart to confirm a rematch
+  does not pay twice.
+- **World compatibility.** Confirm ordinary wild Gigas, unrelated Ancient Remnants structures and the
+  blessing behavior of untouched monoliths are unchanged.
+
+Automated so far: all 58 headless GameTests, including the five guardian tests in the
+`arksurvivalreturns:guardian` environment.
+
 ## Homestead Economy (P04) — added 2026-09-20
 
 - **Berry bushes.** Use each of the four berries on grass/dirt/farmland: the right bush appears and

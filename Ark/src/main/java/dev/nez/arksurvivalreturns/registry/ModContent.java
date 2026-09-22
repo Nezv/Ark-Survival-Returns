@@ -42,6 +42,32 @@ public final class ModContent {
             "tranquilizer_arrow", () -> EntityType.Builder.<SedativeArrow>of(SedativeArrow::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("tranquilizer_arrow"))));
+    /** The encounter boss: an ordinary Giga body with the guardian contract, outside every spawn list. */
+    public static final DeferredHolder<EntityType<?>, EntityType<dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity>>
+            GUARDIAN_GIGANOTOSAURUS = ENTITIES.register("guardian_giganotosaurus", () -> EntityType.Builder
+                    .<dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity>of(
+                            dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity::new,
+                            MobCategory.MONSTER)
+                    .sized(10.5f, 15.0f).eyeHeight(12.75f).clientTrackingRange(12)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("guardian_giganotosaurus"))));
+    /** Allosaur Heart: the ritual key, one guaranteed drop from a player kill on a wild Allosaurus. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> ALLOSAUR_HEART =
+            ITEMS.registerItem("allosaur_heart",
+                    p -> new dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem(
+                            p, "tooltip.arksurvivalreturns.allosaur_heart"),
+                    p -> p.stacksTo(16));
+    /** Shared workshop progression: the tribe flag is authoritative, the item is the visible memento. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> WORKSHOP_SCHEMATIC =
+            ITEMS.registerItem("workshop_schematic",
+                    p -> new dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem(
+                            p, "tooltip.arksurvivalreturns.workshop_schematic"),
+                    p -> p.stacksTo(1));
+    /** Victory trophy dropped by the Guardian. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> GUARDIAN_TROPHY =
+            ITEMS.registerItem("guardian_trophy",
+                    p -> new dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem(
+                            p, "tooltip.arksurvivalreturns.guardian_trophy"),
+                    p -> p.stacksTo(16));
     public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
     /** Concentrated sedative: crafted from narcoberries and fiber, a stronger dose than the berry itself. */
@@ -252,6 +278,9 @@ public final class ModContent {
                     output.accept(COOKING_POT_ITEM.get());
                     output.accept(HEARTY_STEW.get());
                     output.accept(TRAIL_MIX.get());
+                    output.accept(ALLOSAUR_HEART.get());
+                    output.accept(WORKSHOP_SCHEMATIC.get());
+                    output.accept(GUARDIAN_TROPHY.get());
                     output.accept(CHARCOAL_KILN_ITEM.get());
                     output.accept(PRIMITIVE_FORGE_ITEM.get());
                     output.accept(STORAGE_CRATE_ITEM.get());
@@ -273,6 +302,8 @@ public final class ModContent {
     }
     public static void attributes(EntityAttributeCreationEvent event) {
         CREATURES.forEach((species, type) -> event.put(type.get(), CreatureEntity.attributes(species).build()));
+        event.put(GUARDIAN_GIGANOTOSAURUS.get(),
+                dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity.attributes().build());
     }
     private ModContent() {}
 }
