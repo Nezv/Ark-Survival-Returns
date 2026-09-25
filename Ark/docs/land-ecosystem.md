@@ -1,6 +1,6 @@
 # Land Ecosystem & Behavior Patch
 
-Implemented 2026-09-14. The [approved proposal](land-ecosystem-proposal.md) describes the original nine-species baseline; the current runtime has nineteen species, seventeen of them land creatures.
+Implemented 2026-09-14. The original proposal (in git history) described the original nine-species baseline; the current runtime has nineteen species, seventeen of them land creatures.
 
 ## Families and water-associated homes
 

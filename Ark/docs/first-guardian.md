@@ -173,4 +173,4 @@ death spot cannot hold a marker. Leaving to re-equip and reclaim gear is a legit
 `guardian_persistence` round-trips the encounter codec and the world store; `guardian_rewards` proves
 the defeat-before-payout order and exactly-once rewards. The guardian suite runs in its own
 `arksurvivalreturns:guardian` test environment so its oversized boss cannot disturb the shared
-timing-sensitive batches. The full in-client checklist is in [Verify.md](../Verify.md).
+timing-sensitive batches. Visual checks are tracked in Dashboard.csv.

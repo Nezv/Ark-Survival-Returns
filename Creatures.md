@@ -2,7 +2,7 @@
 
 Distribution of the 41 creature projects under [`Creatures/`](Creatures/), grouped by type and spawn group configuration. **All 41 are registered by the mod** and appear naturally in the Overworld; the 22 collection projects are no longer source-only. See [collection ecosystem](Ark/docs/collection-ecosystem.md) for the realms and habitat rules.
 
-Spawn values come from [`Species.java`](Ark/src/main/java/dev/nez/arksurvivalreturns/feature/creature/Species.java); portfolio status from the [collection overview](Creatures/Collection/README.md) and the [mod README](README.md).
+Spawn values come from [`Species.java`](Ark/src/main/java/dev/nez/arksurvivalreturns/feature/creature/Species.java); source-project names and conversion measurements are in the [creature source catalog](Creatures/README.md), with habitat details in the [collection overview](Creatures/Collection/README.md) and the [mod README](README.md).
 
 - **Herbivore and Carnivore are land-exclusive.** Flying, Aquatic, Cold and Swamp are habitat types; a cold or swamp creature keeps its own routine instead of the generic land one.
 - **Group config** is `size / weight`: individuals per group (`min–max`, `1` = solitary) / base selection weight.

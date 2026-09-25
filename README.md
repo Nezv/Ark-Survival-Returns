@@ -11,53 +11,7 @@ The optional Xaero difficulty map, shader loader, shader pack and pinned FTB/JEI
 
 The editable projects in `Creatures/` retain the installed ARK mesh skeletons and original animation clips bound to those exact bone names. `Tyranosaur` retains its original `rex_ravager` resource filenames and geometry identifier. All forty-one creatures are integrated into the playable mod; see [creature expansion](Ark/docs/creature-expansion.md) and [collection ecosystem](Ark/docs/collection-ecosystem.md).
 
-The [ice, flying, aquatic and swamp collection](Creatures/Collection/README.md) adds twenty-two detailed source projects. These models are now registered runtime species: six water species with saved home pools, four semi-aquatic shoreline species, six cold species with snow-supported hydration, and five flying species with nest colonies. The table below lists all forty-one runtime creatures.
-
-| Folder | ARK asset | Common name |
-| --- | --- | --- |
-| Titanosaur | Titanosaur | Titanosaur |
-| Giganotosaur | Giganotosaurus | Giganotosaurus |
-| Therezinosaur | Therizinosaurus | Therizinosaurus |
-| Brontosaur | Sauropod | Brontosaurus |
-| Triceratops | Trike | Triceratops |
-| Velociraptor | Raptor | ARK Raptor |
-| Argentavis | Argentavis | Argentavis |
-| Piterodon | Ptero | Pteranodon |
-| Tyranosaur | Rex | Tyrannosaurus rex |
-| Spinosaurus | Spino | Spinosaurus |
-| Parasaur | Para | Parasaur |
-| Ceratosaurus | CeratosaurusAA_Mesh (ARK Additions) | Ceratosaurus |
-| Dilophosaur | Dilo | Dilophosaurus |
-| Acrochantosaur | Acro_Mesh (ARK Additions) | Acrocanthosaurus |
-| Allosaurus | Allosaurus | Allosaurus |
-| Ankylosaurus | Ankylo | Ankylosaurus |
-| Carnotaurus | Carno | Carnotaurus |
-| Pegomastax | Pegomastax | Pegomastax |
-| Lystrosaurus | Lystrosaurus | Lystrosaurus |
-| Cnidaria | Cnidaria | Cnidaria |
-| Plesiosaur | Plesiosaur | Plesiosaur |
-| Megalodon | Megalodon | Megalodon |
-| Liopleurodon | Liopleurodon | Liopleurodon |
-| Mosasaurus | Mosasaurus | Mosasaurus |
-| Tusoteuthis | Tusoteuthis | Tusoteuthis |
-| Kaprosuchus | Kaprosuchus | Kaprosuchus |
-| Sarco | Sarco | Sarco |
-| Deinosuchus | Deinosuchus | Deinosuchus |
-| Titanoboa | Titanoboa | Titanoboa |
-| Megalocerus | Stag | Megalocerus |
-| Unicorn | Equus | Unicorn |
-| Mammoth | Mammoth | Mammoth |
-| Direwolf | Direwolf | Direwolf |
-| Sabertooth | Saber | Sabertooth |
-| Megapithecus | Gorilla | Megapithecus |
-| Paraceratherium | Paraceratherium | Paraceratherium |
-| Terrorbird | TerrorBird | Terrorbird |
-| Ravager | CaveWolf | Ravager |
-| Archaeopteryx | Archaeopteryx | Archaeopteryx |
-| Quetzal | Quetzalcoatlus | Quetzal |
-| Dragon | Dragon | Dragon |
-
-All folders listed above are inside `Creatures/`. Folder spellings follow the request. ARK's Raptor is used for the requested Velociraptor; `Acrochantosaur` maps to the mod entity `acrocanthosaurus`.
+The [ice, flying, aquatic and swamp collection](Creatures/Collection/README.md) adds twenty-two detailed source projects. These models are now registered runtime species: six water species with saved home pools, four semi-aquatic shoreline species, six cold species with snow-supported hydration, and five flying species with nest colonies. The centralized [creature source catalog](Creatures/README.md) lists all forty-one projects, their ARK assets, resource names and measured conversion results.
 
 ## Open and edit
 
@@ -65,7 +19,8 @@ Open a folder's `*_GeckoLib.bbmodel` in Blockbench with the GeckoLib plugin enab
 
 Edit cubes within their existing bone groups. Keep bone names, pivots, and parent links to retain the animation binding. Extra decorative cubes can be placed under the appropriate existing bone. Adding a new animated bone requires creating animation tracks for it.
 
-Every folder contains:
+Every species follows the directory contract documented in the centralized
+[creature source catalog](Creatures/README.md), including:
 
 - `geo/*.geo.json`: the completed cuboid geometry and original bone hierarchy.
 - `animations/*.animation.json`: converted original clips, keyed by original bone names.
@@ -77,7 +32,6 @@ Every folder contains:
 - `source/logs/`: game input hashes and extraction logs.
 - `previews/`: bind-pose renders and an animated GIF rendered from the actual exported JSON.
 - `build_report.json` and `validation.json`: source hashes, clip inventory, conversion statistics, and validation results.
-- `rebuild.py`: convenience entry point into the shared scripts.
 
 ## Rebuild
 

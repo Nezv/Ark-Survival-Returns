@@ -52,7 +52,7 @@ Plan:
    mixin or registration error. Capture the loaded mod list.
 3. Optional smoke: run `/arkwildlife`, spawn a tamed creature, fence a horse, locate a monolith
    structure id; no GameTest suite change.
-4. Client playtest is the visual gate and is tracked in [Verify.md](../Verify.md).
+4. Client playtest is the visual gate and is tracked in Dashboard.csv.
 
 ## Compatibility audit
 
@@ -73,7 +73,7 @@ What Ark does that could touch them:
 What they add that interacts with Ark's design (decisions for P03/P04):
 
 - Ancient Remnants' research/blessings, monument loot and villager trades are a parallel power curve
-  that bypasses the Primitive/Camp progression (extend `progression-bypass-audit.md` with the
+  that bypasses the Primitive/Camp progression (record the
   decision: accept as side content, tag-gate it, or disable specific trades via its config).
 - Icy's horse bonding, tack and carts are thematically native. Optional later work: a journal chapter
   for horse bonding, tag bridging so Ark trough foods accept its feed, and FTB objectives.

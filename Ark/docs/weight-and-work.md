@@ -113,4 +113,4 @@ Bounds and protections:
 surface rule. `TribePermissionTest` covers the WORK flag. Headless GameTests cover mass accounting and
 the off switch, harness gating and mount overload, ceiling-limited transfer, chunk safety, flight
 takeoff refusal and controlled descent, the swim no-dive rule, work yields, placed-block protection
-and the supervision gate. The full in-client checklist lives in [Verify.md](../Verify.md).
+and the supervision gate. Visual checks are tracked in Dashboard.csv.

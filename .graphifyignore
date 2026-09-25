@@ -1,0 +1,31 @@
+# Graphify's own output must never become input to the next graph.
+graphify-out/
+Ark/graphify-out/
+Graphify/
+
+# Local agent and extraction state.
+.deepseek-runs/
+.deepseek-worktrees/
+.work/
+
+# Generated runtime resources are outputs of Ark's data/import pipelines.
+Ark/src/generated/resources/
+
+# Preserve creature documentation and shared Python tooling in the graph while
+# excluding large generated/source assets that add visual and schema noise.
+Creatures/**/source/
+Creatures/**/previews/
+Creatures/**/animations/
+Creatures/**/geo/
+Creatures/**/textures/
+Creatures/**/skin/
+Creatures/**/skin_v*/
+Creatures/**/*.bbmodel
+Creatures/**/build_report.json
+Creatures/**/validation.json
+
+# Experimental visual artifacts are retained in Git but are not architecture.
+Scratch/
+
+# Binary tooling cannot contribute source relationships.
+tools/*.exe

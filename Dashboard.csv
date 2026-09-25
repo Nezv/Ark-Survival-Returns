@@ -1,0 +1,23 @@
+Type,ID,Item,Description,Proposed by,Executed by,Status
+Feature,F01,Progression Tree,,User,Astra 6,"Verified; The brokred circles around the tree entries look weird; Turn them into some round starfish, keep shape highlight if hoovered; The progression tree also has fixed size, it should adapt to the client screen height;"
+Patch,P01,Tribe and Survival Journal,<>,Astra 6,Deepseek v4.1,Unverified.
+Patch,P02,Camp and Recovery,<>,Astra 6,Deepseek v4.1,Unverified.
+Patch,P03,Weight and Working Tames,<>,Astra 6,Deepseek v4.1,Unverified.
+Patch,P04,Homestead Economy,<>,Astra 6,Deepseek v4.1,Unverified.
+Patch,P05,Prehistoric boss,Former guardian proposed patch. Integrated to Ancient Remnants mod structures. Spawns a giga at the spot where the mod used to have a spawner.,Astra 6,Deepseek v4.1,Unverified.
+Patch,P06,Regional Expeditions and Cartography,,Astra 6,,Under discussion 
+Patch,P07,Iron Age Mechanics,Steel; crusher/press; power; chemistry; ammunition,Astra 6,,Planned
+Patch,P08,Husbandry and Expedition Orders,,Astra 6,,Under discussion 
+Patch,P09,Bronze + Iron Age bosses,"More bosses, reusing P05 services + Ancient Remnants integration.",Astra 6,,To be done
+Patch,P10,Fabrication Oracle and Final Expedition,"Mid-game telemetry: The 5-level difficulty curve is hidden from the player, hence the idea of some technology that includes the difficulty toggle in Xaero World Map; End-game telemetry technology: Will make use of Xaero World Map creature detection; Yet TBD if the technology are blocks, items, nothing is defined until P10.",Astra 6,,"To be done; Unsure what ""replace rank-5 gate"" meant in the old documentation, ot should not break level difficulty;"
+Patch,P12,Graphics and Atmosphere,"A performance benchmark including GPU and CPU consumption; SOTA optimization research; Shader specification and modifications; After project completion and validation,",Astra 6,,To be done
+Patch,P01,Difficulty patch,"Setted up 5 zones in a symmetrical 2D distribution; the curves exist to confuse players, it'll feel random from in-game perspective; Difficult zones are then used to distribute creature species and levels;",User,Astra 6,Done
+Patch,P02,Creature models,Derived from Ark Assets; No copyright issue since it's a private project; The final models are a mixture of the assets skeleton + animations;,User,Astra 6,"The creature sounds weren't extracted and Ark was probably uninstalled, waiting for reinstallation; all eyes have very bad models, need rework, either procedurally or individual; Not all procedurally generated textures were verified;"
+Patch,P03,Taming/Riding patch,,User,Deepseek v4.1,Done; Unverified;
+Patch,P04,Flyer patch,,User,Astra 6,Done
+Integration ,I02,SFX setup,,User,Deepseek v4.1,Done
+Integration ,I01,World Map,,,,
+Backlog,B01,Tech node trigger wiring,,Astra 6,,To be done
+Integration ,I03,FTB Mods Integration ,,Astra 6,,To be done
+Change,C01,Change game version from 26.2 to 26.1,,User,Deepseek v4.1,Done
+Integration ,I04,Tom's Storage Mod integration,,User,,To be done

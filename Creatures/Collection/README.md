@@ -34,7 +34,7 @@ python -m pip install -r scripts/requirements.txt
 python scripts/model_batch.py --reuse-exports
 ```
 
-Omit `--reuse-exports` to re-extract from the local game/Workshop installation. Override `--content`, `--workshop` or `--umodel` for another installation. Rebuild one creature with its `rebuild.py`, or `python scripts/workflow.py --reuse-exports --species Mammoth`. Rebuilding replaces generated artwork.
+Omit `--reuse-exports` to re-extract from the local game/Workshop installation. Override `--content`, `--workshop` or `--umodel` for another installation. Rebuild one creature with `python scripts/workflow.py --reuse-exports --species Mammoth`. Rebuilding replaces generated artwork.
 
 To replace only the cuboids while retaining existing animation files, source exports, palette textures and skeleton metadata, run `python scripts/restore_batch_fitting.py`. Add `--species Mammoth` to limit the operation to one creature. The script checks rig compatibility before replacing files and validates the saved results.
 

@@ -272,14 +272,6 @@ def build(label,refresh=False):
                       'Loop flags are name-based suggestions; review in Blockbench.',
                       'Entity controller/state transitions, sounds and Unreal notifies are not converted.']}
     write_json(out/'build_report.json',report,True)
-    (out/'rebuild.py').write_text('from pathlib import Path\nimport sys\nsys.path.insert(0,str(Path(__file__).resolve().parents[2]/"scripts"))\nfrom build_dinosaurs import build\nfrom validate_dinosaurs import validate\nif __name__ == "__main__":\n    build('+repr(label)+')\n    validate('+repr(label)+')\n',encoding='utf-8')
-    (out/'README.md').write_text(f'# {label}\n\nARK asset: `{asset}`. {len(s.names)} original mesh bones, {len(cubes)} fitted cubes, {len(animations)} original animation clips.\n\n'
-        f'Open `{bb_filename}` in Blockbench with the GeckoLib plugin. Geometry, palette texture and all animations are embedded.\n\n'
-        f'Game resources: `geo/{identifier}.geo.json`, `animations/{identifier}.animation.json`, `textures/entity/{identifier}.png`.\n\n'
-        'Run `python rebuild.py` to rebuild using the shared scripts and saved source exports. This overwrites generated files, so save manual edits under another name first.\n\n'
-        '`source/` includes original extracted PSK/PSA and glTF, a skeleton-only GeckoLib JSON, bone transforms, extraction logs and input hashes in `build_report.json`.\n\n'
-        'Keep bone names, pivots and parent links when editing cubes. The imported clips already target these bones. Choose clips in your mod animation controller; assigning matching names does not create entity behavior automatically.\n\n'
-        'The mesh is an automatic cuboid approximation with an original palette. Inspect shoulders, mouths and wing joints before final art approval. Loop flags are inferred from clip names. Unreal notifies, sounds, physics and AI are outside this conversion.\n',encoding='utf-8')
     from preview_dinosaurs import previews
     previews(out,s,cubes,animations,label)
     print(f'{label}: {len(s.names)} bones, {len(cubes)} cubes, {len(animations)} clips; FK checks passed',flush=True)

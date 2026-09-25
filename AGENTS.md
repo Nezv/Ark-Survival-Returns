@@ -1,10 +1,26 @@
-# Repository agent instructions
+# Workspace Standards
 
-## DeepSeek delegation trigger
+## Source of truth
 
-If a user prompt begins or ends with the exact sentence `DeepSeek this.`, use the
-`deepseek-worker` skill. Treat the remainder of the prompt as the delegated task.
-The primary agent must construct the task, run it through the external DeepSeek
-V4.1 Flash provider, independently review the resulting commit and acceptance
-checks, and report the worker's input, cached-input, output, and reasoning token
-counts. Do not claim that an OpenAI subagent is the DeepSeek worker.
+`Dashboard.csv` (root) tracks every feature/patch: ID, scope, proposer, executor, status and open issues.
+Read it before starting work; update the row's Status when a task finishes. Do not create new
+planning, proposal, audit or report markdown files — put status and open issues in the dashboard.
+`Sync-Dashboard.ps1` syncs it with Google Drive (rclone).
+
+Read only what the task needs. Skip generated/ignored trees: `Ark/src/generated/`, `Creatures/*/source/`,
+`graphify-out/`, `.work/`, `Scratch/`, `Integration/`.
+
+## Mod (Ark/)
+
+NeoForge 26.1.2, Java 25, Gradle wrapper 9.2.1, GeckoLib 5.5.2.
+- Use `./gradlew`, never system Gradle.
+- Run `./gradlew runData` after data provider changes. Commit generated resources; never hand-edit them.
+- Run `./gradlew build` and `./gradlew runGameTestServer` for gameplay changes.
+- Do not launch `runClient`; the user does interactive visual testing.
+- Keep common/server code free of client imports.
+- Import runtime assets from `../Creatures` with `python tools/import_creatures.py`. Python asset scripts belong in `tools/`.
+- Spawning must never force chunk loads; respect biome tags, collision, population caps and game rules.
+
+## GitHub backup
+
+After every completed task: `git add` only the task's paths (gitignore anything too big), `git commit -m "<concise description>"`, `git push`. No re-verification needed if the push reports success. Authorized without repeated confirmation.
