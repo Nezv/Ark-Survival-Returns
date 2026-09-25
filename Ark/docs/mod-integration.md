@@ -73,8 +73,8 @@ What Ark does that could touch them:
 What they add that interacts with Ark's design (decisions for P03/P04):
 
 - Ancient Remnants' research/blessings, monument loot and villager trades are a parallel power curve
-  that bypasses the Primitive/Camp progression (record the
-  decision: accept as side content, tag-gate it, or disable specific trades via its config).
+  that bypasses the Primitive/Camp progression (record the decision in Dashboard.csv:
+  accept as side content, tag-gate it, or disable specific trades via its config).
 - Icy's horse bonding, tack and carts are thematically native. Optional later work: a journal chapter
   for horse bonding, tag bridging so Ark trough foods accept its feed, and FTB objectives.
 - Ancient Remnants generates its own structures and loot; verify they do not collide with Ark's
