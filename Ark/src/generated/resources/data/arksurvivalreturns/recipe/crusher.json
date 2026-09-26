@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "crusher",
+  "key": {
+    "C": "minecraft:cobblestone",
+    "G": "minecraft:grindstone",
+    "L": "#minecraft:logs"
+  },
+  "pattern": [
+    "LGL",
+    "C C",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:crusher"
+  }
+}

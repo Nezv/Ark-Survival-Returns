@@ -1,0 +1,132 @@
+{
+  "variants": {
+    "facing=east,running=false,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 90
+    },
+    "facing=east,running=false,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 90
+    },
+    "facing=east,running=false,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 90
+    },
+    "facing=east,running=false,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 90
+    },
+    "facing=east,running=true,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 90
+    },
+    "facing=east,running=true,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 90
+    },
+    "facing=east,running=true,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 90
+    },
+    "facing=east,running=true,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 90
+    },
+    "facing=north,running=false,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 0
+    },
+    "facing=north,running=false,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 0
+    },
+    "facing=north,running=false,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 0
+    },
+    "facing=north,running=false,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 0
+    },
+    "facing=north,running=true,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 0
+    },
+    "facing=north,running=true,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 0
+    },
+    "facing=north,running=true,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 0
+    },
+    "facing=north,running=true,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 0
+    },
+    "facing=south,running=false,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 180
+    },
+    "facing=south,running=false,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 180
+    },
+    "facing=south,running=false,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 180
+    },
+    "facing=south,running=false,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 180
+    },
+    "facing=south,running=true,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 180
+    },
+    "facing=south,running=true,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 180
+    },
+    "facing=south,running=true,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 180
+    },
+    "facing=south,running=true,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 180
+    },
+    "facing=west,running=false,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 270
+    },
+    "facing=west,running=false,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 270
+    },
+    "facing=west,running=false,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 270
+    },
+    "facing=west,running=false,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 270
+    },
+    "facing=west,running=true,spin=0": {
+      "model": "arksurvivalreturns:block/station/crusher_spin0",
+      "y": 270
+    },
+    "facing=west,running=true,spin=1": {
+      "model": "arksurvivalreturns:block/station/crusher_spin1",
+      "y": 270
+    },
+    "facing=west,running=true,spin=2": {
+      "model": "arksurvivalreturns:block/station/crusher_spin2",
+      "y": 270
+    },
+    "facing=west,running=true,spin=3": {
+      "model": "arksurvivalreturns:block/station/crusher_spin3",
+      "y": 270
+    }
+  }
+}

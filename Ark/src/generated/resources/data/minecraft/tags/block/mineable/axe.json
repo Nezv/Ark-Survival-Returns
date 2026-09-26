@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:working_station",
+    "arksurvivalreturns:medicine_bench",
+    "arksurvivalreturns:storage_crate"
+  ]
+}

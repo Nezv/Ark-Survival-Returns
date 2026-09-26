@@ -1,0 +1,1659 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "gear": "arksurvivalreturns:block/station/gear",
+    "hopper": "arksurvivalreturns:block/station/hopper",
+    "iron": "arksurvivalreturns:block/station/iron",
+    "iron_dark": "arksurvivalreturns:block/station/iron_dark",
+    "planks_dark": "arksurvivalreturns:block/station/planks_dark",
+    "roller": "arksurvivalreturns:block/station/roller",
+    "stone": "arksurvivalreturns:block/station/stone",
+    "stone_dark": "arksurvivalreturns:block/station/stone_dark",
+    "particle": "arksurvivalreturns:block/station/stone"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "stone housing",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        11,
+        15
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#stone"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#stone"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            14,
+            11
+          ],
+          "texture": "#stone"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            11
+          ],
+          "texture": "#stone"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14,
+            11
+          ],
+          "texture": "#stone"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            14,
+            11
+          ],
+          "texture": "#stone"
+        }
+      }
+    },
+    {
+      "name": "footing",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        1.5,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            1.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            1.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            1.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            1.5
+          ],
+          "texture": "#stone_dark"
+        }
+      }
+    },
+    {
+      "name": "hopper wall",
+      "from": [
+        2,
+        11,
+        2
+      ],
+      "to": [
+        14,
+        12,
+        3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        }
+      }
+    },
+    {
+      "name": "hopper wall",
+      "from": [
+        2,
+        11,
+        13
+      ],
+      "to": [
+        14,
+        12,
+        14
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            12,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        }
+      }
+    },
+    {
+      "name": "hopper wall",
+      "from": [
+        2,
+        11,
+        3
+      ],
+      "to": [
+        3,
+        12,
+        13
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            10
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            10
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            10,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            10,
+            1
+          ],
+          "texture": "#stone_dark"
+        }
+      }
+    },
+    {
+      "name": "hopper wall",
+      "from": [
+        13,
+        11,
+        3
+      ],
+      "to": [
+        14,
+        12,
+        13
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            10
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            10
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            10,
+            1
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            10,
+            1
+          ],
+          "texture": "#stone_dark"
+        }
+      }
+    },
+    {
+      "name": "feed chute board",
+      "from": [
+        1,
+        12,
+        1
+      ],
+      "to": [
+        15,
+        14.5,
+        2.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            14,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "feed chute board",
+      "from": [
+        1,
+        12,
+        13.5
+      ],
+      "to": [
+        15,
+        14.5,
+        15
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            14,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "hopper throat",
+      "from": [
+        3,
+        10.8,
+        3
+      ],
+      "to": [
+        13,
+        11,
+        13
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#hopper"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#hopper"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            10,
+            0.25
+          ],
+          "texture": "#hopper"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            10,
+            0.25
+          ],
+          "texture": "#hopper"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            10,
+            0.25
+          ],
+          "texture": "#hopper"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            10,
+            0.25
+          ],
+          "texture": "#hopper"
+        }
+      }
+    },
+    {
+      "name": "axle bearing",
+      "from": [
+        15,
+        6,
+        6
+      ],
+      "to": [
+        16.5,
+        10,
+        10
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            4
+          ],
+          "texture": "#iron_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            4
+          ],
+          "texture": "#iron_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            4
+          ],
+          "texture": "#iron_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            4
+          ],
+          "texture": "#iron_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4,
+            4
+          ],
+          "texture": "#iron_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4,
+            4
+          ],
+          "texture": "#iron_dark"
+        }
+      }
+    },
+    {
+      "name": "output chute",
+      "from": [
+        5,
+        1.5,
+        -0.4
+      ],
+      "to": [
+        11,
+        4,
+        1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.4
+          ],
+          "texture": "#iron_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.4
+          ],
+          "texture": "#iron_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#iron_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#iron_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            2.5
+          ],
+          "texture": "#iron_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            2.5
+          ],
+          "texture": "#iron_dark"
+        }
+      }
+    },
+    {
+      "name": "crushing roller",
+      "from": [
+        3.5,
+        9.8,
+        4.6
+      ],
+      "to": [
+        12.5,
+        12.2,
+        7.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.4000000000000004
+          ],
+          "texture": "#roller"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.4000000000000004
+          ],
+          "texture": "#roller"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          11,
+          5.8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "crushing roller",
+      "from": [
+        3.5,
+        9.8,
+        4.6
+      ],
+      "to": [
+        12.5,
+        12.2,
+        7.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.4000000000000004
+          ],
+          "texture": "#roller"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.4000000000000004
+          ],
+          "texture": "#roller"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          11,
+          5.8
+        ],
+        "axis": "x",
+        "angle": 45,
+        "rescale": false
+      }
+    },
+    {
+      "name": "crushing roller",
+      "from": [
+        3.5,
+        9.8,
+        9.0
+      ],
+      "to": [
+        12.5,
+        12.2,
+        11.399999999999999
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          11,
+          10.2
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "crushing roller",
+      "from": [
+        3.5,
+        9.8,
+        9.0
+      ],
+      "to": [
+        12.5,
+        12.2,
+        11.399999999999999
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.3999999999999986
+          ],
+          "texture": "#roller"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          11,
+          10.2
+        ],
+        "axis": "x",
+        "angle": 45,
+        "rescale": false
+      }
+    },
+    {
+      "name": "flywheel disc",
+      "from": [
+        16.5,
+        3.5,
+        3.5
+      ],
+      "to": [
+        18,
+        12.5,
+        12.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            9.0
+          ],
+          "texture": "#gear"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "flywheel disc",
+      "from": [
+        16.5,
+        3.5,
+        3.5
+      ],
+      "to": [
+        18,
+        12.5,
+        12.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            9.0
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            9.0,
+            9.0
+          ],
+          "texture": "#gear"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 45,
+        "rescale": false
+      }
+    },
+    {
+      "name": "flywheel teeth",
+      "from": [
+        16.8,
+        2,
+        7
+      ],
+      "to": [
+        17.7,
+        14,
+        9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            2
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            2
+          ],
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            12
+          ],
+          "texture": "#gear"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "flywheel teeth",
+      "from": [
+        16.8,
+        2,
+        7
+      ],
+      "to": [
+        17.7,
+        14,
+        9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            2
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            2
+          ],
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.8999999999999986,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            12
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            12
+          ],
+          "texture": "#gear"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "hub cap",
+      "from": [
+        18,
+        6.8,
+        6.8
+      ],
+      "to": [
+        19,
+        9.2,
+        9.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999995,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999995,
+            2.3999999999999995
+          ],
+          "texture": "#iron"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    },
+    {
+      "name": "crank handle",
+      "from": [
+        19,
+        7.4,
+        11
+      ],
+      "to": [
+        20.5,
+        8.6,
+        12.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        }
+      },
+      "rotation": {
+        "origin": [
+          16.5,
+          8,
+          8
+        ],
+        "axis": "x",
+        "angle": 0,
+        "rescale": false
+      }
+    }
+  ]
+}

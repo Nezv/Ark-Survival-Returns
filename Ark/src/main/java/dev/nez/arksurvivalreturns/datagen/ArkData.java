@@ -26,6 +26,8 @@ public final class ArkData implements DataProvider {
         tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); downed(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
         IntegrationData.generate(this::put);
+        StationData.generate(this::put);
+        StationData.itemModels(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
         files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
         // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
@@ -257,6 +259,7 @@ public final class ArkData implements DataProvider {
         tamingMessages(en, pt);
         tribeMessages(en, pt);
         campMessages(en, pt);
+        StationData.messages(en, pt);
         downedMessages(en, pt);
         massMessages(en, pt);
         workMessages(en, pt);
@@ -620,15 +623,15 @@ public final class ArkData implements DataProvider {
         vanillaModel("trail_mix", "minecraft:item/cookie");
     }
 
-    /** Concentration without a station: narcoberries and fiber become a stronger dose at the crafting table. */
+    /** Concentration: narcoberries and fiber become a stronger dose, a mixture only the Medicine Bench makes. */
     private void medicine() {
         vanillaModel("concentrated_sedative", "minecraft:item/gunpowder");
         vanillaModel("improved_tranquilizer_arrow", "minecraft:item/spectral_arrow");
         json("data/" + NS + "/recipe/concentrated_sedative", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"concentrated_sedative",
-                 "ingredients":["%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:plant_fiber"],
+                 "ingredients":["%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:plant_fiber"],
                  "result":{"count":1,"id":"%s:concentrated_sedative"}}
-                """.formatted(NS, NS, NS, NS, NS));
+                """.formatted(NS, NS, NS, NS, NS, NS));
         json("data/" + NS + "/recipe/improved_tranquilizer_arrow", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"improved_tranquilizer_arrow",
                  "ingredients":["%s:tranquilizer_arrow","%s:tranquilizer_arrow","%s:tranquilizer_arrow",
@@ -1024,7 +1027,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
-                "primitive_tall_stations", "primitive_keratin",
+                "primitive_tall_stations", "primitive_keratin", "stations",
                 "integration_curios", "integration_toms_storage", "integration_terralith", "integration_better_combat"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",

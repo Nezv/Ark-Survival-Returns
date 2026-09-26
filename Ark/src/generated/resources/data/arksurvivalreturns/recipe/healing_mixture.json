@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "healing_mixture",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "arksurvivalreturns:azulberry",
+    "arksurvivalreturns:azulberry",
+    "arksurvivalreturns:tintoberry",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:healing_mixture"
+  }
+}

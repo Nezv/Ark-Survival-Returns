@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "arksurvivalreturns:block/station/smithing_table",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arksurvivalreturns:block/station/smithing_table",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "arksurvivalreturns:block/station/smithing_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arksurvivalreturns:block/station/smithing_table",
+      "y": 270
+    }
+  }
+}

@@ -152,7 +152,7 @@ final class ThemeGameTests {
                 "cartography_table")) {
             h.assertTrue(manager.byKey(key(Registries.RECIPE, "minecraft:" + id)).isEmpty(), "Recipe survived: " + id);
         }
-        for (String id : List.of("crafting_table", "iron_pickaxe", "bread", "bookshelf", "bone_meal",
+        for (String id : List.of("barrel", "iron_pickaxe", "bread", "bookshelf", "bone_meal",
                 "copper_bulb", "waxed_oxidized_copper_bulb", "waxed_copper_bulb_from_honeycomb")) {
             h.assertTrue(manager.byKey(key(Registries.RECIPE, "minecraft:" + id)).isPresent(), "Recipe was lost: " + id);
         }

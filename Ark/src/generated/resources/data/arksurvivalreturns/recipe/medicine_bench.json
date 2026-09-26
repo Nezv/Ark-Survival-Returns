@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "medicine_bench",
+  "key": {
+    "B": "minecraft:glass_bottle",
+    "F": "arksurvivalreturns:plant_fiber",
+    "L": "#minecraft:logs",
+    "P": "#minecraft:planks"
+  },
+  "pattern": [
+    "FBF",
+    "PPP",
+    "L L"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:medicine_bench"
+  }
+}

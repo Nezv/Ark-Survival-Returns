@@ -16,8 +16,18 @@ import net.minecraft.world.level.Level;
  * already owns the healing and cooldown so there is one place that consumes it.
  */
 public final class FiberBandageItem extends Item {
+    private final float healScale;
+    private final int regenerationTicks;
+
     public FiberBandageItem(Properties properties) {
+        this(properties, 1f, 0);
+    }
+
+    /** Stronger bandages from the Medicine Bench heal more and add a short regeneration. */
+    public FiberBandageItem(Properties properties, float healScale, int regenerationTicks) {
         super(properties);
+        this.healScale = healScale;
+        this.regenerationTicks = regenerationTicks;
     }
 
     @Override public InteractionResult interactLivingEntity(ItemStack stack, Player player, net.minecraft.world.entity.LivingEntity target, InteractionHand hand) {
@@ -42,8 +52,10 @@ public final class FiberBandageItem extends Item {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (player.getHealth() >= player.getMaxHealth()) return InteractionResult.FAIL;
         if (player.getCooldowns().isOnCooldown(stack)) return InteractionResult.FAIL;
-        float heal = (float) (double) Config.CAMP_BANDAGE_HEAL.get();
+        float heal = (float) (double) Config.CAMP_BANDAGE_HEAL.get() * healScale;
         player.heal(heal);
+        if (regenerationTicks > 0) player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.minecraft.world.effect.MobEffects.REGENERATION, regenerationTicks, 0));
         player.getCooldowns().addCooldown(stack, Config.CAMP_BANDAGE_COOLDOWN.get());
         if (!player.getAbilities().instabuild) stack.consume(1, player);
         Component message = Component.translatable("camp.arksurvivalreturns.bandaged", Math.round(heal));
