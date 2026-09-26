@@ -219,6 +219,8 @@
                --sp-now: color-mix(in srgb, var(--muted) 60%, var(--surface)); --sp-change: var(--check); --sp-cut: var(--red);
                --sp-tbd: var(--idea); --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
                display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  /* the map breaks out of the text column to use the screen width (up to 1840 px) */
+  .spine-box { margin-inline: max(-354px, min(0px, calc(50% - 50vw + 24px))); }
   .spine-box details { border-top: 1px solid var(--line); padding-top: 10px; }
   .spine-box summary { cursor: pointer; font: 600 15px var(--display); }
   .qs { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 28px; }
@@ -326,7 +328,7 @@
     <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle over three ages, and the Field Journal.</span></a>
     <a href="#survival"><span class="eyebrow">Survival systems</span><b>Tribe survival</b><span>Taming, cargo, working tames, the downed state and the Guardian.</span></a>
     <a href="#blocks"><span class="eyebrow">Camp and blocks</span><b>Stations</b><span>Every Ark block, rendered from the in-game models.</span></a>
-    <a href="#recipes"><span class="eyebrow">Recipe Tree</span><b>Recipe gates and items</b><span>The workstation spine from bare hands to keratin armour, and every item sprite.</span></a>
+    <a href="#recipes"><span class="eyebrow">Recipe Tree</span><b>Recipe map and items</b><span>What every item needs, back to bare hands, and every item sprite.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
@@ -438,14 +440,14 @@
   <section id="recipes">
     <div><div class="eyebrow">Recipe Tree</div><h2>What each item needs, from bare hands up</h2></div>
     <p class="lede">The recipe gates, separate from the Tribe Chronicle: which station or tool opens each item. Item sprites are crisp 32 px originals or re-toned vanilla sprites; dinosaur meats are drawn larger in hand and on the ground than normal Minecraft meat.</p>
-    <h3>The workstation spine</h3>
-    <p class="lede">Every station and tool gate sits on one line, left to right in the order it unlocks, from bare hands to the First Guardian. Each recipe is a column on its station: inputs above the line, outputs below. Drag sideways or jump to a station. Items made by one recipe arrive at another as labels instead of long arrows; hover or tap one to light up every recipe that uses it. This is the draft awaiting approval (F12), so it shows proposed changes beside what the game does today.</p>
+    <h3>The dependency map</h3>
+    <p class="lede">Every item sits in the first column where it can be made, counted in crafting steps from bare hands, grouped under the station or tool that makes it. Hover or tap one: what it needs lights up in green, back to bare hands, and what it unlocks in blue. This is the draft awaiting approval (F12), so it shows proposed changes beside what the game does today.</p>
     <div class="spine-box">
       <div class="sp-legend">%%SPINELEGEND%%</div>
-      <p class="sp-trace" id="sp-trace" aria-live="polite">Nothing traced.</p>
+      <div class="sp-trace" id="sp-trace" aria-live="polite"></div>
       <div class="sp-scroll"><div id="sp-host"></div></div>
       <details><summary>Notes on the rows (%%SPINENOTECOUNT%%)</summary><ol class="sp-notes">%%SPINENOTES%%</ol></details>
-      <details><summary>Open decisions (Q1 to Q13)</summary><ol class="qs">%%SPINEDECISIONS%%</ol></details>
+      <details><summary>Open decisions (%%SPINEDECCOUNT%%)</summary><ol class="qs">%%SPINEDECISIONS%%</ol></details>
     </div>
     <h3>The items</h3>
     %%ITEMS%%
