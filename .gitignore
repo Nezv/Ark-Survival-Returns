@@ -16,3 +16,7 @@ Ark/graphify-out/
 Graphify/
 Integration/
 Scratch/
+
+# Modpack pipeline: upstream clones and built output stay local (Ark/tools/build_pack.py)
+Ark/pack/src/
+Ark/pack/out/

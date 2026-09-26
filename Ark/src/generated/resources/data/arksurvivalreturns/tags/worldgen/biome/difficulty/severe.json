@@ -3,6 +3,18 @@
   "values": [
     "minecraft:eroded_badlands",
     "minecraft:jagged_peaks",
-    "minecraft:frozen_peaks"
+    "minecraft:frozen_peaks",
+    {
+      "id": "terralith:emerald_peaks",
+      "required": false
+    },
+    {
+      "id": "terralith:scarlet_mountains",
+      "required": false
+    },
+    {
+      "id": "terralith:warped_mesa",
+      "required": false
+    }
   ]
 }

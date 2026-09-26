@@ -183,6 +183,118 @@ def tooltips():
     return 2
 
 
+def mod_screens():
+    """Integrated mods with vanilla-style panels get the same re-skin, so their screens match (I04, I07)."""
+    import glob
+    count = 0
+    targets = [('toms_storage', 'shared-mods/toms_storage-*.jar'), ('curios', 'shared-mods/curios-neoforge-*.jar')]
+    for namespace, pattern in targets:
+        jars = sorted(glob.glob(str(ROOT / pattern)))
+        if not jars:
+            continue
+        with zipfile.ZipFile(jars[-1]) as jar:
+            for name in jar.namelist():
+                prefix = f'assets/{namespace}/textures/gui/'
+                if not name.startswith(prefix) or not name.endswith('.png') or '/icons/' in name or '/slot/' in name:
+                    continue
+                image = Image.open(io.BytesIO(jar.read(name))).convert('RGBA')
+                widget = '/widget/' in name or '/button' in name or 'cosmetic' in name
+                image = remap(image, DARK if widget else LIGHT, grain=None if widget else (190, 205), seed=count)
+                target = PACK / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                image.save(target)
+                meta = name + '.mcmeta'
+                if meta in jar.namelist():
+                    (PACK / meta).write_bytes(jar.read(meta))
+                count += 1
+    return count
+
+
+# Ark inventory layout (I07, Curios fork): must match ArkLayout.java in pack/src/curios.
+ARK_WIDTH = 212
+ARK_CURIOS = [(8, 8), (26, 8), (8, 26), (26, 26), (8, 44), (26, 44), (8, 62), (26, 62), (134, 62)]
+ARK_ARMOR = [(44, 8 + i * 18) for i in range(4)]
+ARK_OFFHAND = (116, 62)
+ARK_CRAFT = [(134 + (i % 2) * 18, 18 + (i // 2) * 18) for i in range(4)]
+ARK_RESULT = (190, 28)
+ARK_INVENTORY = [(26 + c * 18, 84 + r * 18) for r in range(3) for c in range(9)] + [(26 + c * 18, 142) for c in range(9)]
+CURIO_OVERLAY = ROOT / 'pack/overlays/curios/src/main/resources/assets/curios/textures/gui/curios/ark_inventory.png'
+
+
+def ark_inventory():
+    """The widened inventory panel: vanilla border stretched to 212 px, vanilla slot frames at Ark positions."""
+    vanilla_inv = vanilla('container/inventory.png')
+    panel = Image.new('RGBA', (256, 256))
+    face = vanilla_inv.getpixel((90, 5))  # plain panel face, clear of any slot
+    body = Image.new('RGBA', (ARK_WIDTH, 166), face)
+    b = 4  # border thickness of the vanilla panel
+    body.paste(vanilla_inv.crop((0, 0, b, 166)), (0, 0))
+    body.paste(vanilla_inv.crop((176 - b, 0, 176, 166)), (ARK_WIDTH - b, 0))
+    for x in range(b, ARK_WIDTH - b):
+        body.paste(vanilla_inv.crop((10, 0, 11, b)), (x, 0))
+        body.paste(vanilla_inv.crop((10, 166 - b, 11, 166)), (x, 166 - b))
+    body.paste(vanilla_inv.crop((0, 0, b, b)), (0, 0))
+    body.paste(vanilla_inv.crop((176 - b, 0, 176, b)), (ARK_WIDTH - b, 0))
+    body.paste(vanilla_inv.crop((0, 166 - b, b, 166)), (0, 166 - b))
+    body.paste(vanilla_inv.crop((176 - b, 166 - b, 176, 166)), (ARK_WIDTH - b, 166 - b))
+    frame = vanilla_inv.crop((7, 83, 25, 101))           # a standard 18 px slot frame
+    for x, y in ARK_CURIOS + ARK_ARMOR + [ARK_OFFHAND] + ARK_CRAFT + [ARK_RESULT] + ARK_INVENTORY:
+        body.paste(frame, (x - 1, y - 1))
+    body.paste(vanilla_inv.crop((25, 7, 77, 79)), (61, 7))  # player preview box
+    body.paste(vanilla_inv.crop((135, 26, 153, 44)), (171, 26))  # crafting arrow
+    panel.paste(body, (0, 0))
+    panel = remap(panel, LIGHT, grain=(190, 205), seed=7)
+    CURIO_OVERLAY.parent.mkdir(parents=True, exist_ok=True)
+    panel.save(CURIO_OVERLAY)
+    # Review sheet with the slot icons the game draws on empty slots.
+    import glob
+    preview = panel.crop((0, 0, ARK_WIDTH, 166)).copy()
+    curios_jar = sorted(glob.glob(str(ROOT / 'shared-mods/curios-neoforge-*.jar')))
+    icons = {}
+    if curios_jar:
+        with zipfile.ZipFile(curios_jar[-1]) as jar:
+            for name in ('head', 'necklace', 'body', 'belt', 'feet', 'charm'):
+                icons[name] = Image.open(io.BytesIO(jar.read(f'assets/curios/textures/slot/empty_{name}_slot.png'))).convert('RGBA')
+    icons['legs'] = Image.open(ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/slot/empty_legs_slot.png').convert('RGBA')
+    order = ['head', 'head', 'necklace', 'body', 'belt', 'legs', 'feet', 'feet', 'charm']
+    for (x, y), name in zip(ARK_CURIOS, order):
+        if name in icons:
+            preview.alpha_composite(icons[name].resize((16, 16)), (x, y))
+    for (x, y), name in zip(ARK_ARMOR, ('helmet', 'chestplate', 'leggings', 'boots')):
+        preview.alpha_composite(vanilla(f'sprites/container/slot/{name}.png'), (x, y))
+    preview.alpha_composite(vanilla('sprites/container/slot/shield.png'), ARK_OFFHAND)
+    preview.resize((ARK_WIDTH * 3, 166 * 3), Image.Resampling.NEAREST).save(PREVIEW / 'ark-inventory.png')
+    return 1
+
+
+def legs_icon():
+    """Curios has no legs slot; Ark adds one (data/arksurvivalreturns/curios/slots/legs.json) with this icon."""
+    rows = ["................",
+            "................",
+            "....########....",
+            "....########....",
+            "....###..###....",
+            "....###..###....",
+            "....##....##....",
+            "....##....##....",
+            "....##....##....",
+            "...###....###...",
+            "...###....###...",
+            "...##......##...",
+            "...##......##...",
+            "................",
+            "................",
+            "................"]
+    img = Image.new('RGBA', (16, 16))
+    for y, row in enumerate(rows):
+        for x, c in enumerate(row):
+            if c == '#':
+                img.putpixel((x, y), (55, 55, 55, 120))
+    path = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/slot/empty_legs_slot.png'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(path)
+
+
 def pack_meta():
     PACK.mkdir(parents=True, exist_ok=True)
     (PACK / 'pack.mcmeta').write_text(json.dumps({"pack": {
@@ -219,7 +331,8 @@ def preview():
 
 def main():
     pack_meta()
-    count = containers() + widgets() + hud() + tooltips()
+    legs_icon()
+    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory()
     preview()
     print(f'Wrote {count} textures to {PACK}')
 

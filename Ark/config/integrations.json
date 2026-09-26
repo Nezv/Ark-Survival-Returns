@@ -1,0 +1,279 @@
+{
+  "about": "Source of truth for third-party integrations: the pack builder (tools/build_pack.py) brands and packages these mods, and the showcase lists them. Pins and hashes live in client-mods.lock.json / shared-mods.lock.json. Rows match Dashboard.csv IDs.",
+  "brandPrefix": "Ark - ",
+  "integrations": [
+    {
+      "id": "I01",
+      "title": "World map and danger telemetry",
+      "status": "integrated",
+      "side": "client",
+      "mods": [
+        {
+          "project": "xaeros-world-map",
+          "arkName": "Ark - Xaero's World Map",
+          "license": "All Rights Reserved",
+          "source": "closed",
+          "build": "release"
+        },
+        {
+          "project": "xaero-world-map-bridge",
+          "arkName": "Ark - World Map Bridge",
+          "license": "MIT",
+          "source": "https://github.com/billstark001/xaero-world-map-bridge",
+          "build": "release"
+        }
+      ],
+      "uses": "Xaero's fullscreen map, drawn with Ark's colour-coded danger zones through the bridge hook. Map access can be locked until the tribe tames a creature from a rank-5 zone (progression.mapRequiresUnlock).",
+      "changed": "No code changes to Xaero (closed source). All Ark behaviour lives in Ark's own overlay (client/XaeroDangerOverlay.java). The jar is only rebranded.",
+      "next": "P10 telemetry technology: a mid-game item or block that turns on the danger overlay, and an end-game one that adds Xaero creature detection."
+    },
+    {
+      "id": "I02",
+      "title": "Spatial audio",
+      "status": "integrated",
+      "side": "client",
+      "mods": [
+        {
+          "project": "sound-physics-remastered",
+          "arkName": "embedded in Ark",
+          "license": "GPL-3.0",
+          "source": "https://github.com/henkelmax/sound-physics-remastered",
+          "build": "embedded"
+        },
+        {
+          "project": "ambientsounds",
+          "arkName": "embedded in Ark",
+          "license": "LGPL-3.0",
+          "source": "https://github.com/CreativeMD/AmbientSounds",
+          "build": "embedded"
+        },
+        {
+          "project": "presence-footsteps",
+          "arkName": "embedded in Ark",
+          "license": "MIT at the pinned asset commit (PolyForm Shield today)",
+          "source": "https://github.com/Sollace/Presence-Footsteps",
+          "build": "embedded"
+        }
+      ],
+      "uses": "Reverb, occlusion and reflections from Sound Physics Remastered; material footstep recordings from Presence Footsteps; environmental recordings from AmbientSounds. All run in one client-only engine inside the Ark jar.",
+      "changed": "Physics code ported into dev.nez.arksurvivalreturns.client.audio.physics. The recordings keep their original asset namespaces (ambientsounds:, presencefootsteps:), and a resource-pack catalog (arksurvivalreturns:audio/catalog.json) replaces AmbientSounds' engine and its CreativeCore dependency. Ambient beds skip ray tracing.",
+      "next": "Keep it embedded. Presence Footsteps has no NeoForge build, and loading the standalone Sound Physics jar next to the port would double-process sounds. Dino calls still need recordings (P02)."
+    },
+    {
+      "id": "I03",
+      "title": "Tribe, journal and tech-tree backend",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "ftb-quests",
+          "arkName": "Ark - FTB Quests",
+          "license": "All Rights Reserved (FTB)",
+          "source": "https://github.com/FTBTeam/FTB-Quests",
+          "build": "release"
+        },
+        {
+          "project": "ftb-teams",
+          "arkName": "Ark - FTB Teams",
+          "license": "All Rights Reserved (FTB)",
+          "source": "https://github.com/FTBTeam/FTB-Teams",
+          "build": "release"
+        },
+        {
+          "project": "ftb-library",
+          "arkName": "Ark - FTB Library",
+          "license": "All Rights Reserved (FTB)",
+          "source": "https://github.com/FTBTeam/FTB-Library",
+          "build": "release"
+        },
+        {
+          "project": "ftb-xmod-compat",
+          "arkName": "Ark - FTB XMod Compat",
+          "license": "All Rights Reserved (FTB)",
+          "source": "https://github.com/FTBTeam/FTB-XMod-Compat",
+          "build": "release"
+        },
+        {
+          "project": "jei",
+          "arkName": "Ark - JEI",
+          "license": "MIT",
+          "source": "https://github.com/mezz/JustEnoughItems",
+          "build": "release"
+        }
+      ],
+      "uses": "An FTB Teams party is the tribe: it shares tame permissions, the Field Journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the 40 tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
+      "changed": "No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
+      "next": "B05: the tech_flow test fails (an Ark grant does not reach FTB). B03: JEI categories for the Stone Fire and Primitive Forge, and hide the removed furnace recipes."
+    },
+    {
+      "id": "I04",
+      "title": "Storage network",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "toms-storage",
+          "arkName": "Ark - Tom's Storage",
+          "license": "MIT",
+          "source": "https://github.com/tom5454/Toms-Storage",
+          "build": "source",
+          "branch": "26.1",
+          "gradleDir": "NeoForge"
+        }
+      ],
+      "uses": "Terminals, connectors and crafting terminals that link chests into one network. Tames' Load and Unload buttons reach the network through NeoForge's item capability, like any other modded storage.",
+      "changed": "Built from source (branch 26.1) and branded. Ark's cargo transfer now reads the item capability as well as vanilla containers (GameTest integration_toms_storage). The Ark UI pack re-skins its terminal screens and widgets. No gameplay code removed: every block is cheap, and its common config caps scan sizes.",
+      "next": "Replaces the removed P04 storage crate. In-client check: terminal screens under the Ark UI pack."
+    },
+    {
+      "id": "I05",
+      "title": "Menus and title screen",
+      "status": "integrated",
+      "side": "client",
+      "mods": [
+        {
+          "project": "fancymenu",
+          "arkName": "Ark - FancyMenu",
+          "license": "DSMSLv3.1",
+          "source": "https://github.com/Keksuccino/FancyMenu",
+          "build": "release"
+        },
+        {
+          "project": "konkrete",
+          "arkName": "Ark - Konkrete",
+          "license": "Apache-2.0",
+          "source": "https://github.com/Keksuccino/Konkrete",
+          "build": "release"
+        },
+        {
+          "project": "melody",
+          "arkName": "Ark - Melody",
+          "license": "MIT",
+          "source": "https://github.com/Keksuccino/Melody",
+          "build": "release"
+        }
+      ],
+      "uses": "A title-screen layout with the Ark background (the real danger map as contours) and logo. The vanilla logo and splash text are hidden.",
+      "changed": "Ark ships the layout (config/fancymenu/customization/ark_title_screen.txt) and the art. Jars are only rebranded.",
+      "next": "In-client check of the layout. Later: pause menu and loading screen in the same style."
+    },
+    {
+      "id": "I06",
+      "title": "Rendering and shaders",
+      "status": "pinned",
+      "side": "client",
+      "mods": [
+        {
+          "project": "sodium",
+          "arkName": "Ark - Sodium",
+          "license": "PolyForm Shield 1.0",
+          "source": "https://github.com/CaffeineMC/sodium",
+          "build": "release"
+        },
+        {
+          "project": "iris",
+          "arkName": "Ark - Iris",
+          "license": "LGPL-3.0",
+          "source": "https://github.com/IrisShaders/Iris",
+          "build": "release"
+        },
+        {
+          "project": "bliss-shader",
+          "arkName": "Bliss Shaders",
+          "license": "All Rights Reserved",
+          "source": "https://github.com/X0nk/Bliss-Shader",
+          "build": "shader"
+        },
+        {
+          "project": "complementary-reimagined",
+          "arkName": "Complementary Reimagined",
+          "license": "Complementary custom license",
+          "source": "https://github.com/ComplementaryDevelopment/ComplementaryReimagined",
+          "build": "shader"
+        }
+      ],
+      "uses": "Sodium renders chunks and Iris loads shader packs. Bliss is pinned as the planned default pack; Complementary stays as the tested fallback.",
+      "changed": "Nothing yet. This is the last pass: Sodium, Iris and Bliss settings, plus Distant Horizons LOD settings, tuned together.",
+      "next": "Profile GPU and CPU (P12), then ship tuned Sodium, Iris and shader configs."
+    },
+    {
+      "id": "I07",
+      "title": "Accessories",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "curios",
+          "arkName": "Ark - Curios API",
+          "license": "LGPL-3.0",
+          "source": "https://github.com/TheIllusiveC4/Curios",
+          "build": "source",
+          "branch": "26.1.2",
+          "gradleDir": "."
+        }
+      ],
+      "uses": "Accessory slots in one Ark inventory: crown and hat (head), necklace, shirt (body), belt, pants (legs, added by Ark), socks and shoes (feet), and a charm.",
+      "changed": "Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): the inventory key opens a 212 px screen with the curio slots beside the armour column, the shield and charm under the player and crafting on the right. The separate Curios button is off. Ark's data pack defines the slot set. GameTest integration_curios checks all nine slot positions.",
+      "next": "In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. Ark accessories to fill the slots are still to be designed."
+    },
+    {
+      "id": "I08",
+      "title": "Terrain, biomes and distance",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "tectonic",
+          "arkName": "Ark - Tectonic",
+          "license": "MIT",
+          "source": "https://github.com/Apollounknowndev/tectonic",
+          "build": "release"
+        },
+        {
+          "project": "lithostitched",
+          "arkName": "Ark - Lithostitched",
+          "license": "MIT",
+          "source": "https://github.com/Apollounknowndev/lithostitched",
+          "build": "release"
+        },
+        {
+          "project": "terralith",
+          "arkName": "Ark - Terralith",
+          "license": "Stardust Labs License",
+          "source": "https://github.com/Stardust-Labs-MC/Terralith",
+          "build": "release"
+        },
+        {
+          "project": "distanthorizons",
+          "arkName": "Ark - Distant Horizons",
+          "license": "LGPL-3.0",
+          "source": "https://gitlab.com/distant-horizons-team/distant-horizons",
+          "build": "release",
+          "side": "client",
+          "note": "Client-only in the pack: LODs are drawn on the client, and its server hook assumes a dedicated server (it crashes the headless GameTest server)."
+        }
+      ],
+      "uses": "Tectonic reshapes terrain (with built-in Terralith support), Terralith adds 95 biomes, and Lithostitched is their shared worldgen library. Distant Horizons draws far-away terrain as low-detail LODs on the client.",
+      "changed": "Ark maps every Terralith biome to its closest vanilla analog, so Terralith biomes get Ark creature spawns and a difficulty tier (optional tag entries, safe without Terralith). Danger zones are coordinate-based and work unchanged. Jars are only rebranded.",
+      "next": "Tune DH together with shaders (I06). In-client check of spawn density in Terralith biomes."
+    },
+    {
+      "id": "I09",
+      "title": "Bronze and Iron Age machinery",
+      "status": "blocked",
+      "side": "both",
+      "mods": [
+        {
+          "project": "create",
+          "arkName": "Ark - Create",
+          "license": "Create Mod License",
+          "source": "https://github.com/Creators-of-Create/Create",
+          "build": "blocked"
+        }
+      ],
+      "uses": "Planned core of the Bronze and Iron ages: basic kinetics and processing only, no complex contraptions.",
+      "changed": "Nothing yet. Create has no Minecraft 26.1 release or branch (its newest is 1.21.1), and it needs Flywheel and Ponder ported too.",
+      "next": "Wait for the official 26.1 port. Meanwhile, Bronze basics (alloying, charcoal) can use the Primitive Forge."
+    }
+  ]
+}

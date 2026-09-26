@@ -65,9 +65,16 @@ def integratedStandaloneJars = [
     'PresenceFootsteps*.jar',
     'Presence-Footsteps*.jar'
 ]
-def installedPack = fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)
+// -ParkPack runs against the branded pack that ships (python tools/build_pack.py) instead of the
+// upstream downloads, so the exact jars in the Modrinth pack are what the dev run and GameTests load.
+def useArkPack = project.hasProperty('arkPack') && file('pack/out/mods').isDirectory()
+def installedPack = useArkPack
+    ? fileTree(dir: 'pack/out/client-mods', include: ['*.jar'])
+    : fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)
 // Client and server gameplay mods (survival journal stack). Loaded on every dev run.
-def sharedPack = fileTree(dir: 'shared-mods', include: ['*.jar'])
+def sharedPack = useArkPack
+    ? fileTree(dir: 'pack/out/mods', include: ['Ark-*.jar'])
+    : fileTree(dir: 'shared-mods', include: ['*.jar'])
 dependencies {
     implementation "maven.modrinth:geckolib:${geckolib_version}"
     implementation sharedPack

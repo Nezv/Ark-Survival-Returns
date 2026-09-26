@@ -5,6 +5,10 @@
     "minecraft:old_growth_pine_taiga",
     "minecraft:taiga",
     "minecraft:windswept_forest",
-    "minecraft:forest"
+    "minecraft:forest",
+    {
+      "id": "terralith:yellowstone",
+      "required": false
+    }
   ]
 }

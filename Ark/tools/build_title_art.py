@@ -3,6 +3,7 @@
 background.png: the real danger-band map (the same formula as DangerBands.java) drawn as faint
 contours over a dusk gradient, with dinosaur silhouettes cut from the creature previews.
 logo.png: the wordmark in Bitter (OFL, tools/fonts) in the showcase palette.
+ark_icon.png: the square mod icon (mod list logo for Ark and every Ark-branded integration).
 
 Run from Ark: python tools/build_title_art.py
 """
@@ -135,10 +136,33 @@ def logo():
     return out
 
 
+def icon(size=256):
+    """Basalt tile, ember rounded eight-point star (tools/ark_shapes.py) and an Ark 'A'."""
+    from ark_shapes import star_polygon
+    scale = 4
+    S = size * scale
+    img = Image.new('RGBA', (S, S))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((0, 0, S - 1, S - 1), radius=S // 6, fill=(31, 34, 29, 255))
+    # Faint danger contours across the tile.
+    for i, color in enumerate(RANKS):
+        r = S * (0.18 + 0.12 * i)
+        d.ellipse((S / 2 - r * 1.25, S * 0.62 - r, S / 2 + r * 1.25, S * 0.62 + r), outline=(*color, 60), width=scale * 2)
+    star = star_polygon(S / 2, S / 2, S * 0.40)
+    d.polygon(star, fill=(40, 30, 22, 255))
+    d.line(star + [star[0]], fill=(226, 118, 63, 255), width=scale * 9, joint='curve')
+    font = ImageFont.truetype(str(FONT), int(S * 0.42))
+    font.set_variation_by_axes([800])
+    d.text((S / 2, S / 2 + S * 0.02), 'A', font=font, fill=(230, 232, 225, 255), anchor='mm')
+    return img.resize((size, size), Image.Resampling.LANCZOS)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     background().save(OUT / 'background.png', optimize=True)
     logo().save(OUT / 'logo.png', optimize=True)
+    brand = icon()
+    brand.save(ROOT / 'src/main/resources/ark_icon.png', optimize=True)
     print(f'Wrote {OUT / "background.png"} and logo.png')
 
 

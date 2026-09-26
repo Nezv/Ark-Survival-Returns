@@ -143,19 +143,18 @@ def biome_tiers():
         path = GENERATED / f'data/arksurvivalreturns/tags/worldgen/biome/difficulty/{tier}.json'
         if not path.is_file():
             continue
-        names = [v.split(':')[1].replace('_', ' ') for v in load_json(path)['values']]
+        values = load_json(path)['values']
+        names = [v.split(':')[1].replace('_', ' ') for v in values if isinstance(v, str)]
+        extra = sum(1 for v in values if isinstance(v, dict))  # optional Terralith biomes (I08)
         color = RANK_COLORS[min(index, 4)] if tier != 'severe' else RANK_COLORS[4]
-        blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{tier.title()}</h4><p>{e(", ".join(names))}</p></div>')
+        more = f' <span class="chip">+{extra} Terralith</span>' if extra else ''
+        blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{tier.title()}</h4><p>{e(", ".join(names))}</p>{more}</div>')
     return '\n'.join(blocks)
 
 
 def starfish_path(cx, cy, radius):
-    points = []
-    for i in range(0, 360, 6):
-        t = math.radians(i)
-        r = radius * (0.80 + 0.16 * math.cos(5 * (t + math.pi / 2)))
-        points.append(f'{cx + r * math.cos(t):.1f},{cy + r * math.sin(t):.1f}')
-    return 'M' + ' L'.join(points) + ' Z'
+    from ark_shapes import star_path
+    return star_path(cx, cy, radius * 0.96)
 
 
 def trigger_text(trigger):
@@ -320,6 +319,34 @@ def ui_section():
     return uri(title, width=1160, quality=80), uri(ARK / 'design/ui-rework/ui-preview.png', 'PNG'), uri(parchment, 'PNG')
 
 
+STATUS_LABEL = {'integrated': ('ok', 'Integrated'), 'pinned': ('check', 'Pinned, tuning later'),
+                'planned-layout': ('check', 'Fork built, layout in test'), 'blocked': ('todo', 'Blocked')}
+BUILD_LABEL = {'release': 'Official release, Ark-branded', 'source': 'Built from source, Ark fork',
+               'embedded': 'Embedded in the Ark jar', 'shader': 'Shader pack, unmodified', 'blocked': 'No 26.1 build yet'}
+
+
+def integrations_section():
+    manifest = load_json(ARK / 'config/integrations.json')
+    cards = []
+    for integ in manifest['integrations']:
+        css, label = STATUS_LABEL.get(integ['status'], ('idea', integ['status']))
+        mods = []
+        for mod in integ['mods']:
+            source = mod.get('source', '')
+            link = f'<a href="{e(source)}" rel="noopener" target="_blank">source</a>' if source.startswith('http') else 'closed source'
+            mods.append(f'<li><b>{e(mod["arkName"])}</b><span class="muted">{e(BUILD_LABEL.get(mod.get("build", "release"), ""))}'
+                        f' · {e(mod.get("license", ""))} · {link}</span></li>')
+        cards.append(f'''<article class="integration">
+  <div class="integration-head"><code>{e(integ["id"])}</code><h3>{e(integ["title"])}</h3>
+    <span class="chip {css}">{e(label)}</span><span class="chip">{e(integ["side"])}</span></div>
+  <ul class="mods">{''.join(mods)}</ul>
+  <dl class="spec"><dt>Uses</dt><dd>{e(integ["uses"])}</dd><dt>Changed</dt><dd>{e(integ["changed"])}</dd>
+  <dt>Next</dt><dd>{e(integ["next"])}</dd></dl>
+</article>''')
+    count = sum(1 for i in manifest['integrations'] for m in i['mods'] if m.get('build') in ('release', 'source'))
+    return '\n'.join(cards), count
+
+
 def roadmap_section(rows):
     body = []
     for row in rows:
@@ -343,7 +370,8 @@ def build():
     title_shot, ui_sheet, nodes = ui_section()
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     item_count = len([p for p in (GENERATED / 'assets/arksurvivalreturns/items').glob('*.json') if not p.stem.endswith('spawn_egg')])
-    stats = [(len(species), 'creatures'), (5, 'danger ranks'), (len(tree['nodes']), 'tech nodes'), (5, 'journal chapters'),
+    integrations, integrated = integrations_section()
+    stats = [(len(species), 'creatures'), (5, 'danger ranks'), (len(tree['nodes']), 'tech nodes'), (integrated, 'integrated mods'),
              (item_count, 'items and blocks')]
     page = TEMPLATE
     replacements = {
@@ -358,8 +386,11 @@ def build():
         'ITEMS': items_section(names),
         'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
         'ROADMAP': roadmap_section(rows),
+        'INTEGRATIONS': integrations,
+        'ARKINVENTORY': uri(ARK / 'design/ui-rework/ark-inventory.png', 'PNG'),
         'DATE': datetime.date.today().isoformat(),
         'RANKCOLORS': json.dumps(RANK_COLORS), 'RANKNAMES': json.dumps(RANK_NAMES),
+        'STARPATH': starfish_path(30, 30, 27),
     }
     for key, value in replacements.items():
         page = page.replace('%%' + key + '%%', str(value))

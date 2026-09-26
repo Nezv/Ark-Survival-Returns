@@ -1,0 +1,7 @@
+{
+  "icon": "arksurvivalreturns:slot/empty_legs_slot",
+  "order": 185,
+  "validators": [
+    "curios:tag"
+  ]
+}

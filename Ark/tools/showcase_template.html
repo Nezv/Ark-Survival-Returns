@@ -176,6 +176,17 @@
   .spec dt { color: var(--muted); }
   .spec dd { margin: 0; }
 
+  /* integrations */
+  .integrations { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 16px; }
+  .integration { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 12px; align-content: start; }
+  .integration-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+  .integration-head h3 { font-size: 18px; margin-right: auto; }
+  .mods { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; }
+  .mods li { display: grid; gap: 1px; padding-left: 12px; border-left: 2px solid var(--line); }
+  .mods .muted { font-size: 13px; }
+  .integration .spec { font-size: 14px; }
+  @media (max-width: 760px) { .integrations { grid-template-columns: 1fr; } }
+
   /* roadmap */
   .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -193,7 +204,7 @@
     <nav class="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#progression">Progression</a>
       <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#items">Items</a>
-      <a href="#interface">Interface</a><a href="#roadmap">Roadmap</a>
+      <a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
     <button class="theme" id="theme" type="button">Theme: system</button>
   </div>
@@ -256,8 +267,8 @@
     <div><div class="eyebrow">Progression</div><h2>From a loose rock to the Iron Age</h2></div>
     <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds forty technologies over three ages. Each age starts at one gate and splits into three paths, and all three must be finished to open the next age. Progress is shared by your FTB team. Hover a node for its objective.</p>
     <div class="legend-key">
-      <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="M30 4 C36 22 38 22 56 22 C42 34 42 36 48 54 C34 44 26 44 12 54 C18 36 18 34 4 22 C22 22 24 22 30 4Z" fill="none" stroke="#e2763f" stroke-width="4"/></svg> Wired: completes from real gameplay</span>
-      <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="M30 4 C36 22 38 22 56 22 C42 34 42 36 48 54 C34 44 26 44 12 54 C18 36 18 34 4 22 C22 22 24 22 30 4Z" fill="none" stroke="#8a8f86" stroke-width="4" stroke-dasharray="6 4"/></svg> Planned: objective written, trigger pending</span>
+      <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#e2763f" stroke-width="4"/></svg> Wired: completes from real gameplay</span>
+      <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#8a8f86" stroke-width="4" stroke-dasharray="6 4"/></svg> Planned: objective written, trigger pending</span>
       <span>??? Secret bonus food</span>
     </div>
     %%TREE%%
@@ -324,14 +335,23 @@
           <dt>Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd>
           <dt>HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd>
           <dt>Tooltips</dt><dd>Basalt panel with a moss frame</dd>
-          <dt>Tech tree</dt><dd>Rounded starfish nodes that fill the screen height</dd>
+          <dt>Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd>
           <dt>Menus</dt><dd>FancyMenu title screen with the Ark background and logo</dd>
+          <dt>Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd>
+          <dt>Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd>
           <dt>Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd>
         </dl>
         <img class="pixel" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover">
         <p class="muted">Tech tree nodes: locked, ready, complete and hover.</p>
       </div>
     </div>
+  </section>
+
+  <section id="integrations">
+    <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
+    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name" with the Ark icon and a credit line; the original license and mod id stay intact. Where Ark needs code changes, the mod is built from its own source with Ark patches (<code>Ark/pack/patches</code>). <code>python Ark/tools/build_pack.py</code> assembles everything into a Modrinth pack.</p>
+    <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): crown, hat, necklace, shirt, belt, pants, socks and shoes beside the armour column; shield and charm under the player. Offline render of the texture and slot icons.</figcaption></figure>
+    <div class="integrations">%%INTEGRATIONS%%</div>
   </section>
 
   <section id="roadmap">

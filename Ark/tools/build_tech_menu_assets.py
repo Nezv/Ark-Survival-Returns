@@ -40,16 +40,12 @@ def art():
         x,y=rng.randrange(120),rng.randrange(128)
         d.line((x,y,x+rng.randrange(2,8),y),fill=(133,115,80,13))
     im.save(GUI/'parchment.png')
-    # Rounded starfish badges (user feedback on F01): the same silhouette in every state, and the
-    # hover highlight traces that silhouette. Drawn 4x and downsampled for smooth edges.
-    import math
+    # Rounded eight-point star badges (user reference on F01): the same silhouette in every state, and
+    # the hover highlight traces it. Geometry is shared with the showcase (tools/ark_shapes.py).
+    from ark_shapes import star_polygon
     def starfish(fill,outline,width,scale=1.0):
         S=256;big=Image.new('RGBA',(S,S));d=ImageDraw.Draw(big)
-        pts=[]
-        for i in range(360):
-            t=math.radians(i)
-            r=S*0.5*scale*(0.80+0.16*math.cos(5*(t+math.pi/2)))
-            pts.append((S/2+r*math.cos(t),S/2+r*math.sin(t)))
+        pts=star_polygon(S/2,S/2,S*0.5*scale)
         d.polygon(pts,fill=fill)
         d.line(pts+[pts[0]],fill=outline,width=width*4,joint='curve')
         return big.resize((64,64),Image.Resampling.LANCZOS)

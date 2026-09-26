@@ -21,8 +21,10 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
+        terralith = loadTerralith();
         tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); recovery(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
+        IntegrationData.generate(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
         files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
         // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
@@ -32,7 +34,36 @@ public final class ArkData implements DataProvider {
     }
     private void put(String path, Object value) { files.put(path + ".json", new Gson().toJsonTree(value)); }
     private void json(String path, String value) { files.put(path + ".json", JsonParser.parseString(value)); }
-    private void biomeTag(String name, String... values) { tag("worldgen/biome/" + name, values); }
+    /** Terralith biome -> closest vanilla analog (config/integrations/terralith-biomes.json, tools/build_biome_compat.py). */
+    private Map<String, String> terralith = Map.of();
+
+    private Map<String, String> loadTerralith() {
+        var path = output.getOutputFolder().getParent().getParent().getParent().resolve("config/integrations/terralith-biomes.json");
+        try {
+            var root = JsonParser.parseString(java.nio.file.Files.readString(path)).getAsJsonObject().getAsJsonObject("terralith");
+            var out = new TreeMap<String, String>();
+            root.entrySet().forEach(e -> out.put(e.getKey(), e.getValue().getAsJsonObject().get("analog").getAsString()));
+            return out;
+        } catch (java.io.IOException | RuntimeException missing) {
+            return Map.of();
+        }
+    }
+
+    /**
+     * Biome tags list vanilla biomes, plus every Terralith biome whose analog is listed. Terralith entries
+     * are optional, so the tag still loads without Terralith installed.
+     */
+    private void biomeTag(String name, String... values) {
+        var entries = new ArrayList<Object>();
+        var vanilla = new HashSet<String>();
+        for (String value : values) {
+            String id = value.contains(":") ? value : "minecraft:" + value;
+            entries.add(id);
+            vanilla.add(id);
+        }
+        terralith.forEach((biome, analog) -> { if (vanilla.contains(analog)) entries.add(Map.of("id", biome, "required", false)); });
+        put("data/" + NS + "/tags/worldgen/biome/" + name, Map.of("replace", false, "values", entries));
+    }
     private void tag(String name, String... values) {
         put("data/" + NS + "/tags/" + name, Map.of("replace", false, "values",
                 Arrays.stream(values).map(v -> v.contains(":") ? v : "minecraft:" + v).toList()));
@@ -1037,7 +1068,8 @@ public final class ArkData implements DataProvider {
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
-        for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates"))
+        for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
+                "integration_curios", "integration_toms_storage", "integration_terralith"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));

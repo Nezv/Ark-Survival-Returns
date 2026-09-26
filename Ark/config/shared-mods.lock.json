@@ -1,7 +1,7 @@
 {
   "minecraft": "26.1.2",
   "loader": "neoforge",
-  "verified": "2026-09-20",
+  "verified": "2026-09-25",
   "note": "Client and server gameplay stack for the survival journal. Files are downloaded from the publisher, never redistributed.",
   "entries": [
     {
@@ -59,6 +59,61 @@
       "kind": "shared",
       "license": "MIT",
       "source": "https://modrinth.com/mod/jei"
+    },
+    {
+      "project": "toms-storage",
+      "version": "26.1-2.10.2",
+      "versionId": "4gfSOCkU",
+      "filename": "toms_storage-26.1-2.10.2.jar",
+      "url": "https://cdn.modrinth.com/data/XZNI4Cpy/versions/4gfSOCkU/toms_storage-26.1-2.10.2.jar",
+      "sha512": "6289518633a834bc85b300cbde94960f567902d9b8ffd523c8930e87cf686b97555d43dd492cce112f2a91166a8cc98a34d72f4fe8e93908b79802d0866f690a",
+      "size": 861270,
+      "kind": "shared",
+      "source": "https://modrinth.com/mod/toms-storage"
+    },
+    {
+      "project": "curios",
+      "version": "15.0.0+26.1.2",
+      "versionId": "dRnRThvD",
+      "filename": "curios-neoforge-15.0.0+26.1.2.jar",
+      "url": "https://cdn.modrinth.com/data/vvuO3ImH/versions/dRnRThvD/curios-neoforge-15.0.0%2B26.1.2.jar",
+      "sha512": "0b1a79e78e74e1fd45fe70264ac69329432199ea9e21dfae01a3435b5da8b153b4b218276091b2fa82de6cf40a42273af2b2cbc84667b3b5de2f9c932b4551db",
+      "size": 441630,
+      "kind": "shared",
+      "source": "https://modrinth.com/mod/curios"
+    },
+    {
+      "project": "lithostitched",
+      "version": "1.8.0-neoforge-26.1",
+      "versionId": "jsm1eBZo",
+      "filename": "lithostitched-1.8.0-neoforge-26.1.jar",
+      "url": "https://cdn.modrinth.com/data/XaDC71GB/versions/jsm1eBZo/lithostitched-1.8.0-neoforge-26.1.jar",
+      "sha512": "6a9cbe420832a6aa7ca3d5e28e65a11ee09f12942f48491744599733ceaee1606401dac563f261cb29efd698bdeb84dc97d05bd0a97bafffa0224e562184cbac",
+      "size": 1021057,
+      "kind": "shared",
+      "source": "https://modrinth.com/mod/lithostitched"
+    },
+    {
+      "project": "tectonic",
+      "version": "3.0.28-neoforge-26.1",
+      "versionId": "RNLd3nvP",
+      "filename": "tectonic-3.0.28-neoforge-26.1.jar",
+      "url": "https://cdn.modrinth.com/data/lWDHr9jE/versions/RNLd3nvP/tectonic-3.0.28-neoforge-26.1.jar",
+      "sha512": "edeeffa06fd75d4578d7c6490a229b5694dec602ad3f164a8757b9d4894570ad777a33ebf3c712a97d09094627841c450a32cae40219c74d131b8093cf3fdeff",
+      "size": 447700,
+      "kind": "shared",
+      "source": "https://modrinth.com/mod/tectonic"
+    },
+    {
+      "project": "terralith",
+      "version": "2.6.2",
+      "versionId": "4xxRkKvw",
+      "filename": "Terralith_26.1_v2.6.2_Neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/8oi3bsk5/versions/4xxRkKvw/Terralith_26.1_v2.6.2_Neoforge.jar",
+      "sha512": "160f310b1c45fea4799ceeb1245d30f62e48852e620a46e1f1e08891bc9537019cae28d68161d3c92920505cec155a7e102b31d8555b769755d559217ecb6fa2",
+      "size": 2976792,
+      "kind": "shared",
+      "source": "https://modrinth.com/mod/terralith"
     }
   ]
 }

@@ -1,0 +1,277 @@
+diff --git a/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreen.java b/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreen.java
+index 435dd0c..a517ad8 100644
+--- a/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreen.java
++++ b/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreen.java
+@@ -59,6 +59,7 @@ import top.theillusivec4.curios.client.screen.button.ICuriosWidget;
+ import top.theillusivec4.curios.client.screen.button.PageButton;
+ import top.theillusivec4.curios.client.screen.button.RenderButton;
+ import top.theillusivec4.curios.common.inventory.CurioSlot;
++import top.theillusivec4.curios.common.inventory.container.ArkLayout;
+ import top.theillusivec4.curios.common.inventory.container.CuriosMenu;
+ import top.theillusivec4.curios.common.network.client.CPacketPage;
+ import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
+@@ -72,6 +73,10 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+   static final Identifier CURIO_INVENTORY =
+       Identifier.fromNamespaceAndPath(
+           CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
++  /** Ark: the widened inventory panel with the curio columns beside the armour. */
++  static final Identifier ARK_INVENTORY =
++      Identifier.fromNamespaceAndPath(
++          CuriosConstants.MOD_ID, "textures/gui/curios/ark_inventory.png");
+ 
+   private final EffectsInInventory effects;
+   private final List<ItemSlotMouseAction> itemSlotMouseActions;
+@@ -88,7 +93,8 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+ 
+   public CuriosScreen(CuriosMenu curiosMenu, Inventory playerInventory, Component title) {
+     super(curiosMenu, new CraftingRecipeBookComponent(curiosMenu), playerInventory, title);
+-    this.titleLabelX = 97;
++    this.imageWidth = ArkLayout.WIDTH;
++    this.titleLabelX = ArkLayout.TITLE_X;
+     this.effects = new EffectsInInventory(this);
+     this.itemSlotMouseActions = new ArrayList<>();
+   }
+@@ -137,7 +143,7 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+   @Nonnull
+   @Override
+   protected ScreenPosition getRecipeBookButtonPosition() {
+-    return new ScreenPosition(this.leftPos + 104, this.height / 2 - 22);
++    return new ScreenPosition(this.leftPos + ArkLayout.RECIPE_BUTTON_X, this.height / 2 - 22);
+   }
+ 
+   public void updateRenderButtons() {
+@@ -166,7 +172,9 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+ 
+     for (Slot inventorySlot : this.menu.slots) {
+ 
+-      if (inventorySlot instanceof CurioSlot curioSlot && curioSlot.canToggleRender()) {
++      // Ark: slots in the fixed layout sit edge to edge, so their render toggles stay hidden.
++      if (inventorySlot instanceof CurioSlot curioSlot && curioSlot.canToggleRender()
++          && ArkLayout.position(curioSlot.getIdentifier(), curioSlot.getSlotIndex()) == null) {
+         this.addRenderableWidget(
+             new RenderButton(
+                 curioSlot,
+@@ -306,7 +314,7 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+ 
+   @Override
+   protected void extractLabels(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+-    guiGraphics.text(this.font, this.title, 97, 6, -12566464, false);
++    guiGraphics.text(this.font, this.title, ArkLayout.TITLE_X, 6, -12566464, false);
+   }
+ 
+   /**
+@@ -325,14 +333,14 @@ public class CuriosScreen extends AbstractRecipeBookScreen<CuriosMenu>
+       this.panelWidth = this.menu.panelWidth;
+       int i = this.leftPos;
+       int j = this.topPos;
+-      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i, j, 0, 0, 176,
++      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ARK_INVENTORY, i, j, 0, 0, ArkLayout.WIDTH,
+           this.imageHeight, 256, 256);
+       InventoryScreen.extractEntityInInventoryFollowsMouse(
+           guiGraphics,
+-          i + 26,
+-          j + 8,
+-          i + 75,
+-          j + 78,
++          i + ArkLayout.PLAYER_X0,
++          j + ArkLayout.PLAYER_Y0,
++          i + ArkLayout.PLAYER_X1,
++          j + ArkLayout.PLAYER_Y1,
+           30,
+           0.0625F,
+           mouseX,
+diff --git a/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreenEvents.java b/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreenEvents.java
+index e29b06f..59e3654 100644
+--- a/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreenEvents.java
++++ b/src/main/java/top/theillusivec4/curios/client/screen/CuriosScreenEvents.java
+@@ -30,6 +30,8 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+ import net.minecraft.util.Tuple;
+ import net.minecraft.world.inventory.Slot;
+ import net.neoforged.bus.api.SubscribeEvent;
++import top.theillusivec4.curios.common.network.client.CPacketOpenCurios;
++import net.minecraft.world.item.ItemStack;
+ import net.neoforged.neoforge.client.event.ScreenEvent;
+ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+ import org.lwjgl.glfw.GLFW;
+@@ -39,6 +41,20 @@ import top.theillusivec4.curios.config.CuriosClientConfig;
+ 
+ public class CuriosScreenEvents {
+ 
++  /**
++   * Ark: the survival inventory key opens the Ark layout (vanilla inventory, armour, crafting and the
++   * curio slots in one screen) instead of the plain vanilla inventory. Creative mode is unchanged.
++   */
++  @SubscribeEvent
++  public void openArkInventory(final ScreenEvent.Opening evt) {
++
++    if (evt.getNewScreen() instanceof InventoryScreen && Minecraft.getInstance().player != null
++        && !Minecraft.getInstance().player.isSpectator()) {
++      evt.setCanceled(true);
++      ClientPacketDistributor.sendToServer(new CPacketOpenCurios(ItemStack.EMPTY));
++    }
++  }
++
+   @SubscribeEvent
+   public void postScreenInit(final ScreenEvent.Init.Post evt) {
+     Screen screen = evt.getScreen();
+diff --git a/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java b/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java
+new file mode 100644
+index 0000000..c41b2b8
+--- /dev/null
++++ b/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java
+@@ -0,0 +1,47 @@
++package top.theillusivec4.curios.common.inventory.container;
++
++import java.util.Map;
++
++/**
++ * Ark Survival Returns inventory layout (Ark fork of Curios).
++ *
++ * <p>The curio slots join the armour column in a 3 x 4 grid left of the player: head, necklace, belt and
++ * feet in the first column, the second head, body, legs and second feet in the second, armour in the
++ * third. The shield and the charm sit under the player, the crafting grid moves right. Any curio slot
++ * without a place here (another mod's slot, or a size above the layout) falls back to the side panel.
++ */
++public final class ArkLayout {
++  public static final int WIDTH = 212;
++  public static final int ARMOR_X = 44;
++  public static final int OFFHAND_X = 116;
++  public static final int OFFHAND_Y = 62;
++  public static final int CRAFT_X = 134;
++  public static final int CRAFT_Y = 18;
++  public static final int RESULT_X = 190;
++  public static final int RESULT_Y = 28;
++  public static final int INVENTORY_X = 26;
++  public static final int INVENTORY_Y = 84;
++  public static final int PLAYER_X0 = 62;
++  public static final int PLAYER_Y0 = 8;
++  public static final int PLAYER_X1 = 113;
++  public static final int PLAYER_Y1 = 78;
++  public static final int TITLE_X = 133;
++  public static final int RECIPE_BUTTON_X = 154;
++
++  private static final Map<String, int[][]> CURIOS = Map.of(
++      "head", new int[][] {{8, 8}, {26, 8}},
++      "necklace", new int[][] {{8, 26}},
++      "body", new int[][] {{26, 26}},
++      "belt", new int[][] {{8, 44}},
++      "legs", new int[][] {{26, 44}},
++      "feet", new int[][] {{8, 62}, {26, 62}},
++      "charm", new int[][] {{134, 62}});
++
++  /** The fixed position of a curio slot, or null when it belongs in the side panel. */
++  public static int[] position(String identifier, int index) {
++    int[][] places = CURIOS.get(identifier);
++    return places != null && index < places.length ? places[index] : null;
++  }
++
++  private ArkLayout() {}
++}
+diff --git a/src/main/java/top/theillusivec4/curios/common/inventory/container/CuriosMenu.java b/src/main/java/top/theillusivec4/curios/common/inventory/container/CuriosMenu.java
+index 144416a..1d3f229 100644
+--- a/src/main/java/top/theillusivec4/curios/common/inventory/container/CuriosMenu.java
++++ b/src/main/java/top/theillusivec4/curios/common/inventory/container/CuriosMenu.java
+@@ -92,6 +92,25 @@ public class CuriosMenu extends AbstractCraftingMenu implements ICuriosMenu {
+     this.resetSlots();
+   }
+ 
++  /** Ark: visible curio slots that the Ark layout places beside the armour column. */
++  private int arkPlacedSlots() {
++    int placed = 0;
++
++    for (Map.Entry<String, ICurioStacksHandler> entry : this.curiosHandler.getCurios().entrySet()) {
++      if (!entry.getValue().isVisible()) {
++        continue;
++      }
++      int size = entry.getValue().getStacks().getSlots();
++
++      for (int i = 0; i < size; i++) {
++        if (ArkLayout.position(entry.getKey(), i) != null) {
++          placed++;
++        }
++      }
++    }
++    return placed;
++  }
++
+   public void setPage(int page) {
+     this.panelWidth = 0;
+     int visibleSlots = 0;
+@@ -100,27 +119,28 @@ public class CuriosMenu extends AbstractCraftingMenu implements ICuriosMenu {
+     int columns = 0;
+ 
+     if (this.curiosHandler != null) {
+-      visibleSlots = this.curiosHandler.getVisibleSlots();
++      // Ark: slots with a fixed place in the Ark layout never take room in the side panel.
++      visibleSlots = this.curiosHandler.getVisibleSlots() - this.arkPlacedSlots();
+       int slotsOnPage = Math.min(maxSlotsPerPage, visibleSlots - startingIndex);
+       int calculatedColumns = (int) Math.ceil((double) slotsOnPage / 8);
+       int minimumColumns = Math.min(slotsOnPage, CuriosConfig.SERVER.minimumColumns.get());
+       columns = Mth.clamp(calculatedColumns, minimumColumns, 8);
+-      this.panelWidth = 14 + 18 * columns;
++      this.panelWidth = slotsOnPage > 0 ? 14 + 18 * columns : 0;
+     }
+     this.slots.clear();
+     this.lastSlots.clear();
+     this.remoteSlots.clear();
+-    this.addResultSlot(player, 154, 28);
+-    this.addCraftingGridSlots(98, 18);
++    this.addResultSlot(player, ArkLayout.RESULT_X, ArkLayout.RESULT_Y);
++    this.addCraftingGridSlots(ArkLayout.CRAFT_X, ArkLayout.CRAFT_Y);
+ 
+     for (int i = 0; i < 4; i++) {
+       EquipmentSlot equipmentslot = InventoryMenu.SLOT_IDS[i];
+       Identifier resourcelocation = InventoryMenu.TEXTURE_EMPTY_SLOTS.get(equipmentslot);
+-      this.addSlot(new ArmorSlot(this.player.getInventory(), this.player, equipmentslot, 39 - i, 8,
+-                                 8 + i * 18, resourcelocation));
++      this.addSlot(new ArmorSlot(this.player.getInventory(), this.player, equipmentslot, 39 - i,
++                                 ArkLayout.ARMOR_X, 8 + i * 18, resourcelocation));
+     }
+-    this.addStandardInventorySlots(this.player.getInventory(), 8, 84);
+-    this.addSlot(new Slot(this.player.getInventory(), 40, 77, 62) {
++    this.addStandardInventorySlots(this.player.getInventory(), ArkLayout.INVENTORY_X, ArkLayout.INVENTORY_Y);
++    this.addSlot(new Slot(this.player.getInventory(), 40, ArkLayout.OFFHAND_X, ArkLayout.OFFHAND_Y) {
+ 
+       @Override
+       public void setByPlayer(@Nonnull ItemStack newStack, @Nonnull ItemStack oldStack) {
+@@ -169,6 +189,14 @@ public class CuriosMenu extends AbstractCraftingMenu implements ICuriosMenu {
+         if (stacksHandler.isVisible()) {
+ 
+           for (int i = 0; i < stackHandler.getSlots(); i++) {
++            int[] place = ArkLayout.position(identifier, i);
++
++            if (place != null) {
++              this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, place[0], place[1],
++                                         stacksHandler.getRenders(), stacksHandler.getActiveStates(),
++                                         stacksHandler.canToggleRendering(), isCosmetic));
++              continue;
++            }
+ 
+             if (index >= startingIndex && index < endingIndex) {
+ 
+diff --git a/src/main/java/top/theillusivec4/curios/config/CuriosClientConfig.java b/src/main/java/top/theillusivec4/curios/config/CuriosClientConfig.java
+index 2d14d8e..d5c3cb0 100644
+--- a/src/main/java/top/theillusivec4/curios/config/CuriosClientConfig.java
++++ b/src/main/java/top/theillusivec4/curios/config/CuriosClientConfig.java
+@@ -54,7 +54,7 @@ public class CuriosClientConfig {
+       renderCurios = builder.comment("Set to true to enable rendering curios")
+           .translation(CONFIG_PREFIX + "renderCurios").define("renderCurios", true);
+       enableButton = builder.comment("Set to true to enable the Curios GUI button")
+-          .translation(CONFIG_PREFIX + "enableButton").define("enableButton", true);
++          .translation(CONFIG_PREFIX + "enableButton").define("enableButton", false); // Ark: E opens the Ark layout
+       buttonXOffset = builder.comment("The X-Offset for the Curios GUI button")
+           .translation(CONFIG_PREFIX + "buttonXOffset")
+           .defineInRange("buttonXOffset", 0, -100, 100);
+diff --git a/src/main/resources/META-INF/accesstransformer.cfg b/src/main/resources/META-INF/accesstransformer.cfg
+index 57a3e26..6b658e8 100644
+--- a/src/main/resources/META-INF/accesstransformer.cfg
++++ b/src/main/resources/META-INF/accesstransformer.cfg
+@@ -27,4 +27,6 @@ public-f net.minecraft.world.inventory.AbstractContainerMenu containerId
+ public net.minecraft.world.inventory.AbstractContainerMenu remoteSlots
+ 
+ public net.minecraft.world.inventory.InventoryMenu TEXTURE_EMPTY_SLOTS
+-public net.minecraft.world.inventory.InventoryMenu SLOT_IDS
+\ No newline at end of file
++public net.minecraft.world.inventory.InventoryMenu SLOT_IDS
++# Ark: the Ark inventory layout is wider than the vanilla 176 px panel
++public-f net.minecraft.client.gui.screens.inventory.AbstractContainerScreen imageWidth

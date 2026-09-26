@@ -61,7 +61,8 @@ def verify():
     assert actual == expected, f"Unreviewed/missing client JARs: {actual ^ expected}"
     for owner, required in requirements:
         assert required in mods or required in {"minecraft", "neoforge"}, f"{owner} requires missing {required}"
-    print(f"Verified {len(expected)} pinned NeoForge JARs, one shader pack, checksums and required mod IDs.")
+    shaders = sum(1 for entry in manifest["entries"] if entry["kind"] == "shader")
+    print(f"Verified {len(expected)} pinned NeoForge JARs, {shaders} shader packs, checksums and required mod IDs.")
     print("Embedded XaeroLib:", mods["xaerolib"])
     print("Rendering/audio compatibility still requires the user's client playtest.")
 

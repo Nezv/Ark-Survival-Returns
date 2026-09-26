@@ -1,2 +1,4 @@
 # Preserve the exact exported inputs used by the recorded SHA-256 checks.
 Creatures/**/source/** -text
+# Fork patches must apply byte-for-byte (Ark/tools/build_pack.py)
+Ark/pack/patches/** -text

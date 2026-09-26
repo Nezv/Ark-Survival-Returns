@@ -1,10 +1,11 @@
 license="${mod_license}"
+logoFile="ark_icon.png"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="Nez"
-description='Prehistoric wildlife, biome danger, creature levels and wild berries.'
+description='''ARK-style survival for Minecraft: 41 prehistoric creatures, hidden danger zones, taming and riding, tribes, and a three-age progression from a loose rock to the Iron Age.'''
 [[mixins]]
 config="arksurvivalreturns.mixins.json"
 [[dependencies.${mod_id}]]
@@ -30,4 +31,22 @@ modId="geckolib"
 type="required"
 versionRange="[5.5.2,6)"
 ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="curios"
+type="optional"
+versionRange="[15,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="toms_storage"
+type="optional"
+versionRange="[2.10,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="terralith"
+type="optional"
+versionRange="[2.6,)"
+ordering="NONE"
 side="BOTH"

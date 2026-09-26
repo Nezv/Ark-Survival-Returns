@@ -90,6 +90,28 @@
       "size": 47054,
       "kind": "mod",
       "source": "https://modrinth.com/mod/melody"
+    },
+    {
+      "project": "distanthorizons",
+      "version": "3.3.2-26.1.2",
+      "versionId": "8lNwBMTz",
+      "filename": "DistantHorizons-3.3.2-26.1.2-fabric-neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/uCdwusMi/versions/8lNwBMTz/DistantHorizons-3.3.2-26.1.2-fabric-neoforge.jar",
+      "sha512": "b521e03371664fcf29bfb935857e30a7bde4e749fab8798760d75c588b5e6dfb55834f877bfb9b34f15d16c097845672542fa7ae931c0fc97afe35efc7f1e464",
+      "size": 28217816,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/distanthorizons"
+    },
+    {
+      "project": "bliss-shader",
+      "version": "2.1.2",
+      "versionId": "kC2Y8q1P",
+      "filename": "Bliss_v2.1.2_(Chocapic13_Shaders_edit).zip",
+      "url": "https://cdn.modrinth.com/data/ZvMtQlho/versions/kC2Y8q1P/Bliss_v2.1.2_%28Chocapic13_Shaders_edit%29.zip",
+      "sha512": "dafc60be4980ec40f40edc0f2625cb0976f3c9ce5ed86383146a120480826bb1de70ef5e38b7f1437294ed4d38c6ef3c82ebef0ae4e00b8cee165788c9c18280",
+      "size": 1791406,
+      "kind": "shader",
+      "source": "https://modrinth.com/shader/bliss-shader"
     }
   ]
 }
