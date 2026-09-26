@@ -1,0 +1,75 @@
+/* Workstation spine (tools/spine.js). The page maps the --sp-* tokens onto its own palette and fonts. */
+.sp-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px 28px; }
+.sp-legend h4 { font: 600 12px var(--sp-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--sp-ink2); margin: 0 0 8px; }
+.sp-legend ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.sp-legend li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+.sp-legend svg { flex: none; }
+.sp-trace { margin: 0; font-size: 13px; color: var(--sp-ink2); min-height: 1.6em; }
+.sp-trace b { color: var(--sp-ink); font-weight: 600; font-family: var(--sp-mono); }
+.sp-scroll { overflow-x: auto; }
+.sp-scroll svg { display: block; width: 100%; min-width: 1100px; height: auto; }
+.sp-notes { margin: 12px 0 0; padding-left: 2.2em; columns: 2 460px; column-gap: 36px; font-size: 13px; color: var(--sp-ink2); }
+.sp-notes li { break-inside: avoid; margin-bottom: 6px; }
+.sp-notes li::marker { font: 600 12px var(--sp-mono); color: var(--sp-ink); }
+
+.sp-chip { cursor: pointer; transition: opacity .15s; }
+.sp-chip .sp-shape { fill: var(--sp-chip); stroke: var(--sp-ink2); stroke-width: 1; }
+.sp-in .sp-shape { stroke: var(--sp-ink); stroke-width: 1.2; }
+.sp-world .sp-shape { fill: transparent; stroke: var(--sp-ink2); stroke-dasharray: 3 2.5; }
+.sp-world .sp-label { font-style: italic; }
+.sp-out.st-you .sp-shape { stroke: var(--sp-you); stroke-width: 2; }
+.sp-out.st-now .sp-shape { stroke: var(--sp-now); }
+.sp-out.st-prop .sp-shape { stroke: var(--sp-prop); stroke-width: 1.6; stroke-dasharray: 5 3; }
+.sp-out.st-change .sp-shape { stroke: var(--sp-change); stroke-width: 2; }
+.sp-out.st-cut .sp-shape { stroke: var(--sp-cut); stroke-dasharray: 2 2; }
+.sp-out.st-block .sp-shape, .sp-out.st-tbd .sp-shape { stroke-width: 2; stroke-dasharray: .5 3.5; stroke-linecap: round; }
+.sp-out.st-block .sp-shape { stroke: var(--sp-cut); }
+.sp-out.st-tbd .sp-shape { stroke: var(--sp-tbd); }
+.sp-strike { stroke: var(--sp-cut); stroke-width: 1.4; }
+.sp-label { font: 500 12px var(--sp-body); fill: var(--sp-ink); }
+.sp-ch, .sp-plus { font: 500 10px var(--sp-mono); fill: var(--sp-ink2); }
+.sp-plus { font-size: 12px; }
+.sp-val { font: 400 9.5px var(--sp-mono); fill: var(--sp-ink2); }
+.sp-wire { stroke: var(--sp-wire); stroke-width: 1.5; fill: none; transition: opacity .15s; }
+.sp-wire.st-you { stroke: var(--sp-you); }
+.sp-wire.st-prop { stroke: var(--sp-prop); stroke-dasharray: 5 3; }
+.sp-wire.st-change { stroke: var(--sp-change); }
+.sp-wire.st-cut { stroke: var(--sp-cut); stroke-dasharray: 2 2; }
+.sp-wire.st-block { stroke: var(--sp-cut); stroke-dasharray: 1 3; }
+.sp-wire.st-tbd { stroke: var(--sp-tbd); stroke-dasharray: 1 3; }
+.sp-node { fill: var(--sp-sheet); stroke: var(--sp-ink); stroke-width: 2; }
+.sp-node.sp-gate { fill: var(--sp-gate); }
+.sp-node.sp-cutnode { stroke: var(--sp-cut); stroke-dasharray: 7 4; }
+.sp-name { font: 700 17px var(--sp-display); fill: var(--sp-ink); letter-spacing: .04em; }
+.sp-cutname { text-decoration: line-through; }
+.sp-sub { font: 400 10px var(--sp-mono); fill: var(--sp-ink2); }
+.sp-hrule { stroke: var(--sp-rule); stroke-width: 1; }
+.sp-pin { fill: var(--sp-ink); }
+.sp-step { font: 500 10px var(--sp-mono); fill: var(--sp-now); }
+.sp-step.st-you { fill: var(--sp-you); font-weight: 600; }
+.sp-step.st-prop { fill: var(--sp-prop); } .sp-step.st-change { fill: var(--sp-change); }
+.sp-step.st-cut, .sp-step.st-block { fill: var(--sp-cut); } .sp-step.st-tbd { fill: var(--sp-tbd); }
+.sp-op { font: 400 10px var(--sp-mono); fill: var(--sp-ink2); }
+.sp-spine { stroke: var(--sp-ink); stroke-width: 3; }
+.sp-arrowhead { fill: var(--sp-ink); }
+.sp-divider line { stroke: var(--sp-ink2); stroke-dasharray: 6 5; }
+.sp-divider text { font: 500 11px var(--sp-mono); fill: var(--sp-ink2); letter-spacing: .1em; }
+.sp-hatch-bg { fill: var(--sp-chip); }
+.sp-hatch-line { stroke: var(--sp-change); stroke-width: 1.5; }
+.sp-standin { fill: var(--sp-change); }
+.sp-cube { fill: none; stroke: var(--sp-ink2); stroke-width: 1.1; stroke-linejoin: round; }
+.sp-glyphgrid { fill: var(--sp-chip); stroke: var(--sp-ink); stroke-width: 1.3; }
+.sp-glyphtxt { font: 500 18px var(--sp-mono); fill: var(--sp-ink); }
+.sp-nmark circle { fill: var(--sp-sheet); stroke: var(--sp-ink2); }
+.sp-nmark text { font: 600 9px var(--sp-mono); fill: var(--sp-ink2); }
+.sp-tb rect { fill: var(--sp-sheet); stroke: var(--sp-ink); stroke-width: 1.5; }
+.sp-tb line { stroke: var(--sp-ink); stroke-width: 1; }
+.sp-tb .sp-k { font: 500 8.5px var(--sp-mono); fill: var(--sp-ink2); letter-spacing: .08em; }
+.sp-tb .sp-v { font: 600 14px var(--sp-display); fill: var(--sp-ink); letter-spacing: .02em; }
+.sp-tbnote { font: 400 11px var(--sp-body); fill: var(--sp-ink2); }
+svg.sp-tracing .sp-chip:not(.sp-hot) { opacity: .18; }
+svg.sp-tracing .sp-wire, svg.sp-tracing .sp-plus { opacity: .3; }
+.sp-chip.sp-hot .sp-shape { stroke: var(--sp-wire); stroke-width: 2.6; stroke-dasharray: none; }
+.sp-chip:focus { outline: none; }
+.sp-chip:focus-visible .sp-shape { stroke: var(--sp-prop); stroke-width: 2.6; }
+@media (prefers-reduced-motion: reduce) { .sp-chip, .sp-wire { transition: none; } }

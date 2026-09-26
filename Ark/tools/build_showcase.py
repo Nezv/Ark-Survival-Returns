@@ -3,9 +3,11 @@
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
 (design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
-journal chapters, item sprites and names, block renders, the Ark UI previews and Dashboard.csv for the roadmap.
+journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the recipe-gate
+spine (build_item_flow.py, drawn by spine.js), the Ark UI previews and Dashboard.csv for the roadmap.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
-renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline.
+renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
+the nav, the home index and the pager switch between them.
 
 Vanilla item sprites come from the Minecraft sources jar that a Gradle build unpacks. Without it (a fresh
 checkout), the sprites the current page already shows are carried over instead of dropped.
@@ -516,21 +518,33 @@ def items_section(names):
 
 
 def blocks_section():
-    ortho = ARK / 'design/prehistoric-camp/orthographic'
-    renders = [('stone_fire_lit', 'Stone Fire, lit', 'In game'), ('stone_fire_cooked', 'Stone Fire, meat on the spit', 'In game'),
-               ('primitive_forge_lit_front', 'Primitive Forge, two blocks tall', 'In game'), ('primitive_bedroll', 'Primitive Bedroll, two blocks long', 'In game'),
-               ('pot_on_fire_stew', 'Clay pot on the fire', 'Design'), ('mortar_berry_whole', 'Mortar and pestle', 'Design (B02)')]
-    figs = []
-    for key, caption, status in renders:
-        path = ortho / f'{key}.png'
-        if path.is_file():
-            image = Image.open(path).convert('RGBA')
-            image = image.crop(image.getbbox())
-            image.thumbnail((360, 260), Image.Resampling.LANCZOS)
-            figs.append(f'<figure class="render"><img loading="lazy" src="{uri(image)}" alt="{e(caption)}"><figcaption>{e(caption)}'
-                        f'<span class="chip {"ok" if status == "In game" else "idea"}">{e(status)}</span></figcaption></figure>')
-    camp = uri(ARK / 'docs/camp-assets.png', width=1160, quality=80)
-    return '\n'.join(figs), camp
+    """One card per Ark block, each rendered the same way from the model the game ships."""
+    import render_blocks
+    cards = []
+    for (key, name, status, size, recipe, text, _), tile in render_blocks.renders():
+        css = 'ok' if status == 'In game' else 'idea'
+        cards.append(f'''<article class="dino block-card">
+  <div class="dino-art"><img loading="lazy" src="{uri(tile)}" alt="{e(name)} model"></div>
+  <div class="dino-body">
+    <div class="dino-head"><h3>{e(name)}</h3><span class="chip {css}">{e(status)}</span></div>
+    <p class="muted">{e(text)}</p>
+    <dl><div><dt>Size</dt><dd>{e(size)}</dd></div><div><dt>Made from</dt><dd>{e(recipe)}</dd></div></dl>
+  </div>
+</article>''')
+    return '\n'.join(cards)
+
+
+def spine_section():
+    """The recipe-gate spine from the Recipe Gates chart, with its notes and open decisions."""
+    import build_item_flow as flow
+    data, notes = flow.spine_payload()
+    css, js = flow.spine_assets()
+    return {
+        'SPINECSS': css, 'SPINEJS': js,
+        'SPINEDATA': json.dumps(data, ensure_ascii=False, separators=(',', ':')),
+        'SPINELEGEND': flow.legend_html(), 'SPINENOTES': flow.notes_html(notes), 'SPINENOTECOUNT': len(notes),
+        'SPINEDECISIONS': flow.decisions_html(),
+    }
 
 
 def ui_section():
@@ -603,7 +617,6 @@ def build():
     rows = dashboard()
     hero = uri(ASSETS / 'textures/gui/title/background.png', width=1600, quality=78)
     logo = uri(ASSETS / 'textures/gui/title/logo.png', 'PNG', width=900)
-    renders, camp = blocks_section()
     title_shot, ui_sheet, nodes = ui_section()
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     item_count = len([p for p in (GENERATED / 'assets/arksurvivalreturns/items').glob('*.json') if not p.stem.endswith('spawn_egg')])
@@ -618,9 +631,9 @@ def build():
         'HABITATS': habitats_section(species),
         **behavior_section(names, species),
         'TREE': tree_section(),
-        'FLOW': e((ARK / 'design/showcase/prehistoric-gates.mmd').read_text(encoding='utf-8')),
+        **spine_section(),
         'JOURNAL': journal_section(),
-        'RENDERS': renders, 'CAMP': camp,
+        'BLOCKS': blocks_section(),
         'ITEMS': items_section(names),
         'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
         'ROADMAP': roadmap_section(rows),

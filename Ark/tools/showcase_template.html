@@ -24,6 +24,8 @@
     --check: #9a6a12;
     --idea: #5d5f86;
     --todo: #8a4a2c;
+    --blue: #2c5fb3;
+    --red: #b3261e;
     --display: "Bitter", Georgia, serif;
     --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
     --mono: "JetBrains Mono", Consolas, monospace;
@@ -33,12 +35,14 @@
       color-scheme: dark;
       --bg: #161814; --surface: #1f221d; --raised: #1b1e19; --ink: #e6e8e1; --muted: #a2a79c; --line: #363a32;
       --ember: #e2763f; --moss: #8fb07f; --chip: #2a2e27; --ok: #8fb07f; --check: #e0b458; --idea: #a9abd6; --todo: #e59a74;
+      --blue: #7ea8ff; --red: #ff7163;
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
     --bg: #161814; --surface: #1f221d; --raised: #1b1e19; --ink: #e6e8e1; --muted: #a2a79c; --line: #363a32;
     --ember: #e2763f; --moss: #8fb07f; --chip: #2a2e27; --ok: #8fb07f; --check: #e0b458; --idea: #a9abd6; --todo: #e59a74;
+    --blue: #7ea8ff; --red: #ff7163;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 64px; }
@@ -208,24 +212,35 @@
   .node-info b { font: 700 17px var(--display); }
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
-  .flow { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; }
-  .flow pre { margin: 0; font: 12px var(--mono); color: var(--muted); white-space: pre-wrap; }
-  #flow-svg { min-width: 980px; }
-  #flow-svg svg { display: block; margin: 0 auto; }
-  .flow svg { max-width: 100%; height: auto; }
+
+  /* recipe-gate spine (tools/spine.css), mapped onto this page's palette */
+  .spine-box { --sp-ink: var(--ink); --sp-ink2: var(--muted); --sp-rule: var(--line); --sp-wire: var(--moss); --sp-chip: var(--surface);
+               --sp-sheet: var(--surface); --sp-gate: var(--raised); --sp-you: var(--ink); --sp-prop: var(--blue);
+               --sp-now: color-mix(in srgb, var(--muted) 60%, var(--surface)); --sp-change: var(--check); --sp-cut: var(--red);
+               --sp-tbd: var(--idea); --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
+               display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .spine-box details { border-top: 1px solid var(--line); padding-top: 10px; }
+  .spine-box summary { cursor: pointer; font: 600 15px var(--display); }
+  .qs { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 28px; }
+  .q { border-top: 1px solid var(--line); padding-block: 12px; }
+  .qhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+  .qhead h3 { font-size: 16px; }
+  .qid { font: 600 13px var(--mono); }
+  .qtag { font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; border: 1px solid currentColor; padding: 0 6px; border-radius: 4px; color: var(--muted); }
+  .qtag.t-blocking { color: var(--red); } .qtag.t-spec-gap { color: var(--check); } .qtag.t-answer { color: var(--moss); }
+  .qtag.t-content { color: var(--blue); } .qtag.t-yours { color: var(--idea); }
+  .q p { margin-top: 6px; font-size: 14px; }
+  .q .rec span { display: block; font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .quests { margin: 4px 0 0; padding-left: 20px; display: grid; gap: 3px; font-size: 14px; }
 
   /* blocks, items, ui */
-  .renders { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-  .render { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 10px; justify-items: center; }
-  .render img { max-height: 150px; }
-  .render figcaption { font-size: 14px; display: grid; gap: 6px; justify-items: center; text-align: center; }
+  .block-card .dino-art img { max-height: 150px; }
+  .block-card dl { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+  .block-card dd { text-transform: none; }
+  .block-card .dino-body > p { font-size: 14px; }
   .wide-shot { margin: 0; background: #161814; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
   .wide-shot img { display: block; width: 100%; }
   .wide-shot figcaption { padding: 10px 16px; font-size: 14px; color: #a8b3a0; background: #1b1e19; }
-  .block-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px 20px; margin: 0; padding: 0; list-style: none; }
-  .block-list li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-  .block-list b { font-family: var(--display); }
   .item-group { display: grid; gap: 10px; }
   .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 10px; }
   .item { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 8px; display: grid; justify-items: center; gap: 8px; text-align: center; }
@@ -254,6 +269,22 @@
   th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { font: 600 12px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--chip); }
   tr:last-child td { border-bottom: 0; }
+  /* pages: one section at a time, the hero and the index on the home page */
+  main > section[hidden], .hero[hidden], #index[hidden], .pager[hidden] { display: none; }
+  .index { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .index a { display: grid; gap: 6px; align-content: start; text-decoration: none; color: var(--ink); background: var(--surface);
+             border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; transition: border-color .15s, transform .15s; }
+  .index a:hover, .index a:focus-visible { border-color: var(--ember); transform: translateY(-2px); }
+  .index b { font: 700 19px/1.2 var(--display); }
+  .index span:last-child { color: var(--muted); font-size: 14px; }
+  .pager { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+  .pager a { display: grid; gap: 2px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface);
+             border-radius: 10px; padding: 10px 16px; min-width: 180px; }
+  .pager a:hover, .pager a:focus-visible { border-color: var(--ember); }
+  .pager a small { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  .pager a.next { text-align: right; margin-left: auto; }
+  @media (prefers-reduced-motion: reduce) { .index a { transition: none; } }
+%%SPINECSS%%
   footer { max-width: 1180px; margin: 0 auto; padding: 24px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
   @media (max-width: 760px) { .ui-grid { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
 </style>
@@ -281,6 +312,19 @@
 </div>
 
 <main>
+  <div class="index" id="index">
+    <a href="#creatures"><span class="eyebrow">Wildlife</span><b>Creatures</b><span>Forty-one ARK creatures, their stats, taming and first danger rank.</span></a>
+    <a href="#world"><span class="eyebrow">World</span><b>Danger map and habitats</b><span>The hidden danger zones and which community lives in each biome.</span></a>
+    <a href="#behavior"><span class="eyebrow">Behaviour</span><b>State machines</b><span>Distance tiers, the daily schedule and every transition by model.</span></a>
+    <a href="#progression"><span class="eyebrow">Progression</span><b>Tech tree and recipe gates</b><span>The Tribe Chronicle, the workstation spine and the Field Journal.</span></a>
+    <a href="#survival"><span class="eyebrow">Survival systems</span><b>Tribe survival</b><span>Taming, cargo, working tames, the downed state and the Guardian.</span></a>
+    <a href="#blocks"><span class="eyebrow">Camp and blocks</span><b>Stations</b><span>Every Ark block, rendered from the in-game models.</span></a>
+    <a href="#items"><span class="eyebrow">Items</span><b>Inventory</b><span>Item sprites: tools, food, meats, taming and the Guardian.</span></a>
+    <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
+    <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
+    <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
+  </div>
+
   <section id="creatures">
     <div><div class="eyebrow">Wildlife</div><h2>Forty-one creatures, built from ARK skeletons</h2></div>
     <p class="lede">Every creature keeps its original ARK bone hierarchy and animation clips, rebuilt as Minecraft cuboids and rendered with GeckoLib. Five coloured skin variants each, herds, hunters, nests, sea creatures and cold-climate species. The pips show the first danger rank where each one appears.</p>
@@ -355,9 +399,15 @@
     %%TREE%%
     <div class="node-info" id="node-info" aria-live="polite"><b>Pick a node</b><span class="muted">The objective and how it completes appear here.</span></div>
 
-    <h3>What gates what in the Prehistoric age</h3>
-    <p class="lede">Arrows read "is needed for". Logs need an axe, wooden tools and furnaces are gone, so every run starts by picking a rock off the ground.</p>
-    <div class="flow"><div id="flow-svg"></div><pre id="flow">%%FLOW%%</pre></div>
+    <h3>Recipe gates: the workstation spine</h3>
+    <p class="lede">Every station and tool gate runs down the middle in the order it unlocks, from bare hands to the First Guardian, with its recipes as pins: inputs on the left, outputs on the right. Items made on one row arrive at another as labels instead of long arrows; hover or tap one to light up every row that uses it. This is the draft awaiting approval (F12), so it shows proposed changes beside what the game does today.</p>
+    <div class="spine-box">
+      <div class="sp-legend">%%SPINELEGEND%%</div>
+      <p class="sp-trace" id="sp-trace" aria-live="polite">Nothing traced.</p>
+      <div class="sp-scroll"><div id="sp-host"></div></div>
+      <details><summary>Notes on the rows (%%SPINENOTECOUNT%%)</summary><ol class="sp-notes">%%SPINENOTES%%</ol></details>
+      <details><summary>Open decisions (Q1 to Q13)</summary><ol class="qs">%%SPINEDECISIONS%%</ol></details>
+    </div>
 
     <h3>Field Journal</h3>
     <p class="lede">The FTB Quests book (press <code>J</code>) teaches each system with short chapters, shared by the tribe.</p>
@@ -381,20 +431,8 @@
 
   <section id="blocks">
     <div><div class="eyebrow">Camp and blocks</div><h2>Every station is a real object</h2></div>
-    <p class="lede">Original low-poly models built from Minecraft cuboids, with no custom rendering library. Stations only work in loaded chunks, so being away never produces a windfall.</p>
-    <div class="renders">%%RENDERS%%</div>
-    <figure class="wide-shot"><img loading="lazy" src="%%CAMP%%" alt="Camp model collection"><figcaption>Camp collection: bedroll, ten wood troughs, stacking drying racks and the cooking pot on its trivet. Offline render of the in-game models.</figcaption></figure>
-    <ul class="block-list">
-      <li><b>Loose Rock</b>: lies on the ground in every Overworld biome and is picked up by hand. The first resource of the game.</li>
-      <li><b>Stone Fire</b>: holds fuel and is lit with a fire starter. Cooks four items on a spit, turns sticks into torches and heats a pot on top.</li>
-      <li><b>Primitive Forge</b>: the furnace replacement. Runs every non-food smelting recipe, other mods' included.</li>
-      <li><b>Drying Rack</b>: stacks upward. Turns meat into Dried Meat I, then cures it to II and III.</li>
-      <li><b>Cooking Pot</b>: two prepared meals. Needs a lit fire below.</li>
-      <li><b>Feeding Trough</b>: ten wood finishes. Feeds hungry tames nearby.</li>
-      <li><b>Primitive Bedroll</b>: a two-block grass mat that sets your respawn point and keeps it even if the bedroll is destroyed.</li>
-      <li><b>Recovery Cache</b>: marks where you died. The loot lives in world data, so breaking the marker never loses it.</li>
-      <li><b>Nests and berry bushes</b>: five flyer nests and four plantable Ark berries.</li>
-    </ul>
+    <p class="lede">Original low-poly models built from Minecraft cuboids, with no custom rendering library. Every card is rendered from the model the game ships, with the same camera and light. Stations only work in loaded chunks, so being away never produces a windfall.</p>
+    <div class="dinos">%%BLOCKS%%</div>
   </section>
 
   <section id="items">
@@ -443,10 +481,15 @@
       <tbody>%%ROADMAP%%</tbody>
     </table></div>
   </section>
+
+  <nav class="pager" id="pager" aria-label="Previous and next section"></nav>
 </main>
 
 <footer>Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots. Private project; ARK assets belong to their owners.</footer>
 
+<script>
+%%SPINEJS%%
+</script>
 <script>
 (function () {
   var root = document.documentElement;
@@ -543,15 +586,11 @@
     n.addEventListener('mouseenter', show); n.addEventListener('focus', show);
   });
 
-  // Section highlight in the nav.
-  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id); });
-    });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('main section').forEach(function (s) { observer.observe(s); });
+  // Recipe-gate spine (shared renderer from tools/spine.js).
+  var SPINE = %%SPINEDATA%%;
+  function drawSpine() { window.renderSpine(document.getElementById('sp-host'), document.getElementById('sp-trace'), SPINE); }
+  drawSpine();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawSpine);
 
   // Behaviour models: one tab per model and per distance tier; a filled matrix cell explains its transition.
   var models = Array.prototype.slice.call(document.querySelectorAll('#behavior .model'));
@@ -593,10 +632,10 @@
   });
   if (models.length) showModel(models[0].dataset.model);
 
-  // Diagrams (Mermaid from jsDelivr): the gate flowchart and the visible state machines. Each renders into a plain
-  // div so the <pre> fallback's monospace styling never leaks into label measurement; offline, the readable
-  // source stays visible instead. Renders run one at a time and again only when the theme changes.
-  var flow = document.getElementById('flow'), host = document.getElementById('flow-svg'), renders = 0, queue = Promise.resolve();
+  // Diagrams (Mermaid from jsDelivr): the visible state machines. Each renders into a plain div so the <pre>
+  // fallback's monospace styling never leaks into label measurement; offline, the readable source stays visible
+  // instead. Renders run one at a time, only for the page on screen, and again when the theme changes.
+  var renders = 0, queue = Promise.resolve();
   function dark() { var t = root.getAttribute('data-theme'); return t === 'dark' || (t !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches); }
   function draft(source, target, fallback) {
     queue = queue.then(function () {
@@ -611,9 +650,8 @@
     window.mermaid.initialize({ startOnLoad: false, theme: 'base', securityLevel: 'strict', flowchart: { htmlLabels: true, curve: 'basis' },
       themeVariables: { fontFamily: 'Source Sans 3, Segoe UI, sans-serif', fontSize: '14px', lineColor: d ? '#8f958a' : '#6d7268',
         primaryTextColor: '#22251f', textColor: d ? '#e6e8e1' : '#22251f', edgeLabelBackground: d ? '#1f221d' : '#ffffff', background: 'transparent' } });
-    if (host.dataset.theme !== key) { host.dataset.theme = key; draft(flow.textContent, host, flow); }
     document.querySelectorAll('#behavior .diagram').forEach(function (box) {
-      if (box.closest('.tier-panel').hidden || box.closest('.model').hidden) return;
+      if (box.closest('section').hidden || box.closest('.tier-panel').hidden || box.closest('.model').hidden) return;
       var target = box.querySelector('.diagram-svg');
       if (target.dataset.theme === key) return;
       target.dataset.theme = key;
@@ -626,6 +664,37 @@
   script.onload = function () { (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { renderDiagrams(); }); };
   document.head.appendChild(script);
   window.addEventListener('ark-theme', function () { renderDiagrams(); draw(); });
+
+  // Pages: the nav, the index and the pager switch sections like a website; the hash keeps each page linkable.
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main > section'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var hero = document.getElementById('top'), index = document.getElementById('index'), pager = document.getElementById('pager');
+  function titleOf(section) { return section.querySelector('.eyebrow').textContent; }
+  function pagerLink(section, cls, label) {
+    var a = document.createElement('a'); a.className = cls; a.href = section ? '#' + section.id : '#top';
+    var small = document.createElement('small'); small.textContent = label;
+    var b = document.createElement('b'); b.textContent = section ? titleOf(section) : 'Home';
+    a.appendChild(small); a.appendChild(b); return a;
+  }
+  function route() {
+    var id = location.hash.slice(1), at = -1;
+    sections.forEach(function (s, i) { if (s.id === id) at = i; });
+    var current = at >= 0 ? sections[at] : null;
+    hero.hidden = !!current; index.hidden = !!current; pager.hidden = !current;
+    sections.forEach(function (s) { s.hidden = s !== current; });
+    links.forEach(function (a) { a.classList.toggle('active', !!current && a.getAttribute('href') === '#' + current.id); });
+    pager.innerHTML = '';
+    if (current) {
+      pager.appendChild(pagerLink(sections[at - 1] || null, 'prev', 'Previous'));
+      if (sections[at + 1]) pager.appendChild(pagerLink(sections[at + 1], 'next', 'Next'));
+    }
+    document.title = current ? titleOf(current) + ' · Ark Survival Returns' : 'Ark Survival Returns';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (current && current.id === 'world') draw();
+    if (current && current.id === 'behavior') renderDiagrams();
+  }
+  window.addEventListener('hashchange', route);
+  route();
 })();
 </script>
 </body>

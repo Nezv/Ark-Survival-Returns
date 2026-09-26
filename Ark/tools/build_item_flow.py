@@ -20,10 +20,13 @@ from pathlib import Path
 from PIL import Image
 
 ARK = Path(__file__).resolve().parents[1]
-JAR = ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-merged.jar'
+JARS = [ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-merged.jar',
+        ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-sources.jar']
+JAR = next((j for j in JARS if j.is_file()), JARS[0])
 MOD_TEX = ARK / 'src/main/resources/assets/arksurvivalreturns/textures'
 POLICY = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePolicy.java'
 OUT = ARK / 'build/item-flow.html'
+HERE = Path(__file__).resolve().parent
 GRASS, FOLIAGE = (124, 189, 107), (89, 174, 48)
 
 # ---------------------------------------------------------------- items
@@ -551,7 +554,7 @@ DECISIONS = [
 
 # ---------------------------------------------------------------- icons
 def load_icons():
-    jar = zipfile.ZipFile(JAR)
+    jar = zipfile.ZipFile(JAR) if JAR.is_file() else None  # fresh checkout: no vanilla sprites
     cache = {}
 
     def uri(spec):
@@ -563,6 +566,8 @@ def load_icons():
         ns, path = spec.split(':', 1)
         try:
             if ns == 'mc':
+                if jar is None:
+                    raise KeyError(path)
                 img = Image.open(io.BytesIO(jar.read(f'assets/minecraft/textures/{path}.png')))
             else:
                 img = Image.open(MOD_TEX / f'{path}.png')
@@ -653,15 +658,72 @@ def decisions_html():
         for q, tag, title, body, rec in DECISIONS)
 
 
-def main():
-    items, glyphs, net_icons = load_icons()
+TITLE_BLOCK = {
+    'title': 'Recipe Gates · workstation spine', 'project': 'Ark: Survival Returns', 'rev': 'Draft A',
+    'source': 'Your spec · mod data · vanilla 26.1.2', 'date': '2026-09-26',
+    'notes': ['Pin numbers are the steps of the recipe-gate spec (F12). Unnumbered pins are in the game or proposed.',
+              'Stations below the "Vanilla stations" line need forge metals; the Age gate ends the Prehistoric.'],
+}
+
+LEGEND = [
+    ('Row status', [
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-you)" stroke-width="2"/>', 'Your spec'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-prop)" stroke-width="1.6" stroke-dasharray="5 3"/>', 'Proposed here'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-now)"/>', 'In the game now, unchanged'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-change)" stroke-width="2"/>', 'In the game, changes to match the spec'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-dasharray="2 2"/>'
+         '<line x1="4" x2="40" y1="10" y2="10" stroke="var(--sp-cut)" stroke-width="1.4"/>', 'Removed'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Blocked until a decision'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-tbd)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Yours to decide'),
+    ]),
+    ('Symbols', [
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="none" stroke="var(--sp-ink2)" stroke-dasharray="3 2.5"/>', 'World source: a block or creature, gathered'),
+        ('<path d="M1 2h32l10 8l-10 8h-32z" fill="var(--sp-chip)" stroke="var(--sp-ink)" stroke-width="1.2"/>', 'Net label: made on another row (hover to trace)'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-ink2)"/>', 'Output of this row'),
+        ('<rect x="14" y="2" width="16" height="16" fill="url(#sp-legend-hatch)" stroke="var(--sp-ink2)" stroke-width=".6"/>', 'Needs a new sprite'),
+        ('<rect x="14" y="2" width="16" height="16" fill="var(--sp-rule)"/><path d="M24 1h7v7z" fill="var(--sp-change)"/>', 'Drawn with a borrowed sprite today'),
+        ('<path class="sp-cube" d="M22 3l7 3.5v8L22 18l-7-3.5v-8zM15 6.5l7 3.5l7-3.5M22 10v8"/>', 'Placed block with its own 3D model'),
+    ]),
+]
+
+
+def legend_html():
+    hatch = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="sp-legend-hatch" width="4" '
+             'height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="var(--sp-chip)"/>'
+             '<line x1="0" y1="0" x2="0" y2="4" stroke="var(--sp-change)" stroke-width="1.5"/></pattern></defs></svg>')
+    groups = ''.join(f'<div><h4>{html.escape(title)}</h4><ul>'
+                     + ''.join(f'<li><svg width="44" height="20" aria-hidden="true">{mark}</svg>{html.escape(text)}</li>' for mark, text in rows)
+                     + '</ul></div>' for title, rows in LEGEND)
+    return hatch + groups
+
+
+def spine_payload():
+    """Everything the shared renderer (spine.js) needs, plus the numbered notes."""
+    items, glyphs, _ = load_icons()
     notes = notes_and_numbers()
+    return {'spine': SPINE, 'items': items, 'glyphs': glyphs, 'notes': notes, 'titleBlock': TITLE_BLOCK}, notes
+
+
+def notes_html(notes):
+    return '\n'.join(f'<li value="{k}">{html.escape(t)}</li>' for k, t in enumerate(notes, 1))
+
+
+def spine_assets():
+    """The shared stylesheet and renderer, inlined by both pages."""
+    return (HERE / 'spine.css').read_text(encoding='utf-8'), (HERE / 'spine.js').read_text(encoding='utf-8')
+
+
+
+def main():
+    data, notes = spine_payload()
+    _, _, net_icons = load_icons()
     total, cut = removed_count()
-    data = {'spine': SPINE, 'items': items, 'glyphs': glyphs, 'notes': notes}
+    css, js = spine_assets()
     page = TEMPLATE
+    page = page.replace('/*SPINECSS*/', css).replace('/*SPINEJS*/', js)
     page = page.replace('/*DATA*/null', json.dumps(data, ensure_ascii=False, separators=(',', ':')))
-    page = page.replace('<!--NOTES-->', '\n'.join(f'<li value="{k}">{html.escape(t)}</li>'
-                                                   for k, t in enumerate(notes, 1)))
+    page = page.replace('<!--LEGEND-->', legend_html())
+    page = page.replace('<!--NOTES-->', notes_html(notes))
     page = page.replace('<!--NETLIST-->', netlist_html(net_icons))
     page = page.replace('<!--CUTS-->', cuts_html())
     page = page.replace('<!--DECISIONS-->', decisions_html())
@@ -669,13 +731,14 @@ def main():
     page = page.replace('{{STATIONS}}', str(sum(1 for n in SPINE if n['kind'] == 'station' and n['st'] != 'cut')))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding='utf-8')
+    items = data['items']
     missing = sorted(k for k, v in items.items() if not v['icon'] and not v['cube'] and v['art'] != 'new')
     print(f'{OUT} ({OUT.stat().st_size // 1024} KB), {len(notes)} notes, {total} vanilla recipes, {cut} removed')
     if missing:
         print('no icon:', ', '.join(missing))
 
 
-TEMPLATE = Path(__file__).with_name('item_flow_template.html').read_text(encoding='utf-8')
+TEMPLATE = (HERE / 'item_flow_template.html').read_text(encoding='utf-8')
 
 if __name__ == '__main__':
     main()
