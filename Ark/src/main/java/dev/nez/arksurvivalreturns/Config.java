@@ -100,9 +100,6 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue CAMP_STARTER_KIT, CAMP_BEDROLL_SETS_SPAWN, CAMP_BEDROLL_PICKUP;
     public static final ModConfigSpec.DoubleValue CAMP_BANDAGE_HEAL;
     public static final ModConfigSpec.IntValue CAMP_BANDAGE_COOLDOWN;
-    // ------------------------------------------------------------------------- recovery
-    public static final ModConfigSpec.BooleanValue RECOVERY_ENABLED, RECOVERY_NOTIFY_TRIBE;
-    public static final ModConfigSpec.IntValue RECOVERY_MAX_CACHES, RECOVERY_SEARCH_RADIUS;
     // --------------------------------------------------------------------------- downed
     public static final ModConfigSpec.BooleanValue DOWNED_ENABLED, DOWNED_NOTIFY_TRIBE, DOWNED_REQUIRE_TRIBE,
             DOWNED_LAVA_LETHAL, DOWNED_VOID_LETHAL;
@@ -198,17 +195,6 @@ public final class Config {
                 .defineInRange("bandageHeal", 4.0, 1.0, 20.0);
         CAMP_BANDAGE_COOLDOWN = b.comment("Ticks before the same bandage stack can heal again (100 = five seconds).")
                 .defineInRange("bandageCooldownTicks", 100, 0, 1200);
-        b.pop().push("recovery");
-        RECOVERY_ENABLED = b.comment("Replace player death drops with a recoverable cache at the death spot. "
-                        + "Unplaced caches (void deaths) can be claimed with /arkrecover claim.")
-                .define("enabled", true);
-        RECOVERY_MAX_CACHES = b.comment("Outstanding caches per player; when exceeded, the oldest is folded into the "
-                        + "newest instead of being lost.")
-                .defineInRange("maxCaches", 3, 1, 10);
-        RECOVERY_SEARCH_RADIUS = b.comment("Radius searched for safe ground when the death spot cannot hold a marker.")
-                .defineInRange("searchRadius", 12, 4, 32);
-        RECOVERY_NOTIFY_TRIBE = b.comment("Tell online FTB Teams tribe members where a cache appeared.")
-                .define("notifyTribe", true);
         b.pop().push("downed");
         DOWNED_ENABLED = b.comment("Lethal damage leaves a player downed with a rescue window instead of killing "
                         + "them outright. Void, lava, /kill and overkill hits stay fatal.")

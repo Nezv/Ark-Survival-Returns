@@ -96,6 +96,6 @@ What they add that interacts with Ark's design (decisions for P03/P04):
 2. Horse: bond grows, command wheel, roster, cart; Ark's companion whistle ignores horses.
 3. Horse ride + tamed Ark creature follow + dismount: no AI errors.
 4. Monolith: structure generates, research step completes, blessing applies; Ark HUD, downed state
-   and recovery cache still behave.
-5. Death with both mods loaded: recovery cache and horse state both persist.
+   still behave.
+5. Death with both mods loaded: the drops and horse state both persist.
 6. Two-player party: shared quests + horse roster + monolith visit in one session.

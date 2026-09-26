@@ -6,7 +6,7 @@
       "title": "Prehistoric Age",
       "order": 0,
       "color": "#b9c29a",
-      "laneSummary": "FOOD & PRESERVATION / COMPANIONS & TAMING / CAMP & COMFORT",
+      "laneSummary": "FOOD & PRESERVATION / COMPANIONS & TAMING / CAMP & COMFORT / ARMS & ARMOUR",
       "lanes": [
         {
           "index": 0,
@@ -19,6 +19,10 @@
         {
           "index": 2,
           "title": "CAMP & COMFORT"
+        },
+        {
+          "index": 3,
+          "title": "ARMS & ARMOUR"
         }
       ]
     },
@@ -73,13 +77,13 @@
       "age": "prehistoric",
       "lane": 1,
       "requires": [],
+      "kind": "gate",
       "box": [
         60,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
       "note": "AGE STARTER",
       "trigger": {
         "type": "collect",
@@ -98,13 +102,13 @@
       "requires": [
         "lasting"
       ],
+      "kind": "side",
       "box": [
         60,
         66,
         40,
         40
       ],
-      "kind": "side",
       "note": "OPTIONAL BOOSTING FOOD",
       "trigger": {
         "type": "consume",
@@ -124,13 +128,13 @@
       "requires": [
         "monkeys"
       ],
+      "kind": "main",
       "box": [
         170,
         66,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "craft",
@@ -149,13 +153,13 @@
       "requires": [
         "rock"
       ],
+      "kind": "main",
       "box": [
         280,
         66,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "collect",
@@ -178,13 +182,13 @@
       "requires": [
         "berries"
       ],
+      "kind": "main",
       "box": [
         390,
         66,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "craft",
@@ -202,13 +206,13 @@
       "requires": [
         "london"
       ],
+      "kind": "main",
       "box": [
         500,
         66,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "collect",
@@ -227,13 +231,13 @@
       "requires": [
         "monkeys"
       ],
+      "kind": "main",
       "box": [
         170,
         142,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "event",
@@ -249,13 +253,13 @@
       "requires": [
         "fight"
       ],
+      "kind": "main",
       "box": [
         280,
         142,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "craft",
@@ -274,13 +278,13 @@
       "requires": [
         "ride"
       ],
+      "kind": "main",
       "box": [
         390,
         142,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "tame"
@@ -296,13 +300,13 @@
       "requires": [
         "companions"
       ],
+      "kind": "main",
       "box": [
         500,
         142,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "event",
@@ -319,13 +323,13 @@
       "requires": [
         "monkeys"
       ],
+      "kind": "main",
       "box": [
         170,
         218,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "craft",
@@ -344,13 +348,13 @@
       "requires": [
         "mattress"
       ],
+      "kind": "main",
       "box": [
         280,
         218,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "place_block",
@@ -371,13 +375,13 @@
       "requires": [
         "warmth"
       ],
+      "kind": "main",
       "box": [
         390,
         218,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "event",
@@ -393,13 +397,13 @@
       "requires": [
         "prometheus"
       ],
+      "kind": "main",
       "box": [
         500,
         218,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "collect",
@@ -411,6 +415,110 @@
       "icon": "arksurvivalreturns:textures/gui/tech/icons/dish.png"
     },
     {
+      "id": "sharp",
+      "title": "Sharp thinking",
+      "task": "Knap a Sharp Rock: strike one rock with another.",
+      "age": "prehistoric",
+      "lane": 3,
+      "requires": [
+        "monkeys"
+      ],
+      "kind": "main",
+      "box": [
+        170,
+        294,
+        40,
+        40
+      ],
+      "note": "",
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:sharp_rock"
+        ]
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/sharp.png"
+    },
+    {
+      "id": "horn",
+      "title": "Tough as horn",
+      "task": "Take keratin from a horned, plated or beaked creature.",
+      "age": "prehistoric",
+      "lane": 3,
+      "requires": [
+        "sharp"
+      ],
+      "kind": "main",
+      "box": [
+        280,
+        294,
+        40,
+        40
+      ],
+      "note": "",
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:keratin"
+        ]
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/horn.png"
+    },
+    {
+      "id": "pointy",
+      "title": "Pointy end",
+      "task": "Craft a Keratin Spear.",
+      "age": "prehistoric",
+      "lane": 3,
+      "requires": [
+        "horn"
+      ],
+      "kind": "main",
+      "box": [
+        390,
+        294,
+        40,
+        40
+      ],
+      "note": "",
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:keratin_spear"
+        ]
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/pointy.png"
+    },
+    {
+      "id": "armoured",
+      "title": "Thick skin",
+      "task": "Own the whole keratin armour set: helmet, chestplate, leggings and boots.",
+      "age": "prehistoric",
+      "lane": 3,
+      "requires": [
+        "pointy"
+      ],
+      "kind": "main",
+      "box": [
+        500,
+        294,
+        40,
+        40
+      ],
+      "note": "",
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:keratin_helmet",
+          "arksurvivalreturns:keratin_chestplate",
+          "arksurvivalreturns:keratin_leggings",
+          "arksurvivalreturns:keratin_boots"
+        ],
+        "distinct": true
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/armoured.png"
+    },
+    {
       "id": "narcotics",
       "title": "Narcotraffic",
       "task": "Produce narcotics: craft a concentrated sedative.",
@@ -419,16 +527,17 @@
       "requires": [
         "lasting",
         "scavenge",
-        "dish"
+        "dish",
+        "armoured"
       ],
+      "kind": "gate",
       "box": [
         610,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
-      "note": "AGE FINALE / ALL 3 PATHS",
+      "note": "AGE FINALE / ALL 4 PATHS",
       "trigger": {
         "type": "craft",
         "items": [
@@ -446,13 +555,13 @@
       "requires": [
         "narcotics"
       ],
+      "kind": "gate",
       "box": [
         740,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
       "note": "AGE STARTER",
       "trigger": {
         "type": "future"
@@ -468,13 +577,13 @@
       "requires": [
         "prepare"
       ],
+      "kind": "side",
       "box": [
         740,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "side",
       "note": "OPTIONAL BOOSTING FOOD",
       "trigger": {
         "type": "future"
@@ -489,13 +598,13 @@
       "requires": [
         "prepare"
       ],
+      "kind": "main",
       "box": [
         850,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -511,13 +620,13 @@
       "requires": [
         "feed"
       ],
+      "kind": "main",
       "box": [
         960,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -533,13 +642,13 @@
       "requires": [
         "theri"
       ],
+      "kind": "main",
       "box": [
         1070,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -555,13 +664,13 @@
       "requires": [
         "prepare"
       ],
+      "kind": "main",
       "box": [
         850,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -577,13 +686,13 @@
       "requires": [
         "shiny"
       ],
+      "kind": "main",
       "box": [
         960,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -598,13 +707,13 @@
       "requires": [
         "alloy"
       ],
+      "kind": "main",
       "box": [
         1070,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -619,13 +728,13 @@
       "requires": [
         "prepare"
       ],
+      "kind": "main",
       "box": [
         850,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -641,13 +750,13 @@
       "requires": [
         "charcoal"
       ],
+      "kind": "main",
       "box": [
         960,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -662,13 +771,13 @@
       "requires": [
         "minerals"
       ],
+      "kind": "main",
       "box": [
         1070,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -686,13 +795,13 @@
         "weapon",
         "sparklers"
       ],
+      "kind": "gate",
       "box": [
         1180,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
       "note": "AGE FINALE / ALL 3 PATHS",
       "trigger": {
         "type": "future"
@@ -708,13 +817,13 @@
       "requires": [
         "rawr"
       ],
+      "kind": "gate",
       "box": [
         1310,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
       "note": "AGE STARTER",
       "trigger": {
         "type": "future"
@@ -730,13 +839,13 @@
       "requires": [
         "greed"
       ],
+      "kind": "side",
       "box": [
         1310,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "side",
       "note": "OPTIONAL BOOSTING FOOD",
       "trigger": {
         "type": "future"
@@ -752,13 +861,13 @@
       "requires": [
         "greed"
       ],
+      "kind": "main",
       "box": [
         1420,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -773,13 +882,13 @@
       "requires": [
         "forge"
       ],
+      "kind": "main",
       "box": [
         1530,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -794,13 +903,13 @@
       "requires": [
         "glass"
       ],
+      "kind": "main",
       "box": [
         1640,
-        66,
+        104,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -815,13 +924,13 @@
       "requires": [
         "greed"
       ],
+      "kind": "main",
       "box": [
         1420,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -837,13 +946,13 @@
       "requires": [
         "harder"
       ],
+      "kind": "main",
       "box": [
         1530,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -858,13 +967,13 @@
       "requires": [
         "better"
       ],
+      "kind": "main",
       "box": [
         1640,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -880,13 +989,13 @@
       "requires": [
         "faster"
       ],
+      "kind": "main",
       "box": [
         1750,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -902,13 +1011,13 @@
       "requires": [
         "greed"
       ],
+      "kind": "main",
       "box": [
         1420,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -924,13 +1033,13 @@
       "requires": [
         "home"
       ],
+      "kind": "main",
       "box": [
         1530,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -945,13 +1054,13 @@
       "requires": [
         "vault"
       ],
+      "kind": "main",
       "box": [
         1640,
-        218,
+        256,
         40,
         40
       ],
-      "kind": "main",
       "note": "",
       "trigger": {
         "type": "future"
@@ -968,13 +1077,13 @@
         "stronger",
         "curtain"
       ],
+      "kind": "gate",
       "box": [
         1860,
-        142,
+        180,
         40,
         40
       ],
-      "kind": "gate",
       "note": "AGE FINALE / ALL 3 PATHS",
       "trigger": {
         "type": "future"

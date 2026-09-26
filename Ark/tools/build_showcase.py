@@ -35,6 +35,7 @@ GENERATED = ARK / 'src/generated/resources'
 PREVIEW_BG = (19, 30, 39)
 RANK_COLORS = ['#4bae66', '#a8ca53', '#e4c653', '#e98646', '#994eb3']
 RANK_NAMES = ['Easy', 'Moderate', 'Hard', 'Severe', 'Extreme']
+MAP_HEIGHT = 344  # TechScreen.MAP_HEIGHT: four lanes around the gate row
 FOLDERS = {'pteranodon': 'Piterodon', 'therizinosaurus': 'Therezinosaur', 'brontosaurus': 'Brontosaur',
            'tyrannosaurus': 'Tyranosaur', 'giganotosaurus': 'Giganotosaur', 'acrocanthosaurus': 'Acrochantosaur'}
 e = html.escape
@@ -424,8 +425,8 @@ def tree_section():
         left, right = min(xs) - 60, max(xs) + 60
         width = right - left
         wired = sum(n['trigger']['type'] != 'future' for n in nodes)
-        svg = [f'<svg viewBox="0 0 {width} 268" role="img" aria-label="{e(age["title"])} technology tree">',
-               f'<rect x="0" y="0" width="{width}" height="268" rx="10" fill="{age["color"]}" opacity=".32"/>']
+        svg = [f'<svg viewBox="0 0 {width} {MAP_HEIGHT}" role="img" aria-label="{e(age["title"])} technology tree">',
+               f'<rect x="0" y="0" width="{width}" height="{MAP_HEIGHT}" rx="10" fill="{age["color"]}" opacity=".32"/>']
         for n in nodes:
             if n['kind'] == 'side':
                 continue
@@ -472,7 +473,8 @@ def journal_section():
 
 
 ITEM_GROUPS = [
-    ('Prehistoric', ['rock', 'stone_knife', 'stone_hatchet', 'fire_starter', 'plant_fiber', 'flint_knife', 'spear']),
+    ('Prehistoric', ['rock', 'sharp_rock', 'stone_knife', 'stone_hatchet', 'fire_starter', 'plant_fiber', 'flint_knife']),
+    ('Keratin tier', ['keratin', 'keratin_spear', 'keratin_helmet', 'keratin_chestplate', 'keratin_leggings', 'keratin_boots']),
     ('Food and meat', ['dried_meat', 'dried_ration', 'hearty_stew', 'trail_mix', 'tintoberry', 'amarberry', 'azulberry', 'narcoberry']),
     ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow', 'concentrated_sedative', 'companion_whistle',
                           'field_journal', 'pack_harness', 'reinforced_harness', 'fiber_bandage']),

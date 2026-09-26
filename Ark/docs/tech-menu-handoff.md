@@ -8,7 +8,7 @@ The menu uses parchment, separate moss/bronze/iron age colors, fine connections 
 
 Navigation: mouse wheel/trackpad, drag the map, drag/click the bottom rail, Left/Right, Home/End, or click an age heading. Coordinates, picking and scroll bounds share the same transform. Hovering shows the quest name, objective and state. The Quest book link opens the existing FTB journal.
 
-There are **40 nodes / three ages**. All three path endpoints are required by each finale. Locked icons are subdued, available icons have warm ink, and complete icons acquire a gold check. Opening the screen and each subsequent second requests a fresh server view. Changing completion via the server or FTB is visible without reopening.
+There are **44 nodes / three ages**. The Prehistoric has four paths (Arms & Armour added 2026-09-26: Sharp thinking, Tough as horn, Pointy end, Thick skin) and the later ages three; every path endpoint is required by each finale. The map is 344 units tall, with lanes 76 apart centred on the gate row. Locked icons are subdued, available icons have warm ink, and complete icons acquire a gold check. Opening the screen and each subsequent second requests a fresh server view. Changing completion via the server or FTB is visible without reopening.
 
 The three food extras display `???` until complete. Their hover shows only the name and `???`. The server omits their icon, objective and prerequisites from the snapshot; this is not merely a client-side opacity effect. Their dependency lines are omitted from the map. Completion reveals the food's normal art/objective. FTB mirror descriptions also contain only `???` for secrets. This is an in-game discovery rule, not protection against someone reading the installed mod's source/assets.
 
@@ -61,7 +61,7 @@ Implement the next stage in this order:
 
 ## Preserved design decisions and ambiguities
 
-- Prehistoric: Monkeys → three four-step paths → Narcotraffic. Monkeys is retained from the original sketch; its stone-gathering task overlaps Tha rock and still needs author refinement.
+- Prehistoric: Monkeys → four four-step paths → Narcotraffic. Monkeys is retained from the original sketch; its stone-gathering task overlaps Tha rock and still needs author refinement.
 - Bronze: Prepare for it! → three three-step paths → Rawr!. Sparklers crafts gunpowder. Slavery inherits the prior Working Giants objective (hunt + resource haul from tames).
 - Iron: Greed (have gunpowder) → three paths → Subdue Nature. The middle path preserves all four Harder/Better/Faster/Stronger entries, giving it an extra column.
 - The Iron scoped-kill objective precedes the craft-ammunition finale. The future gameplay designer must provide a way to obtain ammunition before crafting it, or ask the author to revise that dependency. No substitute order is silently invented here.

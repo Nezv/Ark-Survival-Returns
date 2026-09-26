@@ -23,11 +23,11 @@ final class JournalGameTests {
         h.assertTrue(ServerQuestFile.exists(), "The survival journal did not load");
         var file = ServerQuestFile.getInstance();
         verify(h, file, PRIMITIVE, 6);
-        verify(h, file, CAMP, 6);
+        verify(h, file, CAMP, 5);
         verify(h, file, WORK, 5);
         verify(h, file, HOMESTEAD, 4);
         verify(h, file, GUARDIAN, 3);
-        for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "spear",
+        for (String recipe : new String[]{"field_journal", "bedroll", "fiber_bandage", "flint_knife", "keratin_spear",
                 "pack_harness", "reinforced_harness", "trough", "drying_rack", "cooking_pot",
                 "concentrated_sedative", "improved_tranquilizer_arrow"}) {
             var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id(recipe));

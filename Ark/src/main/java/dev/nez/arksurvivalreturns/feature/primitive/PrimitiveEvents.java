@@ -38,6 +38,8 @@ public final class PrimitiveEvents {
     public static final Set<String> WOODEN_TOOLS = Set.of("minecraft:wooden_pickaxe", "minecraft:wooden_axe",
             "minecraft:wooden_shovel", "minecraft:wooden_hoe", "minecraft:wooden_sword");
     public static final Set<String> FURNACES = Set.of("minecraft:furnace", "minecraft:smoker", "minecraft:blast_furnace");
+    /** Vanilla recipes Ark replaces with its own (NeoForge ships its own copy, so a data override would lose). */
+    public static final Set<String> REPLACED = Set.of("minecraft:arrow");
 
     /** Server config loads after the first data pack load, so recipe filtering falls back to defaults. */
     static boolean enabled(ModConfigSpec.BooleanValue value) {
@@ -86,10 +88,10 @@ public final class PrimitiveEvents {
     @SubscribeEvent public static void recipes(ModifyRecipeJsonsEvent event) {
         boolean noWood = enabled(Config.PRIMITIVE_NO_WOODEN_TOOLS);
         boolean noFurnace = enabled(Config.PRIMITIVE_NO_FURNACES);
-        if (!noWood && !noFurnace) return;
         int before = event.getRecipeJsons().size();
         event.getRecipeJsons().entrySet().removeIf(entry -> {
             if (entry.getKey().getNamespace().equals(ArkSurvivalReturns.MOD_ID)) return false;
+            if (REPLACED.contains(entry.getKey().toString())) return true; // arksurvivalreturns:arrow takes over
             String result = result(entry.getValue());
             return result != null && (noWood && WOODEN_TOOLS.contains(result) || noFurnace && FURNACES.contains(result));
         });

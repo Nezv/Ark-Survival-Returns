@@ -3,14 +3,13 @@
   "category": "misc",
   "group": "primitive_forge",
   "key": {
-    "B": "minecraft:cobblestone",
-    "C": "minecraft:clay_ball",
+    "C": "minecraft:cobblestone",
     "F": "arksurvivalreturns:stone_fire"
   },
   "pattern": [
     "CCC",
     "CFC",
-    "BBB"
+    "CCC"
   ],
   "result": {
     "count": 1,

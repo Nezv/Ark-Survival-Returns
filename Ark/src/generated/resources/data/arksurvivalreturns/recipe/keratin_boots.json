@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "keratin_boots",
+  "key": {
+    "K": "arksurvivalreturns:keratin"
+  },
+  "pattern": [
+    "K K",
+    "K K"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:keratin_boots"
+  }
+}

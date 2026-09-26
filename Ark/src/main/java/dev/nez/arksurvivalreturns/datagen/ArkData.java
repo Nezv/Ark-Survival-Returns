@@ -23,7 +23,7 @@ public final class ArkData implements DataProvider {
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
         terralith = loadTerralith();
-        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); recovery(); flying(); spawns(); theme(); tests();
+        tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); downed(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
         IntegrationData.generate(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
@@ -116,7 +116,7 @@ public final class ArkData implements DataProvider {
                 "lapis_lazuli", "redstone", "quartz", "amethyst_shard", "netherite_scrap", "netherite_ingot",
                 "ancient_debris");
         tag("item/mass/tool", "#c:tools", "shears", "flint_and_steel", "fishing_rod", "bow", "crossbow", "trident",
-                NS + ":flint_knife", NS + ":spear");
+                NS + ":flint_knife", NS + ":keratin_spear");
         tag("item/mass/armor", "#c:armors", "shield", "elytra", "leather_horse_armor", "iron_horse_armor",
                 "golden_horse_armor", "diamond_horse_armor", "wolf_armor");
         // Work job targets, so a data pack can retune what each worker harvests.
@@ -246,8 +246,6 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".fiber_bandage", "Bandagem de fibra");
         en.put("item." + NS + ".flint_knife", "Flint Knife");
         pt.put("item." + NS + ".flint_knife", "Faca de s\u00edlex");
-        en.put("item." + NS + ".spear", "Flint Spear");
-        pt.put("item." + NS + ".spear", "Lan\u00e7a de s\u00edlex");
         en.put("block." + NS + ".bedroll", "Primitive Bedroll");
         pt.put("block." + NS + ".bedroll", "Rolo de dormir primitivo");
         en.put("item." + NS + ".bedroll", "Primitive Bedroll");
@@ -259,7 +257,6 @@ public final class ArkData implements DataProvider {
         tamingMessages(en, pt);
         tribeMessages(en, pt);
         campMessages(en, pt);
-        recoveryMessages(en, pt);
         downedMessages(en, pt);
         massMessages(en, pt);
         workMessages(en, pt);
@@ -499,7 +496,6 @@ public final class ArkData implements DataProvider {
         vanillaModel("plant_fiber", "minecraft:item/wheat");
         vanillaModel("fiber_bandage", "minecraft:item/paper");
         vanillaModel("flint_knife", "minecraft:item/flint");
-        vanillaModel("spear", "minecraft:item/trident");
         CampAssetsData.bedroll(this::put);
         // Two halves like a bed: only the head drops the item.
         json("data/" + NS + "/loot_table/blocks/bedroll", """
@@ -531,11 +527,6 @@ public final class ArkData implements DataProvider {
                 {"type":"minecraft:crafting_shapeless","category":"equipment","group":"flint_knife",
                  "ingredients":["minecraft:flint","minecraft:stick","%s:plant_fiber"],
                  "result":{"count":1,"id":"%s:flint_knife"}}
-                """.formatted(NS, NS));
-        json("data/" + NS + "/recipe/spear", """
-                {"type":"minecraft:crafting_shapeless","category":"equipment","group":"spear",
-                 "ingredients":["minecraft:stick","minecraft:stick","minecraft:flint","%s:plant_fiber"],
-                 "result":{"count":1,"id":"%s:spear"}}
                 """.formatted(NS, NS));
         json("data/" + NS + "/recipe/fiber_bandage", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"fiber_bandage",
@@ -645,32 +636,8 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS, NS, NS, NS, NS, NS));
     }
 
-    /** Recovery cache visuals and the two hidden discovery advancements. */
-    private void recovery() {
-        // A crate-like marker; no new PNGs, the barrel texture reads as a survivor's cache.
-        var faces = new LinkedHashMap<String, Object>();
-        for (String side : List.of("north", "south", "east", "west")) faces.put(side, Map.of("texture", "#side"));
-        faces.put("up", Map.of("texture", "#top"));
-        faces.put("down", Map.of("texture", "#side"));
-        put("assets/" + NS + "/models/block/recovery_cache", Map.of(
-                "textures", Map.of("side", "minecraft:block/barrel_side", "top", "minecraft:block/barrel_top",
-                        "particle", "minecraft:block/barrel_side"),
-                "elements", List.of(Map.of("from", List.of(2, 0, 2), "to", List.of(14, 10, 14), "faces", faces))));
-        put("assets/" + NS + "/blockstates/recovery_cache", Map.of("variants", Map.of("", Map.of("model", NS + ":block/recovery_cache"))));
-        put("assets/" + NS + "/models/item/recovery_cache", Map.of("parent", NS + ":block/recovery_cache"));
-        put("assets/" + NS + "/items/recovery_cache", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":block/recovery_cache")));
-        // The marker drops nothing: the items live in world SavedData until collected.
-        json("data/" + NS + "/loot_table/blocks/recovery_cache", """
-                {"type":"minecraft:block","pools":[]}
-                """);
-        json("data/" + NS + "/advancement/journal/first_loss", """
-                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
-                 "requirements":[["discovered"]]}
-                """);
-        json("data/" + NS + "/advancement/journal/first_recovery", """
-                {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
-                 "requirements":[["discovered"]]}
-                """);
+    /** The downed state's two hidden discovery advancements. */
+    private void downed() {
         json("data/" + NS + "/advancement/journal/first_downed", """
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
@@ -701,38 +668,6 @@ public final class ArkData implements DataProvider {
         pt.put("camp." + NS + ".bandaged", "Bandagem recuperou +%s de vida.");
     }
 
-    private void recoveryMessages(Map<String, String> en, Map<String, String> pt) {
-        en.put("block." + NS + ".recovery_cache", "Recovery Cache");
-        pt.put("block." + NS + ".recovery_cache", "Cache de recupera\u00e7\u00e3o");
-        en.put("item." + NS + ".recovery_cache", "Recovery Cache");
-        pt.put("item." + NS + ".recovery_cache", "Cache de recupera\u00e7\u00e3o");
-        en.put("recovery." + NS + ".position", "%s (%s, %s, %s)");
-        pt.put("recovery." + NS + ".position", "%s (%s, %s, %s)");
-        en.put("recovery." + NS + ".unplaced", "unplaced");
-        pt.put("recovery." + NS + ".unplaced", "sem local");
-        en.put("recovery." + NS + ".own_cache", "Your gear is waiting at %s. It stays until collected.");
-        pt.put("recovery." + NS + ".own_cache", "Seus itens esperam em %s. Eles ficam at\u00e9 serem recolhidos.");
-        en.put("recovery." + NS + ".tribe_cache", "%s died; their gear is at %s.");
-        pt.put("recovery." + NS + ".tribe_cache", "%s morreu; os itens est\u00e3o em %s.");
-        en.put("recovery." + NS + ".collected", "Recovered %s stack(s).");
-        pt.put("recovery." + NS + ".collected", "Recuperou %s pilha(s).");
-        en.put("recovery." + NS + ".collected_owner", "%s recovered your cache.");
-        pt.put("recovery." + NS + ".collected_owner", "%s recolheu seu cache.");
-        en.put("recovery." + NS + ".not_yours", "Only the owner or their tribe may recover this cache.");
-        pt.put("recovery." + NS + ".not_yours", "S\u00f3 o dono ou a tribo dele pode recolher este cache.");
-        en.put("recovery." + NS + ".reminder", "%s cache(s) still waiting. Use /arkrecover list.");
-        pt.put("recovery." + NS + ".reminder", "%s cache(s) ainda esperando. Use /arkrecover list.");
-        en.put("recovery." + NS + ".list_empty", "No caches outstanding.");
-        pt.put("recovery." + NS + ".list_empty", "Nenhum cache pendente.");
-        en.put("recovery." + NS + ".list_entry", "%s. %s - %s stack(s)");
-        pt.put("recovery." + NS + ".list_entry", "%s. %s - %s pilha(s)");
-        en.put("recovery." + NS + ".must_travel", "This cache is placed in the world; travel to it or use /arkrecover list.");
-        pt.put("recovery." + NS + ".must_travel", "Este cache est\u00e1 no mundo; v\u00e1 at\u00e9 ele ou use /arkrecover list.");
-        en.put("recovery." + NS + ".cleared", "Cleared %s cache(s) for %s.");
-        pt.put("recovery." + NS + ".cleared", "Removeu %s cache(s) de %s.");
-        en.put("recovery." + NS + ".invalid_index", "No cache with index %s.");
-        pt.put("recovery." + NS + ".invalid_index", "Nenhum cache com \u00edndice %s.");
-    }
 
     private void downedMessages(Map<String, String> en, Map<String, String> pt) {
         en.put("downed." + NS + ".downed", "You are down! %s seconds until you bleed out; a tribe member can revive you with a fiber bandage.");
@@ -1065,7 +1000,7 @@ public final class ArkData implements DataProvider {
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
-                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn", "recovery_cache",
+                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn",
                 "downed_revive"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
@@ -1088,8 +1023,8 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
-                "primitive_tall_stations",
-                "integration_curios", "integration_toms_storage", "integration_terralith"))
+                "primitive_tall_stations", "primitive_keratin",
+                "integration_curios", "integration_toms_storage", "integration_terralith", "integration_better_combat"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));

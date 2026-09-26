@@ -295,7 +295,7 @@
     <a class="brand" href="#top">ARK <span>·</span> SR</a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
-      <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#items">Items</a>
+      <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#recipes">Recipe Tree</a>
       <a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
     <button class="theme" id="theme" type="button">Theme: system</button>
@@ -316,10 +316,10 @@
     <a href="#creatures"><span class="eyebrow">Wildlife</span><b>Creatures</b><span>Forty-one ARK creatures, their stats, taming and first danger rank.</span></a>
     <a href="#world"><span class="eyebrow">World</span><b>Danger map and habitats</b><span>The hidden danger zones and which community lives in each biome.</span></a>
     <a href="#behavior"><span class="eyebrow">Behaviour</span><b>State machines</b><span>Distance tiers, the daily schedule and every transition by model.</span></a>
-    <a href="#progression"><span class="eyebrow">Progression</span><b>Tech tree and recipe gates</b><span>The Tribe Chronicle, the workstation spine and the Field Journal.</span></a>
+    <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle over three ages, and the Field Journal.</span></a>
     <a href="#survival"><span class="eyebrow">Survival systems</span><b>Tribe survival</b><span>Taming, cargo, working tames, the downed state and the Guardian.</span></a>
     <a href="#blocks"><span class="eyebrow">Camp and blocks</span><b>Stations</b><span>Every Ark block, rendered from the in-game models.</span></a>
-    <a href="#items"><span class="eyebrow">Items</span><b>Inventory</b><span>Item sprites: tools, food, meats, taming and the Guardian.</span></a>
+    <a href="#recipes"><span class="eyebrow">Recipe Tree</span><b>Recipe gates and items</b><span>The workstation spine from bare hands to keratin armour, and every item sprite.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
     <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
@@ -390,7 +390,7 @@
 
   <section id="progression">
     <div><div class="eyebrow">Progression</div><h2>From a loose rock to the Iron Age</h2></div>
-    <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds forty technologies over three ages. Each age starts at one gate and splits into three paths, and all three must be finished to open the next age. Progress is shared by your FTB team. Hover a node for its objective.</p>
+    <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds forty-four technologies over three ages. Each age starts at one gate and splits into its paths (four in the Prehistoric, three after), and every path must be finished to open the next age. Progress is shared by your FTB team. Hover a node for its objective.</p>
     <div class="legend-key">
       <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#e2763f" stroke-width="4"/></svg> Wired: completes from real gameplay</span>
       <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#8a8f86" stroke-width="4" stroke-dasharray="6 4"/></svg> Planned: objective written, trigger pending</span>
@@ -399,15 +399,6 @@
     %%TREE%%
     <div class="node-info" id="node-info" aria-live="polite"><b>Pick a node</b><span class="muted">The objective and how it completes appear here.</span></div>
 
-    <h3>Recipe gates: the workstation spine</h3>
-    <p class="lede">Every station and tool gate runs down the middle in the order it unlocks, from bare hands to the First Guardian, with its recipes as pins: inputs on the left, outputs on the right. Items made on one row arrive at another as labels instead of long arrows; hover or tap one to light up every row that uses it. This is the draft awaiting approval (F12), so it shows proposed changes beside what the game does today.</p>
-    <div class="spine-box">
-      <div class="sp-legend">%%SPINELEGEND%%</div>
-      <p class="sp-trace" id="sp-trace" aria-live="polite">Nothing traced.</p>
-      <div class="sp-scroll"><div id="sp-host"></div></div>
-      <details><summary>Notes on the rows (%%SPINENOTECOUNT%%)</summary><ol class="sp-notes">%%SPINENOTES%%</ol></details>
-      <details><summary>Open decisions (Q1 to Q13)</summary><ol class="qs">%%SPINEDECISIONS%%</ol></details>
-    </div>
 
     <h3>Field Journal</h3>
     <p class="lede">The FTB Quests book (press <code>J</code>) teaches each system with short chapters, shared by the tribe.</p>
@@ -420,12 +411,13 @@
       <div class="card"><h4>Taming and torpor</h4><p class="muted">Each creature tames one of three ways: passive feeding, knockout with narcoberries and tranquilizer arrows, or aerial feeding by appetite. Favourite foods tame faster, and every creature has a measured rider seat.</p></div>
       <div class="card"><h4>Weight and cargo</h4><p class="muted">Carried mass shows on a HUD gauge. Past capacity you slow down, and overloaded flyers refuse to take off. Harnesses unlock each creature's hold, with one-click Load and Unload to nearby chests.</p></div>
       <div class="card"><h4>Working tames</h4><p class="muted">Order a Triceratops to forage plants or an Ankylosaurus to mine stone and ore. They work only while a tribe member supervises, and they never touch blocks players placed.</p></div>
-      <div class="card"><h4>Recovery and the downed state</h4><p class="muted">A lethal hit starts a bleed-out timer instead of killing you. A tribemate can revive you with a fiber bandage. Real deaths leave a recovery cache that keeps your loot safe until you collect it.</p></div>
+      <div class="card"><h4>The downed state</h4><p class="muted">A lethal hit starts a bleed-out timer instead of killing you. A tribemate can revive you with a fiber bandage before it runs out.</p></div>
+      <div class="card"><h4>Keratin and melee</h4><p class="muted">Keratin makes the first armour set and the Keratin Spear. Better Combat gives every Ark weapon its own swing: the spear stabs two-handed with extra reach, knives slash as daggers.</p></div>
       <div class="card"><h4>Tribes</h4><p class="muted">FTB Teams parties share riding, cargo, orders and work permissions on each other's tames, plus the Chronicle and the journal.</p></div>
       <div class="card"><h4>The First Guardian</h4><p class="muted">Carry an Allosaur Heart to an Ancient Remnants monolith to wake a Guardian Giganotosaurus. It resets if you retreat and can't be farmed, and it drops the Workshop Schematic that opens the workshop age.</p></div>
       <div class="card"><h4>Night and behaviour</h4><p class="muted">Creatures forage, drink, rest, sleep, flee and hunt on a day-night cycle. Carnivore eyes glow in the dark, and wild creatures grow stronger with level.</p></div>
       <div class="card"><h4>Spatial audio</h4><p class="muted">Built-in reverb and occlusion, footsteps that match the material underfoot, and ambient soundscapes, all in one client-only engine.</p></div>
-      <div class="card"><h4>Carcasses and cooking</h4><p class="muted">Dinosaurs drop seven meat families plus leather, bone and feathers. Cook meat on the Stone Fire, or hang it on a rack and let it cure to Dried Meat III.</p></div>
+      <div class="card"><h4>Carcasses and cooking</h4><p class="muted">Dinosaurs drop seven meat families plus leather, bone and feathers; horned, plated and beaked ones also drop keratin. Cook meat on the Stone Fire, or hang it on a rack and let it cure to Dried Meat III.</p></div>
     </div>
   </section>
 
@@ -435,9 +427,19 @@
     <div class="dinos">%%BLOCKS%%</div>
   </section>
 
-  <section id="items">
-    <div><div class="eyebrow">Items</div><h2>The inventory, in pixels</h2></div>
-    <p class="lede">Item sprites are crisp 32 px originals or re-toned vanilla sprites. Dinosaur meats are drawn larger in hand and on the ground than normal Minecraft meat.</p>
+  <section id="recipes">
+    <div><div class="eyebrow">Recipe Tree</div><h2>What each item needs, from bare hands up</h2></div>
+    <p class="lede">The recipe gates, separate from the Tribe Chronicle: which station or tool opens each item. Item sprites are crisp 32 px originals or re-toned vanilla sprites; dinosaur meats are drawn larger in hand and on the ground than normal Minecraft meat.</p>
+    <h3>The workstation spine</h3>
+    <p class="lede">Every station and tool gate runs down the middle in the order it unlocks, from bare hands to the First Guardian, with its recipes as pins: inputs on the left, outputs on the right. Items made on one row arrive at another as labels instead of long arrows; hover or tap one to light up every row that uses it. This is the draft awaiting approval (F12), so it shows proposed changes beside what the game does today.</p>
+    <div class="spine-box">
+      <div class="sp-legend">%%SPINELEGEND%%</div>
+      <p class="sp-trace" id="sp-trace" aria-live="polite">Nothing traced.</p>
+      <div class="sp-scroll"><div id="sp-host"></div></div>
+      <details><summary>Notes on the rows (%%SPINENOTECOUNT%%)</summary><ol class="sp-notes">%%SPINENOTES%%</ol></details>
+      <details><summary>Open decisions (Q1 to Q13)</summary><ol class="qs">%%SPINEDECISIONS%%</ol></details>
+    </div>
+    <h3>The items</h3>
     %%ITEMS%%
   </section>
 

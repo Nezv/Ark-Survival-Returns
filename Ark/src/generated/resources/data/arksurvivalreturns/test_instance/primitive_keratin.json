@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:primitive_keratin",
+  "max_ticks": 200,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

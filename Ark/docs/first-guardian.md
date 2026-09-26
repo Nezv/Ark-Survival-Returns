@@ -129,9 +129,8 @@ and boss health; `/arkguardian reset` returns the nearest encounter to READY, an
 
 ## Failure and recovery
 
-The encounter composes with P02: downed players can be revived normally, fatal deaths still create
-Recovery Caches, and the existing cache search falls back to safe ground or the bedroll when the
-death spot cannot hold a marker. Leaving to re-equip and reclaim gear is a legitimate retreat.
+The encounter composes with P02: downed players can be revived normally, and a fatal death drops
+items at the arena as usual. Leaving to re-equip and reclaim gear is a legitimate retreat.
 
 ## Performance boundaries
 

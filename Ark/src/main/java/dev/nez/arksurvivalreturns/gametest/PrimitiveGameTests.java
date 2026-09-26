@@ -37,6 +37,11 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -209,6 +214,59 @@ final class PrimitiveGameTests {
             boolean meat = drops.stream().anyMatch(item -> item.getItem().is(PrimitiveContent.RAW_MEAT.get(DinoMeat.HERBIVORE).get()));
             drops.forEach(ItemEntity::discard);
             h.assertTrue(meat, "A parasaur carcass must drop herbivore meat");
+            h.succeed();
+        });
+    }
+
+    /**
+     * The keratin tier: a Triceratops carcass yields keratin, a sharp rock (not flint) tips arrows, the forge is
+     * stone only, the spear is a vanilla spear and the chestplate carries its four armour points.
+     */
+    static void keratin(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        var recipes = level.getServer().getRecipeManager();
+        for (String id : List.of("sharp_rock", "keratin_spear", "keratin_helmet", "keratin_chestplate", "keratin_leggings", "keratin_boots")) {
+            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
+        }
+        ItemStack stick = new ItemStack(Items.STICK), feather = new ItemStack(Items.FEATHER);
+        var arrowInput = CraftingInput.of(1, 3, List.of(new ItemStack(PrimitiveContent.SHARP_ROCK.get()), stick, feather));
+        h.assertTrue(recipes.byKey(recipe("minecraft:arrow")).isEmpty(), "The flint arrow recipe must be replaced");
+        var arrowRecipe = recipes.byKey(recipe("arksurvivalreturns:arrow"));
+        h.assertTrue(arrowRecipe.isPresent(), "The sharp rock arrow recipe is missing");
+        h.assertTrue(arrowRecipe.get().value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
+                        && crafting.matches(arrowInput, level),
+                "A sharp rock, a stick and a feather must make arrows: " + arrowRecipe.get().value().display());
+        var arrow = recipes.getRecipeFor(RecipeType.CRAFTING, arrowInput, level);
+        h.assertTrue(arrow.isPresent() && arrow.get().value().assemble(arrowInput).is(Items.ARROW),
+                "The crafting lookup must find the arrow for a sharp rock: " + arrow.map(r -> r.id().toString()).orElse("none"));
+        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING,
+                CraftingInput.of(1, 3, List.of(new ItemStack(Items.FLINT), stick, feather)), level).isEmpty(),
+                "Flint must no longer tip arrows");
+        ItemStack cobble = new ItemStack(Items.COBBLESTONE), fire = new ItemStack(PrimitiveContent.STONE_FIRE_ITEM.get());
+        var forgeInput = CraftingInput.of(3, 3, List.of(cobble, cobble, cobble, cobble, fire, cobble, cobble, cobble, cobble));
+        var forge = recipes.getRecipeFor(RecipeType.CRAFTING, forgeInput, level);
+        h.assertTrue(forge.isPresent() && forge.get().value().assemble(forgeInput).is(PrimitiveContent.PRIMITIVE_FORGE_ITEM.get()),
+                "Eight cobblestone around a Stone Fire must make the forge");
+
+        ItemStack spear = new ItemStack(PrimitiveContent.KERATIN_SPEAR.get());
+        h.assertTrue(spear.has(DataComponents.KINETIC_WEAPON) && spear.has(DataComponents.PIERCING_WEAPON), "The keratin spear must be a vanilla spear");
+        double armor = new ItemStack(PrimitiveContent.KERATIN_CHESTPLATE.get())
+                .getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY).modifiers().stream()
+                .filter(entry -> entry.attribute().is(Attributes.ARMOR)).mapToDouble(entry -> entry.modifier().amount()).sum();
+        h.assertTrue(armor == 4.0, "The keratin chestplate must give 4 armour, got " + armor);
+
+        BlockPos spot = h.absolutePos(new BlockPos(8, 3, 8));
+        CreatureEntity trike = ModContent.CREATURES.get(Species.TRICERATOPS).get().create(level, EntitySpawnReason.COMMAND);
+        trike.setNoAi(true);
+        trike.setPos(Vec3.atBottomCenterOf(spot));
+        level.addFreshEntity(trike);
+        trike.kill(level);
+        h.runAfterDelay(2, () -> {
+            var drops = level.getEntitiesOfClass(ItemEntity.class, new AABB(spot).inflate(5));
+            int keratin = drops.stream().filter(item -> item.getItem().is(PrimitiveContent.KERATIN.get()))
+                    .mapToInt(item -> item.getItem().getCount()).sum();
+            drops.forEach(ItemEntity::discard);
+            h.assertTrue(keratin >= 2, "A Triceratops carcass must drop at least two keratin, got " + keratin);
             h.succeed();
         });
     }

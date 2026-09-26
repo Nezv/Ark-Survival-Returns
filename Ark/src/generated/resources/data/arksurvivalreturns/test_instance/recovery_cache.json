@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "arksurvivalreturns:empty",
-  "function": "arksurvivalreturns:recovery_cache",
-  "max_ticks": 400,
-  "sky_access": true,
-  "structure": "arksurvivalreturns:test_population"
-}

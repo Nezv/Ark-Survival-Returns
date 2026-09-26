@@ -61,7 +61,6 @@ public final class ArkGameTests {
         FUNCTIONS.register("journal_taming_unlock", () -> JournalGameTests::tamingUnlock);
         FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
-        FUNCTIONS.register("recovery_cache", () -> RecoveryGameTests::recoveryCache);
         FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("primitive_rocks", () -> PrimitiveGameTests::rocks);
@@ -70,9 +69,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("primitive_curing", () -> PrimitiveGameTests::curing);
         FUNCTIONS.register("primitive_gates", () -> PrimitiveGameTests::gates);
         FUNCTIONS.register("primitive_tall_stations", () -> PrimitiveGameTests::tallStations);
+        FUNCTIONS.register("primitive_keratin", () -> PrimitiveGameTests::keratin);
         FUNCTIONS.register("integration_curios", () -> IntegrationGameTests::curios);
         FUNCTIONS.register("integration_toms_storage", () -> IntegrationGameTests::tomsStorage);
         FUNCTIONS.register("integration_terralith", () -> IntegrationGameTests::terralith);
+        FUNCTIONS.register("integration_better_combat", () -> IntegrationGameTests::betterCombat);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);

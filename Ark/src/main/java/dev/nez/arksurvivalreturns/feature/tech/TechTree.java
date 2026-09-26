@@ -49,7 +49,7 @@ public final class TechTree {
                     || node.title().length() > 80 || node.task().length() > 256
                     || node.icon().orElse("").length() > 200 || node.requires().size() > 4
                     || node.box().size() != 4 || node.box().get(0) < 0 || node.box().get(0) > 4096
-                    || node.box().get(1) < 35 || node.box().get(1) > 240 || !questIds.add(TechFtbBridge.questId(node.id())))
+                    || node.box().get(1) < 35 || node.box().get(1) > 316 || !questIds.add(TechFtbBridge.questId(node.id())))
                 throw new IllegalArgumentException("Invalid technology presentation: " + node.id());
             if (byId.putIfAbsent(node.id(), node) != null) {
                 throw new IllegalArgumentException("Duplicate technology node: " + node.id());

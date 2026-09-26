@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "arksurvivalreturns:keratin"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "arksurvivalreturns:keratin"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "arksurvivalreturns:keratin"
+      }
+    ]
+  }
+}

@@ -27,7 +27,7 @@ final class TechGameTests {
     static void tree(GameTestHelper h) {
         TechTree tree = TechTree.current();
         h.assertTrue(tree != null, "The technology tree did not load");
-        h.assertTrue(tree.nodes().size() == 40, "Node count changed: " + tree.nodes().size());
+        h.assertTrue(tree.nodes().size() == 44, "Node count changed: " + tree.nodes().size());
         h.assertTrue(tree.ages().size() == 3, "Age count changed: " + tree.ages().size());
         for (TechNode node : tree.nodes()) {
             h.assertFalse(node.title().isEmpty(), "Node has no title: " + node.id());
@@ -131,7 +131,9 @@ final class TechGameTests {
         partial.complete("scavenge");
         h.assertFalse(available(tree, partial, "narcotics"), "Prehistoric finale opened after only two paths");
         partial.complete("dish");
-        h.assertTrue(available(tree, partial, "narcotics"), "Prehistoric finale did not open after all three paths");
+        h.assertFalse(available(tree, partial, "narcotics"), "Prehistoric finale opened without Arms & Armour");
+        partial.complete("armoured");
+        h.assertTrue(available(tree, partial, "narcotics"), "Prehistoric finale did not open after all four paths");
         h.assertFalse(available(tree, partial, "prepare"), "Bronze opened before Narcotraffic");
         for (String id : List.of("dried", "golden", "cocaine")) {
             var hidden = dev.nez.arksurvivalreturns.feature.tech.TechView.project(tree, partial, true).nodes().stream()

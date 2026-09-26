@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "keratin_chestplate",
+  "key": {
+    "K": "arksurvivalreturns:keratin"
+  },
+  "pattern": [
+    "K K",
+    "KKK",
+    "KKK"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:keratin_chestplate"
+  }
+}
