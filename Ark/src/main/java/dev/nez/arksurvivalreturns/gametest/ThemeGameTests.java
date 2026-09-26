@@ -148,7 +148,8 @@ final class ThemeGameTests {
     private static void recipes(GameTestHelper h, RecipeManager manager) {
         for (String id : List.of("beacon", "enchanting_table", "brewing_stand", "ender_chest", "respawn_anchor",
                 "conduit", "ender_eye", "golden_apple", "popped_chorus_fruit", "firework_rocket_simple",
-                "netherite_sword_smithing", "netherite_upgrade_smithing_template", "netherite_ingot")) {
+                "netherite_sword_smithing", "netherite_upgrade_smithing_template", "netherite_ingot", "loom",
+                "cartography_table")) {
             h.assertTrue(manager.byKey(key(Registries.RECIPE, "minecraft:" + id)).isEmpty(), "Recipe survived: " + id);
         }
         for (String id : List.of("crafting_table", "iron_pickaxe", "bread", "bookshelf", "bone_meal",
@@ -201,7 +202,8 @@ final class ThemeGameTests {
     private static void mechanics(GameTestHelper h, ServerLevel world) {
         for (var block : List.of(Blocks.ENCHANTING_TABLE, Blocks.BREWING_STAND, Blocks.BEACON, Blocks.CONDUIT,
                 Blocks.ENDER_CHEST, Blocks.RESPAWN_ANCHOR, Blocks.END_PORTAL_FRAME, Blocks.TRIAL_SPAWNER,
-                Blocks.VAULT, Blocks.SCULK_CATALYST, Blocks.SCULK_SHRIEKER, Blocks.CREAKING_HEART)) {
+                Blocks.VAULT, Blocks.SCULK_CATALYST, Blocks.SCULK_SHRIEKER, Blocks.CREAKING_HEART, Blocks.LOOM,
+                Blocks.CARTOGRAPHY_TABLE)) {
             h.assertTrue(ThemePolicy.disabled(block.defaultBlockState()), "Mechanic block still usable: " + block);
         }
         for (var block : List.of(Blocks.CHEST, Blocks.CRAFTING_TABLE, Blocks.ANVIL, Blocks.GRINDSTONE,

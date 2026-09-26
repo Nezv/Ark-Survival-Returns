@@ -80,7 +80,9 @@ public final class ThemePolicy {
             "mace", "heavy_core", "breeze_rod", "wind_charge", "ominous_bottle",
             "trial_key", "ominous_trial_key",
             // Drops of removed creatures with no grounded role left.
-            "rotten_flesh", "phantom_membrane");
+            "rotten_flesh", "phantom_membrane",
+            // Workstations outside the Ark progression: banner patterns and map editing.
+            "loom", "cartography_table");
 
     /**
      * Blocks whose interaction and placement are refused: the mechanic they exist for is
@@ -90,7 +92,8 @@ public final class ThemePolicy {
             "enchanting_table", "brewing_stand", "beacon", "conduit", "ender_chest", "respawn_anchor",
             "end_portal_frame", "trial_spawner", "vault",
             "sculk_catalyst", "sculk_shrieker", "sculk_sensor", "calibrated_sculk_sensor",
-            "creaking_heart");
+            "creaking_heart",
+            "loom", "cartography_table");
 
     /** Structure sets emptied in newly generated terrain. */
     public static final List<String> DISABLED_STRUCTURE_SETS = List.of(

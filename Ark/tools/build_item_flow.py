@@ -1,8 +1,8 @@
 """Recipe gates: the item progression spec (Prehistoric + vanilla) drawn as a schematic page.
 
-Sheet 1 is the workstation spine: every station or tool gate once, in unlock order, with its recipes as
-pins (inputs on the left, outputs on the right). Items made on another row arrive as net labels instead of
-long wires. Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
+Sheet 1 is the workstation spine: every station or tool gate once, left to right in unlock order, each
+recipe a column on its station (inputs above the line, outputs below). Items made by another recipe arrive
+as net labels instead of long wires. Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
 decisions.
 
 Sources: the user's recipe-gate spec (2026-09-26), the mod's generated recipes and theme policy, and the
@@ -154,10 +154,6 @@ ITEMS = {
     'trim_in': ('Template + armour + material', 'mc:item/coast_armor_trim_smithing_template', None, None),
     'trimmed': ('Trimmed armour', 'mc:item/iron_chestplate', None, None),
     'netherite_up': ('Netherite upgrade', 'mc:item/netherite_ingot', None, None),
-    'banner_in': ('Banner + dye (+ pattern)', 'mc:item/white_dye', None, None),
-    'banner_out': ('Patterned banner', 'mc:item/flower_banner_pattern', None, None),
-    'map_in': ('Map + paper / pane / map', 'mc:item/filled_map', None, None),
-    'map_out': ('Zoomed, locked or copied map', 'mc:item/filled_map', None, None),
     'plants': ('Seeds, leaves, crops', 'mc:item/wheat_seeds', None, None),
     'bone_meal': ('Bone Meal', 'mc:item/bone_meal', None, None),
     'crafter_in': ('Ingredients + redstone pulse', 'mc:item/redstone', None, None),
@@ -172,8 +168,7 @@ ITEMS = {
 
 NODE_ICONS = {  # extra textures used only as node glyphs
     'g_stonecutter': 'mc:block/stonecutter_saw', 'g_anvil': 'mc:block/anvil', 'g_grindstone': 'mc:block/grindstone_side',
-    'g_smithing': 'mc:block/smithing_table_front', 'g_loom': 'mc:block/loom_front',
-    'g_cartography': 'mc:block/cartography_table_top', 'g_fletching': 'mc:block/fletching_table_front',
+    'g_smithing': 'mc:block/smithing_table_front', 'g_fletching': 'mc:block/fletching_table_front',
     'g_composter': 'mc:block/composter_side', 'g_crafter': 'mc:block/crafter_north',
     'g_brewing': 'mc:item/brewing_stand', 'g_enchanting': 'mc:block/enchanting_table_top',
     'g_furnace': 'mc:block/furnace_front', 'g_pickaxe': 'mc:item/stone_pickaxe', 'g_sword': 'mc:item/stone_sword',
@@ -361,12 +356,6 @@ SPINE = [
             'other 11 come from removed structures.'),
         row('', 'cut', [i('netherite_up')], [i('netherite_up')], 'upgrade'),
     ]),
-    node('loom', 'station', 'Loom', '2 String + 2 Planks', 'g_loom', [
-        row('', 'now', [i('banner_in')], [i('banner_out')], 'weave'),
-    ]),
-    node('cartography', 'station', 'Cartography Table', '2 Paper + 4 Planks', 'g_cartography', [
-        row('', 'now', [i('map_in')], [i('map_out')], 'map', 'Xaero\'s map (I01) is the main map.'),
-    ]),
     node('composter', 'station', 'Composter', '7 Wooden slabs', 'g_composter', [
         row('', 'now', [i('plants')], [i('bone_meal')], 'compost'),
     ]),
@@ -389,7 +378,7 @@ SPINE = [
 ]
 
 # ---------------------------------------------------------------- sheet 2: vanilla netlist
-# station tags: 2x2, T table, SC stonecutter, FG forge, FI stone fire, SM smithing, LM loom, W world
+# station tags: 2x2, T table, SC stonecutter, FG forge, FI stone fire, SM smithing, W world
 # status: now, spec (your spec changes it), cut, starved (recipe stays, the material has no source)
 def f(label, tag='T', st='now', need=''):
     return {'label': label, 'tag': tag, 'st': st, 'need': need}
@@ -399,6 +388,7 @@ NETS = [
     ('WOOD', 'Rock Axe · 2.1', 'mc:block/oak_log', [
         f('Planks, sticks', '2x2'), f('Slabs, stairs, fences, gates, doors, trapdoors, plates, buttons, signs, boats, shelves', 'T', need='×10 woods'),
         f('Hanging signs', need='+ chain'), f('Crafting table, chest, barrel, bowl, ladder, composter'),
+        f('Loom, cartography table', st='cut', need='removed'),
         f('Bookshelf, lectern, chiseled bookshelf', need='+ book'), f('Beds', need='+ wool ×16'),
         f('Item frame, painting', need='+ leather / wool'), f('Charcoal', 'FG'),
         f('Wooden tools', st='cut'), f('Wooden spear', st='spec', need='still craftable'),
@@ -420,11 +410,11 @@ NETS = [
         f('Harness ×16', st='starved', need='happy ghast removed'),
     ]),
     ('STRING', 'spiders · 2.3', 'mc:item/string', [
-        f('Bow, crossbow, fishing rod, loom'), f('Wool', '2x2'), f('Scaffolding', need='+ bamboo'),
+        f('Bow, crossbow, fishing rod'), f('Wool', '2x2'), f('Scaffolding', need='+ bamboo'),
         f('Candle ×17', need='+ honeycomb'), f('Lead', need='+ slime; Ark: 5 fiber'),
     ]),
     ('WOOL', 'kill or shear sheep', 'mc:block/white_wool', [
-        f('Carpets ×16'), f('Beds ×16'), f('Banners ×16', 'LM', need='patterns'), f('Painting'),
+        f('Carpets ×16'), f('Beds ×16'), f('Banners ×16', need='plain: no loom'), f('Painting'),
     ]),
     ('BONE · FEATHER · FLINT', 'kills · gravel', 'mc:item/bone', [
         f('Bone meal, bone block, white dye', '2x2'), f('Arrows', st='spec', need='sharp rock + feather'),
@@ -513,13 +503,14 @@ CUTS = [
         '<b>Flint Spear</b> replaced by the <b>Keratin Spear</b>',
         'Flint in arrows replaced by the <b>Sharp Rock</b>',
         'Clay removed from the <b>Primitive Forge</b> recipe',
+        '<b>Loom</b> and <b>Cartography Table</b> removed: no recipe, and village ones do nothing (banners stay plain; Xaero\'s map replaces map editing)',
     ]),
     ('Proposed with it', [
         '<b>Stone Knife</b> → Rock Sword; <b>Flint Knife</b> removed',
         '<b>Concentrated Sedative</b> → Narcotics',
         'The <b>starter kit</b> (bedroll, 2 bandages, 8 fiber, flint knife), if "starts with nothing" is literal',
     ]),
-    ('Already removed by the theme (70 vanilla recipes)', [
+    ('Already removed by the theme ({{CUT}} vanilla recipes)', [
         'Magic: enchanting table, brewing stand, potions, tipped arrows, golden apple, glistering melon',
         'Teleport and End: ender pearl, eye and chest, end rod, end crystal, shulker box, purpur',
         'Nether tiers: netherite ×15, respawn anchor, lodestone, soul torch, lantern and campfire, magma',
@@ -694,11 +685,11 @@ TITLE_BLOCK = {
     'title': 'Recipe Gates · workstation spine', 'project': 'Ark: Survival Returns', 'rev': 'Draft A',
     'source': 'Your spec · mod data · vanilla 26.1.2', 'date': '2026-09-26',
     'notes': ['Pin numbers are the steps of the recipe-gate spec (F12). Unnumbered pins are in the game or proposed.',
-              'Stations below the "Vanilla stations" line need forge metals; the Age gate ends the Prehistoric.'],
+              'Stations right of the "Vanilla stations" line need forge metals; the Age gate ends the Prehistoric.'],
 }
 
 LEGEND = [
-    ('Row status', [
+    ('Recipe status', [
         ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-you)" stroke-width="2"/>', 'Your spec'),
         ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-prop)" stroke-width="1.6" stroke-dasharray="5 3"/>', 'Proposed here'),
         ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-now)"/>', 'In the game now, unchanged'),
@@ -710,8 +701,8 @@ LEGEND = [
     ]),
     ('Symbols', [
         ('<rect x="1" y="2" width="42" height="16" rx="2" fill="none" stroke="var(--sp-ink2)" stroke-dasharray="3 2.5"/>', 'World source: a block or creature, gathered'),
-        ('<path d="M1 2h32l10 8l-10 8h-32z" fill="var(--sp-chip)" stroke="var(--sp-ink)" stroke-width="1.2"/>', 'Net label: made on another row (hover to trace)'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-ink2)"/>', 'Output of this row'),
+        ('<path d="M1 10l10-8h32v16h-32z" fill="var(--sp-chip)" stroke="var(--sp-ink)" stroke-width="1.2"/>', 'Net label: made by another recipe (hover to trace)'),
+        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-ink2)"/>', 'Output of this recipe'),
         ('<rect x="14" y="2" width="16" height="16" fill="url(#sp-legend-hatch)" stroke="var(--sp-ink2)" stroke-width=".6"/>', 'Needs a new sprite'),
         ('<rect x="14" y="2" width="16" height="16" fill="var(--sp-rule)"/><path d="M24 1h7v7z" fill="var(--sp-change)"/>', 'Drawn with a borrowed sprite today'),
         ('<path class="sp-cube" d="M22 3l7 3.5v8L22 18l-7-3.5v-8zM15 6.5l7 3.5l7-3.5M22 10v8"/>', 'Placed block with its own 3D model'),

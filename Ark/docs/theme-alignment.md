@@ -104,6 +104,9 @@ cream, nether wart and dragon breath.
   breath, echo shards and shulker shells.
 - **Trial chamber rewards:** mace, heavy core, breeze rod, wind charge, ominous bottle, trial
   keys and ominous trial keys.
+- **Workstations outside the progression:** the loom and the cartography table cannot be
+  crafted, placed or used. Village ones stay as decoration and drop nothing; banners stay plain
+  and Xaero's map replaces map editing.
 
 ### Disabled or replaced (rating 4)
 

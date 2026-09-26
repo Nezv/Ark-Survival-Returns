@@ -6,8 +6,12 @@
 .sp-legend svg { flex: none; }
 .sp-trace { margin: 0; font-size: 13px; color: var(--sp-ink2); min-height: 1.6em; }
 .sp-trace b { color: var(--sp-ink); font-weight: 600; font-family: var(--sp-mono); }
-.sp-scroll { overflow-x: auto; }
-.sp-scroll svg { display: block; width: 100%; min-width: 1100px; height: auto; }
+.sp-scroll { overflow-x: auto; overscroll-behavior-x: contain; cursor: grab; }
+.sp-scroll.sp-drag { cursor: grabbing; user-select: none; }
+.sp-scroll svg { display: block; max-width: none; }
+.sp-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.sp-jump button { font: 500 11.5px var(--sp-mono); color: var(--sp-ink); background: var(--sp-sheet); border: 1px solid var(--sp-rule); border-radius: 2px; padding: 3px 8px; cursor: pointer; }
+.sp-jump button:hover, .sp-jump button:focus-visible { border-color: var(--sp-ink); outline: none; }
 .sp-notes { margin: 12px 0 0; padding-left: 2.2em; columns: 2 460px; column-gap: 36px; font-size: 13px; color: var(--sp-ink2); }
 .sp-notes li { break-inside: avoid; margin-bottom: 6px; }
 .sp-notes li::marker { font: 600 12px var(--sp-mono); color: var(--sp-ink); }
@@ -45,6 +49,7 @@
 .sp-sub { font: 400 10px var(--sp-mono); fill: var(--sp-ink2); }
 .sp-hrule { stroke: var(--sp-rule); stroke-width: 1; }
 .sp-pin { fill: var(--sp-ink); }
+.sp-through { stroke: var(--sp-rule); stroke-width: 1; stroke-dasharray: 2 3; }
 .sp-step { font: 500 10px var(--sp-mono); fill: var(--sp-now); }
 .sp-step.st-you { fill: var(--sp-you); font-weight: 600; }
 .sp-step.st-prop { fill: var(--sp-prop); } .sp-step.st-change { fill: var(--sp-change); }
