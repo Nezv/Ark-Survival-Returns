@@ -124,8 +124,69 @@
   .map-controls button, .map-controls select { border: 1px solid var(--line); background: var(--raised); color: var(--ink); border-radius: 8px; padding: 5px 10px; font: 14px var(--body); cursor: pointer; }
   #readout { font: 13px var(--mono); color: var(--muted); min-width: 240px; }
   .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
-  .tier { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 6px; font-size: 14px; }
+  .tier { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 6px; font-size: 14px; align-content: start; }
   .tier p { color: var(--muted); text-transform: capitalize; }
+  .tier p.plain { text-transform: none; }
+  .tier .range { font: 600 13px var(--mono); color: var(--ink); }
+
+  /* behaviour */
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tabs button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px;
+                 font: 600 14px var(--body); cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .tier-tabs button { font-size: 13px; padding: 5px 12px; }
+  .model { display: grid; gap: 14px; }
+  .model[hidden], .tier-panel[hidden] { display: none; }
+  .model-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .model-head h3 { margin-right: 6px; }
+  .tier-panel { display: grid; gap: 12px; }
+  .machine { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  @media (max-width: 980px) { .machine { grid-template-columns: 1fr; } }
+  .matrix-wrap { overflow: auto; max-height: 560px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  table.matrix { width: auto; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+  table.matrix th, table.matrix td { padding: 0; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-align: center; }
+  table.matrix th { font: 600 12px var(--body); letter-spacing: 0; text-transform: none; color: var(--ink); background: var(--chip); }
+  table.matrix thead th { position: sticky; top: 0; z-index: 2; height: 118px; vertical-align: bottom; }
+  table.matrix thead th span { writing-mode: vertical-rl; transform: rotate(180deg); padding: 8px 0; display: inline-block; white-space: nowrap; }
+  table.matrix th.corner { left: 0; z-index: 3; color: var(--muted); font-weight: 400; padding: 6px 8px; vertical-align: bottom; text-align: right; }
+  table.matrix tbody th { position: sticky; left: 0; z-index: 1; text-align: right; padding: 4px 10px; white-space: nowrap; }
+  table.matrix td { width: 28px; min-width: 28px; height: 28px; color: var(--ember); }
+  table.matrix td.diag { background: var(--raised); }
+  table.matrix td.hit { background: color-mix(in srgb, var(--ember) 16%, var(--surface)); cursor: pointer; font-size: 13px; }
+  table.matrix td.hit sup { font-size: 9px; }
+  table.matrix td.hit:hover, table.matrix td.hit:focus, table.matrix td.hit.active { background: var(--ember); color: #fff; outline: none; }
+  .diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; overflow: auto; max-height: 560px; }
+  .diagram svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  .diagram pre { margin: 0; font: 11px var(--mono); color: var(--muted); white-space: pre-wrap; }
+  .cell-info { min-height: 60px; }
+  .day { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .day-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; align-items: center; font-size: 14px; }
+  .day-row small { grid-column: 2; font-size: 13px; }
+  .day-bar { position: relative; height: 28px; border-radius: 6px; overflow: hidden; background: var(--chip); }
+  .day-bar span { position: absolute; top: 0; bottom: 0; display: grid; place-items: center; font: 600 12px var(--body); color: #fff; white-space: nowrap; overflow: hidden; }
+  .p-hunt { background: #b8481b; } .p-sleep { background: #4f5d86; } .p-roam { background: #4b8a55; }
+  .day-axis { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; font: 12px var(--mono); color: var(--muted); }
+  .day-axis div { display: flex; justify-content: space-between; }
+  .bridges { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .bridges li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 8px; }
+  .bridge-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; }
+  .beats, .motion { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .beats i { color: var(--muted); font-style: normal; }
+  .motion b { min-width: 64px; font: 600 13px var(--body); color: var(--muted); }
+  .actions { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .beat { display: inline-flex; gap: 6px; align-items: baseline; padding: 4px 10px; border-radius: 999px; font: 600 13px var(--body);
+          background: var(--chip); border-left: 4px solid var(--muted); }
+  .beat small { font-weight: 400; color: var(--muted); }
+  .beat.m-face { border-left-color: #e4c653; } .beat.m-run { border-left-color: #e98646; } .beat.m-walk { border-left-color: #4bae66; }
+  .beat.m-creep { border-left-color: #a8ca53; } .beat.m-turn { border-left-color: #a9abd6; } .beat.m-hold { border-left-color: #8a8f86; }
+  .laps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .lap { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 6px; }
+  .lap svg { width: 100%; height: auto; display: block; }
+  .lap .route, .lap .profile polyline { fill: none; stroke: var(--ember); stroke-width: 1.2; stroke-linejoin: round; }
+  .lap .profile { background: var(--raised); border-radius: 4px; }
+  .lap .nest { fill: var(--moss); }
+  .lap figcaption { font-size: 14px; display: grid; }
+  .lap figcaption small { color: var(--muted); font-size: 12px; }
 
   /* tree */
   .age { display: grid; gap: 10px; }
@@ -202,7 +263,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">ARK <span>·</span> SR</a>
     <nav class="nav-links" aria-label="Sections">
-      <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#progression">Progression</a>
+      <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
       <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#items">Items</a>
       <a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
@@ -253,14 +314,34 @@
         </div>
       </div>
     </div>
-    <h3>Biome difficulty</h3>
-    <p class="lede">Biomes carry their own difficulty on top of the zones, and wild creature levels scale with both.</p>
-    <div class="tiers">%%TIERS%%</div>
+    <h3>Habitats</h3>
+    <p class="lede">Danger and wild levels come only from the zone. The biome decides which community lives there: warm species share every temperate biome, the snow, the wetlands and the sea keep their own residents, and flyers nest over any land. Spawn-list weights are split across each habitat, so wider habitats bring variety, not more animals.</p>
+    <div class="tiers">%%HABITATS%%</div>
     <div class="grid-3">
       <div class="card"><h4>Land habitats</h4><p class="muted">Herds keep home ranges near water, predators patrol and hunt, and populations recover per habitat without forcing chunk loads.</p></div>
       <div class="card"><h4>Flyers and nests</h4><p class="muted">Each flyer keeps one local nest on cliffs or shores. It perches, forages and returns home, and its eggs can be collected.</p></div>
       <div class="card"><h4>Sea and swamp</h4><p class="muted">Sea creatures keep saved home pools. Crocodilians and Titanoboa hunt shorelines, and cold species drink from snow and ice.</p></div>
     </div>
+  </section>
+
+  <section id="behavior">
+    <div><div class="eyebrow">Behaviour</div><h2>Animals that pace themselves</h2></div>
+    <p class="lede">Every creature runs a two-level state machine: an intent (roam, hunt, flee, sleep, drink...) and the animation-timed action that carries it out (notice, roar, chase, look around...). How much of it runs depends on the distance to the nearest player, so a valley of herds costs little until you walk into it, and herd mates react with their own delays instead of moving like one machine.</p>
+    <div class="tiers">%%BEHAVIORTIERS%%</div>
+    <p class="muted">Each tier border has a margin of %%BEHAVIORMARGIN%%, so a creature on the line does not flicker between tiers. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
+
+    <h3>The day of a land animal</h3>
+    <p class="lede">Each animal shifts its own clock by up to half a minute, so a herd dozes off and wakes one by one.</p>
+    %%SCHEDULE%%
+
+    <h3>State machines by model</h3>
+    <p class="lede">Rows are the current state and columns the next one. A filled cell is a transition the real decision code produced in seeded encounters; hover or tap it for the rules behind it. The diagram beside it shows the same edges.</p>
+    <div class="tabs model-tabs" role="tablist" aria-label="Behaviour model">%%MODELTABS%%</div>
+    %%MODELS%%
+
+    <h3>Actions</h3>
+    <p class="lede">The second level: what the body is doing inside a state, grouped by how it may move. Actions marked "+ clip" start with a one-shot reaction clip when the rig has one; turning in place steps with the rig's own turn clip.</p>
+    <div class="actions">%%ACTIONS%%</div>
   </section>
 
   <section id="progression">
@@ -472,25 +553,79 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   document.querySelectorAll('main section').forEach(function (s) { observer.observe(s); });
 
-  // Gate flowchart (Mermaid from jsDelivr). Rendered into a plain div so the <pre> fallback's monospace
-  // styling never leaks into label measurement; offline, the readable source stays visible instead.
-  var flow = document.getElementById('flow'), host = document.getElementById('flow-svg'), source = flow.textContent, renders = 0;
+  // Behaviour models: one tab per model and per distance tier; a filled matrix cell explains its transition.
+  var models = Array.prototype.slice.call(document.querySelectorAll('#behavior .model'));
+  function select(buttons, key, value) {
+    buttons.forEach(function (b) { b.setAttribute('aria-selected', b.dataset[key] === value ? 'true' : 'false'); });
+  }
+  function showModel(id) {
+    select(document.querySelectorAll('.model-tabs button'), 'model', id);
+    models.forEach(function (m) { m.hidden = m.dataset.model !== id; });
+    renderDiagrams();
+  }
+  function showTier(model, tier) {
+    select(model.querySelectorAll('.tier-tabs button'), 'tier', tier);
+    model.querySelectorAll('.tier-panel').forEach(function (p) { p.hidden = p.dataset.tier !== tier; });
+    renderDiagrams();
+  }
+  document.querySelectorAll('.model-tabs button').forEach(function (b) {
+    b.addEventListener('click', function () { showModel(b.dataset.model); });
+  });
+  models.forEach(function (m) {
+    m.querySelectorAll('.tier-tabs button').forEach(function (b) {
+      b.addEventListener('click', function () { showTier(m, b.dataset.tier); });
+    });
+    var cellInfo = m.querySelector('.cell-info');
+    m.querySelectorAll('td.hit').forEach(function (cell) {
+      function explain() {
+        m.querySelectorAll('td.hit.active').forEach(function (c) { c.classList.remove('active'); });
+        cell.classList.add('active');
+        cellInfo.innerHTML = '';
+        var b = document.createElement('b'); b.textContent = cell.dataset.from + ' → ' + cell.dataset.to;
+        cellInfo.appendChild(b);
+        cell.dataset.why.split(' | ').forEach(function (why) {
+          var s = document.createElement('span'); s.className = 'muted'; s.textContent = why; cellInfo.appendChild(s);
+        });
+      }
+      cell.addEventListener('mouseenter', explain); cell.addEventListener('focus', explain); cell.addEventListener('click', explain);
+    });
+    showTier(m, m.querySelector('.tier-panel').dataset.tier);
+  });
+  if (models.length) showModel(models[0].dataset.model);
+
+  // Diagrams (Mermaid from jsDelivr): the gate flowchart and the visible state machines. Each renders into a plain
+  // div so the <pre> fallback's monospace styling never leaks into label measurement; offline, the readable
+  // source stays visible instead. Renders run one at a time and again only when the theme changes.
+  var flow = document.getElementById('flow'), host = document.getElementById('flow-svg'), renders = 0, queue = Promise.resolve();
   function dark() { var t = root.getAttribute('data-theme'); return t === 'dark' || (t !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches); }
-  function renderFlow() {
+  function draft(source, target, fallback) {
+    queue = queue.then(function () {
+      return window.mermaid.render('diagram' + (++renders), source)
+        .then(function (out) { target.innerHTML = out.svg; fallback.hidden = true; })
+        .catch(function () { fallback.hidden = false; });
+    });
+  }
+  function renderDiagrams() {
     if (!window.mermaid) return;
-    var d = dark();
+    var d = dark(), key = d ? 'dark' : 'light';
     window.mermaid.initialize({ startOnLoad: false, theme: 'base', securityLevel: 'strict', flowchart: { htmlLabels: true, curve: 'basis' },
       themeVariables: { fontFamily: 'Source Sans 3, Segoe UI, sans-serif', fontSize: '14px', lineColor: d ? '#8f958a' : '#6d7268',
         primaryTextColor: '#22251f', textColor: d ? '#e6e8e1' : '#22251f', edgeLabelBackground: d ? '#1f221d' : '#ffffff', background: 'transparent' } });
-    window.mermaid.render('gates' + (++renders), source).then(function (out) { host.innerHTML = out.svg; flow.hidden = true; })
-      .catch(function () { flow.hidden = false; });
+    if (host.dataset.theme !== key) { host.dataset.theme = key; draft(flow.textContent, host, flow); }
+    document.querySelectorAll('#behavior .diagram').forEach(function (box) {
+      if (box.closest('.tier-panel').hidden || box.closest('.model').hidden) return;
+      var target = box.querySelector('.diagram-svg');
+      if (target.dataset.theme === key) return;
+      target.dataset.theme = key;
+      draft(box.querySelector('.diagram-src').textContent, target, box.querySelector('.diagram-src'));
+    });
   }
   var script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js';
   // Measure labels with the final font, or Mermaid sizes the boxes for the fallback face and clips them.
-  script.onload = function () { (document.fonts ? document.fonts.ready : Promise.resolve()).then(renderFlow); };
+  script.onload = function () { (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { renderDiagrams(); }); };
   document.head.appendChild(script);
-  window.addEventListener('ark-theme', function () { renderFlow(); draw(); });
+  window.addEventListener('ark-theme', function () { renderDiagrams(); draw(); });
 })();
 </script>
 </body>

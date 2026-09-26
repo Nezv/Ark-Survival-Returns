@@ -4,24 +4,14 @@
     "minecraft:snowy_plains",
     "minecraft:ice_spikes",
     "minecraft:snowy_taiga",
+    "minecraft:snowy_beach",
     "minecraft:grove",
     "minecraft:snowy_slopes",
     "minecraft:frozen_peaks",
     "minecraft:jagged_peaks",
-    "minecraft:stony_peaks",
-    "minecraft:windswept_hills",
-    "minecraft:windswept_gravelly_hills",
     "minecraft:frozen_river",
-    "minecraft:snowy_beach",
-    "minecraft:frozen_ocean",
-    "minecraft:deep_frozen_ocean",
-    "minecraft:deep_dark",
     {
       "id": "terralith:alpha_islands_winter",
-      "required": false
-    },
-    {
-      "id": "terralith:alpine_highlands",
       "required": false
     },
     {
@@ -30,10 +20,6 @@
     },
     {
       "id": "terralith:emerald_peaks",
-      "required": false
-    },
-    {
-      "id": "terralith:forested_highlands",
       "required": false
     },
     {
@@ -49,15 +35,7 @@
       "required": false
     },
     {
-      "id": "terralith:haze_mountain",
-      "required": false
-    },
-    {
       "id": "terralith:ice_marsh",
-      "required": false
-    },
-    {
-      "id": "terralith:rocky_mountains",
       "required": false
     },
     {
@@ -97,31 +75,11 @@
       "required": false
     },
     {
-      "id": "terralith:stony_spires",
-      "required": false
-    },
-    {
-      "id": "terralith:volcanic_crater",
-      "required": false
-    },
-    {
-      "id": "terralith:volcanic_peaks",
-      "required": false
-    },
-    {
-      "id": "terralith:windswept_spires",
-      "required": false
-    },
-    {
       "id": "terralith:wintry_forest",
       "required": false
     },
     {
       "id": "terralith:wintry_lowlands",
-      "required": false
-    },
-    {
-      "id": "terralith:yosemite_lowlands",
       "required": false
     }
   ]

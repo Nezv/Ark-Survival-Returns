@@ -5,6 +5,6 @@
     "type": "arksurvivalreturns:quetzal",
     "maxCount": 1,
     "minCount": 1,
-    "weight": 2
+    "weight": 1
   }
 }

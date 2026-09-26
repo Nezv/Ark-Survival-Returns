@@ -1,0 +1,3580 @@
+{
+  "actions": [
+    {
+      "cue": "",
+      "id": "IDLE",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "WALK",
+      "motion": "WALK"
+    },
+    {
+      "cue": "",
+      "id": "RUN",
+      "motion": "RUN"
+    },
+    {
+      "cue": "",
+      "id": "TURN",
+      "motion": "TURN"
+    },
+    {
+      "cue": "LOOK",
+      "id": "LOOK",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "SNIFF",
+      "id": "SNIFF",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "POOP",
+      "id": "POOP",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "GRAZE",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "DRINK",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "NOTICE",
+      "motion": "FACE"
+    },
+    {
+      "cue": "WARN",
+      "id": "ROAR",
+      "motion": "FACE"
+    },
+    {
+      "cue": "",
+      "id": "THREAT",
+      "motion": "FACE"
+    },
+    {
+      "cue": "STARTLE",
+      "id": "STARTLE",
+      "motion": "FACE"
+    },
+    {
+      "cue": "",
+      "id": "STALK",
+      "motion": "CREEP"
+    },
+    {
+      "cue": "",
+      "id": "CHASE",
+      "motion": "RUN"
+    },
+    {
+      "cue": "",
+      "id": "BOLT",
+      "motion": "RUN"
+    },
+    {
+      "cue": "",
+      "id": "FEED",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "SETTLE",
+      "id": "SETTLE",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "SLEEP",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "WAKE",
+      "id": "WAKE",
+      "motion": "HOLD"
+    },
+    {
+      "cue": "",
+      "id": "REST",
+      "motion": "HOLD"
+    }
+  ],
+  "margin": 8,
+  "models": [
+    {
+      "bridges": [
+        {
+          "beats": [
+            {
+              "action": "NOTICE",
+              "ticks": 11
+            }
+          ],
+          "from": "ROAM",
+          "species": "parasaur",
+          "to": "ALERT",
+          "urgent": false,
+          "when": "a sound, scent or glimpse"
+        },
+        {
+          "beats": [
+            {
+              "action": "STARTLE",
+              "ticks": 51
+            },
+            {
+              "action": "BOLT",
+              "ticks": 0
+            }
+          ],
+          "from": "ROAM",
+          "species": "parasaur",
+          "to": "FLEE",
+          "urgent": false,
+          "when": "a predator in sight"
+        },
+        {
+          "beats": [
+            {
+              "action": "STARTLE",
+              "ticks": 12
+            },
+            {
+              "action": "BOLT",
+              "ticks": 0
+            }
+          ],
+          "from": "FORAGE",
+          "species": "parasaur",
+          "to": "FLEE",
+          "urgent": true,
+          "when": "hit while grazing"
+        },
+        {
+          "beats": [
+            {
+              "action": "WAKE",
+              "ticks": 24
+            },
+            {
+              "action": "STARTLE",
+              "ticks": 54
+            },
+            {
+              "action": "BOLT",
+              "ticks": 0
+            }
+          ],
+          "from": "SLEEP",
+          "species": "parasaur",
+          "to": "FLEE",
+          "urgent": false,
+          "when": "woken by a predator at night"
+        },
+        {
+          "beats": [
+            {
+              "action": "ROAR",
+              "ticks": 53
+            },
+            {
+              "action": "NOTICE",
+              "ticks": 0
+            }
+          ],
+          "from": "ALERT",
+          "species": "parasaur",
+          "to": "THREATEN",
+          "urgent": false,
+          "when": "an intruder comes close"
+        },
+        {
+          "beats": [
+            {
+              "action": "CHASE",
+              "ticks": 0
+            }
+          ],
+          "from": "THREATEN",
+          "species": "parasaur",
+          "to": "DEFEND",
+          "urgent": false,
+          "when": "the intruder ignored the warning"
+        },
+        {
+          "beats": [
+            {
+              "action": "LOOK",
+              "ticks": 48
+            },
+            {
+              "action": "WALK",
+              "ticks": 0
+            }
+          ],
+          "from": "FLEE",
+          "species": "parasaur",
+          "to": "REGROUP",
+          "urgent": false,
+          "when": "threat gone, herd scattered"
+        },
+        {
+          "beats": [
+            {
+              "action": "LOOK",
+              "ticks": 42
+            },
+            {
+              "action": "SLEEP",
+              "ticks": 0
+            }
+          ],
+          "from": "ROAM",
+          "species": "parasaur",
+          "to": "SLEEP",
+          "urgent": false,
+          "when": "night falls"
+        },
+        {
+          "beats": [
+            {
+              "action": "WAKE",
+              "ticks": 24
+            },
+            {
+              "action": "WALK",
+              "ticks": 0
+            }
+          ],
+          "from": "SLEEP",
+          "species": "parasaur",
+          "to": "ROAM",
+          "urgent": false,
+          "when": "dawn"
+        }
+      ],
+      "id": "land_herbivore",
+      "predator": false,
+      "realms": "land amphibious",
+      "summary": "Grazes, drinks and roams by day, sleeps at night. Startles before it bolts; defensive herds stand together at night. Alarms ripple through the herd instead of moving it in lockstep.",
+      "tiers": [
+        {
+          "matrix": {
+            "ALERT": {
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "DEFEND": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "DRINK": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FLEE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FORAGE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "INVESTIGATE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "REGROUP": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ]
+            },
+            "REST": {
+              "ALERT": [
+                "something sensed, awareness still building",
+                "woken by a hit, a noise or a close player"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ]
+            },
+            "RETURN_HOME": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "ROAM": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SEEK_WATER": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SLEEP": {
+              "ALERT": [
+                "something sensed, awareness still building",
+                "woken by a hit, a noise or a close player"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "FORAGE": [
+                "hungry herbivore on grazing ground"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ]
+            },
+            "THREATEN": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware",
+                "night herd under threat: flee, or stand once defended or cornered"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ]
+            }
+          },
+          "note": "Decision model (WildlifeMind), recorded from seeded encounters. Cells list the rule that chose the new state; every change plays a bridge first.",
+          "states": [
+            "ALERT",
+            "DEFEND",
+            "DRINK",
+            "FLEE",
+            "FORAGE",
+            "INVESTIGATE",
+            "REGROUP",
+            "REST",
+            "RETURN_HOME",
+            "ROAM",
+            "SEEK_WATER",
+            "SLEEP",
+            "THREATEN"
+          ],
+          "tier": "FULL"
+        },
+        {
+          "matrix": {
+            "GRAZE": {
+              "GRAZE": [
+                "day 22%"
+              ],
+              "LOOK": [
+                "day 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "day 22%"
+              ],
+              "TURN": [
+                "day 15%"
+              ],
+              "WALK": [
+                "day 30%"
+              ]
+            },
+            "LOOK": {
+              "GRAZE": [
+                "day 22%"
+              ],
+              "LOOK": [
+                "day 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "day 22%"
+              ],
+              "TURN": [
+                "day 15%"
+              ],
+              "WALK": [
+                "day 30%"
+              ]
+            },
+            "SLEEP": {
+              "STAND": [
+                "schedule wakes it"
+              ]
+            },
+            "STAND": {
+              "GRAZE": [
+                "day 22%"
+              ],
+              "LOOK": [
+                "day 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "day 22%"
+              ],
+              "TURN": [
+                "day 15%"
+              ],
+              "WALK": [
+                "day 30%"
+              ]
+            },
+            "TURN": {
+              "GRAZE": [
+                "day 22%"
+              ],
+              "LOOK": [
+                "day 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "day 22%"
+              ],
+              "TURN": [
+                "day 15%"
+              ],
+              "WALK": [
+                "day 30%"
+              ]
+            },
+            "WALK": {
+              "GRAZE": [
+                "day 22%"
+              ],
+              "LOOK": [
+                "day 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "day 22%"
+              ],
+              "TURN": [
+                "day 15%"
+              ],
+              "WALK": [
+                "day 30%",
+                "home-range edge: walk back"
+              ]
+            }
+          },
+          "note": "Ambient routine (AmbientRoutine): odds of the next step, plus the schedule. A player within the full radius, or any hit, promotes to FULL.",
+          "states": [
+            "GRAZE",
+            "LOOK",
+            "SLEEP",
+            "STAND",
+            "TURN",
+            "WALK"
+          ],
+          "tier": "AMBIENT"
+        },
+        {
+          "matrix": {
+            "SLEEP": {
+              "STAND": [
+                "schedule wakes it (checked every 5 s)"
+              ]
+            },
+            "STAND": {
+              "SLEEP": [
+                "schedule turns to sleep (checked every 5 s)"
+              ]
+            }
+          },
+          "note": "Pose only, on the schedule; beyond the outer radius nothing runs.",
+          "states": [
+            "SLEEP",
+            "STAND"
+          ],
+          "tier": "DORMANT"
+        }
+      ],
+      "title": "Land herbivore"
+    },
+    {
+      "bridges": [
+        {
+          "beats": [
+            {
+              "action": "NOTICE",
+              "ticks": 11
+            }
+          ],
+          "from": "SEARCH",
+          "species": "tyrannosaurus",
+          "to": "ALERT",
+          "urgent": false,
+          "when": "prey glimpsed at night"
+        },
+        {
+          "beats": [
+            {
+              "action": "ROAR",
+              "ticks": 95
+            },
+            {
+              "action": "NOTICE",
+              "ticks": 0
+            }
+          ],
+          "from": "ALERT",
+          "species": "tyrannosaurus",
+          "to": "THREATEN",
+          "urgent": false,
+          "when": "prey or intruder in clear sight"
+        },
+        {
+          "beats": [
+            {
+              "action": "CHASE",
+              "ticks": 0
+            }
+          ],
+          "from": "THREATEN",
+          "species": "tyrannosaurus",
+          "to": "HUNT",
+          "urgent": false,
+          "when": "the warning was held"
+        },
+        {
+          "beats": [
+            {
+              "action": "NOTICE",
+              "ticks": 10
+            },
+            {
+              "action": "ROAR",
+              "ticks": 95
+            },
+            {
+              "action": "CHASE",
+              "ticks": 0
+            }
+          ],
+          "from": "SEARCH",
+          "species": "tyrannosaurus",
+          "to": "HUNT",
+          "urgent": false,
+          "when": "prey already tracked"
+        },
+        {
+          "beats": [
+            {
+              "action": "NOTICE",
+              "ticks": 10
+            },
+            {
+              "action": "STALK",
+              "ticks": 53
+            },
+            {
+              "action": "CHASE",
+              "ticks": 0
+            }
+          ],
+          "from": "SEARCH",
+          "species": "sabertooth",
+          "to": "HUNT",
+          "urgent": false,
+          "when": "stalker (Sabertooth)"
+        },
+        {
+          "beats": [
+            {
+              "action": "WAKE",
+              "ticks": 8
+            },
+            {
+              "action": "CHASE",
+              "ticks": 0
+            }
+          ],
+          "from": "SLEEP",
+          "species": "tyrannosaurus",
+          "to": "DEFEND",
+          "urgent": true,
+          "when": "hit while asleep"
+        },
+        {
+          "beats": [
+            {
+              "action": "LOOK",
+              "ticks": 29
+            },
+            {
+              "action": "WALK",
+              "ticks": 0
+            }
+          ],
+          "from": "HUNT",
+          "species": "tyrannosaurus",
+          "to": "RETURN_HOME",
+          "urgent": false,
+          "when": "chase too long or too far"
+        },
+        {
+          "beats": [
+            {
+              "action": "LOOK",
+              "ticks": 32
+            },
+            {
+              "action": "SLEEP",
+              "ticks": 0
+            }
+          ],
+          "from": "ROAM",
+          "species": "tyrannosaurus",
+          "to": "SLEEP",
+          "urgent": false,
+          "when": "morning"
+        },
+        {
+          "beats": [
+            {
+              "action": "WAKE",
+              "ticks": 24
+            },
+            {
+              "action": "WALK",
+              "ticks": 0
+            }
+          ],
+          "from": "SLEEP",
+          "species": "tyrannosaurus",
+          "to": "ROAM",
+          "urgent": false,
+          "when": "afternoon"
+        }
+      ],
+      "id": "land_carnivore",
+      "predator": true,
+      "realms": "land amphibious",
+      "summary": "Hunts at night, sleeps through the morning and roams in the afternoon. Warns before it charges: big carnivores notice, face and roar; stalkers creep in low. Pack mates react with their own delay.",
+      "tiers": [
+        {
+          "matrix": {
+            "ALERT": {
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "DEFEND": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "DRINK": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FEED": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FLEE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "HUNT": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "INVESTIGATE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "REST": {
+              "ALERT": [
+                "something sensed, awareness still building",
+                "woken by a hit, a noise or a close player"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ]
+            },
+            "RETURN_HOME": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "ROAM": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SEARCH": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SEEK_WATER": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SLEEP": [
+                "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SLEEP": {
+              "ALERT": [
+                "something sensed, awareness still building",
+                "woken by a hit, a noise or a close player"
+              ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ]
+            },
+            "THREATEN": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ]
+            }
+          },
+          "note": "Decision model (WildlifeMind), recorded from seeded encounters. Cells list the rule that chose the new state; every change plays a bridge first.",
+          "states": [
+            "ALERT",
+            "DEFEND",
+            "DRINK",
+            "FEED",
+            "FLEE",
+            "HUNT",
+            "INVESTIGATE",
+            "REST",
+            "RETURN_HOME",
+            "ROAM",
+            "SEARCH",
+            "SEEK_WATER",
+            "SLEEP",
+            "THREATEN"
+          ],
+          "tier": "FULL"
+        },
+        {
+          "matrix": {
+            "LOOK": {
+              "LOOK": [
+                "afternoon 8%",
+                "night 8%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "afternoon 31%",
+                "night 15%"
+              ],
+              "TURN": [
+                "afternoon 20%",
+                "night 20%"
+              ],
+              "WALK": [
+                "afternoon 41%",
+                "night 58%"
+              ]
+            },
+            "SLEEP": {
+              "STAND": [
+                "schedule wakes it"
+              ]
+            },
+            "STAND": {
+              "LOOK": [
+                "afternoon 8%",
+                "night 8%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "afternoon 31%",
+                "night 15%"
+              ],
+              "TURN": [
+                "afternoon 20%",
+                "night 20%"
+              ],
+              "WALK": [
+                "afternoon 41%",
+                "night 58%"
+              ]
+            },
+            "TURN": {
+              "LOOK": [
+                "afternoon 8%",
+                "night 8%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "afternoon 31%",
+                "night 15%"
+              ],
+              "TURN": [
+                "afternoon 20%",
+                "night 20%"
+              ],
+              "WALK": [
+                "afternoon 41%",
+                "night 58%"
+              ]
+            },
+            "WALK": {
+              "LOOK": [
+                "afternoon 8%",
+                "night 8%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "afternoon 31%",
+                "night 15%"
+              ],
+              "TURN": [
+                "afternoon 20%",
+                "night 20%"
+              ],
+              "WALK": [
+                "afternoon 41%",
+                "home-range edge: walk back",
+                "night 58%"
+              ]
+            }
+          },
+          "note": "Ambient routine (AmbientRoutine): odds of the next step, plus the schedule. A player within the full radius, or any hit, promotes to FULL.",
+          "states": [
+            "LOOK",
+            "SLEEP",
+            "STAND",
+            "TURN",
+            "WALK"
+          ],
+          "tier": "AMBIENT"
+        },
+        {
+          "matrix": {
+            "SLEEP": {
+              "STAND": [
+                "schedule wakes it (checked every 5 s)"
+              ]
+            },
+            "STAND": {
+              "SLEEP": [
+                "schedule turns to sleep (checked every 5 s)"
+              ]
+            }
+          },
+          "note": "Pose only, on the schedule; beyond the outer radius nothing runs.",
+          "states": [
+            "SLEEP",
+            "STAND"
+          ],
+          "tier": "DORMANT"
+        }
+      ],
+      "title": "Land carnivore"
+    },
+    {
+      "bridges": [],
+      "curves": [
+        {
+          "kind": "LOOP",
+          "points": [
+            [
+              36.4,
+              19.0,
+              -0.8
+            ],
+            [
+              36.2,
+              19.0,
+              -3.2
+            ],
+            [
+              35.8,
+              18.9,
+              -5.5
+            ],
+            [
+              35.1,
+              18.7,
+              -7.8
+            ],
+            [
+              34.3,
+              18.4,
+              -10.0
+            ],
+            [
+              33.2,
+              18.1,
+              -12.1
+            ],
+            [
+              31.9,
+              17.7,
+              -14.1
+            ],
+            [
+              30.5,
+              17.2,
+              -15.9
+            ],
+            [
+              28.9,
+              16.7,
+              -17.6
+            ],
+            [
+              27.2,
+              16.1,
+              -19.1
+            ],
+            [
+              25.4,
+              15.5,
+              -20.4
+            ],
+            [
+              23.6,
+              14.8,
+              -21.6
+            ],
+            [
+              21.7,
+              14.2,
+              -22.7
+            ],
+            [
+              19.7,
+              13.6,
+              -23.5
+            ],
+            [
+              17.8,
+              12.9,
+              -24.3
+            ],
+            [
+              15.8,
+              12.3,
+              -24.9
+            ],
+            [
+              13.9,
+              11.7,
+              -25.4
+            ],
+            [
+              12.0,
+              11.1,
+              -25.8
+            ],
+            [
+              10.1,
+              10.6,
+              -26.1
+            ],
+            [
+              8.3,
+              10.2,
+              -26.3
+            ],
+            [
+              6.5,
+              9.8,
+              -26.4
+            ],
+            [
+              4.7,
+              9.5,
+              -26.6
+            ],
+            [
+              2.9,
+              9.3,
+              -26.6
+            ],
+            [
+              1.2,
+              9.1,
+              -26.7
+            ],
+            [
+              -0.6,
+              9.0,
+              -26.7
+            ],
+            [
+              -2.3,
+              9.0,
+              -26.6
+            ],
+            [
+              -4.1,
+              9.1,
+              -26.6
+            ],
+            [
+              -5.9,
+              9.3,
+              -26.5
+            ],
+            [
+              -7.7,
+              9.6,
+              -26.3
+            ],
+            [
+              -9.5,
+              9.9,
+              -26.1
+            ],
+            [
+              -11.4,
+              10.3,
+              -25.8
+            ],
+            [
+              -13.3,
+              10.8,
+              -25.5
+            ],
+            [
+              -15.2,
+              11.3,
+              -25.0
+            ],
+            [
+              -17.1,
+              11.9,
+              -24.5
+            ],
+            [
+              -19.1,
+              12.5,
+              -23.8
+            ],
+            [
+              -21.0,
+              13.2,
+              -22.9
+            ],
+            [
+              -22.9,
+              13.8,
+              -22.0
+            ],
+            [
+              -24.8,
+              14.4,
+              -20.8
+            ],
+            [
+              -26.6,
+              15.1,
+              -19.5
+            ],
+            [
+              -28.3,
+              15.7,
+              -18.1
+            ],
+            [
+              -30.0,
+              16.3,
+              -16.4
+            ],
+            [
+              -31.4,
+              16.9,
+              -14.7
+            ],
+            [
+              -32.8,
+              17.4,
+              -12.7
+            ],
+            [
+              -33.9,
+              17.8,
+              -10.7
+            ],
+            [
+              -34.9,
+              18.2,
+              -8.5
+            ],
+            [
+              -35.6,
+              18.5,
+              -6.3
+            ],
+            [
+              -36.1,
+              18.7,
+              -3.9
+            ],
+            [
+              -36.4,
+              18.9,
+              -1.6
+            ],
+            [
+              -36.4,
+              19.0,
+              0.8
+            ],
+            [
+              -36.2,
+              19.0,
+              3.2
+            ],
+            [
+              -35.8,
+              18.9,
+              5.5
+            ],
+            [
+              -35.1,
+              18.7,
+              7.8
+            ],
+            [
+              -34.3,
+              18.4,
+              10.0
+            ],
+            [
+              -33.2,
+              18.1,
+              12.1
+            ],
+            [
+              -31.9,
+              17.7,
+              14.1
+            ],
+            [
+              -30.5,
+              17.2,
+              15.9
+            ],
+            [
+              -28.9,
+              16.7,
+              17.6
+            ],
+            [
+              -27.2,
+              16.1,
+              19.1
+            ],
+            [
+              -25.4,
+              15.5,
+              20.4
+            ],
+            [
+              -23.6,
+              14.8,
+              21.6
+            ],
+            [
+              -21.7,
+              14.2,
+              22.7
+            ],
+            [
+              -19.7,
+              13.6,
+              23.5
+            ],
+            [
+              -17.8,
+              12.9,
+              24.3
+            ],
+            [
+              -15.8,
+              12.3,
+              24.9
+            ],
+            [
+              -13.9,
+              11.7,
+              25.4
+            ],
+            [
+              -12.0,
+              11.1,
+              25.8
+            ],
+            [
+              -10.1,
+              10.6,
+              26.1
+            ],
+            [
+              -8.3,
+              10.2,
+              26.3
+            ],
+            [
+              -6.5,
+              9.8,
+              26.4
+            ],
+            [
+              -4.7,
+              9.5,
+              26.6
+            ],
+            [
+              -2.9,
+              9.3,
+              26.6
+            ],
+            [
+              -1.2,
+              9.1,
+              26.7
+            ],
+            [
+              0.6,
+              9.0,
+              26.7
+            ],
+            [
+              2.3,
+              9.0,
+              26.6
+            ],
+            [
+              4.1,
+              9.1,
+              26.6
+            ],
+            [
+              5.9,
+              9.3,
+              26.5
+            ],
+            [
+              7.7,
+              9.6,
+              26.3
+            ],
+            [
+              9.5,
+              9.9,
+              26.1
+            ],
+            [
+              11.4,
+              10.3,
+              25.8
+            ],
+            [
+              13.3,
+              10.8,
+              25.5
+            ],
+            [
+              15.2,
+              11.3,
+              25.0
+            ],
+            [
+              17.1,
+              11.9,
+              24.5
+            ],
+            [
+              19.1,
+              12.5,
+              23.8
+            ],
+            [
+              21.0,
+              13.2,
+              22.9
+            ],
+            [
+              22.9,
+              13.8,
+              22.0
+            ],
+            [
+              24.8,
+              14.4,
+              20.8
+            ],
+            [
+              26.6,
+              15.1,
+              19.5
+            ],
+            [
+              28.3,
+              15.7,
+              18.1
+            ],
+            [
+              30.0,
+              16.3,
+              16.4
+            ],
+            [
+              31.4,
+              16.9,
+              14.7
+            ],
+            [
+              32.8,
+              17.4,
+              12.7
+            ],
+            [
+              33.9,
+              17.8,
+              10.7
+            ],
+            [
+              34.9,
+              18.2,
+              8.5
+            ],
+            [
+              35.6,
+              18.5,
+              6.3
+            ],
+            [
+              36.1,
+              18.7,
+              3.9
+            ],
+            [
+              36.4,
+              18.9,
+              1.6
+            ],
+            [
+              36.4,
+              19.0,
+              -0.8
+            ]
+          ]
+        },
+        {
+          "kind": "FIGURE_EIGHT",
+          "points": [
+            [
+              0.0,
+              16.1,
+              0.0
+            ],
+            [
+              2.8,
+              16.4,
+              0.2
+            ],
+            [
+              5.5,
+              16.8,
+              0.4
+            ],
+            [
+              8.2,
+              17.0,
+              0.5
+            ],
+            [
+              10.9,
+              17.3,
+              0.6
+            ],
+            [
+              13.4,
+              17.4,
+              0.6
+            ],
+            [
+              15.7,
+              17.5,
+              0.5
+            ],
+            [
+              18.0,
+              17.6,
+              0.3
+            ],
+            [
+              20.0,
+              17.6,
+              0.0
+            ],
+            [
+              21.8,
+              17.5,
+              -0.4
+            ],
+            [
+              23.5,
+              17.4,
+              -1.0
+            ],
+            [
+              24.9,
+              17.2,
+              -1.7
+            ],
+            [
+              26.1,
+              16.9,
+              -2.5
+            ],
+            [
+              27.0,
+              16.6,
+              -3.5
+            ],
+            [
+              27.7,
+              16.3,
+              -4.6
+            ],
+            [
+              28.2,
+              15.9,
+              -5.8
+            ],
+            [
+              28.4,
+              15.5,
+              -7.2
+            ],
+            [
+              28.4,
+              15.0,
+              -8.6
+            ],
+            [
+              28.1,
+              14.6,
+              -10.2
+            ],
+            [
+              27.7,
+              14.1,
+              -11.7
+            ],
+            [
+              27.1,
+              13.7,
+              -13.4
+            ],
+            [
+              26.2,
+              13.2,
+              -15.0
+            ],
+            [
+              25.3,
+              12.7,
+              -16.6
+            ],
+            [
+              24.1,
+              12.3,
+              -18.2
+            ],
+            [
+              22.9,
+              11.9,
+              -19.8
+            ],
+            [
+              21.6,
+              11.6,
+              -21.2
+            ],
+            [
+              20.2,
+              11.2,
+              -22.5
+            ],
+            [
+              18.7,
+              11.0,
+              -23.8
+            ],
+            [
+              17.2,
+              10.7,
+              -24.8
+            ],
+            [
+              15.7,
+              10.6,
+              -25.7
+            ],
+            [
+              14.2,
+              10.5,
+              -26.3
+            ],
+            [
+              12.7,
+              10.4,
+              -26.8
+            ],
+            [
+              11.3,
+              10.4,
+              -27.0
+            ],
+            [
+              9.9,
+              10.5,
+              -27.0
+            ],
+            [
+              8.6,
+              10.6,
+              -26.7
+            ],
+            [
+              7.4,
+              10.8,
+              -26.2
+            ],
+            [
+              6.3,
+              11.1,
+              -25.4
+            ],
+            [
+              5.3,
+              11.4,
+              -24.4
+            ],
+            [
+              4.4,
+              11.7,
+              -23.1
+            ],
+            [
+              3.6,
+              12.1,
+              -21.6
+            ],
+            [
+              2.9,
+              12.5,
+              -19.8
+            ],
+            [
+              2.3,
+              13.0,
+              -17.8
+            ],
+            [
+              1.8,
+              13.4,
+              -15.7
+            ],
+            [
+              1.3,
+              13.9,
+              -13.3
+            ],
+            [
+              1.0,
+              14.3,
+              -10.8
+            ],
+            [
+              0.7,
+              14.8,
+              -8.2
+            ],
+            [
+              0.4,
+              15.3,
+              -5.5
+            ],
+            [
+              0.2,
+              15.7,
+              -2.8
+            ],
+            [
+              0.0,
+              16.1,
+              0.0
+            ],
+            [
+              -0.2,
+              16.4,
+              2.8
+            ],
+            [
+              -0.4,
+              16.8,
+              5.5
+            ],
+            [
+              -0.7,
+              17.0,
+              8.2
+            ],
+            [
+              -1.0,
+              17.3,
+              10.8
+            ],
+            [
+              -1.3,
+              17.4,
+              13.3
+            ],
+            [
+              -1.8,
+              17.5,
+              15.7
+            ],
+            [
+              -2.3,
+              17.6,
+              17.8
+            ],
+            [
+              -2.9,
+              17.6,
+              19.8
+            ],
+            [
+              -3.6,
+              17.5,
+              21.6
+            ],
+            [
+              -4.4,
+              17.4,
+              23.1
+            ],
+            [
+              -5.3,
+              17.2,
+              24.4
+            ],
+            [
+              -6.3,
+              16.9,
+              25.4
+            ],
+            [
+              -7.4,
+              16.6,
+              26.2
+            ],
+            [
+              -8.6,
+              16.3,
+              26.7
+            ],
+            [
+              -9.9,
+              15.9,
+              27.0
+            ],
+            [
+              -11.3,
+              15.5,
+              27.0
+            ],
+            [
+              -12.7,
+              15.0,
+              26.8
+            ],
+            [
+              -14.2,
+              14.6,
+              26.3
+            ],
+            [
+              -15.7,
+              14.1,
+              25.7
+            ],
+            [
+              -17.2,
+              13.7,
+              24.8
+            ],
+            [
+              -18.7,
+              13.2,
+              23.8
+            ],
+            [
+              -20.2,
+              12.7,
+              22.5
+            ],
+            [
+              -21.6,
+              12.3,
+              21.2
+            ],
+            [
+              -22.9,
+              11.9,
+              19.8
+            ],
+            [
+              -24.1,
+              11.6,
+              18.2
+            ],
+            [
+              -25.3,
+              11.2,
+              16.6
+            ],
+            [
+              -26.2,
+              11.0,
+              15.0
+            ],
+            [
+              -27.1,
+              10.7,
+              13.4
+            ],
+            [
+              -27.7,
+              10.6,
+              11.7
+            ],
+            [
+              -28.1,
+              10.5,
+              10.2
+            ],
+            [
+              -28.4,
+              10.4,
+              8.6
+            ],
+            [
+              -28.4,
+              10.4,
+              7.2
+            ],
+            [
+              -28.2,
+              10.5,
+              5.8
+            ],
+            [
+              -27.7,
+              10.6,
+              4.6
+            ],
+            [
+              -27.0,
+              10.8,
+              3.5
+            ],
+            [
+              -26.1,
+              11.1,
+              2.5
+            ],
+            [
+              -24.9,
+              11.4,
+              1.7
+            ],
+            [
+              -23.5,
+              11.7,
+              1.0
+            ],
+            [
+              -21.8,
+              12.1,
+              0.4
+            ],
+            [
+              -20.0,
+              12.5,
+              0.0
+            ],
+            [
+              -18.0,
+              13.0,
+              -0.3
+            ],
+            [
+              -15.7,
+              13.4,
+              -0.5
+            ],
+            [
+              -13.4,
+              13.9,
+              -0.6
+            ],
+            [
+              -10.9,
+              14.3,
+              -0.6
+            ],
+            [
+              -8.2,
+              14.8,
+              -0.5
+            ],
+            [
+              -5.5,
+              15.3,
+              -0.4
+            ],
+            [
+              -2.8,
+              15.7,
+              -0.2
+            ],
+            [
+              0.0,
+              16.1,
+              0.0
+            ]
+          ]
+        },
+        {
+          "kind": "THERMAL",
+          "points": [
+            [
+              1.1,
+              13.1,
+              -11.6
+            ],
+            [
+              1.9,
+              13.1,
+              -11.5
+            ],
+            [
+              2.6,
+              13.2,
+              -11.3
+            ],
+            [
+              3.4,
+              13.2,
+              -11.1
+            ],
+            [
+              4.1,
+              13.2,
+              -10.9
+            ],
+            [
+              4.8,
+              13.3,
+              -10.6
+            ],
+            [
+              5.5,
+              13.4,
+              -10.3
+            ],
+            [
+              6.1,
+              13.5,
+              -9.9
+            ],
+            [
+              6.8,
+              13.6,
+              -9.5
+            ],
+            [
+              7.4,
+              13.7,
+              -9.0
+            ],
+            [
+              7.9,
+              13.9,
+              -8.5
+            ],
+            [
+              8.5,
+              14.0,
+              -8.0
+            ],
+            [
+              9.0,
+              14.2,
+              -7.4
+            ],
+            [
+              9.4,
+              14.4,
+              -6.8
+            ],
+            [
+              9.9,
+              14.6,
+              -6.2
+            ],
+            [
+              10.3,
+              14.8,
+              -5.5
+            ],
+            [
+              10.6,
+              15.0,
+              -4.8
+            ],
+            [
+              10.9,
+              15.2,
+              -4.1
+            ],
+            [
+              11.1,
+              15.3,
+              -3.4
+            ],
+            [
+              11.3,
+              15.5,
+              -2.7
+            ],
+            [
+              11.5,
+              15.7,
+              -1.9
+            ],
+            [
+              11.6,
+              15.9,
+              -1.2
+            ],
+            [
+              11.6,
+              16.0,
+              -0.4
+            ],
+            [
+              11.6,
+              16.2,
+              0.4
+            ],
+            [
+              11.6,
+              16.3,
+              1.1
+            ],
+            [
+              11.5,
+              16.5,
+              1.9
+            ],
+            [
+              11.3,
+              16.6,
+              2.6
+            ],
+            [
+              11.1,
+              16.7,
+              3.4
+            ],
+            [
+              10.9,
+              16.7,
+              4.1
+            ],
+            [
+              10.6,
+              16.8,
+              4.8
+            ],
+            [
+              10.3,
+              16.8,
+              5.5
+            ],
+            [
+              9.9,
+              16.8,
+              6.1
+            ],
+            [
+              9.5,
+              16.9,
+              6.8
+            ],
+            [
+              9.0,
+              16.8,
+              7.4
+            ],
+            [
+              8.5,
+              16.8,
+              7.9
+            ],
+            [
+              8.0,
+              16.8,
+              8.5
+            ],
+            [
+              7.4,
+              16.7,
+              9.0
+            ],
+            [
+              6.8,
+              16.7,
+              9.4
+            ],
+            [
+              6.2,
+              16.6,
+              9.9
+            ],
+            [
+              5.5,
+              16.6,
+              10.3
+            ],
+            [
+              4.8,
+              16.5,
+              10.6
+            ],
+            [
+              4.1,
+              16.4,
+              10.9
+            ],
+            [
+              3.4,
+              16.4,
+              11.1
+            ],
+            [
+              2.7,
+              16.3,
+              11.3
+            ],
+            [
+              1.9,
+              16.2,
+              11.5
+            ],
+            [
+              1.2,
+              16.2,
+              11.6
+            ],
+            [
+              0.4,
+              16.1,
+              11.6
+            ],
+            [
+              -0.4,
+              16.1,
+              11.6
+            ],
+            [
+              -1.1,
+              16.1,
+              11.6
+            ],
+            [
+              -1.9,
+              16.1,
+              11.5
+            ],
+            [
+              -2.6,
+              16.1,
+              11.3
+            ],
+            [
+              -3.4,
+              16.2,
+              11.1
+            ],
+            [
+              -4.1,
+              16.2,
+              10.9
+            ],
+            [
+              -4.8,
+              16.3,
+              10.6
+            ],
+            [
+              -5.5,
+              16.4,
+              10.3
+            ],
+            [
+              -6.1,
+              16.5,
+              9.9
+            ],
+            [
+              -6.8,
+              16.6,
+              9.5
+            ],
+            [
+              -7.4,
+              16.7,
+              9.0
+            ],
+            [
+              -7.9,
+              16.9,
+              8.5
+            ],
+            [
+              -8.5,
+              17.0,
+              8.0
+            ],
+            [
+              -9.0,
+              17.2,
+              7.4
+            ],
+            [
+              -9.4,
+              17.4,
+              6.8
+            ],
+            [
+              -9.9,
+              17.5,
+              6.2
+            ],
+            [
+              -10.3,
+              17.7,
+              5.5
+            ],
+            [
+              -10.6,
+              17.9,
+              4.8
+            ],
+            [
+              -10.9,
+              18.1,
+              4.1
+            ],
+            [
+              -11.1,
+              18.3,
+              3.4
+            ],
+            [
+              -11.3,
+              18.5,
+              2.7
+            ],
+            [
+              -11.5,
+              18.7,
+              1.9
+            ],
+            [
+              -11.6,
+              18.8,
+              1.2
+            ],
+            [
+              -11.6,
+              19.0,
+              0.4
+            ],
+            [
+              -11.6,
+              19.2,
+              -0.4
+            ],
+            [
+              -11.6,
+              19.3,
+              -1.1
+            ],
+            [
+              -11.5,
+              19.4,
+              -1.9
+            ],
+            [
+              -11.3,
+              19.5,
+              -2.6
+            ],
+            [
+              -11.1,
+              19.6,
+              -3.4
+            ],
+            [
+              -10.9,
+              19.7,
+              -4.1
+            ],
+            [
+              -10.6,
+              19.7,
+              -4.8
+            ],
+            [
+              -10.3,
+              19.8,
+              -5.5
+            ],
+            [
+              -9.9,
+              19.8,
+              -6.1
+            ],
+            [
+              -9.5,
+              19.8,
+              -6.8
+            ],
+            [
+              -9.0,
+              19.8,
+              -7.4
+            ],
+            [
+              -8.5,
+              19.8,
+              -7.9
+            ],
+            [
+              -8.0,
+              19.7,
+              -8.5
+            ],
+            [
+              -7.4,
+              19.7,
+              -9.0
+            ],
+            [
+              -6.8,
+              19.6,
+              -9.4
+            ],
+            [
+              -6.2,
+              19.6,
+              -9.9
+            ],
+            [
+              -5.5,
+              19.5,
+              -10.3
+            ],
+            [
+              -4.8,
+              19.5,
+              -10.6
+            ],
+            [
+              -4.1,
+              19.4,
+              -10.9
+            ],
+            [
+              -3.4,
+              19.3,
+              -11.1
+            ],
+            [
+              -2.7,
+              19.3,
+              -11.3
+            ],
+            [
+              -1.9,
+              19.2,
+              -11.5
+            ],
+            [
+              -1.2,
+              19.1,
+              -11.6
+            ],
+            [
+              -0.4,
+              19.1,
+              -11.6
+            ],
+            [
+              0.4,
+              19.1,
+              -11.6
+            ],
+            [
+              1.1,
+              19.1,
+              -11.6
+            ]
+          ]
+        }
+      ],
+      "id": "flyer",
+      "predator": false,
+      "realms": "air",
+      "summary": "No day schedule, hunger or thirst. Each bird flies smooth laps around its nest (wide loops, figure eights over the nest, thermal circles that gain height), then lands, perches, looks around and takes off again. Egg thieves and, for apex flyers, intruders are circled and swooped.",
+      "tiers": [
+        {
+          "matrix": {
+            "DEFENSE_CIRCLE": {
+              "RETURN_HOME": [
+                "thief gone, out of the leash, unseen for 3 s, or timeout"
+              ],
+              "SWOOP": [
+                "swoop cooldown over and a clear line to the thief"
+              ]
+            },
+            "LAND": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen, or an intruder in an apex flyer's airspace"
+              ],
+              "PERCH": [
+                "touched down on the nest"
+              ],
+              "TAKEOFF": [
+                "nest blocked or gone, water, or 10 s without touchdown"
+              ]
+            },
+            "PERCH": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen while perched (takes off into the defense)"
+              ],
+              "TAKEOFF": [
+                "rest over (5 to 15 s), hurt, or the nest became unsafe"
+              ]
+            },
+            "RETURN_HOME": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen, or an intruder in an apex flyer's airspace"
+              ],
+              "ROAM": [
+                "back within 10 blocks of home"
+              ]
+            },
+            "ROAM": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen, or an intruder in an apex flyer's airspace"
+              ],
+              "LAND": [
+                "perch timer due, nest safe and reachable"
+              ],
+              "RETURN_HOME": [
+                "beyond the roam radius"
+              ],
+              "SOAR": [
+                "lap finished, a thermal was chosen"
+              ]
+            },
+            "SOAR": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen, or an intruder in an apex flyer's airspace"
+              ],
+              "LAND": [
+                "perch timer due, nest safe and reachable"
+              ],
+              "RETURN_HOME": [
+                "beyond the roam radius"
+              ],
+              "ROAM": [
+                "thermal lap finished"
+              ]
+            },
+            "SWOOP": {
+              "DEFENSE_CIRCLE": [
+                "bite landed or missed, 5 s, or a collision"
+              ],
+              "RETURN_HOME": [
+                "thief gone, out of the leash, or timeout"
+              ]
+            },
+            "TAKEOFF": {
+              "DEFENSE_CIRCLE": [
+                "egg stolen, or an intruder in an apex flyer's airspace"
+              ],
+              "ROAM": [
+                "climbed clear"
+              ]
+            }
+          },
+          "note": "Flight phases (FlyingCreatureEntity). Clips follow the motion: flap when climbing, glide when level or descending, bank left or right in turns, hover on approach.",
+          "states": [
+            "DEFENSE_CIRCLE",
+            "LAND",
+            "PERCH",
+            "RETURN_HOME",
+            "ROAM",
+            "SOAR",
+            "SWOOP",
+            "TAKEOFF"
+          ],
+          "tier": "FULL"
+        },
+        {
+          "matrix": {
+            "LAND": {
+              "PERCH": [
+                "touched down"
+              ]
+            },
+            "PERCH": {
+              "TAKEOFF": [
+                "rest over"
+              ]
+            },
+            "ROAM": {
+              "LAND": [
+                "perch timer due"
+              ],
+              "SOAR": [
+                "lap finished, a thermal was chosen"
+              ]
+            },
+            "SOAR": {
+              "ROAM": [
+                "thermal lap finished"
+              ]
+            },
+            "TAKEOFF": {
+              "ROAM": [
+                "climbed clear"
+              ]
+            }
+          },
+          "note": "Same laps and perching without territory scans; collision checks every 3 ticks.",
+          "states": [
+            "LAND",
+            "PERCH",
+            "ROAM",
+            "SOAR",
+            "TAKEOFF"
+          ],
+          "tier": "AMBIENT"
+        },
+        {
+          "matrix": {
+            "PERCH": {
+              "PERCH": [
+                "stays perched"
+              ]
+            },
+            "ROAM": {
+              "ROAM": [
+                "keeps its lap, collision checks every 10 ticks"
+              ]
+            }
+          },
+          "note": "A perched bird stays on its nest; one in the air finishes its lap cheaply.",
+          "states": [
+            "PERCH",
+            "ROAM"
+          ],
+          "tier": "DORMANT"
+        }
+      ],
+      "title": "Flyer"
+    },
+    {
+      "bridges": [],
+      "id": "aquatic",
+      "predator": true,
+      "realms": "water",
+      "summary": "Kept simple for now: cruise inside the home pool, investigate, warn, hunt and feed, or flee (Cnidaria), with no sleep, thirst or grazing. Swimming banks use the rig's left and right swim clips.",
+      "tiers": [
+        {
+          "matrix": {
+            "ALERT": {
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "DEFEND": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FEED": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "FLEE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "HUNT": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "INVESTIGATE": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "REST": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "RETURN_HOME": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "ROAM": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "SEARCH": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "REST": [
+                "fatigue while calm"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
+              ]
+            },
+            "THREATEN": {
+              "ALERT": [
+                "something sensed, awareness still building"
+              ],
+              "DEFEND": [
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
+              ],
+              "FLEE": [
+                "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
+              ],
+              "INVESTIGATE": [
+                "stimulus out of sight: investigate (timid animals flee)"
+              ],
+              "RETURN_HOME": [
+                "left its home range or gave up a chase"
+              ]
+            }
+          },
+          "note": "Same decision model as land, without sleep, water or grazing.",
+          "states": [
+            "ALERT",
+            "DEFEND",
+            "FEED",
+            "FLEE",
+            "HUNT",
+            "INVESTIGATE",
+            "REST",
+            "RETURN_HOME",
+            "ROAM",
+            "SEARCH",
+            "THREATEN"
+          ],
+          "tier": "FULL"
+        },
+        {
+          "matrix": {
+            "REST": {
+              "ROAM": [
+                "hover over: next cruise leg"
+              ]
+            },
+            "ROAM": {
+              "REST": [
+                "cruise leg finished: hover a while"
+              ]
+            }
+          },
+          "note": "Slow cruise legs inside the water column, no senses.",
+          "states": [
+            "REST",
+            "ROAM"
+          ],
+          "tier": "AMBIENT"
+        },
+        {
+          "matrix": {
+            "REST": {
+              "REST": [
+                "hovers in place"
+              ]
+            }
+          },
+          "note": "Hovers; containment inside the water column still runs.",
+          "states": [
+            "REST"
+          ],
+          "tier": "DORMANT"
+        }
+      ],
+      "title": "Aquatic"
+    }
+  ],
+  "schedule": {
+    "carnivore": "Night: hunt. Morning: sleep. Afternoon: roam and drink.",
+    "carnivoreDaySleep": 0.5,
+    "flyer": "No schedule: flyers loop around their nest, land, perch and take off.",
+    "herbivore": "Night: sleep. Day: graze, drink and roam.",
+    "nightEnd": 23000,
+    "nightStart": 13000
+  },
+  "tiers": [
+    {
+      "id": "FULL",
+      "radius": 64,
+      "summary": "Full behaviour: senses, needs (hunger, thirst, fatigue), hunting, fleeing, drinking and the timed bridges between states. Decisions twice a second."
+    },
+    {
+      "id": "AMBIENT",
+      "radius": 128,
+      "summary": "Seen from afar: short walks, turns, stops, looking around, grazing, sniffing, pooping and the daily sleep schedule. One cheap decision every few seconds; needs frozen."
+    },
+    {
+      "id": "DORMANT",
+      "radius": 256,
+      "summary": "Culled: no routine. Within this radius the pose still follows the schedule (asleep or standing) on a slow timer; beyond it nothing runs."
+    }
+  ]
+}

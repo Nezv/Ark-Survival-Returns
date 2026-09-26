@@ -41,7 +41,7 @@ public final class BiomeAnnouncements {
         var key = biome.unwrapKey();
         if (key.isEmpty()) return;
         var id = key.get().identifier();
-        int danger = player.level().dimension() == Level.OVERWORLD ? BiomeTier.at(player.level(), player.blockPosition()).dangerLevel() : 0;
+        int danger = player.level().dimension() == Level.OVERWORLD ? DangerTier.at(player.level(), player.blockPosition()).dangerLevel() : 0;
         var region = new Region(player.level().dimension().identifier(), id, danger);
         if (!VISITS.computeIfAbsent(player.getUUID(), unused -> new Visit()).update(region)) return;
         String fallback = java.util.Arrays.stream(id.getPath().split("_"))
@@ -51,7 +51,7 @@ public final class BiomeAnnouncements {
         if (danger == 0) {
             player.sendSystemMessage(Component.translatable("chat.arksurvivalreturns.biome_unrated", name).withStyle(ChatFormatting.GRAY));
         } else {
-            var tier = BiomeTier.values()[danger - 1];
+            var tier = DangerTier.values()[danger - 1];
             int a = Config.MIN_LEVEL.get(tier).get(), b = Config.MAX_LEVEL.get(tier).get();
             player.sendSystemMessage(Component.translatable("chat.arksurvivalreturns.biome", name, danger,
                     Math.min(a, b), Math.max(a, b)).withStyle(COLORS[danger - 1]));

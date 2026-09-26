@@ -105,6 +105,16 @@ public enum Species {
     /** Movement domain and habitat system used by a species. */
     public enum Realm { LAND, AMPHIBIOUS, WATER, AIR }
 
+    /**
+     * Broad spawn habitat, generated as the biome tag {@code habitat/<id>}. Danger and level come from the
+     * area alone; a habitat only keeps cold species in the snow, crocodilians in wetlands and swimmers in
+     * the sea, while warm land species share every temperate biome and flyers every land biome.
+     */
+    public enum Habitat {
+        TEMPERATE, WETLAND, COLD, SEA, SKY;
+        public final String id = name().toLowerCase(java.util.Locale.ROOT);
+    }
+
     /** Water clip set for semi-aquatic and water-bound species. */
     private record SwimProfile(String idle, String walk, String run) {}
 
@@ -236,6 +246,13 @@ public enum Species {
      * chunk generation. Wider species spawn only through the population budget instead.
      */
     public boolean chunkSpawnSafe() { return width <= 10.0f; }
+    public Habitat habitat() {
+        if (flyer()) return Habitat.SKY;
+        if (aquatic()) return Habitat.SEA;
+        if (coldAdapted()) return Habitat.COLD;
+        if (amphibious() || family() == LandFamily.AMPHIBIOUS) return Habitat.WETLAND;
+        return Habitat.TEMPERATE;
+    }
     public boolean amphibious() { return realm == Realm.AMPHIBIOUS; }
     public boolean swimmer() { return realm == Realm.WATER || realm == Realm.AMPHIBIOUS; }
     /** Realm LAND and AMPHIBIOUS species keep a saved land habitat and shared group satiation. */
@@ -326,24 +343,22 @@ public enum Species {
             return dev.nez.arksurvivalreturns.Config.NEST_WATER_RADIUS.get();
         return flyerProfile.shoreWaterRadius();
     }
+    /** Generated eye groups (tools/build_creature_eyes.py): calm or predatory lids, and the alert variant. */
+    public static final String EYES_CALM = "ark_eye_calm", EYES_ALERT = "ark_eye_alert";
+    /** Rigs without an eye anchor get no generated eyes (build_creature_eyes.NO_EYES). */
+    private static final java.util.Set<String> NO_EYES = java.util.Set.of("cnidaria", "tusoteuthis", "dragon");
+
     /**
-     * Eye bones that receive the emissive night glow.
-     *
-     * Rigs whose eye bones carry no cube geometry are excluded: the layer renders the named bone's own
-     * geometry, so naming a joint-only bone would light nothing. That covers Deinosuchus, Dragon and
-     * Mosasaurus (whose two eye bones are not both geometry-bearing) plus the rigs without eyes.
+     * The generated eyeball bones of one eye set, which also receive the emissive night glow. Every rig
+     * with an eye anchor gets the same names; the calm set shows unless the creature is alarmed.
      */
-    public String[] eyeBones() {
-        return switch (id) {
-            case "velociraptor", "tyrannosaurus" -> new String[]{"Lft_Eye_JNT_SKL", "Rht_Eye_JNT_SKL"};
-            case "ceratosaurus", "acrocanthosaurus" -> new String[]{"Eye_L", "Eye_R"};
-            case "argentavis", "ravager" -> new String[]{"l_Eye_01", "r_Eye_01"};
-            case "archaeopteryx" -> new String[]{"l_Eye", "r_Eye"};
-            case "lystrosaurus", "cnidaria", "tusoteuthis", "kaprosuchus", "sarco", "terrorbird",
-                 "deinosuchus", "dragon", "mosasaurus" -> new String[0];
-            default -> new String[]{"l_eye", "r_eye"};
-        };
+    public String[] eyeBones(boolean alert) {
+        if (NO_EYES.contains(id)) return new String[0];
+        String state = alert ? "alert" : "calm";
+        return new String[]{"ark_eyeball_" + state + "_l", "ark_eyeball_" + state + "_r"};
     }
+
+    public String[] eyeBones() { return eyeBones(false); }
     /** Predators with dedicated eye geometry receive the red night glow. */
     public boolean glowingEyes() { return predator && eyeBones().length > 0; }
 }

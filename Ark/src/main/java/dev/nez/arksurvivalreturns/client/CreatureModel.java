@@ -10,6 +10,8 @@ import net.minecraft.resources.Identifier;
 
 final class CreatureModel extends GeoModel<CreatureEntity> {
     static final DataTicket<Integer> TEXTURE_VARIANT = DataTicket.create("arksurvivalreturns:texture_variant", Integer.class);
+    /** Alert eyes: attacking, defending, threatening or fleeing (the synced behaviour state). */
+    static final DataTicket<Boolean> EYE_ALERT = DataTicket.create("arksurvivalreturns:eye_alert", Boolean.class);
     private static final String[] VARIANTS = {"ivory", "darken", "emerald", "midnight", "burgundy"};
     private final Species species;
     CreatureModel(Species species) { this.species = species; }

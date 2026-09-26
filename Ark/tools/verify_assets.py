@@ -6,7 +6,8 @@ from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
 from verify_camp_assets import verify_camp_assets
-from import_creatures import ROOT, ASSETS, SPECIES, source_files
+from build_creature_eyes import NO_EYES
+from import_creatures import ROOT, ASSETS, SPECIES, source_files, with_behavior_clips
 
 # Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
 # variant textures chosen from its UUID, so every <species>_<variant>.png must match the geometry's
@@ -15,25 +16,16 @@ from import_creatures import ROOT, ASSETS, SPECIES, source_files
 VARIANTS = ('ivory', 'darken', 'emerald', 'midnight', 'burgundy')
 PALETTE_SIZE = (64, 8)
 
-# Eye geometry used by the emissive night layer, mirroring Species.eyeBones().
-# Deinosuchus, Dragon and Mosasaurus own eye bones without usable cube geometry, so they are excluded
-# there and here: an empty bone would render nothing.
-EYE_PAIRS = {'velociraptor': ('Lft_Eye_JNT_SKL', 'Rht_Eye_JNT_SKL'),
-             'tyrannosaurus': ('Lft_Eye_JNT_SKL', 'Rht_Eye_JNT_SKL'),
-             'ceratosaurus': ('Eye_L', 'Eye_R'), 'acrocanthosaurus': ('Eye_L', 'Eye_R'),
-             'argentavis': ('l_Eye_01', 'r_Eye_01'), 'ravager': ('l_Eye_01', 'r_Eye_01'),
-             'archaeopteryx': ('l_Eye', 'r_Eye')}
-NO_EYE_GEOMETRY = {'lystrosaurus', 'cnidaria', 'tusoteuthis', 'kaprosuchus', 'sarco', 'terrorbird',
-                   'deinosuchus', 'dragon', 'mosasaurus'}
+# Generated eyes (build_creature_eyes.py), mirroring Species.eyeBones(): two eyeballs per set, calm and
+# alert, under their own groups. Rigs without an eye anchor get none.
+NO_EYE_GEOMETRY = set(NO_EYES)
 FLYERS = ['pteranodon', 'argentavis'] + [entry['id'] for entry in COLLECTION if entry['realm'] == 'AIR']
-# Only predators receive the emissive layer, so only predators must own usable eye geometry.
-PREDATORS = {'velociraptor', 'tyrannosaurus', 'giganotosaurus'} | {entry['id'] for entry in COLLECTION if entry['predator']}
 
 
 def eye_bones(identifier):
     if identifier in NO_EYE_GEOMETRY:
         return ()
-    return EYE_PAIRS.get(identifier, ('l_eye', 'r_eye'))
+    return tuple(f'ark_eyeball_{state}_{side}' for state in ('calm', 'alert') for side in ('l', 'r'))
 
 
 def check_creature(folder, identifier, height, clips, report, check, fail):
@@ -54,12 +46,14 @@ def check_creature(folder, identifier, height, clips, report, check, fail):
     if 'Ark-Sleep' in clips:
         check(anim['Ark-Sleep']['loop'] and anim['Ark-Sleep']['animation_length'] == 4,
               f'{identifier}: Ark-Sleep must loop for four seconds')
-    # A glowing eye bone must exist and carry geometry, or the night layer would light nothing.
+    # Every generated eyeball must exist and carry geometry: the renderer shows it and the night layer lights it.
     for name in eye_bones(identifier):
         eye = next((b for b in geo['bones'] if b['name'] == name), None)
         check(eye is not None, f'Missing eye geometry: {identifier}/{name}')
-        if identifier in PREDATORS and eye is not None:
-            check(eye.get('cubes'), f'Glowing eye bone has no geometry: {identifier}/{name}')
+        if eye is not None:
+            check(eye.get('cubes'), f'Eye bone has no geometry: {identifier}/{name}')
+    if eye_bones(identifier):
+        check({'ark_eye_calm', 'ark_eye_alert'} <= bones, f'{identifier}: missing the calm/alert eye groups')
     expected = (geo['description']['texture_width'], geo['description']['texture_height'])
     for variant in VARIANTS:
         path = ASSETS/f'textures/entity/{identifier}_{variant}.png'
@@ -104,7 +98,7 @@ def main():
     report = json.loads((ROOT/'docs/creature-import.json').read_text())
     for folder, identifier, height, *clips in SPECIES:
         try:
-            check_creature(folder, identifier, height, clips, report, check, fail)
+            check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion

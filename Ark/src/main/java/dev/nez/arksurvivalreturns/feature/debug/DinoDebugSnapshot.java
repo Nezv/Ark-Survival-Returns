@@ -21,6 +21,8 @@ public final class DinoDebugSnapshot {
         out.add("level", dino.creatureLevel());
         out.add("health", dino.getHealth() + " / " + dino.getMaxHealth());
         out.add("behavior", dino.behavior());
+        out.add("action", dino.action());
+        out.add("tier", dino.behaviorTier());
         out.add("nightActive", dino.nightActive());
         out.add("position", dino.position());
         out.add("velocity", dino.getDeltaMovement());
@@ -57,7 +59,8 @@ public final class DinoDebugSnapshot {
                     if (!field.trySetAccessible()) { add(key, "[unavailable]"); continue; }
                     Object value = field.get(object);
                     // These are the only owned child objects. Never traverse a mob/world/target reference.
-                    if (value != null && (field.getName().equals("wildlife") || field.getName().equals("mind"))) fields(key, value);
+                    if (value != null && (field.getName().equals("wildlife") || field.getName().equals("mind")
+                            || field.getName().equals("choreo"))) fields(key, value);
                     else add(key, value);
                 } catch (IllegalAccessException e) { add(key, "[unavailable]"); }
             }

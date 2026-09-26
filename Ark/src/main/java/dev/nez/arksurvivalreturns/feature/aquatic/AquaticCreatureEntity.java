@@ -5,6 +5,7 @@ import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.PlayState;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
+import dev.nez.arksurvivalreturns.feature.behavior.ClipRole;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
@@ -116,12 +117,20 @@ public final class AquaticCreatureEntity extends CreatureEntity {
             }
             var behavior = behavior();
             boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
-            state.setControllerSpeed(1);
+            state.setControllerSpeed(individualRate());
             String clip = isLocomoting() ? (running ? species().swimRun() : species().swimWalk()) : species().swimIdle();
+            // Hard turns bank with the rig's own left and right swim clips.
+            if (isLocomoting() && !running && Math.abs(bodyTurn()) > 2.5f) {
+                boolean mirror = level().isClientSide() && dev.nez.arksurvivalreturns.NighttimeClientConfig.MIRROR_TURN_CLIPS.get();
+                String bank = clips().name(bodyTurn() > 0 != mirror ? ClipRole.SWIM_RIGHT : ClipRole.SWIM_LEFT);
+                if (bank != null) clip = bank;
+            }
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
-        registrar.add(new AnimationController<CreatureEntity>("reaction", 4, state -> PlayState.STOP)
-                .triggerableAnim("warn", oneShot(species().warningClip())));
+        var reaction = new AnimationController<CreatureEntity>("reaction", 4, state -> PlayState.STOP)
+                .triggerableAnim("warn", oneShot(species().warningClip()));
+        if (clips().has(ClipRole.HURT)) reaction.triggerableAnim("hurt", oneShot(clips().name(ClipRole.HURT)));
+        registrar.add(reaction);
         registrar.add(new AnimationController<CreatureEntity>("attack", 3, state -> PlayState.STOP)
                 .triggerableAnim("strike", oneShot(species().attack)));
     }

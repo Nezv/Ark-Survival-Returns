@@ -1,17 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:river",
-    "minecraft:swamp",
-    "minecraft:mangrove_swamp",
-    "minecraft:sparse_jungle",
-    {
-      "id": "terralith:orchid_swamp",
-      "required": false
-    },
-    {
-      "id": "terralith:warm_river",
-      "required": false
-    }
+    "#arksurvivalreturns:habitat/temperate"
   ]
 }

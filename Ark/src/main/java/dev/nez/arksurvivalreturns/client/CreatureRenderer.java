@@ -1,6 +1,7 @@
 package dev.nez.arksurvivalreturns.client;
 
 import com.geckolib.renderer.GeoEntityRenderer;
+import com.geckolib.renderer.base.BoneSnapshots;
 import com.geckolib.renderer.base.RenderPassInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -24,6 +25,18 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
         super.captureDefaultRenderState(creature, unused, state, partialTick);
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
                 CreatureModel.TEXTURE_VARIANT, Math.floorMod(creature.getUUID().hashCode(), 5));
+        ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
+                CreatureModel.EYE_ALERT, creature.behavior().alarm() || creature.isAggressive());
+    }
+
+    /** One eye set at a time: calm (predatory for carnivores) or alert. */
+    @Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public void adjustModelBonesForRender(RenderPassInfo pass, BoneSnapshots snapshots) {
+        super.adjustModelBonesForRender(pass, snapshots);
+        boolean alert = Boolean.TRUE.equals(pass.getOrDefaultGeckolibData(CreatureModel.EYE_ALERT, false));
+        snapshots.ifPresent(Species.EYES_CALM, bone -> bone.skipRender(alert).skipChildrenRender(alert));
+        snapshots.ifPresent(Species.EYES_ALERT, bone -> bone.skipRender(!alert).skipChildrenRender(!alert));
     }
 
     @Override

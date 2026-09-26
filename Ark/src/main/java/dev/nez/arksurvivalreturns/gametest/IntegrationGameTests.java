@@ -83,7 +83,7 @@ final class IntegrationGameTests {
         return total >= amount;
     }
 
-    /** I08: Terralith biomes inherit Ark spawns and a difficulty tier through their vanilla analog. */
+    /** I08: Terralith biomes inherit Ark habitats through their vanilla analog; danger comes from the area only. */
     static void terralith(GameTestHelper h) {
         if (!ModList.get().isLoaded("terralith")) {
             h.succeed();
@@ -94,9 +94,8 @@ final class IntegrationGameTests {
         h.assertTrue(rainforest.isPresent(), "Terralith's amethyst rainforest must be registered");
         TagKey<net.minecraft.world.level.biome.Biome> raptors = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:spawns/velociraptor"));
         h.assertTrue(rainforest.get().is(raptors), "A jungle-like Terralith biome must spawn raptors");
-        boolean tiered = false;
-        for (var tier : dev.nez.arksurvivalreturns.feature.spawn.BiomeTier.values()) tiered |= rainforest.get().is(tier.tag);
-        h.assertTrue(tiered, "Terralith biomes must carry an Ark difficulty tier");
+        TagKey<net.minecraft.world.level.biome.Biome> wetland = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:habitat/wetland"));
+        h.assertTrue(rainforest.get().is(wetland), "A jungle-like Terralith biome must also be crocodilian wetland");
         h.succeed();
     }
 

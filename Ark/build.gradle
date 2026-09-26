@@ -83,6 +83,8 @@ dependencies {
     immersiveClientRuntimeOnly installedPack
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    // Plain unit tests run without Minecraft; BehaviorModels exports with Gson (Minecraft's version).
+    testImplementation 'com.google.code.gson:gson:2.13.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 tasks.named('test') { useJUnitPlatform() }

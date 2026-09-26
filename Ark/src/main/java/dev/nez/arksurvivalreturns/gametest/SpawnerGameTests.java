@@ -74,9 +74,10 @@ public final class SpawnerGameTests {
         var border = new AABB(pad).inflate(24);
         h.assertTrue(hasMod, "Plains spawn list has no mod creatures: " + spawns.unwrap().size() + " entries");
         int spawned = 0;
-        // A fixed random source keeps the weighted pick reproducible across test runs.
+        // A fixed random source keeps the weighted pick reproducible across test runs. Habitats spread
+        // one list budget over many species, so fewer rolls land on a species legal at this danger.
         var random = net.minecraft.util.RandomSource.create(0x5EEDL);
-        for (int i = 0; i < 400 && spawned == 0; i++) {
+        for (int i = 0; i < 1000 && spawned == 0; i++) {
             NaturalSpawner.spawnMobsForChunkGeneration(facade, biome,
                     new ChunkPos(pad.getX() >> 4, pad.getZ() >> 4), random);
             spawned = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife).size();

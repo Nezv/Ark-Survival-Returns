@@ -1,10 +1,14 @@
 """Build the project showcase: one self-contained HTML page at the repository root.
 
 Everything is read from the live project, so rebuilding keeps the page honest:
-creature facts (design/showcase/species.json, exported by runData), the tech tree (tree.json), the journal
-chapters, item sprites and names, block renders, the Ark UI previews and Dashboard.csv for the roadmap.
+creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
+(design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
+journal chapters, item sprites and names, block renders, the Ark UI previews and Dashboard.csv for the roadmap.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline.
+
+Vanilla item sprites come from the Minecraft sources jar that a Gradle build unpacks. Without it (a fresh
+checkout), the sprites the current page already shows are carried over instead of dropped.
 
 Run from Ark after runData: python tools/build_showcase.py
 """
@@ -15,6 +19,7 @@ import html
 import io
 import json
 import math
+import re
 import zipfile
 from pathlib import Path
 from PIL import Image
@@ -49,8 +54,19 @@ def uri(image, fmt='WEBP', quality=82, width=None):
 
 
 def vanilla_texture(path):
+    if not JAR.is_file():
+        return None
     with zipfile.ZipFile(JAR) as jar:
         return Image.open(io.BytesIO(jar.read(f'assets/minecraft/textures/{path}.png'))).convert('RGBA')
+
+
+def published_sprites():
+    """Item sprites of the page as last built, by caption: the fallback when the Minecraft jar is missing."""
+    if not OUT.is_file():
+        return {}
+    page = OUT.read_text(encoding='utf-8')
+    return {html.unescape(name): src for src, name in
+            re.findall(r'<figure class="item"><img src="([^"]+)" alt=""><figcaption>(.*?)</figcaption></figure>', page)}
 
 
 def cutout(path):
@@ -137,19 +153,239 @@ def creatures_section(species):
     return '\n'.join(cards)
 
 
-def biome_tiers():
-    blocks = []
-    for index, tier in enumerate(('easy', 'moderate', 'hard', 'extreme', 'severe')):
-        path = GENERATED / f'data/arksurvivalreturns/tags/worldgen/biome/difficulty/{tier}.json'
-        if not path.is_file():
-            continue
-        values = load_json(path)['values']
-        names = [v.split(':')[1].replace('_', ' ') for v in values if isinstance(v, str)]
+HABITATS = [('temperate', 'Temperate land', '#6f9a4f'), ('wetland', 'Wetlands', '#3f8f80'),
+            ('cold', 'Snow and ice', '#86b3d3'), ('sea', 'Sea', '#3f6fa3'), ('sky', 'Sky', '#c49a45')]
+
+
+def habitats_section(species):
+    """The five habitat tags (generated from Species.habitat) with their biomes and residents."""
+    lists, blocks = {}, []
+    for key, title, color in HABITATS:
+        values = load_json(GENERATED / f'data/arksurvivalreturns/tags/worldgen/biome/habitat/{key}.json')['values']
+        lists[key] = [v.split(':')[1].replace('_', ' ') for v in values if isinstance(v, str)]
         extra = sum(1 for v in values if isinstance(v, dict))  # optional Terralith biomes (I08)
-        color = RANK_COLORS[min(index, 4)] if tier != 'severe' else RANK_COLORS[4]
-        more = f' <span class="chip">+{extra} Terralith</span>' if extra else ''
-        blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{tier.title()}</h4><p>{e(", ".join(names))}</p>{more}</div>')
+        if key == 'sky' and set(lists[key]) == set(lists['temperate']) | set(lists['cold']):
+            biomes = '<p class="plain">Every temperate and snowy land biome.</p>'
+        else:
+            biomes = f'<p>{e(", ".join(lists[key]))}</p>'
+        residents = ''.join(f'<span class="chip">{e(s["name"])}</span>'
+                            for s in sorted(species, key=lambda s: s['name']) if s.get('habitat') == key)
+        more = f'<span class="chip">+{extra} Terralith</span>' if extra else ''
+        blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}</h4>{biomes}'
+                      f'<div class="chips">{residents}{more}</div></div>')
     return '\n'.join(blocks)
+
+
+# ---------------------------------------------------------------------------------------- behaviour
+
+TIER_STYLE = {'FULL': ('Full detail', '#4bae66'), 'AMBIENT': ('Ambient', '#e4c653'), 'DORMANT': ('Dormant', '#8a8f86')}
+PHASE_STYLE = {'HUNT': ('Hunt', 'p-hunt'), 'SLEEP': ('Sleep', 'p-sleep'), 'ROAM': ('Roam', 'p-roam')}
+LAP_TITLES = {'LOOP': 'Wide wobbling loop', 'FIGURE_EIGHT': 'Figure eight over the nest',
+              'THERMAL': 'Thermal circle, gaining height'}
+
+
+def state_name(state):
+    return state.replace('_', ' ').capitalize()
+
+
+def tier_cards(data):
+    cards, inner = [], 0
+    for tier in data['tiers']:
+        title, color = TIER_STYLE[tier['id']]
+        span = f'Within {tier["radius"]} blocks' if inner == 0 else f'{inner} to {tier["radius"]} blocks'
+        cards.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}</h4>'
+                     f'<b class="range">{span}</b><p class="plain">{e(tier["summary"])}</p></div>')
+        inner = tier['radius']
+    return '\n'.join(cards)
+
+
+def day_schedule(schedule):
+    """Carnivore and herbivore days as bars over the 24 in-game hours (tick 0 is 06:00)."""
+    def hour(tick):
+        return (tick + 6000) % 24000 / 1000
+
+    def bar(segments):
+        spans = []
+        for start, end, phase in segments:
+            end = end if end > start else end + 24
+            for a, b in ((start, min(end, 24)), (0, end - 24)):
+                if b > a:
+                    label, css = PHASE_STYLE[phase]
+                    spans.append(f'<span class="{css}" style="left:{a / 24 * 100:.3f}%;width:{(b - a) / 24 * 100:.3f}%" '
+                                 f'title="{label}">{label if b - a >= 2.5 else ""}</span>')
+        return ''.join(spans)
+
+    dusk, dawn = hour(schedule['nightStart']), hour(schedule['nightEnd'])
+    daylight = (schedule['nightStart'] - schedule['nightEnd']) % 24000
+    wake = hour(schedule['nightEnd'] + schedule['carnivoreDaySleep'] * daylight)
+    rows = [('Carnivores', [(dawn, wake, 'SLEEP'), (wake, dusk, 'ROAM'), (dusk, dawn, 'HUNT')], schedule['carnivore']),
+            ('Herbivores', [(dawn, dusk, 'ROAM'), (dusk, dawn, 'SLEEP')], schedule['herbivore'])]
+    body = ''.join(f'<div class="day-row"><b>{name}</b><div class="day-bar">{bar(segments)}</div>'
+                   f'<small class="muted">{e(text)}</small></div>' for name, segments, text in rows)
+    axis = ''.join(f'<span>{h:02d}:00</span>' for h in range(0, 25, 6))
+    return f'<div class="day">{body}<div class="day-axis"><span></span><div>{axis}</div></div></div>'
+
+
+def matrix_table(tier):
+    """Transition matrix: rows are the current state, columns the next; a filled cell lists its rules."""
+    states, cells = tier['states'], tier['matrix']
+    head = ''.join(f'<th scope="col"><span>{e(state_name(s))}</span></th>' for s in states)
+    rows = []
+    for a in states:
+        tds = []
+        for b in states:
+            why = cells.get(a, {}).get(b)
+            css = 'hit diag' if why and a == b else 'hit' if why else 'diag' if a == b else ''
+            if why:
+                mark = '&#9679;' if len(why) == 1 else f'&#9679;<sup>{len(why)}</sup>'
+                tds.append(f'<td class="{css}" tabindex="0" data-from="{e(state_name(a))}" data-to="{e(state_name(b))}" '
+                           f'data-why="{e(" | ".join(why))}" title="{e("; ".join(why))}">{mark}</td>')
+            else:
+                tds.append(f'<td class="{css}"></td>' if css else '<td></td>')
+        rows.append(f'<tr><th scope="row">{e(state_name(a))}</th>{"".join(tds)}</tr>')
+    return (f'<table class="matrix"><thead><tr><th class="corner" scope="col">from / to</th>{head}</tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table>')
+
+
+def short_reason(reason):
+    """First clause of a rule, for diagram labels: 'attacked: retaliate' -> 'attacked'."""
+    clause = reason.split(':')[0].split(',')[0].strip()
+    return re.sub(r'[;#{}<>"]', '', clause)
+
+
+def state_diagram(tier):
+    """
+    Mermaid source for one tier. A rule that fires from most states (being attacked, nothing pressing...) is
+    drawn once from an "Any state" node instead of from every state, so the diagram stays readable; the
+    matrix beside it still lists every source.
+    """
+    states, matrix = tier['states'], tier['matrix']
+    sources = {}
+    for a, row in matrix.items():
+        for b, why in row.items():
+            for reason in why:
+                sources.setdefault((b, reason), set()).add(a)
+    common = {key for key, found in sources.items() if len(found) >= max(4, (len(states) - 1) / 2)}
+    edges = []
+    for target in states:
+        reasons = [reason for (b, reason) in sorted(common) if b == target]
+        if reasons:
+            edges.append(('any_state', target.lower(), reasons))
+    for a, row in matrix.items():
+        for b, why in row.items():
+            rest = [reason for reason in why if (b, reason) not in common]
+            if rest:
+                edges.append((a.lower(), b.lower(), rest))
+    labelled = len(edges) <= 40
+    # A hub fans out best left to right; a chain of phases (take off, roam, land, perch) reads top to bottom.
+    direction = 'LR' if sum(1 for edge in edges if edge[0] == 'any_state') >= 4 else 'TB'
+    lines = ['stateDiagram-v2', f'  direction {direction}',
+             '  classDef anyState fill:transparent,stroke:#8a8f86,stroke-width:1.5px,stroke-dasharray:4 3']
+    if common:
+        lines.append('  state "Any state" as any_state')
+    lines += [f'  state "{state_name(s)}" as {s.lower()}' for s in states]
+    for a, b, why in edges:
+        label = ' / '.join(dict.fromkeys(short_reason(r) for r in why)) if labelled else ''
+        lines.append(f'  {a} --> {b}' + (f': {label}' if label else ''))
+    if common:
+        lines.append('  class any_state anyState')
+    return '\n'.join(lines)
+
+
+def bridges_list(model, actions, names, species_names):
+    """Level 2: the animation-timed actions a creature plays while it changes state."""
+    motion = {a['id']: a['motion'].lower() for a in actions}
+    rows = []
+    for bridge in model['bridges']:
+        beats = []
+        for beat in bridge['beats']:
+            label = names.get(f'action.arksurvivalreturns.{beat["action"].lower()}', state_name(beat['action']))
+            length = f'{beat["ticks"] / 20:.1f} s' if beat['ticks'] else 'held'
+            beats.append(f'<span class="beat m-{motion.get(beat["action"], "hold")}">{e(label)}<small>{length}</small></span>')
+        who = species_names.get(bridge['species'], bridge['species'].title())
+        reflex = ' &middot; reflex, no display' if bridge['urgent'] else ''
+        rows.append(f'<li><div class="bridge-head"><b>{e(state_name(bridge["from"]))} &rarr; {e(state_name(bridge["to"]))}</b>'
+                    f'<span class="muted">{e(bridge["when"])} &middot; {e(who)}{reflex}</span></div>'
+                    f'<div class="beats">{"<i>&rarr;</i>".join(beats)}</div></li>')
+    return f'<ol class="bridges">{"".join(rows)}</ol>'
+
+
+def lap_figures(model):
+    """Sample laps seen from above with the nest in the middle, and the height over one lap underneath."""
+    figures = []
+    for curve in model.get('curves', []):
+        points, title = curve['points'], LAP_TITLES.get(curve['kind'], state_name(curve['kind']))
+        reach = max(max(abs(p[0]), abs(p[2])) for p in points) * 1.12 or 1
+        route = ' '.join(f'{50 + p[0] / reach * 46:.1f},{50 + p[2] / reach * 46:.1f}' for p in points)
+        low, high = min(p[1] for p in points), max(p[1] for p in points)
+        span = max(high - low, 1)
+        height = ' '.join(f'{i / (len(points) - 1) * 100:.1f},{22 - (p[1] - low) / span * 18:.1f}' for i, p in enumerate(points))
+        figures.append(f'<figure class="lap"><svg viewBox="0 0 100 100" role="img" aria-label="{e(title)}">'
+                       f'<circle cx="50" cy="50" r="2.4" class="nest"/><polyline points="{route}" class="route"/></svg>'
+                       f'<svg viewBox="0 0 100 24" class="profile" aria-hidden="true"><polyline points="{height}"/></svg>'
+                       f'<figcaption>{e(title)}<small>{low:.0f} to {high:.0f} blocks above the nest</small></figcaption></figure>')
+    return f'<div class="laps">{"".join(figures)}</div>' if figures else ''
+
+
+def model_panel(model, actions, names, species_names):
+    tier_tabs, tier_panels = [], []
+    for index, tier in enumerate(model['tiers']):
+        title = TIER_STYLE[tier['tier']][0]
+        selected = 'true' if index == 0 else 'false'
+        tier_tabs.append(f'<button type="button" role="tab" data-tier="{tier["tier"]}" aria-selected="{selected}">'
+                         f'Tier {index + 1}: {e(title)}</button>')
+        count = sum(len(row) for row in tier['matrix'].values())
+        diagram = state_diagram(tier)
+        legend = ('<p class="muted diagram-note">In the diagram, the dashed "Any state" stands for a rule that fires from '
+                  'most states; the matrix lists every source.</p>' if 'any_state' in diagram else '')
+        tier_panels.append(
+            f'<div class="tier-panel" data-tier="{tier["tier"]}" role="tabpanel">'
+            f'<p class="muted">{e(tier["note"])} <span class="chip">{len(tier["states"])} states, {count} transitions</span></p>'
+            f'<div class="machine"><div class="matrix-wrap">{matrix_table(tier)}</div>'
+            f'<div class="diagram"><div class="diagram-svg"></div><pre class="diagram-src">{e(diagram)}</pre></div></div>'
+            f'{legend}</div>')
+    chips = ''.join(f'<span class="chip">{e(r)}</span>' for r in model['realms'].split())
+    chips += '<span class="chip">predator</span>' if model['predator'] else ''
+    extra = ''
+    if model['bridges']:
+        extra += ('<h4>Level 2: the actions inside a change of state</h4><p class="muted">Every change of state first plays a '
+                  'short bridge timed to the rig\'s own clips (lengths below are the named species\'). A hit or a threat at the '
+                  'body is a reflex and skips the display.</p>' + bridges_list(model, actions, names, species_names))
+    if model.get('curves'):
+        extra += ('<h4>Flight curves</h4><p class="muted">One sample lap of each shape from the flight code. Each lap may '
+                  'pick a new shape, and the bird follows a point that slides along it, so it banks and climbs smoothly.</p>'
+                  + lap_figures(model))
+    return (f'<div class="model" data-model="{model["id"]}" role="tabpanel">'
+            f'<div class="model-head"><h3>{e(model["title"])}</h3>{chips}</div>'
+            f'<p class="lede">{e(model["summary"])}</p>'
+            f'<div class="tabs tier-tabs" role="tablist" aria-label="Distance tier">{"".join(tier_tabs)}</div>'
+            f'{"".join(tier_panels)}'
+            f'<div class="node-info cell-info" aria-live="polite"><b>Pick a filled cell</b>'
+            f'<span class="muted">The rules behind that transition appear here.</span></div>'
+            f'{extra}</div>')
+
+
+def behavior_section(names, species):
+    data = load_json(ARK / 'design/showcase/behavior.json')
+    species_names = {s['id']: s['name'] for s in species}
+    tabs = ''.join(f'<button type="button" role="tab" data-model="{m["id"]}" aria-selected="{"true" if i == 0 else "false"}">'
+                   f'{e(m["title"])}</button>' for i, m in enumerate(data['models']))
+    panels = '\n'.join(model_panel(m, data['actions'], names, species_names) for m in data['models'])
+    motions = {}
+    for action in data['actions']:
+        label = names.get(f'action.arksurvivalreturns.{action["id"].lower()}', state_name(action['id']))
+        cue = '<small>+ clip</small>' if action['cue'] else ''
+        motions.setdefault(action['motion'].lower(), []).append(f'<span class="beat m-{action["motion"].lower()}">{e(label)}{cue}</span>')
+    legend = ''.join(f'<div class="motion"><b>{e(motion.title())}</b>{"".join(chips)}</div>' for motion, chips in motions.items())
+    margin = data['margin']
+    return {
+        'BEHAVIORTIERS': tier_cards(data),
+        'BEHAVIORMARGIN': f'{margin} block{"s" if margin != 1 else ""}',
+        'SCHEDULE': day_schedule(data['schedule']),
+        'MODELTABS': tabs,
+        'MODELS': panels,
+        'ACTIONS': legend,
+    }
 
 
 def starfish_path(cx, cy, radius):
@@ -265,14 +501,15 @@ def items_section(names):
     meats = [p.stem for p in sorted((GENERATED / 'assets/arksurvivalreturns/models/item').glob('*_meat.json'))
              if p.stem.startswith(('raw_', 'cooked_'))]
     groups = ITEM_GROUPS[:2] + [('Dinosaur meat', meats)] + ITEM_GROUPS[2:]
+    published = {} if JAR.is_file() else published_sprites()
     out = []
     for title, ids in groups:
         tiles = []
         for item_id in ids:
-            sprite = item_sprite(item_id)
+            name = names.get(f'item.arksurvivalreturns.{item_id}', item_id.replace('_', ' ').title())
+            sprite = item_sprite(item_id) or published.get(name)
             if not sprite:
                 continue
-            name = names.get(f'item.arksurvivalreturns.{item_id}', item_id.replace('_', ' ').title())
             tiles.append(f'<figure class="item"><img src="{sprite}" alt=""><figcaption>{e(name)}</figcaption></figure>')
         out.append(f'<div class="item-group"><h4>{e(title)}</h4><div class="item-grid">{"".join(tiles)}</div></div>')
     return '\n'.join(out)
@@ -378,7 +615,8 @@ def build():
         'HERO': hero, 'LOGO': logo,
         'STATS': ''.join(f'<div class="stat"><b>{n}</b><span>{e(label)}</span></div>' for n, label in stats),
         'CREATURES': creatures_section(species),
-        'TIERS': biome_tiers(),
+        'HABITATS': habitats_section(species),
+        **behavior_section(names, species),
         'TREE': tree_section(),
         'FLOW': e((ARK / 'design/showcase/prehistoric-gates.mmd').read_text(encoding='utf-8')),
         'JOURNAL': journal_section(),

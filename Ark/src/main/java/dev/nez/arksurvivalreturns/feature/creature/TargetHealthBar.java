@@ -30,9 +30,12 @@ public final class TargetHealthBar {
             created.addPlayer(player);
             return created;
         });
-        bar.setName(Component.translatable("hud.arksurvivalreturns.creature", target.getDisplayName(), target.creatureLevel(),
+        var name = Component.translatable("hud.arksurvivalreturns.creature", target.getDisplayName(), target.creatureLevel(),
                 (int) Math.ceil(target.getHealth()), (int) Math.ceil(target.getMaxHealth()))
-                .append(" | ").append(Component.translatable(target.behavior().key())));
+                .append(" | ").append(Component.translatable(target.behavior().key()));
+        // Walkers and swimmers also show the step they are performing (noticing, roaring, grazing...).
+        if (!target.species().flyer()) name.append(" / ").append(Component.translatable(target.action().key()));
+        bar.setName(name);
         bar.setProgress(Math.clamp(target.getHealth() / target.getMaxHealth(), 0f, 1f));
         bar.setColor(target.species().predator ? BossEvent.BossBarColor.RED : BossEvent.BossBarColor.GREEN);
     }
