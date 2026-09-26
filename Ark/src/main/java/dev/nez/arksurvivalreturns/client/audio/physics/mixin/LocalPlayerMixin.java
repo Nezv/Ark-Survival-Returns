@@ -1,5 +1,6 @@
 package dev.nez.arksurvivalreturns.client.audio.physics.mixin;
 
+import dev.nez.arksurvivalreturns.client.audio.ArkAudioEngine;
 import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysicsMod;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -20,6 +21,11 @@ public abstract class LocalPlayerMixin extends Entity {
 
     @Inject(method = "playSound", at = @At("HEAD"), cancellable = true)
     private void playSound(SoundEvent soundEvent, float volume, float pitch, CallbackInfo ci) {
+        // Ark footsteps replace the vanilla step wherever the audio catalog covers the block.
+        if (ArkAudioEngine.replacesStep(soundEvent)) {
+            ci.cancel();
+            return;
+        }
         if (!SoundPhysicsMod.isEnabled()) {
             return;
         }

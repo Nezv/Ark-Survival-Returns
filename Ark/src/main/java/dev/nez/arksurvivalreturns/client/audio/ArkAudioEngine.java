@@ -6,7 +6,9 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.SoundType;
@@ -19,18 +21,28 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Client audio: Presence Footsteps recordings for the local player's steps and AmbientSounds beds.
+ *
+ * <p>A footfall lands on every half swing of the walk animation, so the steps follow the legs (about
+ * 3.7 a second walking, 4.2 sprinting) instead of a fixed short distance. The vanilla step sound is
+ * dropped wherever a catalog profile covers the block (see LocalPlayerMixin); otherwise both would
+ * play and every step would double.
+ */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class ArkAudioEngine {
     private static final RandomSource RANDOM = RandomSource.create();
     private static final Map<SoundType, String> SOUND_TYPE_NAMES = discoverSoundTypes();
-    private static double lastX;
-    private static double lastZ;
-    private static double stride;
-    private static boolean positioned;
+    /** Walk-animation distance between two footfalls: half a leg swing (HumanoidModel uses cos(pos * 0.6662)). */
+    private static final float HALF_SWING = (float) (Math.PI / 0.6662D);
+    private static Map<SoundEvent, String> stepSoundTypes;
+    private static long lastFootfall = Long.MIN_VALUE;
+    private static boolean leftFoot;
     private static int ambienceDelay;
     private static SoundInstance ambience;
 
@@ -50,37 +62,51 @@ public final class ArkAudioEngine {
 
     private static void tickFootsteps(Minecraft minecraft) {
         var player = minecraft.player;
-        if (!positioned) {
-            lastX = player.getX();
-            lastZ = player.getZ();
-            positioned = true;
-            return;
-        }
-        double dx = player.getX() - lastX;
-        double dz = player.getZ() - lastZ;
-        lastX = player.getX();
-        lastZ = player.getZ();
-        if (!player.onGround() || player.isPassenger() || player.isSwimming()) {
-            stride = 0D;
-            return;
-        }
-        stride += Math.sqrt(dx * dx + dz * dz);
-        boolean running = player.isSprinting();
-        double interval = running ? 0.58D : 0.78D;
-        if (stride < interval) return;
-        stride %= interval;
+        long footfall = (long) Math.floor(player.walkAnimation.position() / HALF_SWING);
+        // Vanilla is silent in the air, riding, swimming, flying and sneaking; so are these steps.
+        boolean silent = !player.onGround() || player.isPassenger() || player.isSwimming() || player.isSpectator()
+                || player.getAbilities().flying || player.isDiscrete();
+        long previous = lastFootfall;
+        lastFootfall = footfall;
+        // First tick, a reset animation (riding stops it) or a silent tick: wait for the next footfall.
+        if (silent || previous == Long.MIN_VALUE || footfall <= previous) return;
 
-        var catalog = AudioCatalog.INSTANCE.get();
-        String soundType = SOUND_TYPE_NAMES.getOrDefault(player.getBlockStateOn().getSoundType(), "STONE");
-        String material = catalog.soundTypes().getOrDefault(soundType, catalog.fallbackMaterial());
-        AudioCatalog.Footstep profile = catalog.footsteps().get(material);
+        AudioCatalog.Footstep profile = footstep(AudioCatalog.INSTANCE.get(),
+                SOUND_TYPE_NAMES.getOrDefault(player.getBlockStateOn().getSoundType(), "STONE"));
         if (profile == null) return;
+        boolean running = player.isSprinting();
         Identifier sound = Identifier.tryParse(running ? profile.run() : profile.walk());
         if (sound == null) return;
+        // Feet land a hand's width to either side of the walking line; walking is softer than running.
+        leftFoot = !leftFoot;
+        float yaw = player.getYRot() * Mth.DEG_TO_RAD, side = leftFoot ? 0.12F : -0.12F;
+        float volume = profile.volume() * (running ? 1F : 0.8F) * (0.85F + RANDOM.nextFloat() * 0.15F);
         float pitch = 1F + (RANDOM.nextFloat() * 2F - 1F) * profile.pitchVariance();
         minecraft.getSoundManager().play(new SimpleSoundInstance(sound, SoundSource.PLAYERS,
-                profile.volume(), pitch, RANDOM, false, 0, SoundInstance.Attenuation.LINEAR,
-                player.getX(), player.getY(), player.getZ(), false));
+                volume, pitch, RANDOM, false, 0, SoundInstance.Attenuation.LINEAR,
+                player.getX() + Mth.cos(yaw) * side, player.getY(), player.getZ() + Mth.sin(yaw) * side, false));
+    }
+
+    private static AudioCatalog.Footstep footstep(AudioCatalog.Data catalog, String soundType) {
+        return catalog.footsteps().get(catalog.soundTypes().getOrDefault(soundType, catalog.fallbackMaterial()));
+    }
+
+    /**
+     * True when a vanilla step sound of the local player belongs to a block the Ark footsteps cover,
+     * so LocalPlayerMixin drops it instead of doubling the step.
+     */
+    public static boolean replacesStep(SoundEvent sound) {
+        if (sound == null) return false;
+        if (stepSoundTypes == null) {
+            var steps = new HashMap<SoundEvent, String>();
+            SOUND_TYPE_NAMES.forEach((type, name) -> {
+                try { steps.putIfAbsent(type.getStepSound(), name); }
+                catch (RuntimeException unresolved) {} // A deferred modded type whose sound is not registered yet.
+            });
+            stepSoundTypes = steps;
+        }
+        String type = stepSoundTypes.get(sound);
+        return type != null && footstep(AudioCatalog.INSTANCE.get(), type) != null;
     }
 
     private static void tickAmbience(Minecraft minecraft) {
@@ -133,8 +159,7 @@ public final class ArkAudioEngine {
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { reset(); }
 
     private static void reset() {
-        positioned = false;
-        stride = 0D;
+        lastFootfall = Long.MIN_VALUE;
         ambienceDelay = 0;
         ambience = null;
     }
