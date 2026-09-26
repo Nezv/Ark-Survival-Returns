@@ -4,6 +4,12 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import dev.nez.arksurvivalreturns.feature.camp.CampShapes;
+import dev.nez.arksurvivalreturns.feature.camp.TallBlocks;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -32,7 +38,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-/** Drying rack block: raw food in, portable rations out, one interaction at a time. */
+/**
+ * Drying rack: raw food in, portable rations out, one interaction at a time. Two blocks tall: food hangs from
+ * the top lines, rations cure on the bottom shelf. The lower half holds the block entity; racks still stack.
+ */
 public final class DryingRackBlock extends BaseEntityBlock {
     public static final MapCodec<DryingRackBlock> CODEC = simpleCodec(DryingRackBlock::new);
 
@@ -44,19 +53,28 @@ public final class DryingRackBlock extends BaseEntityBlock {
         MEAT, FISH, BERRIES;
         @Override public String getSerializedName() { return name().toLowerCase(java.util.Locale.ROOT); }
     }
-    private static final Map<Direction, VoxelShape> SHAPES = CampShapes.horizontal(
-            net.minecraft.world.phys.shapes.Shapes.or(Block.box(1, 0, 3, 15, 2.5, 13), Block.box(1, 2.5, 3, 2.75, 16, 4.75), Block.box(13.25, 2.5, 3, 15, 16, 4.75), Block.box(1, 2.5, 11.25, 2.75, 16, 13), Block.box(13.25, 2.5, 11.25, 15, 16, 13), Block.box(1, 14, 3, 15, 16, 13)));
+    private static final Map<Direction, VoxelShape> LOWER_SHAPES = CampShapes.horizontal(
+            net.minecraft.world.phys.shapes.Shapes.or(Block.box(1, 0, 3, 15, 2.5, 13), uprights(2.5, 16)));
+    private static final Map<Direction, VoxelShape> UPPER_SHAPES = CampShapes.horizontal(
+            net.minecraft.world.phys.shapes.Shapes.or(uprights(0, 15.6), Block.box(1, 12, 3, 15, 13.5, 13)));
+
+    private static VoxelShape uprights(double y, double top) {
+        return net.minecraft.world.phys.shapes.Shapes.or(Block.box(1, y, 3, 2.75, top, 4.75), Block.box(13.25, y, 3, 15, top, 4.75),
+                Block.box(1, y, 11.25, 2.75, top, 13), Block.box(13.25, y, 11.25, 15, top, 13));
+    }
 
     public DryingRackBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HANGING, 0).setValue(READY, false).setValue(FOOD, Food.MEAT));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HANGING, 0).setValue(READY, false).setValue(FOOD, Food.MEAT)
+                .setValue(TallBlocks.HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HANGING, READY, FOOD);
+        builder.add(FACING, HANGING, READY, FOOD, TallBlocks.HALF);
     }
 
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        if (!TallBlocks.roomAbove(context)) return null;
         BlockState below = context.getLevel().getBlockState(context.getClickedPos().below());
         return defaultBlockState().setValue(FACING, below.getBlock() instanceof DryingRackBlock
                 ? below.getValue(FACING) : context.getHorizontalDirection().getOpposite());
@@ -70,14 +88,30 @@ public final class DryingRackBlock extends BaseEntityBlock {
         return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
+    @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, by, stack);
+        TallBlocks.placeUpper(level, pos, state);
+    }
+
+    @Override protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
+            Direction direction, BlockPos neighbor, BlockState neighborState, RandomSource random) {
+        BlockState partner = TallBlocks.partnerUpdate(state, direction, neighborState);
+        return partner != null ? partner : super.updateShape(state, level, ticks, pos, direction, neighbor, neighborState, random);
+    }
+
+    @Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        TallBlocks.preventLowerDrop(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
+        return (TallBlocks.isUpper(state) ? UPPER_SHAPES : LOWER_SHAPES).get(state.getValue(FACING));
     }
 
     @Override protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
 
     @Override public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new DryingRackBlockEntity(pos, state);
+        return TallBlocks.isUpper(state) ? null : new DryingRackBlockEntity(pos, state);
     }
 
     @Override public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state,
@@ -91,14 +125,14 @@ public final class DryingRackBlock extends BaseEntityBlock {
         // An empty hand must fall through to useWithoutItem, or taking contents out never runs.
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (stack.is(asItem())) return InteractionResult.PASS; // Let the block item place the next tier.
-        if (!(level.getBlockEntity(pos) instanceof DryingRackBlockEntity rack)) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(TallBlocks.base(state, pos)) instanceof DryingRackBlockEntity rack)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         return rack.insert(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
             Player player, BlockHitResult hit) {
-        if (!(level.getBlockEntity(pos) instanceof DryingRackBlockEntity rack)) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(TallBlocks.base(state, pos)) instanceof DryingRackBlockEntity rack)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         ItemStack taken = rack.extract();
         if (taken.isEmpty()) return InteractionResult.SUCCESS;

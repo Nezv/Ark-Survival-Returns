@@ -187,7 +187,7 @@ public final class Config {
         CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (bedroll, bandages, fiber and a flint knife) "
                         + "on their first join in a world.")
                 .define("starterKit", true);
-        CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the field bedroll to set the personal respawn point.")
+        CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the bedroll to set the personal respawn point.")
                 .define("bedrollSetsSpawn", true);
         CAMP_BEDROLL_PICKUP = b.comment("Allow sneak-use to roll the bedroll back into an item. The saved respawn "
                         + "point survives either way.")

@@ -5,6 +5,13 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "arksurvivalreturns:primitive_forge",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "half": "lower"
+          }
         }
       ],
       "entries": [

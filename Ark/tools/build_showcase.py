@@ -281,8 +281,8 @@ def items_section(names):
 def blocks_section():
     ortho = ARK / 'design/prehistoric-camp/orthographic'
     renders = [('stone_fire_lit', 'Stone Fire, lit', 'In game'), ('stone_fire_cooked', 'Stone Fire, meat on the spit', 'In game'),
-               ('pot_on_fire_stew', 'Clay pot on the fire', 'Design'), ('mortar_berry_whole', 'Mortar and pestle', 'Design (B02)'),
-               ('reed_bedroll', 'Reed bedroll', 'Design')]
+               ('primitive_forge_lit_front', 'Primitive Forge, two blocks tall', 'In game'), ('primitive_bedroll', 'Primitive Bedroll, two blocks long', 'In game'),
+               ('pot_on_fire_stew', 'Clay pot on the fire', 'Design'), ('mortar_berry_whole', 'Mortar and pestle', 'Design (B02)')]
     figs = []
     for key, caption, status in renders:
         path = ortho / f'{key}.png'

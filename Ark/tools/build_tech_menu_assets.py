@@ -64,7 +64,7 @@ def export():
     for index,age in enumerate(SPEC['ages']):
         ages.append(dict(id=age['id'],title=age['name'].title()+' Age',order=index,color=COLORS[index],
                          laneSummary=' / '.join(age['lanes']),lanes=[dict(index=i,title=t) for i,t in enumerate(age['lanes'])]))
-    overrides={'mattress':'reed_bedroll','warmth':'stone_fire_lit','dish':'clay_pot','narcotics':'mortar_berry_whole'}
+    overrides={'mattress':'primitive_bedroll','warmth':'stone_fire_lit','dish':'clay_pot','narcotics':'mortar_berry_whole'}
     for source in SPEC['nodes']:
         n={k:source[k] for k in ('id','title','task','age','lane','requires')}
         index=next(i for i,a in enumerate(ages) if a['id']==n['age'])

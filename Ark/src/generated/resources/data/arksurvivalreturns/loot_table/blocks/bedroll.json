@@ -5,6 +5,13 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "arksurvivalreturns:bedroll",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "part": "head"
+          }
         }
       ],
       "entries": [

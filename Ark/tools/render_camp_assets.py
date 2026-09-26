@@ -118,23 +118,22 @@ def main():
     sheet = Image.new('RGB', (1600, 1200), '#eee9df'); d=ImageDraw.Draw(sheet)
     d.text((60,36), 'THE FIELD CAMP', font=font(38,True), fill='#343e30')
     d.text((62,91), 'ARK SURVIVAL RETURNS   /   Authored Minecraft model collection', font=font(19), fill='#736a59')
-    panels=[(40,140,'01  FIELD BEDROLL','Sage canvas, linen cuff & leather packing ties.'),
+    panels=[(40,140,'01  FIELD BEDROLL (IRON AGE)','Sage canvas, linen cuff & leather ties. Reserved art.'),
             (820,140,'02  FEEDING TROUGH','Open timber basin, pegs & resin-sealed joins.'),
-            (40,590,'03  DRYING RACK','Rope-lashed tiers with hanging food & dried rations.'),
+            (40,590,'03  DRYING RACK','Two blocks tall: hanging food up top, rations on the shelf.'),
             (820,590,'04  COOKING POT','Hollow eight-sided pot, loop handles & a low trivet.')]
     for x,y,title,caption in panels:
         d.rounded_rectangle((x,y,x+740,y+430),radius=12,fill='#f8f5ed')
         d.text((x+24,y+19),title,font=font(23,True),fill='#414c39')
         d.text((x+24,y+55),caption,font=font(17),fill='#817561')
-    images=[render([(camp('bedroll'),(0,0,0))],(490,330),22,(8,1,8)),
+    images=[render([(camp('field_bedroll'),(0,0,0))],(490,330),22,(8,1,8)),
             render([(camp('trough_oak'),(0,0,0))],(640,330),24,(8,3,8)),
-            render([(camp('drying_rack'),(0,0,0)),(camp('drying_rack'),(0,16,0)),
-                    *[(camp('rack_meat_'+str(i)),(0,16,0)) for i in (1,2,3)],
-                    (camp('rack_fish_1'),(0,0,0)),(camp('rack_fish_2'),(0,0,0)),(camp('rack_ready'),(0,0,0))],(640,340),9.0,(8,16,8)),
+            render([(camp('drying_rack_lower'),(0,0,0)),(camp('drying_rack_upper'),(0,16,0)),
+                    *[(camp('rack_meat_'+str(i)),(0,0,0)) for i in (1,2,3)],(camp('rack_ready'),(0,0,0))],(640,340),9.0,(8,16,8)),
             render([('minecraft:block/campfire',(0,0,0)),(camp('cooking_pot_campfire'),(0,16,0))],(640,340),11.7,(8,13,8))]
     for im,(x,y,_,_) in zip(images,panels):
         sheet.paste(im,(x+48,y+90),im)
-    rolled=render([(camp('bedroll_rolled'),(0,0,0))],(220,170),10,(8,7,8));sheet.paste(rolled,(540,365),rolled)
+    rolled=render([(camp('field_bedroll_rolled'),(0,0,0))],(220,170),10,(8,7,8));sheet.paste(rolled,(540,365),rolled)
     for i,wood in enumerate(WOODS):
         im=render([(camp('trough_'+wood),(0,0,0))],(148,103),6,(8,3,8));x=45+i*151
         sheet.paste(im,(x,1035),im);d.text((x+74,1145),wood.replace('_',' ').title(),font=font(15),fill='#655d4d',anchor='mm')

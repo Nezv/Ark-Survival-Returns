@@ -1,19 +1,35 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "arksurvivalreturns:block/camp/bedroll",
+    "facing=east,part=foot": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_foot",
       "y": 90
     },
-    "facing=north": {
-      "model": "arksurvivalreturns:block/camp/bedroll",
+    "facing=east,part=head": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_head",
+      "y": 90
+    },
+    "facing=north,part=foot": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_foot",
       "y": 0
     },
-    "facing=south": {
-      "model": "arksurvivalreturns:block/camp/bedroll",
+    "facing=north,part=head": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_head",
+      "y": 0
+    },
+    "facing=south,part=foot": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_foot",
       "y": 180
     },
-    "facing=west": {
-      "model": "arksurvivalreturns:block/camp/bedroll",
+    "facing=south,part=head": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_head",
+      "y": 180
+    },
+    "facing=west,part=foot": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_foot",
+      "y": 270
+    },
+    "facing=west,part=head": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_bedroll_head",
       "y": 270
     }
   }

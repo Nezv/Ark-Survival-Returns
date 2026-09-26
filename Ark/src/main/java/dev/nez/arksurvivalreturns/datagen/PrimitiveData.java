@@ -103,47 +103,26 @@ final class PrimitiveData {
 
     // --------------------------------------------------------------------------------------- forge
 
+    /** Models come from tools/build_prehistoric_camp.py: a two-block bloomery, the lower half owns the drop. */
     private void forge() {
-        for (boolean lit : List.of(false, true)) {
-            String mouth = lit ? NS + ":block/prehistoric/ember" : NS + ":block/prehistoric/ash";
-            var textures = Map.of("particle", NS + ":block/prehistoric/stone", "stone", NS + ":block/prehistoric/stone",
-                    "stone_dark", NS + ":block/prehistoric/stone_dark", "stone_light", NS + ":block/prehistoric/stone_light",
-                    "clay", NS + ":block/prehistoric/clay", "clay_light", NS + ":block/prehistoric/clay_light",
-                    "soot", NS + ":block/prehistoric/soot", "mouth", mouth);
-            put.accept(ASSETS + "models/block/primitive_forge" + (lit ? "_lit" : ""), Map.of("parent", "minecraft:block/block",
-                    "textures", textures, "elements", List.of(
-                            box(0, 0, 0, 16, 3, 16, "stone_dark", "stone", "stone_dark"),
-                            box(1, 3, 1, 15, 11, 15, "clay", "clay_light", "clay"),
-                            box(5, 3, 0.6, 11, 8, 1, "soot", "soot", "soot", "mouth"),
-                            box(4, 8, 0.4, 12, 9.5, 1, "stone_light", "stone_light", "stone_light"),
-                            box(3, 11, 3, 13, 14, 13, "clay_light", "clay_light", "clay"),
-                            box(6, 14, 6, 10, 16, 10, "soot", "stone_dark", "soot"))));
-        }
         var variants = new LinkedHashMap<String, Object>();
-        for (String facing : DIRECTIONS) for (boolean lit : List.of(false, true)) {
-            variants.put("facing=" + facing + ",lit=" + lit, Map.of("model", NS + ":block/primitive_forge" + (lit ? "_lit" : ""),
-                    "y", DIRECTIONS.indexOf(facing) * 90));
+        for (String facing : DIRECTIONS) for (String half : List.of("lower", "upper")) for (boolean lit : List.of(false, true)) {
+            variants.put("facing=" + facing + ",half=" + half + ",lit=" + lit, Map.of("model",
+                    NS + ":block/prehistoric/primitive_forge" + (lit ? "_lit_" : "_") + half, "y", DIRECTIONS.indexOf(facing) * 90));
         }
         put.accept(ASSETS + "blockstates/primitive_forge", Map.of("variants", variants));
-        blockItem("primitive_forge", NS + ":block/primitive_forge");
-        blockLoot("primitive_forge", NS + ":primitive_forge");
+        blockItem("primitive_forge", NS + ":block/prehistoric/primitive_forge_item");
+        put.accept(DATA + "loot_table/blocks/primitive_forge", lowerHalfLoot("primitive_forge"));
         shaped("primitive_forge", NS + ":primitive_forge", 1, List.of("CCC", "CFC", "BBB"),
                 Map.of("C", "minecraft:clay_ball", "F", NS + ":stone_fire", "B", "minecraft:cobblestone"));
     }
 
-    private static Map<String, Object> box(double x, double y, double z, double xx, double yy, double zz,
-            String side, String top, String bottom) {
-        return box(x, y, z, xx, yy, zz, side, top, bottom, side);
-    }
-
-    private static Map<String, Object> box(double x, double y, double z, double xx, double yy, double zz,
-            String side, String top, String bottom, String front) {
-        var faces = new LinkedHashMap<String, Object>();
-        faces.put("north", Map.of("texture", "#" + front));
-        for (String direction : List.of("south", "east", "west")) faces.put(direction, Map.of("texture", "#" + side));
-        faces.put("up", Map.of("texture", "#" + top));
-        faces.put("down", Map.of("texture", "#" + bottom));
-        return Map.of("from", List.of(x, y, z), "to", List.of(xx, yy, zz), "faces", faces);
+    /** Two-block stations drop from their lower half only; the upper half breaks along with it. */
+    static Map<String, Object> lowerHalfLoot(String block) {
+        return Map.of("type", "minecraft:block", "pools", List.of(Map.of("rolls", 1,
+                "conditions", List.of(Map.of("condition", "minecraft:survives_explosion"),
+                        Map.of("condition", "minecraft:block_state_property", "block", NS + ":" + block, "properties", Map.of("half", "lower"))),
+                "entries", List.of(Map.of("type", "minecraft:item", "name", NS + ":" + block)))));
     }
 
     // --------------------------------------------------------------------------------------- meats

@@ -1,12 +1,27 @@
 {
-  "scope": "Assets only; no runtime integration",
+  "scope": "Design pack; the stone fire, Primitive Bedroll and Primitive Forge are installed in game",
   "coordinates": "16 model units per block",
   "main_models": [
     "mortar_empty",
-    "reed_bedroll",
+    "primitive_bedroll",
     "stone_fire_lit",
-    "clay_pot"
+    "clay_pot",
+    "primitive_forge"
   ],
+  "two_block": {
+    "primitive_bedroll": [
+      "primitive_bedroll_head",
+      "primitive_bedroll_foot"
+    ],
+    "primitive_forge": [
+      "primitive_forge_lower",
+      "primitive_forge_upper"
+    ],
+    "primitive_forge_lit": [
+      "primitive_forge_lit_lower",
+      "primitive_forge_lit_upper"
+    ]
+  },
   "all_models": [
     "mortar_empty",
     "mortar_berry_whole",
@@ -15,7 +30,14 @@
     "mortar_meat_whole",
     "mortar_meat_crushed",
     "mortar_meat_paste",
-    "reed_bedroll",
+    "primitive_bedroll_head",
+    "primitive_bedroll_foot",
+    "primitive_bedroll_rolled",
+    "primitive_forge_lower",
+    "primitive_forge_upper",
+    "primitive_forge_item",
+    "primitive_forge_lit_lower",
+    "primitive_forge_lit_upper",
     "stone_fire_empty",
     "stone_fire_fueled",
     "stone_fire_lit",
@@ -93,9 +115,8 @@
     "pot_on_fire_stew"
   ],
   "placement": {
-    "pot_mount_y": 3.35,
+    "pot_mount_y": 5.1,
     "remove_spit_when_pot_added": true,
-    "combined_height": 11.0
-  },
-  "recipe_intent": "New stone fire replaces the furnace role and uses the same furnace recipe; no recipe files installed."
+    "combined_height": 12.75
+  }
 }

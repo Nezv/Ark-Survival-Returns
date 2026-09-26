@@ -7,17 +7,21 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 
-/** State, recipe and item wiring for the authored models in tools/build_camp_assets.py. */
+/** State, recipe and item wiring for the authored models in tools/build_camp_assets.py and build_prehistoric_camp.py. */
 final class CampAssetsData {
     private static final String NS = "arksurvivalreturns";
     private static final String ASSETS = "assets/" + NS + "/";
     private static final List<String> DIRECTIONS = List.of("north", "east", "south", "west");
 
+    /** Primitive Bedroll: two halves like a bed, the grass models from build_prehistoric_camp.py. */
     static void bedroll(BiConsumer<String, Object> put) {
-        model(put, "bedroll", "bedroll", "bedroll_rolled");
         var variants = new LinkedHashMap<String, Object>();
-        for (String facing : DIRECTIONS) variants.put("facing=" + facing, rotated("bedroll", facing));
+        for (String facing : DIRECTIONS) for (String part : List.of("foot", "head")) {
+            variants.put("facing=" + facing + ",part=" + part, Map.of("model", NS + ":block/prehistoric/primitive_bedroll_" + part,
+                    "y", DIRECTIONS.indexOf(facing) * 90));
+        }
         put.accept(ASSETS + "blockstates/bedroll", Map.of("variants", variants));
+        item(put, "bedroll", NS + ":block/prehistoric/primitive_bedroll_rolled");
     }
 
     static void farm(BiConsumer<String, Object> put) {
@@ -43,18 +47,20 @@ final class CampAssetsData {
         // Creakings are removed by the survival theme; scraping spruce keeps resin reachable.
         put.accept("data/" + NS + "/recipe/spruce_resin", Map.of("type", "minecraft:crafting_shapeless", "category", "misc",
                 "ingredients", List.of("minecraft:spruce_log", "minecraft:flint"), "result", Map.of("count", 2, "id", "minecraft:resin_clump")));
-        model(put, "drying_rack", "drying_rack", "drying_rack");
+        // Two blocks tall: the lower half carries the hanging food and rations, the upper half is frame only.
+        item(put, "drying_rack", NS + ":block/camp/drying_rack_item");
         var parts = new ArrayList<Object>();
         for (String facing : DIRECTIONS) {
-            parts.add(Map.of("when", Map.of("facing", facing), "apply", rotated("drying_rack", facing)));
+            parts.add(Map.of("when", Map.of("facing", facing, "half", "lower"), "apply", rotated("drying_rack_lower", facing)));
+            parts.add(Map.of("when", Map.of("facing", facing, "half", "upper"), "apply", rotated("drying_rack_upper", facing)));
             for (String food : List.of("meat", "fish", "berries")) {
                 for (int slot = 1; slot <= 3; slot++) {
                     String counts = slot == 1 ? "1|2|3" : slot == 2 ? "2|3" : "3";
-                    parts.add(Map.of("when", Map.of("facing", facing, "food", food, "hanging", counts),
+                    parts.add(Map.of("when", Map.of("facing", facing, "half", "lower", "food", food, "hanging", counts),
                             "apply", rotated("rack_" + food + "_" + slot, facing)));
                 }
             }
-            parts.add(Map.of("when", Map.of("facing", facing, "ready", "true"), "apply", rotated("rack_ready", facing)));
+            parts.add(Map.of("when", Map.of("facing", facing, "half", "lower", "ready", "true"), "apply", rotated("rack_ready", facing)));
         }
         put.accept(ASSETS + "blockstates/drying_rack", Map.of("multipart", parts));
     }
@@ -71,6 +77,11 @@ final class CampAssetsData {
 
     private static Map<String, Object> rotated(String model, String facing) {
         return Map.of("model", NS + ":block/camp/" + model, "y", DIRECTIONS.indexOf(facing) * 90);
+    }
+
+    private static void item(BiConsumer<String, Object> put, String id, String model) {
+        put.accept(ASSETS + "models/item/" + id, Map.of("parent", model));
+        put.accept(ASSETS + "items/" + id, Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":item/" + id)));
     }
 
     private static void model(BiConsumer<String, Object> put, String id, String block, String item) {

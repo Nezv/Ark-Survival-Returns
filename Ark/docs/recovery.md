@@ -8,15 +8,15 @@ server config under `[camp]`, `[recovery]` and `[downed]`.
 
 - **Plant fiber** drops from short and tall grass next to the berries; shears suppress both.
 - **Flint** comes from gravel, as in vanilla, and repairs the two primitive weapons.
-- **A starter kit** lands on a player's first join in a world: one field bedroll, two fiber
+- **A starter kit** lands on a player's first join in a world: one primitive bedroll, two fiber
   bandages, eight plant fiber and one flint knife. The granted flag is world SavedData, so
   rejoining never duplicates it. Disable with `camp.starterKit=false`.
 - **Recipes:** flint knife = flint + stick + fiber; spear = two sticks + flint + fiber; fiber
-  bandage = three fiber + string (yields two); bedroll = three red wool + two string.
+  bandage = three fiber + string (yields two); bedroll = four plant fiber + leather.
 
-## Field bedroll
+## Primitive bedroll
 
-A low, walkable block. Using it sets the personal respawn point through the vanilla respawn data,
+A flat grass mat, two blocks long like a bed (foot where it is placed, head beyond it), and walkable. Using it sets the personal respawn point through the vanilla respawn data,
 so the point belongs to the player rather than the block: destroying, exploding or picking up the
 bedroll never strands its owner. Sneak-use rolls it back into an item. The world spawn remains the
 fallback when no bedroll has ever been used.

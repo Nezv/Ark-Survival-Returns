@@ -2,11 +2,22 @@
   "multipart": [
     {
       "apply": {
-        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "model": "arksurvivalreturns:block/camp/drying_rack_lower",
         "y": 0
       },
       "when": {
-        "facing": "north"
+        "facing": "north",
+        "half": "lower"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack_upper",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "half": "upper"
       }
     },
     {
@@ -17,6 +28,7 @@
       "when": {
         "facing": "north",
         "food": "meat",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -28,6 +40,7 @@
       "when": {
         "facing": "north",
         "food": "meat",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -39,6 +52,7 @@
       "when": {
         "facing": "north",
         "food": "meat",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -50,6 +64,7 @@
       "when": {
         "facing": "north",
         "food": "fish",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -61,6 +76,7 @@
       "when": {
         "facing": "north",
         "food": "fish",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -72,6 +88,7 @@
       "when": {
         "facing": "north",
         "food": "fish",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -83,6 +100,7 @@
       "when": {
         "facing": "north",
         "food": "berries",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -94,6 +112,7 @@
       "when": {
         "facing": "north",
         "food": "berries",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -105,6 +124,7 @@
       "when": {
         "facing": "north",
         "food": "berries",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -115,16 +135,28 @@
       },
       "when": {
         "facing": "north",
+        "half": "lower",
         "ready": "true"
       }
     },
     {
       "apply": {
-        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "model": "arksurvivalreturns:block/camp/drying_rack_lower",
         "y": 90
       },
       "when": {
-        "facing": "east"
+        "facing": "east",
+        "half": "lower"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack_upper",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "half": "upper"
       }
     },
     {
@@ -135,6 +167,7 @@
       "when": {
         "facing": "east",
         "food": "meat",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -146,6 +179,7 @@
       "when": {
         "facing": "east",
         "food": "meat",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -157,6 +191,7 @@
       "when": {
         "facing": "east",
         "food": "meat",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -168,6 +203,7 @@
       "when": {
         "facing": "east",
         "food": "fish",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -179,6 +215,7 @@
       "when": {
         "facing": "east",
         "food": "fish",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -190,6 +227,7 @@
       "when": {
         "facing": "east",
         "food": "fish",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -201,6 +239,7 @@
       "when": {
         "facing": "east",
         "food": "berries",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -212,6 +251,7 @@
       "when": {
         "facing": "east",
         "food": "berries",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -223,6 +263,7 @@
       "when": {
         "facing": "east",
         "food": "berries",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -233,16 +274,28 @@
       },
       "when": {
         "facing": "east",
+        "half": "lower",
         "ready": "true"
       }
     },
     {
       "apply": {
-        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "model": "arksurvivalreturns:block/camp/drying_rack_lower",
         "y": 180
       },
       "when": {
-        "facing": "south"
+        "facing": "south",
+        "half": "lower"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack_upper",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "half": "upper"
       }
     },
     {
@@ -253,6 +306,7 @@
       "when": {
         "facing": "south",
         "food": "meat",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -264,6 +318,7 @@
       "when": {
         "facing": "south",
         "food": "meat",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -275,6 +330,7 @@
       "when": {
         "facing": "south",
         "food": "meat",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -286,6 +342,7 @@
       "when": {
         "facing": "south",
         "food": "fish",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -297,6 +354,7 @@
       "when": {
         "facing": "south",
         "food": "fish",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -308,6 +366,7 @@
       "when": {
         "facing": "south",
         "food": "fish",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -319,6 +378,7 @@
       "when": {
         "facing": "south",
         "food": "berries",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -330,6 +390,7 @@
       "when": {
         "facing": "south",
         "food": "berries",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -341,6 +402,7 @@
       "when": {
         "facing": "south",
         "food": "berries",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -351,16 +413,28 @@
       },
       "when": {
         "facing": "south",
+        "half": "lower",
         "ready": "true"
       }
     },
     {
       "apply": {
-        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "model": "arksurvivalreturns:block/camp/drying_rack_lower",
         "y": 270
       },
       "when": {
-        "facing": "west"
+        "facing": "west",
+        "half": "lower"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack_upper",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "half": "upper"
       }
     },
     {
@@ -371,6 +445,7 @@
       "when": {
         "facing": "west",
         "food": "meat",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -382,6 +457,7 @@
       "when": {
         "facing": "west",
         "food": "meat",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -393,6 +469,7 @@
       "when": {
         "facing": "west",
         "food": "meat",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -404,6 +481,7 @@
       "when": {
         "facing": "west",
         "food": "fish",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -415,6 +493,7 @@
       "when": {
         "facing": "west",
         "food": "fish",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -426,6 +505,7 @@
       "when": {
         "facing": "west",
         "food": "fish",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -437,6 +517,7 @@
       "when": {
         "facing": "west",
         "food": "berries",
+        "half": "lower",
         "hanging": "1|2|3"
       }
     },
@@ -448,6 +529,7 @@
       "when": {
         "facing": "west",
         "food": "berries",
+        "half": "lower",
         "hanging": "2|3"
       }
     },
@@ -459,6 +541,7 @@
       "when": {
         "facing": "west",
         "food": "berries",
+        "half": "lower",
         "hanging": "3"
       }
     },
@@ -469,6 +552,7 @@
       },
       "when": {
         "facing": "west",
+        "half": "lower",
         "ready": "true"
       }
     }

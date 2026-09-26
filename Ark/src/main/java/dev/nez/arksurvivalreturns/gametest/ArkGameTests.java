@@ -69,6 +69,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("primitive_forge", () -> PrimitiveGameTests::forge);
         FUNCTIONS.register("primitive_curing", () -> PrimitiveGameTests::curing);
         FUNCTIONS.register("primitive_gates", () -> PrimitiveGameTests::gates);
+        FUNCTIONS.register("primitive_tall_stations", () -> PrimitiveGameTests::tallStations);
         FUNCTIONS.register("integration_curios", () -> IntegrationGameTests::curios);
         FUNCTIONS.register("integration_toms_storage", () -> IntegrationGameTests::tomsStorage);
         FUNCTIONS.register("integration_terralith", () -> IntegrationGameTests::terralith);

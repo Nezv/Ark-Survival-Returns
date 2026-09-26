@@ -7,10 +7,10 @@
   "quest.0000000000000201.title": "A Place to Return To",
   "quest.0000000000000201.quest_subtitle": "Camp first.",
   "quest.0000000000000201.quest_desc": [
-    "Craft a field bedroll from three red wool and two string.",
+    "Craft a primitive bedroll from four plant fiber and one leather. It lies two blocks long, like a bed.",
     "Place it and use it to set your respawn point; the point stays even if the bedroll is destroyed."
   ],
-  "task.00000000000002A1.title": "Craft the field bedroll",
+  "task.00000000000002A1.title": "Craft the primitive bedroll",
 
   "quest.0000000000000202.title": "Fiber from the Land",
   "quest.0000000000000202.quest_subtitle": "The land provides the binding.",

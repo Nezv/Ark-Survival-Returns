@@ -48,17 +48,20 @@ def verify_camp_assets():
         data = json.loads(path.read_text())
         if 'variants' in data:
             for value in data['variants'].values(): check_model(value['model'])
-            assert len(data['variants']) == (8 if name == 'cooking_pot' else 4), name
+            assert len(data['variants']) == 8, name
         else:
             parts = data['multipart']
             for part in parts: check_model(part['apply']['model'])
             domains = {'facing': ['north','east','south','west']}
-            if name == 'drying_rack': domains.update(food=['meat','fish','berries'], hanging=['0','1','2','3'], ready=['false','true'])
+            if name == 'drying_rack': domains.update(half=['lower','upper'], food=['meat','fish','berries'], hanging=['0','1','2','3'], ready=['false','true'])
             else: domains['filled'] = ['false','true']
             for combination in itertools.product(*domains.values()):
                 state = dict(zip(domains, combination))
                 active = [part for part in parts if matches(part['when'], state)]
-                expected = (1 + int(state['hanging']) + (state['ready'] == 'true')) if name == 'drying_rack' else 1 + (state['filled'] == 'true')
+                if name == 'drying_rack':
+                    expected = 1 if state['half'] == 'upper' else 1 + int(state['hanging']) + (state['ready'] == 'true')
+                else:
+                    expected = 1 + (state['filled'] == 'true')
                 assert len(active) == expected, (name, state, len(active))
                 checked += 1
     print(f'PASS: {len(visited)} camp models; textures, cuboids, rotations and {checked} multipart states resolve.')

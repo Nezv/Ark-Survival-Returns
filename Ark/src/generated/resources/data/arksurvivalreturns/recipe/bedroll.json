@@ -3,11 +3,11 @@
   "category": "misc",
   "group": "bedroll",
   "ingredients": [
-    "#minecraft:wool",
-    "#minecraft:wool",
-    "#minecraft:wool",
-    "minecraft:string",
-    "minecraft:string"
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber",
+    "minecraft:leather"
   ],
   "result": {
     "count": 1,

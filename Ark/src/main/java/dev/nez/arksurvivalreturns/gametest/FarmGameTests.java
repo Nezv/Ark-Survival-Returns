@@ -71,6 +71,8 @@ final class FarmGameTests {
         // --- drying rack: raw food becomes a ration over the configured batches ---
         BlockPos rackRel = new BlockPos(7, 3, 8);
         h.setBlock(rackRel, ModContent.DRYING_RACK.get().defaultBlockState());
+        h.setBlock(rackRel.above(), ModContent.DRYING_RACK.get().defaultBlockState()
+                .setValue(dev.nez.arksurvivalreturns.feature.camp.TallBlocks.HALF, net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER));
         DryingRackBlockEntity rack = (DryingRackBlockEntity) level.getBlockEntity(h.absolutePos(rackRel));
         h.assertTrue(rack != null, "The drying rack block entity is missing");
         h.assertTrue(rack.insert(new ItemStack(Items.BEEF, 3)) == 3, "The rack must accept raw food");
@@ -87,12 +89,15 @@ final class FarmGameTests {
                 && rack.getBlockState().getValue(DryingRackBlock.FOOD) == DryingRackBlock.Food.MEAT
                 && rack.getBlockState().getValue(DryingRackBlock.READY), "Rack art must show raw meat and the finished ration");
         var rackPos = h.absolutePos(rackRel);
-        var hit = new net.minecraft.world.phys.BlockHitResult(Vec3.atBottomCenterOf(rackPos.above()),
-                net.minecraft.core.Direction.UP, rackPos, false);
+        // Racks are two blocks tall: the next one stands on the first one's top half.
+        var hit = new net.minecraft.world.phys.BlockHitResult(Vec3.atBottomCenterOf(rackPos.above(2)),
+                net.minecraft.core.Direction.UP, rackPos.above(), false);
         var context = new net.minecraft.world.item.context.BlockPlaceContext(owner, net.minecraft.world.InteractionHand.MAIN_HAND,
                 new ItemStack(ModContent.DRYING_RACK_ITEM.get()), hit);
         h.assertTrue(ModContent.DRYING_RACK_ITEM.get().place(context).consumesAction(), "A second rack must be placeable on the first");
-        var upper = (DryingRackBlockEntity) level.getBlockEntity(rackPos.above());
+        var upper = (DryingRackBlockEntity) level.getBlockEntity(rackPos.above(2));
+        h.assertTrue(level.getBlockEntity(rackPos.above()) == null && level.getBlockState(rackPos.above(3)).is(ModContent.DRYING_RACK.get()),
+                "Each rack keeps its block entity in the lower half and places its own top half");
         h.assertTrue(upper != null && upper.getBlockState().getValue(DryingRackBlock.FACING) == rack.getBlockState().getValue(DryingRackBlock.FACING),
                 "Stacked uprights must align");
         upper.insert(new ItemStack(Items.COD));

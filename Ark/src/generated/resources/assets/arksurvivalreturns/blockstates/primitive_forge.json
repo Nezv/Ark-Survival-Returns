@@ -1,35 +1,67 @@
 {
   "variants": {
-    "facing=east,lit=false": {
-      "model": "arksurvivalreturns:block/primitive_forge",
+    "facing=east,half=lower,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lower",
       "y": 90
     },
-    "facing=east,lit=true": {
-      "model": "arksurvivalreturns:block/primitive_forge_lit",
+    "facing=east,half=lower,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_lower",
       "y": 90
     },
-    "facing=north,lit=false": {
-      "model": "arksurvivalreturns:block/primitive_forge",
+    "facing=east,half=upper,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_upper",
+      "y": 90
+    },
+    "facing=east,half=upper,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_upper",
+      "y": 90
+    },
+    "facing=north,half=lower,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lower",
       "y": 0
     },
-    "facing=north,lit=true": {
-      "model": "arksurvivalreturns:block/primitive_forge_lit",
+    "facing=north,half=lower,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_lower",
       "y": 0
     },
-    "facing=south,lit=false": {
-      "model": "arksurvivalreturns:block/primitive_forge",
+    "facing=north,half=upper,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_upper",
+      "y": 0
+    },
+    "facing=north,half=upper,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_upper",
+      "y": 0
+    },
+    "facing=south,half=lower,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lower",
       "y": 180
     },
-    "facing=south,lit=true": {
-      "model": "arksurvivalreturns:block/primitive_forge_lit",
+    "facing=south,half=lower,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_lower",
       "y": 180
     },
-    "facing=west,lit=false": {
-      "model": "arksurvivalreturns:block/primitive_forge",
+    "facing=south,half=upper,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_upper",
+      "y": 180
+    },
+    "facing=south,half=upper,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_upper",
+      "y": 180
+    },
+    "facing=west,half=lower,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lower",
       "y": 270
     },
-    "facing=west,lit=true": {
-      "model": "arksurvivalreturns:block/primitive_forge_lit",
+    "facing=west,half=lower,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_lower",
+      "y": 270
+    },
+    "facing=west,half=upper,lit=false": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_upper",
+      "y": 270
+    },
+    "facing=west,half=upper,lit=true": {
+      "model": "arksurvivalreturns:block/prehistoric/primitive_forge_lit_upper",
       "y": 270
     }
   }

@@ -13,7 +13,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import dev.nez.arksurvivalreturns.feature.camp.BedrollBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -58,29 +61,43 @@ final class CampGameTests {
         FakePlayer player = survivor(world);
         player.getInventory().clearContent();
         BlockPos pos = h.absolutePos(new BlockPos(4, 2, 4));
-        world.setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
-        world.setBlockAndUpdate(pos, ModContent.BEDROLL.get().defaultBlockState());
+        BlockPos head = pos.north();
+        // Ground under the mat and beside it, where the owner stands up.
+        for (BlockPos ground : BlockPos.betweenClosed(pos.offset(-1, -1, -2), pos.offset(1, -1, 1))) {
+            world.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
+        }
+        placeBedroll(world, pos);
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
 
         var result = ModContent.BEDROLL.get().useWithoutItem(world.getBlockState(pos), world, pos, player, hit);
         h.assertTrue(result.consumesAction(), "The bedroll did not accept the interaction");
         var config = player.getRespawnConfig();
         h.assertTrue(config != null, "The respawn point was not set");
-        h.assertTrue(config.respawnData().globalPos().pos().equals(pos), "The respawn point is at the wrong position");
+        h.assertTrue(config.respawnData().globalPos().pos().equals(head), "The respawn point must be the bedroll's head");
+        h.assertTrue(world.getBlockState(head).getRespawnPosition(EntityType.PLAYER, world, head, 0.0f).isPresent(),
+                "Respawning at the bedroll must find a place to stand beside it");
 
         // The saved point lives in player data, not in the block: destroying it must not strand anyone.
         world.removeBlock(pos, false);
+        h.assertTrue(world.getBlockState(head).isAir(), "The head must break with the foot");
         h.assertTrue(player.getRespawnConfig() != null, "Destroying the bedroll removed the respawn point");
 
-        // Sneak-use rolls it back up and leaves the saved respawn point alone.
-        world.setBlockAndUpdate(pos, ModContent.BEDROLL.get().defaultBlockState());
+        // Sneak-use rolls both halves back up and leaves the saved respawn point alone.
+        placeBedroll(world, pos);
         player.setShiftKeyDown(true);
         ModContent.BEDROLL.get().useWithoutItem(world.getBlockState(pos), world, pos, player, hit);
         player.setShiftKeyDown(false);
-        h.assertTrue(world.getBlockState(pos).isAir(), "Sneak-use did not remove the bedroll");
+        h.assertTrue(world.getBlockState(pos).isAir() && world.getBlockState(head).isAir(), "Sneak-use did not remove the bedroll");
         h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 1, "The rolled-up bedroll was not returned");
         h.assertTrue(player.getRespawnConfig() != null, "Picking the bedroll up cleared the respawn point");
         h.succeed();
+    }
+
+    /** The two halves as the block item places them, facing north: foot here, head one block north. */
+    private static void placeBedroll(ServerLevel world, BlockPos foot) {
+        var state = ModContent.BEDROLL.get().defaultBlockState();
+        world.setBlockAndUpdate(foot, state);
+        world.setBlockAndUpdate(foot.north(), state.setValue(BedrollBlock.PART, BedPart.HEAD));
     }
 
     private static int count(Player player, Item item) {

@@ -244,10 +244,10 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".flint_knife", "Faca de s\u00edlex");
         en.put("item." + NS + ".spear", "Flint Spear");
         pt.put("item." + NS + ".spear", "Lan\u00e7a de s\u00edlex");
-        en.put("block." + NS + ".bedroll", "Field Bedroll");
-        pt.put("block." + NS + ".bedroll", "Rolo de dormir");
-        en.put("item." + NS + ".bedroll", "Field Bedroll");
-        pt.put("item." + NS + ".bedroll", "Rolo de dormir");
+        en.put("block." + NS + ".bedroll", "Primitive Bedroll");
+        pt.put("block." + NS + ".bedroll", "Rolo de dormir primitivo");
+        en.put("item." + NS + ".bedroll", "Primitive Bedroll");
+        pt.put("item." + NS + ".bedroll", "Rolo de dormir primitivo");
         en.put("key." + NS + ".journal", "Open Field Journal");
         pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
@@ -497,11 +497,13 @@ public final class ArkData implements DataProvider {
         vanillaModel("flint_knife", "minecraft:item/flint");
         vanillaModel("spear", "minecraft:item/trident");
         CampAssetsData.bedroll(this::put);
+        // Two halves like a bed: only the head drops the item.
         json("data/" + NS + "/loot_table/blocks/bedroll", """
             {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-             {"condition":"minecraft:survives_explosion"}],
+             {"condition":"minecraft:survives_explosion"},
+             {"condition":"minecraft:block_state_property","block":"%s:bedroll","properties":{"part":"head"}}],
              "entries":[{"type":"minecraft:item","name":"%s:bedroll"}]}]}
-            """.formatted(NS));
+            """.formatted(NS, NS));
         // Plant fiber shares the grass route with the berries; shears still suppress it.
         json("data/" + NS + "/loot_modifiers/grass_fiber", """
             {"type":"neoforge:add_table","table":"arksurvivalreturns:gameplay/grass_fiber","conditions":[
@@ -538,10 +540,10 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS, NS, NS, NS));
         json("data/" + NS + "/recipe/bedroll", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"bedroll",
-                 "ingredients":["#minecraft:wool","#minecraft:wool","#minecraft:wool",
-                                "minecraft:string","minecraft:string"],
+                 "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","%s:plant_fiber",
+                                "minecraft:leather"],
                  "result":{"count":1,"id":"%s:bedroll"}}
-                """.formatted(NS));
+                """.formatted(NS, NS, NS, NS, NS));
     }
 
     /** Cargo rigs: the two harness tiers and their primitive recipes. Vanilla textures stand in. */
@@ -563,11 +565,7 @@ public final class ArkData implements DataProvider {
     /** Authored camp stations and the four plantable berry bushes. */
     private void farm() {
         CampAssetsData.farm(this::put);
-        json("data/" + NS + "/loot_table/blocks/drying_rack", """
-            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-             {"condition":"minecraft:survives_explosion"}],
-             "entries":[{"type":"minecraft:item","name":"%s:drying_rack"}]}]}
-            """.formatted(NS));
+        put("data/" + NS + "/loot_table/blocks/drying_rack", PrimitiveData.lowerHalfLoot("drying_rack"));
         vanillaModel("dried_ration", "minecraft:item/bread");
         json("data/" + NS + "/recipe/drying_rack", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"drying_rack",
@@ -1069,6 +1067,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
+                "primitive_tall_stations",
                 "integration_curios", "integration_toms_storage", "integration_terralith"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",

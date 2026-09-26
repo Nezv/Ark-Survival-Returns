@@ -7,6 +7,7 @@ import com.mojang.authlib.GameProfile;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.camp.TallBlocks;
 import dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity;
 import dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock;
 import dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlockEntity;
@@ -15,6 +16,7 @@ import dev.nez.arksurvivalreturns.feature.primitive.DriedMeatItem;
 import dev.nez.arksurvivalreturns.feature.primitive.LooseRockBlock;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveEvents;
+import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveForgeBlock;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveForgeBlockEntity;
 import dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlock;
 import dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlockEntity;
@@ -208,6 +210,65 @@ final class PrimitiveGameTests {
 
     private static ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> recipe(String id) {
         return ResourceKey.create(Registries.RECIPE, Identifier.parse(id));
+    }
+
+    /**
+     * Two-block stations: the forge and the drying rack place their top half, take clicks on either half, and
+     * break as one with a single drop; the bedroll lies two blocks long and drops once.
+     */
+    static void tallStations(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        FakePlayer player = player(level, "ArkBuilder");
+        BlockPos forgePos = place(h, player, new BlockPos(4, 1, 4), PrimitiveContent.PRIMITIVE_FORGE_ITEM.get());
+        BlockPos chimney = forgePos.above();
+        h.assertTrue(level.getBlockState(chimney).is(PrimitiveContent.PRIMITIVE_FORGE.get()) && TallBlocks.isUpper(level.getBlockState(chimney)),
+                "The forge must stand two blocks tall");
+        h.assertTrue(level.getBlockEntity(chimney) == null && level.getBlockEntity(forgePos) instanceof PrimitiveForgeBlockEntity,
+                "Only the lower half keeps the forge's inventory");
+        PrimitiveForgeBlockEntity forge = (PrimitiveForgeBlockEntity) level.getBlockEntity(forgePos);
+        level.getBlockState(chimney).useItemOn(new ItemStack(Items.RAW_IRON, 2), level, player, InteractionHand.MAIN_HAND, hit(chimney));
+        h.assertTrue(forge.input().getCount() == 2, "Clicking the chimney must load the forge");
+        forge.insert(new ItemStack(Items.CHARCOAL), PrimitiveForgeBlockEntity.FUEL);
+        forge.step();
+        h.assertTrue(level.getBlockState(chimney).getValue(PrimitiveForgeBlock.LIT), "The chimney must glow with the fire");
+        level.destroyBlock(chimney, true);
+        h.assertTrue(level.getBlockState(forgePos).isAir(), "Breaking the chimney must take the whole forge");
+        h.assertTrue(dropped(level, forgePos, PrimitiveContent.PRIMITIVE_FORGE_ITEM.get()) == 1, "A broken forge drops exactly one forge");
+
+        BlockPos rackPos = place(h, player, new BlockPos(10, 1, 4), ModContent.DRYING_RACK_ITEM.get());
+        BlockPos rackTop = rackPos.above();
+        h.assertTrue(level.getBlockState(rackTop).is(ModContent.DRYING_RACK.get()) && TallBlocks.isUpper(level.getBlockState(rackTop)),
+                "The drying rack must stand two blocks tall");
+        level.getBlockState(rackTop).useItemOn(new ItemStack(Items.BEEF), level, player, InteractionHand.MAIN_HAND, hit(rackTop));
+        h.assertTrue(((DryingRackBlockEntity) level.getBlockEntity(rackPos)).input().is(Items.BEEF), "Food hung from the top reaches the rack");
+        level.destroyBlock(rackPos, true);
+        h.assertTrue(level.getBlockState(rackTop).isAir(), "Breaking the base must take the top half");
+        h.assertTrue(dropped(level, rackPos, ModContent.DRYING_RACK_ITEM.get()) == 1, "A broken rack drops exactly one rack");
+
+        // A fake player looks south: the head lies one block south of the foot.
+        BlockPos foot = place(h, player, new BlockPos(4, 1, 10), ModContent.BEDROLL_ITEM.get());
+        BlockPos headPos = foot.relative(player.getDirection());
+        h.assertTrue(level.getBlockState(headPos).is(ModContent.BEDROLL.get()), "The bedroll must be two blocks long");
+        level.destroyBlock(foot, true);
+        h.assertTrue(level.getBlockState(headPos).isAir(), "The head must break with the foot");
+        h.assertTrue(dropped(level, foot, ModContent.BEDROLL_ITEM.get()) == 1, "A broken bedroll drops exactly one bedroll");
+        h.succeed();
+    }
+
+    /** Places a block item on a stone floor block the way a player would; returns where it landed. */
+    private static BlockPos place(GameTestHelper h, FakePlayer player, BlockPos floorRel, net.minecraft.world.item.Item item) {
+        h.setBlock(floorRel, Blocks.STONE.defaultBlockState());
+        for (var side : Direction.Plane.HORIZONTAL) h.setBlock(floorRel.relative(side), Blocks.STONE.defaultBlockState());
+        BlockPos floor = h.absolutePos(floorRel);
+        var context = new net.minecraft.world.item.context.BlockPlaceContext(player, InteractionHand.MAIN_HAND, new ItemStack(item),
+                new BlockHitResult(Vec3.atCenterOf(floor).add(0, 0.5, 0), Direction.UP, floor, false));
+        h.assertTrue(((net.minecraft.world.item.BlockItem) item).place(context).consumesAction(), item + " must place");
+        return floor.above();
+    }
+
+    private static int dropped(ServerLevel level, BlockPos pos, net.minecraft.world.item.Item item) {
+        return level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2), e -> e.getItem().is(item))
+                .stream().mapToInt(e -> e.getItem().getCount()).sum();
     }
 
     private PrimitiveGameTests() {}

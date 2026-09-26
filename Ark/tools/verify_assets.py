@@ -160,11 +160,13 @@ def main():
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}_nest.json'):
             check((generated/relative).is_file(), f'Missing nest asset: {relative}')
     # Camp blocks: the bedroll and the recovery cache marker own a state, a model and a loot table.
-    for identifier in ('bedroll', 'recovery_cache'):
+    # The two-block bedroll points its states straight at the authored head and foot models.
+    for identifier, model in (('bedroll', 'prehistoric/primitive_bedroll_head'), ('recovery_cache', 'recovery_cache')):
         for relative in (f'assets/arksurvivalreturns/blockstates/{identifier}.json',
-                         f'assets/arksurvivalreturns/models/block/{identifier}.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}.json'):
             check((generated/relative).is_file(), f'Missing block asset: {relative}')
+        check(any((root/f'assets/arksurvivalreturns/models/block/{model}.json').is_file() for root in (generated, ROOT/'src/main/resources')),
+              f'Missing block model: {model}')
     surfaces = json.loads((generated/'data/arksurvivalreturns/tags/block/spawn_surfaces.json').read_text())['values']
     check({'minecraft:grass_block', 'minecraft:podzol', 'minecraft:mycelium'} <= set(surfaces),
           'Spawn surfaces tag is incomplete')

@@ -1,0 +1,1003 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "clay": "arksurvivalreturns:block/prehistoric/clay",
+    "clay_light": "arksurvivalreturns:block/prehistoric/clay_light",
+    "ember": "arksurvivalreturns:block/prehistoric/ember",
+    "stone_light": "arksurvivalreturns:block/prehistoric/stone_light",
+    "particle": "arksurvivalreturns:block/prehistoric/clay"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "clay stack",
+      "from": [
+        2.5,
+        0,
+        2.5
+      ],
+      "to": [
+        13.5,
+        9,
+        13.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            11.0
+          ],
+          "texture": "#clay"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            11.0
+          ],
+          "texture": "#clay"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            9
+          ],
+          "texture": "#clay"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            9
+          ],
+          "texture": "#clay"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            9
+          ],
+          "texture": "#clay"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            9
+          ],
+          "texture": "#clay"
+        }
+      }
+    },
+    {
+      "name": "rolled clay band",
+      "from": [
+        2,
+        8.5,
+        2
+      ],
+      "to": [
+        14,
+        10,
+        14
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#clay_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#clay_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            12,
+            1.5
+          ],
+          "texture": "#clay_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            12,
+            1.5
+          ],
+          "texture": "#clay_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            12,
+            1.5
+          ],
+          "texture": "#clay_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            12,
+            1.5
+          ],
+          "texture": "#clay_light"
+        }
+      }
+    },
+    {
+      "name": "shoulder",
+      "from": [
+        3.8,
+        10,
+        3.8
+      ],
+      "to": [
+        12.2,
+        13,
+        12.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            8.399999999999999
+          ],
+          "texture": "#clay"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            8.399999999999999
+          ],
+          "texture": "#clay"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            3
+          ],
+          "texture": "#clay"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            3
+          ],
+          "texture": "#clay"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            3
+          ],
+          "texture": "#clay"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8.399999999999999,
+            3
+          ],
+          "texture": "#clay"
+        }
+      }
+    },
+    {
+      "name": "chimney wall",
+      "from": [
+        5,
+        13,
+        5
+      ],
+      "to": [
+        11,
+        16,
+        6.3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.2999999999999998
+          ],
+          "texture": "#clay_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.2999999999999998
+          ],
+          "texture": "#clay_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            6,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            6,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3
+          ],
+          "texture": "#clay_light"
+        }
+      }
+    },
+    {
+      "name": "chimney wall",
+      "from": [
+        5,
+        13,
+        9.7
+      ],
+      "to": [
+        11,
+        16,
+        11
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.3000000000000007
+          ],
+          "texture": "#clay_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            1.3000000000000007
+          ],
+          "texture": "#clay_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            6,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            6,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3
+          ],
+          "texture": "#clay_light"
+        }
+      }
+    },
+    {
+      "name": "chimney wall",
+      "from": [
+        5,
+        13,
+        6.3
+      ],
+      "to": [
+        6.3,
+        16,
+        9.7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3.3999999999999995
+          ],
+          "texture": "#clay_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3.3999999999999995
+          ],
+          "texture": "#clay_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.2999999999999998,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3
+          ],
+          "texture": "#clay_light"
+        }
+      }
+    },
+    {
+      "name": "chimney wall",
+      "from": [
+        9.7,
+        13,
+        6.3
+      ],
+      "to": [
+        11,
+        16,
+        9.7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3.3999999999999995
+          ],
+          "texture": "#clay_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3.3999999999999995
+          ],
+          "texture": "#clay_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000007,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3
+          ],
+          "texture": "#clay_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3
+          ],
+          "texture": "#clay_light"
+        }
+      }
+    },
+    {
+      "name": "stone pressed into the clay",
+      "from": [
+        3.5,
+        2,
+        2.3
+      ],
+      "to": [
+        4.9,
+        3.1999999999999993,
+        2.55
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        }
+      }
+    },
+    {
+      "name": "stone pressed into the clay",
+      "from": [
+        9.8,
+        5,
+        2.3
+      ],
+      "to": [
+        11.200000000000001,
+        6.199999999999999,
+        2.55
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        }
+      }
+    },
+    {
+      "name": "stone pressed into the clay",
+      "from": [
+        6,
+        1.5,
+        13.45
+      ],
+      "to": [
+        7.4,
+        2.6999999999999993,
+        13.7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.25
+          ],
+          "texture": "#stone_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        }
+      }
+    },
+    {
+      "name": "stone pressed into the clay",
+      "from": [
+        2.3,
+        4,
+        8
+      ],
+      "to": [
+        2.55,
+        5.199999999999999,
+        9.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.4000000000000004
+          ],
+          "texture": "#stone_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.4000000000000004
+          ],
+          "texture": "#stone_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        }
+      }
+    },
+    {
+      "name": "stone pressed into the clay",
+      "from": [
+        13.45,
+        1,
+        10
+      ],
+      "to": [
+        13.7,
+        2.1999999999999993,
+        11.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.4000000000000004
+          ],
+          "texture": "#stone_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.4000000000000004
+          ],
+          "texture": "#stone_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            1.1999999999999993
+          ],
+          "texture": "#stone_light"
+        }
+      }
+    },
+    {
+      "name": "glowing throat",
+      "from": [
+        6.3,
+        13,
+        6.3
+      ],
+      "to": [
+        9.7,
+        13.2,
+        9.7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3.3999999999999995
+          ],
+          "texture": "#ember"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            3.3999999999999995
+          ],
+          "texture": "#ember"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            0.25
+          ],
+          "texture": "#ember"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            0.25
+          ],
+          "texture": "#ember"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            0.25
+          ],
+          "texture": "#ember"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3999999999999995,
+            0.25
+          ],
+          "texture": "#ember"
+        }
+      }
+    }
+  ]
+}
