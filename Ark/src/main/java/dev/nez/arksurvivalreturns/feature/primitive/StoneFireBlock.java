@@ -36,7 +36,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
@@ -85,7 +88,26 @@ public final class StoneFireBlock extends BaseEntityBlock {
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(POT) ? Shapes.or(SHAPE, CookingPotBlock.seatedOutline(level.getBlockState(pos.above()))) : SHAPE;
+    }
+
+    /**
+     * A pot seated on the stones sits inside this block's space, so looking at it hits the fire. Anything
+     * aimed above the top course belongs to the pot (its block, and its inventory, are the block above).
+     */
+    private static boolean aimsAtPot(BlockState state, BlockPos pos, Vec3 hit) {
+        return state.getValue(POT) && (hit.y - pos.getY()) * 16 >= CookingPotBlock.STONE_SEAT - 1;
+    }
+
+    /** Mining the seated pot takes the pot and leaves the fire burning. */
+    @Override public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack tool,
+            boolean willHarvest, FluidState fluid) {
+        if (player.pick(player.blockInteractionRange(), 1.0f, false) instanceof BlockHitResult aim
+                && aim.getBlockPos().equals(pos) && aimsAtPot(state, pos, aim.getLocation())) {
+            if (!level.isClientSide()) level.destroyBlock(pos.above(), !player.preventsBlockDrops(), player);
+            return false;
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, tool, willHarvest, fluid);
     }
 
     @Override protected BlockState rotate(BlockState state, Rotation rotation) {
@@ -108,6 +130,9 @@ public final class StoneFireBlock extends BaseEntityBlock {
 
     @Override protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
+        if (aimsAtPot(state, pos, hit.getLocation())) {
+            return level.getBlockState(pos.above()).useItemOn(stack, level, player, hand, hit.withPosition(pos.above()));
+        }
         if (!(level.getBlockEntity(pos) instanceof StoneFireBlockEntity fire)) return InteractionResult.PASS;
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         boolean igniter = stack.is(Items.FLINT_AND_STEEL) || stack.is(Items.FIRE_CHARGE) || stack.is(PrimitiveContent.FIRE_STARTER.get());
@@ -151,6 +176,9 @@ public final class StoneFireBlock extends BaseEntityBlock {
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (aimsAtPot(state, pos, hit.getLocation())) {
+            return level.getBlockState(pos.above()).useWithoutItem(level, player, hit.withPosition(pos.above()));
+        }
         if (!(level.getBlockEntity(pos) instanceof StoneFireBlockEntity fire)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         ItemStack taken = fire.extract();

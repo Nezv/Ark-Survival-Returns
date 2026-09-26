@@ -250,13 +250,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 46
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2192,
-    "seam_delta_mean": 14.02,
-    "seam_delta_max": 170.0,
-    "palette_colors": 38
+    "seam_delta_mean": 16.65,
+    "seam_delta_max": 93.0,
+    "palette_colors": 60
   },
   "anatomy": "Quadrupedal mammal",
   "variant": "Darken"

@@ -579,13 +579,14 @@
       ]
     ]
   ],
+  "isolated_parts": {},
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2408,
-    "seam_delta_mean": 15.63,
-    "seam_delta_max": 202.0,
-    "palette_colors": 38
+    "seam_delta_mean": 13.32,
+    "seam_delta_max": 57.0,
+    "palette_colors": 35
   },
   "anatomy": "Sauropod",
   "variant": "Midnight"

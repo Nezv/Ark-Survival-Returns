@@ -283,13 +283,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "tusk": 16
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2979,
-    "seam_delta_mean": 15.45,
+    "seam_delta_mean": 15.27,
     "seam_delta_max": 129.0,
-    "palette_colors": 38
+    "palette_colors": 60
   },
   "anatomy": "Quadrupedal mammal",
   "variant": "Base"

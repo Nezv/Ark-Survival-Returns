@@ -367,13 +367,18 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "beak": 32,
+    "claw": 34,
+    "membrane": 40
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2840,
-    "seam_delta_mean": 15.32,
-    "seam_delta_max": 202.0,
-    "palette_colors": 38
+    "seam_delta_mean": 17.98,
+    "seam_delta_max": 103.0,
+    "palette_colors": 110
   },
   "anatomy": "Winged vertebrate",
   "variant": "Base"

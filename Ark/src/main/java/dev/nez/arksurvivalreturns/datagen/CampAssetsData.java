@@ -68,9 +68,10 @@ final class CampAssetsData {
     static void pot(BiConsumer<String, Object> put) {
         model(put, "cooking_pot", "cooking_pot", "cooking_pot");
         var variants = new LinkedHashMap<String, Object>();
-        for (String facing : DIRECTIONS) {
-            for (boolean fire : List.of(false, true)) variants.put("facing=" + facing + ",on_campfire=" + fire,
-                    rotated(fire ? "cooking_pot_campfire" : "cooking_pot", facing));
+        // Trivet over a campfire; seated on the top course of a stone fire.
+        for (String facing : DIRECTIONS) for (boolean fire : List.of(false, true)) for (boolean stones : List.of(false, true)) {
+            variants.put("facing=" + facing + ",on_campfire=" + fire + ",on_stones=" + stones,
+                    rotated(stones ? "cooking_pot_stones" : fire ? "cooking_pot_campfire" : "cooking_pot", facing));
         }
         put.accept(ASSETS + "blockstates/cooking_pot", Map.of("variants", variants));
     }

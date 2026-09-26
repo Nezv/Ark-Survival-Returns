@@ -267,13 +267,14 @@
       ]
     ]
   ],
+  "isolated_parts": {},
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 824,
     "seam_delta_mean": 11.89,
     "seam_delta_max": 144.0,
-    "palette_colors": 33
+    "palette_colors": 31
   },
   "anatomy": "Shark",
   "variant": "Base"

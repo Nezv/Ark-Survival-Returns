@@ -287,13 +287,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 58
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2412,
-    "seam_delta_mean": 11.58,
-    "seam_delta_max": 44.0,
-    "palette_colors": 36
+    "seam_delta_mean": 14.08,
+    "seam_delta_max": 74.0,
+    "palette_colors": 58
   },
   "anatomy": "Bipedal theropod",
   "variant": "Darken"

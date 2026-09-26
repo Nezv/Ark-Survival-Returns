@@ -275,13 +275,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 50
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1976,
-    "seam_delta_mean": 10.26,
-    "seam_delta_max": 33.0,
-    "palette_colors": 43
+    "seam_delta_mean": 14.65,
+    "seam_delta_max": 156.0,
+    "palette_colors": 64
   },
   "anatomy": "Bipedal theropod",
   "variant": "Ivory"

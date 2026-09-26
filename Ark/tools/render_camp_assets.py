@@ -118,19 +118,20 @@ def main():
     sheet = Image.new('RGB', (1600, 1200), '#eee9df'); d=ImageDraw.Draw(sheet)
     d.text((60,36), 'THE FIELD CAMP', font=font(38,True), fill='#343e30')
     d.text((62,91), 'ARK SURVIVAL RETURNS   /   Authored Minecraft model collection', font=font(19), fill='#736a59')
-    panels=[(40,140,'01  FIELD BEDROLL (IRON AGE)','Sage canvas, linen cuff & leather ties. Reserved art.'),
+    panels=[(40,140,'01  FIELD BEDROLL (IRON AGE)','Four blocks, 3/4 block tall: canvas bedding on an iron-bracketed frame.'),
             (820,140,'02  FEEDING TROUGH','Open timber basin, pegs & resin-sealed joins.'),
             (40,590,'03  DRYING RACK','Two blocks tall: hanging food up top, rations on the shelf.'),
-            (820,590,'04  COOKING POT','Hollow eight-sided pot, loop handles & a low trivet.')]
+            (820,590,'04  COOKING POT','Seated on the stone fire; the spit lifts while it cooks.')]
     for x,y,title,caption in panels:
         d.rounded_rectangle((x,y,x+740,y+430),radius=12,fill='#f8f5ed')
         d.text((x+24,y+19),title,font=font(23,True),fill='#414c39')
         d.text((x+24,y+55),caption,font=font(17),fill='#817561')
-    images=[render([(camp('field_bedroll'),(0,0,0))],(490,330),22,(8,1,8)),
+    images=[render([(camp('field_bedroll_head_west'),(0,0,0)),(camp('field_bedroll_head_east'),(16,0,0)),
+                    (camp('field_bedroll_foot_west'),(0,0,16)),(camp('field_bedroll_foot_east'),(16,0,16))],(490,330),9.5,(16,5,16)),
             render([(camp('trough_oak'),(0,0,0))],(640,330),24,(8,3,8)),
             render([(camp('drying_rack_lower'),(0,0,0)),(camp('drying_rack_upper'),(0,16,0)),
                     *[(camp('rack_meat_'+str(i)),(0,0,0)) for i in (1,2,3)],(camp('rack_ready'),(0,0,0))],(640,340),9.0,(8,16,8)),
-            render([('minecraft:block/campfire',(0,0,0)),(camp('cooking_pot_campfire'),(0,16,0))],(640,340),11.7,(8,13,8))]
+            render([('arksurvivalreturns:block/prehistoric/stone_fire_pot_base',(0,0,0)),(camp('cooking_pot_stones'),(0,16,0))],(640,340),17,(8,6,8))]
     for im,(x,y,_,_) in zip(images,panels):
         sheet.paste(im,(x+48,y+90),im)
     rolled=render([(camp('field_bedroll_rolled'),(0,0,0))],(220,170),10,(8,7,8));sheet.paste(rolled,(540,365),rolled)

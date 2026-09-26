@@ -250,13 +250,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "beak": 7
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2358,
-    "seam_delta_mean": 10.22,
-    "seam_delta_max": 54.0,
-    "palette_colors": 26
+    "seam_delta_mean": 10.83,
+    "seam_delta_max": 60.0,
+    "palette_colors": 44
   },
   "anatomy": "Cephalopod",
   "variant": "Base"

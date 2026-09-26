@@ -259,13 +259,17 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 38,
+    "horn": 170
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 3176,
-    "seam_delta_mean": 9.1,
-    "seam_delta_max": 43.0,
-    "palette_colors": 37
+    "seam_delta_mean": 13.22,
+    "seam_delta_max": 108.0,
+    "palette_colors": 83
   },
   "anatomy": "Quadrupedal mammal",
   "variant": "Emerald"

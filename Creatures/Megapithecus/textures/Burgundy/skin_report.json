@@ -331,13 +331,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 43
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 3502,
-    "seam_delta_mean": 10.96,
-    "seam_delta_max": 73.0,
-    "palette_colors": 42
+    "seam_delta_mean": 13.73,
+    "seam_delta_max": 88.0,
+    "palette_colors": 64
   },
   "anatomy": "Primate",
   "variant": "Burgundy"

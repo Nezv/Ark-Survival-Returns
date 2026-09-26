@@ -299,13 +299,14 @@
       ]
     ]
   ],
+  "isolated_parts": {},
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1008,
     "seam_delta_mean": 9.57,
     "seam_delta_max": 32.0,
-    "palette_colors": 38
+    "palette_colors": 36
   },
   "anatomy": "Marine flipper",
   "variant": "Midnight"

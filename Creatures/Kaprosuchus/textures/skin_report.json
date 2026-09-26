@@ -259,13 +259,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 48
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2199,
-    "seam_delta_mean": 21.89,
-    "seam_delta_max": 90.0,
-    "palette_colors": 31
+    "seam_delta_mean": 29.56,
+    "seam_delta_max": 100.0,
+    "palette_colors": 54
   },
   "anatomy": "Crocodyliform",
   "variant": "Base"

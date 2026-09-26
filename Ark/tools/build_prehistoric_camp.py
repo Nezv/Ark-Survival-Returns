@@ -32,6 +32,7 @@ ASSEMBLIES = {'primitive_bedroll': [('primitive_bedroll_head', (0, 0, 0)), ('pri
               'primitive_forge_lit': [('primitive_forge_lit_lower', (0, 0, 0)), ('primitive_forge_lit_upper', (0, 16, 0))]}
 COURSES = (0, 1.7, 3.4, 5.1)  # three stacked courses of hearth stones
 SPIT_LIFT = 1.8  # the spit rests one course higher than the original two-course hearth
+POT_SPIT_LIFT = 3.0  # with a pot seated on the stones the spit rides above the pot's rim
 MODEL_DATA = {}
 PALETTE = {
     'stone': ((129, 125, 108), 'stone'),
@@ -286,16 +287,18 @@ def fire():
         h=(3.1,3.5,2.9,2.6)[j]
         flames += [box([x,1.3,z],[x+1.3,1.3+h,z+.6],'flame','flame'),
                    box([x+.35,1.2+h,z+.06],[x+.96,2.3+h,z+.55],'flame_light','flame tip')]
-    top=COURSES[-1];spit=[]
-    for x in (1.85,13.5):
-        spit += [box([x,top,7.65],[x+.65,7.4+SPIT_LIFT,8.35],'wood','forked spit upright'),
-                 box([x-.2,6.1+SPIT_LIFT,7.35],[x+.86,6.8+SPIT_LIFT,8.6],'cord','support binding')]
-    spit += [box([1.6,7.08+SPIT_LIFT,7.68],[14.4,7.58+SPIT_LIFT,8.18],'wood_cut','removable roasting spit'),
-             box([14.25,6.35+SPIT_LIFT,7.65],[14.8,7.6+SPIT_LIFT,8.22],'wood','turning handle')]
+    def spit_at(up):
+        parts=[]
+        for x in (1.85,13.5):
+            parts += [box([x,COURSES[-1],7.65],[x+.65,7.4+up,8.35],'wood','forked spit upright'),
+                      box([x-.2,6.1+up,7.35],[x+.86,6.8+up,8.6],'cord','support binding')]
+        return parts+[box([1.6,7.08+up,7.68],[14.4,7.58+up,8.18],'wood_cut','removable roasting spit'),
+                      box([14.25,6.35+up,7.65],[14.8,7.6+up,8.22],'wood','turning handle')]
+    spit=spit_at(SPIT_LIFT)
     save('stone_fire_empty',e+spit)
     save('stone_fire_fueled',e+logs+spit)
     save('stone_fire_lit',e+logs+coals+flames+spit)
-    save('stone_fire_pot_base',e+logs+coals+flames)
+    save('stone_fire_pot_base',e+logs+coals+flames+spit_at(SPIT_LIFT+POT_SPIT_LIFT))
     for stage in ('raw','seared','cooked'):
         meat=[];shrink={'raw':0,'seared':.12,'cooked':.24}[stage];up=SPIT_LIFT
         for j,x in enumerate((5.0,8.7)):
@@ -445,7 +448,8 @@ def validate():
         verts=np.concatenate([f[0] for f in art.mesh('arksurvivalreturns:block/prehistoric/'+name,(0,0,0))])
         assert verts[:,1].min()>=-.001,(name,'below floor')
         assert verts[:,[0,2]].min()>=-.001 and verts[:,[0,2]].max()<=16.001,(name,'leaves its block')
-        limit=32 if name=='primitive_forge_item' else 13 if name.startswith('pot_on_fire') else 10 if name.startswith('stone_fire') \
+        limit=32 if name=='primitive_forge_item' else 13 if name.startswith('pot_on_fire') or name=='stone_fire_pot_base' \
+            else 10 if name.startswith('stone_fire') \
             else 16 if name.startswith('primitive_') else 8
         assert verts[:,1].max()<=limit,(name,verts[:,1].max())
 

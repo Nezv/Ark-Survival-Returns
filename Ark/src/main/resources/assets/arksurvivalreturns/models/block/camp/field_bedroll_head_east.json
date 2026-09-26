@@ -1,0 +1,1005 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "canvas": "arksurvivalreturns:block/camp/canvas",
+    "canvas_light": "arksurvivalreturns:block/camp/canvas_light",
+    "iron": "arksurvivalreturns:block/camp/iron",
+    "leather": "arksurvivalreturns:block/camp/leather",
+    "linen": "arksurvivalreturns:block/camp/linen",
+    "wood": "arksurvivalreturns:block/camp/dark_oak",
+    "particle": "arksurvivalreturns:block/camp/dark_oak"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "frame leg",
+      "from": [
+        13,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        5,
+        3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#wood"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#wood"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#wood"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#wood"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#wood"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#wood"
+        }
+      }
+    },
+    {
+      "name": "iron corner bracket",
+      "from": [
+        12.8,
+        4,
+        0.8
+      ],
+      "to": [
+        15.2,
+        6.2,
+        3.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.4000000000000004
+          ],
+          "texture": "#iron"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.4000000000000004
+          ],
+          "texture": "#iron"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.2
+          ],
+          "texture": "#iron"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.3999999999999986,
+            2.2
+          ],
+          "texture": "#iron"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.2
+          ],
+          "texture": "#iron"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.2
+          ],
+          "texture": "#iron"
+        }
+      }
+    },
+    {
+      "name": "side rail",
+      "from": [
+        0,
+        4.5,
+        1
+      ],
+      "to": [
+        13,
+        6.5,
+        3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13,
+            2
+          ],
+          "texture": "#wood"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13,
+            2
+          ],
+          "texture": "#wood"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#wood"
+        }
+      }
+    },
+    {
+      "name": "end rail",
+      "from": [
+        13,
+        4.5,
+        3
+      ],
+      "to": [
+        15,
+        6.5,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            13
+          ],
+          "texture": "#wood"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2,
+            13
+          ],
+          "texture": "#wood"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            13,
+            2.0
+          ],
+          "texture": "#wood"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            13,
+            2.0
+          ],
+          "texture": "#wood"
+        }
+      }
+    },
+    {
+      "name": "waterproof groundsheet",
+      "from": [
+        0,
+        6.5,
+        1.5
+      ],
+      "to": [
+        14.5,
+        7.2,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            14.5
+          ],
+          "texture": "#leather"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            14.5
+          ],
+          "texture": "#leather"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            0.7000000000000002
+          ],
+          "texture": "#leather"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            0.7000000000000002
+          ],
+          "texture": "#leather"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            0.7000000000000002
+          ],
+          "texture": "#leather"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            14.5,
+            0.7000000000000002
+          ],
+          "texture": "#leather"
+        }
+      }
+    },
+    {
+      "name": "padded sleeping mat",
+      "from": [
+        0,
+        7.2,
+        2
+      ],
+      "to": [
+        14,
+        9,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.7999999999999998
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.7999999999999998
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.7999999999999998
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            14,
+            1.7999999999999998
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "sage blanket",
+      "from": [
+        0,
+        9,
+        9.5
+      ],
+      "to": [
+        13.600000000000001,
+        10.4,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.600000000000001,
+            6.5
+          ],
+          "texture": "#canvas"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.600000000000001,
+            6.5
+          ],
+          "texture": "#canvas"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.600000000000001,
+            1.4000000000000004
+          ],
+          "texture": "#canvas"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.600000000000001,
+            1.4000000000000004
+          ],
+          "texture": "#canvas"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            6.5,
+            1.4000000000000004
+          ],
+          "texture": "#canvas"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            6.5,
+            1.4000000000000004
+          ],
+          "texture": "#canvas"
+        }
+      }
+    },
+    {
+      "name": "soft raised centre",
+      "from": [
+        0,
+        10.4,
+        11.2
+      ],
+      "to": [
+        12.8,
+        10.8,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            12.8,
+            4.800000000000001
+          ],
+          "texture": "#canvas"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12.8,
+            4.800000000000001
+          ],
+          "texture": "#canvas"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            12.8,
+            0.40000000000000036
+          ],
+          "texture": "#canvas"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            12.8,
+            0.40000000000000036
+          ],
+          "texture": "#canvas"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            0.40000000000000036
+          ],
+          "texture": "#canvas"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            0.40000000000000036
+          ],
+          "texture": "#canvas"
+        }
+      }
+    },
+    {
+      "name": "turned linen cuff",
+      "from": [
+        0,
+        10.2,
+        9.4
+      ],
+      "to": [
+        13.7,
+        10.9,
+        11.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.7,
+            1.799999999999999
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.7,
+            1.799999999999999
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.7,
+            0.7000000000000011
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.7,
+            0.7000000000000011
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            0.7000000000000011
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            0.7000000000000011
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "camp pillow",
+      "from": [
+        0.5,
+        9,
+        2.6
+      ],
+      "to": [
+        12.5,
+        11.2,
+        8.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            12.0,
+            5.800000000000001
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12.0,
+            5.800000000000001
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            12.0,
+            2.1999999999999993
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            12.0,
+            2.1999999999999993
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            5.800000000000001,
+            2.1999999999999993
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            5.800000000000001,
+            2.1999999999999993
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "pillow crown",
+      "from": [
+        1.1999999999999993,
+        11.2,
+        3.2
+      ],
+      "to": [
+        11.8,
+        11.8,
+        7.8
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            10.600000000000001,
+            4.6
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            10.600000000000001,
+            4.6
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            10.600000000000001,
+            0.6000000000000014
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            10.600000000000001,
+            0.6000000000000014
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.6,
+            0.6000000000000014
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.6,
+            0.6000000000000014
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "bound blanket edge",
+      "from": [
+        13.399999999999999,
+        8.9,
+        11.4
+      ],
+      "to": [
+        13.799999999999997,
+        10.5,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.3999999999999986,
+            4.6
+          ],
+          "texture": "#canvas_light"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.3999999999999986,
+            4.6
+          ],
+          "texture": "#canvas_light"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.3999999999999986,
+            1.5999999999999996
+          ],
+          "texture": "#canvas_light"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.3999999999999986,
+            1.5999999999999996
+          ],
+          "texture": "#canvas_light"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.6,
+            1.5999999999999996
+          ],
+          "texture": "#canvas_light"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.6,
+            1.5999999999999996
+          ],
+          "texture": "#canvas_light"
+        }
+      }
+    },
+    {
+      "name": "packing tie",
+      "from": [
+        8,
+        6.2,
+        0.8
+      ],
+      "to": [
+        9,
+        9.4,
+        1.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.7
+          ],
+          "texture": "#leather"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.7
+          ],
+          "texture": "#leather"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            3.2
+          ],
+          "texture": "#leather"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            3.2
+          ],
+          "texture": "#leather"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.7,
+            3.2
+          ],
+          "texture": "#leather"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.7,
+            3.2
+          ],
+          "texture": "#leather"
+        }
+      }
+    }
+  ]
+}

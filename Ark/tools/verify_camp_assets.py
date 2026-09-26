@@ -48,7 +48,7 @@ def verify_camp_assets():
         data = json.loads(path.read_text())
         if 'variants' in data:
             for value in data['variants'].values(): check_model(value['model'])
-            assert len(data['variants']) == 8, name
+            assert len(data['variants']) == (16 if name == 'cooking_pot' else 8), name
         else:
             parts = data['multipart']
             for part in parts: check_model(part['apply']['model'])

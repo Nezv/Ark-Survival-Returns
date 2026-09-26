@@ -250,13 +250,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 34
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1755,
-    "seam_delta_mean": 22.35,
-    "seam_delta_max": 151.0,
-    "palette_colors": 37
+    "seam_delta_mean": 25.57,
+    "seam_delta_max": 103.0,
+    "palette_colors": 54
   },
   "anatomy": "Armored or horned quadruped",
   "variant": "Base"

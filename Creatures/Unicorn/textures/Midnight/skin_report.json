@@ -279,13 +279,17 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 18,
+    "tusk": 3
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1184,
-    "seam_delta_mean": 16.1,
-    "seam_delta_max": 102.0,
-    "palette_colors": 35
+    "seam_delta_mean": 19.35,
+    "seam_delta_max": 76.0,
+    "palette_colors": 62
   },
   "anatomy": "Quadrupedal mammal",
   "variant": "Midnight"

@@ -903,13 +903,17 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 16,
+    "feather": 155
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 3952,
-    "seam_delta_mean": 20.5,
-    "seam_delta_max": 205.0,
-    "palette_colors": 38
+    "seam_delta_mean": 17.97,
+    "seam_delta_max": 90.0,
+    "palette_colors": 54
   },
   "anatomy": "Winged vertebrate",
   "variant": "Darken"

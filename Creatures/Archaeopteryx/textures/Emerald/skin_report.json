@@ -903,13 +903,17 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 16,
+    "feather": 155
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 3952,
-    "seam_delta_mean": 13.11,
-    "seam_delta_max": 224.0,
-    "palette_colors": 38
+    "seam_delta_mean": 11.9,
+    "seam_delta_max": 90.0,
+    "palette_colors": 54
   },
   "anatomy": "Winged vertebrate",
   "variant": "Emerald"

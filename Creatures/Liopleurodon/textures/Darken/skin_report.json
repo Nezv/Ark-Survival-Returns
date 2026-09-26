@@ -250,13 +250,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "horn": 9
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1064,
-    "seam_delta_mean": 11.63,
+    "seam_delta_mean": 12.44,
     "seam_delta_max": 53.0,
-    "palette_colors": 36
+    "palette_colors": 60
   },
   "anatomy": "Marine flipper",
   "variant": "Darken"

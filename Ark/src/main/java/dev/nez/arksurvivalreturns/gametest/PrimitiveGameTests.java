@@ -117,6 +117,11 @@ final class PrimitiveGameTests {
         CookingPotBlockEntity pot = (CookingPotBlockEntity) level.getBlockEntity(h.absolutePos(potRel));
         h.assertTrue(pot != null && pot.isHeated(), "A lit stone fire must heat the pot above it");
         h.assertTrue(level.getBlockState(h.absolutePos(potRel)).getValue(CookingPotBlock.ON_CAMPFIRE), "The pot must stand on its trivet");
+        h.setBlock(potRel, level.getBlockState(h.absolutePos(potRel)).setValue(CookingPotBlock.ON_STONES, true));
+        h.setBlock(fireRel, level.getBlockState(firePos).setValue(StoneFireBlock.POT, true));
+        var seat = new BlockHitResult(Vec3.atBottomCenterOf(firePos).add(0, 9 / 16.0, 0), Direction.NORTH, firePos, false);
+        h.assertTrue(level.getBlockState(firePos).getShape(level, firePos).bounds().maxY > 0.6, "The seated pot must be part of the fire's outline");
+        h.assertTrue(level.getBlockState(firePos).useWithoutItem(level, player, seat).consumesAction(), "Clicking the seated pot must reach the pot");
 
         for (int tick = 0; tick < Config.PRIMITIVE_FIRE_MAX_FUEL.get() + 10 && fire.isLit(); tick++) fire.step();
         h.assertFalse(level.getBlockState(firePos).getValue(StoneFireBlock.LIT), "A fire must burn out");

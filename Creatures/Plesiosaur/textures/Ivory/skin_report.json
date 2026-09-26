@@ -250,6 +250,7 @@
       ]
     ]
   ],
+  "isolated_parts": {},
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,

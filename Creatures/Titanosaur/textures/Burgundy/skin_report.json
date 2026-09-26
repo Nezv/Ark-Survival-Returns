@@ -695,13 +695,14 @@
       ]
     ]
   ],
+  "isolated_parts": {},
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2552,
-    "seam_delta_mean": 10.71,
-    "seam_delta_max": 177.0,
-    "palette_colors": 37
+    "seam_delta_mean": 9.9,
+    "seam_delta_max": 43.0,
+    "palette_colors": 36
   },
   "anatomy": "Sauropod",
   "variant": "Burgundy"

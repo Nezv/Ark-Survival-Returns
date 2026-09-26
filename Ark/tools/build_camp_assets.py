@@ -135,6 +135,7 @@ DISPLAY = {
     'firstperson_righthand': {'rotation': [0, 45, 0], 'translation': [0, 2, 0], 'scale': [.5, .5, .5]},
     'firstperson_lefthand': {'rotation': [0, 225, 0], 'translation': [0, 2, 0], 'scale': [.5, .5, .5]},
 }
+STONE_SEAT = 5.1  # top of the stone fire's third course; CookingPotBlock.STONE_SEAT
 # Two-block-tall stations: the item model stacks both halves (0-32), so it is scaled and lowered to fit.
 TALL_DISPLAY = {
     'gui': {'rotation': [30, 225, 0], 'translation': [0, -3.4, 0], 'scale': [.42, .42, .42]},
@@ -156,21 +157,39 @@ def save(name, elements, substitutions=None, display=DISPLAY):
 
 
 def field_bedroll():
-    """Iron Age canvas bedroll: reserved art, not registered in game (the Primitive Bedroll is the grass one)."""
-    e = [box([2, 0, .25], [14, .65, 15.75], 'leather', 'waterproof groundsheet'),
-         box([2.35, .65, .5], [13.65, 1.5, 15.5], 'linen', 'padded sleeping mat'),
-         box([2.7, 1.5, 4.6], [13.3, 2.5, 15.3], 'canvas', 'sage blanket'),
-         box([3.25, 2.5, 6], [12.75, 2.8, 14.5], 'canvas', 'soft raised centre'),
-         box([2.6, 2.45, 4.65], [13.4, 2.9, 6.1], 'linen', 'turned linen cuff'),
-         box([3, 1.5, .8], [13, 3, 4.4], 'linen', 'camp pillow'),
-         box([3.65, 3, 1.25], [12.35, 3.45, 3.9], 'linen', 'pillow crown'),
-         box([2.6, 1.4, 14.1], [13.4, 3.2, 15.6], 'canvas_light', 'soft foot fold')]
-    for x in (2.5, 13.05):
-        e.append(box([x, 1.45, 6.2], [x + .4, 2.55, 14.05], 'canvas_light', 'bound blanket edge'))
-    for x in (4, 11):
-        e += [box([x, .55, 0], [x + .8, .85, 4.5], 'leather', 'loose packing tie'),
-              box([x, .2, 15.6], [x + .8, .55, 16], 'leather', 'foot tie')]
-    save('field_bedroll', e)
+    """Iron Age Field Bedroll: reserved art (2 x 2 blocks, 12/16 tall), not registered in game yet.
+
+    Canvas bedding on a low timber frame with iron corner brackets, split into four quarter models
+    (head/foot x west/east) ready for a four-block bed.
+    """
+    e = []
+    for x in (1, 29):
+        for z in (1, 29):
+            e += [box([x, 0, z], [x+2, 5, z+2], 'wood', 'frame leg'),
+                  box([x-.2, 4, z-.2], [x+2.2, 6.2, z+2.2], 'iron', 'iron corner bracket')]
+    for z in (1, 29):
+        e.append(box([3, 4.5, z], [29, 6.5, z+2], 'wood', 'side rail'))
+    for x in (1, 29):
+        e.append(box([x, 4.5, 3], [x+2, 6.5, 29], 'wood', 'end rail'))
+    e += [box([1.5, 6.5, 1.5], [30.5, 7.2, 30.5], 'leather', 'waterproof groundsheet'),
+          box([2, 7.2, 2], [30, 9, 30], 'linen', 'padded sleeping mat'),
+          box([2.4, 9, 9.5], [29.6, 10.4, 29.6], 'canvas', 'sage blanket'),
+          box([3.2, 10.4, 11.2], [28.8, 10.8, 28.4], 'canvas', 'soft raised centre'),
+          box([2.3, 10.2, 9.4], [29.7, 10.9, 11.2], 'linen', 'turned linen cuff'),
+          box([2.3, 8.9, 27.8], [29.7, 11, 30], 'canvas_light', 'soft foot fold')]
+    for x in (3.5, 16.5):
+        e += [box([x, 9, 2.6], [x+12, 11.2, 8.4], 'linen', 'camp pillow'),
+              box([x+.7, 11.2, 3.2], [x+11.3, 11.8, 7.8], 'linen', 'pillow crown')]
+    for x in (2.2, 29.4):
+        e.append(box([x, 8.9, 11.4], [x+.4, 10.5, 27.6], 'canvas_light', 'bound blanket edge'))
+    for x in (7, 24):
+        e += [box([x, 6.2, .8], [x+1, 9.4, 1.5], 'leather', 'packing tie'),
+              box([x, 6.2, 30.5], [x+1, 9.4, 31.2], 'leather', 'foot tie')]
+    west, east = split(e, 'x')
+    for side, half in (('west', west), ('east', east)):
+        head, foot = split(half, 'z')
+        save(f'field_bedroll_head_{side}', head, {'wood': 'dark_oak'})
+        save(f'field_bedroll_foot_{side}', foot, {'wood': 'dark_oak'})
     # Inventory reads as a portable rolled blanket with two leather straps.
     e = [box([2, 4, 5], [14, 10, 11], 'canvas'),
          box([2, 5, 4], [14, 9, 12], 'canvas'),
@@ -286,6 +305,9 @@ def pot():
     mounted += [box([3.5, .2, 4.5], [12.5, 1, 5.5], 'iron', 'trivet crossbar'),
                 box([7.5, .2, 5], [8.5, 1, 12], 'iron', 'trivet crossbar')]
     save('cooking_pot_campfire', mounted)
+    # Over a stone fire the pot sits down on the top course (5.1 in the fire's block): no trivet.
+    seated = lift([part for part in e if part['name'] != 'trivet foot'], 'y', STONE_SEAT - 2.5 - 16)
+    save('cooking_pot_stones', seated)
 
 
 def main():

@@ -279,13 +279,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 24
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 1774,
-    "seam_delta_mean": 14.66,
-    "seam_delta_max": 145.0,
-    "palette_colors": 38
+    "seam_delta_mean": 18.06,
+    "seam_delta_max": 96.0,
+    "palette_colors": 57
   },
   "anatomy": "Quadrupedal mammal",
   "variant": "Burgundy"

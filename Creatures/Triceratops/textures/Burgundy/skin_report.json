@@ -250,13 +250,17 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 60,
+    "horn": 24
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2060,
-    "seam_delta_mean": 16.33,
+    "seam_delta_mean": 21.89,
     "seam_delta_max": 91.0,
-    "palette_colors": 37
+    "palette_colors": 84
   },
   "anatomy": "Armored or horned quadruped",
   "variant": "Burgundy"

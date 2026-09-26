@@ -15,12 +15,16 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT/'scripts'))
 import skin_studio as st
+sys.path.insert(0, str(ROOT/'Creatures'))
+import parts
 
 BRUSH = 3
 MIRROR = np.array([-1,1,1])
 DEFAULTS = {'seed':7319, 'base_colors':['#ba7b40','#965529','#6c3b26','#4d2a1b','#361e14'],
             'shade_offsets':[-6,-3,0,3,6], 'layer_edges':[.20,.40,.60,.80],
-            'pixels_per_unit':2.0, 'head_density_multiplier':2.2}
+            'pixels_per_unit':2.0, 'head_density_multiplier':2.2,
+            # Eyes are separate geometry now (Ark/tools/build_creature_eyes.py); the old painted socket stays off.
+            'eye_landmark':False}
 THEROPODS = ['Giganotosaur','Tyranosaur','Spinosaurus','Ceratosaurus','Dilophosaur',
              'Acrochantosaur','Allosaurus','Carnotaurus','Velociraptor']
 VARIANTS = ['Ivory', 'Darken', 'Emerald', 'Midnight', 'Burgundy']
@@ -209,6 +213,7 @@ def make_texture(creature,config):
     field = st.BodyField(cubes,style.get('centerline_chain'))
     head,bounds = st.HeadFrame(cubes),st.part_bounds(cubes)
     nails = find_nails(cubes,skeleton)
+    isolated = parts.isolate(creature.name,cubes,skeleton)
     colors = palette(config['base_colors'],config['shade_offsets'])
     materials = palette(['#a86259','#655646','#ddb34b'],[-16,-8,0,8,16])
     pairs,unmatched = face_pairs(cubes,faces)
@@ -235,9 +240,17 @@ def make_texture(creature,config):
         if material is not None:
             small = materials[material,shades]
             flat = np.broadcast_to(materials[material,2],small.shape).copy()
+        spec = isolated.get(id(f['cube']))
+        if spec is not None:
+            # Horns, claws, beaks and the rest: a root-to-tip gradient under the same brush shades.
+            step,covered = parts.cells(spec,points)
+            table = parts.table(spec[0],colors,config['shade_offsets'])
+            covered = covered.reshape(h,w)[...,None]
+            small = np.where(covered,table[step.reshape(h,w),shades],small)
+            flat = np.where(covered,table[step.reshape(h,w),2],flat)
         # A deliberate eye landmark, also painted only in whole brush cells.
         # Painting skin must not erase the eye hidden behind fitted head cubes.
-        if part=='head' and head.valid:
+        if part=='head' and head.valid and config.get('eye_landmark'):
             eyes = st.part_points(cubes,'eye')
             if len(eyes):
                 center = eyes[eyes[:,0]>0].mean(0) if np.any(eyes[:,0]>0) else eyes.mean(0)
@@ -286,7 +299,8 @@ def make_texture(creature,config):
               'unpaired_cubes':[{'bone':cubes[i]['bone'],'cube_index':cubes[i]['cube_index']} for i in unmatched],
               'random_brush_cells':brush_count,'non_base_shade_fraction':round(changed_count/brush_count,4),
               'checks':{'all_faces_use_uniform_3x3_brushes':True,'paired_face_textures_identical_after_reflection':True},
-              'materials':materials.tolist(),'method':'Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.'}
+              'materials':materials.tolist(),
+              'isolated_parts':{k:sum(1 for v in isolated.values() if v[0]==k) for k in sorted({v[0] for v in isolated.values()})},'method':'Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.'}
     report['metrics'] = st.validation(canvas,faces,size)
     assert report['metrics']['island_overlap_pixels']==0
     report['checks']['islands_disjoint'] = True

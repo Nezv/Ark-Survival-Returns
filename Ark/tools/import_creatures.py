@@ -2,7 +2,8 @@
 from pathlib import Path
 import hashlib
 import json
-import shutil
+from PIL import Image
+from build_creature_eyes import add_eyes, predators, PLACEMENT
 import copy
 from expansion_catalog import EXPANSION
 from collection_catalog import COLLECTION, import_clips
@@ -144,6 +145,10 @@ def source_files(folder):
     return geometry, animation, files
 
 
+# Carnivores get predatory eyes and the night glow: the predator flag in Species.java.
+PREDATORS = predators()
+
+
 def main():
     report = []
     for folder, identifier, height, *clips in SPECIES:
@@ -193,13 +198,16 @@ def main():
                         for value in tracks['position'].values():
                             if isinstance(value, list): value[0] = value[2] = 0.0
             animations[name] = clip
+        # Eyes are added as separate bones plus an art strip under each atlas (build_creature_eyes.py).
+        atlases = add_eyes(identifier, geometry, {variant: Image.open(path) for variant, path in texture_paths.items()},
+                           identifier in PREDATORS)
         write(ASSETS / f'geckolib/models/entity/{identifier}.geo.json', geometry)
         write(ASSETS / f'geckolib/animations/entity/{identifier}.animation.json',
               {'format_version': '1.8.0', 'geckolib_format_version': 2, 'animations': animations})
         texture_dir = ASSETS / 'textures/entity'
         texture_dir.mkdir(parents=True, exist_ok=True)
-        for variant, texture_path in texture_paths.items():
-            shutil.copyfile(texture_path, texture_dir / f'{identifier}_{variant.lower()}.png')
+        for variant, atlas in atlases.items():
+            atlas.save(texture_dir / f'{identifier}_{variant.lower()}.png')
         report.append({'id': identifier, 'source': f'Creatures/{folder}', 'height_blocks': height,
                        'scale': factor, 'clips': clips,
                        'source_sha256': {name: hashlib.sha256(path.read_bytes()).hexdigest()

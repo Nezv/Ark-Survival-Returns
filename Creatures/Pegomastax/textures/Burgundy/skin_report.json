@@ -287,13 +287,16 @@
       ]
     ]
   ],
+  "isolated_parts": {
+    "claw": 34
+  },
   "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
   "metrics": {
     "island_overlap_pixels": 0,
     "shared_border_corners": 2084,
-    "seam_delta_mean": 23.99,
-    "seam_delta_max": 178.0,
-    "palette_colors": 42
+    "seam_delta_mean": 25.69,
+    "seam_delta_max": 94.0,
+    "palette_colors": 61
   },
   "anatomy": "Small biped",
   "variant": "Burgundy"
