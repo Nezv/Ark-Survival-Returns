@@ -48,7 +48,7 @@ class TitleLayoutTest {
     }
 
     private static List<Container> layout() throws Exception {
-        String text = Files.readString(LAYOUT);
+        String text = Files.readString(LAYOUT).replace("\r\n", "\n"); // a Windows checkout has CRLF endings
         assertTrue(text.startsWith("type = fancymenu_layout\n"));
         return parse(text);
     }

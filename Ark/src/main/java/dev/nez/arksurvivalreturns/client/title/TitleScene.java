@@ -160,8 +160,15 @@ public final class TitleScene {
 
     /** Spread the head turn along the neck so it bends instead of swivelling at the skull. */
     private void lookAround(RenderPassInfo<GeoRenderState> pass, BoneSnapshots snapshots) {
+        // Skeletons differ (the T-Rex has three neck bones): the bones that exist share the whole turn.
+        float[] present = {0f};
         for (int i = 0; i < GAZE_BONES.length; i++) {
             float share = GAZE_SHARE[i];
+            snapshots.ifPresent(GAZE_BONES[i], bone -> present[0] += share);
+        }
+        if (present[0] <= 0f) return;
+        for (int i = 0; i < GAZE_BONES.length; i++) {
+            float share = GAZE_SHARE[i] / present[0];
             snapshots.ifPresent(GAZE_BONES[i], bone -> bone.setRotY(bone.getRotY() + lookYaw * share)
                     .setRotX(bone.getRotX() - lookPitch * share));
         }
