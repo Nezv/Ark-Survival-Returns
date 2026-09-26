@@ -1,0 +1,118 @@
+{
+ "source_hashes": {
+  "Creatures\\Dragon\\Dragon\\dragon.geo.json": "0639d4c2852d3001e7c7ec7c3758076a93eefc6fed4c4bed5ddb9ea217359744",
+  "Creatures\\Dragon\\Dragon\\dragon.png": "6e38961e3f86445ac737b5307566e34457a23ac44091f9c55bb7183f48e95f65",
+  "Creatures\\Dragon\\Old\\geo\\dragon.geo.json": "e3a5d04013238cf2fc3b39514e2ac135a645c2ecd9fc8893b6107f2e7de7118d",
+  "Creatures\\Dragon\\Old\\animations\\dragon.animation.json": "f621ee51340f9fec3e9881458fee3e455af243bce7babeffd4c603cfdc8cb5b6"
+ },
+ "fps": 30,
+ "source_facing": "+Z",
+ "target_facing": "-Z",
+ "rotation_basis": "mirrored Bedrock XYZ",
+ "bone_mapping": {
+  "body": "c_back1",
+  "head": "c_head",
+  "jaw": "c_jaw",
+  "wing_l_arm": "l_wingShoulder",
+  "wing_l_fore": "l_wingElbow",
+  "wing_l_hand": "l_wingWrist",
+  "wing_l_claw": "l_wingClaw",
+  "leg_l_thigh": "l_leg",
+  "leg_l_shin": "l_knee",
+  "leg_l_foot": "l_ankle",
+  "leg_l_toes": "l_toeB1",
+  "wing_l_finger1": "l_wingA1",
+  "wing_l_finger1b": "l_wingA2",
+  "wing_l_finger1c": "l_wingA3",
+  "wing_l_finger2": "l_wingB1",
+  "wing_l_finger2b": "l_wingB2",
+  "wing_l_finger2c": "l_wingB3",
+  "wing_l_finger3": "l_wingC1",
+  "wing_l_finger3b": "l_wingC2",
+  "wing_l_finger3c": "l_wingC3",
+  "wing_l_finger4": "l_wingD1",
+  "wing_l_finger4b": "l_wingD2",
+  "wing_l_finger4c": "l_wingD3",
+  "wing_r_arm": "r_wingShoulder",
+  "wing_r_fore": "r_wingElbow",
+  "wing_r_hand": "r_wingWrist",
+  "wing_r_claw": "r_wingClaw",
+  "leg_r_thigh": "r_leg",
+  "leg_r_shin": "r_knee",
+  "leg_r_foot": "r_ankle",
+  "leg_r_toes": "r_toeB1",
+  "wing_r_finger1": "r_wingA1",
+  "wing_r_finger1b": "r_wingA2",
+  "wing_r_finger1c": "r_wingA3",
+  "wing_r_finger2": "r_wingB1",
+  "wing_r_finger2b": "r_wingB2",
+  "wing_r_finger2c": "r_wingB3",
+  "wing_r_finger3": "r_wingC1",
+  "wing_r_finger3b": "r_wingC2",
+  "wing_r_finger3c": "r_wingC3",
+  "wing_r_finger4": "r_wingD1",
+  "wing_r_finger4b": "r_wingD2",
+  "wing_r_finger4c": "r_wingD3",
+  "neck1": [
+   "neck",
+   0.0
+  ],
+  "neck2": [
+   "neck",
+   0.3333333333333333
+  ],
+  "neck3": [
+   "neck",
+   0.6666666666666666
+  ],
+  "neck4": [
+   "neck",
+   1.0
+  ],
+  "tail1": [
+   "tail",
+   0.0
+  ],
+  "tail2": [
+   "tail",
+   0.16666666666666666
+  ],
+  "tail3": [
+   "tail",
+   0.3333333333333333
+  ],
+  "tail4": [
+   "tail",
+   0.5
+  ],
+  "tail5": [
+   "tail",
+   0.6666666666666666
+  ],
+  "tail6": [
+   "tail",
+   0.8333333333333334
+  ],
+  "tail7": [
+   "tail",
+   1.0
+  ],
+  "tail_fin": "c_tail9"
+ },
+ "rig_changes": [
+  "Moved root torso cubes into body with identical bind placement",
+  "Separated existing left and right hand claws into zero-rest child bones",
+  "Expanded visibility bounds to contain all sampled animation poses"
+ ],
+ "adaptation": [
+  "Source world rotation deltas recalibrated against ground/flight reference poses",
+  "Five neck and nine tail joints resampled onto four neck and seven tail joints",
+  "Wing wrists replace old front feet; two-link IK; source hindfoot swing timing",
+  "Grounded claws/feet, tail and head clearance, folded/spread wing transitions",
+  "Legs tuck in flight; death settles between braced wrists and holds its final pose"
+ ],
+ "integration": "Source project only; use the paired retargeted geometry and animation files. No runtime installation.",
+ "rebuild": "python tools/retarget_dragon.py",
+ "validate": "python tools/validate_dragon_retarget.py",
+ "preview": "python tools/preview_dragon.py"
+}

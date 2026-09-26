@@ -1,0 +1,234 @@
+{
+  "passed": true,
+  "clips": 30,
+  "bones": 74,
+  "cubes": 215,
+  "samples_checked": 2224,
+  "bind_preservation_error": 4.440892098500626e-16,
+  "max_contact_error": 3.633595592938316e-06,
+  "lowest_ground_point": -0.26654999864801,
+  "max_loop_seam_error": 5.510225236093902e-07,
+  "checks": [
+    "All 30 names and durations preserved",
+    "Loop/one-shot/held-death semantics",
+    "Cube and UV identity; texture SHA-equivalence",
+    "Bind silhouette before/after rebinding",
+    "Blockbench UUIDs and all timeline values",
+    "Independent homogeneous-matrix contact evaluation",
+    "Baked keys and interpolation midpoints",
+    "Ground clearance and seamless loops"
+  ],
+  "runtime_test": "Not run in Minecraft. Offline retarget and textured previews; artistic review pending.",
+  "clips_detail": {
+    "Dragon-Fly-Attack-Fire": {
+      "samples_checked": 127,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0
+    },
+    "Dragon-Fly-Attack-SpitFire": {
+      "samples_checked": 101,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0
+    },
+    "Dragon-Fly-Attack-Swoop-Out": {
+      "samples_checked": 81,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0
+    },
+    "Dragon-Fly-Fwd": {
+      "samples_checked": 81,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0.0
+    },
+    "Dragon-Fly-Idle": {
+      "samples_checked": 201,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 3.190386621554353e-09
+    },
+    "Dragon-Fly-Lft": {
+      "samples_checked": 81,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0.0
+    },
+    "Dragon-Fly-Rit": {
+      "samples_checked": 81,
+      "max_contact_error": 0,
+      "minimum_y": null,
+      "lowest_bone": "",
+      "loop_seam_error": 0.0
+    },
+    "Dragon-Ground-Aim-Center": {
+      "samples_checked": 5,
+      "max_contact_error": 2.4298529485783158e-06,
+      "minimum_y": 0.24999903307274352,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Dwn-Lft": {
+      "samples_checked": 5,
+      "max_contact_error": 1.8426946235134746e-06,
+      "minimum_y": 0.24999844681576278,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Dwn-Rit": {
+      "samples_checked": 5,
+      "max_contact_error": 2.114217285229959e-06,
+      "minimum_y": 0.2499984210433297,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Dwn": {
+      "samples_checked": 5,
+      "max_contact_error": 2.2050708133193625e-06,
+      "minimum_y": 0.24999879235456035,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Lft": {
+      "samples_checked": 5,
+      "max_contact_error": 2.126955587375173e-06,
+      "minimum_y": 0.24999958888096785,
+      "lowest_bone": "wing_l_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Rit": {
+      "samples_checked": 5,
+      "max_contact_error": 2.0711852142346333e-06,
+      "minimum_y": 0.24999920301097234,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Up-Lft": {
+      "samples_checked": 5,
+      "max_contact_error": 2.337925570967533e-06,
+      "minimum_y": 0.24999973177201795,
+      "lowest_bone": "wing_l_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Up-Rit": {
+      "samples_checked": 5,
+      "max_contact_error": 1.249355085285916e-06,
+      "minimum_y": 0.2499996243742011,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Aim-Up": {
+      "samples_checked": 5,
+      "max_contact_error": 1.8688160677650075e-06,
+      "minimum_y": 0.24999856581002433,
+      "lowest_bone": "wing_l_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Attack-Bite": {
+      "samples_checked": 81,
+      "max_contact_error": 2.713014092368336e-06,
+      "minimum_y": 0.24862180017306645,
+      "lowest_bone": "leg_l_toes",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Attack-Fire": {
+      "samples_checked": 121,
+      "max_contact_error": 2.710688124857478e-06,
+      "minimum_y": 0.2465691271947481,
+      "lowest_bone": "leg_l_toes",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Attack-FireAlt": {
+      "samples_checked": 121,
+      "max_contact_error": 1.7198446469923694e-06,
+      "minimum_y": 0.24999982122788267,
+      "lowest_bone": "leg_r_toes",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Attack-Wing": {
+      "samples_checked": 121,
+      "max_contact_error": 3.3826576763135767e-06,
+      "minimum_y": 0.23172553918802308,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Charge-Fwd": {
+      "samples_checked": 49,
+      "max_contact_error": 3.0457640023041375e-06,
+      "minimum_y": 0.21059526927864858,
+      "lowest_bone": "leg_r_toes",
+      "loop_seam_error": 5.510225236093902e-07
+    },
+    "Dragon-Ground-Charge-Lft": {
+      "samples_checked": 49,
+      "max_contact_error": 3.1094671473680942e-06,
+      "minimum_y": 0.21143768535209784,
+      "lowest_bone": "leg_r_toes",
+      "loop_seam_error": 5.497456214698104e-07
+    },
+    "Dragon-Ground-Charge-Rit": {
+      "samples_checked": 49,
+      "max_contact_error": 2.992243165680252e-06,
+      "minimum_y": 0.21035091566550124,
+      "lowest_bone": "leg_r_toes",
+      "loop_seam_error": 5.472032427178419e-07
+    },
+    "Dragon-Ground-Die": {
+      "samples_checked": 169,
+      "max_contact_error": 3.001058867670817e-06,
+      "minimum_y": 0.2213782790862382,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Idle": {
+      "samples_checked": 201,
+      "max_contact_error": 3.18241881281813e-06,
+      "minimum_y": 0.24997213658706485,
+      "lowest_bone": "wing_l_claw",
+      "loop_seam_error": 3.831843287116499e-09
+    },
+    "Dragon-Ground-Move-Fwd": {
+      "samples_checked": 81,
+      "max_contact_error": 3.2593506507382337e-06,
+      "minimum_y": 0.24262310343888904,
+      "lowest_bone": "leg_l_toes",
+      "loop_seam_error": 0.0
+    },
+    "Dragon-Ground-Turn-Lft": {
+      "samples_checked": 91,
+      "max_contact_error": 2.8765382964359267e-06,
+      "minimum_y": 0.24524306574220778,
+      "lowest_bone": "leg_l_toes",
+      "loop_seam_error": 0
+    },
+    "Dragon-Ground-Turn-Rit": {
+      "samples_checked": 91,
+      "max_contact_error": 3.016227496059863e-06,
+      "minimum_y": 0.2449728987510731,
+      "lowest_bone": "leg_l_toes",
+      "loop_seam_error": 0
+    },
+    "Dragon-Land": {
+      "samples_checked": 101,
+      "max_contact_error": 3.633595592938316e-06,
+      "minimum_y": 0.22520198655588786,
+      "lowest_bone": "wing_r_claw",
+      "loop_seam_error": 0
+    },
+    "Dragon-Take-Off": {
+      "samples_checked": 101,
+      "max_contact_error": 3.132813470854117e-06,
+      "minimum_y": -0.26654999864801,
+      "lowest_bone": "wing_r_finger1c",
+      "loop_seam_error": 0
+    }
+  }
+}
