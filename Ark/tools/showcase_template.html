@@ -241,6 +241,13 @@
   .wide-shot { margin: 0; background: #161814; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
   .wide-shot img { display: block; width: 100%; }
   .wide-shot figcaption { padding: 10px 16px; font-size: 14px; color: #a8b3a0; background: #1b1e19; }
+  .accessory-card .dino-art { background: linear-gradient(180deg, var(--raised), var(--surface)); }
+  .accessory-card .dino-art img:first-child { max-height: 170px; image-rendering: pixelated; }
+  .accessory-card .accessory-icon { position: absolute; left: 10px; top: 10px; width: 48px; height: 48px; image-rendering: pixelated; }
+  .accessory-card .dino-body > p { font-size: 14px; margin: 0; }
+  .accessory-card .bonuses { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ok); }
+  .accessory-card dl { grid-template-columns: 1fr; }
+  table.parts img { width: 32px; height: 32px; image-rendering: pixelated; vertical-align: middle; }
   .item-group { display: grid; gap: 10px; }
   .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 10px; }
   .item { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 8px; display: grid; justify-items: center; gap: 8px; text-align: center; }
@@ -295,7 +302,7 @@
     <a class="brand" href="#top">ARK <span>·</span> SR</a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
-      <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#items">Items</a>
+      <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#items">Items</a><a href="#accessories">Accessories</a>
       <a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
     <button class="theme" id="theme" type="button">Theme: system</button>
@@ -320,6 +327,7 @@
     <a href="#survival"><span class="eyebrow">Survival systems</span><b>Tribe survival</b><span>Taming, cargo, working tames, the downed state and the Guardian.</span></a>
     <a href="#blocks"><span class="eyebrow">Camp and blocks</span><b>Stations</b><span>Every Ark block, rendered from the in-game models.</span></a>
     <a href="#items"><span class="eyebrow">Items</span><b>Inventory</b><span>Item sprites: tools, food, meats, taming and the Guardian.</span></a>
+    <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
     <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
@@ -441,6 +449,20 @@
     %%ITEMS%%
   </section>
 
+  <section id="accessories">
+    <div><div class="eyebrow">Accessories</div><h2>Gear worn on the body</h2></div>
+    <p class="lede">Every Curios slot is in use: two head slots, necklace, back, body, two bracelets, hands, two rings, belt, legs, two feet, a charm and the universal curio slot. Each accessory is a small model hung on the player's own bones, so it walks, sneaks, swims and rides with the wearer, spreads over armour, and shows on the first-person arms. Renders below come from the shipped models.</p>
+    <h3>Primitive gadgets</h3>
+    <p class="muted">What prehistoric people actually wore, made from creature parts and camp materials: slit goggles, Ötzi's pack frame, snowshoes, bone skates, a Beaker-culture wristguard, the Ishango tally bone. The stalker set (hood, ghillie wrap, moccasins) hides each sense the creatures use: scent, sight and hearing.</p>
+    <div class="dinos accessory-grid">%%ACC_PRIMITIVE%%</div>
+    <h3>Relics and totems</h3>
+    <p class="muted">The mystical set, bound with red ochre: amber that refuses death, an alicorn against poison, the feathered-serpent mantle, the Guardian's crown, rings and creature totems.</p>
+    <div class="dinos accessory-grid">%%ACC_RELIC%%</div>
+    <h3>Creature parts</h3>
+    <p class="muted">A player kill rolls the creature's part on top of its carcass (meat, hide, bone). The Tally Bone adds a Looting level against creatures.</p>
+    <div class="table-wrap"><table class="parts"><thead><tr><th>Part</th><th>From</th></tr></thead><tbody>%%ACC_TROPHIES%%</tbody></table></div>
+  </section>
+
   <section id="interface">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
     <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page, so shaders and the menus share one look. Containers become light limestone, so vanilla's dark titles stay readable. Buttons, the hotbar and tooltips become dark basalt with moss and ember accents. Every slot stays exactly where vanilla puts it, so other mods' screens still line up.</p>
@@ -469,7 +491,7 @@
   <section id="integrations">
     <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
     <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name" with the Ark icon and a credit line; the original license and mod id stay intact. Where Ark needs code changes, the mod is built from its own source with Ark patches (<code>Ark/pack/patches</code>). <code>python Ark/tools/build_pack.py</code> assembles everything into a Modrinth pack.</p>
-    <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): crown, hat, necklace, shirt, belt, pants, socks and shoes beside the armour column; shield and charm under the player. Offline render of the texture and slot icons.</figcaption></figure>
+    <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player. Left: crown and hat, necklace and shirt, belt and pants, socks and shoes beside the armour column. Right: back and gloves, two bracelets, two rings, then shield, charm and the universal curio slot; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
     <div class="integrations">%%INTEGRATIONS%%</div>
   </section>
 

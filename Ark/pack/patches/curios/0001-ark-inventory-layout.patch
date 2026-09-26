@@ -116,10 +116,10 @@ index e29b06f..59e3654 100644
      Screen screen = evt.getScreen();
 diff --git a/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java b/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java
 new file mode 100644
-index 0000000..c41b2b8
+index 0000000..3cbffb5
 --- /dev/null
 +++ b/src/main/java/top/theillusivec4/curios/common/inventory/container/ArkLayout.java
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,53 @@
 +package top.theillusivec4.curios.common.inventory.container;
 +
 +import java.util.Map;
@@ -127,37 +127,43 @@ index 0000000..c41b2b8
 +/**
 + * Ark Survival Returns inventory layout (Ark fork of Curios).
 + *
-+ * <p>The curio slots join the armour column in a 3 x 4 grid left of the player: head, necklace, belt and
-+ * feet in the first column, the second head, body, legs and second feet in the second, armour in the
-+ * third. The shield and the charm sit under the player, the crafting grid moves right. Any curio slot
++ * <p>Every curio slot has a place around the player. Left of the player, a 3 x 4 grid: head, necklace,
++ * belt and feet in the first column, the second head, body, legs and second feet in the second, armour in
++ * the third. Right of the player, two columns: back and hands, the two bracelets, the two rings, then the
++ * shield, the charm and the universal curio slot in a row; crafting sits apart on the right. Any slot
 + * without a place here (another mod's slot, or a size above the layout) falls back to the side panel.
 + */
 +public final class ArkLayout {
-+  public static final int WIDTH = 212;
++  public static final int WIDTH = 244;
 +  public static final int ARMOR_X = 44;
 +  public static final int OFFHAND_X = 116;
 +  public static final int OFFHAND_Y = 62;
-+  public static final int CRAFT_X = 134;
++  public static final int CRAFT_X = 166;
 +  public static final int CRAFT_Y = 18;
-+  public static final int RESULT_X = 190;
++  public static final int RESULT_X = 222;
 +  public static final int RESULT_Y = 28;
-+  public static final int INVENTORY_X = 26;
++  public static final int INVENTORY_X = 41;
 +  public static final int INVENTORY_Y = 84;
 +  public static final int PLAYER_X0 = 62;
 +  public static final int PLAYER_Y0 = 8;
 +  public static final int PLAYER_X1 = 113;
 +  public static final int PLAYER_Y1 = 78;
-+  public static final int TITLE_X = 133;
-+  public static final int RECIPE_BUTTON_X = 154;
++  public static final int TITLE_X = 165;
++  public static final int RECIPE_BUTTON_X = 180;
 +
-+  private static final Map<String, int[][]> CURIOS = Map.of(
-+      "head", new int[][] {{8, 8}, {26, 8}},
-+      "necklace", new int[][] {{8, 26}},
-+      "body", new int[][] {{26, 26}},
-+      "belt", new int[][] {{8, 44}},
-+      "legs", new int[][] {{26, 44}},
-+      "feet", new int[][] {{8, 62}, {26, 62}},
-+      "charm", new int[][] {{134, 62}});
++  private static final Map<String, int[][]> CURIOS = Map.ofEntries(
++      Map.entry("head", new int[][] {{8, 8}, {26, 8}}),
++      Map.entry("necklace", new int[][] {{8, 26}}),
++      Map.entry("body", new int[][] {{26, 26}}),
++      Map.entry("belt", new int[][] {{8, 44}}),
++      Map.entry("legs", new int[][] {{26, 44}}),
++      Map.entry("feet", new int[][] {{8, 62}, {26, 62}}),
++      Map.entry("back", new int[][] {{116, 8}}),
++      Map.entry("hands", new int[][] {{134, 8}}),
++      Map.entry("bracelet", new int[][] {{116, 26}, {134, 26}}),
++      Map.entry("ring", new int[][] {{116, 44}, {134, 44}}),
++      Map.entry("charm", new int[][] {{134, 62}}),
++      Map.entry("curio", new int[][] {{152, 62}}));
 +
 +  /** The fixed position of a curio slot, or null when it belongs in the side panel. */
 +  public static int[] position(String identifier, int index) {

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:fang",
+    "arksurvivalreturns:fang",
+    "arksurvivalreturns:fang",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:fang_necklace"
+  }
+}

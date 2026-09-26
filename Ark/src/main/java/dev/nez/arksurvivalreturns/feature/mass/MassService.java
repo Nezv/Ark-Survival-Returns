@@ -133,7 +133,9 @@ public final class MassService {
             return;
         }
         double mass = MassCalculator.playerMass(player);
-        double capacity = MassRules.playerCapacity();
+        // Pack frames and other gear scale the base allowance (carry_capacity attribute).
+        double capacity = MassRules.playerCapacity() * dev.nez.arksurvivalreturns.feature.accessory.AccessoryAttributes.value(
+                player, dev.nez.arksurvivalreturns.feature.accessory.AccessoryAttributes.CARRY_CAPACITY);
         double ratio = capacity <= 0.0 ? 0.0 : mass / capacity;
         Load load = new Load(mass, capacity, MassRules.band(ratio));
         Load previous = LOADS.put(id, load);

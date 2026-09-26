@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:sweet_berry_bush",
+    "arksurvivalreturns:tintoberry_bush",
+    "arksurvivalreturns:amarberry_bush",
+    "arksurvivalreturns:azulberry_bush",
+    "arksurvivalreturns:narcoberry_bush"
+  ]
+}

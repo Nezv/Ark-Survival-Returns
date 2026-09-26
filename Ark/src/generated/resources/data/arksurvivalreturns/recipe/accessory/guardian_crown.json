@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:guardian_trophy",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:guardian_crown"
+  }
+}

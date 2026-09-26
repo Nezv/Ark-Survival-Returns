@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:amber",
+    "minecraft:bone",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:amber_ring"
+  }
+}

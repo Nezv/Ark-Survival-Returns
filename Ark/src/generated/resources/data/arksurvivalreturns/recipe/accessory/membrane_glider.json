@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:wing_membrane",
+    "arksurvivalreturns:wing_membrane",
+    "minecraft:bone",
+    "minecraft:bone",
+    "minecraft:leather",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:membrane_glider"
+  }
+}

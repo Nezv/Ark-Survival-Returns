@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "key": {
+    "B": "minecraft:bone",
+    "L": "minecraft:leather"
+  },
+  "pattern": [
+    "B B",
+    "BLB",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bone_vest"
+  }
+}

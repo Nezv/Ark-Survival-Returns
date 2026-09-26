@@ -2,6 +2,8 @@ package dev.nez.arksurvivalreturns.feature.behavior;
 
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.accessory.AccessoryAttributes;
+import dev.nez.arksurvivalreturns.feature.accessory.AccessoryEffects;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,9 +39,14 @@ public final class WildlifeSenses {
     }
     public static Detection detect(CreatureEntity observer, LivingEntity target) {
         if (!validTarget(target)) return new Detection(false, 0);
+        if (AccessoryEffects.herdDisguise(observer, target)) return new Detection(false, 0);
         var world = (ServerLevel) observer.level();
         Vec3 offset = target.position().subtract(observer.position());
-        double distance = offset.length(), sight = sightRange(observer);
+        // Worn gear scales each sense (visibility, noise, scent attributes; 1.0 for everything else).
+        double seen = AccessoryAttributes.value(target, AccessoryAttributes.VISIBILITY);
+        double heard = AccessoryAttributes.value(target, AccessoryAttributes.NOISE);
+        double smelt = AccessoryAttributes.value(target, AccessoryAttributes.SCENT);
+        double distance = offset.length(), sight = sightRange(observer) * seen;
         boolean crouching = target.isShiftKeyDown(), wet = target.isInWaterOrRain();
         if (world.isRaining()) sight *= 0.80;
         if (crouching) sight *= 0.60;
@@ -50,13 +57,13 @@ public final class WildlifeSenses {
         boolean visible = distance < sight && (distance < 4 + observer.getBbWidth() || facing.dot(flat) > -0.15)
                 && !target.isInvisible() && clear;
         boolean moving = target.position().distanceToSqr(new Vec3(target.xo, target.yo, target.zo)) > 0.0004;
-        double hearing = moving ? (target.isSprinting() ? 28 : crouching ? 3 : 12) : 0;
+        double hearing = (moving ? (target.isSprinting() ? 28 : crouching ? 3 : 12) : 0) * heard;
         if (world.isRaining()) hearing *= 0.6;
         // Sound can reveal an approximate direction through cover, never authorize a melee hit.
         if (!clear) hearing *= 0.4;
         double angle = windAngle(world);
         Vec3 wind = new Vec3(Math.cos(angle), 0, Math.sin(angle));
-        boolean smelled = distance < (wet ? 8 : 24) && wind.dot(flat.scale(-1)) > 0.65;
+        boolean smelled = distance < (wet ? 8 : 24) * smelt && wind.dot(flat.scale(-1)) > 0.65;
         return new Detection(visible, visible ? 1 : distance < hearing ? 0.65 : smelled ? 0.25 : 0);
     }
     private WildlifeSenses() {}

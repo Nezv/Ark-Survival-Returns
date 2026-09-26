@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:sickle_claw",
+    "arksurvivalreturns:sickle_claw",
+    "minecraft:leather",
+    "minecraft:leather",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:climbing_claws"
+  }
+}

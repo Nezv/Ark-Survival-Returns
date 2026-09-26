@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:unicorn_horn",
+    "minecraft:gold_nugget",
+    "minecraft:gold_nugget",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:alicorn_pendant"
+  }
+}

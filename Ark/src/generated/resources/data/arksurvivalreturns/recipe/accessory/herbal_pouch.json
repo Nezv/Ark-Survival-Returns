@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "minecraft:leather",
+    "arksurvivalreturns:plant_fiber",
+    "#arksurvivalreturns:berries",
+    "#arksurvivalreturns:berries",
+    "#arksurvivalreturns:berries"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:herbal_pouch"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "minecraft:obsidian",
+    "minecraft:flint",
+    "minecraft:flint",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:obsidian_band"
+  }
+}

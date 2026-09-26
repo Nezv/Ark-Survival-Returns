@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "minecraft:stick",
+    "minecraft:stick",
+    "minecraft:stick",
+    "minecraft:stick",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber",
+    "minecraft:leather"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:snowshoes"
+  }
+}

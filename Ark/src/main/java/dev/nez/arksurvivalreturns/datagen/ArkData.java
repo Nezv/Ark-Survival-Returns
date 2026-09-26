@@ -294,6 +294,7 @@ public final class ArkData implements DataProvider {
         model("workshop_schematic");
         model("guardian_trophy");
         PrimitiveData.lang(en, pt);
+        AccessoryData.lang(en, pt);
         put("assets/" + NS + "/lang/en_us", en); put("assets/" + NS + "/lang/pt_br", pt);
     }
     private void model(String id) {

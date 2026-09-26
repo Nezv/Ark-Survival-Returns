@@ -5,10 +5,15 @@
   "slots": [
     "head",
     "necklace",
+    "back",
     "body",
+    "bracelet",
+    "hands",
+    "ring",
     "belt",
     "legs",
     "feet",
-    "charm"
+    "charm",
+    "curio"
   ]
 }

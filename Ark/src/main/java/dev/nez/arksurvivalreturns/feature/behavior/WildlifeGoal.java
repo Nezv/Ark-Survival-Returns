@@ -283,6 +283,7 @@ public final class WildlifeGoal extends WildlifeController {
         boolean intimidating = visible && sensed instanceof CreatureEntity c && c.species().predator
                 && c.getBbWidth() > mob.getBbWidth() * 1.4;
         if (mob.species().herd() && sensed instanceof CreatureEntity) intimidating = false;
+        if (visible && dev.nez.arksurvivalreturns.feature.accessory.AccessoryEffects.tyrant(mob, sensed)) intimidating = true;
         // Night herbivores first escape, then evaluate their ability to stand with the herd.
         if (cycle && night && !mob.species().predator) intimidating = false;
         if (mob.species().predator && guardedPrey && (mob.distanceTo(sensed) < mob.getBbWidth() + 8

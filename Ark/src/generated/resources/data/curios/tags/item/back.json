@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:membrane_glider",
+    "arksurvivalreturns:pack_frame",
+    "arksurvivalreturns:hide_quiver",
+    "arksurvivalreturns:fur_mantle",
+    "arksurvivalreturns:quetzal_mantle"
+  ]
+}

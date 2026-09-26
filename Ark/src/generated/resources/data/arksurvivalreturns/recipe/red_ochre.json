@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "red_ochre",
+  "ingredients": [
+    "minecraft:clay_ball",
+    "arksurvivalreturns:rock",
+    "minecraft:red_dye"
+  ],
+  "result": {
+    "count": 2,
+    "id": "arksurvivalreturns:red_ochre"
+  }
+}

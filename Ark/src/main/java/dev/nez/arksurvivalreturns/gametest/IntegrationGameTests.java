@@ -31,7 +31,10 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
  * a nested holder, so the suite still loads (and passes as "not installed") without that mod.
  */
 final class IntegrationGameTests {
-    /** I07: Ark's accessory set reaches players (two head, necklace, body, belt, legs, two feet, charm). */
+    /**
+     * I07: every Curios slot type reaches players (two head, necklace, back, body, two bracelets, hands, two
+     * rings, belt, legs, two feet, charm, curio).
+     */
     static void curios(GameTestHelper h) {
         if (!ModList.get().isLoaded("curios")) {
             h.succeed();
@@ -103,11 +106,14 @@ final class IntegrationGameTests {
     private static final class CuriosProbe {
         static void check(GameTestHelper h) {
             var slots = top.theillusivec4.curios.api.CuriosSlotTypes.getDefaultEntitySlotTypes(EntityType.PLAYER, false);
-            for (String id : new String[]{"head", "necklace", "body", "belt", "legs", "feet", "charm"}) {
+            for (String id : new String[]{"head", "necklace", "back", "body", "bracelet", "hands", "ring", "belt", "legs",
+                    "feet", "charm", "curio"}) {
                 h.assertTrue(slots.containsKey(id), "Players are missing the Ark curio slot " + id);
             }
             h.assertTrue(slots.get("head").getSize() >= 2, "Ark gives players two head slots (crown, hat)");
             h.assertTrue(slots.get("feet").getSize() >= 2, "Ark gives players two feet slots (socks, shoes)");
+            h.assertTrue(slots.get("ring").getSize() >= 2, "Ark gives players a ring on each hand");
+            h.assertTrue(slots.get("bracelet").getSize() >= 2, "Ark gives players a bracelet on each wrist");
             if (arkFork()) layout(h);
             h.succeed();
         }
@@ -127,9 +133,15 @@ final class IntegrationGameTests {
             // A fake player never joins the world, so its curio slots are built explicitly.
             top.theillusivec4.curios.api.CuriosApi.getCuriosInventory(player).ifPresent(handler -> handler.reset());
             var menu = new top.theillusivec4.curios.common.inventory.container.CuriosMenu(1, player.getInventory());
-            java.util.Map<String, int[]> expected = java.util.Map.of("head0", new int[]{8, 8}, "head1", new int[]{26, 8},
-                    "necklace0", new int[]{8, 26}, "body0", new int[]{26, 26}, "belt0", new int[]{8, 44},
-                    "legs0", new int[]{26, 44}, "feet0", new int[]{8, 62}, "feet1", new int[]{26, 62}, "charm0", new int[]{134, 62});
+            java.util.Map<String, int[]> expected = java.util.Map.ofEntries(java.util.Map.entry("head0", new int[]{8, 8}),
+                    java.util.Map.entry("head1", new int[]{26, 8}), java.util.Map.entry("necklace0", new int[]{8, 26}),
+                    java.util.Map.entry("body0", new int[]{26, 26}), java.util.Map.entry("belt0", new int[]{8, 44}),
+                    java.util.Map.entry("legs0", new int[]{26, 44}), java.util.Map.entry("feet0", new int[]{8, 62}),
+                    java.util.Map.entry("feet1", new int[]{26, 62}), java.util.Map.entry("back0", new int[]{116, 8}),
+                    java.util.Map.entry("hands0", new int[]{134, 8}), java.util.Map.entry("bracelet0", new int[]{116, 26}),
+                    java.util.Map.entry("bracelet1", new int[]{134, 26}), java.util.Map.entry("ring0", new int[]{116, 44}),
+                    java.util.Map.entry("ring1", new int[]{134, 44}), java.util.Map.entry("charm0", new int[]{134, 62}),
+                    java.util.Map.entry("curio0", new int[]{152, 62}));
             int placed = 0;
             for (var slot : menu.slots) {
                 if (!(slot instanceof top.theillusivec4.curios.common.inventory.CurioSlot curio)) continue;

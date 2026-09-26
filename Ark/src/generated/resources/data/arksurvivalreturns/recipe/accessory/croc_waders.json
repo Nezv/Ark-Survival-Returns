@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:croc_scute",
+    "arksurvivalreturns:croc_scute",
+    "arksurvivalreturns:croc_scute",
+    "arksurvivalreturns:croc_scute",
+    "minecraft:leather",
+    "minecraft:leather"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:croc_waders"
+  }
+}

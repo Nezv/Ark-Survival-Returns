@@ -1,0 +1,782 @@
+{
+  "accessories": [
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "bone_snow_goggles",
+      "ingredients": [
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "head"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": -1.0,
+          "attribute": "arksurvivalreturns:scent",
+          "operation": "add_multiplied_base"
+        },
+        {
+          "amount": -0.1,
+          "attribute": "arksurvivalreturns:visibility",
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "group": "primitive",
+      "id": "pelt_hood",
+      "ingredients": [
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:fang",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "head"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "antler_frontlet",
+      "ingredients": [
+        "arksurvivalreturns:giant_antler",
+        "arksurvivalreturns:giant_antler",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "head"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "fang_necklace",
+      "ingredients": [
+        "arksurvivalreturns:fang",
+        "arksurvivalreturns:fang",
+        "arksurvivalreturns:fang",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "necklace"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "membrane_glider",
+      "ingredients": [
+        "arksurvivalreturns:wing_membrane",
+        "arksurvivalreturns:wing_membrane",
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "back"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 0.4,
+          "attribute": "arksurvivalreturns:carry_capacity",
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "group": "primitive",
+      "id": "pack_frame",
+      "ingredients": [
+        "minecraft:stick",
+        "minecraft:stick",
+        "minecraft:stick",
+        "minecraft:leather",
+        "minecraft:stick",
+        "minecraft:stick",
+        "arksurvivalreturns:plant_fiber",
+        "minecraft:stick"
+      ],
+      "slot": "back"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "hide_quiver",
+      "ingredients": [
+        "minecraft:leather",
+        "minecraft:leather",
+        "minecraft:leather",
+        "minecraft:bone",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "back"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 1.0,
+          "attribute": "minecraft:armor",
+          "operation": "add_value"
+        }
+      ],
+      "group": "primitive",
+      "id": "fur_mantle",
+      "ingredients": [
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "back"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": -0.4,
+          "attribute": "arksurvivalreturns:visibility",
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "group": "primitive",
+      "id": "ghillie_wrap",
+      "ingredients": [
+        "#minecraft:leaves",
+        "#minecraft:leaves",
+        "#minecraft:leaves",
+        "#minecraft:leaves",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber",
+        "minecraft:leather"
+      ],
+      "slot": "body"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 3.0,
+          "attribute": "minecraft:armor",
+          "operation": "add_value"
+        },
+        {
+          "amount": 0.1,
+          "attribute": "minecraft:knockback_resistance",
+          "operation": "add_value"
+        },
+        {
+          "amount": -0.05,
+          "attribute": "minecraft:movement_speed",
+          "operation": "add_multiplied_total"
+        }
+      ],
+      "group": "primitive",
+      "id": "bone_vest",
+      "ingredients": [
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:leather",
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:bone"
+      ],
+      "slot": "body"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "thornproof_wraps",
+      "ingredients": [
+        "minecraft:leather",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "legs"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 0.4,
+          "attribute": "minecraft:water_movement_efficiency",
+          "operation": "add_value"
+        },
+        {
+          "amount": 0.35,
+          "attribute": "minecraft:movement_efficiency",
+          "operation": "add_value"
+        }
+      ],
+      "group": "primitive",
+      "id": "croc_waders",
+      "ingredients": [
+        "arksurvivalreturns:croc_scute",
+        "arksurvivalreturns:croc_scute",
+        "arksurvivalreturns:croc_scute",
+        "arksurvivalreturns:croc_scute",
+        "minecraft:leather",
+        "minecraft:leather"
+      ],
+      "slot": "legs"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "snowshoes",
+      "ingredients": [
+        "minecraft:stick",
+        "minecraft:stick",
+        "minecraft:stick",
+        "minecraft:stick",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber",
+        "minecraft:leather"
+      ],
+      "slot": "feet"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "bone_skates",
+      "ingredients": [
+        "minecraft:bone",
+        "minecraft:bone",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "feet"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": -0.7,
+          "attribute": "arksurvivalreturns:noise",
+          "operation": "add_multiplied_base"
+        },
+        {
+          "amount": 0.15,
+          "attribute": "minecraft:sneaking_speed",
+          "operation": "add_value"
+        }
+      ],
+      "group": "primitive",
+      "id": "stalker_moccasins",
+      "ingredients": [
+        "minecraft:leather",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber",
+        "minecraft:feather"
+      ],
+      "slot": "feet"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 0.6,
+          "attribute": "neoforge:swim_speed",
+          "operation": "add_multiplied_base"
+        },
+        {
+          "amount": -0.1,
+          "attribute": "minecraft:movement_speed",
+          "operation": "add_multiplied_total"
+        }
+      ],
+      "group": "primitive",
+      "id": "flipper_sandals",
+      "ingredients": [
+        "arksurvivalreturns:marine_flipper",
+        "arksurvivalreturns:marine_flipper",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "feet"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "climbing_claws",
+      "ingredients": [
+        "arksurvivalreturns:sickle_claw",
+        "arksurvivalreturns:sickle_claw",
+        "minecraft:leather",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "hands"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "scythe_claws",
+      "ingredients": [
+        "arksurvivalreturns:scythe_claw",
+        "arksurvivalreturns:scythe_claw",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "hands"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "archer_wristguard",
+      "ingredients": [
+        "arksurvivalreturns:rock",
+        "arksurvivalreturns:rock",
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "bracelet"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "thumb_ring",
+      "ingredients": [
+        "minecraft:bone",
+        "minecraft:flint"
+      ],
+      "slot": "ring"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "ember_carrier",
+      "ingredients": [
+        "minecraft:clay_ball",
+        "minecraft:clay_ball",
+        "arksurvivalreturns:fire_starter",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "belt"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "herbal_pouch",
+      "ingredients": [
+        "minecraft:leather",
+        "arksurvivalreturns:plant_fiber",
+        "#arksurvivalreturns:berries",
+        "#arksurvivalreturns:berries",
+        "#arksurvivalreturns:berries"
+      ],
+      "slot": "belt"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 2.0,
+          "attribute": "minecraft:oxygen_bonus",
+          "operation": "add_value"
+        }
+      ],
+      "group": "primitive",
+      "id": "diver_stones",
+      "ingredients": [
+        "arksurvivalreturns:rock",
+        "arksurvivalreturns:rock",
+        "arksurvivalreturns:rock",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber"
+      ],
+      "slot": "belt"
+    },
+    {
+      "bonuses": [],
+      "group": "primitive",
+      "id": "tally_bone",
+      "ingredients": [
+        "minecraft:bone",
+        "arksurvivalreturns:rock"
+      ],
+      "slot": "charm"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "amber_amulet",
+      "ingredients": [
+        "arksurvivalreturns:amber",
+        "arksurvivalreturns:amber",
+        "arksurvivalreturns:amber",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "necklace"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "alicorn_pendant",
+      "ingredients": [
+        "arksurvivalreturns:unicorn_horn",
+        "minecraft:gold_nugget",
+        "minecraft:gold_nugget",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "necklace"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 4.0,
+          "attribute": "minecraft:safe_fall_distance",
+          "operation": "add_value"
+        }
+      ],
+      "group": "relic",
+      "id": "quetzal_mantle",
+      "ingredients": [
+        "arksurvivalreturns:quetzal_feather",
+        "arksurvivalreturns:quetzal_feather",
+        "arksurvivalreturns:quetzal_feather",
+        "arksurvivalreturns:quetzal_feather",
+        "arksurvivalreturns:thick_pelt",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "back"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 2.0,
+          "attribute": "minecraft:armor",
+          "operation": "add_value"
+        }
+      ],
+      "group": "relic",
+      "id": "guardian_crown",
+      "ingredients": [
+        "arksurvivalreturns:guardian_trophy",
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "head"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": -0.75,
+          "attribute": "minecraft:burning_time",
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "group": "relic",
+      "id": "obsidian_band",
+      "ingredients": [
+        "minecraft:obsidian",
+        "minecraft:flint",
+        "minecraft:flint",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "ring"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "amber_ring",
+      "ingredients": [
+        "arksurvivalreturns:amber",
+        "minecraft:bone",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "ring"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "serpent_ring",
+      "ingredients": [
+        "arksurvivalreturns:venom_fang",
+        "minecraft:bone",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "ring"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "kinship_bracelet",
+      "ingredients": [
+        "arksurvivalreturns:thick_pelt",
+        "minecraft:feather",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:plant_fiber",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "bracelet"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 0.1,
+          "attribute": "minecraft:movement_speed",
+          "operation": "add_multiplied_base"
+        },
+        {
+          "amount": 0.5,
+          "attribute": "minecraft:step_height",
+          "operation": "add_value"
+        }
+      ],
+      "group": "relic",
+      "id": "raptor_totem",
+      "ingredients": [
+        "#minecraft:logs",
+        "arksurvivalreturns:sickle_claw",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "charm"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 2.0,
+          "attribute": "minecraft:attack_damage",
+          "operation": "add_value"
+        }
+      ],
+      "group": "relic",
+      "id": "rex_totem",
+      "ingredients": [
+        "#minecraft:logs",
+        "arksurvivalreturns:tyrant_tooth",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "charm"
+    },
+    {
+      "bonuses": [],
+      "group": "relic",
+      "id": "argentavis_totem",
+      "ingredients": [
+        "#minecraft:logs",
+        "arksurvivalreturns:argentavis_talon",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "charm"
+    },
+    {
+      "bonuses": [
+        {
+          "amount": 0.3,
+          "attribute": "neoforge:swim_speed",
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "group": "relic",
+      "id": "megalodon_totem",
+      "ingredients": [
+        "#minecraft:logs",
+        "arksurvivalreturns:megalodon_tooth",
+        "arksurvivalreturns:red_ochre"
+      ],
+      "slot": "charm"
+    }
+  ],
+  "trophies": {
+    "amber": [
+      {
+        "chance": 0.015,
+        "max": 1,
+        "min": 1,
+        "species": "digging"
+      }
+    ],
+    "argentavis_talon": [
+      {
+        "chance": 0.8,
+        "max": 2,
+        "min": 1,
+        "species": "argentavis"
+      }
+    ],
+    "croc_scute": [
+      {
+        "chance": 0.7,
+        "max": 2,
+        "min": 1,
+        "species": "kaprosuchus"
+      },
+      {
+        "chance": 0.8,
+        "max": 3,
+        "min": 1,
+        "species": "sarco"
+      },
+      {
+        "chance": 0.9,
+        "max": 3,
+        "min": 2,
+        "species": "deinosuchus"
+      }
+    ],
+    "fang": [
+      {
+        "chance": 0.5,
+        "max": 1,
+        "min": 1,
+        "species": "direwolf"
+      },
+      {
+        "chance": 1.0,
+        "max": 2,
+        "min": 1,
+        "species": "sabertooth"
+      },
+      {
+        "chance": 0.5,
+        "max": 1,
+        "min": 1,
+        "species": "ravager"
+      }
+    ],
+    "giant_antler": [
+      {
+        "chance": 0.7,
+        "max": 2,
+        "min": 1,
+        "species": "megalocerus"
+      }
+    ],
+    "marine_flipper": [
+      {
+        "chance": 0.7,
+        "max": 2,
+        "min": 1,
+        "species": "plesiosaur"
+      },
+      {
+        "chance": 0.7,
+        "max": 2,
+        "min": 1,
+        "species": "liopleurodon"
+      },
+      {
+        "chance": 0.9,
+        "max": 2,
+        "min": 2,
+        "species": "mosasaurus"
+      }
+    ],
+    "megalodon_tooth": [
+      {
+        "chance": 1.0,
+        "max": 2,
+        "min": 1,
+        "species": "megalodon"
+      }
+    ],
+    "quetzal_feather": [
+      {
+        "chance": 1.0,
+        "max": 4,
+        "min": 2,
+        "species": "quetzal"
+      }
+    ],
+    "scythe_claw": [
+      {
+        "chance": 0.8,
+        "max": 2,
+        "min": 1,
+        "species": "therizinosaurus"
+      }
+    ],
+    "sickle_claw": [
+      {
+        "chance": 0.5,
+        "max": 1,
+        "min": 1,
+        "species": "velociraptor"
+      }
+    ],
+    "thick_pelt": [
+      {
+        "chance": 0.5,
+        "max": 1,
+        "min": 1,
+        "species": "megalocerus"
+      },
+      {
+        "chance": 1.0,
+        "max": 3,
+        "min": 2,
+        "species": "mammoth"
+      },
+      {
+        "chance": 0.8,
+        "max": 2,
+        "min": 1,
+        "species": "direwolf"
+      },
+      {
+        "chance": 0.6,
+        "max": 1,
+        "min": 1,
+        "species": "sabertooth"
+      },
+      {
+        "chance": 1.0,
+        "max": 3,
+        "min": 2,
+        "species": "megapithecus"
+      },
+      {
+        "chance": 0.6,
+        "max": 1,
+        "min": 1,
+        "species": "ravager"
+      }
+    ],
+    "tyrant_tooth": [
+      {
+        "chance": 1.0,
+        "max": 3,
+        "min": 1,
+        "species": "tyrannosaurus"
+      },
+      {
+        "chance": 1.0,
+        "max": 3,
+        "min": 2,
+        "species": "giganotosaurus"
+      }
+    ],
+    "unicorn_horn": [
+      {
+        "chance": 1.0,
+        "max": 1,
+        "min": 1,
+        "species": "unicorn"
+      }
+    ],
+    "venom_fang": [
+      {
+        "chance": 0.8,
+        "max": 2,
+        "min": 1,
+        "species": "titanoboa"
+      }
+    ],
+    "wing_membrane": [
+      {
+        "chance": 0.8,
+        "max": 2,
+        "min": 1,
+        "species": "pteranodon"
+      },
+      {
+        "chance": 1.0,
+        "max": 3,
+        "min": 2,
+        "species": "quetzal"
+      }
+    ]
+  }
+}

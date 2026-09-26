@@ -1,0 +1,208 @@
+{
+ "texture_size": [
+  64,
+  64
+ ],
+ "bones": [
+  {
+   "name": "collar",
+   "part": "body",
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "fit": "chest",
+   "cubes": [
+    {
+     "origin": [
+      -4.0,
+      -0.5,
+      -2.0
+     ],
+     "size": [
+      8,
+      1,
+      4
+     ],
+     "uv": [
+      40,
+      0
+     ],
+     "grow": [
+      0.62,
+      0.62,
+      0.62
+     ]
+    }
+   ]
+  },
+  {
+   "name": "shoulder_right",
+   "part": "body",
+   "pivot": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "fit": "chest",
+   "cubes": [
+    {
+     "origin": [
+      -5.8,
+      -1.0,
+      -2.6
+     ],
+     "size": [
+      3,
+      2,
+      5
+     ],
+     "uv": [
+      22,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "shoulder_left",
+   "part": "body",
+   "pivot": [
+    -0.0,
+    0.0,
+    0.0
+   ],
+   "rotation": [
+    0.0,
+    -0.0,
+    -0.0
+   ],
+   "fit": "chest",
+   "cubes": [
+    {
+     "origin": [
+      2.8,
+      -1.0,
+      -2.6
+     ],
+     "size": [
+      3,
+      2,
+      5
+     ],
+     "uv": [
+      22,
+      0
+     ],
+     "mirror": true
+    }
+   ]
+  },
+  {
+   "name": "cape",
+   "part": "body",
+   "pivot": [
+    0.0,
+    0.2,
+    2.6
+   ],
+   "rotation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "fit": "chest",
+   "anim": "cape",
+   "cubes": [
+    {
+     "origin": [
+      -5.0,
+      0.0,
+      0.0
+     ],
+     "size": [
+      10,
+      13,
+      1
+     ],
+     "uv": [
+      0,
+      0
+     ]
+    },
+    {
+     "origin": [
+      -2.5,
+      12.5,
+      0.6
+     ],
+     "size": [
+      1,
+      5,
+      0
+     ],
+     "uv": [
+      0,
+      14
+     ],
+     "faces": [
+      "north",
+      "south"
+     ]
+    },
+    {
+     "origin": [
+      -0.5,
+      12.5,
+      0.6
+     ],
+     "size": [
+      1,
+      6,
+      0
+     ],
+     "uv": [
+      38,
+      0
+     ],
+     "faces": [
+      "north",
+      "south"
+     ]
+    },
+    {
+     "origin": [
+      1.5,
+      12.5,
+      0.6
+     ],
+     "size": [
+      1,
+      5,
+      0
+     ],
+     "uv": [
+      2,
+      14
+     ],
+     "faces": [
+      "north",
+      "south"
+     ]
+    }
+   ]
+  }
+ ],
+ "glow": false
+}

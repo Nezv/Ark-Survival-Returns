@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "#minecraft:logs",
+    "arksurvivalreturns:sickle_claw",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:raptor_totem"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arksurvivalreturns:item/accessory/kinship_bracelet"
+  }
+}

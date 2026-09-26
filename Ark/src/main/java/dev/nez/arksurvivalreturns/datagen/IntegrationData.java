@@ -16,17 +16,21 @@ final class IntegrationData {
     }
 
     /**
-     * I07: the Ark accessory set, laid out beside the armour by the Ark fork of Curios (ArkLayout.java):
-     * two head slots (crown, hat), necklace, body, belt, legs (added by Ark), two feet (socks, shoes), charm.
+     * I07: every Curios slot type, laid out around the player by the Ark fork of Curios (ArkLayout.java):
+     * two head slots (crown, hat), necklace, back, body, two bracelets, hands, two rings, belt, legs (added by
+     * Ark), two feet (socks, shoes), charm and the universal curio slot.
      */
     private static void curios(BiConsumer<String, Object> put) {
         String slots = "data/" + NS + "/curios/slots/";
         put.accept(slots + "head", Map.of("size", 2));
         put.accept(slots + "feet", Map.of("size", 2));
+        put.accept(slots + "ring", Map.of("size", 2));
+        put.accept(slots + "bracelet", Map.of("size", 2));
         put.accept(slots + "legs", Map.of("order", 185, "icon", NS + ":slot/empty_legs_slot", "validators", List.of("curios:tag")));
         put.accept("data/" + NS + "/curios/entities/ark_player", Map.of(
                 "entities", List.of("#curios:player_like"),
-                "slots", List.of("head", "necklace", "body", "belt", "legs", "feet", "charm")));
+                "slots", List.of("head", "necklace", "back", "body", "bracelet", "hands", "ring", "belt", "legs", "feet",
+                        "charm", "curio")));
     }
 
     private IntegrationData() {}

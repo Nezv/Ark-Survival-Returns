@@ -8,6 +8,8 @@ authors="Nez"
 description='''ARK-style survival for Minecraft: 41 prehistoric creatures, hidden danger zones, taming and riding, tribes, and a three-age progression from a loose rock to the Iron Age.'''
 [[mixins]]
 config="arksurvivalreturns.mixins.json"
+[[mixins]]
+config="arksurvivalreturns.accessories.mixins.json"
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"

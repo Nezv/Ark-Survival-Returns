@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:quetzal_feather",
+    "arksurvivalreturns:quetzal_feather",
+    "arksurvivalreturns:quetzal_feather",
+    "arksurvivalreturns:quetzal_feather",
+    "arksurvivalreturns:thick_pelt",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:red_ochre"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:quetzal_mantle"
+  }
+}

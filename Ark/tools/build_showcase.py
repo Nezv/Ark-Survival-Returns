@@ -635,6 +635,7 @@ def build():
         'JOURNAL': journal_section(),
         'BLOCKS': blocks_section(),
         'ITEMS': items_section(names),
+        **__import__('showcase_accessories').section(names, uri, e),
         'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
         'ROADMAP': roadmap_section(rows),
         'INTEGRATIONS': integrations,

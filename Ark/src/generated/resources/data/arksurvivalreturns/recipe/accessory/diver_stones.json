@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "arksurvivalreturns:rock",
+    "arksurvivalreturns:rock",
+    "arksurvivalreturns:rock",
+    "arksurvivalreturns:plant_fiber",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:diver_stones"
+  }
+}

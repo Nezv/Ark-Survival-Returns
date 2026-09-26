@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "ark_accessory",
+  "ingredients": [
+    "minecraft:bone",
+    "arksurvivalreturns:rock"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:tally_bone"
+  }
+}

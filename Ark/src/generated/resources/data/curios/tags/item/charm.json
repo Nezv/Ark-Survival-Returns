@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:tally_bone",
+    "arksurvivalreturns:raptor_totem",
+    "arksurvivalreturns:rex_totem",
+    "arksurvivalreturns:argentavis_totem",
+    "arksurvivalreturns:megalodon_totem"
+  ]
+}

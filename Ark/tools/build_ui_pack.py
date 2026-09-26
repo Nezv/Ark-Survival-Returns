@@ -211,13 +211,18 @@ def mod_screens():
 
 
 # Ark inventory layout (I07, Curios fork): must match ArkLayout.java in pack/src/curios.
-ARK_WIDTH = 212
-ARK_CURIOS = [(8, 8), (26, 8), (8, 26), (26, 26), (8, 44), (26, 44), (8, 62), (26, 62), (134, 62)]
+ARK_WIDTH = 244
+# Slot order: head, head, necklace, body, belt, legs, feet, feet | back, hands, bracelet, bracelet, ring, ring,
+# charm | curio.
+ARK_CURIOS = [(8, 8), (26, 8), (8, 26), (26, 26), (8, 44), (26, 44), (8, 62), (26, 62),
+              (116, 8), (134, 8), (116, 26), (134, 26), (116, 44), (134, 44), (134, 62), (152, 62)]
+ARK_CURIO_NAMES = ['head', 'head', 'necklace', 'body', 'belt', 'legs', 'feet', 'feet',
+                   'back', 'hands', 'bracelet', 'bracelet', 'ring', 'ring', 'charm', 'curio']
 ARK_ARMOR = [(44, 8 + i * 18) for i in range(4)]
 ARK_OFFHAND = (116, 62)
-ARK_CRAFT = [(134 + (i % 2) * 18, 18 + (i // 2) * 18) for i in range(4)]
-ARK_RESULT = (190, 28)
-ARK_INVENTORY = [(26 + c * 18, 84 + r * 18) for r in range(3) for c in range(9)] + [(26 + c * 18, 142) for c in range(9)]
+ARK_CRAFT = [(166 + (i % 2) * 18, 18 + (i // 2) * 18) for i in range(4)]
+ARK_RESULT = (222, 28)
+ARK_INVENTORY = [(41 + c * 18, 84 + r * 18) for r in range(3) for c in range(9)] + [(41 + c * 18, 142) for c in range(9)]
 CURIO_OVERLAY = ROOT / 'pack/overlays/curios/src/main/resources/assets/curios/textures/gui/curios/ark_inventory.png'
 
 
@@ -241,7 +246,7 @@ def ark_inventory():
     for x, y in ARK_CURIOS + ARK_ARMOR + [ARK_OFFHAND] + ARK_CRAFT + [ARK_RESULT] + ARK_INVENTORY:
         body.paste(frame, (x - 1, y - 1))
     body.paste(vanilla_inv.crop((25, 7, 77, 79)), (61, 7))  # player preview box
-    body.paste(vanilla_inv.crop((135, 26, 153, 44)), (171, 26))  # crafting arrow
+    body.paste(vanilla_inv.crop((135, 26, 153, 44)), (203, 26))  # crafting arrow
     panel.paste(body, (0, 0))
     panel = remap(panel, LIGHT, grain=(190, 205), seed=7)
     CURIO_OVERLAY.parent.mkdir(parents=True, exist_ok=True)
@@ -253,11 +258,10 @@ def ark_inventory():
     icons = {}
     if curios_jar:
         with zipfile.ZipFile(curios_jar[-1]) as jar:
-            for name in ('head', 'necklace', 'body', 'belt', 'feet', 'charm'):
+            for name in ('head', 'necklace', 'body', 'belt', 'feet', 'charm', 'back', 'hands', 'bracelet', 'ring', 'curio'):
                 icons[name] = Image.open(io.BytesIO(jar.read(f'assets/curios/textures/slot/empty_{name}_slot.png'))).convert('RGBA')
     icons['legs'] = Image.open(ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/slot/empty_legs_slot.png').convert('RGBA')
-    order = ['head', 'head', 'necklace', 'body', 'belt', 'legs', 'feet', 'feet', 'charm']
-    for (x, y), name in zip(ARK_CURIOS, order):
+    for (x, y), name in zip(ARK_CURIOS, ARK_CURIO_NAMES):
         if name in icons:
             preview.alpha_composite(icons[name].resize((16, 16)), (x, y))
     for (x, y), name in zip(ARK_ARMOR, ('helmet', 'chestplate', 'leggings', 'boots')):
