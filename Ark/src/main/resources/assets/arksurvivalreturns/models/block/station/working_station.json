@@ -1,0 +1,1281 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "bench_top": "arksurvivalreturns:block/station/bench_top",
+    "iron": "arksurvivalreturns:block/station/iron",
+    "iron_dark": "arksurvivalreturns:block/station/iron_dark",
+    "log": "arksurvivalreturns:block/station/log",
+    "planks": "arksurvivalreturns:block/station/planks",
+    "planks_dark": "arksurvivalreturns:block/station/planks_dark",
+    "particle": "arksurvivalreturns:block/station/bench_top"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        3.5,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        12.5
+      ],
+      "to": [
+        3.5,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        1
+      ],
+      "to": [
+        15.0,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        12.5
+      ],
+      "to": [
+        15.0,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "bench top with a scored grid",
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        15,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#bench_top"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#bench_top"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            3
+          ],
+          "texture": "#bench_top"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            3
+          ],
+          "texture": "#bench_top"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            3
+          ],
+          "texture": "#bench_top"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            3
+          ],
+          "texture": "#bench_top"
+        }
+      }
+    },
+    {
+      "name": "front apron",
+      "from": [
+        1.5,
+        10.5,
+        1
+      ],
+      "to": [
+        14.5,
+        12,
+        2.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.2000000000000002
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.2000000000000002
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.2000000000000002,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.2000000000000002,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "back apron",
+      "from": [
+        1.5,
+        10.5,
+        13.8
+      ],
+      "to": [
+        14.5,
+        12,
+        15
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "lower shelf",
+      "from": [
+        1.5,
+        3,
+        1.5
+      ],
+      "to": [
+        14.5,
+        4,
+        14.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "spare log on the shelf",
+      "from": [
+        3,
+        4,
+        4
+      ],
+      "to": [
+        9,
+        6.5,
+        6.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            6,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "stacked boards",
+      "from": [
+        9.5,
+        4,
+        3.5
+      ],
+      "to": [
+        13,
+        5,
+        12
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            8.5
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            8.5
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8.5,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8.5,
+            1
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "vise jaw",
+      "from": [
+        10.5,
+        15,
+        0.5
+      ],
+      "to": [
+        14.5,
+        17,
+        3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            4.0,
+            2.5
+          ],
+          "texture": "#iron"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            4.0,
+            2.5
+          ],
+          "texture": "#iron"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            4.0,
+            2
+          ],
+          "texture": "#iron"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            4.0,
+            2
+          ],
+          "texture": "#iron"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#iron"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#iron"
+        }
+      }
+    },
+    {
+      "name": "vise screw block",
+      "from": [
+        11.5,
+        15.4,
+        3
+      ],
+      "to": [
+        13.5,
+        16.6,
+        5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2
+          ],
+          "texture": "#iron_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2
+          ],
+          "texture": "#iron_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            1.200000000000001
+          ],
+          "texture": "#iron_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            1.200000000000001
+          ],
+          "texture": "#iron_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            1.200000000000001
+          ],
+          "texture": "#iron_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            1.200000000000001
+          ],
+          "texture": "#iron_dark"
+        }
+      }
+    },
+    {
+      "name": "vise handle",
+      "from": [
+        12.2,
+        15.7,
+        -0.5
+      ],
+      "to": [
+        12.8,
+        16.3,
+        0.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000014,
+            1.0
+          ],
+          "texture": "#iron_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000014,
+            1.0
+          ],
+          "texture": "#iron_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000014,
+            0.6000000000000014
+          ],
+          "texture": "#iron_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000014,
+            0.6000000000000014
+          ],
+          "texture": "#iron_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.6000000000000014
+          ],
+          "texture": "#iron_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.6000000000000014
+          ],
+          "texture": "#iron_dark"
+        }
+      }
+    },
+    {
+      "name": "mallet handle",
+      "from": [
+        2.5,
+        15,
+        10
+      ],
+      "to": [
+        9.5,
+        15.8,
+        10.8
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "mallet head",
+      "from": [
+        9,
+        15,
+        9
+      ],
+      "to": [
+        11.5,
+        17,
+        11.8
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.8000000000000007
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.8000000000000007
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.8000000000000007,
+            2
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.8000000000000007,
+            2
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "hand saw blade",
+      "from": [
+        -0.3,
+        6.5,
+        4
+      ],
+      "to": [
+        0,
+        10.5,
+        12
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.3,
+            8
+          ],
+          "texture": "#iron"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.3,
+            8
+          ],
+          "texture": "#iron"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.3,
+            4.0
+          ],
+          "texture": "#iron"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.3,
+            4.0
+          ],
+          "texture": "#iron"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            4.0
+          ],
+          "texture": "#iron"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            4.0
+          ],
+          "texture": "#iron"
+        }
+      }
+    },
+    {
+      "name": "saw grip",
+      "from": [
+        -0.5,
+        9.5,
+        11
+      ],
+      "to": [
+        0,
+        11.5,
+        13
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            2
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            2
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            2.0
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            2.0
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    }
+  ]
+}

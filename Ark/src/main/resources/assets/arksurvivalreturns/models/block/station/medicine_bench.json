@@ -1,0 +1,1642 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "cork": "arksurvivalreturns:block/station/cork",
+    "glass_blue": "arksurvivalreturns:block/station/glass_blue",
+    "glass_green": "arksurvivalreturns:block/station/glass_green",
+    "glass_red": "arksurvivalreturns:block/station/glass_red",
+    "herb": "arksurvivalreturns:block/station/herb",
+    "herb_dry": "arksurvivalreturns:block/station/herb_dry",
+    "linen": "arksurvivalreturns:block/station/linen",
+    "planks": "arksurvivalreturns:block/station/planks",
+    "planks_dark": "arksurvivalreturns:block/station/planks_dark",
+    "rope": "arksurvivalreturns:block/station/rope",
+    "stone": "arksurvivalreturns:block/station/stone",
+    "stone_dark": "arksurvivalreturns:block/station/stone_dark",
+    "particle": "arksurvivalreturns:block/station/planks"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        3.5,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        12.5
+      ],
+      "to": [
+        3.5,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        1
+      ],
+      "to": [
+        15.0,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        12.5
+      ],
+      "to": [
+        15.0,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "bench top",
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        14,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            2
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            2
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            2
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            2
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "lower shelf",
+      "from": [
+        1.5,
+        3,
+        1.5
+      ],
+      "to": [
+        14.5,
+        4,
+        14.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "mortar",
+      "from": [
+        2,
+        14,
+        2.5
+      ],
+      "to": [
+        6.5,
+        16,
+        7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            4.5
+          ],
+          "texture": "#stone"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            4.5
+          ],
+          "texture": "#stone"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            2
+          ],
+          "texture": "#stone"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            2
+          ],
+          "texture": "#stone"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            2
+          ],
+          "texture": "#stone"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.5,
+            2
+          ],
+          "texture": "#stone"
+        }
+      }
+    },
+    {
+      "name": "ground herbs",
+      "from": [
+        2.5,
+        15.9,
+        3
+      ],
+      "to": [
+        6,
+        16.1,
+        6.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            3.5
+          ],
+          "texture": "#herb"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            3.5
+          ],
+          "texture": "#herb"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            0.25
+          ],
+          "texture": "#herb"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            0.25
+          ],
+          "texture": "#herb"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            0.25
+          ],
+          "texture": "#herb"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            0.25
+          ],
+          "texture": "#herb"
+        }
+      }
+    },
+    {
+      "name": "pestle",
+      "from": [
+        4.6,
+        15,
+        4.2
+      ],
+      "to": [
+        5.4,
+        18.5,
+        5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.7999999999999998
+          ],
+          "texture": "#stone_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.7999999999999998
+          ],
+          "texture": "#stone_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            3.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            3.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.5
+          ],
+          "texture": "#stone_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.5
+          ],
+          "texture": "#stone_dark"
+        }
+      },
+      "rotation": {
+        "origin": [
+          5,
+          16,
+          4.6
+        ],
+        "axis": "z",
+        "angle": -22.5,
+        "rescale": false
+      }
+    },
+    {
+      "name": "green mixture",
+      "from": [
+        8.5,
+        14,
+        2.5
+      ],
+      "to": [
+        10.5,
+        17,
+        4.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2.0
+          ],
+          "texture": "#glass_green"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2.0
+          ],
+          "texture": "#glass_green"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            3
+          ],
+          "texture": "#glass_green"
+        }
+      }
+    },
+    {
+      "name": "cork",
+      "from": [
+        8.9,
+        17,
+        2.9
+      ],
+      "to": [
+        10.1,
+        17.8,
+        4.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999997
+          ],
+          "texture": "#cork"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999997
+          ],
+          "texture": "#cork"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999997,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999997,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        }
+      }
+    },
+    {
+      "name": "red mixture",
+      "from": [
+        11,
+        14,
+        2.5
+      ],
+      "to": [
+        13,
+        16.5,
+        4.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#glass_red"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.0
+          ],
+          "texture": "#glass_red"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.5
+          ],
+          "texture": "#glass_red"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2,
+            2.5
+          ],
+          "texture": "#glass_red"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2.5
+          ],
+          "texture": "#glass_red"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.0,
+            2.5
+          ],
+          "texture": "#glass_red"
+        }
+      }
+    },
+    {
+      "name": "cork",
+      "from": [
+        11.4,
+        16.5,
+        2.9
+      ],
+      "to": [
+        12.6,
+        17.3,
+        4.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999997
+          ],
+          "texture": "#cork"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.1999999999999997
+          ],
+          "texture": "#cork"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999997,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999997,
+            0.8000000000000007
+          ],
+          "texture": "#cork"
+        }
+      }
+    },
+    {
+      "name": "blue vial",
+      "from": [
+        13.5,
+        14,
+        3.5
+      ],
+      "to": [
+        15,
+        15.5,
+        5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#glass_blue"
+        }
+      }
+    },
+    {
+      "name": "bandage roll",
+      "from": [
+        3,
+        14,
+        10
+      ],
+      "to": [
+        8,
+        16,
+        12.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            5,
+            2.5
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            5,
+            2.5
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            5,
+            2
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            5,
+            2
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "bandage strip",
+      "from": [
+        8.5,
+        14,
+        10.5
+      ],
+      "to": [
+        14,
+        14.4,
+        13
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            5.5,
+            2.5
+          ],
+          "texture": "#linen"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            5.5,
+            2.5
+          ],
+          "texture": "#linen"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            5.5,
+            0.40000000000000036
+          ],
+          "texture": "#linen"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            5.5,
+            0.40000000000000036
+          ],
+          "texture": "#linen"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            0.40000000000000036
+          ],
+          "texture": "#linen"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            0.40000000000000036
+          ],
+          "texture": "#linen"
+        }
+      }
+    },
+    {
+      "name": "drying herbs",
+      "from": [
+        3,
+        9,
+        7.5
+      ],
+      "to": [
+        4.5,
+        12,
+        9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3
+          ],
+          "texture": "#herb_dry"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3
+          ],
+          "texture": "#herb_dry"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3
+          ],
+          "texture": "#herb_dry"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3
+          ],
+          "texture": "#herb_dry"
+        }
+      }
+    },
+    {
+      "name": "drying herbs",
+      "from": [
+        7,
+        8.5,
+        7.5
+      ],
+      "to": [
+        8.5,
+        12,
+        9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3.5
+          ],
+          "texture": "#herb"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3.5
+          ],
+          "texture": "#herb"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3.5
+          ],
+          "texture": "#herb"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            3.5
+          ],
+          "texture": "#herb"
+        }
+      }
+    },
+    {
+      "name": "drying herbs",
+      "from": [
+        11,
+        9.5,
+        7.5
+      ],
+      "to": [
+        12.5,
+        12,
+        9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            1.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#herb_dry"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5,
+            2.5
+          ],
+          "texture": "#herb_dry"
+        }
+      }
+    },
+    {
+      "name": "drying line",
+      "from": [
+        2.5,
+        11.8,
+        8
+      ],
+      "to": [
+        13.5,
+        12,
+        8.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            0.5
+          ],
+          "texture": "#rope"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            0.5
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            0.25
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            11.0,
+            0.25
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.25
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.25
+          ],
+          "texture": "#rope"
+        }
+      }
+    },
+    {
+      "name": "shelf jar",
+      "from": [
+        3,
+        4,
+        3
+      ],
+      "to": [
+        6,
+        7,
+        6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#glass_green"
+        }
+      }
+    },
+    {
+      "name": "herb box",
+      "from": [
+        9,
+        4,
+        9
+      ],
+      "to": [
+        12,
+        6.5,
+        12
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3,
+            3
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3,
+            2.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    }
+  ]
+}

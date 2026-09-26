@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "storage_crate",
+  "key": {
+    "P": "#minecraft:planks"
+  },
+  "pattern": [
+    "PPP",
+    "P P",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:storage_crate"
+  }
+}

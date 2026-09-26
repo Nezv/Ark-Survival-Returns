@@ -250,6 +250,7 @@ public final class ModContent {
                     output.accept(PACK_HARNESS.get());
                     output.accept(REINFORCED_HARNESS.get());
                     output.accept(FIBER_BANDAGE.get());
+                    dev.nez.arksurvivalreturns.feature.station.StationContent.displayItems(output);
                     output.accept(FLINT_KNIFE.get());
                     output.accept(SPEAR.get());
                     output.accept(BEDROLL_ITEM.get());
