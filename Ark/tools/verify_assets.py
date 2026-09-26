@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
 from verify_camp_assets import verify_camp_assets
-from import_creatures import ROOT, ASSETS, SPECIES, source_files
+from import_creatures import ROOT, ASSETS, SPECIES, source_files, with_behavior_clips
 
 # Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
 # variant textures chosen from its UUID, so every <species>_<variant>.png must match the geometry's
@@ -104,7 +104,7 @@ def main():
     report = json.loads((ROOT/'docs/creature-import.json').read_text())
     for folder, identifier, height, *clips in SPECIES:
         try:
-            check_creature(folder, identifier, height, clips, report, check, fail)
+            check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion

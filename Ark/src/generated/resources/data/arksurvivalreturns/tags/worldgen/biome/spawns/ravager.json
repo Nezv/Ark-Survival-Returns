@@ -1,14 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:dark_forest",
-    "minecraft:old_growth_pine_taiga",
-    "minecraft:taiga",
-    "minecraft:windswept_forest",
-    "minecraft:forest",
-    {
-      "id": "terralith:yellowstone",
-      "required": false
-    }
+    "#arksurvivalreturns:habitat/temperate"
   ]
 }

@@ -4,7 +4,9 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.UUID;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
+import dev.nez.arksurvivalreturns.feature.behavior.Desync;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
@@ -28,7 +30,8 @@ import net.minecraft.world.phys.Vec3;
  *
  * Perception, warnings, hunting, fleeing, satiation and the saved home are the same contract the
  * ground adapter uses. Only the movement and the destination rules differ: the body steers inside
- * the local water column and never leaves the water on its own.
+ * the local water column and never leaves the water on its own. By distance tier: FULL runs all of
+ * it, AMBIENT swims slow cruise legs with hover pauses and no senses, DORMANT hovers in place.
  */
 public final class AquaticGoal extends WildlifeController {
     private static final double SWIM_SPEED = 0.26;
@@ -39,6 +42,7 @@ public final class AquaticGoal extends WildlifeController {
     private UUID preyHerd;
     private int herdThreatTicks, alarmTicks, corneredTicks, failedPaths, damageStamp = -1;
     private long nextRoutine, nextAlarm;
+    private int hoverTicks;
 
     public AquaticGoal(CreatureEntity mob) { super(mob); setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
 
@@ -62,8 +66,37 @@ public final class AquaticGoal extends WildlifeController {
     @Override public void tick() {
         // A rider owns the mount's velocity; the swimming routine must not overwrite it.
         if (mob.isRidden()) { mob.getNavigation().stop(); return; }
-        if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think();
-        if (mob.level() instanceof ServerLevel world) keepSubmerged(world);
+        if (!(mob.level() instanceof ServerLevel world)) return;
+        switch (mob.behaviorTier()) {
+            case FULL -> { if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think(); }
+            case AMBIENT -> cruise(world);
+            case DORMANT -> mob.setDeltaMovement(mob.getDeltaMovement().scale(0.8));
+        }
+        keepSubmerged(world);
+    }
+    /** Tier 2: slow cruise legs inside the column with hover pauses; no senses, needs frozen. */
+    private void cruise(ServerLevel world) {
+        mob.setTarget(null);
+        if (hoverTicks > 0) {
+            hoverTicks--;
+            mob.setDeltaMovement(mob.getDeltaMovement().scale(0.8));
+            return;
+        }
+        if (destination == null || mob.position().distanceToSqr(destination) < 4 || mob.tickCount >= nextRoutine) {
+            if (destination != null && mob.getRandom().nextInt(3) == 0) {
+                destination = null;
+                hoverTicks = 60 + mob.getRandom().nextInt(120);
+                mob.setBehavior(BehaviorState.REST);
+                mob.setAction(BehaviorAction.IDLE);
+                return;
+            }
+            destination = null;
+            roam(world);
+            mob.setBehavior(BehaviorState.ROAM);
+            mob.setAction(BehaviorAction.WALK);
+            return;
+        }
+        swimTo(world, destination, 0.4);
     }
     @Override public void stop() { mob.setDeltaMovement(Vec3.ZERO); mob.setTarget(null); }
     @Override public void receiveAlarm(Vec3 position) { lastKnown = position; alarmTicks = 40; }
@@ -131,6 +164,7 @@ public final class AquaticGoal extends WildlifeController {
                 || visible && sensed instanceof net.minecraft.world.entity.Mob enemy && enemy.getTarget() == mob;
         boolean far = Math.hypot(mob.getX() - home().getX(), mob.getZ() - home().getZ()) > LandWildlife.leash(mob.species());
         BehaviorState before = brain.state();
+        brain.quench();
         var routine = new WildlifeMind.Routine(true, night, false, true, danger, false,
                 corneredTicks > 0, Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), false);
         var state = brain.step(new WildlifeMind.Observation(signal, visible, visible && prey(sensed), intruding, attacked,
@@ -139,8 +173,8 @@ public final class AquaticGoal extends WildlifeController {
         mob.setBehavior(state);
         if (state != before) {
             destination = null; nextRoutine = 0;
+            if (state == BehaviorState.THREATEN || state.combat() && !before.alarm()) mob.playCue(BehaviorAction.Cue.WARN);
             if (state.alarm()) {
-                mob.behaviorCue(state);
                 if (lastKnown != null && world.getGameTime() >= nextAlarm && visible) {
                     nextAlarm = world.getGameTime() + 100;
                     if (mob.species().maxGroup > 1)
@@ -151,6 +185,13 @@ public final class AquaticGoal extends WildlifeController {
             }
         }
         mob.setTarget(state.combat() && visible ? sensed : null);
+        mob.setAction(switch (state) {
+            case HUNT, DEFEND -> BehaviorAction.CHASE;
+            case FLEE -> BehaviorAction.BOLT;
+            case FEED -> BehaviorAction.FEED;
+            case REST, ALERT, THREATEN -> BehaviorAction.IDLE;
+            default -> BehaviorAction.WALK;
+        });
         if (lastKnown != null && state.alarm()) mob.getLookControl().setLookAt(lastKnown.x, lastKnown.y + 1, lastKnown.z, 20, 20);
         if (state.combat() && visible && sensed != null) {
             if (mob.isWithinMeleeAttackRange(sensed)) {
@@ -204,7 +245,7 @@ public final class AquaticGoal extends WildlifeController {
     private void swimTo(ServerLevel world, Vec3 point, double speed) {
         var to = point.subtract(mob.position());
         if (to.length() < 1.2) { mob.setDeltaMovement(mob.getDeltaMovement().scale(0.7)); return; }
-        var desired = to.normalize().scale(SWIM_SPEED * speed);
+        var desired = to.normalize().scale(SWIM_SPEED * speed * Desync.speedFactor(mob.getUUID().getLeastSignificantBits()));
         var next = mob.getDeltaMovement().lerp(desired, 0.18);
         next = keepInsideColumn(world, next);
         mob.setDeltaMovement(next);

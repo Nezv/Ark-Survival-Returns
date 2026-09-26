@@ -91,8 +91,9 @@ class NighttimeMindTest {
         assertTrue(NighttimeCycle.individualNight(13600, 600, 13000, 23000, 600));
         assertFalse(NighttimeCycle.individualNight(23600, 600, 13000, 23000, 600));
         int asleep = 0;
-        for (int t = 0; t < 2000; t++) if (NighttimeCycle.sleepWanted(t, Long.MIN_VALUE, true, false, 0.7)) asleep++;
-        assertEquals(1400, asleep);
+        for (int t = 23000; t < 23000 + 14000; t += 10)
+            if (DailySchedule.phase(t, Long.MIN_VALUE, true, 13000, 23000, 0, 0.7) == DailySchedule.Phase.SLEEP) asleep++;
+        assertEquals(980, asleep, "carnivores sleep the first 70% of daylight in one block");
         assertEquals(62.4, NighttimeCycle.sight(48, true, true, 1.3), 1e-10);
         assertEquals(41.6, NighttimeCycle.sight(32, true, true, 1.3), 1e-10);
         assertEquals(22.4, NighttimeCycle.sight(32, true, false, 1.3), 1e-10);

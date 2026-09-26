@@ -7,8 +7,15 @@ not a claim of visual verification.
 ## Behavior
 
 A natural flyer claims a single nest of its own near where it spawned; no colony record, member list or
-map marker is saved. It roams a circle around its saved home, perches at its own nest, and takes off again
-on a staggered timer. A safe perch is an existing owned nest with solid support and enough body clearance,
+map marker is saved. It flies smooth laps around its saved home (`FlightPath`): each lap picks a wide
+wobbling loop, a figure eight that crosses over the nest, or, for soaring species, a thermal circle that
+gains height (the SOAR phase). The bird follows a point that slides along the lap, only advancing while the
+bird keeps up, so it banks and climbs gradually instead of snapping between waypoints. It perches at its
+own nest, looks around now and then while perched, and takes off again on a staggered timer. In the air it
+banks with its left and right flight clips in hard turns, flaps while climbing and glides while descending.
+Flyers have no day schedule, hunger or thirst. Beyond the full-detail radius they skip territory scans and
+check collisions less often (every 3 ticks in the ambient tier, every 10 in the dormant tier), and a
+dormant bird stays perched. A safe perch is an existing owned nest with solid support and enough body clearance,
 unoccupied by another bird. Landing approaches slowly and settles on the surface; removed or blocked
 perches cause a return to flight.
 
@@ -30,7 +37,8 @@ Hunger, thirst, reproduction, incubation and automatic egg production are still 
 
 Flyers spawn through the vanilla spawner: each is added to its `spawns/<id>` biome tag by a generated
 `neoforge:add_spawns` modifier, and the placement predicate applies the same danger gate every other
-species uses.
+species uses. Since P00 every flyer tag points at `habitat/sky`, every temperate and snowy land biome; the
+nest rules below decide where a bird can actually live.
 
 | Setting | Default |
 |---|---|
@@ -43,8 +51,7 @@ species uses.
 
 Pteranodon requires sand or red sand near at least a 2×2 patch of exposed water. Argentavis requires
 supported natural high ground; Quetzal, Archaeopteryx and Dragon require their own minimum floor heights.
-All require open sky, body clearance, loaded entity-ticking terrain and the world border. Biome tags
-remain spawn preferences as before.
+All require open sky, body clearance, loaded entity-ticking terrain and the world border.
 
 Nest models are the same per-species bowls as before: sand for Pteranodon, twig and moss-colored fronds for
 the others. A flyer that never finds a valid local site simply keeps flying with no nest.

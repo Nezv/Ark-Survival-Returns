@@ -6,6 +6,7 @@ import shutil
 import copy
 from expansion_catalog import EXPANSION
 from collection_catalog import COLLECTION, import_clips
+from build_behavior_clips import LOOPING_ROLES, behavior_extras
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'src/main/resources/assets/arksurvivalreturns'
@@ -144,6 +145,17 @@ def source_files(folder):
     return geometry, animation, files
 
 
+WATER = {entry['id'] for entry in COLLECTION if entry['realm'] == 'WATER'}
+
+
+def with_behavior_clips(folder, identifier, clips):
+    """The role clips plus every behaviour clip (turns, look-around, sniff, poop, startle, flinch,
+    banking) the rig's own source library offers, and the role each extra clip plays."""
+    _, animation, _ = source_files(folder)
+    roles = behavior_extras(list(json.loads(animation.read_text())['animations']), identifier in WATER)
+    return list(clips) + [name for name in dict.fromkeys(roles.values()) if name not in clips], roles
+
+
 def main():
     report = []
     for folder, identifier, height, *clips in SPECIES:
@@ -173,6 +185,9 @@ def main():
         desc['visible_bounds_height'] = height * 2 + 2
         desc['visible_bounds_offset'] = [0, height / 2, 0]
         source_animations = json.loads(anim_path.read_text())['animations']
+        base = clips[:3]
+        clips, roles = with_behavior_clips(folder, identifier, clips)
+        looping = {name for role, name in roles.items() if role in LOOPING_ROLES}
         animations = {}
         for index, name in enumerate(clips):
             if name == 'Ark-Sleep':
@@ -183,6 +198,10 @@ def main():
                 # Torpor sequences carry their authored one-shot/loop intent; the locomotion heuristic
                 # below is calibrated for movement clips and must not rewrite a collapse or a wake.
                 clip['loop'] = clip.get('loop', False)
+            elif name in roles.values() and name not in looping and name not in base:
+                clip['loop'] = False
+            elif name in looping:
+                clip['loop'] = True
             else:
                 clip['loop'] = index != 2 and not any(word in name for word in ('Startled', 'Roar', 'Call', 'Attack-Bite', 'Attack-Claw', 'Swoop-Out', '-Land', 'Take-Off'))
             for bone_name, tracks in clip.get('bones', {}).items():
@@ -205,6 +224,6 @@ def main():
                        'source_sha256': {name: hashlib.sha256(path.read_bytes()).hexdigest()
                                          for name, path in sources.items()}})
     write(ROOT / 'docs/creature-import.json', report)
-    print(f'Imported {len(report)} creatures, {sum(len(row[3:]) for row in SPECIES)} clips, and five procedural texture variants.')
+    print(f'Imported {len(report)} creatures, {sum(len(row["clips"]) for row in report)} clips, and five procedural texture variants.')
 
 if __name__ == '__main__': main()

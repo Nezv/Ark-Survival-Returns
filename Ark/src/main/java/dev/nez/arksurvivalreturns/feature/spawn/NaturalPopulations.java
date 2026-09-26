@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Independent wildlife budget: keeps a configurable population of mod creatures around players
- * regardless of the vanilla mob cap, using the same danger, biome and placement rules as the
+ * regardless of the vanilla mob cap, using the same danger, habitat and placement rules as the
  * biome spawn tables. It only counts, places and culls natural wildlife; tames, spawn eggs and
  * command summons are never touched, and no chunk is ever force-loaded.
  */
@@ -32,8 +32,7 @@ import org.jspecify.annotations.Nullable;
 public final class NaturalPopulations {
     /**
      * Regional large species the budget wants at least one of near a player, mirroring the deleted
-     * director's missing-large priority. They are the only species allowed to cross their biome tag,
-     * at a reduced weight, so a level-4/5 area always has a chance at an apex encounter.
+     * director's missing-large priority, so a level-4/5 area always has a chance at an apex encounter.
      */
     private static final java.util.EnumSet<Species> REGIONAL_LARGE = java.util.EnumSet.of(
             Species.GIGANOTOSAURUS, Species.TITANOSAUR, Species.TYRANNOSAURUS, Species.BRONTOSAURUS,
@@ -81,7 +80,7 @@ public final class NaturalPopulations {
         }
     }
 
-    /** One regional large species absent near the player and legal at the player's danger, or null. */
+    /** One regional large species absent near the player and legal at the player's danger and habitat, or null. */
     private static @Nullable Species missingRegionalLarge(ServerLevel level, Player player,
             List<CreatureEntity> wilds, double radius) {
         var present = java.util.EnumSet.noneOf(Species.class);
@@ -89,8 +88,10 @@ public final class NaturalPopulations {
             if (creature.distanceToSqr(player) <= radius * radius) present.add(creature.species());
         var missing = new ArrayList<Species>();
         int danger = ProgressionData.dangerAt(level, player.blockPosition());
+        var biome = level.getBiome(player.blockPosition());
         for (var species : REGIONAL_LARGE)
-            if (!present.contains(species) && danger >= species.minimumDanger()) missing.add(species);
+            if (!present.contains(species) && danger >= species.minimumDanger() && biome.is(species.biomes))
+                missing.add(species);
         return missing.isEmpty() ? null : missing.get(level.getRandom().nextInt(missing.size()));
     }
 
@@ -118,7 +119,7 @@ public final class NaturalPopulations {
         return nearest;
     }
 
-    /** Finds one biome/danger-legal group site around the player and places the group. */
+    /** Finds one habitat/danger-legal group site around the player and places the group. */
     private static boolean tryGroup(ServerLevel level, Player player, double radius, double minDistance,
             @Nullable Set<Species> only) {
         int reach = (int) radius;
@@ -146,40 +147,30 @@ public final class NaturalPopulations {
     }
 
     /**
-     * Weighted pick over species whose minimum danger admits this position. Ordinary species stay inside
-     * their biome tag; regional large species are only biased by it (x3 in habitat, x1 outside), so an
-     * apex can rarely cross into a neighbouring level-4/5 habitat instead of being impossible there.
+     * Weighted pick over species whose minimum danger admits this position and whose habitat tag holds
+     * its biome. The area decides how dangerous the pick may be; the biome only decides between the
+     * temperate, wetland, cold, sea and sky communities.
      */
     private static Species pickSpecies(ServerLevel level, BlockPos pos, @Nullable Set<Species> only) {
         int danger = ProgressionData.dangerAt(level, pos);
         if (danger < 1) return null;
         var biome = level.getBiome(pos);
         var eligible = new ArrayList<Species>();
-        var weights = new ArrayList<Integer>();
         int total = 0;
         for (var species : Species.values()) {
             if (species.weight <= 0 || danger < species.minimumDanger()) continue;
             if (only != null && !only.contains(species)) continue;
-            boolean habitat = biome.is(species.biomes);
-            if (!habitat && !REGIONAL_LARGE.contains(species)) continue;
-            int weight = selectionWeight(species, habitat);
+            if (!biome.is(species.biomes)) continue;
             eligible.add(species);
-            weights.add(weight);
-            total += weight;
+            total += species.weight;
         }
         if (eligible.isEmpty()) return null;
         int roll = level.getRandom().nextInt(total);
-        for (int i = 0; i < eligible.size(); i++) {
-            roll -= weights.get(i);
-            if (roll < 0) return eligible.get(i);
+        for (var species : eligible) {
+            roll -= species.weight;
+            if (roll < 0) return species;
         }
         return eligible.getFirst();
-    }
-
-    /** Biome tag bonus: the natural habitat triples a species' chance, off-habitat apex strays keep the base. */
-    private static int selectionWeight(Species species, boolean habitat) {
-        int base = Math.max(1, species.weight);
-        return habitat ? base * 3 : base;
     }
 
     private static boolean spawnGroup(ServerLevel level, Species species, BlockPos anchor, boolean water) {

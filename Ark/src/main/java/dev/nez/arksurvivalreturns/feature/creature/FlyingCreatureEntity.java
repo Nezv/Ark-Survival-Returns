@@ -5,7 +5,11 @@ import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.animation.*;
 import com.geckolib.animation.object.PlayState;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorTier;
+import dev.nez.arksurvivalreturns.feature.behavior.ClipRole;
+import dev.nez.arksurvivalreturns.feature.behavior.FlightPath;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.flying.*;
 import dev.nez.arksurvivalreturns.feature.mass.MassRules;
@@ -25,9 +29,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.*;
 import net.minecraft.world.phys.*;
 
-/** Habitat-anchored circle/swoop steering. No ground needs, target acquisition or pack-follow goal. */
+/**
+ * Nest-anchored flight. No day schedule, needs, target acquisition or pack-follow goal: the bird flies smooth
+ * laps around its nest ({@link FlightPath}: wide loops, figure eights over the nest, thermal circles), lands,
+ * perches and looks around, then takes off again. Egg thieves, and intruders near an apex flyer, are circled
+ * and swooped. Far from players the laps continue with sparse collision checks and a perched bird stays put.
+ */
 public final class FlyingCreatureEntity extends CreatureEntity {
-    public enum Phase { ROAM, DEFENSE_CIRCLE, SWOOP, RETURN_HOME, LAND, PERCH, TAKEOFF }
+    public enum Phase { ROAM, DEFENSE_CIRCLE, SWOOP, RETURN_HOME, LAND, PERCH, TAKEOFF, SOAR }
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(FlyingCreatureEntity.class, EntityDataSerializers.INT);
     private UUID thiefId;
     private BlockPos center, nest;
@@ -36,6 +45,10 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     private int phaseTicks, nextPerch, nextDestination, nextAdoption, swoopTicks, blockedTicks;
     private double angle, orbitRadius, orbitHeight;
     private boolean orbitInitialized, struck;
+    private FlightPath.Shape lap;
+    private double lapTheta;
+    private float perchYaw;
+    private java.util.SplittableRandom flightRandom;
 
     public FlyingCreatureEntity(EntityType<? extends CreatureEntity> type, Level level, Species species) {
         super(type, level, species); setNoGravity(true);
@@ -49,7 +62,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     public BlockPos nestPosition() { return nest; }
     /** Claims the local perch this bird owns. */
     public void assignNest(BlockPos perch) {
-        nest = perch; destination = null; orbitInitialized = false;
+        nest = perch; destination = null; orbitInitialized = false; lap = null;
     }
     private void phase(Phase next) {
         if (flightPhase() == next) return;
@@ -60,6 +73,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             case PERCH -> BehaviorState.REST;
             default -> BehaviorState.ROAM;
         });
+        setAction(next == Phase.PERCH ? BehaviorAction.REST : BehaviorAction.IDLE);
         if (next == Phase.TAKEOFF || before == Phase.PERCH && next == Phase.DEFENSE_CIRCLE) triggerAnim("transition", "takeoff");
         if (next == Phase.PERCH) triggerAnim("transition", "land");
         if (next == Phase.SWOOP) stopTriggeredAnim("transition", null);
@@ -137,7 +151,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         if (!orbitInitialized) {
             angle = random.nextDouble() * Math.PI * 2;
             orbitRadius = 8 + random.nextDouble() * (roamRadius() - 10);
-            orbitHeight = (species() == Species.ARGENTAVIS ? 12 : 6) + random.nextDouble() * 12;
+            orbitHeight = (species() == Species.ARGENTAVIS ? 12 : 8) + random.nextDouble() * 10;
             nextPerch = tickCount + 240 + random.nextInt(401); orbitInitialized = true;
         }
         if (tickCount >= nextAdoption) {
@@ -146,7 +160,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             // A natural flyer claims one local nest of its own; no colony record is kept.
             if (nest == null && isNaturalWildlife()) nest = Nests.placeNear(world, this);
         }
-        considerTerritorialDefense(world);
+        if (behaviorTier() == BehaviorTier.FULL) considerTerritorialDefense(world);
         Player thief = thiefId != null && world.getEntity(thiefId) instanceof Player player ? player : null;
         if (thiefId != null && (!validThief(thief) || world.getGameTime() >= defenseUntil
                 || dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) > (double)Config.FLIGHT_LEASH.get() * Config.FLIGHT_LEASH.get())) endDefense();
@@ -167,9 +181,21 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             }
         } else setTarget(null); // External target assignments never grant attack authority.
         if (flightPhase() == Phase.PERCH) {
-            if (!Config.PERCHING.get() || !safePerch(world) || isInWater() || hurtTime > 0 || phaseTicks > 100 + Math.floorMod(getId() * 31, 201)) {
+            boolean rested = phaseTicks > 100 + Math.floorMod(getId() * 31, 201) && behaviorTier() != BehaviorTier.DORMANT;
+            if (!Config.PERCHING.get() || !safePerch(world) || isInWater() || hurtTime > 0 || rested) {
                 phase(Phase.TAKEOFF); nextPerch = tickCount + 400 + random.nextInt(401);
-            } else { setDeltaMovement(Vec3.ZERO); setXRot(Mth.approachDegrees(getXRot(), 0, 5)); return; }
+            } else {
+                setDeltaMovement(Vec3.ZERO); setXRot(Mth.approachDegrees(getXRot(), 0, 5));
+                // A perched bird looks around now and then instead of freezing on its nest.
+                if (Math.floorMod(tickCount + getId(), 50) == 0 && random.nextInt(3) == 0)
+                    perchYaw = getYRot() + (random.nextBoolean() ? 1 : -1) * (30 + random.nextInt(60));
+                if (perchYaw != 0) {
+                    setYRot(Mth.approachDegrees(getYRot(), perchYaw, 3));
+                    yBodyRot = getYRot(); yHeadRot = getYRot();
+                    if (Math.abs(Mth.wrapDegrees(perchYaw - getYRot())) < 1) perchYaw = 0;
+                }
+                return;
+            }
         }
         if (flightPhase() == Phase.LAND) {
             if (isInWater() || isInLava() || !safePerch(world) || phaseTicks > 200) { phase(Phase.TAKEOFF); nextPerch = tickCount + 400; }
@@ -180,18 +206,20 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         }
         if (flightPhase() == Phase.TAKEOFF) {
             destination = position().add(0, 4, 0);
-            if (phaseTicks > (species() == Species.ARGENTAVIS ? 28 : 48)) phase(Phase.ROAM);
+            if (phaseTicks > (species() == Species.ARGENTAVIS ? 28 : 48)) { lap = null; phase(Phase.ROAM); }
         }
-        if (flightPhase() == Phase.ROAM && dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) > (double)roamRadius() * roamRadius()) phase(Phase.RETURN_HOME);
+        boolean cruising = flightPhase() == Phase.ROAM || flightPhase() == Phase.SOAR;
+        if (cruising && dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) > (double)roamRadius() * roamRadius()) phase(Phase.RETURN_HOME);
         if (flightPhase() == Phase.RETURN_HOME) {
             destination = Vec3.atBottomCenterOf(center).add(0, orbitHeight, 0);
-            if (dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) < 100) phase(Phase.ROAM);
+            if (dev.nez.arksurvivalreturns.feature.land.LandWildlife.distanceSqr(center, blockPosition()) < 100) { lap = null; phase(Phase.ROAM); }
         }
-        if (flightPhase() == Phase.ROAM && tickCount >= nextPerch && Config.PERCHING.get() && nest != null) {
+        if ((flightPhase() == Phase.ROAM || flightPhase() == Phase.SOAR) && tickCount >= nextPerch && Config.PERCHING.get() && nest != null) {
             nextPerch = tickCount + 200;
             beginPerching(world);
         }
-        if (flightPhase() == Phase.ROAM || flightPhase() == Phase.DEFENSE_CIRCLE) {
+        if (flightPhase() == Phase.ROAM || flightPhase() == Phase.SOAR) followLap();
+        if (flightPhase() == Phase.DEFENSE_CIRCLE) {
             if (destination == null || tickCount >= nextDestination || position().distanceToSqr(destination) < 9) {
                 nextDestination = tickCount + 40 + random.nextInt(21);
                 double direction = (getUUID().getLeastSignificantBits() & 1) == 0 ? 1 : -1;
@@ -202,6 +230,38 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         }
         steer(world);
     }
+    /**
+     * Follows a point that slides along the current lap. The point only advances while the bird keeps up,
+     * and the bird aims a few blocks ahead of it, so turns bank smoothly and climbs are gradual.
+     */
+    private void followLap() {
+        if (flightRandom == null) flightRandom = new java.util.SplittableRandom(getUUID().getMostSignificantBits() ^ tickCount);
+        if (lap == null) startLap();
+        Vec3 point = lapPoint(lapTheta);
+        if (position().distanceToSqr(point) < 49) {
+            lapTheta += FlightPath.step(lap, lapTheta, cruiseSpeed() * 1.1);
+            if (lapTheta >= Math.PI * 2) startLap();
+        }
+        destination = lapPoint(lapTheta + FlightPath.step(lap, lapTheta, 5));
+    }
+    private void startLap() {
+        lap = FlightPath.pick(flightRandom, roamRadius(), orbitHeight, species() != Species.ARCHAEOPTERYX);
+        // Start from the point of the new lap nearest the bird, so a new shape never yanks it across the sky.
+        double best = Double.MAX_VALUE;
+        for (int i = 0; i < 48; i++) {
+            double theta = Math.PI * 2 * i / 48;
+            double d = position().distanceToSqr(lapPoint(theta));
+            if (d < best) { best = d; lapTheta = theta; }
+        }
+        if (flightPhase() == Phase.ROAM || flightPhase() == Phase.SOAR)
+            phase(lap.kind() == FlightPath.Kind.THERMAL ? Phase.SOAR : Phase.ROAM);
+    }
+    private Vec3 lapPoint(double theta) {
+        double[] offset = FlightPath.offset(lap, theta);
+        return Vec3.atBottomCenterOf(center).add(offset[0], offset[1], offset[2]);
+    }
+    /** Blocks per tick on a lap: thermals are slow circles, cruising laps a steady glide. */
+    private double cruiseSpeed() { return flightPhase() == Phase.SOAR ? 0.2 : 0.27; }
     private boolean seesPlayer(ServerLevel world, Player player) {
         return player != null && SpawnRules.loaded(world, new AABB(position(), player.position()).inflate(1)) && hasLineOfSight(player);
     }
@@ -249,12 +309,16 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         if (isInWater() || isInLava()) destination = position().add(0, 4, 0);
         if (destination == null) { setDeltaMovement(getDeltaMovement().scale(0.8)); return; }
         Vec3 to = destination.subtract(position());
-        double speed = flightPhase() == Phase.SWOOP ? 0.48 : flightPhase() == Phase.LAND ? Math.min(0.18, to.length()*0.2) : 0.27;
+        double speed = flightPhase() == Phase.SWOOP ? 0.48 : flightPhase() == Phase.LAND ? Math.min(0.18, to.length()*0.2)
+                : flightPhase() == Phase.SOAR ? 0.2 : 0.27;
         if (MassService.overloaded(this)) speed *= MassRules.speedFactor(MassService.creatureLoad(this).ratio());
         Vec3 desired = to.normalize().scale(speed);
         Vec3 velocity = getDeltaMovement().lerp(desired, 0.18);
         var ahead = position().add(velocity.scale(4));
-        if (!clearRoute(world, ahead)) {
+        // Far birds check their route less often; a missed check only means a bump, never a pass through blocks.
+        var tier = behaviorTier();
+        boolean check = tier == BehaviorTier.FULL || Math.floorMod(tickCount + getId(), tier == BehaviorTier.AMBIENT ? 3 : 10) == 0;
+        if (check && !clearRoute(world, ahead)) {
             blockedTicks++;
             if (flightPhase() == Phase.SWOOP) recover(world);
             // A blocked dive or orbit may climb/turn locally. Never plan through unloaded chunks.
@@ -264,8 +328,11 @@ public final class FlyingCreatureEntity extends CreatureEntity {
                 Vec3 side = position().add(-Math.sin(angle)*2, 0, Math.cos(angle)*2);
                 velocity = clearRoute(world, side) ? side.subtract(position()).normalize().scale(0.14) : Vec3.ZERO;
             }
-            if (blockedTicks >= 40) { angle += Math.PI/2; destination = null; blockedTicks = 0; if (flightPhase() == Phase.LAND) phase(Phase.ROAM); }
-        } else blockedTicks = 0;
+            if (blockedTicks >= 40) {
+                angle += Math.PI/2; destination = null; blockedTicks = 0; lap = null;
+                if (flightPhase() == Phase.LAND) phase(Phase.ROAM);
+            }
+        } else if (check) blockedTicks = 0;
         setDeltaMovement(velocity);
         if (velocity.horizontalDistanceSqr() > 0.0001) {
             float yaw = (float)(Math.atan2(velocity.z, velocity.x)*180/Math.PI) - 90;
@@ -333,7 +400,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         long perch = in.getLongOr("FlightNest", Long.MIN_VALUE);
         nest = perch == Long.MIN_VALUE ? null : BlockPos.of(perch);
         thiefId = null; setTarget(null); entityData.set(PHASE, Phase.ROAM.ordinal()); setBehavior(BehaviorState.ROAM); setNoGravity(true);
-        orbitInitialized = false; destination = null;
+        orbitInitialized = false; destination = null; lap = null;
     }
     public String flightPrefix() { return species() == Species.ARGENTAVIS ? "Argentavis-" : "Ptero-"; }
     private Species.FlyerProfile flightProfile() { return species().flyerProfile(); }
@@ -374,15 +441,37 @@ public final class FlyingCreatureEntity extends CreatureEntity {
                     .thenLoop(isLocomoting() ? flyMoveClip() : hoverClip()));
             String clip = flightPhase() == Phase.PERCH ? perchClip()
                     : flightPhase() == Phase.SWOOP ? swoopLoopClip()
-                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : flyMoveClip();
+                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : airborneClip();
+            state.setControllerSpeed(individualRate());
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));
         registrar.add(new AnimationController<FlyingCreatureEntity>("transition", 4, state -> PlayState.STOP)
                 .triggerableAnim("takeoff", oneShot(takeOffClip()))
                 .triggerableAnim("land", oneShot(landClip()))
                 .triggerableAnim("pullout", oneShot(swoopOutClip())));
+        var reaction = new AnimationController<FlyingCreatureEntity>("reaction", 4, state -> PlayState.STOP)
+                .triggerableAnim("warn", oneShot(species().warningClip()));
+        if (clips().has(ClipRole.HURT)) reaction.triggerableAnim("hurt", oneShot(clips().name(ClipRole.HURT)));
+        registrar.add(reaction);
         registrar.add(new AnimationController<FlyingCreatureEntity>("attack", 2, state -> PlayState.STOP)
                 .triggerableAnim("strike", oneShot(attackClip())));
+    }
+    /**
+     * Airborne clip from the motion: bank left or right in hard turns, flap while climbing, glide while
+     * descending, cruise otherwise.
+     */
+    private String airborneClip() {
+        var book = clips();
+        float turn = bodyTurn();
+        if (Math.abs(turn) > 2.2f) {
+            boolean mirror = level().isClientSide() && dev.nez.arksurvivalreturns.NighttimeClientConfig.MIRROR_TURN_CLIPS.get();
+            String bank = book.name(turn > 0 != mirror ? ClipRole.FLY_RIGHT : ClipRole.FLY_LEFT);
+            if (bank != null) return bank;
+        }
+        double climb = getDeltaMovement().y;
+        if (climb > 0.06 && book.has(ClipRole.FLAP)) return book.name(ClipRole.FLAP);
+        if (climb < -0.08 && book.has(ClipRole.GLIDE)) return book.name(ClipRole.GLIDE);
+        return flyMoveClip();
     }
     public static double altitudeWeight(Species species, int y, int seaLevel) {
         if (species == Species.PTERANODON) return 1;

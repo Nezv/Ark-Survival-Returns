@@ -13,7 +13,7 @@ import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionGoal;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
 import dev.nez.arksurvivalreturns.feature.mass.MassService;
-import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
+import dev.nez.arksurvivalreturns.feature.spawn.DangerTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
 import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
@@ -46,6 +46,7 @@ import org.jspecify.annotations.Nullable;
 public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Integer> LEVEL = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BEHAVIOR = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ACTION = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> NIGHT_ACTIVE = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Species species;
@@ -75,10 +76,17 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private int strikeWindup;
     private int strikeCooldown;
     private boolean applyingStrike;
+    private BehaviorTier behaviorTier = BehaviorTier.FULL;
+    private int engagedTicks;
+    private @Nullable BehaviorProfile behaviorProfile;
+    private float turnBase = -1;
+    /** Client: smoothed body yaw change in degrees per tick, positive when turning right. */
+    private float bodyTurn;
 
     public CreatureEntity(EntityType<? extends CreatureEntity> type, Level level, Species species) {
         super(type, level);
         this.species = species;
+        moveControl = new CreatureMoveControl(this);
     }
 
     public Species species() { return species; }
@@ -340,11 +348,94 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public void setNightActive(boolean value) { if (!species.flyer()) entityData.set(NIGHT_ACTIVE, value); }
     public boolean nightActive() { return entityData.get(NIGHT_ACTIVE); }
     public float nightEyeGlow(float partialTick) { return previousEyeGlow + (eyeGlow - previousEyeGlow) * partialTick; }
-    public void behaviorCue(BehaviorState state) {
-        if (state == BehaviorState.THREATEN || state == BehaviorState.FLEE) triggerAnim("reaction", "warn");
-        var sound = state == BehaviorState.ALERT || state == BehaviorState.INVESTIGATE ? net.minecraft.sounds.SoundEvents.SNIFFER_SNIFFING
-                : species.predator ? net.minecraft.sounds.SoundEvents.RAVAGER_ROAR : net.minecraft.sounds.SoundEvents.POLAR_BEAR_WARNING;
-        playSound(sound, state.combat() ? 1.0f : 0.7f, species.solitary() ? 0.7f : 1.2f);
+    /** The animation-timed step inside the current behaviour state; synchronized for the clip choice. */
+    public BehaviorAction action() {
+        return BehaviorAction.values()[Math.clamp(entityData.get(ACTION), 0, BehaviorAction.values().length - 1)];
+    }
+    public void setAction(BehaviorAction action) { entityData.set(ACTION, action.ordinal()); }
+
+    /** This species' runtime clips, lengths, authored ground speeds and behaviour roles. */
+    public ClipBook clips() { return BehaviorClips.of(species.id); }
+
+    /** What the choreography needs to know about this species. */
+    public BehaviorProfile behaviorProfile() {
+        if (behaviorProfile == null) {
+            var family = species.flyer() ? null : species.family();
+            boolean stalker = family == dev.nez.arksurvivalreturns.feature.land.LandFamily.COLD_STALKER
+                    || family == dev.nez.arksurvivalreturns.feature.land.LandFamily.COLD_PREDATOR
+                    || family == dev.nez.arksurvivalreturns.feature.land.LandFamily.AMPHIBIOUS
+                    || family == dev.nez.arksurvivalreturns.feature.land.LandFamily.SWAMP_PACK;
+            String warning = species.warningClip();
+            behaviorProfile = new BehaviorProfile(species.id, species.predator, species.timid(), species.herd(), stalker,
+                    !species.predator && !species.aquatic(), species.height,
+                    warning.equals(species.idle) ? null : warning, clips());
+        }
+        return behaviorProfile;
+    }
+
+    /**
+     * Degrees per tick the body may turn. Rigs with a turn clip turn about 75 degrees per clip cycle;
+     * the others turn slower the taller they stand. Running and walking turns are wider arcs.
+     */
+    public float turnRate(boolean running, boolean moving) {
+        if (turnBase < 0) {
+            var turn = clips().role(ClipRole.TURN_LEFT);
+            float byClip = turn == null ? 0 : 75f / turn.ticks();
+            float bySize = (float) (18 / Math.sqrt(Math.max(1, species.height)));
+            turnBase = Math.clamp(turn == null ? bySize : byClip, 1.5f, 12f);
+        }
+        return turnBase * (running ? 2.5f : 1f) * (moving ? 1.5f : 1f);
+    }
+
+    /**
+     * Navigation speed modifier for wandering: near the pace this species' walk clip was authored for,
+     * so its feet do not slide, varied per individual so a herd does not march in step.
+     */
+    public double wanderModifier() {
+        double attribute = getAttributeValue(Attributes.MOVEMENT_SPEED);
+        double target = MovementTuning.wanderBlocksPerSecond(clips().groundSpeed(species.walk),
+                MovementTuning.blocksPerSecond(attribute), Desync.speedFactor(getUUID().getLeastSignificantBits()));
+        return Math.clamp(MovementTuning.modifierFor(target, attribute), 0.3, 0.9);
+    }
+
+    /** Level of detail of this creature's behaviour; always FULL for tames, riders and alarmed animals. */
+    public BehaviorTier behaviorTier() { return behaviorTier; }
+
+    /** Keeps full behaviour for a while, e.g. after a hit from beyond the full-detail radius. */
+    public void engage(int ticks) {
+        engagedTicks = Math.max(engagedTicks, ticks);
+        behaviorTier = BehaviorTier.FULL;
+    }
+
+    /** Recomputes the tier now; called on a staggered one-second timer and by tests. */
+    public void refreshBehaviorTier() {
+        if (!(level() instanceof ServerLevel world)) return;
+        var state = behavior();
+        if (!BehaviorLod.enabled() || isTamed() || isRidden() || isVehicle() || TorporService.restricted(this)
+                || engagedTicks > 0 || state.alarm() || state == BehaviorState.INVESTIGATE || getTarget() != null) {
+            behaviorTier = BehaviorTier.FULL;
+            return;
+        }
+        behaviorTier = BehaviorTier.classify(BehaviorLod.nearestObserverSq(world, this), behaviorTier, BehaviorLod.radii());
+    }
+
+    /** Whether a dormant creature is still close enough for its pose to follow the sleep schedule. */
+    public boolean posedWhenDormant() {
+        return level() instanceof ServerLevel world
+                && BehaviorTier.posed(BehaviorLod.nearestObserverSq(world, this), BehaviorLod.radii());
+    }
+
+    /** Plays a one-shot reaction clip (when the rig has one) and its call. */
+    public void playCue(BehaviorAction.Cue cue) {
+        boolean clip = cue == BehaviorAction.Cue.WARN ? !species.warningClip().equals(species.idle) : clips().has(cue.role());
+        if (clip) triggerAnim("reaction", cue == BehaviorAction.Cue.WARN ? "warn" : cue.key());
+        switch (cue) {
+            case WARN -> playSound(species.predator ? net.minecraft.sounds.SoundEvents.RAVAGER_ROAR
+                    : net.minecraft.sounds.SoundEvents.POLAR_BEAR_WARNING, 1.0f, species.solitary() ? 0.7f : 1.2f);
+            case STARTLE, WAKE -> playSound(net.minecraft.sounds.SoundEvents.SNIFFER_SNIFFING, 0.7f, species.solitary() ? 0.7f : 1.2f);
+            case LOOK, SNIFF -> playSound(net.minecraft.sounds.SoundEvents.SNIFFER_SNIFFING, 0.35f, species.solitary() ? 0.7f : 1.2f);
+            default -> {}
+        }
     }
 
     public static AttributeSupplier.Builder attributes(Species s) {
@@ -357,7 +448,23 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         super.defineSynchedData(builder);
         builder.define(LEVEL, 1);
         builder.define(BEHAVIOR, BehaviorState.ROAM.ordinal());
+        builder.define(ACTION, BehaviorAction.IDLE.ordinal());
         builder.define(NIGHT_ACTIVE, false);
+    }
+    /**
+     * The body follows the facing at the creature's own turn rate, moving or not, on both sides. Vanilla
+     * lets a standing mob's body trail its head and then snap when it walks off, which reads as a glitch
+     * on a large animal turning in place.
+     */
+    @Override protected net.minecraft.world.entity.ai.control.BodyRotationControl createBodyControl() {
+        return new net.minecraft.world.entity.ai.control.BodyRotationControl(this) {
+            @Override public void clientTick() {
+                float limit = isRidden() || riddenTicks > 0 ? 180f : turnRate(true, true) * 1.5f;
+                yBodyRot = net.minecraft.util.Mth.approachDegrees(yBodyRot, getYRot(), limit);
+                float head = net.minecraft.util.Mth.wrapDegrees(yHeadRot - yBodyRot);
+                if (Math.abs(head) > 50f) yHeadRot = yBodyRot + Math.signum(head) * 50f;
+            }
+        };
     }
     @Override protected void registerGoals() {
         // registerGoals runs from the superclass constructor, before this.species is assigned, so the
@@ -390,8 +497,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         int danger = level() instanceof ServerLevel world
                 ? dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.dangerAt(world, blockPosition()) : -1;
         recordOrigin(danger);
-        var tier = danger >= 1 && danger <= BiomeTier.values().length
-                ? BiomeTier.values()[danger - 1] : BiomeTier.EASY;
+        var tier = danger >= 1 && danger <= DangerTier.values().length
+                ? DangerTier.values()[danger - 1] : DangerTier.EASY;
         int a = Config.MIN_LEVEL.get(tier).get(), b = Config.MAX_LEVEL.get(tier).get();
         initializeLevel(Math.min(a, b) + random.nextInt(Math.abs(a - b) + 1));
     }
@@ -414,6 +521,12 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     @Override public void tick() {
         if (!level().isClientSide() && !levelInitialized) rollLevel(); // Covers /summon and external spawners.
         if (!level().isClientSide() && tickCount % 20 == 0) applyMovementTuning();
+        if (!level().isClientSide()) {
+            if (engagedTicks > 0) engagedTicks--;
+            if (Math.floorMod(tickCount + getId(), 20) == 0) refreshBehaviorTier();
+        } else {
+            bodyTurn += (net.minecraft.util.Mth.wrapDegrees(yBodyRot - yBodyRotO) - bodyTurn) * 0.4f;
+        }
         if (riddenTicks > 0) riddenTicks--;
         if (petCooldown > 0) petCooldown--;
         if (strikeWindup > 0) strikeWindup--;
@@ -577,10 +690,15 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
     @Override public boolean hurtServer(ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float damage) {
         boolean hit = super.hurtServer(level, source, damage);
+        if (hit && isAlive()) {
+            // A hit from any distance brings the full behaviour back for the fight or the escape.
+            engage(200);
+            if (clips().has(ClipRole.HURT) && !isStriking() && !TorporService.restricted(this)) triggerAnim("reaction", "hurt");
+        }
         if (hit && isAlive() && WildlifeSenses.hasNightCycle(this)) {
             boolean sleeping = behavior().sleeping();
             wildlife.interruptSleep();
-            if (sleeping) behaviorCue(BehaviorState.ALERT);
+            if (sleeping) playCue(BehaviorAction.Cue.WAKE);
         }
         return hit;
     }
@@ -599,32 +717,92 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             }
             if (isRidden() || riddenTicks > 0) {
                 boolean moving = isLocomoting();
-                state.setControllerSpeed(moving
-                        ? (float) MovementTuning.animationRate(animationBlocksPerSecond, species.height,
-                                species.strideCycleSeconds(true), true, Config.STRIDE_SCALE.get(species).get())
-                        : 1f);
-                return state.setAndContinue(RawAnimation.begin().thenLoop(riddenClip(moving)));
+                String clip = riddenClip(moving);
+                state.setControllerSpeed(moving ? gaitRate(clip, true) : 1f);
+                return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
             }
             var behavior = behavior();
-            boolean running = behavior.combat() || behavior == BehaviorState.FLEE;
-            boolean moving = isLocomoting();
-            state.setControllerSpeed(moving ? (float)MovementTuning.animationRate(animationBlocksPerSecond,
-                    species.height, species.strideCycleSeconds(running), running, Config.STRIDE_SCALE.get(species).get()) : 1);
-            String clip = moving ? movingClip(running)
-                    : behavior == BehaviorState.SLEEP ? species.sleepClip()
-                    : behavior == BehaviorState.REST ? restingClip()
-                    : (behavior == BehaviorState.FORAGE || behavior == BehaviorState.FEED || behavior == BehaviorState.DRINK)
-                            && !species.additiveFood() ? species.foodClip() : standingClip();
-            return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
+            var action = action();
+            if (isLocomoting()) {
+                boolean running = running(action, behavior);
+                String clip = movingClip(running);
+                state.setControllerSpeed(gaitRate(clip, running));
+                return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
+            }
+            // Turning in place steps with the rig's own turn clip instead of sliding round on the spot.
+            String turn = !swimming() && Math.abs(bodyTurn) > 0.8f ? turnClip(bodyTurn > 0) : null;
+            if (turn != null) {
+                var authored = clips().clip(turn);
+                float perTick = authored == null ? 3f : 75f / authored.ticks();
+                state.setControllerSpeed(Math.clamp(Math.abs(bodyTurn) / perTick, 0.5f, 2f));
+                return state.setAndContinue(RawAnimation.begin().thenLoop(turn));
+            }
+            state.setControllerSpeed(individualRate());
+            return state.setAndContinue(RawAnimation.begin().thenLoop(idleClip(action, behavior)));
         }));
         registrar.add(new AnimationController<CreatureEntity>("feeding", 5, state ->
-                species.additiveFood() && behavior() == BehaviorState.FEED && !TorporService.restricted(this)
+                species.additiveFood() && eating(action(), behavior()) && !TorporService.restricted(this)
                         ? state.setAndContinue(RawAnimation.begin().thenLoop(species.foodClip())) : com.geckolib.animation.object.PlayState.STOP).additiveAnimations());
-        registrar.add(new AnimationController<CreatureEntity>("reaction", 4, state -> com.geckolib.animation.object.PlayState.STOP)
-                .triggerableAnim("warn", oneShot(species.warningClip())));
+        var reaction = new AnimationController<CreatureEntity>("reaction", 4, state -> com.geckolib.animation.object.PlayState.STOP)
+                .triggerableAnim("warn", oneShot(species.warningClip()));
+        var book = clips();
+        for (var cue : BehaviorAction.Cue.values())
+            if (cue.role() != null && book.has(cue.role())) reaction.triggerableAnim(cue.key(), oneShot(book.name(cue.role())));
+        if (book.has(ClipRole.HURT)) reaction.triggerableAnim("hurt", oneShot(book.name(ClipRole.HURT)));
+        registrar.add(reaction);
         registrar.add(new AnimationController<CreatureEntity>("attack", 3, state -> com.geckolib.animation.object.PlayState.STOP)
                 .triggerableAnim("strike", oneShot(species.attack)));
     }
+
+    private static boolean running(BehaviorAction action, BehaviorState behavior) {
+        return switch (action) {
+            case RUN, CHASE, BOLT -> true;
+            case WALK, STALK -> false;
+            default -> behavior.combat() || behavior == BehaviorState.FLEE;
+        };
+    }
+
+    private static boolean eating(BehaviorAction action, BehaviorState behavior) {
+        return action == BehaviorAction.GRAZE || action == BehaviorAction.DRINK || action == BehaviorAction.FEED
+                || behavior == BehaviorState.FEED || behavior == BehaviorState.FORAGE || behavior == BehaviorState.DRINK;
+    }
+
+    /** The clip a creature holds while it stands: sleeping, resting, eating, threatening or idle. */
+    protected String idleClip(BehaviorAction action, BehaviorState behavior) {
+        if (behavior == BehaviorState.SLEEP || action == BehaviorAction.SLEEP) return species.sleepClip();
+        if (behavior == BehaviorState.REST || action == BehaviorAction.REST) {
+            String bask = clips().name(ClipRole.REST);
+            return bask != null && !swimming() ? bask : restingClip();
+        }
+        if (eating(action, behavior) && !species.additiveFood()) return species.foodClip();
+        if (action == BehaviorAction.THREAT && !swimming()) {
+            String threat = clips().name(ClipRole.THREAT);
+            if (threat != null) return threat;
+        }
+        return standingClip();
+    }
+
+    /** Playback rate that makes a gait clip's feet match the ground speed, varied per individual. */
+    protected float gaitRate(String clip, boolean running) {
+        double natural = clips().groundSpeed(clip);
+        double stride = Config.STRIDE_SCALE.get(species).get();
+        double rate = Double.isNaN(natural)
+                ? MovementTuning.animationRate(animationBlocksPerSecond, species.height, species.strideCycleSeconds(running), running, stride)
+                : MovementTuning.matchedRate(animationBlocksPerSecond, natural, stride);
+        return (float) rate * individualRate();
+    }
+
+    /** Per-individual animation rate so herd mates drift out of step. */
+    protected float individualRate() { return Desync.animationRate(getUUID().getLeastSignificantBits()); }
+
+    /** The rig's turn clip for a direction, or null; the client option swaps sides for mirrored rigs. */
+    protected @Nullable String turnClip(boolean right) {
+        boolean mirror = level().isClientSide() && dev.nez.arksurvivalreturns.NighttimeClientConfig.MIRROR_TURN_CLIPS.get();
+        return clips().name(right != mirror ? ClipRole.TURN_RIGHT : ClipRole.TURN_LEFT);
+    }
+
+    /** Client: smoothed body yaw change in degrees per tick, positive when turning right. */
+    public float bodyTurn() { return bodyTurn; }
 
     /** Mounted locomotion uses real movement, not the AI's navigation state. */
     protected String riddenClip(boolean moving) {

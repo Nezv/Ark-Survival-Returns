@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import com.google.gson.*;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import net.minecraft.data.*;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,8 +29,9 @@ public final class ArkData implements DataProvider {
         var saves = new ArrayList<CompletableFuture<?>>();
         files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
         // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
-        saves.add(DataProvider.saveStable(cache, ShowcaseData.species(), output.getOutputFolder().getParent().getParent().getParent()
-                .resolve("design/showcase/species.json")));
+        var showcase = output.getOutputFolder().getParent().getParent().getParent().resolve("design/showcase");
+        saves.add(DataProvider.saveStable(cache, ShowcaseData.species(), showcase.resolve("species.json")));
+        saves.add(DataProvider.saveStable(cache, ShowcaseData.behavior(), showcase.resolve("behavior.json")));
         return CompletableFuture.allOf(saves.toArray(CompletableFuture[]::new));
     }
     private void put(String path, Object value) { files.put(path + ".json", new Gson().toJsonTree(value)); }
@@ -68,56 +70,31 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/tags/" + name, Map.of("replace", false, "values",
                 Arrays.stream(values).map(v -> v.contains(":") ? v : "minecraft:" + v).toList()));
     }
+    /** Snow-covered land: the only home of the cold species, and closed to the warm ones. */
+    private static final String[] COLD_BIOMES = {"snowy_plains", "ice_spikes", "snowy_taiga", "snowy_beach", "grove",
+            "snowy_slopes", "frozen_peaks", "jagged_peaks", "frozen_river"};
+    /** Every other surface biome with natural ground; mushroom fields stay a wildlife-free refuge. */
+    private static final String[] TEMPERATE_BIOMES = {"plains", "sunflower_plains", "meadow", "cherry_grove", "forest",
+            "flower_forest", "birch_forest", "old_growth_birch_forest", "dark_forest", "taiga", "old_growth_pine_taiga",
+            "old_growth_spruce_taiga", "savanna", "savanna_plateau", "windswept_savanna", "windswept_hills",
+            "windswept_gravelly_hills", "windswept_forest", "stony_peaks", "jungle", "sparse_jungle", "bamboo_jungle",
+            "swamp", "mangrove_swamp", "river", "beach", "stony_shore", "desert", "badlands", "wooded_badlands",
+            "eroded_badlands"};
+
     private void tags() {
-        biomeTag("difficulty/easy", "plains", "sunflower_plains", "beach", "birch_forest", "old_growth_birch_forest", "cherry_grove", "river", "mushroom_fields");
-        biomeTag("difficulty/moderate", "forest", "flower_forest", "savanna", "savanna_plateau", "windswept_savanna", "meadow", "taiga", "old_growth_pine_taiga", "ocean", "lukewarm_ocean", "warm_ocean");
-        biomeTag("difficulty/hard", "jungle", "sparse_jungle", "bamboo_jungle", "swamp", "mangrove_swamp", "dark_forest", "old_growth_spruce_taiga", "desert", "badlands", "wooded_badlands", "eroded_badlands", "windswept_forest", "stony_shore", "cold_ocean", "deep_ocean", "deep_lukewarm_ocean", "deep_cold_ocean", "lush_caves", "dripstone_caves");
-        biomeTag("difficulty/extreme", "snowy_plains", "ice_spikes", "snowy_taiga", "grove", "snowy_slopes", "frozen_peaks", "jagged_peaks", "stony_peaks", "windswept_hills", "windswept_gravelly_hills", "frozen_river", "snowy_beach", "frozen_ocean", "deep_frozen_ocean", "deep_dark");
-        biomeTag("difficulty/severe", "eroded_badlands", "jagged_peaks", "frozen_peaks");
-        biomeTag("spawns/pteranodon", "beach", "river", "plains", "sunflower_plains", "savanna");
-        biomeTag("spawns/velociraptor", "forest", "flower_forest", "savanna", "savanna_plateau", "jungle", "sparse_jungle");
-        biomeTag("spawns/argentavis", "taiga", "old_growth_pine_taiga", "windswept_forest", "windswept_hills", "windswept_gravelly_hills", "stony_peaks", "snowy_taiga");
-        biomeTag("spawns/triceratops", "plains", "sunflower_plains", "savanna", "savanna_plateau", "meadow");
-        biomeTag("spawns/therizinosaurus", "jungle", "sparse_jungle", "dark_forest", "swamp", "old_growth_spruce_taiga");
-        biomeTag("spawns/brontosaurus", "savanna", "savanna_plateau", "sparse_jungle");
-        biomeTag("spawns/tyrannosaurus", "badlands", "wooded_badlands", "desert", "sparse_jungle", "windswept_forest");
-        biomeTag("spawns/giganotosaurus", "windswept_hills", "windswept_gravelly_hills", "stony_peaks", "jagged_peaks");
-        biomeTag("spawns/titanosaur", "stony_peaks", "windswept_gravelly_hills");
-        biomeTag("spawns/spinosaurus", "river", "swamp", "mangrove_swamp", "sparse_jungle");
-        biomeTag("spawns/parasaur", "plains", "sunflower_plains", "savanna", "forest", "river");
-        biomeTag("spawns/ceratosaurus", "forest", "savanna", "badlands", "sparse_jungle");
-        biomeTag("spawns/dilophosaur", "beach", "forest", "jungle", "sparse_jungle", "swamp");
-        biomeTag("spawns/acrocanthosaurus", "windswept_hills", "windswept_forest", "wooded_badlands", "jagged_peaks");
-        biomeTag("spawns/allosaurus", "savanna", "savanna_plateau", "windswept_forest", "sparse_jungle");
-        biomeTag("spawns/ankylosaurus", "plains", "savanna", "taiga", "windswept_hills", "meadow");
-        biomeTag("spawns/carnotaurus", "forest", "savanna", "badlands", "sparse_jungle");
-        biomeTag("spawns/pegomastax", "beach", "forest", "birch_forest", "jungle");
-        biomeTag("spawns/lystrosaurus", "plains", "sunflower_plains", "beach", "forest", "meadow");
-        // Collection: water-bound species prefer open and deep water, semi-aquatic species the swamp.
-        biomeTag("spawns/cnidaria", "warm_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "ocean", "deep_ocean");
-        biomeTag("spawns/plesiosaur", "ocean", "deep_ocean", "cold_ocean", "deep_cold_ocean", "frozen_ocean", "deep_frozen_ocean", "river");
-        biomeTag("spawns/megalodon", "ocean", "deep_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "cold_ocean", "deep_cold_ocean");
-        biomeTag("spawns/liopleurodon", "deep_ocean", "deep_lukewarm_ocean", "deep_cold_ocean", "deep_frozen_ocean");
-        biomeTag("spawns/mosasaurus", "deep_ocean", "deep_lukewarm_ocean", "deep_cold_ocean");
-        biomeTag("spawns/tusoteuthis", "deep_ocean", "deep_cold_ocean", "deep_frozen_ocean");
-        biomeTag("spawns/kaprosuchus", "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle", "lush_caves");
-        biomeTag("spawns/sarco", "swamp", "mangrove_swamp", "river", "jungle");
-        biomeTag("spawns/deinosuchus", "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle");
-        biomeTag("spawns/titanoboa", "swamp", "mangrove_swamp", "jungle", "sparse_jungle", "dark_forest");
-        // Collection: cold species are gated to snow and mountain biomes, never to warm high ground.
-        biomeTag("spawns/megalocerus", "snowy_taiga", "snowy_plains", "grove", "taiga");
-        biomeTag("spawns/unicorn", "snowy_plains", "snowy_taiga", "grove", "ice_spikes");
-        biomeTag("spawns/mammoth", "snowy_plains", "snowy_taiga", "snowy_beach", "grove", "frozen_river");
-        biomeTag("spawns/direwolf", "snowy_taiga", "snowy_plains", "grove", "taiga", "frozen_river");
-        biomeTag("spawns/sabertooth", "snowy_taiga", "grove", "snowy_slopes", "frozen_peaks", "jagged_peaks");
-        biomeTag("spawns/megapithecus", "jagged_peaks", "frozen_peaks", "snowy_slopes", "stony_peaks");
-        // Collection: remaining warm land and flying species reuse existing habitat families.
-        biomeTag("spawns/paraceratherium", "plains", "sunflower_plains", "savanna", "meadow", "forest");
-        biomeTag("spawns/terrorbird", "savanna", "plains", "jungle", "sparse_jungle", "badlands");
-        biomeTag("spawns/ravager", "dark_forest", "old_growth_pine_taiga", "taiga", "windswept_forest", "forest");
-        biomeTag("spawns/archaeopteryx", "forest", "dark_forest", "jungle", "sparse_jungle", "birch_forest", "old_growth_birch_forest");
-        biomeTag("spawns/quetzal", "windswept_hills", "windswept_gravelly_hills", "stony_peaks", "savanna_plateau", "badlands", "jagged_peaks");
-        biomeTag("spawns/dragon", "jagged_peaks", "frozen_peaks", "stony_peaks", "snowy_slopes", "windswept_gravelly_hills");
+        // Habitats replace the old per-species biome lists and the biome difficulty tiers: danger and levels
+        // come from the area alone, so a species appears wherever its habitat and the local danger allow.
+        biomeTag("habitat/" + Species.Habitat.TEMPERATE.id, TEMPERATE_BIOMES);
+        biomeTag("habitat/" + Species.Habitat.WETLAND.id, "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle", "bamboo_jungle");
+        biomeTag("habitat/" + Species.Habitat.COLD.id, COLD_BIOMES);
+        biomeTag("habitat/" + Species.Habitat.SEA.id, "warm_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "ocean", "deep_ocean",
+                "cold_ocean", "deep_cold_ocean", "frozen_ocean", "deep_frozen_ocean");
+        var land = new ArrayList<>(List.of(TEMPERATE_BIOMES));
+        land.addAll(List.of(COLD_BIOMES));
+        biomeTag("habitat/" + Species.Habitat.SKY.id, land.toArray(String[]::new));
+        // Each species keeps its own tag so a data pack can still narrow or widen one species.
+        for (var species : Species.values())
+            tag("worldgen/biome/spawns/" + species.id, "#" + NS + ":habitat/" + species.habitat().id);
         tag("block/spawn_surfaces", "#minecraft:dirt", "#minecraft:sand", "#minecraft:terracotta",
                 "grass_block", "podzol", "mycelium",
                 "stone", "granite", "diorite", "andesite", "gravel", "snow", "snow_block", "ice", "packed_ice", "blue_ice",
@@ -188,6 +165,33 @@ public final class ArkData implements DataProvider {
         en.put("behavior." + NS + ".sleep", "Sleeping"); pt.put("behavior." + NS + ".sleep", "Dormindo");
         en.put("behavior." + NS + ".search", "Searching for prey"); pt.put("behavior." + NS + ".search", "Procurando presas");
         en.put("behavior." + NS + ".regroup", "Regrouping"); pt.put("behavior." + NS + ".regroup", "Reagrupando");
+        // Body actions follow the state on the target bar ("Hunting / Stalking"); a missing label fails datagen.
+        var actions = new EnumMap<BehaviorAction, String[]>(BehaviorAction.class);
+        actions.put(BehaviorAction.IDLE, new String[]{"Standing", "Parado"});
+        actions.put(BehaviorAction.WALK, new String[]{"Walking", "Andando"});
+        actions.put(BehaviorAction.RUN, new String[]{"Running", "Correndo"});
+        actions.put(BehaviorAction.TURN, new String[]{"Turning", "Virando"});
+        actions.put(BehaviorAction.LOOK, new String[]{"Looking around", "Olhando em volta"});
+        actions.put(BehaviorAction.SNIFF, new String[]{"Sniffing", "Farejando"});
+        actions.put(BehaviorAction.POOP, new String[]{"Pooping", "Fazendo coc\u00f4"});
+        actions.put(BehaviorAction.GRAZE, new String[]{"Grazing", "Pastando"});
+        actions.put(BehaviorAction.DRINK, new String[]{"Drinking", "Bebendo"});
+        actions.put(BehaviorAction.NOTICE, new String[]{"Noticing", "Percebendo"});
+        actions.put(BehaviorAction.ROAR, new String[]{"Roaring", "Rugindo"});
+        actions.put(BehaviorAction.THREAT, new String[]{"Threat display", "Intimidando"});
+        actions.put(BehaviorAction.STARTLE, new String[]{"Startled", "Assustado"});
+        actions.put(BehaviorAction.STALK, new String[]{"Stalking", "Espreitando"});
+        actions.put(BehaviorAction.CHASE, new String[]{"Chasing", "Perseguindo"});
+        actions.put(BehaviorAction.BOLT, new String[]{"Bolting", "Em disparada"});
+        actions.put(BehaviorAction.FEED, new String[]{"Eating", "Comendo"});
+        actions.put(BehaviorAction.SETTLE, new String[]{"Settling down", "Deitando"});
+        actions.put(BehaviorAction.SLEEP, new String[]{"Asleep", "Dormindo"});
+        actions.put(BehaviorAction.WAKE, new String[]{"Waking up", "Acordando"});
+        actions.put(BehaviorAction.REST, new String[]{"Resting", "Descansando"});
+        for (var action : BehaviorAction.values()) {
+            var label = Objects.requireNonNull(actions.get(action), () -> "Missing action label: " + action);
+            en.put(action.key(), label[0]); pt.put(action.key(), label[1]);
+        }
         pt.put("chat." + NS + ".biome_unrated", "[ARK] %s | Fora das zonas de perigo do mundo normal");
         String[] ids = {"tintoberry", "amarberry", "azulberry", "narcoberry"};
         String[] names = {"Tintoberry", "Amarberry", "Azulberry", "Narcoberry (Sedative)"};
@@ -999,16 +1003,33 @@ public final class ArkData implements DataProvider {
                 "[ARK] Sua tribo n\u00e3o tem progresso de tecnologia para reiniciar.");
     }
 
+    /**
+     * Summed vanilla spawn-list weight a habitat adds to each of its biomes. A habitat spans dozens of
+     * biomes, so a species' list weight is its share of this budget: a biome's Ark entries weigh about
+     * what they did under the old per-species biome lists, and vanilla animals keep their share of
+     * chunk-generation spawns. The population budget still picks by the species' own weight.
+     */
+    private static final Map<Species.Habitat, Integer> HABITAT_LIST_WEIGHT = Map.of(
+            Species.Habitat.TEMPERATE, 30, Species.Habitat.SKY, 8, Species.Habitat.WETLAND, 20,
+            Species.Habitat.COLD, 20, Species.Habitat.SEA, 18);
+
+    /** Oversized bodies break vanilla's single-chunk spawn clamp; the population budget spawns them. */
+    private static boolean vanillaListed(Species species) { return species.weight > 0 && species.chunkSpawnSafe(); }
+
     private void spawns() {
+        var habitatWeight = new EnumMap<Species.Habitat, Integer>(Species.Habitat.class);
+        for (var species : Species.values())
+            if (vanillaListed(species)) habitatWeight.merge(species.habitat(), species.weight, Integer::sum);
         for (var species : Species.values()) {
-            // Oversized bodies break vanilla's single-chunk spawn clamp; the population budget spawns them.
-            if (species.weight <= 0 || !species.chunkSpawnSafe()) continue;
+            if (!vanillaListed(species)) continue;
+            int weight = Math.max(1, (int) Math.round(species.weight
+                    * (double) HABITAT_LIST_WEIGHT.get(species.habitat()) / habitatWeight.get(species.habitat())));
             put("data/" + NS + "/neoforge/biome_modifier/spawn_" + species.id, Map.of(
                     "type", "neoforge:add_spawns",
                     "biomes", "#" + NS + ":spawns/" + species.id,
                     "spawners", Map.of(
                             "type", NS + ":" + species.id,
-                            "weight", species.weight,
+                            "weight", weight,
                             "minCount", species.minGroup,
                             "maxCount", species.maxGroup)));
         }

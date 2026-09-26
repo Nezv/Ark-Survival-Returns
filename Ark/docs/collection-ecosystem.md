@@ -10,7 +10,7 @@ Implementation: pending client playtesting per `Ark/AGENTS.md`; the checks liste
 ## Realms
 
 A species belongs to one realm, and the realm decides where it lives, how it moves and where it spawns.
-Creatures spawn through the vanilla spawner via per-species biome tags; no habitat record is saved.
+Creatures spawn through the vanilla spawner via per-species biome tags, each pointing at one habitat tag (`habitat/sea`, `wetland`, `cold`, `temperate` or `sky`); no habitat record is saved.
 
 | Realm | Species | Spawning and home | Movement |
 |---|---|---|---|

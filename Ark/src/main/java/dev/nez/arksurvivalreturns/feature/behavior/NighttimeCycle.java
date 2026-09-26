@@ -10,11 +10,6 @@ public final class NighttimeCycle {
     public static boolean individualNight(long clock, long individual, int start, int end, int transitionTicks) {
         return night(clock - Math.floorMod(individual, transitionTicks + 1L), start, end);
     }
-    public static boolean sleepWanted(long clock, long individual, boolean predator, boolean night, double daySleepFraction) {
-        if (!predator) return night;
-        return !night && Math.floorMod(Math.floorMod(clock, 2000) + Math.floorMod(individual, 2000), 2000)
-                < Math.round(2000 * daySleepFraction);
-    }
     public static double sight(double daytimeRange, boolean dark, boolean landHunterNight, double nightMultiplier) {
         return daytimeRange * (landHunterNight ? nightMultiplier : dark ? 0.7 : 1.0);
     }

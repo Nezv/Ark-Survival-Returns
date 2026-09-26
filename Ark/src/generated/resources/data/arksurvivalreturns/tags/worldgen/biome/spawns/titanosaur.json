@@ -1,19 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:stony_peaks",
-    "minecraft:windswept_gravelly_hills",
-    {
-      "id": "terralith:rocky_mountains",
-      "required": false
-    },
-    {
-      "id": "terralith:volcanic_crater",
-      "required": false
-    },
-    {
-      "id": "terralith:volcanic_peaks",
-      "required": false
-    }
+    "#arksurvivalreturns:habitat/temperate"
   ]
 }

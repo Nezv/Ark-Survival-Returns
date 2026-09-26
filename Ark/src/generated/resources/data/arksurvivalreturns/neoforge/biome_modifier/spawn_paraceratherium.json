@@ -5,6 +5,6 @@
     "type": "arksurvivalreturns:paraceratherium",
     "maxCount": 4,
     "minCount": 2,
-    "weight": 6
+    "weight": 1
   }
 }

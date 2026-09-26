@@ -99,13 +99,35 @@ Behavior, level and HP remain independent. The current state is synchronized for
 - Alarms address existing members of the same saved pack and carry positions rather than a magical shared combat target. Alarm propagation has a cooldown.
 - There is no offscreen ecological simulation, unlimited path searching, forced chunk loading or terrain regeneration.
 - Giant colliders and models are both enlarged. A Titanosaur now has a 20-block-wide, 28-block-tall body box. Such an animal cannot fit in ordinary dense woodland. Flat-terrain spawn tests prove valid placement, not reliable encounters on every landscape.
-- Birds currently use ground navigation. Custom roars, proper drinking poses, most sleeping poses, turn-in-place/head-aim layers, terrain IK, flight and visible tracks are not implemented by this ground behavior model.
+- Flyers have their own flight routine (see [the flying ecosystem](flying-ecosystem.md)). Custom roars, proper drinking poses, head-aim layers, terrain IK and visible tracks are not implemented by this ground behavior model; turning in place is (see below).
 
 ## Difficulty and apex correction
 
 The previous capped radial distance left all distant terrain at level 5. The replacement repeats curved regions and allocates approximately one fifth of each complete tile to each rank. Integer coordinate shears preserve the area distribution; square-area thresholds make the five shares equal in continuous space, with small block-grid rounding differences. Unit tests cover area ratios, recurrence and adjacent/diagonal borders, including tile seams. See [the map](difficulty-map.png) and [measured shares](difficulty-area-shares.json).
 
-The displayed regional rank is now the authority for species eligibility. A plains biome displaying level 5 no longer retains the old hidden apex prohibition. Rex requires 4+, Giga/Titano require 5; none is naturally eligible in level 1. The population budget (`NaturalPopulations`) keeps a configurable wild population around each player. Ordinary species stay inside their biome tag; the regional large species (Titano, Giga, Rex, Bronto, Theri, Spino, Acro) treat the tag as a weight — x3 in their habitat, x1 outside — and the first placement attempt of a pass is biased toward one missing regional large, so an apex remains reachable wherever the rank admits it without a forced spawn. Large bodies accept bounded uneven ground and now need only a clear feet slab with solid-free headroom; leaves may cross a body. The linked Bronto-and-Rex encounter of the previous director is not part of the budget. `/arkwildlife [radius]` reports the danger band, biome, local population and the per-species placement failure tally for operators. No species has a day/night spawn filter.
+The displayed regional rank is the only authority for species eligibility and wild levels; biomes carry no difficulty of their own (the `difficulty/*` biome tags and `BiomeTier` were removed in P00, `DangerTier` names the five area ranks). Rex requires 4+, Giga/Titano require 5; none is naturally eligible in level 1. Biomes only choose the community: each species' `spawns/<id>` tag points at one of five habitat tags (`habitat/temperate`, `wetland`, `cold`, `sea`, `sky`), so snow species stay in the snow, crocodilians in wetlands and swimmers in the sea, while warm species share every temperate biome. Each habitat splits a fixed vanilla spawn-list weight across its species (temperate 30, wetland 20, cold 20, sea 18, sky 8), so a biome's Ark entries weigh about what they did under the old per-species lists and wider habitats bring variety, not more animals. The population budget (`NaturalPopulations`) keeps a configurable wild population around each player, picking by species weight among species legal at the site's danger and habitat; the first placement attempt of a pass is biased toward one missing regional large species (Titano, Giga, Rex, Bronto, Theri, Spino, Acro) legal at the player's danger and habitat, so an apex remains reachable wherever the rank admits it without a forced spawn. Large bodies accept bounded uneven ground and now need only a clear feet slab with solid-free headroom; leaves may cross a body. The linked Bronto-and-Rex encounter of the previous director is not part of the budget. `/arkwildlife [radius]` reports the danger band, biome, local population and the per-species placement failure tally for operators. No species has a day/night spawn filter.
+
+## Behaviour model and distance tiers (P00, 2026-09-26)
+
+Every creature runs two levels. `WildlifeMind` chooses the intent (the states above); the `Choreographer` performs the change as timed actions (`BehaviorAction`): a roaming Parasaur that spots a predator plays its startle clip before it bolts, a Rex notices, faces and roars before the chase, a Sabertooth stalks in low instead, and a sleeper wakes before it walks. Beats last as long as the rig's own clips; locomotion waits for them, strikes in range never do, and a hit or a threat at the body skips the display. Roaming pauses are filled with the idle beats the rig has (look around, sniff, graze, poop). The synced action drives the clip choice and follows the state on the HP bar ("Hunting / Stalking").
+
+How much runs depends on the distance to the nearest player (`[behavior]` in the server config):
+
+| Tier | Default radius | What runs |
+|---|---|---|
+| Full detail | 64 | Senses, needs, decisions twice a second, bridges, pack alarms, pursuit and escape |
+| Ambient | 128 | `AmbientRoutine`: walk a few blocks, turn, stop, look, sniff, graze, poop, sleep on schedule; one decision every few seconds; needs frozen |
+| Dormant | 256 | No routine; the pose follows the sleep schedule every 5 s; beyond it nothing runs |
+
+An 8-block margin stops flicker at the borders. Hit, alarmed, targeting, tamed, ridden or torpid creatures always run full detail, and thirst and hunger only change there. GameTests stay in full detail unless a test supplies observers (`BehaviorLod.useTestObservers`). `/arkwildlife` prints the loaded wildlife per tier.
+
+`DailySchedule` sets the day: carnivores hunt at night, sleep through the first half of daylight (`carnivoreDaySleepFraction`, now 0.5) and roam the afternoon; herbivores sleep at night and graze, drink and roam by day. Each individual shifts its clock by up to `transitionTicks`.
+
+Groups no longer move like one machine: `Desync` gives each animal its own alarm delay (rippling out from the caller), speed factor, flee heading, formation slot around the leader and clip playback rate.
+
+Water-bound species keep a simpler model: cruise, investigate, warn, hunt, feed or flee, with no sleep, thirst or grazing (`WildlifeMind.quench`); the ambient tier swims slow legs with hover pauses. Flyers are described in [the flying ecosystem](flying-ecosystem.md).
+
+The transition matrices of every model and tier are recorded from the real code by `BehaviorModels` (runData writes `design/showcase/behavior.json`) and shown with state diagrams in the showcase's Behaviour section. The land matrices are fuzzed from seeded encounters, so every cell quotes the rule (`WildlifeMind.Reason`) that fired.
 
 ## Player-facing development priorities after this model
 

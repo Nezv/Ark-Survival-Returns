@@ -2,7 +2,7 @@ package dev.nez.arksurvivalreturns;
 
 import java.util.EnumMap;
 import java.util.List;
-import dev.nez.arksurvivalreturns.feature.spawn.BiomeTier;
+import dev.nez.arksurvivalreturns.feature.spawn.DangerTier;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.mass.MassRules;
@@ -39,11 +39,13 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue NIGHTTIME;
     public static final ModConfigSpec.IntValue NIGHT_START, NIGHT_END, NIGHT_TRANSITION, SLEEP_CALM;
     public static final ModConfigSpec.DoubleValue NIGHT_HUNGER, NIGHT_VISION, DAY_SLEEP, WAKE_DISTANCE;
+    public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS;
+    public static final ModConfigSpec.IntValue TIER_FULL_RADIUS, TIER_AMBIENT_RADIUS, TIER_DORMANT_RADIUS, TIER_MARGIN;
     public static final ModConfigSpec.IntValue HEALTH_BAR_RANGE;
     public static final ModConfigSpec.IntValue ARGENT_NEST_Y, NEST_WATER_RADIUS, PTERO_ROAM_RADIUS, ARGENT_ROAM_RADIUS, FLIGHT_LEASH, EGG_DEFENSE_TICKS;
     public static final ModConfigSpec.BooleanValue PERCHING;
-    public static final EnumMap<BiomeTier, ModConfigSpec.IntValue> MIN_LEVEL = new EnumMap<>(BiomeTier.class);
-    public static final EnumMap<BiomeTier, ModConfigSpec.IntValue> MAX_LEVEL = new EnumMap<>(BiomeTier.class);
+    public static final EnumMap<DangerTier, ModConfigSpec.IntValue> MIN_LEVEL = new EnumMap<>(DangerTier.class);
+    public static final EnumMap<DangerTier, ModConfigSpec.IntValue> MAX_LEVEL = new EnumMap<>(DangerTier.class);
     // ------------------------------------------------------------------------------- taming
     public static final ModConfigSpec.BooleanValue TAMING_ENABLED;
     public static final ModConfigSpec.BooleanValue TAMING_DEBUG_LOG;
@@ -341,7 +343,7 @@ public final class Config {
         b.pop().push("levels");
         HEALTH_GROWTH = b.comment("HP = base HP * (1 + growth * (level - 1)^0.85). Applies on spawn.").defineInRange("healthGrowth", 0.10, 0.0, 0.20);
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);
-        for (var tier : BiomeTier.values()) {
+        for (var tier : DangerTier.values()) {
             b.push(tier.id);
             MIN_LEVEL.put(tier, b.defineInRange("min", tier.minLevel, 1, 100));
             MAX_LEVEL.put(tier, b.comment("Reversed endpoints are sorted automatically.").defineInRange("max", tier.maxLevel, 1, 100));
@@ -439,9 +441,25 @@ public final class Config {
         NIGHT_TRANSITION = b.comment("Maximum individual dusk/dawn delay; 600 ticks = 30 seconds.").defineInRange("transitionTicks", 600, 0, 1200);
         NIGHT_HUNGER = b.defineInRange("carnivoreHungerMultiplier", 2.0, 1.0, 5.0);
         NIGHT_VISION = b.comment("Multiplier of daytime sight for land carnivores at night; cover, rain and crouching still apply.").defineInRange("carnivoreVisionMultiplier", 1.3, 1.0, 2.0);
-        DAY_SLEEP = b.comment("Share of undisturbed daytime routine spent sleeping; urgent needs and danger override.").defineInRange("carnivoreDaySleepFraction", 0.7, 0.0, 1.0);
+        DAY_SLEEP = b.comment("Share of daylight carnivores sleep, starting at dawn: they hunt at night, sleep through the "
+                        + "morning and roam in the afternoon. 0.5 wakes them at noon; urgent needs and danger override.")
+                .defineInRange("carnivoreDaySleepFraction", 0.5, 0.0, 1.0);
         WAKE_DISTANCE = b.comment("Distance from body bounds for ordinary player approach; noisy actions can wake from farther away.").defineInRange("playerWakeDistance", 8.0, 2.0, 24.0);
         SLEEP_CALM = b.comment("Simulated ticks without relevant danger before sleep is allowed again.").defineInRange("calmBeforeSleepTicks", 200, 20, 1200);
+        b.pop().push("behavior");
+        BEHAVIOR_TIERS = b.comment("Level of detail by distance to the nearest player. Near: full behaviour (senses, needs, hunting, "
+                        + "fleeing, timed transitions). Mid: a cheap ambient routine (walk, turn, stop, graze, sleep on schedule). "
+                        + "Far: no routine. Disable to run the full behaviour for every loaded creature.")
+                .define("distanceTiers", true);
+        TIER_FULL_RADIUS = b.comment("Creatures within this many blocks of a player run the full behaviour.")
+                .defineInRange("fullRadius", 64, 16, 256);
+        TIER_AMBIENT_RADIUS = b.comment("Beyond the full radius and within this one: the ambient routine.")
+                .defineInRange("ambientRadius", 128, 32, 512);
+        TIER_DORMANT_RADIUS = b.comment("Beyond the ambient radius and within this one: no routine, but the pose still follows "
+                        + "the sleep schedule. Beyond it nothing runs. Also bounded by the simulation distance.")
+                .defineInRange("dormantRadius", 256, 64, 1024);
+        TIER_MARGIN = b.comment("Blocks past a radius before a creature drops to the cheaper tier, so borders do not flicker.")
+                .defineInRange("tierMargin", 8, 0, 32);
         b.pop().push("wildlife");
         for (var family : dev.nez.arksurvivalreturns.feature.land.LandFamily.values()) {
             b.push(family.name().toLowerCase(java.util.Locale.ROOT));

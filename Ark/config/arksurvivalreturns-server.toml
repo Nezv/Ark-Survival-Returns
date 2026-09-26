@@ -811,10 +811,10 @@
 	# Default: 1.3
 	# Range: 1.0 ~ 2.0
 	carnivoreVisionMultiplier = 1.3
-	#Share of undisturbed daytime routine spent sleeping; urgent needs and danger override.
-	# Default: 0.7
+	#Share of daylight carnivores sleep, starting at dawn: they hunt at night, sleep through the morning and roam in the afternoon. 0.5 wakes them at noon; urgent needs and danger override.
+	# Default: 0.5
 	# Range: 0.0 ~ 1.0
-	carnivoreDaySleepFraction = 0.7
+	carnivoreDaySleepFraction = 0.5
 	#Distance from body bounds for ordinary player approach; noisy actions can wake from farther away.
 	# Default: 8.0
 	# Range: 2.0 ~ 24.0
@@ -823,6 +823,26 @@
 	# Default: 200
 	# Range: 20 ~ 1200
 	calmBeforeSleepTicks = 200
+
+[behavior]
+	#Level of detail by distance to the nearest player. Near: full behaviour (senses, needs, hunting, fleeing, timed transitions). Mid: a cheap ambient routine (walk, turn, stop, graze, sleep on schedule). Far: no routine. Disable to run the full behaviour for every loaded creature.
+	distanceTiers = true
+	#Creatures within this many blocks of a player run the full behaviour.
+	# Default: 64
+	# Range: 16 ~ 256
+	fullRadius = 64
+	#Beyond the full radius and within this one: the ambient routine.
+	# Default: 128
+	# Range: 32 ~ 512
+	ambientRadius = 128
+	#Beyond the ambient radius and within this one: no routine, but the pose still follows the sleep schedule. Beyond it nothing runs. Also bounded by the simulation distance.
+	# Default: 256
+	# Range: 64 ~ 1024
+	dormantRadius = 256
+	#Blocks past a radius before a creature drops to the cheaper tier, so borders do not flicker.
+	# Default: 8
+	# Range: 0 ~ 32
+	tierMargin = 8
 
 [aquatic]
 	#Saved water bodies for water-bound species; solo groups that roam one home pool.

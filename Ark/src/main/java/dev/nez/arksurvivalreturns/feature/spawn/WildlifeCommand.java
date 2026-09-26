@@ -51,17 +51,24 @@ public final class WildlifeCommand {
                 + " naturalSpawns=" + Config.NATURAL_SPAWNS.get() + " budget=" + Config.POPULATION_BUDGET.get());
         int wildCount = 0;
         var bySpecies = new java.util.TreeMap<String, Integer>();
+        var byTier = new EnumMap<dev.nez.arksurvivalreturns.feature.behavior.BehaviorTier, Integer>(
+                dev.nez.arksurvivalreturns.feature.behavior.BehaviorTier.class);
         for (var entity : level.getAllEntities())
-            if (entity instanceof CreatureEntity creature && creature.isAlive() && creature.isNaturalWildlife()
-                    && creature.distanceToSqr(player) <= (double)radius * radius) {
+            if (entity instanceof CreatureEntity creature && creature.isAlive() && creature.isNaturalWildlife()) {
+                byTier.merge(creature.behaviorTier(), 1, Integer::sum);
+                if (creature.distanceToSqr(player) > (double)radius * radius) continue;
                 wildCount++;
                 bySpecies.merge(creature.species().id, 1, Integer::sum);
             }
         send(source, "wilds within " + radius + "=" + wildCount + "/" + Config.POPULATION_TARGET.get() + " " + bySpecies);
+        // Behaviour cost scales with these: full-detail creatures sense and path, ambient ones only wander.
+        send(source, "loaded wilds by tier " + byTier + " (tiers " + (Config.BEHAVIOR_TIERS.get() ? "on" : "off")
+                + ", radii " + Config.TIER_FULL_RADIUS.get() + "/" + Config.TIER_AMBIENT_RADIUS.get() + "/"
+                + Config.TIER_DORMANT_RADIUS.get() + ")");
         for (var species : Species.values()) {
             if (!NaturalPopulations.isRegionalLarge(species) || danger < species.minimumDanger()) continue;
             send(source, species.id + " minDanger=" + species.minimumDanger()
-                    + (biome.is(species.biomes) ? " habitat" : " off-habitat")
+                    + (biome.is(species.biomes) ? " habitat" : " outside its habitat")
                     + " weight=" + species.weight + " " + probe(level, player, species, radius));
         }
         return 1;

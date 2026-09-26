@@ -105,6 +105,16 @@ public enum Species {
     /** Movement domain and habitat system used by a species. */
     public enum Realm { LAND, AMPHIBIOUS, WATER, AIR }
 
+    /**
+     * Broad spawn habitat, generated as the biome tag {@code habitat/<id>}. Danger and level come from the
+     * area alone; a habitat only keeps cold species in the snow, crocodilians in wetlands and swimmers in
+     * the sea, while warm land species share every temperate biome and flyers every land biome.
+     */
+    public enum Habitat {
+        TEMPERATE, WETLAND, COLD, SEA, SKY;
+        public final String id = name().toLowerCase(java.util.Locale.ROOT);
+    }
+
     /** Water clip set for semi-aquatic and water-bound species. */
     private record SwimProfile(String idle, String walk, String run) {}
 
@@ -236,6 +246,13 @@ public enum Species {
      * chunk generation. Wider species spawn only through the population budget instead.
      */
     public boolean chunkSpawnSafe() { return width <= 10.0f; }
+    public Habitat habitat() {
+        if (flyer()) return Habitat.SKY;
+        if (aquatic()) return Habitat.SEA;
+        if (coldAdapted()) return Habitat.COLD;
+        if (amphibious() || family() == LandFamily.AMPHIBIOUS) return Habitat.WETLAND;
+        return Habitat.TEMPERATE;
+    }
     public boolean amphibious() { return realm == Realm.AMPHIBIOUS; }
     public boolean swimmer() { return realm == Realm.WATER || realm == Realm.AMPHIBIOUS; }
     /** Realm LAND and AMPHIBIOUS species keep a saved land habitat and shared group satiation. */

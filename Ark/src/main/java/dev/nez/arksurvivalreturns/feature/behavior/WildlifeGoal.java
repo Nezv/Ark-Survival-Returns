@@ -2,6 +2,7 @@ package dev.nez.arksurvivalreturns.feature.behavior;
 
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.SplittableRandom;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.land.*;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
@@ -10,24 +11,31 @@ import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
-/** Server adapter: bounded perception, local routines, pack signals and collision-aware navigation. */
+/**
+ * Server adapter of the land behaviour model, by distance tier.
+ *
+ * <p>FULL: bounded perception, the decision model ({@link WildlifeMind}), the timed bridges between states
+ * ({@link Choreographer}), pack signals that ripple with individual delays, and collision-aware navigation.
+ * AMBIENT: {@link AmbientRoutine}, a cheap visible routine with no senses and frozen needs. DORMANT: only the
+ * sleep pose follows the schedule, on a slow timer.
+ */
 public final class WildlifeGoal extends WildlifeController {
     private WildlifeMind mind;
+    private Choreographer choreo;
     private BlockPos home, transientHome;
-    private long nextGroupPath;
-    private Vec3 lastKnown, destination, waterDestination;
+    private Vec3 lastKnown, destination, waterDestination, pendingAlarm, facing;
     private LivingEntity focus;
     private LivingEntity herdThreat;
-    private int herdThreatTicks;
+    private int herdThreatTicks, pendingAlarmTicks, alarmEvents;
     private java.util.UUID preyHerd;
     private int damageStamp = -1, failedPaths, nextRoutine, alarmTicks;
     private long nextAlarm, nextWaterSearch;
@@ -35,6 +43,11 @@ public final class WildlifeGoal extends WildlifeController {
     private int failedEscapes;
     private boolean interrupted, regrouping;
     private java.util.List<CreatureEntity> packCache;
+    private BehaviorTier tier = BehaviorTier.FULL;
+    private AmbientRoutine.Plan ambient;
+    private int ambientTicks;
+    private float ambientYaw;
+    private SplittableRandom ambientRandom;
     public WildlifeGoal(CreatureEntity mob) { super(mob); setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
     @Override public WildlifeMind mind() {
         if (mind == null) {
@@ -44,6 +57,14 @@ public final class WildlifeGoal extends WildlifeController {
                     0.05 + ((variation >>> 16) & 255) / 1024.0);
         }
         return mind;
+    }
+    /** The timed performance of the current state; per individual, so herd mates never move in lockstep. */
+    public Choreographer choreo() {
+        if (choreo == null) {
+            choreo = new Choreographer(mob.behaviorProfile(), mob.getUUID().getLeastSignificantBits());
+            choreo.reset(mind().state());
+        }
+        return choreo;
     }
     @Override public BlockPos home() {
         if (transientHome != null) return transientHome;
@@ -56,10 +77,26 @@ public final class WildlifeGoal extends WildlifeController {
     @Override public void tick() {
         // A rider owns the mount's movement; the wild routine must not fight the input or target the rider.
         if (mob.isRidden()) { mob.getNavigation().stop(); mob.setTarget(null); return; }
-        if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think();
+        var now = mob.behaviorTier();
+        if (now != tier) changeTier(now);
+        switch (tier) {
+            case FULL -> {
+                if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think();
+                // Facing a stimulus turns the whole body in place, at the creature's own rate.
+                if (facing != null && choreo().action().motion() == BehaviorAction.Motion.FACE && mob.getNavigation().isDone())
+                    turnToward(yawTo(facing), false);
+            }
+            case AMBIENT -> ambientTick();
+            case DORMANT -> dormantTick();
+        }
     }
     @Override public void stop() { mob.getNavigation().stop(); mob.setTarget(null); packCache = null; }
-    @Override public void receiveAlarm(Vec3 position) { lastKnown = position; alarmTicks = 40; }
+    /** An alarm from a pack mate reaches this animal after its own delay, rippling outward from the caller. */
+    @Override public void receiveAlarm(Vec3 position) {
+        int delay = Desync.reactionDelay(mob.getUUID().getLeastSignificantBits(), ++alarmEvents,
+                mob.position().distanceTo(position), mob.species().timid());
+        if (pendingAlarm == null || delay < pendingAlarmTicks) { pendingAlarm = position; pendingAlarmTicks = delay; }
+    }
     @Override public void interruptSleep() {
         if (!mob.species().landHabitat()) return;
         interrupted = true;
@@ -72,9 +109,106 @@ public final class WildlifeGoal extends WildlifeController {
         if (!mob.species().defensiveHerd() || !WildlifeSenses.validTarget(threat)) return;
         herdThreat = threat; herdThreatTicks = 100; focus = threat; lastKnown = threat.position(); mind().defendHerd();
     }
+
+    // ----------------------------------------------------------------------------------- tiers
+
+    private void changeTier(BehaviorTier next) {
+        if (next == BehaviorTier.FULL) {
+            // Resume the full routine from what the cheaper routine was showing, without replaying a bridge.
+            var shown = mob.behavior();
+            if (shown == BehaviorState.SLEEP || shown == BehaviorState.ROAM || shown == BehaviorState.FORAGE) mind().resumeAs(shown);
+            choreo().reset(mind().state());
+            mob.setAction(choreo().action());
+        } else {
+            // Leaving full detail drops pursuit and bridges; needs stay frozen until the creature is near again.
+            mob.setTarget(null); focus = null; lastKnown = null; pendingAlarm = null; destination = null; facing = null;
+            mob.getNavigation().stop();
+            choreo().reset(mind().state().sleeping() ? mind().state() : BehaviorState.ROAM);
+        }
+        ambient = null;
+        ambientTicks = 0;
+        tier = next;
+    }
+
+    private DailySchedule.Phase schedule(ServerLevel world) {
+        if (!WildlifeSenses.hasNightCycle(mob)) return DailySchedule.Phase.ROAM;
+        return DailySchedule.phase(world.getDefaultClockTime(), mob.getUUID().getLeastSignificantBits(), mob.species().predator,
+                Config.NIGHT_START.get(), Config.NIGHT_END.get(), Config.NIGHT_TRANSITION.get(), Config.DAY_SLEEP.get());
+    }
+
+    /** Tier 2: walk, turn, stop, look, sniff, graze, poop and sleep on schedule; one decision every few seconds. */
+    private void ambientTick() {
+        if (!(mob.level() instanceof ServerLevel world)) return;
+        if (ambientRandom == null) ambientRandom = new SplittableRandom(mob.getUUID().getMostSignificantBits());
+        if (ambient == null || --ambientTicks <= 0) { nextAmbient(world); return; }
+        switch (ambient.step()) {
+            case TURN -> { if (turnToward(ambientYaw, false)) ambientTicks = Math.min(ambientTicks, 10); }
+            case WALK -> { if (mob.getNavigation().isDone()) ambientTicks = Math.min(ambientTicks, 1); }
+            default -> {}
+        }
+    }
+
+    private void nextAmbient(ServerLevel world) {
+        var phase = schedule(world);
+        double leash = LandWildlife.roam(mob.species()) * 0.8;
+        boolean homeward = LandWildlife.distanceSqr(mob.blockPosition(), home()) > leash * leash;
+        ambient = AmbientRoutine.next(phase, mob.behaviorProfile(), ambientRandom, homeward);
+        ambientTicks = Math.max(1, ambient.ticks());
+        mob.getNavigation().stop();
+        switch (ambient.step()) {
+            case WALK -> {
+                Vec3 target;
+                if (homeward) target = Vec3.atBottomCenterOf(home());
+                else {
+                    float heading = mob.getYRot() + (float) (ambientRandom.nextDouble() * 120 - 60);
+                    target = mob.position().add(Vec3.directionFromRotation(0, heading).scale(ambient.distance()));
+                }
+                var ground = SpawnRules.surface(world, Mth.floor(target.x), Mth.floor(target.z));
+                if (ground == null || Math.abs(ground.getY() - mob.getY()) > 4
+                        || !move(world, Vec3.atBottomCenterOf(ground), mob.wanderModifier() * 0.85)) {
+                    ambient = new AmbientRoutine.Plan(AmbientRoutine.Step.STAND, 60, 0, 0);
+                    ambientTicks = 60;
+                }
+            }
+            case TURN -> { ambientYaw = mob.getYRot() + (float) ambient.turn(); ambientTicks = 200; }
+            case LOOK -> mob.playCue(BehaviorAction.Cue.LOOK);
+            case SNIFF -> mob.playCue(BehaviorAction.Cue.SNIFF);
+            case POOP -> mob.playCue(BehaviorAction.Cue.POOP);
+            default -> {}
+        }
+        mob.setBehavior(AmbientRoutine.state(ambient.step()));
+        mob.setAction(AmbientRoutine.action(ambient.step()));
+        mob.setNightActive(phase == DailySchedule.Phase.HUNT);
+    }
+
+    /** Tier 3: no routine; within the outer radius the pose still follows the sleep schedule. */
+    private void dormantTick() {
+        if (Math.floorMod(mob.tickCount + mob.getId(), 100) != 0) return;
+        if (!mob.getNavigation().isDone()) mob.getNavigation().stop();
+        if (!(mob.level() instanceof ServerLevel world) || !mob.posedWhenDormant()) return;
+        boolean asleep = schedule(world) == DailySchedule.Phase.SLEEP;
+        mob.setBehavior(asleep ? BehaviorState.SLEEP : BehaviorState.ROAM);
+        mob.setAction(asleep ? BehaviorAction.SLEEP : BehaviorAction.IDLE);
+    }
+
+    /** Rotates the facing toward a yaw at the creature's turn rate; true once aligned. */
+    private boolean turnToward(float yaw, boolean running) {
+        float turned = Mth.approachDegrees(mob.getYRot(), yaw, mob.turnRate(running, false));
+        mob.setYRot(turned);
+        return Math.abs(Mth.wrapDegrees(yaw - turned)) < 2f;
+    }
+
+    private float yawTo(Vec3 point) {
+        return (float) (Mth.atan2(point.z - mob.getZ(), point.x - mob.getX()) * (180.0 / Math.PI)) - 90.0f;
+    }
+
+    // ------------------------------------------------------------------------------ full tier
+
     @Override public void think() {
         if (!(mob.level() instanceof ServerLevel world) || !mob.species().landHabitat()) return;
         var brain = mind();
+        var dance = choreo();
+        dance.advance(10, !mob.getNavigation().isDone());
         // One pack scan per decision is reused by the herd, alarm and regroup routines.
         packCache = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(64),
                 c -> c != mob && c.isAlive() && c.packId().equals(mob.packId()));
@@ -90,6 +224,9 @@ public final class WildlifeGoal extends WildlifeController {
             if (!herd.isEmpty()) transientHome = herd.getFirst().blockPosition();
         }
         if ((herdThreatTicks -= 10) <= 0) herdThreat = null;
+        if (pendingAlarm != null && (pendingAlarmTicks -= 10) <= 0) {
+            lastKnown = pendingAlarm; alarmTicks = 40; pendingAlarm = null;
+        }
         boolean peaceful = world.getDifficulty() == Difficulty.PEACEFUL;
         var attacker = mob.getLastHurtByMob();
         boolean attacked = attacker != null && mob.getLastHurtByMobTimestamp() != damageStamp
@@ -171,16 +308,14 @@ public final class WildlifeGoal extends WildlifeController {
         if (!cycle || !night || mob.species().predator) regrouping = false;
         else if (before == BehaviorState.FLEE || before == BehaviorState.REGROUP) regrouping = true;
         if (regrouping) {
-            var leader = packWithin(64).stream().filter(c -> c.getId() < mob.getId())
-                    .min(Comparator.comparingInt(CreatureEntity::getId)).orElse(null);
+            var leader = leader(64);
             Vec3 anchor = leader == null ? Vec3.atBottomCenterOf(home()) : leader.position();
             double near = leader == null ? 6 + mob.getBbWidth() / 2 : mob.species().cohesionDistance();
-            if (mob.position().distanceToSqr(anchor) > near * near) regroupDestination = anchor;
+            if (mob.position().distanceToSqr(anchor) > near * near) regroupDestination = leader == null ? anchor : slot(leader);
             else regrouping = false;
         }
-        var routine = cycle ? new WildlifeMind.Routine(true, night,
-                NighttimeCycle.sleepWanted(world.getDefaultClockTime(), mob.getUUID().getLeastSignificantBits(),
-                        mob.species().predator, night, Config.DAY_SLEEP.get()), safeSleep, danger, defended,
+        var routine = cycle ? new WildlifeMind.Routine(true, night, schedule(world) == DailySchedule.Phase.SLEEP, safeSleep,
+                danger, defended,
                 corneredTicks > 0 || attacked && (mob.species() == Species.THERIZINOSAURUS || mob.species() == Species.TITANOSAUR),
                 Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : WildlifeMind.Routine.LEGACY;
         var state = brain.step(new WildlifeMind.Observation(signal, visible, huntable, intruding, attacked,
@@ -190,47 +325,81 @@ public final class WildlifeGoal extends WildlifeController {
         mob.setBehavior(state);
         if (state != before) {
             mob.getNavigation().stop(); destination = null; nextRoutine = 0;
-            if (state.alarm()) {
-                mob.behaviorCue(state);
-                if (lastKnown != null && world.getGameTime() >= nextAlarm && (!cycle || visible || attacked)) {
-                    nextAlarm = world.getGameTime() + 100;
-                    for (var member : packWithin(32)) member.wildlife().receiveAlarm(lastKnown);
-                }
+            // Reflexes skip the display: a hit, or a threat already at the body.
+            boolean urgent = attacked || sensed != null && WildlifeSenses.bodyDistance(mob, sensed) < 3;
+            dance.enter(before, state, urgent);
+            if (state.alarm() && lastKnown != null && world.getGameTime() >= nextAlarm && (!cycle || visible || attacked)) {
+                nextAlarm = world.getGameTime() + 100;
+                for (var member : packWithin(32)) member.wildlife().receiveAlarm(lastKnown);
             }
-            else if (before == BehaviorState.SLEEP && !state.sleeping()) mob.behaviorCue(BehaviorState.ALERT);
         }
         mob.setTarget(state.combat() && visible ? sensed : null);
-        if (lastKnown != null && state.alarm()) mob.getLookControl().setLookAt(lastKnown.x, lastKnown.y + 1, lastKnown.z, 20, 20);
+        facing = lastKnown != null && state.alarm() ? lastKnown : null;
+        if (facing != null) mob.getLookControl().setLookAt(facing.x, facing.y + 1, facing.z, 20, 20);
+        boolean holding = dance.holding();
         if (state.combat() && visible && sensed != null) {
             if (mob.isWithinMeleeAttackRange(sensed)) {
                 mob.getNavigation().stop();
                 // The strike schedules its damage on the clip's hit frame; onStrikeKill feeds the mind.
                 mob.strike(sensed);
-            } else move(world, sensed.position(), 1.0);
-        } else switch (state) {
-            case INVESTIGATE -> { if (lastKnown != null) move(world, lastKnown, 0.7); }
+            } else if (holding) mob.getNavigation().stop();
+            else move(world, sensed.position(), dance.action() == BehaviorAction.STALK ? mob.wanderModifier() * 0.6 : chaseModifier());
+        } else if (holding) mob.getNavigation().stop();
+        else switch (state) {
+            case INVESTIGATE -> { if (lastKnown != null) move(world, lastKnown, mob.wanderModifier()); }
             case FLEE -> {
                 if (mob.tickCount >= nextRoutine || !cycle && mob.getNavigation().isDone()) {
                     nextRoutine = mob.tickCount + 40 + (cycle ? Math.floorMod(mob.getId(), 10) : 0);
                     Vec3 away = lastKnown == null ? mob.position().subtract(Vec3.atBottomCenterOf(home())) : mob.position().subtract(lastKnown);
-                    boolean escaped = chooseDestination(world, mob.position().add(away.normalize().scale(20)), 8, 1.0);
+                    boolean escaped = chooseDestination(world, mob.position().add(scatter(away).scale(20)), 8, chaseModifier());
                     if (cycle) {
                         failedEscapes = escaped ? 0 : failedEscapes + 1;
                         if (failedEscapes >= 3) corneredTicks = 100;
                     }
                 }
             }
-            case RETURN_HOME -> move(world, Vec3.atBottomCenterOf(home()), 0.8);
-            case REGROUP -> { if (regroupDestination != null) move(world, regroupDestination, 0.8); }
+            case RETURN_HOME -> move(world, Vec3.atBottomCenterOf(home()), mob.wanderModifier());
+            case REGROUP -> { if (regroupDestination != null) move(world, regroupDestination, Math.min(1, mob.wanderModifier() * 1.3)); }
             case SEEK_WATER -> seekWater(world);
-            case ROAM -> roam(world);
-            case SEARCH -> roam(world);
+            case ROAM, SEARCH -> roam(world);
             default -> mob.getNavigation().stop();
         }
+        // Cues and the synced action go out last, so a pause beat chosen above starts its clip this tick.
+        var cue = dance.takeCue();
+        if (cue != null) mob.playCue(cue);
+        else if (state != before && before.sleeping() && !state.sleeping()) mob.playCue(BehaviorAction.Cue.WAKE);
+        mob.setAction(dance.action());
     }
     /** A landed strike that killed the target satisfies the predator exactly like the old instant hit did. */
     @Override public void onStrikeKill() {
+        var before = mind().state();
         mind().ate(); focus = null; mob.setTarget(null); mob.getNavigation().stop();
+        choreo().enter(before, BehaviorState.FEED, false);
+    }
+    /** Full pursuit and escape speed, varied a little per individual so a pack spreads out. */
+    private double chaseModifier() {
+        return Math.clamp(Desync.speedFactor(mob.getUUID().getLeastSignificantBits()), 0.92, 1.05);
+    }
+    /**
+     * Escape heading: away from the threat, bent by this animal's own angle for this alarm, and pushed off the
+     * nearest herd mate so a fleeing herd fans out instead of stacking on one line.
+     */
+    private Vec3 scatter(Vec3 away) {
+        Vec3 flat = new Vec3(away.x, 0, away.z);
+        if (flat.lengthSqr() < 1.0E-4) flat = Vec3.directionFromRotation(0, mob.getYRot());
+        flat = flat.normalize().yRot((float) Math.toRadians(Desync.headingJitter(mob.getUUID().getLeastSignificantBits(), alarmEvents)));
+        CreatureEntity nearest = null;
+        double closest = Math.pow(mob.getBbWidth() + 4, 2);
+        for (var member : packWithin(12)) {
+            double d = member.distanceToSqr(mob);
+            if (d < closest) { closest = d; nearest = member; }
+        }
+        if (nearest != null) {
+            Vec3 apart = mob.position().subtract(nearest.position());
+            apart = new Vec3(apart.x, 0, apart.z);
+            if (apart.lengthSqr() > 1.0E-4) flat = flat.add(apart.normalize().scale(0.6)).normalize();
+        }
+        return flat;
     }
     private boolean routineAllows(LivingEntity candidate, boolean quietRoutine, LivingEntity recentAttacker) {
         if (!quietRoutine || candidate == recentAttacker || candidate == herdThreat || mind().state().combat()
@@ -257,16 +426,33 @@ public final class WildlifeGoal extends WildlifeController {
         var box = mob.getBoundingBox().inflate(radius);
         return packCache.stream().filter(c -> box.intersects(c.getBoundingBox())).toList();
     }
+    private CreatureEntity leader(double radius) {
+        return packWithin(radius).stream().filter(c -> c.getId() < mob.getId())
+                .min(Comparator.comparingInt(CreatureEntity::getId)).orElse(null);
+    }
+    /** This member's own place around the leader, so a group spreads out instead of converging on one block. */
+    private Vec3 slot(CreatureEntity leader) {
+        long seed = mob.getUUID().getLeastSignificantBits();
+        double angle = Desync.formationAngle(seed);
+        double radius = Desync.formationRadius(seed, mob.species().cohesionDistance(), mob.getBbWidth());
+        return leader.position().add(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+    }
     private double territoryRadius() { return LandWildlife.leash(mob.species()); }
     private void roam(ServerLevel world) {
         if (!mob.species().solitary()) {
-            var leader = packWithin(64).stream().filter(c -> c.getId() < mob.getId())
-                    .min(Comparator.comparingInt(CreatureEntity::getId)).orElse(null);
-            if (leader != null && mob.distanceTo(leader) > mob.species().cohesionDistance()) { move(world, leader.position(), 0.85); return; }
+            var leader = leader(64);
+            if (leader != null && mob.distanceTo(leader) > mob.species().cohesionDistance()) {
+                move(world, slot(leader), Math.min(1, mob.wanderModifier() * 1.15));
+                return;
+            }
         }
-        if (mob.tickCount < nextRoutine) return;
+        if (mob.tickCount < nextRoutine) {
+            // A roaming pause is filled with the idle beats the rig can play.
+            if (mob.getNavigation().isDone()) choreo().pause();
+            return;
+        }
         nextRoutine = mob.tickCount + (mind().state() == BehaviorState.SEARCH ? 60 : 100) + mob.getRandom().nextInt(100);
-        chooseDestination(world, Vec3.atBottomCenterOf(home()), mob.species().solitary() ? 36 : 24, mob.species().predator ? 0.6 : 0.55);
+        chooseDestination(world, Vec3.atBottomCenterOf(home()), mob.species().solitary() ? 36 : 24, mob.wanderModifier());
     }
     private boolean chooseDestination(ServerLevel world, Vec3 center, int radius, double speed) {
         for (int i = 0; i < 8; i++) {
@@ -315,7 +501,7 @@ public final class WildlifeGoal extends WildlifeController {
         return false;
     }
     private void seekWater(ServerLevel world) {
-        if (waterDestination != null && move(world, waterDestination, 0.75)) return;
+        if (waterDestination != null && move(world, waterDestination, mob.wanderModifier())) return;
         if (world.getGameTime() < nextWaterSearch) { roam(world); return; }
         nextWaterSearch = world.getGameTime() + 200;
         waterDestination = null;
@@ -330,7 +516,7 @@ public final class WildlifeGoal extends WildlifeController {
                 var water = pos.relative(direction, edge).below();
                 if (!world.getFluidState(water).is(FluidTags.WATER)) continue;
                 waterDestination = Vec3.atBottomCenterOf(pos);
-                if (move(world, waterDestination, 0.75)) return;
+                if (move(world, waterDestination, mob.wanderModifier())) return;
             }
         }
         roam(world);
@@ -348,10 +534,12 @@ public final class WildlifeGoal extends WildlifeController {
         home = new BlockPos(in.getIntOr("WildHomeX", mob.blockPosition().getX()), in.getIntOr("WildHomeY", mob.blockPosition().getY()), in.getIntOr("WildHomeZ", mob.blockPosition().getZ()));
         transientHome = null;
         mind = null; // Reset transient pursuit and sleep state on reload.
+        choreo = null;
         mind().restoreNeeds(in.getDoubleOr("WildHunger", 0.55), in.getDoubleOr("WildThirst", 0.35), in.getDoubleOr("WildFatigue", 0.15));
         mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
-        focus = null; lastKnown = null; destination = null; regrouping = false; packCache = null;
+        focus = null; lastKnown = null; destination = null; regrouping = false; packCache = null; pendingAlarm = null; facing = null;
         herdThreat = null; herdThreatTicks = 0;
+        ambient = null; tier = BehaviorTier.FULL;
         try { preyHerd = java.util.UUID.fromString(in.getStringOr("WildPreyHerd", "")); }
         catch (IllegalArgumentException ignored) { preyHerd = null; }
     }

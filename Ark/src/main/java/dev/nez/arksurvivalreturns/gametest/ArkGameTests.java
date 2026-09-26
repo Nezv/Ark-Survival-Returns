@@ -157,6 +157,18 @@ public final class ArkGameTests {
         h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, pos, world.getRandom()), "Valid plains spawn rejected");
         h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(pos), 1), "Rex allowed in danger 1");
         h.assertTrue(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(pos), 5), "Legacy plains tag blocked high-danger Rex");
+        // Habitats instead of biome difficulty: warm species share the temperate land, while the snow,
+        // the wetlands and the sea keep their own communities.
+        var biomes = world.registryAccess().lookupOrThrow(Registries.BIOME);
+        h.assertTrue(biomes.getOrThrow(Biomes.PLAINS).is(Species.TYRANNOSAURUS.biomes), "Rex habitat excludes plains");
+        h.assertTrue(biomes.getOrThrow(Biomes.DESERT).is(Species.PARASAUR.biomes), "Parasaur habitat excludes deserts");
+        h.assertFalse(biomes.getOrThrow(Biomes.SNOWY_PLAINS).is(Species.PARASAUR.biomes), "Parasaur entered the snow");
+        h.assertTrue(biomes.getOrThrow(Biomes.SNOWY_PLAINS).is(Species.MAMMOTH.biomes), "Mammoth habitat excludes snowy plains");
+        h.assertFalse(biomes.getOrThrow(Biomes.PLAINS).is(Species.MAMMOTH.biomes), "Mammoth left the snow");
+        h.assertTrue(biomes.getOrThrow(Biomes.SWAMP).is(Species.SARCO.biomes), "Sarco habitat excludes swamps");
+        h.assertFalse(biomes.getOrThrow(Biomes.DESERT).is(Species.SARCO.biomes), "Sarco left the wetlands");
+        h.assertTrue(biomes.getOrThrow(Biomes.OCEAN).is(Species.MEGALODON.biomes), "Megalodon habitat excludes the ocean");
+        h.assertTrue(biomes.getOrThrow(Biomes.GROVE).is(Species.ARGENTAVIS.biomes), "Flyers must reach snowy land too");
         h.setBlock(8, 2, 8, Blocks.WATER);
         h.assertFalse(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, pos, world.getRandom()), "Underwater spawn accepted");
         h.setBlock(8, 2, 8, Blocks.AIR);
@@ -249,7 +261,7 @@ public final class ArkGameTests {
         var animals = new java.util.ArrayList<CreatureEntity>();
         try {
             world.getDataStorage().set(ProgressionData.TYPE, new ProgressionData(viewer.getX() - 512, viewer.getZ(), 256, true));
-            h.assertTrue(BiomeTier.at(world, viewer).dangerLevel() == 5, "Fixture is not danger 5");
+            h.assertTrue(DangerTier.at(world, viewer).dangerLevel() == 5, "Fixture is not danger 5");
             var trike = ModContent.CREATURES.get(Species.TRICERATOPS).get();
             h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer, world.getRandom()), "Valid danger-5 trike spawn rejected");
             h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer.above(4), world.getRandom()) == false, "Covered spawn accepted");
@@ -267,7 +279,7 @@ public final class ArkGameTests {
             }
             h.assertTrue(animals.stream().allMatch(c -> c.packId().equals(animals.getFirst().packId())), "Spawn cluster split its pack");
             for (var creature : animals) {
-                var tier = BiomeTier.at(world, creature.blockPosition());
+                var tier = DangerTier.at(world, creature.blockPosition());
                 h.assertTrue(creature.creatureLevel() >= Config.MIN_LEVEL.get(tier).get()
                         && creature.creatureLevel() <= Config.MAX_LEVEL.get(tier).get(), "Level outside local danger range");
             }

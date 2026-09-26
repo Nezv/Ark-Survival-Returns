@@ -2,6 +2,9 @@ package dev.nez.arksurvivalreturns.datagen;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorModels;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorTier;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.primitive.DinoMeat;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureProfileRegistry;
@@ -18,6 +21,7 @@ final class ShowcaseData {
             o.addProperty("id", s.id);
             o.addProperty("name", s.displayName);
             o.addProperty("realm", s.realm().name().toLowerCase(java.util.Locale.ROOT));
+            o.addProperty("habitat", s.habitat().id);
             o.addProperty("predator", s.predator);
             o.addProperty("apex", s.apex());
             o.addProperty("cold", s.coldAdapted());
@@ -39,6 +43,17 @@ final class ShowcaseData {
         JsonObject root = new JsonObject();
         root.add("species", list);
         return root;
+    }
+
+    /**
+     * Behaviour models with their tiers, bridges and transition matrices, at the shipped config defaults
+     * (datagen never loads a config file). Written to Ark/design/showcase/behavior.json.
+     */
+    static JsonObject behavior() {
+        var radii = new BehaviorTier.Radii(Config.TIER_FULL_RADIUS.getDefault(), Config.TIER_AMBIENT_RADIUS.getDefault(),
+                Config.TIER_DORMANT_RADIUS.getDefault(), Config.TIER_MARGIN.getDefault());
+        return BehaviorModels.export(radii, Config.NIGHT_START.getDefault(), Config.NIGHT_END.getDefault(),
+                Config.DAY_SLEEP.getDefault());
     }
 
     private ShowcaseData() {}
