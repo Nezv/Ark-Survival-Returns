@@ -1,15 +1,16 @@
 // Ark: Survival Returns title scene, foreground layer (FancyMenu "GLSL Shader" element, full screen, blended).
-// Drawn over the creature: swaying ferns, near rain, ground mist, the lamp's veiling glare, lightning and
+// Drawn over the creature: swaying ferns, near rain, ground mist, the campfire's warm haze, lightning and
 // a vignette. Same scene units, textures and strike clock as background.glsl.
 // iChannel0 scene_far.png, iChannel1 scene_near.png (B ferns, A near fronds)
 
 const float X0 = -1.2;
 const float X1 = 1.2;
-const vec2 LIGHT = vec2(0.465, 0.745);
+const vec2 FIRE = vec2(-0.02, 0.318);
 
 const vec3 FERN = vec3(0.010, 0.016, 0.012);
 const vec3 MIST = vec3(0.060, 0.078, 0.092);
-const vec3 LAMP = vec3(0.80, 0.90, 1.00);
+const vec3 WARM = vec3(1.00, 0.52, 0.2);
+const vec3 RAIN = vec3(0.55, 0.62, 0.72);
 const vec3 BOLT = vec3(0.70, 0.78, 1.00);
 
 uint hashu(uint x) {
@@ -103,26 +104,27 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 par = clamp(mouse, 0.0, 1.0) - 0.5;
     float flash = lightning();
     float gust = sin(iTime * 0.55) * 0.6 + sin(iTime * 1.7 + 1.3) * 0.25 + (vnoise(vec2(iTime * 0.35, 3.1)) - 0.5) * 1.2;
-    float lampNear = exp(-length((s - LIGHT) * vec2(0.55, 1.0)) * 2.4);
+    float fireNear = exp(-length((s - FIRE - vec2(0.0, 0.03)) * vec2(1.0, 1.3)) * 5.0)
+                   * (0.85 + 0.15 * vnoise(vec2(iTime * 5.0, 1.3)));
     vec4 acc = vec4(0.0);
 
-    // Air between the viewer and the creature: a thin veil, the lamp's glare, mist rolling over the ground.
-    over(acc, MIST * (1.0 + 1.5 * lampNear), 0.03 + 0.10 * lampNear);
+    // Air between the viewer and the creature: a thin veil, the fire's warm haze, mist rolling over the ground.
+    over(acc, mix(MIST, WARM * 0.35, fireNear), 0.03 + 0.08 * fireNear);
     float mistShape = fbm(vec2(s.x * 1.7 - iTime * 0.07, s.y * 5.0 + iTime * 0.03));
     float mist = smoothstep(0.34, 0.0, s.y) * (0.25 + 0.75 * mistShape);
-    over(acc, MIST * (1.0 + 0.8 * lampNear), mist * 0.30);
+    over(acc, mix(MIST, WARM * 0.3, fireNear * 0.6), mist * 0.30);
 
-    // Rain close to the camera: long streaks, lit by the lamp and the sky.
-    float light = 0.06 + 1.6 * lampNear * lampNear + 1.6 * flash;
+    // Rain close to the camera: long streaks, lit by the fire and the sky.
+    float light = 0.06 + 1.4 * fireNear + 1.6 * flash;
     float rain = rainStreaks(s, 26.0, 4.2, 1.0, 0.035) + rainStreaks(s, 41.0, 5.6, 5.0, 0.03) * 0.7;
-    over(acc, mix(LAMP, BOLT, flash), rain * 0.16 * light);
+    over(acc, mix(mix(RAIN, WARM, fireNear), BOLT, flash), rain * 0.16 * light);
 
-    // Ferns: black-green, a wet rim toward the lamp, a flicker of highlight when lightning hits.
+    // Ferns: black-green, a wet rim toward the fire, a flicker of highlight when lightning hits.
     vec2 fernAt = sway(s + par * vec2(0.022, 0.006), gust, 1.0);
     float fern = texture(iChannel1, uvOf(fernAt)).b;
-    vec2 toLight = normalize(LIGHT - s);
+    vec2 toLight = normalize(FIRE - s);
     float rim = fern * (1.0 - texture(iChannel1, uvOf(fernAt + toLight * 0.0035)).b);
-    vec3 fernColor = FERN + (LAMP * 0.10 * (0.3 + lampNear) + BOLT * flash * 0.45) * rim;
+    vec3 fernColor = FERN + (WARM * 0.08 * (0.2 + fireNear) + BOLT * flash * 0.45) * rim;
     over(acc, fernColor, fern);
 
     // Nearest fronds, out of focus.

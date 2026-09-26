@@ -20,14 +20,14 @@ public class CreatureElement extends AbstractElement {
     public final Property.StringProperty creature = putProperty(Property.stringProperty("creature", "tyrannosaurus", false, false, KEY + "species"));
     public final Property.StringProperty textureVariant = putProperty(Property.stringProperty("texture_variant", "midnight", false, false, KEY + "texture_variant"));
     public final Property.StringProperty idleClip = putProperty(Property.stringProperty("idle_clip", "", false, false, KEY + "idle_clip"));
-    public final Property.FloatProperty sceneX = putProperty(Property.floatProperty("scene_x", 0.42F, KEY + "scene_x"));
-    public final Property.FloatProperty sceneGround = putProperty(Property.floatProperty("scene_ground", 0.165F, KEY + "scene_ground"));
+    public final Property.FloatProperty sceneX = putProperty(Property.floatProperty("scene_x", 0.5F, KEY + "scene_x"));
+    public final Property.FloatProperty sceneGround = putProperty(Property.floatProperty("scene_ground", 0.16F, KEY + "scene_ground"));
     public final Property.FloatProperty sceneHeight = putProperty(Property.floatProperty("scene_height", 0.4F, KEY + "scene_height"));
     public final Property.FloatProperty bodyYaw = putProperty(Property.floatProperty("body_yaw", -38.0F, KEY + "body_yaw"));
     public final Property.FloatProperty cameraPitch = putProperty(Property.floatProperty("camera_pitch", -5.0F, KEY + "camera_pitch"));
     public final Property.BooleanProperty lookAround = putProperty(Property.booleanProperty("look_around", true, KEY + "look_around"));
     public final Property.FloatProperty lookRange = putProperty(Property.floatProperty("look_range", 38.0F, KEY + "look_range"));
-    public final Property.ColorProperty tint = putProperty(Property.hexColorProperty("tint", "#56606B", false, KEY + "tint"));
+    public final Property.ColorProperty tint = putProperty(Property.hexColorProperty("tint", "#6E6A68", false, KEY + "tint"));
     public final Property.FloatProperty lightningBoost = putProperty(Property.floatProperty("lightning_boost", 0.8F, KEY + "lightning_boost"));
     public final Property.BooleanProperty thunder = putProperty(Property.booleanProperty("thunder", true, KEY + "thunder"));
     public final Property.FloatProperty thunderVolume = putProperty(Property.floatProperty("thunder_volume", 0.7F, KEY + "thunder_volume"));

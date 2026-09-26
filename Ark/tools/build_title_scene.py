@@ -4,7 +4,7 @@ Scene units: x runs from the screen centre in screen heights (16:9 spans -0.89..
 (0..1). The shaders (tools/title_scene/*.glsl) and the Ark creature element use the same units, so the
 T-Rex stays on the painted path at any resolution or aspect ratio.
 
-textures/gui/title/scene_far.png   R distant treeline, G outpost, B warm windows, A side conifers
+textures/gui/title/scene_far.png   R distant treeline, G huts and camp, B firelit doors and torches, A side conifers
 textures/gui/title/scene_near.png  R ground, G wet path and puddles, B ferns, A near fronds (blurred)
 config/fancymenu/customization/ark_title_screen.txt  the layout, shaders inlined the way FancyMenu stores
 multi-line properties (one line, %%!serialized_property_newline!%% for each line break).
@@ -144,77 +144,109 @@ def spruce(mask, rng, x, base, height, lean=0.0):
             needles(mask, rng, leader + side * height * 0.008, yy, height * 0.009, 0.5)
 
 
-# ---------------------------------------------------------------- outpost
+# ---------------------------------------------------------------- camp
 
-OUTPOST = (0.02, 0.66)       # facade from x..x
-MAST_X = 0.46                # floodlight mast
-LAMP = (0.465, 0.745)        # floodlight head (the shaders' LIGHT_POS)
+CAMP_BASE = 0.318            # ground under the huts and the fire
+FIRE = (-0.02, CAMP_BASE)    # campfire (the shaders' FIRE)
 
 
-def outpost(structure, lights, rng):
-    base = 0.318
-    left, right = OUTPOST
-    # Main hall, upper storey and a service block.
-    structure.polygon([(left, base), (left, 0.495), (left + 0.03, 0.51), (right - 0.05, 0.51), (right, 0.49),
-                       (right, base)])
-    structure.rect(0.16, 0.50, 0.52, 0.585)
-    structure.rect(0.52, 0.47, 0.62, 0.53)
-    structure.rect(-0.12, base, left + 0.01, 0.43)                       # annex
-    structure.polygon([(-0.13, 0.43), (-0.045, 0.462), (left + 0.012, 0.43)])
-    # Roof clutter: vents, rails, antenna.
-    for vx in (0.19, 0.25, 0.41):
-        structure.rect(vx, 0.585, vx + 0.03, 0.602)
-    for rx in [0.16 + i * 0.018 for i in range(21)]:
-        structure.line([(rx, 0.585), (rx, 0.598)], 0.0012)
-    structure.line([(0.16, 0.598), (0.52, 0.598)], 0.0016)
-    structure.line([(0.30, 0.60), (0.30, 0.665)], 0.0018)
-    structure.line([(0.295, 0.645), (0.305, 0.645)], 0.0012)
-    # Floodlight mast: two legs, cross bracing, the lamp head and its hood.
-    legs = ((MAST_X - 0.02, 0.51), (MAST_X + 0.02, 0.51))
-    structure.line([legs[0], (MAST_X - 0.004, LAMP[1] - 0.015)], 0.0022)
-    structure.line([legs[1], (MAST_X + 0.004, LAMP[1] - 0.015)], 0.0022)
-    steps = 7
-    for i in range(steps):
-        y0 = 0.51 + (LAMP[1] - 0.525) * i / steps
-        y1 = 0.51 + (LAMP[1] - 0.525) * (i + 1) / steps
-        w0 = 0.02 - 0.016 * i / steps
-        w1 = 0.02 - 0.016 * (i + 1) / steps
-        structure.line([(MAST_X - w0, y0), (MAST_X + w1, y1)], 0.0011)
-        structure.line([(MAST_X + w0, y0), (MAST_X - w1, y1)], 0.0011)
-    structure.rect(LAMP[0] - 0.034, LAMP[1] - 0.012, LAMP[0] + 0.034, LAMP[1] + 0.012)
-    structure.polygon([(LAMP[0] - 0.04, LAMP[1] + 0.012), (LAMP[0] + 0.04, LAMP[1] + 0.012),
-                       (LAMP[0] + 0.03, LAMP[1] + 0.022), (LAMP[0] - 0.03, LAMP[1] + 0.022)])
-    # Perimeter fence with posts and a gap for the gate.
-    for fx in [-0.95 + i * 0.045 for i in range(46)]:
-        if 0.24 < fx < 0.44:
-            continue
-        structure.line([(fx, base - 0.012), (fx, base + 0.045)], 0.0016)
-    for fy in (base + 0.018, base + 0.040):
-        structure.line([(-0.95, fy), (0.24, fy)], 0.0009)
-        structure.line([(0.44, fy), (1.1, fy)], 0.0009)
-    # Warm windows: a lit strip in the hall, a scattering upstairs, the open gate bay.
-    for i in range(22):
-        wx = left + 0.03 + i * 0.027
-        if rng.random() < 0.72:
-            lights.rect(wx, 0.445, wx + 0.018, 0.47, rng.randint(150, 255))
-        if rng.random() < 0.3:
-            lights.rect(wx, 0.395, wx + 0.018, 0.418, rng.randint(90, 200))
-    for i in range(12):
-        wx = 0.175 + i * 0.029
-        if rng.random() < 0.45:
-            lights.rect(wx, 0.535, wx + 0.016, 0.556, rng.randint(80, 190))
-    lights.rect(0.28, base, 0.38, 0.40, 255)                             # gate bay
-    structure.rect(0.28, 0.40, 0.38, 0.41)
-    lights.rect(-0.1, 0.36, -0.07, 0.385, 180)                           # annex window
-    # Cut the lit areas out of the structure so the shader can glow them.
-    return structure
+def barracks(structure, lights, rng, x0, x1, door_left):
+    """A long log hut seen from its side: notched log corners, a ragged thatch roof with crossed gable
+    poles, a firelit doorway on the side facing the campfire and a couple of lit chinks."""
+    base, eave, ridge = CAMP_BASE, CAMP_BASE + 0.07, CAMP_BASE + 0.165
+    structure.rect(x0, base - 0.004, x1, eave)
+    # Log ends stick out past both corners, one per course.
+    for corner in (x0, x1):
+        y = base + 0.004
+        while y < eave - 0.004:
+            reach = rng.uniform(0.007, 0.012)
+            structure.rect(corner - reach, y, corner + reach, y + 0.009)
+            y += 0.0115
+    # Thatch: a hipped roof with a fringe of straw hanging over the eaves.
+    over = 0.022
+    roof = [(x0 - over, eave - 0.004), (x0 + 0.05, ridge), (x1 - 0.05, ridge), (x1 + over, eave - 0.004)]
+    structure.polygon(roof + [(x1 + over, eave - 0.012), (x0 - over, eave - 0.012)])
+    x = x0 - over
+    while x < x1 + over:
+        w = rng.uniform(0.004, 0.008)
+        structure.polygon([(x, eave - 0.006), (x + w * 0.5, eave - 0.006 - rng.uniform(0.006, 0.014)), (x + w, eave - 0.006)])
+        x += w
+    for k in range(40):                                               # tufts along the ridge
+        tx = x0 + 0.05 + (x1 - x0 - 0.1) * k / 39
+        structure.line([(tx, ridge - 0.002), (tx + rng.uniform(-0.004, 0.004), ridge + rng.uniform(0.003, 0.008))], 0.0012)
+    for gx, lean in ((x0 + 0.05, -1), (x1 - 0.05, 1)):                # crossed gable poles
+        structure.line([(gx - lean * 0.012, ridge - 0.012), (gx + lean * 0.016, ridge + 0.03)], 0.0022)
+        structure.line([(gx + lean * 0.012, ridge - 0.012), (gx - lean * 0.008, ridge + 0.028)], 0.0022)
+    # Doorway toward the fire, hide curtain pulled half aside; firelight through the chinks.
+    dx = x0 + 0.03 if door_left else x1 - 0.07
+    lights.rect(dx, base, dx + 0.04, base + 0.058, 235)
+    structure.polygon([(dx, base + 0.058), (dx + 0.018, base + 0.058), (dx + 0.006, base)] if door_left else
+                      [(dx + 0.04, base + 0.058), (dx + 0.022, base + 0.058), (dx + 0.034, base)])
+    for _ in range(2):
+        cx = rng.uniform(x0 + 0.1, x1 - 0.1)
+        lights.rect(cx, base + 0.036, cx + rng.uniform(0.012, 0.022), base + 0.041, rng.randint(120, 190))
+    # Firewood stacked against the gable end.
+    wall = x1 if door_left else x0
+    side = 1 if door_left else -1
+    for row in range(3):
+        for k in range(4 - row):
+            lx = wall + side * (0.008 + 0.009 * k + 0.0045 * row)
+            structure.ellipse(lx, base + 0.005 + row * 0.008, 0.005, 0.0045)
+
+
+def camp(structure, lights, rng):
+    barracks(structure, lights, rng, -0.34, -0.085, door_left=False)
+    barracks(structure, lights, rng, 0.055, 0.315, door_left=True)
+    fx, fy = FIRE
+    # Stone ring and a teepee of logs; the flames themselves are drawn by the shader.
+    for k in range(9):
+        a = math.pi * k / 8
+        structure.ellipse(fx + math.cos(a) * 0.032, fy + 0.002 + math.sin(a) * 0.003, 0.007, 0.005)
+    for a, b in ((-0.028, 0.01), (0.026, 0.008), (-0.01, 0.014), (0.014, 0.013)):
+        structure.line([(fx + a, fy), (fx + a * 0.15, fy + b + 0.012)], 0.003)
+    # Cooking tripod over the fire with its pot.
+    apex = (fx + 0.004, fy + 0.085)
+    for foot in (fx - 0.045, fx + 0.05, fx + 0.012):
+        structure.line([(foot, fy - 0.004), apex], 0.0022)
+    structure.line([apex, (apex[0], fy + 0.055)], 0.0008)
+    structure.ellipse(apex[0], fy + 0.047, 0.012, 0.009)
+    # Drying rack with hanging strips, and torches at the doors.
+    rx = -0.47
+    structure.line([(rx, CAMP_BASE), (rx + 0.01, CAMP_BASE + 0.06)], 0.0016)
+    structure.line([(rx + 0.07, CAMP_BASE), (rx + 0.06, CAMP_BASE + 0.06)], 0.0016)
+    structure.line([(rx + 0.005, CAMP_BASE + 0.056), (rx + 0.065, CAMP_BASE + 0.056)], 0.0016)
+    for k in range(5):
+        sx = rx + 0.014 + k * 0.011
+        structure.line([(sx, CAMP_BASE + 0.056), (sx + 0.001, CAMP_BASE + 0.03 + rng.uniform(0, 0.01))], 0.0028)
+    for tx in (-0.355, 0.33):
+        structure.line([(tx, CAMP_BASE - 0.004), (tx, CAMP_BASE + 0.07)], 0.0022)
+        lights.ellipse(tx, CAMP_BASE + 0.077, 0.004, 0.008, 255)
+    # Palisades of sharpened stakes close the flanks; the camp stays open between the huts.
+    for start, stop in ((-1.05, -0.5), (0.4, 1.12)):
+        x = start
+        while x < stop:
+            w = rng.uniform(0.007, 0.01)
+            h = rng.uniform(0.05, 0.078)
+            structure.polygon([(x, CAMP_BASE - 0.01), (x, CAMP_BASE + h), (x + w / 2, CAMP_BASE + h + 0.012),
+                               (x + w, CAMP_BASE + h), (x + w, CAMP_BASE - 0.01)])
+            x += w + rng.uniform(0.0, 0.0025)
+        structure.line([(start, CAMP_BASE + 0.03), (stop, CAMP_BASE + 0.03)], 0.0014)
 
 
 # ---------------------------------------------------------------- ground
 
+PATH_X = 0.08                # the trampled path leaves the camp beside the fire
+
+
 def ground_line(x):
-    bump = 0.018 * math.exp(-((x - 0.33) / 0.55) ** 2)
+    bump = 0.018 * math.exp(-((x - PATH_X) / 0.6) ** 2)
     return GROUND + bump + 0.006 * math.sin(x * 9.0) + 0.003 * math.sin(x * 31.0 + 1.3)
+
+
+def path_edge(t, side):
+    """A point on the path's edge, t = 0 at the camp and 1 at the bottom of the screen."""
+    y = ground_line(PATH_X) * (1 - t) - 0.02 * t
+    return PATH_X + 0.12 * t + side * (0.05 + 0.55 * t ** 1.2), y
 
 
 def ground(ground_mask, wet, rng):
@@ -223,36 +255,24 @@ def ground(ground_mask, wet, rng):
     # Grass tufts break the ground line.
     for _ in range(900):
         x = rng.uniform(X0, X1)
-        if 0.18 < x < 0.5 and rng.random() < 0.8:
+        if PATH_X - 0.14 < x < PATH_X + 0.14 and rng.random() < 0.8:
             continue  # the path stays clear
         y = ground_line(x) - 0.004
         h = rng.uniform(0.006, 0.022)
         lean = rng.uniform(-0.6, 0.6) * h
         ground_mask.polygon([(x - 0.0025, y), (x + lean, y + h), (x + 0.0025, y)])
-    # The path runs from the gate towards the viewer, widening with perspective.
-    path = [(0.29, ground_line(0.29)), (0.38, ground_line(0.38))]
-    for i in range(1, 11):
-        t = i / 10
-        y = ground_line(0.33) * (1 - t) - 0.02 * t
-        half = 0.05 + 0.55 * t ** 1.2
-        center = 0.335 + 0.05 * t
-        path.append((center + half, y))
-    left_edge = []
-    for i in range(10, 0, -1):
-        t = i / 10
-        y = ground_line(0.33) * (1 - t) - 0.02 * t
-        half = 0.05 + 0.55 * t ** 1.2
-        center = 0.335 + 0.05 * t
-        left_edge.append((center - half, y))
-    wet.polygon(path + left_edge, 70)
+    # Mud trampled from the camp towards the viewer, widening with perspective.
+    right = [path_edge(i / 10, 1) for i in range(11)]
+    left = [path_edge(i / 10, -1) for i in range(10, -1, -1)]
+    wet.polygon(right + left, 70)
     # Puddles: flat ellipses, wider and softer nearer the viewer.
     for _ in range(46):
         t = rng.uniform(0.05, 1.0) ** 1.4
-        y = ground_line(0.33) * (1 - t) + 0.01
-        half = 0.05 + 0.55 * t ** 1.2
-        cx = 0.335 + 0.05 * t + rng.uniform(-0.85, 0.85) * half
+        edge, y = path_edge(t, 1)
+        half = edge - (PATH_X + 0.12 * t)
+        cx = PATH_X + 0.12 * t + rng.uniform(-0.85, 0.85) * half
         rx = rng.uniform(0.012, 0.05) * (0.4 + 1.6 * t)
-        wet.ellipse(cx, y, rx, rx * rng.uniform(0.08, 0.16), rng.randint(170, 255))
+        wet.ellipse(cx, y + 0.01, rx, rx * rng.uniform(0.08, 0.16), rng.randint(170, 255))
 
 
 # ---------------------------------------------------------------- ferns
@@ -344,7 +364,7 @@ def build_masks():
     far_trees, structure, lights, side_trees = Mask(), Mask(), Mask(), Mask()
     ground_mask, wet, near, nearest = Mask(), Mask(), Mask(), Mask()
 
-    # Distant forest: a dense band of spires and canopies behind the outpost.
+    # Distant forest: a dense band of spires and canopies behind the camp.
     for _ in range(260):
         x = rng.uniform(X0, X1)
         base = 0.30 + rng.uniform(0.0, 0.04)
@@ -353,8 +373,8 @@ def build_masks():
         else:
             broadleaf(far_trees, rng, x, base, rng.uniform(0.08, 0.16))
     far_trees.rect(X0, 0.2, X1, 0.33)
-    outpost(structure, lights, rng)
-    # Side conifers frame the outpost and reach past the top edge.
+    camp(structure, lights, rng)
+    # Side conifers frame the camp and reach past the top edge.
     for x, height, lean in ((-1.08, 1.05, 0.01), (-0.86, 0.95, -0.015), (-0.62, 0.78, 0.02), (-0.42, 0.62, -0.01),
                             (0.84, 0.92, -0.02), (1.05, 1.1, 0.01), (0.7, 0.66, 0.015)):
         spruce(side_trees, rng, x, 0.29 + rng.uniform(-0.01, 0.01), height, lean)
@@ -388,21 +408,21 @@ CREATURE = [
     ('creature', 'tyrannosaurus'),
     ('texture_variant', 'midnight'),
     ('idle_clip', ''),
-    ('scene_x', '0.38'),
+    ('scene_x', '0.5'),
     ('scene_ground', '0.16'),
-    ('scene_height', '0.42'),
+    ('scene_height', '0.4'),
     ('body_yaw', '-38.0'),
     ('camera_pitch', '-5.0'),
     ('look_around', 'true'),
     ('look_range', '38.0'),
-    ('tint', '#56606B'),
+    ('tint', '#6E6A68'),
     ('lightning_boost', '0.8'),
     ('thunder', 'true'),
     ('thunder_volume', '0.7'),
     ('parallax', '0.012'),
 ]
 
-# Buttons in a column on the left, over the dark ferns; the creature and the lamp own the right.
+# Buttons in a column on the left, over the dark ferns; the camp holds the centre and the creature the right.
 BUTTONS = [
     ('mc_titlescreen_singleplayer_button', 24, -16, 164, 20),
     ('mc_titlescreen_multiplayer_button', 24, 8, 164, 20),
