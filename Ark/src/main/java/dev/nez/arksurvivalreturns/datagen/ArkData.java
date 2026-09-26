@@ -260,6 +260,7 @@ public final class ArkData implements DataProvider {
         tribeMessages(en, pt);
         campMessages(en, pt);
         StationData.messages(en, pt);
+        TitleData.messages(en, pt);
         downedMessages(en, pt);
         massMessages(en, pt);
         workMessages(en, pt);
