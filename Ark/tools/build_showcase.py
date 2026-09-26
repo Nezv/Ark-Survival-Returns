@@ -476,8 +476,9 @@ ITEM_GROUPS = [
     ('Prehistoric', ['rock', 'sharp_rock', 'stone_knife', 'stone_hatchet', 'fire_starter', 'plant_fiber', 'flint_knife']),
     ('Keratin tier', ['keratin', 'keratin_spear', 'keratin_helmet', 'keratin_chestplate', 'keratin_leggings', 'keratin_boots']),
     ('Food and meat', ['dried_meat', 'dried_ration', 'hearty_stew', 'trail_mix', 'tintoberry', 'amarberry', 'azulberry', 'narcoberry']),
-    ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow', 'concentrated_sedative', 'companion_whistle',
-                          'field_journal', 'pack_harness', 'reinforced_harness', 'fiber_bandage']),
+    ('Medicine', ['fiber_bandage', 'herbal_bandage', 'healing_mixture', 'concentrated_sedative']),
+    ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow', 'companion_whistle',
+                          'field_journal', 'pack_harness', 'reinforced_harness']),
     ('Guardian', ['allosaur_heart', 'workshop_schematic', 'guardian_trophy']),
 ]
 
@@ -546,6 +547,7 @@ def spine_section():
         'SPINEDATA': json.dumps(data, ensure_ascii=False, separators=(',', ':')),
         'SPINELEGEND': flow.legend_html(), 'SPINENOTES': flow.notes_html(notes), 'SPINENOTECOUNT': len(notes),
         'SPINEDECISIONS': flow.decisions_html(),
+        'SPINEDECCOUNT': len(flow.DECISIONS),
     }
 
 

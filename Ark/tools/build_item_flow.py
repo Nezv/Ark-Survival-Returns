@@ -1,8 +1,8 @@
 """Recipe gates: the item progression spec (Prehistoric + vanilla) drawn as a schematic page.
 
-Sheet 1 is the workstation spine: every station or tool gate once, left to right in unlock order, each
-recipe a column on its station (inputs above the line, outputs below). Items made by another recipe arrive
-as net labels instead of long wires. Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
+Sheet 1 is the dependency map: every item once, in the first column (crafting steps from bare hands) where
+it can be made, grouped under the station or tool that makes it, with a line from each ingredient. Hovering an
+item lights its whole ancestry and everything it unlocks (tools/spine.js). Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
 decisions.
 
 Sources: the user's recipe-gate spec (2026-09-26), the mod's generated recipes and theme policy, and the
@@ -43,6 +43,11 @@ ITEMS = {
     'w_stone': ('Stone', 'mc:block/stone', None, None),
     'w_coal_ore': ('Coal ore', 'mc:block/coal_ore', None, None),
     'w_metal_ore': ('Copper, iron, lapis ore', 'mc:block/iron_ore', None, None),
+    'w_sand': ('Sand', 'mc:block/sand', None, None),
+    'w_sugar_cane': ('Sugar cane', 'mc:item/sugar_cane', None, None),
+    'w_flowers': ('Flowers', 'mc:block/poppy', None, None),
+    'w_farm': ('Village crops', 'mc:item/carrot', None, None),
+    'w_redstone_ore': ('Redstone ore', 'mc:block/redstone_ore', None, None),
     'w_creature': ('Dinosaur', 'ark:item/parasaur_spawn_egg', None, None),
     'w_animal': ('Vanilla animal', 'mc:item/cow_spawn_egg', None, None),
     'w_spider': ('Spider', 'mc:item/spider_spawn_egg', None, None),
@@ -75,7 +80,7 @@ ITEMS = {
     'string': ('String', 'mc:item/string', None, None),
     'log': ('Log', 'mc:block/oak_log', None, None),
     'planks': ('Planks', 'mc:block/oak_planks', None, None),
-    'crafting_table': ('Crafting Table', 'mc:block/crafting_table_front', None, None),
+    'working_station': ('Working Station', 'cube', None, 'Crafting Table'),
     'bedroll': ('Primitive Bedroll', 'cube', None, None),
     'cobblestone': ('Cobblestone', 'mc:block/cobblestone', None, None),
     'stone_tools': ('Stone tools ×6', 'mc:item/stone_pickaxe', None, None),
@@ -106,17 +111,15 @@ ITEMS = {
     'reinforced_harness': ('Reinforced Harness', 'mc:item/iron_horse_armor', 'standin', None),
     'book': ('Book', 'mc:item/book', None, None),
     'field_journal': ('Field Journal', 'mc:item/book', 'standin', None),
-    'spruce_log': ('Spruce Log', 'mc:block/spruce_log', None, None),
     'resin': ('Resin Clump', 'mc:item/resin_clump', None, None),
     'trough': ('Trough', 'cube', None, None),
-    'chest': ('Chest', 'cube', None, None),
+    'storage_crate': ('Storage Crate', 'cube', None, 'Chest'),
     'coal': ('Coal', 'mc:item/coal', None, None),
     'torch': ('Torch', 'mc:block/torch', None, None),
     'campfire': ('Campfire', 'mc:item/campfire', None, None),
     'raw_meat': ('Raw meat ×7 kinds', 'ark:item/raw_herbivore_meat', None, None),
     'cooked_meat': ('Cooked meat ×7', 'ark:item/cooked_herbivore_meat', None, None),
-    'hide_bone': ('Leather, Bone, Feather', 'mc:item/leather', None, None),
-    'vanilla_drops': ('Vanilla meat, Wool, Leather', 'mc:item/beef', None, None),
+    'wool': ('Wool', 'mc:block/white_wool', None, None),
     'vanilla_raw': ('Vanilla raw food ×9', 'mc:item/beef', None, None),
     'vanilla_cooked': ('Cooked ×9', 'mc:item/cooked_beef', None, None),
     'allosaur_heart': ('Allosaur Heart', 'ark:item/allosaur_heart', None, None),
@@ -133,7 +136,6 @@ ITEMS = {
     'trail_mix': ('Trail Mix', 'mc:item/cookie', 'standin', None),
     'raw_ores': ('Raw copper, iron, gold', 'mc:item/raw_iron', None, None),
     'ingots': ('Copper, Iron, Gold ingot', 'mc:item/iron_ingot', None, None),
-    'blocked_ore': ('✕ nothing at wood tier', 'mc:item/raw_copper', None, None),
     'sand': ('Sand', 'mc:block/sand', None, None),
     'glass': ('Glass', 'mc:block/glass', None, None),
     'brick': ('Brick', 'mc:item/brick', None, None),
@@ -141,6 +143,32 @@ ITEMS = {
     'charcoal': ('Charcoal', 'mc:item/charcoal', None, None),
     'smelt_rest': ('Every other non-food smelt', 'mc:item/iron_nugget', None, None),
     'smelt_in': ('Terracotta, sponge, stone variants…', 'mc:block/terracotta', None, None),
+    'gravel': ('Gravel', 'mc:block/gravel', None, None),
+    'gunpowder': ('Gunpowder', 'mc:item/gunpowder', None, None),
+    'flowers': ('Flowers', 'mc:block/poppy', None, None),
+    'dyes': ('Dyes', 'mc:item/red_dye', None, None),
+    'sugar_cane': ('Sugar Cane', 'mc:item/sugar_cane', None, None),
+    'paper': ('Paper', 'mc:item/paper', None, None),
+    'smooth_stone': ('Smooth Stone', 'mc:block/smooth_stone', None, None),
+    'stone_slab': ('Stone Slab', 'mc:block/stone', None, None),
+    'wood_slab': ('Wooden Slab', 'mc:block/oak_planks', None, None),
+    'glass_bottle': ('Glass Bottle', 'mc:item/glass_bottle', None, None),
+    'redstone': ('Redstone', 'mc:item/redstone', None, None),
+    'dropper': ('Dropper', 'mc:block/dropper_front', None, None),
+    'ore_block': ('Ore block (Silk Touch)', 'mc:block/iron_ore', None, None),
+    'herbal_bandage': ('Herbal Bandage', 'mc:item/paper', 'standin', None),
+    'healing_mixture': ('Healing Mixture', 'mc:item/honey_bottle', 'standin', None),
+    'medicine_bench': ('Medicine Bench', 'cube', None, None),
+    'crusher': ('Crusher', 'cube', None, None),
+    'smithing_table': ('Smithing Table', 'cube', None, None),
+    'stonecutter': ('Stonecutter', 'mc:block/stonecutter_top', None, None),
+    'anvil': ('Anvil', 'mc:block/anvil', None, None),
+    'grindstone': ('Grindstone', 'mc:block/grindstone_side', None, None),
+    'composter': ('Composter', 'mc:block/composter_side', None, None),
+    'crafter': ('Crafter', 'mc:block/crafter_north', None, None),
+    'furnace': ('Furnace', 'mc:block/furnace_front', None, None),
+    'brewing_stand': ('Brewing Stand', 'mc:item/brewing_stand', None, None),
+    'enchanting_table': ('Enchanting Table', 'mc:block/enchanting_table_top', None, None),
     'workshop_schematic': ('Workshop Schematic', 'ark:item/workshop_schematic', None, None),
     'guardian_trophy': ('Guardian Trophy', 'ark:item/guardian_trophy', None, None),
     # vanilla stations
@@ -157,7 +185,7 @@ ITEMS = {
     'plants': ('Seeds, leaves, crops', 'mc:item/wheat_seeds', None, None),
     'bone_meal': ('Bone Meal', 'mc:item/bone_meal', None, None),
     'crafter_in': ('Ingredients + redstone pulse', 'mc:item/redstone', None, None),
-    'crafter_out': ('Any crafting-table result', 'mc:block/crafter_north', None, None),
+    'crafter_out': ('Any Working Station result', 'mc:block/crafter_north', None, None),
     'potion_in': ('Blaze powder + nether wart', 'mc:item/blaze_powder', None, None),
     'potions': ('Potions', 'mc:item/potion', None, None),
     'ench_in': ('Item + lapis + levels', 'mc:item/lapis_lazuli', None, None),
@@ -185,12 +213,20 @@ def row(step, st, ins, outs, op='', note=None):
     return {'step': step, 'st': st, 'ins': ins, 'outs': outs, 'op': op, 'note': note}
 
 
-def node(key, kind, name, sub, glyph, rows, divider=None, st=None):
-    return {'key': key, 'kind': kind, 'name': name, 'sub': sub, 'glyph': glyph, 'rows': rows,
-            'divider': divider, 'st': st}
+def node(key, kind, name, sub, glyph, rows, st=None, item=None):
+    """A station or tool gate. item: the item that is the station (its tier gates every row here)."""
+    return {'key': key, 'kind': kind, 'name': name, 'sub': sub, 'glyph': glyph, 'rows': rows, 'st': st, 'item': item}
 
 
-W = lambda item, **k: dict(i(item, **k), world=True)  # a world source, not a net label
+W = lambda item, **k: dict(i(item, **k), world=True)  # a world source, not a crafted item
+
+# "Any of" inputs: the renderer draws them as one chip fed by each member.
+GROUPS = {
+    'berry': ['blackberry', 'redberry', 'yellowberry', 'blueberry'],
+    'meat': ['raw_meat', 'cooked_meat'],
+    'raw_or_fish': ['raw_meat', 'vanilla_raw'],
+    'dried_food': ['dried_1', 'dried_2', 'dried_3', 'dried_ration'],
+}
 
 SPINE = [
     node('hands', 'gate', 'Bare hands', '1 · starts with nothing', 'empty', [
@@ -206,8 +242,12 @@ SPINE = [
             'Fiber is the primitive rope and goes into every rock tool. Today it is drawn with the wheat sprite.'),
         row('1.4', 'you', [W('w_leaves')], [i('twig')], 'break',
             'New item. Today leaves drop a Stick 20% of the time; that drop becomes the Twig.'),
-        row('', 'now', [W('w_gravel')], [i('flint', ch='10%')], 'break'),
+        row('', 'now', [W('w_gravel')], [i('flint', ch='10%'), i('gravel')], 'dig'),
         row('', 'now', [W('w_clay')], [i('clay_ball', 4)], 'dig'),
+        row('', 'now', [W('w_sand')], [i('sand')], 'dig'),
+        row('', 'now', [W('w_sugar_cane')], [i('sugar_cane')], 'break'),
+        row('', 'now', [W('w_flowers')], [i('flowers')], 'pick'),
+        row('', 'now', [W('w_farm')], [i('carrot')], 'harvest'),
     ]),
     node('inv', 'station', 'Inventory', '2×2 grid · always open', 'grid2', [
         row('1.2.1', 'you', [i('blackberry', 4)], [i('sedative', 4)], 'shapeless'),
@@ -215,25 +255,29 @@ SPINE = [
             'You set Twig → Stick; the 2 → 1 ratio is a proposal. After the axe, planks give sticks cheaply, so '
             'twigs only matter before the first log.'),
         row('2.1', 'change', [i('rock'), i('stick'), i('fiber')], [i('rock_axe', val='wood stats')], 'shapeless',
-            'Today this is the Stone Hatchet. It has to fit the 2×2 grid: logs need an axe, and the crafting '
-            'table needs logs. Uses the vanilla stone axe sprite (B04).'),
+            'Today this is the Stone Hatchet. It has to fit the 2×2 grid: logs need an axe, and the Working '
+            'Station needs logs. Uses the vanilla stone axe sprite (B04).'),
         row('', 'now', [i('rock', 2)], [i('sharp_rock')], 'shapeless',
             'Knapping: one rock struck on another. The sharp flake tips arrows in place of flint.'),
         row('', 'now', [i('stick', 2), i('fiber')], [i('fire_starter')], 'shapeless'),
         row('', 'now', [i('fiber', 3), i('string')], [i('bandage', 2)], 'shapeless'),
+        row('', 'now', [i('bone')], [i('bone_meal', 3)], 'vanilla'),
+        row('', 'now', [i('flowers')], [i('dyes')], 'vanilla'),
         row('2.1', 'now', [i('log')], [i('planks', 4)], 'vanilla'),
         row('2.1', 'now', [i('planks', 2)], [i('stick', 4)], 'vanilla'),
-        row('2.1', 'now', [i('planks', 4)], [i('crafting_table')], 'vanilla'),
+        row('2.1', 'now', [i('planks', 2), i('log', 2)], [i('working_station')], 'shaped',
+            'The Working Station replaces the crafting table (F14): two planks over two logs, so it needs the '
+            'axe. Vanilla tables that turn up in an inventory become Working Stations.'),
     ]),
     node('axe', 'gate', 'Rock Axe', '2.1 · chops logs', 'g_axe', [
         row('2.1', 'you', [W('w_log')], [i('log', val='10 Overworld woods')], 'chop',
             'Without an axe a log breaks at a quarter speed and drops nothing (in game). Crimson and warped '
             'wood are Nether-only, so 10 kinds remain.'),
-    ]),
-    node('table', 'station', 'Crafting Table', '3×3 grid', 'grid3', [
+    ], item='rock_axe'),
+    node('table', 'station', 'Working Station', '3×3 grid · replaces the crafting table', 'grid3', [
         row('1.3', 'change', [i('fiber', 9)], [i('bedroll')], 'shapeless',
             'Today: 4 Fiber + 1 Leather. Nine items need the 3×3 grid, so the bedroll arrives right after the '
-            'axe and the table, not at step 1 (Q2).'),
+            'axe and the Working Station, not at step 1 (Q2).'),
         row('2.2', 'you', [i('rock', 3), i('stick', 2), i('fiber')], [i('rock_pickaxe', val='wood stats')],
             'pickaxe + fiber', 'The vanilla pickaxe pattern with one Fiber in any free slot (Q3). Its mining '
             'tier decides whether copper and iron can ever be reached (Q1).'),
@@ -273,31 +317,50 @@ SPINE = [
             'Today it takes a Narcoberry. The Sedative replaces it (Q7).'),
         row('', 'change', [i('tranq_arrow', 4), i('narcotics')], [i('improved_tranq', 4)], 'shapeless',
             'Today it takes a Concentrated Sedative. Narcotics replace it (Q7).'),
-        row('', 'cut', [i('blackberry', 3), i('fiber')], [i('conc_sedative')], 'shapeless',
-            'Proposed removal: Narcotics from the mortar take its place; the Narcotraffic node moves to '
-            'Narcotics (Q7).'),
         row('', 'now', [i('fiber', 5)], [i('lead')], 'shaped'),
         row('', 'now', [i('leather', 3), i('fiber', 2)], [i('pack_harness')], 'shapeless'),
         row('', 'now', [i('pack_harness'), i('leather'), i('flint'), i('fiber', 2)], [i('reinforced_harness')], 'shapeless'),
+        row('', 'now', [i('sugar_cane', 3)], [i('paper', 3)], 'vanilla'),
+        row('', 'now', [i('paper', 3), i('leather')], [i('book')], 'vanilla'),
         row('', 'now', [i('book'), i('leather', 2)], [i('field_journal')], 'shapeless'),
-        row('', 'now', [i('spruce_log'), i('flint')], [i('resin', 2)], 'shapeless'),
+        row('', 'now', [i('log', ch='spruce'), i('flint')], [i('resin', 2)], 'shapeless'),
         row('', 'now', [i('planks', 5), i('resin'), i('fiber')], [i('trough')], 'shaped'),
-        row('', 'now', [i('planks', 8)], [i('chest')], 'vanilla'),
+        row('', 'now', [i('planks', 8)], [i('storage_crate')], 'shaped',
+            'The Storage Crate replaces every wooden chest (F14): 27 slots, and neighbouring crates join into '
+            'one look while each keeps its own slots, so Tom\'s Storage, hoppers and tame cargo never count '
+            'twice.'),
         row('', 'now', [i('coal'), i('stick')], [i('torch', 4)], 'vanilla'),
         row('', 'now', [i('log', 3), i('stick', 3), i('coal')], [i('campfire')], 'vanilla',
             'Also lights the "A little warmth" node. Keep it beside the Stone Fire? (Q12)'),
-    ]),
+        row('', 'now', [i('planks', 3)], [i('wood_slab', 6)], 'vanilla'),
+        row('', 'now', [i('stone', 3)], [i('stone_slab', 6)], 'vanilla'),
+        row('', 'now', [i('glass', 3)], [i('glass_bottle', 3)], 'vanilla'),
+        row('', 'now', [i('fiber', 2), i('glass_bottle'), i('planks', 3), i('log', 2)], [i('medicine_bench')], 'shaped',
+            'F14. The only place medicine is made; the Working Station leaves it out.'),
+        row('', 'now', [i('log', 2), i('grindstone'), i('cobblestone', 5)], [i('crusher')], 'shaped',
+            'F14. Unpowered: a flywheel turns while it grinds.'),
+        row('', 'now', [i('stick', 2), i('stone_slab'), i('planks', 2)], [i('grindstone')], 'vanilla'),
+        row('', 'now', [i('wood_slab', 7)], [i('composter')], 'vanilla'),
+        row('', 'block', [i('stone', 3), i('ingots')], [i('stonecutter')], 'vanilla'),
+        row('', 'block', [i('ingots', 31)], [i('anvil')], 'vanilla', 'Three iron blocks and four ingots.'),
+        row('', 'block', [i('ingots', 2), i('smooth_stone', 2), i('planks', 2)], [i('smithing_table')], 'shaped',
+            'Ark\'s own Smithing Table replaces the vanilla one (F14).'),
+        row('', 'block', [i('cobblestone', 7), i('redstone')], [i('dropper')], 'vanilla'),
+        row('', 'block', [i('ingots', 5), i('working_station'), i('redstone', 2), i('dropper')], [i('crafter')], 'vanilla'),
+    ], item='working_station'),
     node('pick', 'gate', 'Rock Pickaxe', '2.2 · mines stone', 'g_pickaxe', [
         row('2.2', 'you', [W('w_stone')], [i('cobblestone')], 'mine'),
         row('', 'now', [W('w_coal_ore')], [i('coal')], 'mine'),
-        row('', 'block', [W('w_metal_ore')], [i('blocked_ore')], 'mine',
+        row('', 'block', [W('w_metal_ore')], [i('raw_ores')], 'mine',
             'At wood tier the pickaxe cannot harvest copper, iron or lapis ore, and stone tools are gone. '
-            'Nothing past the forge is reachable until this is decided (Q1).'),
-    ]),
+            'Nothing that needs metal is reachable until this is decided (Q1).'),
+        row('', 'block', [W('w_redstone_ore')], [i('redstone')], 'mine',
+            'Redstone ore needs an iron pickaxe, so it waits on the metals too (Q1).'),
+    ], item='rock_pickaxe'),
     node('sword', 'gate', 'Rock Sword', '2.3 · kills', 'g_sword', [
         row('2.3', 'you', [W('w_creature')], [i('raw_meat')], 'kill',
             'Seven meat families by body plan (F05); big creatures add prime cuts.'),
-        row('', 'now', [W('w_creature')], [i('hide_bone')], 'kill',
+        row('', 'now', [W('w_creature')], [i('leather'), i('bone'), i('feather')], 'kill',
             'Leather scales with the creature\'s health; birds and sea creatures give no hide.'),
         row('2.3.2', 'tbd', [W('w_creature')], [i('creature_tbd')], 'kill', 'Yours to decide: blood, heart and other creature drops.'),
         row('', 'now', [W('w_horned')], [i('keratin', val='Trike 2-4 · Anky 1-3')], 'kill',
@@ -307,78 +370,101 @@ SPINE = [
         row('', 'now', [W('w_goat')], [i('keratin', ch='50%')], 'kill'),
         row('', 'now', [W('w_allosaurus')], [i('allosaur_heart')], 'kill'),
         row('', 'now', [W('w_spider')], [i('string')], 'kill'),
-        row('', 'now', [W('w_animal')], [i('vanilla_drops')], 'kill',
+        row('', 'now', [W('w_animal')], [i('vanilla_raw'), i('wool'), i('leather')], 'kill',
             'Cows, pigs, sheep, chickens and the rest keep their drops; they also drop bones now that skeletons '
             'are gone.'),
-    ]),
+    ], item='rock_sword'),
     node('fire', 'station', 'Stone Fire', 'rocks · lit with the Fire Starter', 'cube', [
         row('2.3', 'now', [i('raw_meat')], [i('cooked_meat')], '4-item spit'),
         row('', 'now', [i('vanilla_raw')], [i('vanilla_cooked')], '4-item spit'),
         row('', 'now', [i('stick')], [i('torch')], 'hold to flame', 'The Prometheus node.'),
-    ]),
+    ], item='stone_fire'),
     node('rack', 'station', 'Drying Rack', 'two blocks tall', 'cube', [
         row('2.3.1', 'you', [i('raw_or_fish')], [i('dried_1'), i('dried_2', val='1 day · haste'),
                                                  i('dried_3', val='3 days · strength')], 'hang',
             'Left hanging, Dried Meat I cures into II and III (F04). III also gives regeneration.'),
         row('', 'now', [i('berry')], [i('dried_ration')], 'hang'),
-    ]),
+    ], item='drying_rack'),
+    node('pot', 'station', 'Cooking Pot', 'sits on a lit Stone Fire', 'cube', [
+        row('', 'now', [i('dried_food', 2), i('meat'), i('carrot')], [i('hearty_stew', val='regeneration')], '4 slots'),
+        row('', 'now', [i('dried_food', 2), i('berry', 2)], [i('trail_mix', val='speed')], '4 slots'),
+    ], item='cooking_pot'),
+    node('medbench', 'station', 'Medicine Bench', 'crafting grid · medicine only', 'cube', [
+        row('', 'now', [i('bandage', 2), i('blueberry'), i('yellowberry'), i('fiber')],
+            [i('herbal_bandage', 2, val='double heal · regeneration')], 'shapeless'),
+        row('', 'now', [i('glass_bottle'), i('blueberry', 2), i('redberry'), i('fiber')],
+            [i('healing_mixture', val='regeneration II · cures poison')], 'shapeless'),
+        row('', 'now', [i('blackberry', 4), i('fiber')], [i('conc_sedative')], 'shapeless',
+            'Only the Medicine Bench makes it now (F14). Your spec replaces it with Narcotics from the mortar '
+            '(Q7, Q15).'),
+    ], item='medicine_bench'),
     node('mortar', 'station', 'Mortar & Pestle', 'planned · B02', 'cube', [
         row('1.2.1', 'you', [i('sedative', 4)], [i('narcotics', 4)], 'grind'),
         row('1.2.2', 'tbd', [i('redberry')], [i('medicine')], 'grind', 'The medicine path starts here; recipes to be decided.'),
         row('1.2.4', 'tbd', [i('blueberry')], [i('blue_tbd')], 'grind'),
-    ]),
-    node('pot', 'station', 'Cooking Pot', 'sits on a lit Stone Fire', 'cube', [
-        row('', 'now', [i('dried_food', 2), i('meat'), i('carrot')], [i('hearty_stew', val='regeneration')], '4 slots'),
-        row('', 'now', [i('dried_food', 2), i('berry', 2)], [i('trail_mix', val='speed')], '4 slots'),
-    ]),
-    node('forge', 'station', 'Primitive Forge', 'two blocks · clay bloomery', 'cube', [
+    ], item='mortar'),
+    node('forge', 'station', 'Primitive Forge', 'two blocks · stone bloomery', 'cube', [
         row('', 'now', [i('raw_ores')], [i('ingots')], 'smelt', 'Ore tier: see Q1.'),
         row('', 'now', [i('sand')], [i('glass')], 'smelt'),
         row('', 'now', [i('clay_ball')], [i('brick')], 'smelt'),
         row('', 'now', [i('cobblestone')], [i('stone')], 'smelt'),
+        row('', 'now', [i('stone')], [i('smooth_stone')], 'smelt'),
         row('', 'now', [i('log')], [i('charcoal')], 'smelt'),
         row('', 'now', [i('smelt_in')], [i('smelt_rest')], 'smelt',
             'Every non-food smelting recipe, modded ones included. Food goes to the Stone Fire.'),
-    ]),
+    ], item='forge'),
+    node('crusher', 'station', 'Crusher', 'unpowered · flywheel and rollers', 'cube', [
+        row('', 'now', [i('flint')], [i('gunpowder')], 'crush',
+            'Flint grinds into gunpowder, so TNT no longer depends on chest loot (Q11). The Crusher also '
+            'grinds cobblestone to gravel, gravel to sand, bones to 5 bone meal, wool to 4 string, flowers '
+            'to 2 dyes and raw metal blocks back into 10 raw.'),
+        row('', 'now', [i('cobblestone')], [i('gravel')], 'crush'),
+        row('', 'now', [i('gravel')], [i('sand')], 'crush'),
+        row('', 'now', [i('bone')], [i('bone_meal', 5)], 'crush'),
+        row('', 'now', [i('wool')], [i('string', 4)], 'crush'),
+        row('', 'now', [i('flowers')], [i('dyes', 2)], 'crush'),
+        row('', 'block', [i('ore_block')], [i('raw_ores', 2)], 'crush',
+            'Ore blocks only drop with Silk Touch, and enchanting is removed, so ore doubling cannot happen (Q14).'),
+    ], item='crusher'),
     node('stonecutter', 'station', 'Stonecutter', '3 Stone + Iron ingot', 'g_stonecutter', [
         row('', 'now', [i('stone_family')], [i('stone_variants')], 'cut'),
-    ], divider='Vanilla stations · built from forge metals'),
+    ], item='stonecutter'),
     node('anvil', 'station', 'Anvil', '3 Iron blocks + 4 Iron', 'g_anvil', [
         row('', 'now', [i('damaged')], [i('repaired')], 'repair'),
         row('', 'now', [i('name_tag')], [i('renamed')], 'rename', 'No enchanting, so no book merging.'),
-    ]),
+    ], item='anvil'),
     node('grindstone', 'station', 'Grindstone', '2 Stick + Stone slab + 2 Planks', 'g_grindstone', [
         row('', 'now', [i('two_damaged')], [i('repaired')], 'combine', 'Only repairs: there are no enchantments to strip.'),
-    ]),
-    node('smithing', 'station', 'Smithing Table', '2 Iron + 4 Planks', 'g_smithing', [
+    ], item='grindstone'),
+    node('smithing', 'station', 'Smithing Table', 'Ark model · replaces the vanilla table', 'cube', [
         row('', 'now', [i('trim_in')], [i('trimmed')], 'trim',
             '7 of 18 trim templates can still be found (coast, dune, wild and the four trail-ruin ones); the '
             'other 11 come from removed structures.'),
         row('', 'cut', [i('netherite_up')], [i('netherite_up')], 'upgrade'),
-    ]),
+    ], item='smithing_table'),
     node('composter', 'station', 'Composter', '7 Wooden slabs', 'g_composter', [
         row('', 'now', [i('plants')], [i('bone_meal')], 'compost'),
-    ]),
-    node('crafter', 'station', 'Crafter', '5 Iron + Table + 2 Redstone + Dropper', 'g_crafter', [
+    ], item='composter'),
+    node('crafter', 'station', 'Crafter', '5 Iron + Station + 2 Redstone + Dropper', 'g_crafter', [
         row('', 'now', [i('crafter_in')], [i('crafter_out')], 'auto-craft'),
-    ]),
+    ], item='crafter'),
     node('furnaces', 'station', 'Furnace, Smoker, Blast Furnace', 'removed · the fire and forge replace them', 'g_furnace', [
         row('', 'cut', [i('fuel_food')], [i('smelted')], 'smelt'),
-    ], st='cut'),
+    ], st='cut', item='furnace'),
     node('brewing', 'station', 'Brewing Stand', 'removed by the theme', 'g_brewing', [
         row('', 'cut', [i('potion_in')], [i('potions')], 'brew'),
-    ], st='cut'),
+    ], st='cut', item='brewing_stand'),
     node('enchanting', 'station', 'Enchanting Table', 'removed by the theme', 'g_enchanting', [
         row('', 'cut', [i('ench_in')], [i('enchanted')], 'enchant'),
-    ], st='cut'),
+    ], st='cut', item='enchanting_table'),
     node('guardian', 'gate', 'First Guardian', 'Prehistoric finale → Bronze Age', 'ark:item/guardian_trophy', [
         row('', 'now', [i('allosaur_heart')], [i('workshop_schematic'), i('guardian_trophy')], 'ritual',
             'The heart starts the Guardian Giganotosaurus ritual (P05).'),
-    ], divider='Age gate'),
+    ]),
 ]
 
 # ---------------------------------------------------------------- sheet 2: vanilla netlist
-# station tags: 2x2, T table, SC stonecutter, FG forge, FI stone fire, SM smithing, W world
+# station tags: 2x2, T Working Station, SC stonecutter, FG forge, FI stone fire, CR crusher, MB medicine bench, W world
 # status: now, spec (your spec changes it), cut, starved (recipe stays, the material has no source)
 def f(label, tag='T', st='now', need=''):
     return {'label': label, 'tag': tag, 'st': st, 'need': need}
@@ -387,7 +473,8 @@ def f(label, tag='T', st='now', need=''):
 NETS = [
     ('WOOD', 'Rock Axe · 2.1', 'mc:block/oak_log', [
         f('Planks, sticks', '2x2'), f('Slabs, stairs, fences, gates, doors, trapdoors, plates, buttons, signs, boats, shelves', 'T', need='×10 woods'),
-        f('Hanging signs', need='+ chain'), f('Crafting table, chest, barrel, bowl, ladder, composter'),
+        f('Hanging signs', need='+ chain'), f('Working Station, Storage Crate', need='replace the crafting table and chests'),
+        f('Barrel, bowl, ladder, composter'), f('Medicine Bench', need='+ bottle, fiber'),
         f('Loom, cartography table', st='cut', need='removed'),
         f('Bookshelf, lectern, chiseled bookshelf', need='+ book'), f('Beds', need='+ wool ×16'),
         f('Item frame, painting', need='+ leather / wool'), f('Charcoal', 'FG'),
@@ -397,6 +484,7 @@ NETS = [
     ('STONE', 'Rock Pickaxe · 2.2', 'mc:block/cobblestone', [
         f('Stone, smooth stone', 'FG'), f('Stone, brick, deepslate, tuff, andesite, diorite, granite, sandstone, mud and resin families', 'SC', need='~275 cuts'),
         f('Lever, stone button and plate, grindstone'), f('Armor stand', need='+ smooth slab'),
+        f('Gravel, sand', 'CR', need='crushed from cobblestone'), f('Crusher', need='+ grindstone, logs'),
         f('Stone tools, stone spear', st='spec', need='removed'), f('Cobblestone from 4 rocks', st='spec', need='removed'),
         f('Furnace, smoker, blast furnace', st='cut'), f('Brewing stand', st='cut'),
     ]),
@@ -417,7 +505,8 @@ NETS = [
         f('Carpets ×16'), f('Beds ×16'), f('Banners ×16', need='plain: no loom'), f('Painting'),
     ]),
     ('BONE · FEATHER · FLINT', 'kills · gravel', 'mc:item/bone', [
-        f('Bone meal, bone block, white dye', '2x2'), f('Arrows', st='spec', need='sharp rock + feather'),
+        f('Bone meal, bone block, white dye', '2x2'), f('Bone meal ×5', 'CR'), f('Gunpowder', 'CR', need='from flint'),
+        f('Arrows', st='spec', need='sharp rock + feather'),
         f('Writable book', need='+ ink sac'), f('Flint and steel', need='+ iron'), f('Fletching table'),
         f('Spectral arrow', st='starved', need='glowstone'),
     ]),
@@ -429,7 +518,7 @@ NETS = [
         f('Bricks, flower pot, decorated pot', 'FG', need='sherds by brush'), f('Terracotta ×17, glazed ×16', 'FG'),
         f('Glass, panes, stained ×16, bottle', 'FG'), f('Sandstone families', 'SC'),
         f('Concrete powder ×16', need='+ gravel, dye; set by water'), f('Tinted glass', need='+ amethyst'),
-        f('TNT, TNT minecart', st='starved', need='gunpowder is loot only'), f('Beacon', st='cut'),
+        f('TNT, TNT minecart', need='gunpowder from the Crusher'), f('Glass bottle', need='→ Medicine Bench'), f('Beacon', st='cut'),
     ]),
     ('COPPER', 'Forge · ore tier Q1', 'mc:item/copper_ingot', [
         f('Copper tools ×6 (axe, pickaxe, shovel, hoe, sword, spear)', need='becomes tier 2'),
@@ -440,7 +529,7 @@ NETS = [
     ]),
     ('IRON', 'Forge · ore tier Q1', 'mc:item/iron_ingot', [
         f('Iron tools ×6, armour ×4'), f('Bucket, shears, flint and steel, compass, map, clock'),
-        f('Anvil, smithing table, stonecutter, cauldron, hopper, crafter'),
+        f('Anvil, Ark Smithing Table, stonecutter, cauldron, crafter'), f('Hopper', need='takes a Storage Crate'),
         f('Minecarts, rails', need='+ gold for powered'), f('Door, trapdoor, bars, chain, lantern, heavy plate'),
         f('Shield, crossbow, tripwire hook, piston'),
         f('Furnace minecart', st='cut'), f('Iron golem', st='cut'),
@@ -469,7 +558,7 @@ NETS = [
         f('Slime block, sticky piston'), f('Magma cream', st='cut'),
     ]),
     ('DYES', 'flowers, plants, bone meal, ink, cocoa, lapis', 'mc:item/red_dye', [
-        f('16 dyes', '2x2'), f('Wool, carpet, bed, banner, stained glass, terracotta, concrete, candle, bundle'),
+        f('16 dyes', '2x2'), f('2 dyes per flower', 'CR'), f('Wool, carpet, bed, banner, stained glass, terracotta, concrete, candle, bundle'),
         f('Leather armour, wolf armour', need='dyeing'), f('Shulker box ×17', st='cut'),
     ]),
     ('FOOD', 'farms, animals', 'mc:item/bread', [
@@ -504,6 +593,7 @@ CUTS = [
         'Flint in arrows replaced by the <b>Sharp Rock</b>',
         'Clay removed from the <b>Primitive Forge</b> recipe',
         '<b>Loom</b> and <b>Cartography Table</b> removed: no recipe, and village ones do nothing (banners stay plain; Xaero\'s map replaces map editing)',
+        'The <b>crafting table</b>, <b>chests</b> and the <b>smithing table</b> are replaced by the Working Station, the Storage Crate and Ark\'s Smithing Table (F14)',
     ]),
     ('Proposed with it', [
         '<b>Stone Knife</b> → Rock Sword; <b>Flint Knife</b> removed',
@@ -522,7 +612,6 @@ CUTS = [
         '<b>Nether quartz</b> → comparator, observer, daylight detector',
         '<b>Glowstone</b> (cleric trades only) → redstone lamp, spectral arrow',
         '<b>Ender pearls</b> → Tom\'s Storage connector, interface and wireless terminals',
-        '<b>Gunpowder</b> (finite chest loot) → TNT',
         'Prismarine, sponge, trident, crimson and warped wood, 11 trim templates, harness, copper golem statue',
     ]),
 ]
@@ -551,7 +640,8 @@ DECISIONS = [
      'Stone Knife and Flint Knife overlap with the new set; the Keratin Spear is now the first weapon tier.',
      'The Stone Knife becomes the Rock Sword (London node moves) and the Flint Knife goes.'),
     ('Q7', 'Content', 'Sedative chain',
-     'Blackberry → Sedative (2×2) → Narcotics (mortar) replaces Concentrated Sedative.',
+     'Blackberry → Sedative (2×2) → Narcotics (mortar) replaces Concentrated Sedative, which the Medicine Bench '
+     'makes today from 4 Blackberries and a Fiber.',
      'Tranq Arrow takes a Sedative, Improved Tranq takes Narcotics, and Narcotraffic tracks Narcotics.'),
     ('Q8', 'Balance', 'Twig and rack ratios',
      'Twig → Stick and the rack\'s wood + sticks need numbers.',
@@ -563,19 +653,60 @@ DECISIONS = [
      'The inventory connector, interface and wireless terminals need ender pearls. The storage terminal needs '
      'a comparator and glowstone. None of these can be crafted, so no storage network works in survival.',
      'Override those recipes in Ark data, for example with diamond, redstone and copper.'),
-    ('Q11', 'Balance', 'Gunpowder',
-     'Creepers, ghasts and witches are gone, so TNT depends on finite chest loot.',
-     'Accept it for now; a later mortar recipe could make it (charcoal + bone meal + sand).'),
+    ('Q11', 'Answer', 'Gunpowder',
+     'Creepers, ghasts and witches are gone, but the Crusher (F14) grinds flint into gunpowder, so TNT has a '
+     'renewable source again.',
+     'Keep it.'),
     ('Q12', 'Content', 'Vanilla campfire',
      'The vanilla campfire (logs, sticks, coal) cooks like the Stone Fire and also completes the warmth node.',
      'Keep it as the coal-era option.'),
     ('Q13', 'Yours', 'Open design',
      'Blueberry effect, the Redberry medicine path and creature drops (blood, heart…).',
      'Left open, as in your spec.'),
+    ('Q14', 'Spec gap', 'Crusher ore doubling',
+     'The Crusher turns an ore block into two raw metal, but ore blocks only drop with Silk Touch, and '
+     'enchanting is removed. Only raw metal blocks can be crushed, for one extra raw per block.',
+     'Let the Crusher double raw metal instead (1 raw → 2, slower), so it pays off once Q1 opens the ores.'),
+    ('Q15', 'Content', 'Medicine Bench and the Mortar',
+     'Your spec grinds Sedative into Narcotics and starts the medicine path at a Mortar & Pestle (B02). The '
+     'new Medicine Bench (F14) already makes the medicine: Herbal Bandage, Healing Mixture and Concentrated '
+     'Sedative.',
+     'Fold the mortar into the Medicine Bench: Narcotics and the Redberry medicines become bench recipes, and '
+     'the mortar model sits on the bench.'),
 ]
 
 
 # ---------------------------------------------------------------- icons
+# Placed blocks: the item id and the tools/render_blocks.py entry that draws it.
+CUBE_RENDERS = {'stone_fire': 'stone_fire', 'cooking_pot': 'pot', 'forge': 'forge', 'drying_rack': 'rack',
+                'bedroll': 'bedroll', 'trough': 'trough', 'mortar': 'mortar', 'working_station': 'working_station',
+                'storage_crate': 'storage_crate', 'smithing_table': 'smithing_table',
+                'medicine_bench': 'medicine_bench', 'crusher': 'crusher'}
+_BLOCK_ICONS = {}
+
+
+def block_icons():
+    """Small icons for placed blocks, cut from the standard block renders (the showcase's block cards)."""
+    if _BLOCK_ICONS or not JAR.is_file():
+        return _BLOCK_ICONS
+    import render_blocks
+    entries = {entry[0]: entry for entry in render_blocks.BLOCKS}
+    for item, key in CUBE_RENDERS.items():
+        try:
+            tile = render_blocks.render(entries[key][-1])
+        except (KeyError, FileNotFoundError):
+            continue
+        box = tile.getbbox()
+        tile = tile.crop(box) if box else tile
+        tile.thumbnail((40, 40), Image.Resampling.LANCZOS)
+        canvas = Image.new('RGBA', (40, 40))
+        canvas.alpha_composite(tile, ((40 - tile.width) // 2, (40 - tile.height) // 2))
+        buf = io.BytesIO()
+        canvas.save(buf, 'PNG', optimize=True)
+        _BLOCK_ICONS[item] = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
+    return _BLOCK_ICONS
+
+
 def load_icons():
     jar = zipfile.ZipFile(JAR) if JAR.is_file() else None  # fresh checkout: no vanilla sprites
     cache = {}
@@ -613,7 +744,9 @@ def load_icons():
         cache[spec] = 'data:image/png;base64,' + base64.b64encode(buf.getvalue()).decode()
         return cache[spec]
 
-    items = {k: {'name': v[0], 'icon': uri(v[1]), 'cube': v[1] == 'cube', 'art': v[2], 'was': v[3]}
+    rendered = block_icons()
+    items = {k: {'name': v[0], 'icon': rendered.get(k) or uri(v[1]), 'cube': v[1] == 'cube' and k not in rendered,
+                 'smooth': k in rendered, 'art': v[2], 'was': v[3]}
              for k, v in ITEMS.items()}
     glyphs = {k: uri(v) for k, v in NODE_ICONS.items()}
     for n in SPINE:
@@ -682,30 +815,32 @@ def decisions_html():
 
 
 TITLE_BLOCK = {
-    'title': 'Recipe Gates · workstation spine', 'project': 'Ark: Survival Returns', 'rev': 'Draft A',
+    'title': 'Recipe Gates · dependency map', 'project': 'Ark: Survival Returns', 'rev': 'Draft A',
     'source': 'Your spec · mod data · vanilla 26.1.2', 'date': '2026-09-26',
-    'notes': ['Pin numbers are the steps of the recipe-gate spec (F12). Unnumbered pins are in the game or proposed.',
-              'Stations right of the "Vanilla stations" line need forge metals; the Age gate ends the Prehistoric.'],
+    'notes': ['Columns count crafting steps from bare hands; every item sits in the first column where it can be made.',
+              'Small numbers on a chip are the steps of your recipe-gate spec (F12); circled numbers point to the notes.'],
 }
 
 LEGEND = [
     ('Recipe status', [
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-you)" stroke-width="2"/>', 'Your spec'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-prop)" stroke-width="1.6" stroke-dasharray="5 3"/>', 'Proposed here'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-now)"/>', 'In the game now, unchanged'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-change)" stroke-width="2"/>', 'In the game, changes to match the spec'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-dasharray="2 2"/>'
-         '<line x1="4" x2="40" y1="10" y2="10" stroke="var(--sp-cut)" stroke-width="1.4"/>', 'Removed'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Blocked until a decision'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-tbd)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Yours to decide'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-you)" stroke-width="2"/>', 'Your spec'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-prop)" stroke-width="1.6" stroke-dasharray="5 3"/>', 'Proposed here'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-now)"/>', 'In the game now, unchanged'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-change)" stroke-width="2"/>', 'In the game, changes to match the spec'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-dasharray="2 2"/>'
+         '<line x1="4" x2="40" y1="10" y2="10" stroke="var(--sp-cut)" stroke-width="1.4"/>', 'Removed (shown with "Show removed")'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Blocked until a decision'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-tbd)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Yours to decide'),
     ]),
-    ('Symbols', [
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="none" stroke="var(--sp-ink2)" stroke-dasharray="3 2.5"/>', 'World source: a block or creature, gathered'),
-        ('<path d="M1 10l10-8h32v16h-32z" fill="var(--sp-chip)" stroke="var(--sp-ink)" stroke-width="1.2"/>', 'Net label: made by another recipe (hover to trace)'),
-        ('<rect x="1" y="2" width="42" height="16" rx="2" fill="var(--sp-chip)" stroke="var(--sp-ink2)"/>', 'Output of this recipe'),
+    ('Reading the map', [
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-gate)" stroke="var(--sp-ink)" stroke-width="2"/>', 'Station or tool gate: it opens the groups it points to'),
+        ('<rect x="1" y="2" width="42" height="16" rx="8" fill="none" stroke="var(--sp-ink2)" stroke-dasharray="3 2.5"/>', 'Gathered from the world'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-ink2)" stroke-dasharray="1 2"/>', '"Any of": any member will do'),
+        ('<path d="M2 10C16 10 26 4 42 4" fill="none" stroke="var(--sp-wire)" stroke-width="1.6"/>', 'Ingredient: goes into the item on the right'),
+        ('<path d="M2 10C16 10 26 16 42 16" fill="none" stroke="var(--sp-ink2)" stroke-width="1.2" stroke-dasharray="4 3"/>', 'Needs this station or tool'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-dasharray="1 2" opacity=".55"/>', 'Waits on a blocked decision further back'),
         ('<rect x="14" y="2" width="16" height="16" fill="url(#sp-legend-hatch)" stroke="var(--sp-ink2)" stroke-width=".6"/>', 'Needs a new sprite'),
         ('<rect x="14" y="2" width="16" height="16" fill="var(--sp-rule)"/><path d="M24 1h7v7z" fill="var(--sp-change)"/>', 'Drawn with a borrowed sprite today'),
-        ('<path class="sp-cube" d="M22 3l7 3.5v8L22 18l-7-3.5v-8zM15 6.5l7 3.5l7-3.5M22 10v8"/>', 'Placed block with its own 3D model'),
     ]),
 ]
 
@@ -724,7 +859,8 @@ def spine_payload():
     """Everything the shared renderer (spine.js) needs, plus the numbered notes."""
     items, glyphs, _ = load_icons()
     notes = notes_and_numbers()
-    return {'spine': SPINE, 'items': items, 'glyphs': glyphs, 'notes': notes, 'titleBlock': TITLE_BLOCK}, notes
+    return {'spine': SPINE, 'groups': GROUPS, 'items': items, 'glyphs': glyphs, 'notes': notes,
+            'titleBlock': TITLE_BLOCK}, notes
 
 
 def notes_html(notes):
@@ -751,7 +887,8 @@ def main():
     page = page.replace('<!--CUTS-->', cuts_html())
     page = page.replace('<!--DECISIONS-->', decisions_html())
     page = page.replace('{{TOTAL}}', f'{total:,}').replace('{{CUT}}', str(cut))
-    page = page.replace('{{STATIONS}}', str(sum(1 for n in SPINE if n['kind'] == 'station' and n['st'] != 'cut')))
+    page = page.replace('{{STATIONS}}', str(sum(1 for n in SPINE if n['item'] and n['st'] != 'cut')))
+    page = page.replace('{{DECISIONS}}', str(len(DECISIONS)))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding='utf-8')
     items = data['items']

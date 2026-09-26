@@ -31,7 +31,7 @@ body {
   background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.wrap { max-width: 1340px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; }
+.wrap { max-width: 1760px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; }
 .eyebrow, .facts, .sheetno, .src, .tag, .qid { font-family: var(--mono); }
 .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); margin: 0; }
 h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
@@ -101,15 +101,15 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
   <header>
     <p class="eyebrow">Ark: Survival Returns · item progression · draft for approval · 2026-09-26</p>
     <h1>Recipe Gates</h1>
-    <p class="lede">Every recipe gate from bare hands to the end of the Prehistoric age, then the vanilla items that follow. The workstations and tool gates run along one line, left to right, in the order they unlock. Your steps (1.1 to 2.3.2) are the pin numbers; unnumbered pins are recipes already in the game or proposed here. Items made by one recipe and used by another are joined by net labels instead of long arrows.</p>
+    <p class="lede">Every item from bare hands to the metal stations, placed in the first column where it can be made: the columns count crafting steps from nothing, so late items sit to the right and every line shows what they are built from. Items are grouped under the station or tool that makes them, and each station points to its groups. Your steps (1.1 to 2.3.2) are the small numbers on the chips.</p>
     <ul class="facts">
-      <li><b>{{STATIONS}}</b> working stations on the spine</li>
+      <li><b>{{STATIONS}}</b> stations and tool gates</li>
       <li><b>{{TOTAL}}</b> vanilla 26.1.2 recipes read</li>
       <li><b>{{CUT}}</b> already removed by the theme</li>
-      <li><b>13</b> decisions for you</li>
+      <li><b>{{DECISIONS}}</b> decisions for you</li>
     </ul>
     <nav class="sheets" aria-label="Sheets">
-      <a href="#spine">1 · Workstation spine</a><a href="#netlist">2 · Vanilla netlist</a><a href="#cuts">Cut list</a><a href="#decisions">Decisions Q1–Q13</a>
+      <a href="#spine">1 · Dependency map</a><a href="#netlist">2 · Vanilla netlist</a><a href="#cuts">Cut list</a><a href="#decisions">Decisions</a>
     </nav>
   </header>
 
@@ -119,10 +119,10 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
 
   <section class="sheet" id="spine">
     <div class="sheethead">
-      <div><h2>Workstation spine</h2><p>Each recipe is a column on its station: inputs above the line, outputs below. Grey text under an output is its value (food, stats, curing time). Drag sideways, scroll with Shift or jump to a station. Hover or tap any label to light up every recipe that uses it; click to keep it lit.</p></div>
+      <div><h2>Dependency map</h2><p>Hover or tap an item: everything it needs lights up in green, all the way back to bare hands, and everything it unlocks in blue. The panel lists its recipe, the gates on the way and what uses it. Click to pin an item, or pick one under Trace.</p></div>
       <span class="sheetno">SHEET 1 / 2</span>
     </div>
-    <p class="sp-trace" id="sp-trace" aria-live="polite">Nothing traced.</p>
+    <div class="sp-trace" id="sp-trace" aria-live="polite"></div>
     <div class="sp-scroll"><div id="sp-host"></div></div>
     <ol class="sp-notes"><!--NOTES--></ol>
   </section>
@@ -134,10 +134,11 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
     </div>
     <ul class="taglegend">
       <li><span class="fam"><span class="tag">2x2</span>inventory</span></li>
-      <li><span class="fam"><span class="tag">T</span>crafting table</span></li>
+      <li><span class="fam"><span class="tag">T</span>Working Station</span></li>
       <li><span class="fam"><span class="tag">SC</span>stonecutter</span></li>
       <li><span class="fam"><span class="tag">FG</span>Primitive Forge</span></li>
       <li><span class="fam"><span class="tag">FI</span>Stone Fire</span></li>
+      <li><span class="fam"><span class="tag">CR</span>Crusher</span></li>
       <li><span class="fam st-spec">changes with your spec</span></li>
       <li><span class="fam st-cut"><span class="lbl">removed</span></span></li>
       <li><span class="fam st-starved">recipe stays, no source</span></li>
