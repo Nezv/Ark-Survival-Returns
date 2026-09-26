@@ -1,11 +1,14 @@
 package dev.nez.arksurvivalreturns.client;
 
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
+import dev.nez.arksurvivalreturns.client.title.CreatureSceneRenderer;
+import dev.nez.arksurvivalreturns.client.title.CreatureSceneState;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysicsMod;
 
@@ -20,6 +23,11 @@ public final class ArkClient {
                 new CreatureRenderer(context, species)));
         event.registerEntityRenderer(ModContent.GUARDIAN_GIGANOTOSAURUS.get(), context ->
                 new CreatureRenderer(context, dev.nez.arksurvivalreturns.feature.creature.Species.GIGANOTOSAURUS));
+    }
+
+    /** Menu creatures (the title scene) reach the screen as pictures-in-picture. */
+    @SubscribeEvent public static void pictures(RegisterPictureInPictureRenderersEvent event) {
+        event.register(CreatureSceneState.class, CreatureSceneRenderer::new);
     }
     private ArkClient() {}
 }

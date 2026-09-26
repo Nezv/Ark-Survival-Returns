@@ -80,6 +80,9 @@ dependencies {
     implementation sharedPack
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'
     compileOnly 'maven.modrinth:xaeros-world-map:pKatKnls'
+    // FancyMenu 3.9.12 and Konkrete 1.10.1 (client-mods.lock.json): the title screen's Ark creature element.
+    compileOnly 'maven.modrinth:fancymenu:CcXZnQVp'
+    compileOnly 'maven.modrinth:konkrete:S3KyS0Na'
     immersiveClientRuntimeOnly installedPack
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

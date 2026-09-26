@@ -550,21 +550,8 @@ def spine_section():
 
 
 def ui_section():
-    title = Image.open(ASSETS / 'textures/gui/title/background.png').convert('RGBA')
-    logo = Image.open(ASSETS / 'textures/gui/title/logo.png')
-    scale = 0.36
-    logo_small = logo.resize((int(logo.width * scale * 1.6), int(logo.height * scale * 1.6)), Image.Resampling.LANCZOS)
-    title.alpha_composite(logo_small, ((title.width - logo_small.width) // 2, 60))
-    buttons = Image.open(ARK / 'src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button.png')
-    from PIL import ImageDraw, ImageFont
-    font = ImageFont.truetype(str(ARK / 'tools/fonts/Bitter.ttf'), 26)
-    font.set_variation_by_axes([600])
-    draw = ImageDraw.Draw(title)
-    for i, label in enumerate(('Singleplayer', 'Multiplayer', 'Options...')):
-        b = buttons.resize((600, 60), Image.Resampling.NEAREST)
-        top = 560 + i * 80
-        title.alpha_composite(b, ((title.width - 600) // 2, top))
-        draw.text((title.width // 2, top + 30), label, font=font, fill=(236, 238, 230), anchor='mm')
+    # The title screen as tools/preview_title_scene.py renders it: both GLSL layers, the creature and the layout.
+    title = Image.open(ARK / 'docs/title-scene.jpg').convert('RGB')
     parchment = Image.new('RGBA', (4 * 150, 150), (240, 226, 196, 255))
     for i, state in enumerate(('locked', 'ready', 'complete', 'hover')):
         node = Image.open(ASSETS / f'textures/gui/tech/node_{state}.png').resize((128, 128), Image.Resampling.LANCZOS)

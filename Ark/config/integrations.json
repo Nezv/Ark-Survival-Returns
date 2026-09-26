@@ -153,9 +153,9 @@
           "build": "release"
         }
       ],
-      "uses": "A title-screen layout with the Ark background (the real danger map as contours) and logo. The vanilla logo and splash text are hidden.",
-      "changed": "Ark ships the layout (config/fancymenu/customization/ark_title_screen.txt) and the art. Jars are only rebranded.",
-      "next": "In-client check of the layout. Later: pause menu and loading screen in the same style."
+      "uses": "The title screen: a rainy night at a floodlit outpost drawn live by FancyMenu's GLSL background and a full-screen GLSL element, with Ark's own layout element between them (Ark Creature: the T-Rex model idling and looking around, lit by the scene's lightning). Buttons in a column on the left, the Ark logo, rain from the embedded AmbientSounds recordings. The vanilla logo, splash and Realms button are hidden.",
+      "changed": "Ark ships the layout (config/fancymenu/customization/ark_title_screen.txt, written by tools/build_title_scene.py) and the scene masks, and registers the Ark Creature element through FancyMenu's element API (client/title/fancymenu; compile-only, loaded only when FancyMenu is). Jars are only rebranded.",
+      "next": "In-client check of the night scene (draw order of the creature between the shader layers, placement, thunder). Later: pause menu and loading screen in the same style."
     },
     {
       "id": "I06",

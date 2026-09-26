@@ -1,7 +1,8 @@
-"""Build the title-screen art used by the FancyMenu layout and the project showcase.
+"""Build the title art: the logo of the FancyMenu title screen and the showcase's hero image.
 
 background.png: the real danger-band map (the same formula as DangerBands.java) drawn as faint
-contours over a dusk gradient, with dinosaur silhouettes cut from the creature previews.
+contours over a dusk gradient, with dinosaur silhouettes cut from the creature previews. The showcase
+hero; the title screen itself is the night-rain scene (tools/build_title_scene.py).
 logo.png: the wordmark in Bitter (OFL, tools/fonts) in the showcase palette.
 ark_icon.png: the square mod icon (mod list logo for Ark and every Ark-branded integration).
 
