@@ -34,7 +34,8 @@ public final class TechScreen extends Screen {
     private static Identifier texture(String name) { return ArkSurvivalReturns.id("textures/gui/tech/" + name + ".png"); }
     private int top() { return 51; }
     private int bottom() { return height - 32; }
-    private double scale() { return Math.min(1.25, Math.max(.25, (bottom() - top()) / 268.0)); }
+    /** The map fills the screen height at any GUI scale; only the width scrolls. */
+    private double scale() { return Math.min(4.0, Math.max(.25, (bottom() - top()) / 268.0)); }
     private double visibleWidth() { return Math.max(1, width - 32) / scale(); }
     private int worldWidth() { return view.ages().stream().mapToInt(TechView.Age::right).max().orElse(0); }
     private double maxPan() { return Math.max(0, worldWidth() - visibleWidth()); }

@@ -40,12 +40,25 @@ def art():
         x,y=rng.randrange(120),rng.randrange(128)
         d.line((x,y,x+rng.randrange(2,8),y),fill=(133,115,80,13))
     im.save(GUI/'parchment.png')
-    for name,color in [('ready',(151,110,51,210)),('locked',(106,99,79,75)),('complete',(126,137,68,230)),('hover',(207,159,69,255))]:
-        im=Image.new('RGBA',(64,64));d=ImageDraw.Draw(im)
-        # Broken ink arcs, not an inventory slot or a node tile.
-        for start,end,box in [(12,126,(3,5,60,58)),(153,258,(5,3,58,60)),(290,341,(3,5,60,58))]:
-            d.arc(box,start,end,fill=color,width=2)
+    # Rounded starfish badges (user feedback on F01): the same silhouette in every state, and the
+    # hover highlight traces that silhouette. Drawn 4x and downsampled for smooth edges.
+    import math
+    def starfish(fill,outline,width,scale=1.0):
+        S=256;big=Image.new('RGBA',(S,S));d=ImageDraw.Draw(big)
+        pts=[]
+        for i in range(360):
+            t=math.radians(i)
+            r=S*0.5*scale*(0.80+0.16*math.cos(5*(t+math.pi/2)))
+            pts.append((S/2+r*math.cos(t),S/2+r*math.sin(t)))
+        d.polygon(pts,fill=fill)
+        d.line(pts+[pts[0]],fill=outline,width=width*4,joint='curve')
+        return big.resize((64,64),Image.Resampling.LANCZOS)
+    styles={'locked':((98,103,94,34),(98,103,94,120),2),'ready':((226,118,63,42),(184,72,27,235),2),
+            'complete':((143,176,127,96),(75,102,65,245),2),'hover':((0,0,0,0),(226,118,63,255),3)}
+    for name,(fill,outline,width) in styles.items():
+        im=starfish(fill,outline,width,0.92 if name!='hover' else 0.98)
         if name=='complete':
+            d=ImageDraw.Draw(im)
             d.polygon([(46,49),(50,46),(54,50),(61,41),(63,44),(54,56)],fill=(191,145,55,255))
         im.save(GUI/('node_'+name+'.png'))
 

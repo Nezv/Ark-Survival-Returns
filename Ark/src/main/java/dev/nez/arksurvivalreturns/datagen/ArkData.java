@@ -23,8 +23,12 @@ public final class ArkData implements DataProvider {
         files.clear();
         tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); recovery(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
-        return CompletableFuture.allOf(files.entrySet().stream().map(e -> DataProvider.saveStable(cache, e.getValue(),
-                output.getOutputFolder().resolve(e.getKey()))).toArray(CompletableFuture[]::new));
+        var saves = new ArrayList<CompletableFuture<?>>();
+        files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
+        // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
+        saves.add(DataProvider.saveStable(cache, ShowcaseData.species(), output.getOutputFolder().getParent().getParent().getParent()
+                .resolve("design/showcase/species.json")));
+        return CompletableFuture.allOf(saves.toArray(CompletableFuture[]::new));
     }
     private void put(String path, Object value) { files.put(path + ".json", new Gson().toJsonTree(value)); }
     private void json(String path, String value) { files.put(path + ".json", JsonParser.parseString(value)); }

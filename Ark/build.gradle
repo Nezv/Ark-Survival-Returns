@@ -141,11 +141,14 @@ def devOptions = file('run/options.txt')
 def devServerProperties = file('run/server.properties')
 def questSource = file('config/ftbquests')
 def questTarget = file('run/config/ftbquests')
+def menuSource = file('config/fancymenu')
+def menuTarget = file('run/config/fancymenu')
 tasks.register('prepareDevRuntime') {
     group = 'application'
     description = 'Applies explicit dev distances and syncs the authored quest pack into the instance config.'
     inputs.file(devRuntimeFile)
     if (questSource.isDirectory()) inputs.dir(questSource)
+    if (menuSource.isDirectory()) inputs.dir(menuSource)
     outputs.files(devOptions, devServerProperties)
     doLast {
         def settings = new Properties()
@@ -172,6 +175,17 @@ tasks.register('prepareDevRuntime') {
                 }
             }
             logger.lifecycle('Synced the authored quest pack into run/config/ftbquests.')
+        }
+        // FancyMenu reads layouts from the instance config too; only the authored files are overwritten.
+        if (menuSource.isDirectory()) {
+            menuSource.eachFileRecurse { sourceFile ->
+                if (sourceFile.isFile()) {
+                    def target = new File(menuTarget, menuSource.toPath().relativize(sourceFile.toPath()).toString())
+                    target.parentFile.mkdirs()
+                    target.bytes = sourceFile.bytes
+                }
+            }
+            logger.lifecycle('Synced the authored FancyMenu layouts into run/config/fancymenu.')
         }
     }
 }

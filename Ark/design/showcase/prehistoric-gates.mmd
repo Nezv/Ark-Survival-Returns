@@ -1,0 +1,75 @@
+flowchart LR
+  classDef world fill:#d9d4c7,stroke:#8a8375,color:#22251f
+  classDef gate fill:#f1c7a8,stroke:#b8481b,color:#22251f,stroke-width:2px
+  classDef station fill:#cfe0c5,stroke:#4b6641,color:#22251f
+  classDef food fill:#e8e2f3,stroke:#6b5c8a,color:#22251f
+
+  ROCK([Loose rock<br/>every Overworld biome]):::world
+  GRASS([Grass by hand]):::world
+  LEAVES([Leaves by hand<br/>20% stick]):::world
+  GRAVEL([Gravel]):::world
+  CLAY([Clay]):::world
+  DINO([Dinosaur carcass]):::world
+
+  FIBER[Plant fiber]
+  STICK[Stick]
+  FLINT[Flint]
+  BERRY[Ark berries]
+
+  GRASS --> FIBER
+  GRASS --> BERRY
+  LEAVES --> STICK
+  GRAVEL --> FLINT
+
+  HATCHET[Stone hatchet<br/>rock + stick + fiber]:::gate
+  KNIFE[Stone knife<br/>2 rocks + fiber]:::gate
+  COBBLE[Cobblestone<br/>4 rocks]:::gate
+  ROCK --> HATCHET
+  STICK --> HATCHET
+  FIBER --> HATCHET
+  ROCK --> KNIFE
+  FIBER --> KNIFE
+  ROCK --> COBBLE
+
+  LOGS[Logs<br/>need an axe]:::gate
+  HATCHET --> LOGS
+  LOGS --> PLANKS[Planks, crafting table, sticks]
+  COBBLE --> STONETOOLS[Stone pickaxe and tools]
+  STONETOOLS --> ORE([Stone, ore, clay in reach]):::world
+
+  STARTER[Fire starter<br/>2 sticks + fiber]
+  STICK --> STARTER
+  FIBER --> STARTER
+  FIRE[[Stone fire<br/>5 rocks + stick]]:::station
+  ROCK --> FIRE
+  STICK --> FIRE
+  STARTER -- lights --> FIRE
+  FIRE -- stick --> TORCH[Torch]
+
+  POT[[Cooking pot<br/>4 cobblestone + 2 fiber]]:::station
+  COBBLE --> POT
+  FIRE -- heat under --> POT
+  RACK[[Drying rack<br/>4 sticks + fiber]]:::station
+  STICK --> RACK
+
+  DINO --> MEAT[Raw dino meats<br/>7 families + prime]:::food
+  DINO --> HIDE[Leather, bone, feathers]
+  MEAT -- spit --> COOKED[Cooked dino meat]:::food
+  FIRE --> COOKED
+  MEAT --> RACK
+  RACK --> D1[Dried Meat I]:::food
+  D1 -- 1 in-game day on rack --> D2[Dried Meat II<br/>haste]:::food
+  D2 -- 3 days total --> D3[Dried Meat III<br/>strength + regen]:::food
+  D1 --> POT
+  POT --> MEALS[Hearty stew, trail mix]:::food
+
+  FIBER --> LEAD[Leash<br/>5 fiber]
+  BERRY --> SED[Concentrated sedative<br/>3 narcoberries + fiber]
+  SED --> TRANQ[Improved tranq arrows]
+
+  FORGE[[Primitive forge<br/>5 clay + stone fire + 3 cobblestone]]:::station
+  CLAY --> FORGE
+  FIRE --> FORGE
+  COBBLE --> FORGE
+  ORE --> FORGE
+  FORGE --> INGOTS[Ingots, glass, brick, charcoal<br/>Bronze age]:::gate
