@@ -13,6 +13,13 @@ GUI=ROOT/'src/main/resources/assets/arksurvivalreturns/textures/gui/tech'
 DESIGN=ROOT/'design/tech-menu'
 SPEC=json.loads((ROOT/'design/technology-tree/technology-tree.json').read_text(encoding='utf-8'))
 ORIGINS=[0,680,1250]
+# The map is 344 units tall (TechScreen.MAP_HEIGHT). Lanes are 76 apart and centred on the gate row, so a
+# three-lane age and the four-lane Prehistoric share the same gate height.
+GATE_Y,LANE_STEP=180,76
+
+
+def lane_y(lane,lanes):
+    return round(GATE_Y+(lane-(lanes-1)/2)*LANE_STEP)
 COLORS=['#b9c29a','#cbb184','#a6b6b6']
 
 
@@ -68,8 +75,9 @@ def export():
     for source in SPEC['nodes']:
         n={k:source[k] for k in ('id','title','task','age','lane','requires')}
         index=next(i for i,a in enumerate(ages) if a['id']==n['age'])
-        n['box']=[ORIGINS[index]+60+source['column']*110,[66,142,218][n['lane']],40,40]
         n['kind']='side' if source['kind']=='bonus' else 'gate' if source['kind'] in ('starter','finale') else 'main'
+        lanes=len(ages[index]['lanes'])
+        n['box']=[ORIGINS[index]+60+source['column']*110,GATE_Y if n['kind']=='gate' else lane_y(n['lane'],lanes),40,40]
         n['note']=source.get('note') or ''
         n['trigger']=source.get('trigger',{'type':'future'})
         # Food placement is cosmetic; actual prerequisites still apply.
@@ -84,7 +92,7 @@ def export():
             n['icon']='arksurvivalreturns:textures/gui/tech/icons/'+n['id']+'.png'
         nodes.append(n)
         ftbmap[n['id']]=f'{quest_id(n["id"]):016X}'
-    assert len(nodes)==40 and len(set(ftbmap.values()))==40
+    assert len(nodes)==len(SPEC['nodes']) and len(set(ftbmap.values()))==len(nodes)
     tree=dict(schema_version=2,ages=ages,nodes=nodes)
     write(ROOT/'src/main/resources/data/arksurvivalreturns/tech_tree/tree.json',tree)
     write(DESIGN/'quest-id-map.json',ftbmap)
@@ -110,29 +118,29 @@ def export():
 
 def preview(tree):
     """Offline layout proof, not a client screenshot; same coordinates and art as the menu."""
-    im=Image.new('RGBA',(720,400),'#27291f');d=ImageDraw.Draw(im)
+    im=Image.new('RGBA',(720,476),'#27291f');d=ImageDraw.Draw(im)
     font=ImageFont.truetype('C:/Windows/Fonts/segoeui.ttf',11)
     bold=ImageFont.truetype('C:/Windows/Fonts/georgiab.ttf',17)
     d.text((20,12),'TRIBE CHRONICLE',font=bold,fill='#e0c58f')
     d.text((400,16),'PREHISTORIC    BRONZE    IRON',font=font,fill='#dac9a4')
     d.line((402,33,478,33),fill='#b99550',width=2)
     tile=Image.open(GUI/'parchment.png').convert('RGBA')
-    for y in range(48,336,128):
+    for y in range(48,412,128):
         for x in range(16,704,128):im.alpha_composite(tile,(x,y))
-    d=ImageDraw.Draw(im);d.rectangle((16,48,704,336),fill='#bac19d')
-    for y in range(51,335,3):d.line((20,y,700,y),fill=(182+(y%3),190,152,255))
+    d=ImageDraw.Draw(im);d.rectangle((16,48,704,412),fill='#bac19d')
+    for y in range(51,411,3):d.line((20,y,700,y),fill=(182+(y%3),190,152,255))
     d.text((34,61),'I   PREHISTORIC AGE',font=bold,fill='#485137')
     completed={'monkeys','rock','berries','mattress','warmth','fight'}
     shown=[n for n in tree['nodes'] if n['age']=='prehistoric'];byid={n['id']:n for n in tree['nodes']}
     for n in shown:
         if n['kind']=='side':continue
-        x,y=n['box'][:2];x+=16;y+=68
+        x,y=n['box'][:2];x+=16;y+=58
         for req in n['requires']:
-            a=byid[req];sx,sy=a['box'][:2];sx+=16;sy+=68
+            a=byid[req];sx,sy=a['box'][:2];sx+=16;sy+=58
             mid=sx+55 if len(n['requires'])<3 else x-46
             d.line([(sx+22,sy),(mid,sy),(mid,y),(x-22,y)],fill='#777451',width=1)
     for n in shown:
-        x,y=n['box'][:2];x+=16;y+=68
+        x,y=n['box'][:2];x+=16;y+=58
         if n['kind']=='side':d.text((x-8,y-7),'???',font=font,fill='#8c8464');continue
         status='complete' if n['id'] in completed else 'ready' if all(r in completed for r in n['requires']) else 'locked'
         halo=Image.open(GUI/('node_'+status+'.png')).resize((48,48));im.alpha_composite(halo,(x-24,y-24))
@@ -145,16 +153,16 @@ def preview(tree):
     d.text((351,183),'A little warmth',font=bold,fill='#483d29')
     d.text((351,207),'Light a campfire.',font=font,fill='#5d523b')
     d.text((351,227),'Complete',font=font,fill='#66733e')
-    d.rectangle((0,337,720,400),fill='#27291f')
-    d.line((24,352,696,352),fill='#666347',width=2);d.line((24,352,252,352),fill='#c6a15e',width=4)
-    d.text((22,371),'Wheel / drag to travel     Arrow keys to pan',font=font,fill='#baa985')
-    d.text((481,371),'Quest book     Esc / P close',font=font,fill='#baa985')
-    im.convert('RGB').resize((1440,800),Image.Resampling.NEAREST).save(DESIGN/'menu-preview.png')
+    d.rectangle((0,413,720,476),fill='#27291f')
+    d.line((24,428,696,428),fill='#666347',width=2);d.line((24,428,252,428),fill='#c6a15e',width=4)
+    d.text((22,447),'Wheel / drag to travel     Arrow keys to pan',font=font,fill='#baa985')
+    d.text((481,447),'Quest book     Esc / P close',font=font,fill='#baa985')
+    im.convert('RGB').resize((1440,952),Image.Resampling.NEAREST).save(DESIGN/'menu-preview.png')
 
 
 def main():
     DESIGN.mkdir(parents=True,exist_ok=True);art();tree=export();preview(tree)
-    print('Exported 40 nodes, GUI art, three FTB mirror chapters and offline preview.')
+    print(f"Exported {len(tree['nodes'])} nodes, GUI art, three FTB mirror chapters and offline preview.")
 
 
 if __name__=='__main__':main()

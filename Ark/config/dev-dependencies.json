@@ -9,6 +9,9 @@
     {"project": "ftb-teams", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": ["ftb-library"], "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-teams-forge"},
     {"project": "ftb-library", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": [], "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-library-forge"},
     {"project": "ftb-xmod-compat", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": ["ftb-library"], "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-xmod-compat"},
+    {"project": "better-combat", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": ["player-animation-library", "cloth-config"], "source": "https://modrinth.com/mod/better-combat/version/YPa9bdAg"},
+    {"project": "player-animation-library", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": [], "source": "https://modrinth.com/mod/player-animation-library/version/GiRAXABH"},
+    {"project": "cloth-config", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": [], "source": "https://modrinth.com/mod/cloth-config/version/TimoYzse"},
     {"project": "jei", "scope": "shared", "status": "pinned", "lock": "shared-mods.lock.json", "requires": [], "source": "https://modrinth.com/mod/jei/version/AisPQmQz"},
     {"project": "river-redux", "scope": "world-generation", "status": "unavailable", "requires": ["terrablender"], "reason": "No published Minecraft 26.1.2 / NeoForge release. Do not load the 1.21.x JAR into this dev run.", "source": "https://modrinth.com/mod/river-redux/versions"},
     {"project": "terrablender", "scope": "world-generation", "status": "deferred", "requires": [], "reason": "Resolve an exact compatible dependency only when a matching River Redux release is available.", "source": "https://modrinth.com/mod/terrablender"}

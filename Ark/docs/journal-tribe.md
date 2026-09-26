@@ -26,8 +26,8 @@ license, so the artifacts are downloaded at runtime and never redistributed with
    `/ftbteams` or the invitation screen. FTB Teams owns membership, ranks and team chat.
 2. **Open the journal.** Craft the Field Journal from a book and two leather, then press **J** or
    right-click with it. The Primitive chapter starts with camp, tools, forage, sedation, the first
-   tame and the journal itself; Camp and Recovery follows with the bedroll, fiber, bandages, flint
-   tools, cache recovery and a revive.
+   tame and the journal itself; Camp and Rescue follows with the bedroll, fiber, bandages, the flint
+   knife and keratin spear, and a revive.
 3. **Share progress.** Quest progress is per tribe; rewards are per player and granted exactly once.
    Pin an objective in the book to keep it on the HUD tracker.
 4. **Grant tame access.** `/arktribe status` shows the party and the caller's resolved flags.
@@ -44,9 +44,8 @@ members, breeding is reserved for the husbandry work and defaults off.
 Advancements are the per-player record. Taming a first creature awards the hidden
 `journal/first_tame`; a tame whose saved origin band is 5 also awards `journal/rank5_tame` and
 grants the map entitlement. The origin band is recorded when a creature first spawns, so
-transporting an animal later never changes its provenance. Death and rescue add `journal/first_loss`,
-`journal/first_recovery`, `journal/first_downed` and `journal/first_revive`; see
-[Camp and recovery](recovery.md) for their systems and commands.
+transporting an animal later never changes its provenance. The rescue adds `journal/first_downed` and
+`journal/first_revive`; see [Camp and rescue](recovery.md) for the system.
 
 ## Authoring the quest pack
 

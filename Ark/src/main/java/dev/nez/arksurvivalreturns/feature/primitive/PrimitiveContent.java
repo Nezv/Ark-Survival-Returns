@@ -1,16 +1,23 @@
 package dev.nez.arksurvivalreturns.feature.primitive;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,7 +32,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Prehistoric progression content: loose rocks, the first stone tools, the stone fire, the primitive
- * forge, tiered dried meat and the dinosaur meats. Registered into the shared {@link ModContent} registers.
+ * forge, tiered dried meat, the dinosaur meats and the keratin tier (the first armour and spear). Registered into the shared {@link ModContent} registers.
  */
 public final class PrimitiveContent {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, ArkSurvivalReturns.MOD_ID);
@@ -45,6 +52,42 @@ public final class PrimitiveContent {
             p -> p.sword(KNAPPED_STONE, 0.5f, -1.8f));
     public static final DeferredItem<Item> STONE_HATCHET = ModContent.ITEMS.registerItem("stone_hatchet", Item::new,
             p -> p.axe(KNAPPED_STONE, 4.0f, -3.2f));
+    /** A knapped flake: the arrowhead, in place of flint. */
+    public static final DeferredItem<Item> SHARP_ROCK = ModContent.ITEMS.registerSimpleItem("sharp_rock", p -> p.stacksTo(64));
+
+    // ------------------------------------------------------------------------------ keratin tier
+    /** Keratin: horn, antler, plate and beak sheaths from carcasses (DinoMeat.keratin); the first armour tier. */
+    public static final TagKey<Item> KERATIN_REPAIR = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("primitive/keratin_materials"));
+    /** Between stone and copper: mines like stone, lasts a little longer. */
+    public static final ToolMaterial KERATIN_TOOL = new ToolMaterial(BlockTags.INCORRECT_FOR_STONE_TOOL, 150, 4.0f, 1.0f, 10, KERATIN_REPAIR);
+    public static final ResourceKey<EquipmentAsset> KERATIN_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, ArkSurvivalReturns.id("keratin"));
+    /** Eight armour points for the set: above leather (7), below copper (10). */
+    public static final ArmorMaterial KERATIN_ARMOR = new ArmorMaterial(9, defense(1, 2, 4, 1, 4), 10,
+            SoundEvents.ARMOR_EQUIP_TURTLE, 0.0f, 0.0f, KERATIN_REPAIR, KERATIN_ASSET);
+
+    public static final DeferredItem<Item> KERATIN = ModContent.ITEMS.registerSimpleItem("keratin", p -> p.stacksTo(64));
+    /** A vanilla spear (jab and charge) on the keratin tier, with the stone spear's timings. */
+    public static final DeferredItem<Item> KERATIN_SPEAR = ModContent.ITEMS.registerItem("keratin_spear", Item::new,
+            p -> p.spear(KERATIN_TOOL, 0.75f, 0.82f, 0.7f, 4.5f, 13.0f, 9.0f, 5.1f, 13.75f, 4.6f));
+    public static final DeferredItem<Item> KERATIN_HELMET = armor("keratin_helmet", ArmorType.HELMET);
+    public static final DeferredItem<Item> KERATIN_CHESTPLATE = armor("keratin_chestplate", ArmorType.CHESTPLATE);
+    public static final DeferredItem<Item> KERATIN_LEGGINGS = armor("keratin_leggings", ArmorType.LEGGINGS);
+    public static final DeferredItem<Item> KERATIN_BOOTS = armor("keratin_boots", ArmorType.BOOTS);
+
+    private static Map<ArmorType, Integer> defense(int boots, int legs, int chest, int helmet, int body) {
+        var map = new EnumMap<ArmorType, Integer>(ArmorType.class);
+        map.put(ArmorType.BOOTS, boots);
+        map.put(ArmorType.LEGGINGS, legs);
+        map.put(ArmorType.CHESTPLATE, chest);
+        map.put(ArmorType.HELMET, helmet);
+        map.put(ArmorType.BODY, body);
+        return map;
+    }
+
+    private static DeferredItem<Item> armor(String id, ArmorType type) {
+        return ModContent.ITEMS.registerItem(id, Item::new, p -> p.humanoidArmor(KERATIN_ARMOR, type));
+    }
+
     public static final DeferredItem<FireStarterItem> FIRE_STARTER = ModContent.ITEMS.registerItem("fire_starter",
             FireStarterItem::new, p -> p.stacksTo(1).durability(16));
 
@@ -88,11 +131,18 @@ public final class PrimitiveContent {
     /** Creative tab order: the progression reads left to right. */
     public static void displayItems(net.minecraft.world.item.CreativeModeTab.Output output) {
         output.accept(ROCK.get());
+        output.accept(SHARP_ROCK.get());
         output.accept(STONE_KNIFE.get());
         output.accept(STONE_HATCHET.get());
         output.accept(FIRE_STARTER.get());
         output.accept(STONE_FIRE_ITEM.get());
         output.accept(PRIMITIVE_FORGE_ITEM.get());
+        output.accept(KERATIN.get());
+        output.accept(KERATIN_SPEAR.get());
+        output.accept(KERATIN_HELMET.get());
+        output.accept(KERATIN_CHESTPLATE.get());
+        output.accept(KERATIN_LEGGINGS.get());
+        output.accept(KERATIN_BOOTS.get());
         for (int tier = 1; tier <= DriedMeatItem.MAX_TIER; tier++) output.accept(DriedMeatItem.withTier(tier));
         RAW_MEAT.values().forEach(item -> output.accept(item.get()));
         COOKED_MEAT.values().forEach(item -> output.accept(item.get()));

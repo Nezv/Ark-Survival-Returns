@@ -32,10 +32,12 @@ public final class TechScreen extends Screen {
 
     public TechScreen() { super(Component.translatable("tech.gui.title")); }
     private static Identifier texture(String name) { return ArkSurvivalReturns.id("textures/gui/tech/" + name + ".png"); }
+    /** Height of the tree map in tree units: four lanes 76 apart around the gate row (tools/build_tech_menu_assets.py). */
+    public static final int MAP_HEIGHT = 344;
     private int top() { return 51; }
     private int bottom() { return height - 32; }
     /** The map fills the screen height at any GUI scale; only the width scrolls. */
-    private double scale() { return Math.min(4.0, Math.max(.25, (bottom() - top()) / 268.0)); }
+    private double scale() { return Math.min(4.0, Math.max(.25, (bottom() - top()) / (double) MAP_HEIGHT)); }
     private double visibleWidth() { return Math.max(1, width - 32) / scale(); }
     private int worldWidth() { return view.ages().stream().mapToInt(TechView.Age::right).max().orElse(0); }
     private double maxPan() { return Math.max(0, worldWidth() - visibleWidth()); }
@@ -86,21 +88,21 @@ public final class TechScreen extends Screen {
         g.pose().scale((float) scale(), (float) scale());
         g.pose().translate((float) -pan, 0);
         for (var age : view.ages()) {
-            g.fill(age.left(), 0, age.right(), 268, age.color());
+            g.fill(age.left(), 0, age.right(), MAP_HEIGHT, age.color());
             // Small repeated fiber tiles retain crisp details at any GUI scale.
             for (int x = age.left(); x < age.right(); x += 128)
-                for (int y = 0; y < 268; y += 128)
+                for (int y = 0; y < MAP_HEIGHT; y += 128)
                     g.blit(RenderPipelines.GUI_TEXTURED, PAPER, x, y, 0f, 0f,
-                            Math.min(128, age.right() - x), Math.min(128, 268 - y), 128, 128, 0x45FFFFFF);
+                            Math.min(128, age.right() - x), Math.min(128, MAP_HEIGHT - y), 128, 128, 0x45FFFFFF);
             g.text(font, age.title().toUpperCase(java.util.Locale.ROOT), age.left() + 24, 17, 0xFF4E5039, false);
-            g.verticalLine(age.left(), 6, 261, 0x557F7151);
+            g.verticalLine(age.left(), 6, MAP_HEIGHT - 7, 0x557F7151);
         }
         for (var n : view.nodes()) {
             if (n.state() == TechView.State.HIDDEN) continue;
             for (String dependency : n.requires()) {
                 var a = byId.get(dependency);
                 if (a == null || a.state() == TechView.State.HIDDEN) continue;
-                if (n.kind().equals("side")) continue; // Extras never become a fourth progression lane.
+                if (n.kind().equals("side")) continue; // Extras never become a progression lane.
                 int color = n.state() == TechView.State.COMPLETE ? 0xFF8C823E : 0x997C7658;
                 int mid = n.requires().size() >= 3 ? n.x() - 44 : a.x() + 55;
                 g.horizontalLine(a.x() + 23, mid, a.y(), color);

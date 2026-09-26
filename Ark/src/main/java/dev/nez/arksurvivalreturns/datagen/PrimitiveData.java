@@ -26,6 +26,7 @@ final class PrimitiveData {
         data.tools();
         data.stoneFire();
         data.forge();
+        data.keratin();
         data.meats();
         data.creatureLoot();
         data.tags();
@@ -78,6 +79,14 @@ final class PrimitiveData {
         shapeless("fire_starter", NS + ":fire_starter", 1, "minecraft:stick", "minecraft:stick", NS + ":plant_fiber");
         shaped("cobblestone_from_rocks", "minecraft:cobblestone", 1, List.of("RR", "RR"), Map.of("R", NS + ":rock"));
         shaped("lead_from_fiber", "minecraft:lead", 1, List.of("FF ", "FF ", "  F"), Map.of("F", NS + ":plant_fiber"));
+        // Knapping: one rock struck on another leaves a sharp flake, the arrowhead in place of flint.
+        flatItem("sharp_rock", NS + ":item/sharp_rock", false);
+        shapeless("sharp_rock", NS + ":sharp_rock", 1, NS + ":rock", NS + ":rock");
+        // Replaces minecraft:arrow, which PrimitiveEvents drops at load (NeoForge ships its own copy of it).
+        put.accept(DATA + "recipe/arrow", Map.of("type", "minecraft:crafting_shaped", "category", "equipment",
+                "pattern", List.of("X", "#", "Y"),
+                "key", Map.of("X", NS + ":sharp_rock", "#", "minecraft:stick", "Y", "minecraft:feather"),
+                "result", Map.of("count", 4, "id", "minecraft:arrow")));
     }
 
     // ---------------------------------------------------------------------------------- stone fire
@@ -113,8 +122,58 @@ final class PrimitiveData {
         put.accept(ASSETS + "blockstates/primitive_forge", Map.of("variants", variants));
         blockItem("primitive_forge", NS + ":block/prehistoric/primitive_forge_item");
         put.accept(DATA + "loot_table/blocks/primitive_forge", lowerHalfLoot("primitive_forge"));
-        shaped("primitive_forge", NS + ":primitive_forge", 1, List.of("CCC", "CFC", "BBB"),
-                Map.of("C", "minecraft:clay_ball", "F", NS + ":stone_fire", "B", "minecraft:cobblestone"));
+        // Stone only: eight cobblestone walled around a Stone Fire.
+        shaped("primitive_forge", NS + ":primitive_forge", 1, List.of("CCC", "CFC", "CCC"),
+                Map.of("C", "minecraft:cobblestone", "F", NS + ":stone_fire"));
+    }
+
+    // ------------------------------------------------------------------------------------- keratin
+
+    /** The keratin tier: sprites from tools/build_keratin_items.py, the spear follows the vanilla spear models. */
+    private void keratin() {
+        flatItem("keratin", NS + ":item/keratin", false);
+        put.accept(ASSETS + "models/item/keratin_spear", Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", NS + ":item/keratin_spear")));
+        put.accept(ASSETS + "models/item/keratin_spear_in_hand", Map.of("parent", "minecraft:item/spear_in_hand",
+                "textures", Map.of("layer0", NS + ":item/keratin_spear_in_hand")));
+        put.accept(ASSETS + "items/keratin_spear", Map.of("swap_animation_scale", 1.95, "model", Map.of(
+                "type", "minecraft:select", "property", "minecraft:display_context",
+                "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
+                        "model", Map.of("type", "minecraft:model", "model", NS + ":item/keratin_spear"))),
+                "fallback", Map.of("type", "minecraft:model", "model", NS + ":item/keratin_spear_in_hand"))));
+        String texture = NS + ":keratin";
+        put.accept(ASSETS + "equipment/keratin", Map.of("layers", Map.of(
+                "humanoid", List.of(Map.of("texture", texture)),
+                "humanoid_leggings", List.of(Map.of("texture", texture)),
+                "humanoid_baby", List.of(Map.of("texture", texture)))));
+        for (String piece : ARMOR) flatItem("keratin_" + piece, NS + ":item/keratin_" + piece, false);
+
+        shapeless("keratin_spear", NS + ":keratin_spear", 1, NS + ":keratin", "minecraft:stick", "minecraft:stick", NS + ":plant_fiber");
+        Map<String, String> key = Map.of("K", NS + ":keratin");
+        shaped("keratin_helmet", NS + ":keratin_helmet", 1, List.of("KKK", "K K"), key);
+        shaped("keratin_chestplate", NS + ":keratin_chestplate", 1, List.of("K K", "KKK", "KKK"), key);
+        shaped("keratin_leggings", NS + ":keratin_leggings", 1, List.of("KKK", "K K", "K K"), key);
+        shaped("keratin_boots", NS + ":keratin_boots", 1, List.of("K K", "K K"), key);
+
+        // Goats carry horns too: a vanilla source beside the dinosaurs.
+        put.accept(DATA + "loot_modifiers/goat_keratin", Map.of("type", "neoforge:add_table",
+                "table", NS + ":gameplay/goat_keratin",
+                "conditions", List.of(Map.of("condition", "neoforge:loot_table_id", "loot_table_id", "minecraft:entities/goat"))));
+        var goat = new LinkedHashMap<>(pool(NS + ":keratin", 1, 2, List.of()));
+        goat.put("conditions", List.of(Map.of("condition", "minecraft:random_chance", "chance", 0.5)));
+        put.accept(DATA + "loot_table/gameplay/goat_keratin", Map.of("type", "minecraft:entity", "pools", List.of(goat)));
+
+        // Better Combat (I11) movesets; ignored when the mod is absent.
+        weapon("keratin_spear", "bettercombat:spear");
+        weapon("stone_knife", "bettercombat:dagger");
+        weapon("flint_knife", "bettercombat:dagger");
+        weapon("stone_hatchet", "bettercombat:axe");
+    }
+
+    static final List<String> ARMOR = List.of("helmet", "chestplate", "leggings", "boots");
+
+    private void weapon(String item, String preset) {
+        put.accept(DATA + "weapon_attributes/" + item, Map.of("parent", preset));
     }
 
     /** Two-block stations drop from their lower half only; the upper half breaks along with it. */
@@ -160,6 +219,8 @@ final class PrimitiveData {
                     pools.add(prime);
                 }
                 if (DinoMeat.hide(species)) pools.add(pool("minecraft:leather", 0, Math.clamp(Math.round(species.health / 40.0), 1, 6), List.of()));
+                int keratin = DinoMeat.keratin(species);
+                if (keratin > 0) pools.add(pool(NS + ":keratin", keratin / 2, keratin, List.of()));
                 if (meat == DinoMeat.BIRD) pools.add(pool("minecraft:feather", 1, 3, List.of()));
                 pools.add(pool("minecraft:bone", 0, 2, List.of()));
             }
@@ -186,6 +247,17 @@ final class PrimitiveData {
                 "minecraft:packed_mud", "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone");
         tag("minecraft", "item/axes", NS + ":stone_hatchet");
         tag("minecraft", "item/swords", NS + ":stone_knife");
+        tag(NS, "item/primitive/keratin_materials", NS + ":keratin");
+        tag("minecraft", "item/spears", NS + ":keratin_spear");
+        tag("c", "item/tools/spear", NS + ":keratin_spear");
+        tag("minecraft", "item/head_armor", NS + ":keratin_helmet");
+        tag("minecraft", "item/chest_armor", NS + ":keratin_chestplate");
+        tag("minecraft", "item/leg_armor", NS + ":keratin_leggings");
+        tag("minecraft", "item/foot_armor", NS + ":keratin_boots");
+        tag("c", "item/armors/helmets", NS + ":keratin_helmet");
+        tag("c", "item/armors/chestplates", NS + ":keratin_chestplate");
+        tag("c", "item/armors/leggings", NS + ":keratin_leggings");
+        tag("c", "item/armors/boots", NS + ":keratin_boots");
         List<String> raw = new ArrayList<>(), cooked = new ArrayList<>();
         for (DinoMeat meat : DinoMeat.values()) {
             raw.add(NS + ":" + meat.rawId());
@@ -255,6 +327,13 @@ final class PrimitiveData {
         name(en, pt, "item", "stone_knife", "Stone Knife", "Faca de pedra");
         name(en, pt, "item", "stone_hatchet", "Stone Hatchet", "Machadinha de pedra");
         name(en, pt, "item", "fire_starter", "Fire Starter", "Acendedor de fogo");
+        name(en, pt, "item", "sharp_rock", "Sharp Rock", "Pedra afiada");
+        name(en, pt, "item", "keratin", "Keratin", "Queratina");
+        name(en, pt, "item", "keratin_spear", "Keratin Spear", "Lança de queratina");
+        name(en, pt, "item", "keratin_helmet", "Keratin Helmet", "Elmo de queratina");
+        name(en, pt, "item", "keratin_chestplate", "Keratin Chestplate", "Peitoral de queratina");
+        name(en, pt, "item", "keratin_leggings", "Keratin Leggings", "Perneiras de queratina");
+        name(en, pt, "item", "keratin_boots", "Keratin Boots", "Botas de queratina");
         name(en, pt, "block", "stone_fire", "Stone Fire", "Fogueira de pedras");
         name(en, pt, "item", "stone_fire", "Stone Fire", "Fogueira de pedras");
         name(en, pt, "block", "primitive_forge", "Primitive Forge", "Forja primitiva");

@@ -1,7 +1,7 @@
 {
   "minecraft": "26.1.2",
   "loader": "neoforge",
-  "verified": "2026-09-25",
+  "verified": "2026-09-26",
   "note": "Client and server gameplay stack for the survival journal. Files are downloaded from the publisher, never redistributed.",
   "entries": [
     {
@@ -114,6 +114,39 @@
       "size": 2976792,
       "kind": "shared",
       "source": "https://modrinth.com/mod/terralith"
+    },
+    {
+      "project": "better-combat",
+      "version": "3.2.2+26.1.2-neoforge",
+      "filename": "bettercombat-neoforge-3.2.2+26.1.2.jar",
+      "url": "https://cdn.modrinth.com/data/5sy6g3kz/versions/YPa9bdAg/bettercombat-neoforge-3.2.2%2B26.1.2.jar",
+      "sha512": "d55afc070d7cf8e56f98147d647111976cacc3bfc5fbd42e3d917d083b996ff709d4baa13ed9afe3e0546a09f85ea32adfbe9fb8d171b883e4e371bb82025c4c",
+      "size": 1043101,
+      "kind": "shared",
+      "license": "All Rights Reserved",
+      "source": "https://github.com/ZsoltMolnarrr/BetterCombat"
+    },
+    {
+      "project": "player-animation-library",
+      "version": "1.2.6",
+      "filename": "PlayerAnimationLibMerged-1.2.6+mc.26.1.jar",
+      "url": "https://cdn.modrinth.com/data/ha1mEyJS/versions/GiRAXABH/PlayerAnimationLibMerged-1.2.6%2Bmc.26.1.jar",
+      "sha512": "fd645f449f3dad83dc789e22ba2ce1cbb7c10c5991daa923ed5376d1243652c3a1dbc6a0655b982bb639e78a279d79139c6e13f82b382778d95a6d191ae549f0",
+      "size": 419758,
+      "kind": "shared",
+      "license": "MIT",
+      "source": "https://github.com/ZigyTheBird/PlayerAnimationLibrary"
+    },
+    {
+      "project": "cloth-config",
+      "version": "26.1.154+neoforge",
+      "filename": "cloth-config-26.1.154.jar",
+      "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/TimoYzse/cloth-config-26.1.154.jar",
+      "sha512": "b3084e992459c211617bf5247a94b93c06823277932341e7cec98602a6c6e21ca599aae5e552868ae7a60aac6ec33f3a9cee11615667470483948b3e349d3caf",
+      "size": 1135993,
+      "kind": "shared",
+      "license": "LGPL-3.0-only",
+      "source": "https://github.com/shedaniel/ClothConfig/"
     }
   ]
 }

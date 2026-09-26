@@ -108,7 +108,7 @@
           "id": "00000000000002A5",
           "type": "item",
           "item": {
-            "id": "arksurvivalreturns:spear"
+            "id": "arksurvivalreturns:keratin_spear"
           },
           "only_from_crafting": true
         }
@@ -119,32 +119,6 @@
           "type": "item",
           "item": {
             "id": "minecraft:flint",
-            "count": 4
-          }
-        }
-      ]
-    },
-    {
-      "id": "0000000000000205",
-      "x": 0.0,
-      "y": -2.0,
-      "dependencies": [
-        "0000000000000201"
-      ],
-      "tasks": [
-        {
-          "id": "00000000000002A6",
-          "type": "advancement",
-          "advancement": "arksurvivalreturns:journal/first_recovery",
-          "criterion": "discovered"
-        }
-      ],
-      "rewards": [
-        {
-          "id": "00000000000002B5",
-          "type": "item",
-          "item": {
-            "id": "minecraft:cooked_beef",
             "count": 4
           }
         }

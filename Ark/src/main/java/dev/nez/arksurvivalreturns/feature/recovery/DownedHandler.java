@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * Turns lethal damage into a rescue window instead of instant death.
  *
  * <p>Void, lava and {@code /kill} remain fatal, as do single hits above the overkill threshold; the
- * death path then hands the haul to the recovery cache. While downed, hits shorten the window and
+ * death drops items as usual. While downed, hits shorten the window and
  * movement and interactions are enforced by the shared unconscious-player handler.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)

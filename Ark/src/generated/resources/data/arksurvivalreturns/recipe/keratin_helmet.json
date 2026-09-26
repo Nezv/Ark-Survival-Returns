@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "keratin_helmet",
+  "key": {
+    "K": "arksurvivalreturns:keratin"
+  },
+  "pattern": [
+    "KKK",
+    "K K"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:keratin_helmet"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "chapter.0000000000000200.title": "Acampamento e Recupera\u00e7\u00e3o",
+  "chapter.0000000000000200.title": "Acampamento e Resgate",
   "chapter.0000000000000200.chapter_subtitle": [
     "Prepare-se, tropece e volte."
   ],
@@ -28,22 +28,14 @@
   ],
   "task.00000000000002A3.title": "Crie 2 bandagens de fibra",
 
-  "quest.0000000000000204.title": "S\u00edlex e tend\u00e3o",
-  "quest.0000000000000204.quest_subtitle": "Fio sem metal.",
+  "quest.0000000000000204.title": "Sílex e chifre",
+  "quest.0000000000000204.quest_subtitle": "Fio e ponta sem metal.",
   "quest.0000000000000204.quest_desc": [
-    "Crie uma faca de s\u00edlex e uma lan\u00e7a de s\u00edlex.",
-    "A lan\u00e7a alcan\u00e7a mais longe; a faca \u00e9 r\u00e1pida e fr\u00e1gil."
+    "Faça uma faca de sílex e uma lança de queratina.",
+    "A queratina vem de criaturas com chifres, placas ou bicos. A lança alcança mais longe e investe; a faca é rápida e frágil."
   ],
   "task.00000000000002A4.title": "Crie uma faca de s\u00edlex",
-  "task.00000000000002A5.title": "Crie uma lan\u00e7a de s\u00edlex",
-
-  "quest.0000000000000205.title": "Nada se perde de verdade",
-  "quest.0000000000000205.quest_subtitle": "Volte e recolha.",
-  "quest.0000000000000205.quest_desc": [
-    "Morra uma vez e encontre seu Cache de recupera\u00e7\u00e3o para recolh\u00ea-lo.",
-    "Sua tribo v\u00ea as coordenadas; quebre o marcador se precisar, os itens continuam resgat\u00e1veis."
-  ],
-  "task.00000000000002A6.title": "Recupere seu primeiro cache",
+  "task.00000000000002A5.title": "Faça uma lança de queratina",
 
   "quest.0000000000000206.title": "Levante seu parceiro",
   "quest.0000000000000206.quest_subtitle": "Ningu\u00e9m sangra sob sua vigil\u00e2ncia.",

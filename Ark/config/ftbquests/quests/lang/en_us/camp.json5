@@ -1,5 +1,5 @@
 {
-  "chapter.0000000000000200.title": "Camp and Recovery",
+  "chapter.0000000000000200.title": "Camp and Rescue",
   "chapter.0000000000000200.chapter_subtitle": [
     "Prepare, stumble, and come back."
   ],
@@ -28,22 +28,14 @@
   ],
   "task.00000000000002A3.title": "Craft 2 fiber bandages",
 
-  "quest.0000000000000204.title": "Flint and Sinew",
-  "quest.0000000000000204.quest_subtitle": "Edge without metal.",
+  "quest.0000000000000204.title": "Flint and Horn",
+  "quest.0000000000000204.quest_subtitle": "Edge and point without metal.",
   "quest.0000000000000204.quest_desc": [
-    "Craft a flint knife and a flint spear.",
-    "The spear reaches further; the knife is fast and fragile."
+    "Craft a flint knife and a keratin spear.",
+    "Keratin comes from horned, plated and beaked creatures. The spear reaches further and charges; the knife is fast and fragile."
   ],
   "task.00000000000002A4.title": "Craft a flint knife",
-  "task.00000000000002A5.title": "Craft a flint spear",
-
-  "quest.0000000000000205.title": "Nothing Is Really Lost",
-  "quest.0000000000000205.quest_subtitle": "Walk back and collect.",
-  "quest.0000000000000205.quest_desc": [
-    "Die once, then find your Recovery Cache and collect it.",
-    "Your tribe sees the coordinates; break the marker if you must, the items stay claimable."
-  ],
-  "task.00000000000002A6.title": "Recover your first cache",
+  "task.00000000000002A5.title": "Craft a keratin spear",
 
   "quest.0000000000000206.title": "Lift Your Partner Up",
   "quest.0000000000000206.quest_subtitle": "Nobody bleeds out on your watch.",

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "keratin_leggings",
+  "key": {
+    "K": "arksurvivalreturns:keratin"
+  },
+  "pattern": [
+    "KKK",
+    "K K",
+    "K K"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:keratin_leggings"
+  }
+}

@@ -102,11 +102,11 @@ def main():
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion
-    # whistle, the field journal, five camp items, two cargo harnesses, the recovery cache marker,
+    # whistle, the field journal, four camp items, two cargo harnesses,
     # three homestead items (trough, drying rack, dried ration), two medicine items, three kitchen
     # items (cooking pot, hearty stew, trail mix) and nine additional wood variants of the feeding trough.
     definitions = list((generated/'assets/arksurvivalreturns/items').glob('*.json'))
-    expected_items = len(SPECIES) + len(FLYERS) + 57  # 36 camp/farm/taming items + 21 prehistoric (rocks, tools, fire, forge, meats)
+    expected_items = len(SPECIES) + len(FLYERS) + 62  # 34 camp/farm/taming items + 28 prehistoric (rocks, tools, fire, forge, meats, keratin tier)
     check(len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}')
     for definition in definitions:
         try:
@@ -153,9 +153,9 @@ def main():
                          f'assets/arksurvivalreturns/models/item/{identifier}_egg.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}_nest.json'):
             check((generated/relative).is_file(), f'Missing nest asset: {relative}')
-    # Camp blocks: the bedroll and the recovery cache marker own a state, a model and a loot table.
+    # Camp blocks: the bedroll owns a state, a model and a loot table.
     # The two-block bedroll points its states straight at the authored head and foot models.
-    for identifier, model in (('bedroll', 'prehistoric/primitive_bedroll_head'), ('recovery_cache', 'recovery_cache')):
+    for identifier, model in (('bedroll', 'prehistoric/primitive_bedroll_head'),):
         for relative in (f'assets/arksurvivalreturns/blockstates/{identifier}.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}.json'):
             check((generated/relative).is_file(), f'Missing block asset: {relative}')
@@ -173,7 +173,7 @@ def main():
         for identifier in FLYERS:
             check(f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}')
         check('block.arksurvivalreturns.bedroll' in lang, f'{locale}: missing bedroll name')
-        check('block.arksurvivalreturns.recovery_cache' in lang, f'{locale}: missing recovery cache name')
+        check('item.arksurvivalreturns.keratin_spear' in lang, f'{locale}: missing keratin spear name')
     try:
         verify_camp_assets()
     except Exception as error:

@@ -101,9 +101,6 @@ public final class ModContent {
     /** Flint knife: fast, fragile and repairable with flint. */
     public static final DeferredItem<Item> FLINT_KNIFE = ITEMS.registerItem("flint_knife", Item::new,
             p -> p.sword(dev.nez.arksurvivalreturns.feature.camp.CampMaterials.FLINT, 1.0f, -1.6f));
-    /** Spear: extra reach at the cost of swing speed. */
-    public static final DeferredItem<Item> SPEAR = ITEMS.registerItem("spear", Item::new,
-            dev.nez.arksurvivalreturns.feature.camp.CampMaterials::spear);
     /** Bedroll: sets the personal respawn point; the saved point survives the block. */
     public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.camp.BedrollBlock> BEDROLL =
             BLOCKS.registerBlock("bedroll", dev.nez.arksurvivalreturns.feature.camp.BedrollBlock::new,
@@ -112,13 +109,6 @@ public final class ModContent {
                             .sound(net.minecraft.world.level.block.SoundType.WOOL));
     public static final DeferredItem<net.minecraft.world.item.BlockItem> BEDROLL_ITEM =
             ITEMS.registerSimpleBlockItem(BEDROLL, p -> p.stacksTo(1));
-    /** Recovery cache marker: the death haul lives in world SavedData, not in this block. */
-    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.recovery.RecoveryCacheBlock> RECOVERY_CACHE =
-            BLOCKS.registerBlock("recovery_cache", dev.nez.arksurvivalreturns.feature.recovery.RecoveryCacheBlock::new,
-                    p -> p.strength(1.5f).explosionResistance(1200f)
-                            .sound(net.minecraft.world.level.block.SoundType.WOOD));
-    public static final DeferredItem<net.minecraft.world.item.BlockItem> RECOVERY_CACHE_ITEM =
-            ITEMS.registerSimpleBlockItem(RECOVERY_CACHE, p -> p.stacksTo(1));
     public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu>> COOKING_POT_MENU =
             MENUS.register("cooking_pot", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
                     new dev.nez.arksurvivalreturns.feature.kitchen.CookingPotMenu(containerId, inventory, data.readBlockPos())));
@@ -251,9 +241,7 @@ public final class ModContent {
                     output.accept(REINFORCED_HARNESS.get());
                     output.accept(FIBER_BANDAGE.get());
                     output.accept(FLINT_KNIFE.get());
-                    output.accept(SPEAR.get());
                     output.accept(BEDROLL_ITEM.get());
-                    output.accept(RECOVERY_CACHE_ITEM.get());
                     TROUGHS.values().forEach(block -> output.accept(block.get()));
                     output.accept(DRYING_RACK_ITEM.get());
                     output.accept(DRIED_RATION.get());

@@ -274,6 +274,38 @@
       "uses": "Planned core of the Bronze and Iron ages: basic kinetics and processing only, no complex contraptions.",
       "changed": "Nothing yet. Create has no Minecraft 26.1 release or branch (its newest is 1.21.1), and it needs Flywheel and Ponder ported too.",
       "next": "Wait for the official 26.1 port. Meanwhile, Bronze basics (alloying, charcoal) can use the Primitive Forge."
+    },
+    {
+      "id": "I11",
+      "title": "Melee combat",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "better-combat",
+          "arkName": "Ark - Better Combat",
+          "license": "All Rights Reserved",
+          "source": "https://github.com/ZsoltMolnarrr/BetterCombat",
+          "build": "release"
+        },
+        {
+          "project": "player-animation-library",
+          "arkName": "Ark - Player Animation Library",
+          "license": "MIT",
+          "source": "https://github.com/ZigyTheBird/PlayerAnimationLibrary",
+          "build": "release"
+        },
+        {
+          "project": "cloth-config",
+          "arkName": "Ark - Cloth Config",
+          "license": "LGPL-3.0-only",
+          "source": "https://github.com/shedaniel/ClothConfig",
+          "build": "release"
+        }
+      ],
+      "uses": "Directional swings, combos and two-handed poses for melee weapons. Ark supplies the movesets: the Keratin Spear stabs two-handed with a block of extra reach, the stone and flint knives slash as daggers, the stone hatchet swings as an axe; vanilla swords, mace and trident use Better Combat's own.",
+      "changed": "Official 26.1.2 releases, rebranded only. Ark ships its movesets as data (data/arksurvivalreturns/weapon_attributes), so nothing loads when the mod is absent. The keratin spear keeps its vanilla charge on use. GameTest integration_better_combat checks the three movesets.",
+      "next": "In-client check: spear stabs and reach on dinosaurs, knife combos, the two-handed pose while riding. Movesets for the Bronze and Iron weapons as they arrive (P13)."
     }
   ]
 }

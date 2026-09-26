@@ -103,6 +103,34 @@ final class IntegrationGameTests {
     }
 
     /** Kept apart so Curios classes load only when Curios is installed. */
+    /**
+     * I11: Better Combat loads Ark's movesets: the keratin spear stabs two-handed with extra reach, the knives
+     * slash as daggers and the hatchet as an axe.
+     */
+    static void betterCombat(GameTestHelper h) {
+        if (!ModList.get().isLoaded("bettercombat")) {
+            h.succeed();
+            return;
+        }
+        BetterCombatProbe.check(h);
+    }
+
+    private static final class BetterCombatProbe {
+        static void check(GameTestHelper h) {
+            var spear = net.bettercombat.logic.WeaponRegistry.getAttributes(
+                    new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.KERATIN_SPEAR.get()));
+            h.assertTrue(spear != null && "spear".equals(spear.category()) && spear.isTwoHanded() && spear.rangeBonus() > 0,
+                    "The keratin spear has no Better Combat spear moveset");
+            var knife = net.bettercombat.logic.WeaponRegistry.getAttributes(
+                    new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.STONE_KNIFE.get()));
+            h.assertTrue(knife != null && "dagger".equals(knife.category()), "The stone knife must swing as a dagger");
+            var hatchet = net.bettercombat.logic.WeaponRegistry.getAttributes(
+                    new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.STONE_HATCHET.get()));
+            h.assertTrue(hatchet != null && "axe".equals(hatchet.category()), "The stone hatchet must swing as an axe");
+            h.succeed();
+        }
+    }
+
     private static final class CuriosProbe {
         static void check(GameTestHelper h) {
             var slots = top.theillusivec4.curios.api.CuriosSlotTypes.getDefaultEntitySlotTypes(EntityType.PLAYER, false);

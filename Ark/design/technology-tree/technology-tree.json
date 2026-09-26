@@ -14,7 +14,8 @@
       "lanes": [
         "FOOD & PRESERVATION",
         "COMPANIONS & TAMING",
-        "CAMP & COMFORT"
+        "CAMP & COMFORT",
+        "ARMS & ARMOUR"
       ],
       "column_counts": [
         2,
@@ -453,6 +454,118 @@
       }
     },
     {
+      "id": "sharp",
+      "title": "Sharp thinking",
+      "task": "Knap a Sharp Rock: strike one rock with another.",
+      "age": "prehistoric",
+      "lane": 3,
+      "column": 1,
+      "icon": "sharp_rock",
+      "kind": "main",
+      "note": null,
+      "box": [
+        565,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "monkeys"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:sharp_rock"
+        ]
+      }
+    },
+    {
+      "id": "horn",
+      "title": "Tough as horn",
+      "task": "Take keratin from a horned, plated or beaked creature.",
+      "age": "prehistoric",
+      "lane": 3,
+      "column": 2,
+      "icon": "keratin",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1020,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "sharp"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:keratin"
+        ]
+      }
+    },
+    {
+      "id": "pointy",
+      "title": "Pointy end",
+      "task": "Craft a Keratin Spear.",
+      "age": "prehistoric",
+      "lane": 3,
+      "column": 3,
+      "icon": "keratin_spear",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1475,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "horn"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:keratin_spear"
+        ]
+      }
+    },
+    {
+      "id": "armoured",
+      "title": "Thick skin",
+      "task": "Own the whole keratin armour set: helmet, chestplate, leggings and boots.",
+      "age": "prehistoric",
+      "lane": 3,
+      "column": 4,
+      "icon": "keratin_armour",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1930,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "pointy"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:keratin_helmet",
+          "arksurvivalreturns:keratin_chestplate",
+          "arksurvivalreturns:keratin_leggings",
+          "arksurvivalreturns:keratin_boots"
+        ],
+        "distinct": true
+      }
+    },
+    {
       "id": "narcotics",
       "title": "Narcotraffic",
       "task": "Produce narcotics: craft a concentrated sedative.",
@@ -461,7 +574,7 @@
       "column": 5,
       "icon": "narcotics",
       "kind": "finale",
-      "note": "AGE FINALE / ALL 3 PATHS",
+      "note": "AGE FINALE / ALL 4 PATHS",
       "box": [
         2385,
         815,
@@ -471,7 +584,8 @@
       "requires": [
         "lasting",
         "scavenge",
-        "dish"
+        "dish",
+        "armoured"
       ],
       "optional": false,
       "trigger": {

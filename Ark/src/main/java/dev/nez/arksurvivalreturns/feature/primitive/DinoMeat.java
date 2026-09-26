@@ -49,6 +49,20 @@ public enum DinoMeat {
         };
     }
 
+    /**
+     * Most keratin a carcass yields (0 = none): horns and antlers, armour plates, and the big claws and beaks.
+     * Stegosaurus is listed for when it joins the roster.
+     */
+    public static int keratin(Species species) {
+        return switch (species.id) {
+            case "triceratops" -> 4;
+            case "ankylosaurus", "stegosaurus", "megalocerus" -> 3;
+            case "carnotaurus", "ceratosaurus", "unicorn", "therizinosaurus" -> 2;
+            case "argentavis", "terrorbird", "pegomastax", "lystrosaurus" -> 1;
+            default -> 0;
+        };
+    }
+
     /** Whether the carcass yields leather (hide); birds and sea creatures do not. */
     public static boolean hide(Species species) {
         DinoMeat meat = of(species);
