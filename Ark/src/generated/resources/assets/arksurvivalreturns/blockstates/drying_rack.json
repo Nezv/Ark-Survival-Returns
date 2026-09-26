@@ -1,7 +1,476 @@
 {
-  "variants": {
-    "": {
-      "model": "arksurvivalreturns:block/drying_rack"
+  "multipart": [
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "y": 0
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_1",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "meat",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_2",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "meat",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_3",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "meat",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_1",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "fish",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_2",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "fish",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_3",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "fish",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_1",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "berries",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_2",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "berries",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_3",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "food": "berries",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_ready",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "ready": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_1",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "meat",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_2",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "meat",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_3",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "meat",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_1",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "fish",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_2",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "fish",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_3",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "fish",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_1",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "berries",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_2",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "berries",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_3",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "food": "berries",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_ready",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "ready": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_1",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "meat",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_2",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "meat",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_3",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "meat",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_1",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "fish",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_2",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "fish",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_3",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "fish",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_1",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "berries",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_2",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "berries",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_3",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "food": "berries",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_ready",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "ready": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/drying_rack",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_1",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "meat",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_2",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "meat",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_meat_3",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "meat",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_1",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "fish",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_2",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "fish",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_fish_3",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "fish",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_1",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "berries",
+        "hanging": "1|2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_2",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "berries",
+        "hanging": "2|3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_berries_3",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "food": "berries",
+        "hanging": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/rack_ready",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "ready": "true"
+      }
     }
-  }
+  ]
 }

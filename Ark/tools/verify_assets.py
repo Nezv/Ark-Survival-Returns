@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
+from verify_camp_assets import verify_camp_assets
 from import_creatures import ROOT, ASSETS, SPECIES, source_files
 
 # Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
@@ -109,10 +110,9 @@ def main():
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion
     # whistle, the field journal, five camp items, two cargo harnesses, the recovery cache marker,
     # three homestead items (trough, drying rack, dried ration), two medicine items, three kitchen
-    # items (cooking pot, hearty stew, trail mix) and three forge/storage items (charcoal kiln,
-    # primitive forge, storage crate).
+    # items (cooking pot, hearty stew, trail mix) and nine additional wood variants of the feeding trough.
     definitions = list((generated/'assets/arksurvivalreturns/items').glob('*.json'))
-    expected_items = len(SPECIES) + len(FLYERS) + 27
+    expected_items = len(SPECIES) + len(FLYERS) + 57  # 36 camp/farm/taming items + 21 prehistoric (rocks, tools, fire, forge, meats)
     check(len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}')
     for definition in definitions:
         try:
@@ -178,6 +178,10 @@ def main():
             check(f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}')
         check('block.arksurvivalreturns.bedroll' in lang, f'{locale}: missing bedroll name')
         check('block.arksurvivalreturns.recovery_cache' in lang, f'{locale}: missing recovery cache name')
+    try:
+        verify_camp_assets()
+    except Exception as error:
+        fail(f"Camp assets: {error!r}")
     if failures:
         for failure in failures:
             print(f'FAIL: {failure}')

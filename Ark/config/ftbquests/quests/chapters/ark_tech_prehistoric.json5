@@ -1,0 +1,249 @@
+{
+  "id": "4152FFFF00000100",
+  "filename": "ark_tech_prehistoric",
+  "group": "",
+  "order_index": 20,
+  "always_invisible": true,
+  "quests": [
+    {
+      "id": "415200009362DE00",
+      "x": 1.0,
+      "y": 2.3666666666666667,
+      "dependencies": [],
+      "tasks": [
+        {
+          "id": "415200009362DE01",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200000B6D2EF4",
+      "x": 1.0,
+      "y": 1.1,
+      "dependencies": [
+        "41520001FA63EB18"
+      ],
+      "tasks": [
+        {
+          "id": "415200000B6D2EF5",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": true
+    },
+    {
+      "id": "41520000006AFECA",
+      "x": 2.8333333333333335,
+      "y": 1.1,
+      "dependencies": [
+        "415200009362DE00"
+      ],
+      "tasks": [
+        {
+          "id": "41520000006AFECB",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520001E5F00C68",
+      "x": 4.666666666666667,
+      "y": 1.1,
+      "dependencies": [
+        "41520000006AFECA"
+      ],
+      "tasks": [
+        {
+          "id": "41520001E5F00C69",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200017D363430",
+      "x": 6.5,
+      "y": 1.1,
+      "dependencies": [
+        "41520001E5F00C68"
+      ],
+      "tasks": [
+        {
+          "id": "415200017D363431",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520001FA63EB18",
+      "x": 8.333333333333334,
+      "y": 1.1,
+      "dependencies": [
+        "415200017D363430"
+      ],
+      "tasks": [
+        {
+          "id": "41520001FA63EB19",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200000B9D5020",
+      "x": 2.8333333333333335,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200009362DE00"
+      ],
+      "tasks": [
+        {
+          "id": "415200000B9D5021",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000006AD1F0",
+      "x": 4.666666666666667,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200000B9D5020"
+      ],
+      "tasks": [
+        {
+          "id": "41520000006AD1F1",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200019AE4FDCE",
+      "x": 6.5,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520000006AD1F0"
+      ],
+      "tasks": [
+        {
+          "id": "415200019AE4FDCF",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000196C91E98",
+      "x": 8.333333333333334,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200019AE4FDCE"
+      ],
+      "tasks": [
+        {
+          "id": "4152000196C91E99",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000254D71CE",
+      "x": 2.8333333333333335,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "415200009362DE00"
+      ],
+      "tasks": [
+        {
+          "id": "41520000254D71CF",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520001A13A2772",
+      "x": 4.666666666666667,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520000254D71CE"
+      ],
+      "tasks": [
+        {
+          "id": "41520001A13A2773",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000546311D4",
+      "x": 6.5,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520001A13A2772"
+      ],
+      "tasks": [
+        {
+          "id": "41520000546311D5",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000005E1B34",
+      "x": 8.333333333333334,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520000546311D4"
+      ],
+      "tasks": [
+        {
+          "id": "41520000005E1B35",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200009F04BBE0",
+      "x": 10.166666666666666,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520001FA63EB18",
+        "4152000196C91E98",
+        "41520000005E1B34"
+      ],
+      "tasks": [
+        {
+          "id": "415200009F04BBE1",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    }
+  ]
+}

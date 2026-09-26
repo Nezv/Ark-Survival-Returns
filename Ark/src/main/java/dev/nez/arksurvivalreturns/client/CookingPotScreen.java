@@ -33,5 +33,7 @@ public final class CookingPotScreen extends AbstractContainerScreen<CookingPotMe
                     xo + 62 + (slot % 2) * 18, yo + 17 + (slot / 2) * 18, 18, 18);
         }
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE, xo + 116, yo + 26, 18, 18);
+        graphics.text(font, Component.translatable(menu.isHeated()
+                ? "kitchen.arksurvivalreturns.heated" : "kitchen.arksurvivalreturns.needs_fire"), xo + 8, yo + 60, 0xFF514638, false);
     }
 }

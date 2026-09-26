@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "arksurvivalreturns:empty",
-  "function": "arksurvivalreturns:forge_batch",
-  "max_ticks": 100,
-  "sky_access": true,
-  "structure": "arksurvivalreturns:test_empty"
-}

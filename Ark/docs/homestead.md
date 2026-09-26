@@ -1,8 +1,8 @@
 # Homestead Economy
 
-Farm stations, food processing, field medicine, the primitive forge and storage (P04). Everything is
-server-authoritative, ticks on a shared batch cadence and never advances in unloaded chunks, so an
-absence never produces a windfall. Settings live under `[farm]`, `[kitchen]` and `[forge]`.
+Farm stations, food processing and field medicine (P04). Everything is server-authoritative, ticks
+on a shared batch cadence and never advances in unloaded chunks, so an absence never produces a
+windfall. Settings live under `[farm]` and `[kitchen]`.
 
 ## Stations and the batch cadence
 
@@ -21,6 +21,13 @@ to worker jobs. Batch counts are per station and configurable.
 
 ## Feeding trough
 
+- Ten matching wood finishes; four planks of one wood, one resin clump and one plant fiber.
+  Pattern: `P P` / `PRP` / ` F ` (P = planks, R = resin, F = fiber).
+- Combine one spruce log and one flint to make two resin clumps; both ingredients are consumed.
+  This works without creakings, which the survival theme removes.
+- The original `trough` id remains oak. The introductory journal task specifically requests oak;
+  all finishes feed identically. Nonempty troughs show a bed of feed.
+
 - Holds one food stack, capped by `farm.troughCapacity`. It accepts `#arksurvivalreturns:farm/trough_food`
   (the four berries, wheat and seeds, carrot, potato, beetroot, `#minecraft:meat`, `#minecraft:fishes`).
 - Every batch it feeds up to `farm.troughMaxPerBatch` hungry **tamed** creatures within
@@ -30,11 +37,21 @@ to worker jobs. Batch counts are per station and configurable.
 
 ## Drying rack
 
+- Right-click the top with another rack to stack a new tier; the uprights align automatically.
+  Each tier has its own inventory and drying progress. The stack does not require sneaking.
+- Hanging meat strips, fish or berry pouches show up to three raw portions. Finished rations
+  appear on the slatted shelf; taking all contents clears the visual display.
+
 - Holds raw food (`#arksurvivalreturns:farm/drying_inputs`) and converts one item per
   `farm.dryingBatches` batch into a **dried ration** (nutrition 6, travels in stacks of 64).
 - The output fills first; an empty hand takes the ration, then the remaining raw input.
 
 ## Cooking pot
+
+- Place on top of a campfire: its trivet reaches the logs, and the bowl clears the flames.
+  A pot on another surface uses short feet and can still be opened.
+- Cooking requires a **lit campfire immediately below**. Extinguishing/removing the fire pauses
+  progress without consuming ingredients. The menu shows whether the pot has heat.
 
 - Four ingredient slots and one meal slot, opened through its own menu (vanilla panel reused).
 - All four slots must be filled and each loses exactly one item per meal. Fixed recipes:
@@ -50,20 +67,13 @@ No station is required. Three narcoberries and a plant fiber craft a **concentra
 through every route the narcoberry has. Four base tranquilizer arrows plus one concentrate craft four
 **improved tranquilizer arrows** carrying that dose. The berry remains the cheap route.
 
-## Forge stations
+## Smelting and storage
 
-- **Charcoal kiln** — logs, planks and saplings reduce to charcoal with no fuel (kilnBatches).
-- **Primitive forge** — raw iron, copper and gold, sand, cobblestone, deepslate, clay and dried
-  rations process without fuel (forgeBatches). The vanilla furnace stays fully usable; the forge is an
-  efficiency route, not a gate.
-- Both are two-slot stations: a valid input is inserted by hand, progress accumulates per batch, and
-  an empty hand takes the output first, then the input back. Contents drop when the block is removed.
-
-## Storage crate
-
-A fixed 27-slot container crafted from a chest, planks and fiber. It opens a vanilla-layout screen,
-holds items and nothing else, has no ticker, and drops its contents when broken. It is the intended
-pairing for the P03 Load/Unload buttons.
+Vanilla furnaces are replaced (config `primitive.replaceFurnaces`): the Stone Fire cooks food and the
+Primitive Forge smelts everything else, including charcoal. See the Prehistoric gate chart linked from
+Dashboard.csv (F06).
+The tame Load/Unload controls work with ordinary loaded containers such as chests and barrels.
+Tom's Storage is the planned storage expansion, but it is not installed or required by this patch.
 
 ## Config quick reference
 
@@ -77,14 +87,20 @@ pairing for the P03 Load/Unload buttons.
 | `farm.dryingBatches` | 6 | Batches per dried ration |
 | `farm.berryGrowthChance` | 0.2 | Growth chance per random tick |
 | `kitchen.enabled` / `kitchen.cookBatches` | true / 4 | Cooking pot |
-| `forge.enabled` | true | Kiln and forge |
-| `forge.kilnBatches` / `forge.forgeBatches` | 4 / 6 | Processing time |
 
 ## Automated coverage
 
-`farm_batch` covers trough feeding and wild exclusion, drying cycles, bush harvest and chunk safety;
+`farm_batch` covers trough feeding and wild exclusion, all ten wood recipes (including resin),
+stacked racks, inventory-driven food displays, drying cycles, bush harvest and chunk safety;
 `medicine_dose` covers the dose order (berry < concentrate, arrow uses its configured dose);
-`kitchen_cook` covers both recipes, one-item-per-slot consumption and chunk safety; `forge_batch`
-covers kiln charcoal, forge ingots, rejected inputs and chunk safety; `storage_crate` covers the
-27-slot contract and a save/load round trip. The full in-client checklist is in
-[Verify.md](../Verify.md).
+`kitchen_cook` covers both recipes, campfire heat and extinguish/resume, trivet state changes,
+one-item-per-slot consumption and chunk safety. The full
+in-client checks are tracked in Dashboard.csv.
+
+## Art and previews
+
+![Camp model collection](camp-assets.png)
+
+Regenerate the authored assets with `python tools/build_camp_assets.py`, then regenerate their
+wiring with `./gradlew runData`. `python tools/render_camp_assets.py` renders this offline sheet.
+`python tools/verify_assets.py` also checks the native model references and all camp display states.

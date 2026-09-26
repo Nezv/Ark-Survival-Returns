@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "arksurvivalreturns:block/drying_rack"
+    "model": "arksurvivalreturns:item/drying_rack"
   }
 }

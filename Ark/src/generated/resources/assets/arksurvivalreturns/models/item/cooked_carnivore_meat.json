@@ -1,0 +1,71 @@
+{
+  "parent": "minecraft:item/generated",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        25
+      ],
+      "scale": [
+        0.88,
+        0.88,
+        0.88
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        1.13
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        1.3,
+        1.3,
+        1.3
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.72,
+        0.72,
+        0.72
+      ],
+      "translation": [
+        0,
+        3,
+        1
+      ]
+    }
+  },
+  "textures": {
+    "layer0": "arksurvivalreturns:item/cooked_carnivore_meat"
+  }
+}

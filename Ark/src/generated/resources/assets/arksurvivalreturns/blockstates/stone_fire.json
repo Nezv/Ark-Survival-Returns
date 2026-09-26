@@ -1,0 +1,516 @@
+{
+  "variants": {
+    "facing=east,fueled=false,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=false,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=east,fueled=true,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 90
+    },
+    "facing=north,fueled=false,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=false,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=north,fueled=true,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 0
+    },
+    "facing=south,fueled=false,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=false,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=south,fueled=true,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 180
+    },
+    "facing=west,fueled=false,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_empty",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=false,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=false,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_fueled",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=false,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_cooked",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=false,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_lit",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=false,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_raw",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=false,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_seared",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=true,spit=cooked": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=true,spit=none": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=true,spit=raw": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    },
+    "facing=west,fueled=true,lit=true,pot=true,spit=seared": {
+      "model": "arksurvivalreturns:block/prehistoric/stone_fire_pot_base",
+      "y": 270
+    }
+  }
+}

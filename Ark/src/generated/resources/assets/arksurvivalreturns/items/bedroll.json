@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "arksurvivalreturns:block/bedroll"
+    "model": "arksurvivalreturns:item/bedroll"
   }
 }

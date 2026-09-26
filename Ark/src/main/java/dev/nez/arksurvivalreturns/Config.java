@@ -28,6 +28,10 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue BIOME_MESSAGES;
     public static final ModConfigSpec.BooleanValue THEME_DIMENSIONS, THEME_MONSTERS, THEME_MECHANICS;
     public static final ModConfigSpec.BooleanValue MAP_REQUIRES_UNLOCK;
+    public static final ModConfigSpec.BooleanValue PRIMITIVE_LOGS_NEED_AXE, PRIMITIVE_NO_WOODEN_TOOLS, PRIMITIVE_NO_FURNACES;
+    public static final ModConfigSpec.DoubleValue PRIMITIVE_LEAF_STICKS, PRIMITIVE_FIRE_STARTER_CHANCE,
+            PRIMITIVE_FIRE_COOK_FACTOR, PRIMITIVE_FIRE_FUEL_FACTOR, PRIMITIVE_FORGE_SPEED;
+    public static final ModConfigSpec.IntValue PRIMITIVE_FIRE_MAX_FUEL, FARM_DRIED_TIER_TWO, FARM_DRIED_TIER_THREE;
     public static final ModConfigSpec.DoubleValue HEALTH_GROWTH;
     public static final ModConfigSpec.DoubleValue DAMAGE_GROWTH;
     public static final ModConfigSpec.BooleanValue HEALTH_BAR;
@@ -77,8 +81,6 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue KITCHEN_ENABLED;
     public static final ModConfigSpec.IntValue KITCHEN_COOK_BATCHES;
     // ---------------------------------------------------------------------------- forge
-    public static final ModConfigSpec.BooleanValue FORGE_ENABLED;
-    public static final ModConfigSpec.IntValue FORGE_BATCHES, KILN_BATCHES;
     // ----------------------------------------------------------------------------- mass
     public static final ModConfigSpec.BooleanValue MASS_ENABLED;
     public static final ModConfigSpec.EnumValue<MassRules.Preset> MASS_PRESET;
@@ -112,6 +114,9 @@ public final class Config {
             GUARDIAN_BAR_RANGE, GUARDIAN_SPAWN_RADIUS;
     public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, GUARDIAN_HEALTH_PER_PLAYER,
             GUARDIAN_HEALTH_PER_TAME, GUARDIAN_DAMAGE_MULTIPLIER, GUARDIAN_ARMOR, GUARDIAN_TAME_DAMAGE_FACTOR;
+    // ----------------------------------------------------------------------------- tech
+    public static final ModConfigSpec.BooleanValue TECH_ENABLED, TECH_ANNOUNCE;
+    public static final ModConfigSpec.IntValue TECH_SCAN_TICKS;
     static {
         var b = new ModConfigSpec.Builder();
         b.push("spawning");
@@ -136,6 +141,26 @@ public final class Config {
         b.pop().push("progression");
         MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame whose origin band is 5 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
         BAND_WIDTH = b.comment("Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
+        b.pop().push("primitive");
+        PRIMITIVE_LOGS_NEED_AXE = b.comment("Logs drop nothing and break slowly without an axe; the stone hatchet is the first one.")
+                .define("logsNeedAxe", true);
+        PRIMITIVE_NO_WOODEN_TOOLS = b.comment("Remove the wooden tool recipes; loose rocks lead to cobblestone and stone tools instead. Applies on /reload.")
+                .define("removeWoodenTools", true);
+        PRIMITIVE_NO_FURNACES = b.comment("Remove the furnace, smoker and blast furnace recipes and block existing ones; food goes to the stone fire, "
+                        + "smelting to the primitive forge. Recipes apply on /reload.")
+                .define("replaceFurnaces", true);
+        PRIMITIVE_LEAF_STICKS = b.comment("Chance that leaves broken by hand also drop a stick, so the first handle never needs a log.")
+                .defineInRange("leafStickChance", 0.2, 0.0, 1.0);
+        PRIMITIVE_FIRE_STARTER_CHANCE = b.comment("Chance a fire starter use lights a fueled stone fire or campfire.")
+                .defineInRange("fireStarterChance", 0.5, 0.05, 1.0);
+        PRIMITIVE_FIRE_COOK_FACTOR = b.comment("Stone fire cooking time as a fraction of the campfire recipe time.")
+                .defineInRange("stoneFireCookFactor", 0.5, 0.1, 4.0);
+        PRIMITIVE_FIRE_FUEL_FACTOR = b.comment("Stone fire burn time as a fraction of the item's furnace burn time.")
+                .defineInRange("stoneFireFuelFactor", 1.0, 0.1, 4.0);
+        PRIMITIVE_FIRE_MAX_FUEL = b.comment("Most burn ticks a stone fire stores at once.")
+                .defineInRange("stoneFireMaxFuel", 6000, 200, 72000);
+        PRIMITIVE_FORGE_SPEED = b.comment("Primitive forge smelting time as a fraction of the smelting recipe time.")
+                .defineInRange("forgeTimeFactor", 1.0, 0.1, 4.0);
         b.pop().push("movement");
         PLAYER_SPRINT_REFERENCE = b.comment("Normal player sprint benchmark in blocks/second; does not chase temporary player potion buffs.").defineInRange("playerSprintBlocksPerSecond", 5.612, 1.0, 20.0);
         for (var species : Species.values()) {
@@ -259,6 +284,10 @@ public final class Config {
                 .defineInRange("dryingBatches", 6, 1, 60);
         FARM_DRYING_CAPACITY = b.comment("Raw food a drying rack accepts per load.")
                 .defineInRange("dryingCapacity", 8, 1, 64);
+        FARM_DRIED_TIER_TWO = b.comment("Batches dried meat must keep hanging on a rack to become Dried Meat II (240 = one in-game day at 100 batch ticks).")
+                .defineInRange("driedTierTwoBatches", 240, 1, 10000);
+        FARM_DRIED_TIER_THREE = b.comment("Total hanging batches for Dried Meat III (720 = three in-game days at 100 batch ticks).")
+                .defineInRange("driedTierThreeBatches", 720, 2, 30000);
         FARM_BERRY_GROWTH = b.comment("Chance per random tick that a planted Ark berry bush advances one age.")
                 .defineInRange("berryGrowthChance", 0.2, 0.01, 1.0);
         b.pop().push("kitchen");
@@ -266,13 +295,6 @@ public final class Config {
                 .define("enabled", true);
         KITCHEN_COOK_BATCHES = b.comment("Batches a matching set of ingredients needs to become a meal.")
                 .defineInRange("cookBatches", 4, 1, 60);
-        b.pop().push("forge");
-        FORGE_ENABLED = b.comment("Enable the charcoal kiln and the primitive forge.")
-                .define("enabled", true);
-        FORGE_BATCHES = b.comment("Batches the primitive forge needs per ore or heating recipe.")
-                .defineInRange("forgeBatches", 6, 1, 120);
-        KILN_BATCHES = b.comment("Batches the charcoal kiln needs per log.")
-                .defineInRange("kilnBatches", 4, 1, 120);
         b.pop().push("mass");
         MASS_ENABLED = b.comment("Track carried mass for players and, later, tames. Nothing blocks item movement: "
                         + "capacity is a movement budget, so players may overload deliberately to rearrange or drop cargo.")
@@ -489,6 +511,14 @@ public final class Config {
         GUARDIAN_TAME_DAMAGE_FACTOR = b.comment("Damage dealt by tames that were not registered for the encounter "
                         + "(0 disables their damage entirely).")
                 .defineInRange("unregisteredTameDamageFactor", 0.1, 0.0, 1.0);
+        b.pop().push("tech");
+        TECH_ENABLED = b.comment("Enable the technology tree and its /arktech progression.")
+                .define("enabled", true);
+        TECH_ANNOUNCE = b.comment("Announce a completed technology node to the tribe.")
+                .define("announce", true);
+        TECH_SCAN_TICKS = b.comment("Ticks between possession scans for collection tasks (100 = five seconds; "
+                        + "0 disables the periodic pass).")
+                .defineInRange("scanTicks", 100, 0, 1200);
         b.pop();
         SPEC = b.build();
     }

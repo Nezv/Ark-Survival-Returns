@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:cooked_herbivore_meat",
+    "arksurvivalreturns:cooked_carnivore_meat",
+    "arksurvivalreturns:cooked_prime_meat",
+    "arksurvivalreturns:cooked_bird_meat",
+    "arksurvivalreturns:cooked_reptile_meat",
+    "arksurvivalreturns:cooked_game_meat",
+    "arksurvivalreturns:cooked_marine_meat"
+  ]
+}

@@ -29,7 +29,19 @@ final class KitchenGameTests {
         pot.setItem(1, new ItemStack(ModContent.DRIED_RATION.get()));
         pot.setItem(2, new ItemStack(Items.COOKED_BEEF));
         pot.setItem(3, new ItemStack(Items.CARROT));
-        for (int i = 0; i < Config.KITCHEN_COOK_BATCHES.get() - 1; i++) {
+        h.assertTrue(!pot.advance(), "A complete recipe must wait for a lit campfire");
+        h.assertTrue(pot.getItem(0).getCount() == 1, "A cold pot consumed ingredients");
+        h.setBlock(potRel.below(), net.minecraft.world.level.block.Blocks.CAMPFIRE.defaultBlockState());
+        h.assertTrue(level.getBlockState(potPos).getValue(dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock.ON_CAMPFIRE),
+                "The pot did not adopt its campfire trivet");
+        h.assertTrue(pot.isHeated(), "The lit campfire must heat the pot");
+        h.assertTrue(pot.advance(), "Heating must start cooking");
+        int paused = pot.get(0);
+        h.setBlock(potRel.below(), net.minecraft.world.level.block.Blocks.CAMPFIRE.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.CampfireBlock.LIT, false));
+        h.assertTrue(!pot.advance() && pot.get(0) == paused, "Extinguishing must pause cooking without losing progress");
+        h.setBlock(potRel.below(), net.minecraft.world.level.block.Blocks.CAMPFIRE.defaultBlockState());
+        for (int i = 1; i < Config.KITCHEN_COOK_BATCHES.get() - 1; i++) {
             h.assertTrue(pot.advance(), "A valid recipe must advance each batch");
         }
         h.assertTrue(pot.getItem(CookingPotBlockEntity.OUTPUT_SLOT).isEmpty(), "The meal must wait for the last batch");
@@ -52,6 +64,10 @@ final class KitchenGameTests {
         h.assertTrue(pot.getItem(CookingPotBlockEntity.OUTPUT_SLOT).is(ModContent.TRAIL_MIX.get()),
                 "The pot must produce trail mix");
 
+        h.setBlock(potRel.below(), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+        h.assertTrue(!pot.isHeated(), "Removing the fire must remove heat");
+        h.assertTrue(!level.getBlockState(potPos).getValue(dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock.ON_CAMPFIRE),
+                "The pot must return to the short feet on a solid surface");
         h.assertTrue(level.getChunkSource().getLoadedChunksCount() == chunks, "Cooking must not load chunks");
         h.succeed();
     }

@@ -1,0 +1,219 @@
+{
+  "id": "4152FFFF00000102",
+  "filename": "ark_tech_iron",
+  "group": "",
+  "order_index": 22,
+  "always_invisible": true,
+  "quests": [
+    {
+      "id": "415200000BC19DF2",
+      "x": 21.833333333333332,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520000006A9A94"
+      ],
+      "tasks": [
+        {
+          "id": "415200000BC19DF3",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000070273BAC",
+      "x": 21.833333333333332,
+      "y": 1.1,
+      "dependencies": [
+        "415200000BC19DF2"
+      ],
+      "tasks": [
+        {
+          "id": "4152000070273BAD",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": true
+    },
+    {
+      "id": "415200000BA316CE",
+      "x": 23.666666666666668,
+      "y": 1.1,
+      "dependencies": [
+        "415200000BC19DF2"
+      ],
+      "tasks": [
+        {
+          "id": "415200000BA316CF",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200000BBC0EF8",
+      "x": 25.5,
+      "y": 1.1,
+      "dependencies": [
+        "415200000BA316CE"
+      ],
+      "tasks": [
+        {
+          "id": "415200000BBC0EF9",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520001A580119A",
+      "x": 27.333333333333332,
+      "y": 1.1,
+      "dependencies": [
+        "415200000BBC0EF8"
+      ],
+      "tasks": [
+        {
+          "id": "41520001A580119B",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200016E087DB0",
+      "x": 23.666666666666668,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200000BC19DF2"
+      ],
+      "tasks": [
+        {
+          "id": "415200016E087DB1",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200015A015BE0",
+      "x": 25.5,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200016E087DB0"
+      ],
+      "tasks": [
+        {
+          "id": "415200015A015BE1",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000167367C12",
+      "x": 27.333333333333332,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200015A015BE0"
+      ],
+      "tasks": [
+        {
+          "id": "4152000167367C13",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000D6A47308",
+      "x": 29.166666666666668,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "4152000167367C12"
+      ],
+      "tasks": [
+        {
+          "id": "41520000D6A47309",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200000061E9BE",
+      "x": 23.666666666666668,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "415200000BC19DF2"
+      ],
+      "tasks": [
+        {
+          "id": "415200000061E9BF",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "415200000D596464",
+      "x": 25.5,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "415200000061E9BE"
+      ],
+      "tasks": [
+        {
+          "id": "415200000D596465",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000086592D24",
+      "x": 27.333333333333332,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "415200000D596464"
+      ],
+      "tasks": [
+        {
+          "id": "4152000086592D25",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000195B83F68",
+      "x": 31.0,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520001A580119A",
+        "41520000D6A47308",
+        "4152000086592D24"
+      ],
+      "tasks": [
+        {
+          "id": "4152000195B83F69",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    }
+  ]
+}

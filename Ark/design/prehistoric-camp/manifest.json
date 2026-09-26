@@ -1,0 +1,101 @@
+{
+  "scope": "Assets only; no runtime integration",
+  "coordinates": "16 model units per block",
+  "main_models": [
+    "mortar_empty",
+    "reed_bedroll",
+    "stone_fire_lit",
+    "clay_pot"
+  ],
+  "all_models": [
+    "mortar_empty",
+    "mortar_berry_whole",
+    "mortar_berry_crushed",
+    "mortar_berry_paste",
+    "mortar_meat_whole",
+    "mortar_meat_crushed",
+    "mortar_meat_paste",
+    "reed_bedroll",
+    "stone_fire_empty",
+    "stone_fire_fueled",
+    "stone_fire_lit",
+    "stone_fire_pot_base",
+    "stone_fire_raw",
+    "stone_fire_seared",
+    "stone_fire_cooked",
+    "clay_pot",
+    "clay_pot_stew",
+    "pot_on_fire",
+    "pot_on_fire_stew"
+  ],
+  "materials": [
+    "stone",
+    "stone_light",
+    "stone_dark",
+    "mortar",
+    "mortar_rim",
+    "reed",
+    "reed_light",
+    "reed_dark",
+    "woven",
+    "cord",
+    "fur",
+    "fur_light",
+    "hide",
+    "wood",
+    "wood_cut",
+    "char",
+    "ash",
+    "ember",
+    "flame",
+    "flame_light",
+    "clay",
+    "clay_light",
+    "clay_inner",
+    "soot",
+    "berry_whole",
+    "berry_crush",
+    "berry_paste",
+    "leaf",
+    "meat_raw",
+    "meat_crush",
+    "meat_paste",
+    "meat_seared",
+    "meat_cooked",
+    "fat",
+    "crust",
+    "broth"
+  ],
+  "grinding": {
+    "berries": [
+      "mortar_berry_whole",
+      "mortar_berry_crushed",
+      "mortar_berry_paste"
+    ],
+    "meat": [
+      "mortar_meat_whole",
+      "mortar_meat_crushed",
+      "mortar_meat_paste"
+    ]
+  },
+  "cooking": [
+    "stone_fire_empty",
+    "stone_fire_fueled",
+    "stone_fire_lit",
+    "stone_fire_raw",
+    "stone_fire_seared",
+    "stone_fire_cooked"
+  ],
+  "pot": [
+    "clay_pot",
+    "clay_pot_stew",
+    "pot_on_fire",
+    "pot_on_fire_stew"
+  ],
+  "placement": {
+    "pot_mount_y": 3.35,
+    "remove_spit_when_pot_added": true,
+    "combined_height": 11.0
+  },
+  "recipe_intent": "New stone fire replaces the furnace role and uses the same furnace recipe; no recipe files installed."
+}

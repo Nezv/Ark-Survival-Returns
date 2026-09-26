@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "feeding_trough",
+  "key": {
+    "F": "arksurvivalreturns:plant_fiber",
+    "P": "minecraft:bamboo_planks",
+    "R": "minecraft:resin_clump"
+  },
+  "pattern": [
+    "P P",
+    "PRP",
+    " F "
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bamboo_trough"
+  }
+}

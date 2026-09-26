@@ -1,16 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
   "group": "primitive_forge",
-  "ingredients": [
-    "minecraft:stone",
-    "minecraft:stone",
-    "minecraft:stone",
-    "minecraft:stone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "arksurvivalreturns:plant_fiber",
-    "arksurvivalreturns:plant_fiber"
+  "key": {
+    "B": "minecraft:cobblestone",
+    "C": "minecraft:clay_ball",
+    "F": "arksurvivalreturns:stone_fire"
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "BBB"
   ],
   "result": {
     "count": 1,

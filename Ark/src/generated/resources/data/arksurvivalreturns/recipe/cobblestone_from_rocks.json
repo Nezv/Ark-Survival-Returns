@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "cobblestone_from_rocks",
+  "key": {
+    "R": "arksurvivalreturns:rock"
+  },
+  "pattern": [
+    "RR",
+    "RR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cobblestone"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:tech",
+  "function": "arksurvivalreturns:tech_progress",
+  "max_ticks": 300,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

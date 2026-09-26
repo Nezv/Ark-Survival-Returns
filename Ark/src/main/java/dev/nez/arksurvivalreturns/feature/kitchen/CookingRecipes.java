@@ -20,16 +20,22 @@ public final class CookingRecipes {
         for (int slot = 0; slot < SLOTS; slot++) {
             if (slots.get(slot).isEmpty()) return null;
         }
-        if (count(slots, stack -> stack.is(ModContent.DRIED_RATION.get())) == 2
+        if (count(slots, CookingRecipes::isDriedFood) == 2
                 && count(slots, stack -> stack.is(ItemTags.MEAT)) == 1
                 && count(slots, stack -> stack.is(Items.CARROT)) == 1) {
             return new ItemStack(ModContent.HEARTY_STEW.get());
         }
-        if (count(slots, stack -> stack.is(ModContent.DRIED_RATION.get())) == 2
+        if (count(slots, CookingRecipes::isDriedFood) == 2
                 && count(slots, CookingRecipes::isArkBerry) == 2) {
             return new ItemStack(ModContent.TRAIL_MIX.get());
         }
         return null;
+    }
+
+    /** Rations and dried meat of any tier are interchangeable preserved food. */
+    private static boolean isDriedFood(ItemStack stack) {
+        return stack.is(ModContent.DRIED_RATION.get())
+                || stack.is(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.DRIED_MEAT.get());
     }
 
     private static boolean isArkBerry(ItemStack stack) {

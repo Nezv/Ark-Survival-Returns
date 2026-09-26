@@ -44,7 +44,7 @@ public final class CookingPotBlockEntity extends BlockEntity implements Containe
 
     /** One cooking batch; public so the headless suite can drive it deterministically. */
     public boolean advance() {
-        if (!Config.KITCHEN_ENABLED.get()) return false;
+        if (!Config.KITCHEN_ENABLED.get() || !isHeated()) return false;
         ItemStack result = CookingRecipes.match(items.subList(0, INPUT_SLOTS));
         if (result == null) {
             if (progress != 0) {
@@ -69,6 +69,14 @@ public final class CookingPotBlockEntity extends BlockEntity implements Containe
         else output.grow(result.getCount());
         setChanged();
         return true;
+    }
+
+    public boolean isHeated() {
+        if (level == null) return false;
+        var below = level.getBlockState(worldPosition.below());
+        return net.minecraft.world.level.block.CampfireBlock.isLitCampfire(below)
+                || below.getBlock() instanceof dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlock
+                        && below.getValue(dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlock.LIT);
     }
 
     @Override public int getContainerSize() { return SIZE; }
@@ -101,9 +109,9 @@ public final class CookingPotBlockEntity extends BlockEntity implements Containe
 
     @Override public void clearContent() { items.clear(); }
 
-    @Override public int getCount() { return 2; }
+    @Override public int getCount() { return 3; }
 
-    @Override public int get(int index) { return index == 0 ? progress : Config.KITCHEN_COOK_BATCHES.get(); }
+    @Override public int get(int index) { return switch (index) { case 0 -> progress; case 1 -> Config.KITCHEN_COOK_BATCHES.get(); case 2 -> isHeated() ? 1 : 0; default -> 0; }; }
 
     @Override public void set(int index, int value) {
         if (index == 0) progress = value;

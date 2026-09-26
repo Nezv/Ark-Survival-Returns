@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "stone_fire",
+  "key": {
+    "R": "arksurvivalreturns:rock",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "RSR",
+    "RRR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:stone_fire"
+  }
+}

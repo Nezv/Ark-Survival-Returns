@@ -3,9 +3,9 @@
   "category": "misc",
   "group": "bedroll",
   "ingredients": [
-    "minecraft:red_wool",
-    "minecraft:red_wool",
-    "minecraft:red_wool",
+    "#minecraft:wool",
+    "#minecraft:wool",
+    "#minecraft:wool",
     "minecraft:string",
     "minecraft:string"
   ],

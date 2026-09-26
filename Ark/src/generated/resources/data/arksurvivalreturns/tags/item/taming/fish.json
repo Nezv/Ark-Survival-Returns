@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "minecraft:cod",
-    "minecraft:salmon"
+    "minecraft:salmon",
+    "arksurvivalreturns:raw_marine_meat"
   ]
 }

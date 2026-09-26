@@ -64,6 +64,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("recovery_cache", () -> RecoveryGameTests::recoveryCache);
         FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
+        FUNCTIONS.register("primitive_rocks", () -> PrimitiveGameTests::rocks);
+        FUNCTIONS.register("primitive_fire", () -> PrimitiveGameTests::fire);
+        FUNCTIONS.register("primitive_forge", () -> PrimitiveGameTests::forge);
+        FUNCTIONS.register("primitive_curing", () -> PrimitiveGameTests::curing);
+        FUNCTIONS.register("primitive_gates", () -> PrimitiveGameTests::gates);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
@@ -80,8 +85,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("guardian_registration", () -> GuardianGameTests::registration);
         FUNCTIONS.register("guardian_persistence", () -> GuardianGameTests::persistence);
         FUNCTIONS.register("guardian_rewards", () -> GuardianGameTests::rewards);
-        FUNCTIONS.register("forge_batch", () -> ForgeGameTests::batch);
-        FUNCTIONS.register("storage_crate", () -> StorageGameTests::slots);
+        FUNCTIONS.register("tech_tree", () -> TechGameTests::tree);
+        FUNCTIONS.register("tech_progress", () -> TechGameTests::progress);
+        FUNCTIONS.register("tech_triggers", () -> TechGameTests::triggers);
+        FUNCTIONS.register("tech_flow", () -> TechGameTests::flow);
+        FUNCTIONS.register("tech_future", () -> TechGameTests::future);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

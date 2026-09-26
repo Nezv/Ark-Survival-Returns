@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "stone_knife",
+  "ingredients": [
+    "arksurvivalreturns:rock",
+    "arksurvivalreturns:rock",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:stone_knife"
+  }
+}

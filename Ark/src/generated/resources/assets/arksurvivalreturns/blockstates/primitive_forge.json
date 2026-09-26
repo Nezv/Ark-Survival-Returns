@@ -1,7 +1,36 @@
 {
   "variants": {
-    "": {
-      "model": "arksurvivalreturns:block/primitive_forge"
+    "facing=east,lit=false": {
+      "model": "arksurvivalreturns:block/primitive_forge",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "arksurvivalreturns:block/primitive_forge_lit",
+      "y": 90
+    },
+    "facing=north,lit=false": {
+      "model": "arksurvivalreturns:block/primitive_forge",
+      "y": 0
+    },
+    "facing=north,lit=true": {
+      "model": "arksurvivalreturns:block/primitive_forge_lit",
+      "y": 0
+    },
+    "facing=south,lit=false": {
+      "model": "arksurvivalreturns:block/primitive_forge",
+      "y": 180
+    },
+    "facing=south,lit=true": {
+      "model": "arksurvivalreturns:block/primitive_forge_lit",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "arksurvivalreturns:block/primitive_forge",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "arksurvivalreturns:block/primitive_forge_lit",
+      "y": 270
     }
   }
 }

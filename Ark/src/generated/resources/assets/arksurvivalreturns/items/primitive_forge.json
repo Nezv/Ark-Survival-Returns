@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "arksurvivalreturns:block/primitive_forge"
+    "model": "arksurvivalreturns:item/primitive_forge"
   }
 }

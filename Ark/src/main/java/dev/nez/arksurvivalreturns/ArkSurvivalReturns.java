@@ -22,6 +22,7 @@ public final class ArkSurvivalReturns {
         ModContent.TABS.register(bus);
         ModContent.MENUS.register(bus);
         ModContent.BLOCK_ENTITIES.register(bus);
+        dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.register(bus);
         dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.register(bus);
         dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.register(bus);
         dev.nez.arksurvivalreturns.gametest.ArkGameTests.FUNCTIONS.register(bus);

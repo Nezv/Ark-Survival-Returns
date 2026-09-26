@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "trough",
-  "ingredients": [
-    "#minecraft:planks",
-    "#minecraft:planks",
-    "#minecraft:planks",
-    "#minecraft:planks",
-    "arksurvivalreturns:plant_fiber"
+  "group": "feeding_trough",
+  "key": {
+    "F": "arksurvivalreturns:plant_fiber",
+    "P": "minecraft:oak_planks",
+    "R": "minecraft:resin_clump"
+  },
+  "pattern": [
+    "P P",
+    "PRP",
+    " F "
   ],
   "result": {
     "count": 1,

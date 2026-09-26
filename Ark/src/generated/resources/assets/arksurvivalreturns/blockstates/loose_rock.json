@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "variant=andesite": {
+      "model": "arksurvivalreturns:block/loose_rock_andesite"
+    },
+    "variant=diorite": {
+      "model": "arksurvivalreturns:block/loose_rock_diorite"
+    },
+    "variant=granite": {
+      "model": "arksurvivalreturns:block/loose_rock_granite"
+    },
+    "variant=red_sandstone": {
+      "model": "arksurvivalreturns:block/loose_rock_red_sandstone"
+    },
+    "variant=sandstone": {
+      "model": "arksurvivalreturns:block/loose_rock_sandstone"
+    },
+    "variant=stone": {
+      "model": "arksurvivalreturns:block/loose_rock_stone"
+    }
+  }
+}

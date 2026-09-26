@@ -35,7 +35,9 @@ public final class TroughBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, TroughBlockEntity trough) {
-        if (level.isClientSide() || trough.items.get(0).isEmpty()) return;
+        if (level.isClientSide()) return;
+        trough.syncDisplay();
+        if (trough.items.get(0).isEmpty()) return;
         if (++trough.batch < Config.FARM_BATCH_TICKS.get()) return;
         trough.batch = 0;
         trough.feedNearby((ServerLevel) level);
@@ -91,9 +93,23 @@ public final class TroughBlockEntity extends BlockEntity {
             double heal = Config.FARM_TROUGH_HEAL.get();
             if (heal > 0.0) creature.heal((float) heal);
             fed++;
+            dev.nez.arksurvivalreturns.feature.tech.TechEvents.onTroughFed(level, creature);
             setChanged();
         }
         return fed;
+    }
+
+    @Override public void setChanged() {
+        super.setChanged();
+        syncDisplay();
+    }
+
+    private void syncDisplay() {
+        if (level == null || level.isClientSide()) return;
+        BlockState state = getBlockState();
+        if (state.getBlock() instanceof TroughBlock && state.getValue(TroughBlock.FILLED) == items.get(0).isEmpty()) {
+            level.setBlock(worldPosition, state.setValue(TroughBlock.FILLED, !items.get(0).isEmpty()), Block.UPDATE_CLIENTS);
+        }
     }
 
     @Override protected void saveAdditional(ValueOutput output) {

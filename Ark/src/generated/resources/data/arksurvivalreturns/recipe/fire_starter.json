@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "fire_starter",
+  "ingredients": [
+    "minecraft:stick",
+    "minecraft:stick",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:fire_starter"
+  }
+}

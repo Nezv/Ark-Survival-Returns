@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "arksurvivalreturns:block/cooking_pot"
+    "model": "arksurvivalreturns:item/cooking_pot"
   }
 }

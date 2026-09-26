@@ -18,17 +18,20 @@ public final class CookingPotMenu extends AbstractContainerMenu {
     public static final int DATA_MAX = 1;
 
     private final Container pot;
+    private final ContainerData data;
 
     public CookingPotMenu(int containerId, Inventory inventory, BlockPos pos) {
         super(ModContent.COOKING_POT_MENU.get(), containerId);
         var blockEntity = inventory.player.level().getBlockEntity(pos);
         this.pot = blockEntity instanceof CookingPotBlockEntity entity ? entity
                 : new SimpleContainer(CookingPotBlockEntity.SIZE);
-        ContainerData data = blockEntity instanceof CookingPotBlockEntity entity ? entity
-                : new SimpleContainerData(2);
+        this.data = blockEntity instanceof CookingPotBlockEntity entity ? entity
+                : new SimpleContainerData(3);
         layout(inventory);
         addDataSlots(data);
     }
+
+    public boolean isHeated() { return data.get(2) != 0; }
 
     private void layout(Inventory inventory) {
         for (int slot = 0; slot < CookingPotBlockEntity.INPUT_SLOTS; slot++) {

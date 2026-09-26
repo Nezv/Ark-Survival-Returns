@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "lead_from_fiber",
+  "key": {
+    "F": "arksurvivalreturns:plant_fiber"
+  },
+  "pattern": [
+    "FF ",
+    "FF ",
+    "  F"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:lead"
+  }
+}

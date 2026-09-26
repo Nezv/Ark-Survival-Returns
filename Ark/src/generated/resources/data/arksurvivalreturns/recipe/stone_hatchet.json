@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "stone_hatchet",
+  "ingredients": [
+    "arksurvivalreturns:rock",
+    "minecraft:stick",
+    "arksurvivalreturns:plant_fiber"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:stone_hatchet"
+  }
+}

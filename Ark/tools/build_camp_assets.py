@@ -1,0 +1,252 @@
+"""Author the camp collection as vanilla cuboid models and original pixel materials.
+
+Run from any directory: python tools/build_camp_assets.py
+Geometry lives under models/block/camp; ArkData owns blockstate/item/recipe wiring.
+No third-party art, client renderer or runtime model loader is required.
+"""
+import copy
+import json
+import math
+import random
+from pathlib import Path
+from PIL import Image, ImageDraw
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = ROOT / 'src/main/resources/assets/arksurvivalreturns'
+MODELS = ASSETS / 'models/block/camp'
+TEXTURES = ASSETS / 'textures/block/camp'
+WOODS = {
+    'oak': (156, 117, 67), 'spruce': (105, 76, 48),
+    'birch': (203, 184, 130), 'jungle': (164, 112, 80),
+    'acacia': (170, 91, 54), 'dark_oak': (76, 53, 35),
+    'mangrove': (119, 58, 49), 'cherry': (205, 151, 137),
+    'pale_oak': (216, 210, 183), 'bamboo': (182, 162, 76),
+}
+PALETTE = {
+    'canvas': (105, 117, 76), 'canvas_light': (137, 146, 98),
+    'linen': (207, 192, 152), 'leather': (99, 62, 40),
+    'rope': (169, 140, 88), 'iron': (65, 65, 59),
+    'iron_edge': (96, 96, 82), 'soot': (41, 40, 36),
+    'resin': (135, 83, 34), 'meat': (156, 68, 52),
+    'fat': (211, 161, 122), 'dried': (99, 52, 34),
+    'fish': (121, 144, 134), 'berry': (115, 57, 62),
+    'grain': (174, 141, 66),
+}
+
+
+def material(name, base, wood=False):
+    rng = random.Random(name)
+    im = Image.new('RGB', (32, 32))
+    px = im.load()
+    for y in range(32):
+        for x in range(32):
+            weave = ((x % 2) - (y % 2)) * 2 if name in ('canvas', 'canvas_light', 'linen') else 0
+            grain = 5 * math.sin(y * 1.4) if wood else 0
+            noise = rng.choice((-3, -2, 0, 0, 1, 2, 3))
+            px[x, y] = tuple(max(0, min(255, round(c + weave + grain + noise))) for c in base)
+    d = ImageDraw.Draw(im)
+    dark = tuple(max(0, c - 21) for c in base)
+    light = tuple(min(255, c + 18) for c in base)
+    if wood:
+        for y in (4, 11, 20, 28):
+            x = rng.randrange(2, 15)
+            d.line([(x, y), (x + 7, y), (x + 10, y + 1), (min(31, x + 18), y + 1)], fill=dark)
+            d.line((x + 3, y + 2, min(31, x + 14), y + 2), fill=light)
+        d.ellipse((19, 14, 26, 17), outline=dark)
+        d.line((21, 15, 24, 15), fill=dark)
+    elif name in ('canvas', 'canvas_light', 'linen', 'leather'):
+        for x in range(1, 32, 4):
+            d.line((x, 1, x + 1, 1), fill=light)
+            d.line((x, 30, x + 1, 30), fill=light)
+    elif name == 'rope':
+        for x in range(-30, 33, 5):
+            d.line((x, 0, x + 31, 31), fill=dark)
+            d.line((x + 1, 0, x + 32, 31), fill=light)
+    elif name in ('meat', 'dried', 'fish'):
+        for y in (5, 14, 23):
+            d.line([(0, y), (9, y + 2), (18, y), (31, y + 3)], fill=light, width=1)
+    elif name in ('iron', 'iron_edge'):
+        for _ in range(12):
+            x, y = rng.randrange(30), rng.randrange(30)
+            d.line((x, y, x + 1, y), fill=light)
+    im.save(TEXTURES / (name + '.png'))
+
+
+def box(a, b, tex, name='', rotation=None):
+    x, y, z = a
+    X, Y, Z = b
+    dimensions = {'up': (X-x, Z-z), 'down': (X-x, Z-z),
+                  'north': (X-x, Y-y), 'south': (X-x, Y-y),
+                  'east': (Z-z, Y-y), 'west': (Z-z, Y-y)}
+    result = {'name': name or tex, 'from': a, 'to': b, 'faces': {
+        face: {'uv': [0, 0, max(.25, w), max(.25, h)], 'texture': '#' + tex}
+        for face, (w, h) in dimensions.items()}}
+    if rotation:
+        result['rotation'] = rotation
+    return result
+
+
+def rot(origin, axis, angle):
+    return {'origin': origin, 'axis': axis, 'angle': angle, 'rescale': False}
+
+
+DISPLAY = {
+    'gui': {'rotation': [30, 225, 0], 'translation': [0, 0, 0], 'scale': [.8, .8, .8]},
+    'ground': {'translation': [0, 3, 0], 'scale': [.45, .45, .45]},
+    'fixed': {'rotation': [0, 180, 0], 'scale': [.6, .6, .6]},
+    'thirdperson_righthand': {'rotation': [75, 45, 0], 'translation': [0, 2.5, 0], 'scale': [.4, .4, .4]},
+    'firstperson_righthand': {'rotation': [0, 45, 0], 'translation': [0, 2, 0], 'scale': [.5, .5, .5]},
+    'firstperson_lefthand': {'rotation': [0, 225, 0], 'translation': [0, 2, 0], 'scale': [.5, .5, .5]},
+}
+
+
+def save(name, elements, substitutions=None):
+    keys = {f['texture'][1:] for e in elements for f in e['faces'].values()}
+    textures = {key: 'arksurvivalreturns:block/camp/' + (substitutions or {}).get(key, key) for key in sorted(keys)}
+    textures['particle'] = textures.get('wood', next(iter(textures.values())))
+    model = {'parent': 'minecraft:block/block', 'textures': textures,
+             'display': DISPLAY, 'elements': elements}
+    (MODELS / (name + '.json')).write_text(json.dumps(model, indent=2) + '\n', encoding='utf8')
+
+
+def bedroll():
+    e = [box([2, 0, .25], [14, .65, 15.75], 'leather', 'waterproof groundsheet'),
+         box([2.35, .65, .5], [13.65, 1.5, 15.5], 'linen', 'padded sleeping mat'),
+         box([2.7, 1.5, 4.6], [13.3, 2.5, 15.3], 'canvas', 'sage blanket'),
+         box([3.25, 2.5, 6], [12.75, 2.8, 14.5], 'canvas', 'soft raised centre'),
+         box([2.6, 2.45, 4.65], [13.4, 2.9, 6.1], 'linen', 'turned linen cuff'),
+         box([3, 1.5, .8], [13, 3, 4.4], 'linen', 'camp pillow'),
+         box([3.65, 3, 1.25], [12.35, 3.45, 3.9], 'linen', 'pillow crown'),
+         box([2.6, 1.4, 14.1], [13.4, 3.2, 15.6], 'canvas_light', 'soft foot fold')]
+    for x in (2.5, 13.05):
+        e.append(box([x, 1.45, 6.2], [x + .4, 2.55, 14.05], 'canvas_light', 'bound blanket edge'))
+    for x in (4, 11):
+        e += [box([x, .55, 0], [x + .8, .85, 4.5], 'leather', 'loose packing tie'),
+              box([x, .2, 15.6], [x + .8, .55, 16], 'leather', 'foot tie')]
+    save('bedroll', e)
+    # Inventory reads as a portable rolled blanket with two leather straps.
+    e = [box([2, 4, 5], [14, 10, 11], 'canvas'),
+         box([2, 5, 4], [14, 9, 12], 'canvas'),
+         box([2, 3.6, 6], [14, 10.4, 10], 'canvas_light')]
+    for x in (1.95, 13.9):
+        e += [box([x, 5, 5.4], [x + .15, 9, 10.6], 'linen'),
+              box([x - .03, 6, 6.3], [x + .18, 8.3, 9.5], 'canvas'),
+              box([x - .06, 6.8, 7], [x + .21, 7.7, 8.8], 'linen')]
+    for x in (4, 10.8):
+        for a, b in (([x, 3.4, 5.8], [x+1.2, 10.6, 10.2]),
+                     ([x, 4.8, 3.8], [x+1.2, 9.2, 12.2])):
+            e.append(box(a, b, 'leather'))
+        e.append(box([x+.15, 6, 12.2], [x+1.05, 7.25, 12.45], 'resin', 'wooden toggle'))
+    e += [box([5, 10.6, 7.4], [11, 11.3, 8.5], 'leather', 'carrying handle')]
+    save('bedroll_rolled', e)
+
+
+def trough():
+    e = []
+    for x in (2, 12):
+        e.append(box([x, 0, 3.25], [x+2, 2, 12.75], 'wood', 'runner foot'))
+    for z in (5, 7, 9):
+        e.append(box([1, 2, z], [15, 3.25, z+1.95], 'wood', 'floor plank'))
+    for z in (3.5, 10.75):
+        e += [box([.5, 3, z], [15.5, 6.75, z+1.75], 'wood', 'trough side'),
+              box([.25, 6.75, z-.25], [15.75, 7.5, z+2], 'wood', 'worn top lip'),
+              box([1.8, 3, z-.08], [2.4, 6.75, z+1.83], 'resin', 'sealed join'),
+              box([13.6, 3, z-.08], [14.2, 6.75, z+1.83], 'resin', 'sealed join')]
+    for x in (.6, 13.9):
+        e.append(box([x, 3, 5.25], [x+1.5, 7.1, 10.75], 'wood', 'end board'))
+    for x in (3, 12.2):
+        for z in (3.38, 12.52):
+            e.append(box([x, 5.4, z], [x+.7, 6.1, z+.12], 'leather', 'wooden peg'))
+    for wood in WOODS:
+        save('trough_' + wood, e, {'wood': wood})
+    save('trough_feed', [box([2.15, 3.3, 5.3], [13.85, 4.4, 10.7], 'grain'),
+                         box([4, 4.4, 6.1], [10.5, 4.9, 9.5], 'grain')])
+
+
+def rack():
+    e = []
+    for x in (1, 13.25):
+        for z in (3, 11.25):
+            e.append(box([x, 0, z], [x+1.75, 16, z+1.75], 'wood', 'upright'))
+            for y in (2, 13):
+                e.append(box([x-.15, y, z-.15], [x+1.9, y+1, z+1.9], 'rope', 'lashed joint'))
+    for y in (1, 14):
+        for z in (3.25, 11.5):
+            e.append(box([1, y, z], [15, y+1.5, z+1.25], 'wood', 'cross rail'))
+    for x in (1.2, 13.5):
+        e.append(box([x, 14, 3], [x+1.3, 15.5, 13], 'wood', 'side rail'))
+    # Air gaps below the finished food; each unit remains a separate working rack.
+    for x in (3, 5.5, 8, 10.5, 13):
+        e.append(box([x, 1.8, 3.4], [x+.9, 2.4, 12.6], 'wood', 'slatted shelf'))
+    for z in (5.6, 9.6):
+        e.append(box([2.75, 13.7, z], [13.25, 14.2, z+.4], 'rope', 'drying line'))
+    save('drying_rack', e, {'wood': 'spruce'})
+    for food in ('meat', 'fish', 'berries'):
+        for slot, x in enumerate((4, 8, 12), 1):
+            e = [box([x-.16, 10.5, 5.6], [x+.16, 14.1, 6], 'rope', 'hanging tie')]
+            if food == 'meat':
+                e += [box([x-.85, 6, 5.1], [x+.85, 11.8, 6.5], 'meat'),
+                      box([x-.5, 5.1, 5.2], [x+.6, 6, 6.4], 'meat'),
+                      box([x-.6, 7, 5.04], [x-.23, 11.1, 5.1], 'fat'),
+                      box([x+.3, 6.2, 6.5], [x+.6, 10.1, 6.56], 'fat')]
+            elif food == 'fish':
+                e += [box([x-.7, 6.1, 5.2], [x+.7, 10.7, 6.3], 'fish'),
+                      box([x-.35, 5.3, 5.3], [x+.35, 6.1, 6.2], 'fish'),
+                      box([x-1, 10.7, 5.35], [x+1, 11.5, 6.15], 'fish'),
+                      box([x-.3, 5.85, 5.12], [x, 6.15, 5.2], 'soot')]
+            else:
+                e += [box([x-.9, 8, 5], [x+.9, 10.6, 6.8], 'rope', 'woven berry pouch'),
+                      box([x-.65, 10.6, 5.2], [x+.65, 11, 6.5], 'berry')]
+            save(f'rack_{food}_{slot}', e)
+    save('rack_ready', [box([x, 2.45, z], [x+2.8, 3, z+1.2], 'dried', 'finished ration')
+                        for x, z in ((3, 8), (7, 9), (10, 7.7))])
+
+
+def pot():
+    e = []
+    # A hollow eight-sided iron body. Four angled wall elements soften the silhouette.
+    e.append(box([4, 1.5, 4], [12, 2.5, 12], 'soot', 'heavy base'))
+    for axis in ('x', 'z'):
+        for side in (3, 12):
+            a, b = ([5, 2.5, side], [11, 8, side+1]) if axis == 'x' else ([side, 2.5, 5], [side+1, 8, 11])
+            e.append(box(a, b, 'iron', 'hammered wall'))
+    for x, z, angle in ((4.5, 4.5, -45), (11.5, 4.5, 45), (4.5, 11.5, 45), (11.5, 11.5, -45)):
+        e.append(box([x-1.5, 2.5, z-.5], [x+1.5, 8, z+.5], 'iron', 'chamfered corner', rot([x, 5, z], 'y', angle)))
+    for a, b in (([4.6, 8, 2.8], [11.4, 8.7, 4.2]), ([4.6, 8, 11.8], [11.4, 8.7, 13.2]),
+                 ([2.8, 8, 4.6], [4.2, 8.7, 11.4]), ([11.8, 8, 4.6], [13.2, 8.7, 11.4])):
+        e.append(box(a, b, 'iron_edge', 'rolled rim'))
+    for x, z, angle in ((4.5, 4.5, -45), (11.5, 4.5, 45), (4.5, 11.5, 45), (11.5, 11.5, -45)):
+        e.append(box([x-1.6, 8, z-.6], [x+1.6, 8.7, z+.6], 'iron_edge', 'rim corner', rot([x, 8, z], 'y', angle)))
+    for x in (1.2, 13.8):
+        e += [box([x, 6.3, 5.7], [x+1, 7, 10.3], 'iron_edge', 'loop handle'),
+              box([x if x<8 else 12.5, 6.3, 5.7], [3.5 if x<8 else x+1, 7, 6.4], 'iron_edge'),
+              box([x if x<8 else 12.5, 6.3, 9.6], [3.5 if x<8 else x+1, 7, 10.3], 'iron_edge')]
+    # Short feet rest on the campfire log surface rather than floating one block above it.
+    for x, z in ((4, 5), (11, 5), (7.5, 11)):
+        e.append(box([x, 0, z], [x+1, 2, z+1], 'soot', 'trivet foot'))
+    save('cooking_pot', e)
+    mounted = copy.deepcopy(e)
+    for part in mounted:
+        if part['name'] == 'trivet foot':
+            part['from'][1] = -9
+    mounted += [box([3.5, .2, 4.5], [12.5, 1, 5.5], 'iron', 'trivet crossbar'),
+                box([7.5, .2, 5], [8.5, 1, 12], 'iron', 'trivet crossbar')]
+    save('cooking_pot_campfire', mounted)
+
+
+def main():
+    MODELS.mkdir(parents=True, exist_ok=True)
+    TEXTURES.mkdir(parents=True, exist_ok=True)
+    for name, color in WOODS.items():
+        material(name, color, wood=True)
+    for name, color in PALETTE.items():
+        material(name, color)
+    bedroll()
+    trough()
+    rack()
+    pot()
+    print(f'Authored {len(list(MODELS.glob("*.json")))} models and {len(list(TEXTURES.glob("*.png")))} original materials.')
+
+
+if __name__ == '__main__':
+    main()

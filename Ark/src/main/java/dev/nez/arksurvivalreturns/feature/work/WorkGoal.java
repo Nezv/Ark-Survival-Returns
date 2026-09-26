@@ -166,6 +166,7 @@ public final class WorkGoal extends Goal {
         WorkProfiles.Job job = WorkProfiles.of(mob.species()).job();
         if (job == WorkProfiles.Job.FORAGE) forage(mob, level, pos);
         else if (job == WorkProfiles.Job.MINERAL) mine(mob, level, pos);
+        dev.nez.arksurvivalreturns.feature.tech.TechEvents.onTameWork(mob);
     }
 
     /** Grass is grazed in place; ferns and tufts are cut; ripe berry bushes reset to growing. */

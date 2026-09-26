@@ -128,6 +128,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         setTarget(null);
         if (wildlife != null) wildlife.interruptSleep();
         applyTameState();
+        dev.nez.arksurvivalreturns.feature.tech.TechEvents.onTamed(this, owner);
     }
 
     /** Removing a tamed creature from wild population accounting; called on tame and on reload. */
@@ -569,6 +570,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         // Any lethal hit feeds the mind, whether it landed via the wind-up or a direct call.
         if (target instanceof LivingEntity living && !living.isAlive() && species.predator
                 && !(living instanceof Player) && wildlife != null) wildlife.onStrikeKill();
+        if (target instanceof LivingEntity living && !living.isAlive()) {
+            dev.nez.arksurvivalreturns.feature.tech.TechEvents.onTameKill(this);
+        }
         return true;
     }
     @Override public boolean hurtServer(ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float damage) {

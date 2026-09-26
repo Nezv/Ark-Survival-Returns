@@ -1,7 +1,36 @@
 {
   "variants": {
-    "": {
-      "model": "arksurvivalreturns:block/cooking_pot"
+    "facing=east,on_campfire=false": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot",
+      "y": 90
+    },
+    "facing=east,on_campfire=true": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot_campfire",
+      "y": 90
+    },
+    "facing=north,on_campfire=false": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot",
+      "y": 0
+    },
+    "facing=north,on_campfire=true": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot_campfire",
+      "y": 0
+    },
+    "facing=south,on_campfire=false": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot",
+      "y": 180
+    },
+    "facing=south,on_campfire=true": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot_campfire",
+      "y": 180
+    },
+    "facing=west,on_campfire=false": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot",
+      "y": 270
+    },
+    "facing=west,on_campfire=true": {
+      "model": "arksurvivalreturns:block/camp/cooking_pot_campfire",
+      "y": 270
     }
   }
 }

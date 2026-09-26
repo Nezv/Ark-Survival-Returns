@@ -1,5 +1,15 @@
 package dev.nez.arksurvivalreturns.feature.farm;
 
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import dev.nez.arksurvivalreturns.feature.camp.CampShapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import java.util.Map;
 import com.mojang.serialization.MapCodec;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
@@ -28,11 +38,37 @@ import org.jspecify.annotations.Nullable;
 public final class TroughBlock extends BaseEntityBlock {
     public static final MapCodec<TroughBlock> CODEC = simpleCodec(TroughBlock::new);
 
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty FILLED = BooleanProperty.create("filled");
+    private static final Map<Direction, VoxelShape> SHAPES = CampShapes.horizontal(
+            net.minecraft.world.phys.shapes.Shapes.or(Block.box(1, 0, 3, 15, 3.25, 13), Block.box(0, 3.25, 3, 16, 7.5, 5.25), Block.box(0, 3.25, 10.75, 16, 7.5, 13), Block.box(0, 3.25, 5.25, 2.1, 7.5, 10.75), Block.box(13.9, 3.25, 5.25, 16, 7.5, 10.75)));
+
     public TroughBlock(Properties properties) {
         super(properties);
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FILLED, false));
+    }
+
+    @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPES.get(state.getValue(FACING));
     }
 
     @Override protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
+
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, FILLED);
+    }
+
+    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override protected BlockState mirror(BlockState state, Mirror mirror) {
+        return rotate(state, mirror.getRotation(state.getValue(FACING)));
+    }
 
     @Override public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new TroughBlockEntity(pos, state);
@@ -55,6 +91,8 @@ public final class TroughBlock extends BaseEntityBlock {
 
     @Override protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
+        // An empty hand must fall through to useWithoutItem, or taking contents out never runs.
+        if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!(level.getBlockEntity(pos) instanceof TroughBlockEntity trough)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         return trough.insert(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;

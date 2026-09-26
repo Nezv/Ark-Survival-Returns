@@ -1,0 +1,80 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_acacia",
+        "y": 0
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_feed",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "filled": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_acacia",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_feed",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "filled": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_acacia",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_feed",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "filled": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_acacia",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "arksurvivalreturns:block/camp/trough_feed",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "filled": "true"
+      }
+    }
+  ]
+}

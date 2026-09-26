@@ -1,0 +1,1214 @@
+{
+  "status": "Design proposal 02; no game patch",
+  "ages": [
+    {
+      "id": "prehistoric",
+      "name": "PREHISTORIC",
+      "x": 55,
+      "width": 2800,
+      "start": 110,
+      "cols": 6,
+      "fill": "#e8eedc",
+      "accent": "#466652",
+      "shadow": "#cbd2bd",
+      "lanes": [
+        "FOOD & PRESERVATION",
+        "COMPANIONS & TAMING",
+        "CAMP & COMFORT"
+      ],
+      "column_counts": [
+        2,
+        3,
+        3,
+        3,
+        3,
+        1
+      ]
+    },
+    {
+      "id": "bronze",
+      "name": "BRONZE",
+      "x": 2890,
+      "width": 2345,
+      "start": 2945,
+      "cols": 5,
+      "fill": "#f1dec6",
+      "accent": "#875b38",
+      "shadow": "#d6c1a7",
+      "lanes": [
+        "WORKING DINOSAURS",
+        "METAL & CRAFT",
+        "FIELD CHEMISTRY"
+      ],
+      "column_counts": [
+        2,
+        3,
+        3,
+        3,
+        1
+      ]
+    },
+    {
+      "id": "iron",
+      "name": "IRON",
+      "x": 5270,
+      "width": 2800,
+      "start": 5325,
+      "cols": 6,
+      "fill": "#dfe8ed",
+      "accent": "#485f72",
+      "shadow": "#c0cdd5",
+      "lanes": [
+        "FORGE & PRECISION",
+        "HARDER / BETTER / FASTER / STRONGER",
+        "HOME & DEFENCE"
+      ],
+      "column_counts": [
+        2,
+        3,
+        3,
+        3,
+        1,
+        1
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "monkeys",
+      "title": "Monkeys",
+      "task": "Pick up a loose rock.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 0,
+      "icon": "stone",
+      "kind": "starter",
+      "note": "AGE STARTER",
+      "box": [
+        110,
+        815,
+        380,
+        238
+      ],
+      "requires": [],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:rock"
+        ]
+      }
+    },
+    {
+      "id": "dried",
+      "title": "Dried Meat III",
+      "task": "Eat Dried Meat III: meat left curing on a rack for three in-game days.",
+      "age": "prehistoric",
+      "lane": 0,
+      "column": 0,
+      "icon": "ration",
+      "kind": "bonus",
+      "note": "OPTIONAL BOOSTING FOOD",
+      "box": [
+        110,
+        445,
+        380,
+        238
+      ],
+      "acquisition_requires": [
+        "lasting"
+      ],
+      "requires": [
+        "monkeys"
+      ],
+      "optional": true,
+      "trigger": {
+        "type": "consume",
+        "items": [
+          "arksurvivalreturns:dried_meat"
+        ],
+        "dryness": 3
+      }
+    },
+    {
+      "id": "rock",
+      "title": "Tha rock",
+      "task": "Bind a rock to a stick: craft a Stone Hatchet.",
+      "age": "prehistoric",
+      "lane": 0,
+      "column": 1,
+      "icon": "stone",
+      "kind": "main",
+      "note": null,
+      "box": [
+        565,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "monkeys"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:stone_hatchet"
+        ]
+      }
+    },
+    {
+      "id": "berries",
+      "title": "Berries!",
+      "task": "Collect all four berries.",
+      "age": "prehistoric",
+      "lane": 0,
+      "column": 2,
+      "icon": "berries",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1020,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "rock"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:tintoberry",
+          "arksurvivalreturns:amarberry",
+          "arksurvivalreturns:azulberry",
+          "arksurvivalreturns:narcoberry"
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "id": "london",
+      "title": "London",
+      "task": "Craft a Stone Knife.",
+      "age": "prehistoric",
+      "lane": 0,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        1475,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "berries"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:stone_knife"
+        ]
+      }
+    },
+    {
+      "id": "lasting",
+      "title": "Long-lasting",
+      "task": "Dry meat on a drying rack.",
+      "age": "prehistoric",
+      "lane": 0,
+      "column": 4,
+      "icon": "drying_rack",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1930,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "london"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:dried_meat"
+        ]
+      }
+    },
+    {
+      "id": "fight",
+      "title": "We should fight them",
+      "task": "Deal damage to a dinosaur.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 1,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        565,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "monkeys"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "event",
+        "kind": "damage_creature"
+      }
+    },
+    {
+      "id": "ride",
+      "title": "We should ride them",
+      "task": "Craft a leash.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 2,
+      "icon": "leash",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1020,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "fight"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "minecraft:lead"
+        ]
+      }
+    },
+    {
+      "id": "companions",
+      "title": "Companions",
+      "task": "Tame any dinosaur.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 3,
+      "icon": "parasaur",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1475,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "ride"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "tame"
+      }
+    },
+    {
+      "id": "scavenge",
+      "title": "Scavenger",
+      "task": "Have a dinosaur gather resources.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 4,
+      "icon": "harness",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1930,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "companions"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "event",
+        "kind": "tame_work"
+      }
+    },
+    {
+      "id": "mattress",
+      "title": "Finally Goodnight",
+      "task": "Craft a Field Bedroll.",
+      "age": "prehistoric",
+      "lane": 2,
+      "column": 1,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        565,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "monkeys"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:bedroll"
+        ]
+      }
+    },
+    {
+      "id": "warmth",
+      "title": "A little warmth",
+      "task": "Light a stone fire.",
+      "age": "prehistoric",
+      "lane": 2,
+      "column": 2,
+      "icon": "campfire",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1020,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "mattress"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "place_block",
+        "blocks": [
+          "arksurvivalreturns:stone_fire",
+          "minecraft:campfire"
+        ],
+        "lit": true
+      }
+    },
+    {
+      "id": "prometheus",
+      "title": "Prometheus",
+      "task": "Light a torch in the stone fire.",
+      "age": "prehistoric",
+      "lane": 2,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        1475,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "warmth"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "event",
+        "kind": "light_torch"
+      }
+    },
+    {
+      "id": "dish",
+      "title": "Delicious",
+      "task": "Cook any dish in a cooking pot.",
+      "age": "prehistoric",
+      "lane": 2,
+      "column": 4,
+      "icon": "cooking_pot",
+      "kind": "main",
+      "note": null,
+      "box": [
+        1930,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "prometheus"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:hearty_stew",
+          "arksurvivalreturns:trail_mix"
+        ]
+      }
+    },
+    {
+      "id": "narcotics",
+      "title": "Narcotraffic",
+      "task": "Produce narcotics: craft a concentrated sedative.",
+      "age": "prehistoric",
+      "lane": 1,
+      "column": 5,
+      "icon": "narcotics",
+      "kind": "finale",
+      "note": "AGE FINALE / ALL 3 PATHS",
+      "box": [
+        2385,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "lasting",
+        "scavenge",
+        "dish"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:concentrated_sedative"
+        ]
+      }
+    },
+    {
+      "id": "prepare",
+      "title": "Prepare for it!",
+      "task": "Embed an arrow with tranquilizer.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 0,
+      "icon": "tranquilizer",
+      "kind": "starter",
+      "note": "AGE STARTER",
+      "box": [
+        2945,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "narcotics"
+      ],
+      "optional": false
+    },
+    {
+      "id": "golden",
+      "title": "Golden Raptor Meat",
+      "task": "Craft Golden Raptor Meat.",
+      "age": "bronze",
+      "lane": 0,
+      "column": 0,
+      "icon": null,
+      "kind": "bonus",
+      "note": "OPTIONAL BOOSTING FOOD",
+      "box": [
+        2945,
+        445,
+        380,
+        238
+      ],
+      "acquisition_requires": [
+        "prepare"
+      ],
+      "requires": [
+        "prepare"
+      ],
+      "optional": true
+    },
+    {
+      "id": "feed",
+      "title": "Feed the Beast",
+      "task": "Have your tame eat from a feeding trough.",
+      "age": "bronze",
+      "lane": 0,
+      "column": 1,
+      "icon": "trough",
+      "kind": "main",
+      "note": null,
+      "box": [
+        3400,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "prepare"
+      ],
+      "optional": false
+    },
+    {
+      "id": "theri",
+      "title": "Multi-tool",
+      "task": "Tame a Therizinosaurus.",
+      "age": "bronze",
+      "lane": 0,
+      "column": 2,
+      "icon": "therizinosaurus",
+      "kind": "main",
+      "note": null,
+      "box": [
+        3855,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "feed"
+      ],
+      "optional": false
+    },
+    {
+      "id": "slavery",
+      "title": "Slavery",
+      "task": "Return with a hunt and a resource haul from your tames.",
+      "age": "bronze",
+      "lane": 0,
+      "column": 3,
+      "icon": "harness",
+      "kind": "main",
+      "note": null,
+      "box": [
+        4310,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "theri"
+      ],
+      "optional": false
+    },
+    {
+      "id": "shiny",
+      "title": "Shiny",
+      "task": "Collect copper and tin.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 1,
+      "icon": "copper",
+      "kind": "main",
+      "note": null,
+      "box": [
+        3400,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "prepare"
+      ],
+      "optional": false
+    },
+    {
+      "id": "alloy",
+      "title": "Better Together",
+      "task": "Smelt your first bronze.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3855,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "shiny"
+      ],
+      "optional": false
+    },
+    {
+      "id": "weapon",
+      "title": "Made to last",
+      "task": "Craft your first bronze weapon.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        4310,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "alloy"
+      ],
+      "optional": false
+    },
+    {
+      "id": "charcoal",
+      "title": "Black Gold",
+      "task": "Produce charcoal.",
+      "age": "bronze",
+      "lane": 2,
+      "column": 1,
+      "icon": "charcoal",
+      "kind": "main",
+      "note": null,
+      "box": [
+        3400,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "prepare"
+      ],
+      "optional": false
+    },
+    {
+      "id": "minerals",
+      "title": "Earths Secrets",
+      "task": "Collect sulfur and saltpeter.",
+      "age": "bronze",
+      "lane": 2,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3855,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "charcoal"
+      ],
+      "optional": false
+    },
+    {
+      "id": "sparklers",
+      "title": "Sparklers",
+      "task": "Craft gunpowder.",
+      "age": "bronze",
+      "lane": 2,
+      "column": 3,
+      "icon": "gunpowder",
+      "kind": "main",
+      "note": null,
+      "box": [
+        4310,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "minerals"
+      ],
+      "optional": false
+    },
+    {
+      "id": "rawr",
+      "title": "Rawr!",
+      "task": "Tame a Tyrannosaur.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 4,
+      "icon": "tyrannosaur",
+      "kind": "finale",
+      "note": "AGE FINALE / ALL 3 PATHS",
+      "box": [
+        4765,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "slavery",
+        "weapon",
+        "sparklers"
+      ],
+      "optional": false
+    },
+    {
+      "id": "greed",
+      "title": "Greed",
+      "task": "Have gunpowder.",
+      "age": "iron",
+      "lane": 1,
+      "column": 0,
+      "icon": "gunpowder",
+      "kind": "starter",
+      "note": "AGE STARTER",
+      "box": [
+        5325,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "rawr"
+      ],
+      "optional": false
+    },
+    {
+      "id": "cocaine",
+      "title": "Cocaine",
+      "task": "Gunpowder + narcotics + yellow berry.",
+      "age": "iron",
+      "lane": 0,
+      "column": 0,
+      "icon": "white_dust",
+      "kind": "bonus",
+      "note": "OPTIONAL BOOSTING FOOD",
+      "box": [
+        5325,
+        445,
+        380,
+        238
+      ],
+      "acquisition_requires": [
+        "greed",
+        "narcotics",
+        "berries"
+      ],
+      "requires": [
+        "greed"
+      ],
+      "optional": true
+    },
+    {
+      "id": "forge",
+      "title": "Hell Forge",
+      "task": "Have a forging table.",
+      "age": "iron",
+      "lane": 0,
+      "column": 1,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        5780,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "greed"
+      ],
+      "optional": false
+    },
+    {
+      "id": "glass",
+      "title": "I see you",
+      "task": "Craft glass.",
+      "age": "iron",
+      "lane": 0,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        6235,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "forge"
+      ],
+      "optional": false
+    },
+    {
+      "id": "trickshot",
+      "title": "Trick-shot",
+      "task": "Kill a carnivore with a scoped weapon.",
+      "age": "iron",
+      "lane": 0,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        6690,
+        445,
+        380,
+        238
+      ],
+      "requires": [
+        "glass"
+      ],
+      "optional": false
+    },
+    {
+      "id": "harder",
+      "title": "Harder",
+      "task": "Forge iron.",
+      "age": "iron",
+      "lane": 1,
+      "column": 1,
+      "icon": "iron",
+      "kind": "main",
+      "note": null,
+      "box": [
+        5780,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "greed"
+      ],
+      "optional": false
+    },
+    {
+      "id": "better",
+      "title": "Better",
+      "task": "Craft your first iron weapon.",
+      "age": "iron",
+      "lane": 1,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        6235,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "harder"
+      ],
+      "optional": false
+    },
+    {
+      "id": "faster",
+      "title": "Faster",
+      "task": "Have engineered boots.",
+      "age": "iron",
+      "lane": 1,
+      "column": 3,
+      "icon": "boots",
+      "kind": "main",
+      "note": null,
+      "box": [
+        6690,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "better"
+      ],
+      "optional": false
+    },
+    {
+      "id": "stronger",
+      "title": "Stronger",
+      "task": "Have a piece of iron armor.",
+      "age": "iron",
+      "lane": 1,
+      "column": 4,
+      "icon": "armor",
+      "kind": "main",
+      "note": null,
+      "box": [
+        7145,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "faster"
+      ],
+      "optional": false
+    },
+    {
+      "id": "home",
+      "title": "Home Sweet Home",
+      "task": "Sleep in a bed.",
+      "age": "iron",
+      "lane": 2,
+      "column": 1,
+      "icon": "bedroll",
+      "kind": "main",
+      "note": null,
+      "box": [
+        5780,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "greed"
+      ],
+      "optional": false
+    },
+    {
+      "id": "vault",
+      "title": "Vault it!",
+      "task": "Store items in a reinforced vault.",
+      "age": "iron",
+      "lane": 2,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        6235,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "home"
+      ],
+      "optional": false
+    },
+    {
+      "id": "curtain",
+      "title": "Iron-Curtain",
+      "task": "Place 10 iron spikes.",
+      "age": "iron",
+      "lane": 2,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        6690,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "vault"
+      ],
+      "optional": false
+    },
+    {
+      "id": "subdue",
+      "title": "Subdue Nature",
+      "task": "Craft ammunition.",
+      "age": "iron",
+      "lane": 1,
+      "column": 5,
+      "icon": null,
+      "kind": "finale",
+      "note": "AGE FINALE / ALL 3 PATHS",
+      "box": [
+        7600,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "trickshot",
+        "stronger",
+        "curtain"
+      ],
+      "optional": false
+    }
+  ],
+  "edges": [
+    [
+      "monkeys",
+      "dried"
+    ],
+    [
+      "monkeys",
+      "rock"
+    ],
+    [
+      "rock",
+      "berries"
+    ],
+    [
+      "berries",
+      "london"
+    ],
+    [
+      "london",
+      "lasting"
+    ],
+    [
+      "monkeys",
+      "fight"
+    ],
+    [
+      "fight",
+      "ride"
+    ],
+    [
+      "ride",
+      "companions"
+    ],
+    [
+      "companions",
+      "scavenge"
+    ],
+    [
+      "monkeys",
+      "mattress"
+    ],
+    [
+      "mattress",
+      "warmth"
+    ],
+    [
+      "warmth",
+      "prometheus"
+    ],
+    [
+      "prometheus",
+      "dish"
+    ],
+    [
+      "lasting",
+      "narcotics"
+    ],
+    [
+      "scavenge",
+      "narcotics"
+    ],
+    [
+      "dish",
+      "narcotics"
+    ],
+    [
+      "prepare",
+      "golden"
+    ],
+    [
+      "prepare",
+      "feed"
+    ],
+    [
+      "feed",
+      "theri"
+    ],
+    [
+      "theri",
+      "slavery"
+    ],
+    [
+      "prepare",
+      "shiny"
+    ],
+    [
+      "shiny",
+      "alloy"
+    ],
+    [
+      "alloy",
+      "weapon"
+    ],
+    [
+      "prepare",
+      "charcoal"
+    ],
+    [
+      "charcoal",
+      "minerals"
+    ],
+    [
+      "minerals",
+      "sparklers"
+    ],
+    [
+      "slavery",
+      "rawr"
+    ],
+    [
+      "weapon",
+      "rawr"
+    ],
+    [
+      "sparklers",
+      "rawr"
+    ],
+    [
+      "narcotics",
+      "prepare"
+    ],
+    [
+      "greed",
+      "cocaine"
+    ],
+    [
+      "greed",
+      "forge"
+    ],
+    [
+      "forge",
+      "glass"
+    ],
+    [
+      "glass",
+      "trickshot"
+    ],
+    [
+      "greed",
+      "harder"
+    ],
+    [
+      "harder",
+      "better"
+    ],
+    [
+      "better",
+      "faster"
+    ],
+    [
+      "faster",
+      "stronger"
+    ],
+    [
+      "greed",
+      "home"
+    ],
+    [
+      "home",
+      "vault"
+    ],
+    [
+      "vault",
+      "curtain"
+    ],
+    [
+      "trickshot",
+      "subdue"
+    ],
+    [
+      "stronger",
+      "subdue"
+    ],
+    [
+      "curtain",
+      "subdue"
+    ],
+    [
+      "rawr",
+      "greed"
+    ]
+  ],
+  "notes": [
+    "Monkeys retained as the Prehistoric starter; its gather-stone task overlaps Tha rock pending author refinement.",
+    "Narcotraffic ends Prehistoric; Prepare for it! starts Bronze; Rawr! ends Bronze; Greed starts Iron; Subdue Nature ends Iron.",
+    "Prehistoric columns 2-3-3-3-3-1. Bronze columns 2-3-3-3-1; Greed is the following singleton and also Iron starter, not a duplicate Bronze node.",
+    "Iron columns 2-3-3-3-1-1 preserve all four middle-path achievements.",
+    "Slavery inherits the previous Working Giants requirement; Multi-tool inherits Therizinosaurus taming.",
+    "Food bonuses are optional. acquisition_requires describes later food availability, independently of diagram placement.",
+    "Cocaine is a fictional humorous boosting food: gunpowder + narcotics + yellow berry. White dust uses the existing sugar sprite.",
+    "Mattress, new blocks and weapons remain text-only. Approved bed icon moves to Iron. Boots and armor use vanilla placeholder sprites."
+  ]
+}

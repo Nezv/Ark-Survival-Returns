@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:trough",
+    "arksurvivalreturns:spruce_trough",
+    "arksurvivalreturns:birch_trough",
+    "arksurvivalreturns:jungle_trough",
+    "arksurvivalreturns:acacia_trough",
+    "arksurvivalreturns:dark_oak_trough",
+    "arksurvivalreturns:mangrove_trough",
+    "arksurvivalreturns:cherry_trough",
+    "arksurvivalreturns:pale_oak_trough",
+    "arksurvivalreturns:bamboo_trough"
+  ]
+}

@@ -1,5 +1,12 @@
 package dev.nez.arksurvivalreturns.feature.camp;
 
+import dev.nez.arksurvivalreturns.feature.camp.CampShapes;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import java.util.Map;
 import com.mojang.serialization.MapCodec;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.registry.ModContent;
@@ -34,8 +41,29 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public final class BedrollBlock extends Block {
     public static final MapCodec<BedrollBlock> CODEC = simpleCodec(BedrollBlock::new);
 
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    private static final Map<Direction, VoxelShape> SHAPES = CampShapes.horizontal(
+            net.minecraft.world.level.block.Block.box(2, 0, 0, 14, 3.5, 16));
+
     public BedrollBlock(Properties properties) {
         super(properties);
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override protected BlockState mirror(BlockState state, Mirror mirror) {
+        return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override public MapCodec<BedrollBlock> codec() {
@@ -43,7 +71,7 @@ public final class BedrollBlock extends Block {
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0, 0, 0, 16, 2, 16);
+        return SHAPES.get(state.getValue(FACING));
     }
 
     @Override protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {

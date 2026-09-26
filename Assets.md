@@ -65,8 +65,8 @@ No new PNG is shipped for these; the model or definition points at a vanilla tex
 | Field Bedroll | `block/red_wool` | 16×2×16 box that sets respawn | Rolled mat with pillow |
 | Recovery Cache | `block/barrel_side` + `barrel_top` | 12×10×12 box marker | Strapped survivor's bundle |
 
-The two new block models are simple single-box elements; a proper model with layers would make the
-cache and bedroll read as objects rather than slabs.
+The recovery cache remains a simple box marker. The field bedroll and three homestead stations now
+have authored art; see the camp collection below.
 
 ## 3. Procedurally generated item art
 
@@ -112,3 +112,28 @@ Several visuals are drawn in code and have no asset to replace yet: the Xaero di
 legend and cursor readout, the downed HUD, biome/danger chat lines, the debug spyglass terminal and
 the quest book is FTB's own UI. A designed UI pass could replace the primitives. Documentation images
 under `Ark/docs/*.png` are generated renders, not runtime assets.
+
+## 7. Authored camp collection
+
+Original cuboid geometry and 25 original 32×32 pixel materials, built by
+`Ark/tools/build_camp_assets.py`. Native Minecraft JSON models live in
+`Ark/src/main/resources/assets/arksurvivalreturns/models/block/camp/`, textures beside them under
+`textures/block/camp/`. `CampAssetsData` connects the art to recipes, items and block states through
+`runData`; no custom rendering library is needed.
+
+- **Field bedroll:** layered sage canvas, linen pillow and cuff, leather groundsheet and packing ties.
+  The inventory/held item is a separate rolled bundle. The placed mat turns with the player.
+- **Feeding trough:** open basin, runner feet, pegged planks and amber resin joins. Ten Overworld
+  finishes: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak and bamboo.
+  The original `trough` id remains oak. A feed layer appears when the inventory is nonempty.
+- **Drying rack:** rope-lashed timber, open slatted shelf and aligned stackable tiers. Up to three
+  hanging portions indicate raw inventory (larger stacks use the same three portions). Meat, fish
+  and berry pouches have separate geometry; finished rations appear on the shelf.
+- **Cooking pot:** hollow chamfered bowl, loop handles, rolled rim and soot-darkened base. A taller
+  trivet reaches the campfire logs while keeping the bowl above the vanilla flame planes.
+
+[Collection preview](Ark/docs/camp-assets.png) is rendered from the actual JSON geometry by
+`Ark/tools/render_camp_assets.py`; it is an offline preview, not an interactive client capture.
+The vanilla campfire in that preview comes from the locally cached Minecraft source jar and is not
+redistributed as an Ark runtime model. `Ark/tools/verify_camp_assets.py` validates textures, model
+bounds and every multipart combination.
