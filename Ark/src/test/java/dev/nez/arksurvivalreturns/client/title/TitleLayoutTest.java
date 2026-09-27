@@ -58,6 +58,14 @@ class TitleLayoutTest {
                 .orElseThrow(() -> new AssertionError("no " + type + " element"));
     }
 
+    /** FancyMenu applies layouts only to screens switched on in customizablemenus.txt, keyed by class name. */
+    @Test void titleScreenCustomizationIsSwitchedOn() throws Exception {
+        String text = Files.readString(Path.of("config/fancymenu/customizablemenus.txt")).replace("\r\n", "\n");
+        assertTrue(text.startsWith("type = customizablemenus\n"));
+        assertTrue(parse(text).stream().anyMatch(c -> c.type().equals("net.minecraft.client.gui.screens.TitleScreen")),
+                "the title screen must be customizable, or FancyMenu ignores ark_title_screen.txt");
+    }
+
     @Test void titleScreenLayoutWithTheShaderBackground() throws Exception {
         List<Container> containers = layout();
         Container meta = containers.stream().filter(c -> c.type().equals("layout-meta")).findFirst().orElseThrow();
