@@ -58,7 +58,10 @@ public final class StoneFireBlock extends BaseEntityBlock {
     public static final BooleanProperty FUELED = BooleanProperty.create("fueled");
     public static final BooleanProperty POT = BooleanProperty.create("pot");
     public static final EnumProperty<Spit> SPIT = EnumProperty.create("spit", Spit.class);
-    private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 7, 15);
+    /** Outline and clicks: the three courses of stones and the raised spit (the model reaches 9.65 px). */
+    private static final VoxelShape SHAPE = Block.box(0.8, 0, 0.8, 15.2, 9.7, 15.2);
+    /** Walking stays on the low ring, as before the third course was added. */
+    private static final VoxelShape COLLISION = Block.box(1, 0, 1, 15, 7, 15);
 
     public enum Spit implements StringRepresentable {
         NONE, RAW, SEARED, COOKED;
@@ -89,6 +92,10 @@ public final class StoneFireBlock extends BaseEntityBlock {
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return state.getValue(POT) ? Shapes.or(SHAPE, CookingPotBlock.seatedOutline(level.getBlockState(pos.above()))) : SHAPE;
+    }
+
+    @Override protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return state.getValue(POT) ? Shapes.or(COLLISION, CookingPotBlock.seatedOutline(level.getBlockState(pos.above()))) : COLLISION;
     }
 
     /**

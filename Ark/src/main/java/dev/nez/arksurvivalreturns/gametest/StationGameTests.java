@@ -19,6 +19,22 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import com.mojang.authlib.GameProfile;
+import dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity;
+import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
+import dev.nez.arksurvivalreturns.feature.station.CrusherBlockEntity;
+import dev.nez.arksurvivalreturns.feature.station.StationCraftingMenu;
+import dev.nez.arksurvivalreturns.feature.tech.TechTrigger;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CrafterBlock;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
 /** F14: the exclusive workstations replace their vanilla blocks, and their storage, grinding and filters work. */
 final class StationGameTests {
@@ -81,6 +97,69 @@ final class StationGameTests {
         h.assertTrue(CrusherRecipes.find(new ItemStack(Items.FLINT)) == null, "Gunpowder waits for the Bronze Age");
         h.assertTrue(CrusherRecipes.find(new ItemStack(Items.STICK)) == null, "Sticks are not crushable");
         h.succeed();
+    }
+
+    /**
+     * X04 regressions: station-only results stay at their station, a drying load survives midnight, the crusher's
+     * hopper slot is closed from below, and the stone fire's outline reaches its spit.
+     */
+    static void guards(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        var player = FakePlayerFactory.get(level, new GameProfile(java.util.UUID.randomUUID(), "ArkStationGuards"));
+        var berry = ModContent.BERRIES.get("narcoberry").get();
+        h.assertTrue(fill(player.inventoryMenu, 1, berry).isEmpty(), "The 2x2 inventory grid must not grind Narcotics");
+        BlockPos table = h.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(table, Blocks.CRAFTING_TABLE.defaultBlockState());
+        var village = new CraftingMenu(11, player.getInventory(), ContainerLevelAccess.create(level, table));
+        h.assertTrue(fill(village, 1, berry).isEmpty(), "A village crafting table must not grind Narcotics");
+        level.setBlockAndUpdate(table, StationContent.MORTAR_AND_PESTLE.get().defaultBlockState());
+        var mortar = new StationCraftingMenu(12, player.getInventory(), ContainerLevelAccess.create(level, table),
+                StationContent.MORTAR_AND_PESTLE.get(), StationContent::mortar);
+        h.assertTrue(fill(mortar, 1, berry).is(ModContent.NARCOTICS.get()), "The Mortar & Pestle must still grind Narcotics");
+        level.setBlockAndUpdate(table, Blocks.AIR.defaultBlockState());
+        var grid = CraftingInput.of(2, 2, List.of(new ItemStack(berry), new ItemStack(berry), new ItemStack(berry), new ItemStack(berry)));
+        h.assertTrue(CrafterBlock.getPotentialResults(level, grid).isEmpty(), "The Crafter must not grind Narcotics");
+
+        BlockPos rackRel = new BlockPos(5, 2, 5);
+        h.setBlock(rackRel, ModContent.DRYING_RACK.get().defaultBlockState());
+        if (!(level.getBlockEntity(h.absolutePos(rackRel)) instanceof DryingRackBlockEntity rack)) throw h.assertionException("No rack");
+        rack.insert(new ItemStack(Items.BEEF, 3));
+        for (int i = 0; i < 40 && rack.output().isEmpty(); i++) rack.advance();
+        // The first piece was dried "yesterday": the rest must still join the shelf.
+        CustomData.update(DataComponents.CUSTOM_DATA, rack.output(),
+                tag -> tag.putLong(TechTrigger.DRIED_DAY_TAG, tag.getLongOr(TechTrigger.DRIED_DAY_TAG, 0L) - 1));
+        for (int i = 0; i < 40 && !rack.input().isEmpty(); i++) rack.advance();
+        h.assertTrue(rack.input().isEmpty() && rack.output().getCount() == 3, "A drying load that spans midnight stalled");
+        rack.extract();
+        h.setBlock(rackRel, Blocks.AIR.defaultBlockState());
+
+        BlockPos crusherRel = new BlockPos(7, 2, 2);
+        h.setBlock(crusherRel, StationContent.CRUSHER.get().defaultBlockState());
+        BlockPos crusherPos = h.absolutePos(crusherRel);
+        if (!(level.getBlockEntity(crusherPos) instanceof CrusherBlockEntity crusher)) throw h.assertionException("No crusher");
+        crusher.insert(new ItemStack(Items.COBBLESTONE, 8));
+        var below = level.getCapability(Capabilities.Item.BLOCK, crusherPos, Direction.DOWN);
+        int pulled;
+        try (Transaction tx = Transaction.openRoot()) {
+            pulled = below == null ? -1 : below.extract(0, ItemResource.of(Items.COBBLESTONE), 8, tx);
+        }
+        h.assertTrue(below != null && below.size() == 1 && pulled == 0, "Automation below the crusher must only reach its output");
+        crusher.clearContent();
+        h.setBlock(crusherRel, Blocks.AIR.defaultBlockState());
+
+        var fire = PrimitiveContent.STONE_FIRE.get().defaultBlockState();
+        h.assertTrue(fire.getShape(level, BlockPos.ZERO).max(Direction.Axis.Y) >= 9.4 / 16,
+                "The stone fire outline must reach the spit");
+        h.assertTrue(fire.getCollisionShape(level, BlockPos.ZERO, CollisionContext.empty()).max(Direction.Axis.Y) <= 7.01 / 16,
+                "The stone fire must stay walkable");
+        h.succeed();
+    }
+
+    /** Four of one item into grid slots 1-4 (a shapeless recipe matches anywhere); returns the result slot. */
+    private static ItemStack fill(AbstractContainerMenu menu, int first, net.minecraft.world.item.Item item) {
+        for (int i = 0; i < 4; i++) menu.getSlot(first + i).set(new ItemStack(item));
+        menu.broadcastChanges();
+        return menu.getSlot(0).getItem();
     }
 
     private StationGameTests() {}

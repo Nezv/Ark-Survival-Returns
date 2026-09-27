@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import java.util.List;
+import java.util.Optional;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 /**
@@ -25,10 +27,13 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
     private static final Identifier SLOT_SPRITE = Identifier.withDefaultNamespace("container/slot");
     private static final Identifier CHEST_SLOTS_SPRITE = Identifier.withDefaultNamespace("container/horse/chest_slots");
     private static final int LABEL = -12566464;
-    private static final int BUTTON_WIDTH = 36;
+    /** Buttons sit between the chest grid (ends at x 133) and the panel frame (starts at x 172). */
+    private static final int BUTTON_WIDTH = 32;
     private static final int BUTTON_HEIGHT = 14;
-    private static final int UNLOAD_X = 136, UNLOAD_Y = 36;
-    private static final int LOAD_X = 136, LOAD_Y = 54;
+    private static final int UNLOAD_X = 137, UNLOAD_Y = 36;
+    private static final int LOAD_X = 137, LOAD_Y = 54;
+    /** The creature preview box, panel-relative. */
+    private static final int PREVIEW_X = 26, PREVIEW_Y = 18, PREVIEW_SIZE = 52;
     private float xMouse;
     private float yMouse;
 
@@ -56,37 +61,56 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
         drawButton(graphics, xo + LOAD_X, yo + LOAD_Y, "screen.arksurvivalreturns.load");
         var creature = this.menu.creature();
         if (creature != null) {
-            InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, xo + 26, yo + 18, xo + 78, yo + 70, 17,
-                    0.25f, this.xMouse, this.yMouse, creature);
+            // Vanilla's fixed 17 px per block suits a horse; scale so every species fits the 52 px box.
+            int size = Math.clamp(Math.round(34f / Math.max(creature.getBbWidth(), creature.getBbHeight())), 4, 30);
+            InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, xo + PREVIEW_X, yo + PREVIEW_Y,
+                    xo + PREVIEW_X + PREVIEW_SIZE, yo + PREVIEW_Y + PREVIEW_SIZE, size, 0.25f, this.xMouse, this.yMouse, creature);
         }
     }
 
+    /**
+     * Title on the left, hunger right-aligned on the same row; the title is trimmed so a long name never runs into it.
+     * Taming, torpor and cargo live in the preview's tooltip: the horse panel has no free row for them.
+     */
     @Override protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        super.extractLabels(graphics, mouseX, mouseY);
         // extractLabels runs inside the pose already translated by leftPos/topPos, so these stay panel-relative.
+        Component hunger = Component.translatable("screen.arksurvivalreturns.hunger", this.menu.rawHunger());
+        int hungerX = this.imageWidth - 8 - this.font.width(hunger);
+        graphics.text(this.font, this.font.plainSubstrByWidth(this.title.getString(), hungerX - 12 - this.titleLabelX),
+                this.titleLabelX, this.titleLabelY, LABEL, false);
+        graphics.text(this.font, hunger, hungerX, this.titleLabelY, LABEL, false);
+        graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, LABEL, false);
+    }
+
+    @Override protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+        if (!isHovering(PREVIEW_X, PREVIEW_Y, PREVIEW_SIZE, PREVIEW_SIZE, mouseX, mouseY)) return;
         int progress = this.menu.rawProgress();
-        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.taming",
-                progress / 100 + "." + (progress % 100) / 10 + "%"), 8, 56, LABEL, false);
-        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.hunger",
-                this.menu.rawHunger()), 90, 6, LABEL, false);
-        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.torpor",
-                this.menu.rawTorpor(), this.menu.rawTorporMax()), 90, 74, LABEL, false);
-        graphics.text(this.font, Component.translatable("screen.arksurvivalreturns.cargo",
-                this.menu.rawCargoMass(), this.menu.rawCargoMax()), 8, 68, LABEL, false);
+        graphics.setTooltipForNextFrame(this.font, List.of(
+                Component.translatable("screen.arksurvivalreturns.taming", progress / 100 + "." + (progress % 100) / 10 + "%"),
+                Component.translatable("screen.arksurvivalreturns.torpor", this.menu.rawTorpor(), this.menu.rawTorporMax()),
+                Component.translatable("screen.arksurvivalreturns.cargo", this.menu.rawCargoMass(), this.menu.rawCargoMax())),
+                Optional.empty(), mouseX, mouseY);
     }
 
     /** Bulk transfer buttons; disabled while the creature is not resolvable on this side. */
     private void drawButton(GuiGraphicsExtractor graphics, int x, int y, String key) {
         boolean enabled = this.menu.creature() != null;
         boolean hover = enabled && inside(this.xMouse, this.yMouse, x, y);
-        graphics.fill(x - 4, y, x + BUTTON_WIDTH + 4, y + BUTTON_HEIGHT, hover ? 0xFF5A5A5A : 0xFF3A3A3A);
+        graphics.fill(x - 2, y, x + BUTTON_WIDTH + 2, y + BUTTON_HEIGHT, hover ? 0xFF5A5A5A : 0xFF3A3A3A);
         Component text = Component.translatable(key);
-        graphics.text(this.font, text, x + (BUTTON_WIDTH + 8 - this.font.width(text)) / 2, y + 3,
-                enabled ? 0xFFEDEDED : 0xFF777777, false);
+        // Longer translations ("Descarregar") shrink to the button instead of spilling over the frame.
+        int width = this.font.width(text);
+        float scale = Math.min(1f, (BUTTON_WIDTH + 2f) / Math.max(1, width));
+        graphics.pose().pushMatrix();
+        graphics.pose().translate(x + BUTTON_WIDTH / 2f - width * scale / 2f, y + BUTTON_HEIGHT / 2f - 4f * scale);
+        graphics.pose().scale(scale, scale);
+        graphics.text(this.font, text, 0, 0, enabled ? 0xFFEDEDED : 0xFF777777, false);
+        graphics.pose().popMatrix();
     }
 
     private static boolean inside(double mouseX, double mouseY, int x, int y) {
-        return mouseX >= x - 4 && mouseX < x + BUTTON_WIDTH + 4 && mouseY >= y && mouseY < y + BUTTON_HEIGHT;
+        return mouseX >= x - 2 && mouseX < x + BUTTON_WIDTH + 2 && mouseY >= y && mouseY < y + BUTTON_HEIGHT;
     }
 
     @Override public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
