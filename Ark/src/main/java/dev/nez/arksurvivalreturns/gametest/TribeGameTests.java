@@ -56,6 +56,10 @@ final class TribeGameTests {
         h.assertFalse(permissions.allows(owner.getUUID(), TribePermission.RIDE, 0),
                 "Absent entry ignored an empty default mask");
 
+        // Editing flags needs a party you own: a solo player, or a member editing themselves, is refused.
+        h.assertFalse(TribeService.ownsTeamOf(outsider, outsider.getUUID()), "A player without a party edited their own flags");
+        h.assertFalse(TribeService.ownsTeamOf(outsider, owner.getUUID()), "A stranger edited another player's flags");
+
         // Ownership itself is untouched by the permission layer.
         h.assertTrue(owner.getUUID().equals(TamingService.of(creature).owner()), "Tribe checks changed the owner");
         creature.discard();

@@ -11,7 +11,9 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
@@ -89,6 +91,79 @@ final class DownedGameTests {
         killed.hurtServer(world, world.damageSources().genericKill(), Float.MAX_VALUE);
         h.assertTrue(killed.isDeadOrDying(), "/kill on a downed player was absorbed");
         h.succeed();
+    }
+
+    /**
+     * Going down is decided on the damage that would really land. A raw hit that armor brings under the
+     * player's health, or one their absorption hearts soak, used to down them anyway.
+     */
+    static void mitigated(GameTestHelper h) {
+        ServerLevel world = h.getLevel();
+        var hit = world.damageSources().cactus();   // armor applies, no difficulty scaling
+
+        // Full diamond: a raw 22 against 20 health lands as about 9, so the player stays up.
+        FakePlayer armored = vulnerable(world, "ArkDownedArmored");
+        armored.getAttribute(Attributes.ARMOR).setBaseValue(20);
+        armored.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(8);
+        armored.setHealth(20f);
+        h.assertTrue(armored.hurtServer(world, hit, 22f), "The armored hit did not land");
+        h.assertFalse(armored.getData(RecoveryAttachments.DOWNED).downed(), "Damage armor absorbed still downed the player");
+        h.assertTrue(armored.getHealth() > 1f && armored.getHealth() < 20f, "The armored hit left " + armored.getHealth());
+
+        // Absorption soaks first: 7 against 5 health and 4 absorption is survivable.
+        FakePlayer soaked = vulnerable(world, "ArkDownedSoaked");
+        soaked.getAttribute(Attributes.MAX_ABSORPTION).setBaseValue(20);   // absorption is capped by this, 0 without the effect
+        soaked.setHealth(5f);
+        soaked.setAbsorptionAmount(4f);
+        soaked.hurtServer(world, hit, 7f);
+        var state = soaked.getData(RecoveryAttachments.DOWNED);
+        h.assertFalse(state.downed(), "A hit absorption covers downed the player");
+        h.assertTrue(Math.abs(soaked.getHealth() - 2f) < 0.01f && soaked.getAbsorptionAmount() == 0f,
+                "Absorption did not soak first: " + soaked.getHealth() + " health, " + soaked.getAbsorptionAmount() + " absorption");
+
+        // Past health and absorption the player goes down: absorption is spent and health ends at exactly 1.
+        soaked.invulnerableTime = 0;
+        soaked.setAbsorptionAmount(2f);
+        soaked.hurtServer(world, hit, 6f);
+        h.assertTrue(state.downed(), "A hit past health and absorption did not down the player");
+        h.assertTrue(soaked.getHealth() == 1f && soaked.getAbsorptionAmount() == 0f && !soaked.isDeadOrDying(),
+                "Going down left " + soaked.getHealth() + " health, " + soaked.getAbsorptionAmount() + " absorption");
+        state.clear();
+
+        if (ModList.get().isLoaded("curios")) AmberProbe.check(h, world);
+        h.succeed();
+    }
+
+    /** Kept apart so Curios classes load only when Curios is installed. */
+    private static final class AmberProbe {
+        /** A survivable hit keeps the amulet's charge; a fatal one cracks it instead of downing the player. */
+        static void check(GameTestHelper h, ServerLevel world) {
+            var hit = world.damageSources().cactus();
+            FakePlayer wearer = vulnerable(world, "ArkAmberWearer");
+            var curios = top.theillusivec4.curios.api.CuriosApi.getCuriosInventory(wearer).orElseThrow();
+            curios.reset();
+            var accessory = dev.nez.arksurvivalreturns.feature.accessory.Accessory.AMBER_AMULET;
+            curios.setEquippedCurio(accessory.slot.id(), 0,
+                    new ItemStack(dev.nez.arksurvivalreturns.feature.accessory.AccessoryContent.ITEMS.get(accessory).get()));
+            dev.nez.arksurvivalreturns.feature.accessory.Worn.invalidate(wearer);
+            h.assertTrue(dev.nez.arksurvivalreturns.feature.accessory.Worn.has(wearer, accessory), "The amulet is not worn");
+            var recharge = dev.nez.arksurvivalreturns.feature.accessory.AccessoryContent.RECHARGE.get();
+
+            wearer.getAttribute(Attributes.ARMOR).setBaseValue(20);
+            wearer.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(8);
+            wearer.setHealth(20f);
+            wearer.hurtServer(world, hit, 22f);
+            var amulet = dev.nez.arksurvivalreturns.feature.accessory.Worn.stack(wearer, accessory);
+            h.assertFalse(amulet.has(recharge), "A hit armor made survivable spent the amulet");
+
+            wearer.invulnerableTime = 0;
+            wearer.setHealth(4f);
+            wearer.hurtServer(world, hit, 30f);
+            h.assertTrue(amulet.has(recharge), "A fatal hit did not crack the amulet");
+            h.assertFalse(wearer.getData(RecoveryAttachments.DOWNED).downed(), "The amulet's save still downed the player");
+            h.assertTrue(wearer.getHealth() >= 8f, "The amulet did not restore 40% health: " + wearer.getHealth());
+            curios.reset();
+        }
     }
 
     /** Fake players refuse ordinary damage by default; the bleed-out checks need it to land. */

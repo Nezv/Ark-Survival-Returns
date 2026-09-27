@@ -37,6 +37,20 @@ final class CargoGameTests {
         return entity;
     }
 
+    /** Load and Unload only reach storage in the player's sight, so the hauler stands beside the tame. */
+    private static FakePlayer hauler(GameTestHelper h, String name) {
+        FakePlayer player = FakePlayerFactory.get(h.getLevel(), new GameProfile(UUID.randomUUID(), name));
+        player.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 3, 5))));
+        return player;
+    }
+
+    private static Container chest(GameTestHelper h, BlockPos relative, ItemStack content) {
+        h.setBlock(relative, Blocks.CHEST.defaultBlockState());
+        Container chest = (Container) h.getLevel().getBlockEntity(h.absolutePos(relative));
+        chest.setItem(0, content);
+        return chest;
+    }
+
     static void load(GameTestHelper h) {
         FakePlayer owner = FakePlayerFactory.get(h.getLevel(), new GameProfile(UUID.randomUUID(), "ArkCargoOwner"));
         CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(8, 3, 8));
@@ -86,7 +100,7 @@ final class CargoGameTests {
     }
 
     static void transfer(GameTestHelper h) {
-        FakePlayer owner = FakePlayerFactory.get(h.getLevel(), new GameProfile(UUID.randomUUID(), "ArkCargoHauler"));
+        FakePlayer owner = hauler(h, "ArkCargoHauler");
         CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(8, 3, 8));
         TamingService.of(trike).setOwner(owner.getUUID());
         trike.applyTameState();
@@ -126,6 +140,41 @@ final class CargoGameTests {
         h.succeed();
     }
 
+    /**
+     * Fast Load reaches what the player could open by hand: a chest in sight and one seen past another
+     * chest, but not one behind a wall, which loads once the wall is gone.
+     */
+    static void reach(GameTestHelper h) {
+        FakePlayer owner = hauler(h, "ArkCargoReach");
+        CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(8, 3, 8));
+        TamingService.of(trike).setOwner(owner.getUUID());
+        trike.applyTameState();
+        trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
+        Container cargo = trike.tamingInventory();
+
+        chest(h, new BlockPos(10, 3, 8), new ItemStack(Items.RAW_IRON));
+        chest(h, new BlockPos(8, 3, 10), ItemStack.EMPTY);
+        chest(h, new BlockPos(8, 3, 11), new ItemStack(Items.GOLD_INGOT));
+        for (int z = 4; z <= 12; z++) {
+            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(11, y, z), Blocks.STONE.defaultBlockState());
+        }
+        chest(h, new BlockPos(12, 3, 8), new ItemStack(Items.DIAMOND));
+
+        int moved = CargoTransferService.load(owner, trike);
+        h.assertTrue(cargo.countItem(Items.RAW_IRON) == 1, "A chest in sight must load");
+        h.assertTrue(cargo.countItem(Items.GOLD_INGOT) == 1, "A chest seen past another chest must load");
+        h.assertTrue(cargo.countItem(Items.DIAMOND) == 0, "A chest behind a wall must not load");
+        h.assertTrue(moved == 2, "Fast Load moved " + moved + " instead of the two visible stacks");
+
+        for (int z = 4; z <= 12; z++) {
+            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(11, y, z), Blocks.AIR.defaultBlockState());
+        }
+        h.assertTrue(CargoTransferService.load(owner, trike) == 1, "Without the wall the far chest must load");
+        h.assertTrue(cargo.countItem(Items.DIAMOND) == 1, "The far chest's diamond must land in the hold");
+        trike.discard();
+        h.succeed();
+    }
+
     static void overloadFlight(GameTestHelper h) {
         Player rider = h.makeMockPlayer(GameType.SURVIVAL);
         CreatureEntity bird = create(h, Species.PTERANODON, new BlockPos(8, 3, 8));
@@ -137,15 +186,22 @@ final class CargoGameTests {
         bird.tamingInventory().setItem(1, new ItemStack(Items.STONE, 64));
         MassService.refreshCreature(bird);
         h.assertTrue(MassService.overloaded(bird), "128 units must overload a 100-capacity scout");
+        // The rider's client moves a ridden mount, so the overload must travel as synced entity data.
+        h.assertTrue(bird.overloaded(), "The overload flag must be set for the rider's client");
         h.assertTrue(rider.startRiding(bird), "The rider must mount");
 
         bird.setOnGround(true);
         bird.travel(new Vec3(0, 1, 0));
         h.assertTrue(bird.getDeltaMovement().y <= 0.001, "An overloaded bird must not take off");
+        h.assertFalse(bird.overloadWarningDue(), "The refused takeoff must have warned the rider");
 
         bird.setOnGround(false);
         bird.travel(new Vec3(0, 1, 0));
         h.assertTrue(bird.getDeltaMovement().y < 0.0, "An airborne overloaded bird must descend in control");
+
+        bird.tamingInventory().clearContent();
+        MassService.refreshCreature(bird);
+        h.assertFalse(bird.overloaded(), "Emptying the hold must clear the synced overload flag");
         bird.discard();
         h.succeed();
     }

@@ -105,10 +105,12 @@ public final class TribeCommands {
         return 1;
     }
 
-    /** A gamemaster may always edit; otherwise the actor must own the target's party. */
+    /**
+     * A gamemaster may always edit; otherwise the actor must own the target's party. Editing yourself is
+     * no exception: a restricted member could otherwise grant themselves every flag back.
+     */
     private static boolean authorized(CommandSourceStack source, ServerPlayer actor, ServerPlayer target) {
         if (Commands.LEVEL_GAMEMASTERS.check(source.permissions())) return true;
-        if (actor.getUUID().equals(target.getUUID())) return true;
         return TribeService.ownsTeamOf(actor, target.getUUID())
                 && TribeService.sameTribe(actor.getUUID(), target.getUUID());
     }

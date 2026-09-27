@@ -8,8 +8,10 @@ import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -19,33 +21,48 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * <p>Void, lava and {@code /kill} remain fatal, as do single hits above the overkill threshold; the
  * death drops items as usual. While downed, hits shorten the window and
  * movement and interactions are enforced by the shared unconscious-player handler.
+ *
+ * <p>Going down is decided on the damage that would really land: after shields, armor, enchantments and
+ * effects, against health plus absorption. A hit the player would survive never downs them.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class DownedHandler {
+    /** While downed, hits are absorbed into the rescue window instead of health. */
     @SubscribeEvent public static void incoming(LivingIncomingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!Config.DOWNED_ENABLED.get()) return;
-        var source = event.getSource();
         // /kill and the bleed-out always land, downed or not: absorbing them would call expire() again from
         // inside its own finishing blow and recurse until the stack overflows.
+        if (event.getSource().is(DamageTypes.GENERIC_KILL)) return;
+        DownedState state = player.getData(RecoveryAttachments.DOWNED);
+        if (!state.downed()) return;
+        event.setCanceled(true);
+        state.bleed(event.getAmount(), Config.DOWNED_BLEED_FACTOR.get());
+        DownedSync.send(player, state);
+        // A drained window ends on the next player tick, never inside this damage event.
+    }
+
+    /**
+     * Going down, decided on the mitigated damage (armor and effects applied; absorption comes after this
+     * event). Runs last, after the Amber Amulet and every other damage modifier.
+     */
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void mitigated(LivingDamageEvent.Pre event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (!Config.DOWNED_ENABLED.get()) return;
+        var source = event.getSource();
         if (source.is(DamageTypes.GENERIC_KILL)) return;
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
-        float damage = event.getAmount();
-        if (state.downed()) {
-            event.setCanceled(true);
-            state.bleed(damage, Config.DOWNED_BLEED_FACTOR.get());
-            DownedSync.send(player, state);
-            // A drained window ends on the next player tick, never inside this damage event.
-            return;
-        }
-        if (damage < player.getHealth()) return;
+        float damage = event.getNewDamage();
+        float pool = player.getHealth() + player.getAbsorptionAmount();
+        if (state.downed() || damage < pool) return;
         boolean lethal = DownedPolicy.lethal(damage, player.getMaxHealth(), Config.DOWNED_OVERKILL.get(),
                 Config.DOWNED_VOID_LETHAL.get() && source.is(DamageTypes.FELL_OUT_OF_WORLD),
                 Config.DOWNED_LAVA_LETHAL.get() && (source.is(DamageTypes.LAVA)
                         || source.is(DamageTypes.IN_FIRE) || source.is(DamageTypes.ON_FIRE)));
         if (lethal) return;
-        event.setCanceled(true);
-        player.setHealth(1.0f);
+        // Absorption soaks first and health ends at exactly 1; the hit itself still lands (knockback, sound).
+        event.setNewDamage(Math.max(0.0f, pool - 1.0f));
         state.start(Config.DOWNED_WINDOW.get(), player.position());
         DownedSync.send(player, state);
         notifyDown(player, state);

@@ -74,10 +74,12 @@ public final class TribeService {
         return FTBTeamsAPI.api().getManager().getTeamForPlayer(player);
     }
 
-    /** True when the actor owns the target's current team (parties included). */
+    /**
+     * True when the actor owns the party the target belongs to, the target being the owner included. A
+     * player's own solo team does not count, so nobody edits their own flags without owning a party.
+     */
     public static boolean ownsTeamOf(Player actor, UUID target) {
-        if (actor.getUUID().equals(target)) return true;
-        return team(target).map(team -> team.getOwner().equals(actor.getUUID())
+        return team(target).filter(Team::isPartyTeam).map(team -> team.getOwner().equals(actor.getUUID())
                 && team.getMembers().contains(actor.getUUID())).orElse(false);
     }
 

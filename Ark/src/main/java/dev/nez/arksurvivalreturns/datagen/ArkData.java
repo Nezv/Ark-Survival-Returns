@@ -975,7 +975,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "cargo_reach", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);
@@ -1005,7 +1005,7 @@ public final class ArkData implements DataProvider {
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
                 "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn",
-                "downed_revive", "downed_bleed_out"))
+                "downed_revive", "downed_bleed_out", "downed_mitigated"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

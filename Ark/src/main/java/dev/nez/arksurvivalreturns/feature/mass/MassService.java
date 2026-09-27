@@ -44,7 +44,6 @@ public final class MassService {
     private static final Map<UUID, Long> SENT_TICK = new HashMap<>();
     private static final Set<UUID> DIRTY = new HashSet<>();
     private static final Set<UUID> DIRTY_CREATURES = new HashSet<>();
-    private static final Map<UUID, Long> WARN_TICKS = new HashMap<>();
     private static int rulesHash;
 
     public static void markDirty(Player player) {
@@ -68,18 +67,23 @@ public final class MassService {
         return CargoProfiles.capacity(creature.species(), creature.harnessTier());
     }
 
-    /** True when the creature's tracked load is at or past its overload line. */
+    /**
+     * True when the creature's load is at or past its overload line. The flag is synced entity data, so
+     * the rider's client, which moves a ridden mount, sees the same answer as the server.
+     */
     public static boolean overloaded(CreatureEntity creature) {
-        return MassRules.enabled() && MassRules.overloaded(creatureLoad(creature).ratio());
+        return creature.overloaded() && (creature.level().isClientSide() || MassRules.enabled());
     }
 
-    /** Rate-limited rider warning for overload behavior; at most one every three seconds. */
+    /**
+     * Rate-limited rider warning for overload behavior; at most one every three seconds. Ridden mounts move
+     * on the rider's client, so this normally runs there and shows the local player's action bar.
+     */
     public static void warn(CreatureEntity mount, String key) {
-        if (!(mount.getFirstPassenger() instanceof ServerPlayer rider)) return;
-        long last = WARN_TICKS.getOrDefault(mount.getUUID(), Long.MIN_VALUE);
-        if (mount.tickCount - last < 60) return;
-        WARN_TICKS.put(mount.getUUID(), (long) mount.tickCount);
-        rider.sendSystemMessage(Component.translatable(key), true);
+        if (!(mount.getFirstPassenger() instanceof Player rider)) return;
+        if (mount.level().isClientSide() != rider.isLocalPlayer()) return;
+        if (!mount.overloadWarningDue()) return;
+        rider.sendOverlayMessage(Component.translatable(key));
     }
 
     /** Drops all tracked state and the movement modifier, e.g. on logout or with mass disabled. */
@@ -124,6 +128,7 @@ public final class MassService {
             // While mounted the rider's carried load counts on the mount, so the on-foot penalty is off.
             Load mountLoad = mountLoad(mount, player);
             CREATURE_LOADS.put(mount.getUUID(), mountLoad);
+            mount.setOverloaded(MassRules.overloaded(mountLoad.ratio()));
             applyModifier(mount, MassRules.speedFactor(mountLoad.ratio()));
             removeModifier(player);
             Load previous = LOADS.put(id, mountLoad);
@@ -149,11 +154,13 @@ public final class MassService {
         UUID id = creature.getUUID();
         if (!MassRules.enabled()) {
             CREATURE_LOADS.remove(id);
+            creature.setOverloaded(false);
             removeModifier(creature);
             return;
         }
         Load load = mountLoad(creature, creature.getFirstPassenger() instanceof Player rider ? rider : null);
         CREATURE_LOADS.put(id, load);
+        creature.setOverloaded(MassRules.overloaded(load.ratio()));
         applyModifier(creature, MassRules.speedFactor(load.ratio()));
     }
 

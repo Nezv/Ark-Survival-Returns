@@ -44,6 +44,7 @@ public final class MassEvents {
     /** Mount and dismount both move the rider's load between the player and the animal. */
     @SubscribeEvent public static void mounted(EntityMountEvent event) {
         if (event.getEntity() instanceof CreatureEntity creature) MassService.markDirty(creature);
+        if (event.getEntityBeingMounted() instanceof CreatureEntity mount) MassService.markDirty(mount);
         if (event.getEntityMounting() instanceof ServerPlayer player) MassService.markDirty(player);
     }
     @SubscribeEvent public static void serverTick(ServerTickEvent.Post event) { MassService.tick(event.getServer()); }

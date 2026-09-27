@@ -201,20 +201,24 @@ public final class AccessoryEffects {
 
     // ------------------------------------------------------------------------------ damage
 
-    /** Amber Amulet runs before the downed state: a fatal blow cracks the amber instead. */
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    static void preserve(LivingIncomingDamageEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || event.getAmount() < player.getHealth()) return;
+    /**
+     * Amber Amulet runs before the downed state: a fatal blow cracks the amber instead. Fatal means the
+     * damage left after armor and effects reaches health plus absorption, so survivable hits keep the charge.
+     */
+    @SubscribeEvent(priority = EventPriority.LOW)
+    static void preserve(LivingDamageEvent.Pre event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (event.getNewDamage() < player.getHealth() + player.getAbsorptionAmount()) return;
         if (event.getSource().is(DamageTypes.GENERIC_KILL) || event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) return;
         if (!Worn.has(player, Accessory.AMBER_AMULET)) return;
         ItemStack amulet = Worn.stack(player, Accessory.AMBER_AMULET);
         long now = player.level().getGameTime();
         if (amulet.isEmpty() || amulet.getOrDefault(AccessoryContent.RECHARGE.get(), 0L) > now) return;
-        event.setCanceled(true);
+        event.setNewDamage(0.0f);
         amulet.set(AccessoryContent.RECHARGE.get(), now + AMBER_RECHARGE);
         player.setHealth(Math.max(1.0f, player.getMaxHealth() * 0.4f));
         player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 100, 1));
-        player.invulnerableTime = 20;
+        event.getContainer().setPostAttackInvulnerabilityTicks(20);
         player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.2f, 0.7f);
         if (player.level() instanceof ServerLevel level) {
             level.sendParticles(ParticleTypes.WAX_OFF, player.getX(), player.getY(1.0), player.getZ(), 24, 0.4, 0.6, 0.4, 0.1);

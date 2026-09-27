@@ -48,6 +48,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Integer> BEHAVIOR = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTION = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> NIGHT_ACTIVE = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> OVERLOADED = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Species species;
     private final CreatureInventory tamingInventory = new CreatureInventory(this);
@@ -364,6 +365,17 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public void setBehavior(BehaviorState state) { entityData.set(BEHAVIOR, state.ordinal()); }
     public void setNightActive(boolean value) { if (!species.flyer()) entityData.set(NIGHT_ACTIVE, value); }
     public boolean nightActive() { return entityData.get(NIGHT_ACTIVE); }
+    /** Set by the server's mass pass and synced: a ridden mount moves on its rider's client. */
+    public void setOverloaded(boolean value) { entityData.set(OVERLOADED, value); }
+    public boolean overloaded() { return entityData.get(OVERLOADED); }
+    private static final int OVERLOAD_WARN_TICKS = 60;
+    private int overloadWarnedAt = -OVERLOAD_WARN_TICKS;
+    /** True at most once every three seconds, on whichever side is moving the mount. */
+    public boolean overloadWarningDue() {
+        if (tickCount - overloadWarnedAt < OVERLOAD_WARN_TICKS) return false;
+        overloadWarnedAt = tickCount;
+        return true;
+    }
     public float nightEyeGlow(float partialTick) { return previousEyeGlow + (eyeGlow - previousEyeGlow) * partialTick; }
     /** The animation-timed step inside the current behaviour state; synchronized for the clip choice. */
     public BehaviorAction action() {
@@ -467,6 +479,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         builder.define(BEHAVIOR, BehaviorState.ROAM.ordinal());
         builder.define(ACTION, BehaviorAction.IDLE.ordinal());
         builder.define(NIGHT_ACTIVE, false);
+        builder.define(OVERLOADED, false);
     }
     /**
      * The body follows the facing at the creature's own turn rate, moving or not, on both sides. Vanilla

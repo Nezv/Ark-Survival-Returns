@@ -63,6 +63,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
         FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
         FUNCTIONS.register("downed_bleed_out", () -> DownedGameTests::bleedOut);
+        FUNCTIONS.register("downed_mitigated", () -> DownedGameTests::mitigated);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("primitive_rocks", () -> PrimitiveGameTests::rocks);
         FUNCTIONS.register("primitive_fire", () -> PrimitiveGameTests::fire);
@@ -82,6 +83,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
         FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);
+        FUNCTIONS.register("cargo_reach", () -> CargoGameTests::reach);
         FUNCTIONS.register("overload_flight", () -> CargoGameTests::overloadFlight);
         FUNCTIONS.register("overload_swim", () -> CargoGameTests::overloadSwim);
         FUNCTIONS.register("work_harvest", () -> WorkGameTests::harvest);
@@ -205,6 +207,24 @@ public final class ArkGameTests {
         // The original anchor must stay easy and must not follow that later spawn change.
         var spawn = new BlockPos(profile.originX(), 64, profile.originZ());
         h.assertTrue(profile.levelAt(spawn) == 1, "Initial spawn is not easy");
+        // A new world loads its overworld before it picks a spawn: nothing may lock or publish a layout
+        // until then (it used to centre every band on 0,0), and the first read afterwards locks the spawn.
+        var levelData = world.getServer().getWorldData().overworldData();
+        world.getDataStorage().set(ProgressionData.TYPE, new ProgressionData(0, 0, 256, false));
+        levelData.setInitialized(false);
+        try {
+            h.assertFalse(ProgressionData.get(world).initialized(), "The layout locked before the world had a spawn");
+            h.assertTrue(ProgressionData.snapshot() == null, "A layout was published before the world had a spawn");
+            h.assertTrue(ProgressionData.dangerAt(world, spawn) == -1, "Danger did not fail closed before the spawn existed");
+        } finally {
+            levelData.setInitialized(true);
+        }
+        var locked = ProgressionData.get(world);
+        var respawn = levelData.getRespawnData().pos();
+        h.assertTrue(locked.initialized() && locked.originX() == respawn.getX() && locked.originZ() == respawn.getZ(),
+                "The first read after the spawn did not lock it");
+        world.getDataStorage().set(ProgressionData.TYPE, profile);
+        ProgressionData.get(world);
         var serialized = ProgressionData.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, profile).getOrThrow();
         var restored = ProgressionData.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, serialized).getOrThrow();
         var owner = java.util.UUID.randomUUID();

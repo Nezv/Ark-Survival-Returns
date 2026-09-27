@@ -66,6 +66,8 @@ final class IntegrationGameTests {
             transaction.commit();
         }
         var owner = FakePlayerFactory.get(level, new GameProfile(UUID.randomUUID(), "ArkTomsProbe"));
+        // Load and Unload only reach storage in the player's sight.
+        owner.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 3, 5))));
         CreatureEntity trike = ModContent.CREATURES.get(Species.TRICERATOPS).get().create(level, EntitySpawnReason.COMMAND);
         trike.setNoAi(true);
         trike.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 3, 8))));

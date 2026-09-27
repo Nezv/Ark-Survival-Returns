@@ -12,7 +12,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -26,6 +30,10 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
  * Only already-loaded chunks are read, the position and container scans are capped, and no chunk
  * is ever requested. Fast Load stops before the automation ceiling; Fast Unload always proceeds,
  * because unloading can never be an exploit and manual slot moves remain the player's business.
+ *
+ * <p>Only storage the player could open by hand from where they stand takes part: outside spawn
+ * protection and the world border, not locked against their held key, and in sight of their eyes, so a
+ * tame parked against someone else's wall cannot empty the chests behind it.
  */
 public final class CargoTransferService {
     private static final int MAX_POSITIONS = 2048;
@@ -33,18 +41,18 @@ public final class CargoTransferService {
     private static final int VERTICAL_REACH = 4;
 
     public static int unload(ServerPlayer player, CreatureEntity creature) {
-        return transfer(creature, false);
+        return transfer(player, creature, false);
     }
 
     public static int load(ServerPlayer player, CreatureEntity creature) {
-        return transfer(creature, true);
+        return transfer(player, creature, true);
     }
 
-    private static int transfer(CreatureEntity creature, boolean load) {
-        if (!(creature.level() instanceof ServerLevel level)) return 0;
+    private static int transfer(ServerPlayer player, CreatureEntity creature, boolean load) {
+        if (!(creature.level() instanceof ServerLevel level) || player.level() != level) return 0;
         List<Container> containers = new ArrayList<>();
         List<ResourceHandler<ItemResource>> handlers = new ArrayList<>();
-        nearbyStorage(level, creature.blockPosition(), Config.CARGO_TRANSFER_RADIUS.get(), containers, handlers);
+        nearbyStorage(level, player, creature.blockPosition(), Config.CARGO_TRANSFER_RADIUS.get(), containers, handlers);
         if (containers.isEmpty() && handlers.isEmpty()) return 0;
         Container cargo = creature.tamingInventory();
         double ceiling = MassRules.enabled()
@@ -55,7 +63,7 @@ public final class CargoTransferService {
             for (Container container : containers) {
                 for (int slot = 0; slot < container.getContainerSize(); slot++) {
                     ItemStack stack = container.getItem(slot);
-                    if (stack.isEmpty()) continue;
+                    if (stack.isEmpty() || !container.canTakeItem(cargo, slot, stack)) continue;
                     if (cargoMass(creature, cargo) + MassCalculator.massOf(stack) > ceiling) continue;
                     moved += merge(container, slot, cargo);
                 }
@@ -172,7 +180,7 @@ public final class CargoTransferService {
     }
 
     /** Block storage within the radius, reading loaded chunks only: containers first, capabilities otherwise. */
-    private static void nearbyStorage(ServerLevel level, BlockPos center, int radius,
+    private static void nearbyStorage(ServerLevel level, ServerPlayer player, BlockPos center, int radius,
             List<Container> containers, List<ResourceHandler<ItemResource>> handlers) {
         int minY = Math.max(level.getMinY(), center.getY() - VERTICAL_REACH);
         int maxY = Math.min(level.getMaxY() - 1, center.getY() + VERTICAL_REACH);
@@ -195,10 +203,11 @@ public final class CargoTransferService {
                             BlockEntity entity = level.getBlockEntity(pos);
                             if (entity == null) continue;
                             if (entity instanceof Container container) {
+                                if (!usable(level, player, pos, entity) || !inSight(level, player, pos)) continue;
                                 containers.add(container);
                             } else {
                                 ResourceHandler<ItemResource> handler = level.getCapability(Capabilities.Item.BLOCK, pos, null);
-                                if (handler == null) continue;
+                                if (handler == null || !usable(level, player, pos, entity) || !inSight(level, player, pos)) continue;
                                 handlers.add(handler);
                             }
                             if (containers.size() + handlers.size() >= MAX_CONTAINERS) return;
@@ -207,6 +216,34 @@ public final class CargoTransferService {
                 }
             }
         }
+    }
+
+    /** Spawn protection, the world border and a container lock all refuse the player's hand, so they refuse the tame too. */
+    private static boolean usable(ServerLevel level, ServerPlayer player, BlockPos pos, BlockEntity entity) {
+        if (!level.mayInteract(player, pos)) return false;
+        return !(entity instanceof BaseContainerBlockEntity lockable) || lockable.canOpen(player);
+    }
+
+    /**
+     * A sight line from the player's eyes to the block's centre. Usable storage along the way does not
+     * block it, so rows of chests and the far half of a double chest stay reachable; walls, doors, glass
+     * and locked storage do. An unloaded block on the way blocks it rather than being loaded.
+     */
+    private static boolean inSight(ServerLevel level, ServerPlayer player, BlockPos target) {
+        Vec3 from = player.getEyePosition();
+        Vec3 to = Vec3.atCenterOf(target);
+        CollisionContext shapes = CollisionContext.of(player);
+        return BlockGetter.traverseBlocks(from, to, target, (goal, cursor) -> {
+            if (cursor.equals(goal)) return Boolean.TRUE;
+            BlockPos pos = cursor.immutable();
+            if (!level.isLoaded(pos)) return Boolean.FALSE;
+            var shape = level.getBlockState(pos).getCollisionShape(level, pos, shapes);
+            if (shape.isEmpty() || shape.clip(from, to, pos) == null) return null;
+            BlockEntity passed = level.getBlockEntity(pos);
+            boolean storage = passed instanceof Container
+                    || passed != null && level.getCapability(Capabilities.Item.BLOCK, pos, null) != null;
+            return storage && usable(level, player, pos, passed) ? null : Boolean.FALSE;
+        }, goal -> Boolean.TRUE);
     }
 
     private CargoTransferService() {}
