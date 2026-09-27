@@ -33,8 +33,10 @@ import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
  * blocks now make these, and stray vanilla items convert on pickup ({@link StationEvents}).
  */
 public final class StationContent {
-    /** Results only the Medicine Bench makes: the advanced bandages and the mixtures. */
+    /** Results only the Medicine Bench makes. Empty until the Iron Age medicine is designed. */
     public static final TagKey<Item> MEDICINE = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("medicine"));
+    /** Results only the Mortar & Pestle makes: Narcotics and the herbal remedies. */
+    public static final TagKey<Item> MORTAR = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("mortar"));
 
     public static final DeferredBlock<StationBlock> WORKING_STATION = ModContent.BLOCKS.registerBlock("working_station",
             p -> new StationBlock(StationBlock.Kind.WORKING, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
@@ -43,6 +45,10 @@ public final class StationContent {
     public static final DeferredBlock<StationBlock> MEDICINE_BENCH = ModContent.BLOCKS.registerBlock("medicine_bench",
             p -> new StationBlock(StationBlock.Kind.MEDICINE, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
     public static final DeferredItem<BlockItem> MEDICINE_BENCH_ITEM = ModContent.ITEMS.registerSimpleBlockItem(MEDICINE_BENCH);
+
+    public static final DeferredBlock<StationBlock> MORTAR_AND_PESTLE = ModContent.BLOCKS.registerBlock("mortar_and_pestle",
+            p -> new StationBlock(StationBlock.Kind.MORTAR, p), p -> p.strength(1.5f).noOcclusion().sound(SoundType.STONE));
+    public static final DeferredItem<BlockItem> MORTAR_AND_PESTLE_ITEM = ModContent.ITEMS.registerSimpleBlockItem(MORTAR_AND_PESTLE);
 
     public static final DeferredBlock<StationBlock> SMITHING_TABLE = ModContent.BLOCKS.registerBlock("smithing_table",
             p -> new StationBlock(StationBlock.Kind.SMITHING, p), p -> p.strength(3.5f).noOcclusion().sound(SoundType.STONE)
@@ -76,6 +82,8 @@ public final class StationContent {
 
     public static boolean medicine(ItemStack stack) { return stack.is(MEDICINE); }
 
+    public static boolean mortar(ItemStack stack) { return stack.is(MORTAR); }
+
     public static void register(IEventBus bus) {
         bus.addListener(StationContent::capabilities);
     }
@@ -93,6 +101,7 @@ public final class StationContent {
 
     public static void displayItems(CreativeModeTab.Output output) {
         output.accept(WORKING_STATION_ITEM.get());
+        output.accept(MORTAR_AND_PESTLE_ITEM.get());
         output.accept(STORAGE_CRATE_ITEM.get());
         output.accept(SMITHING_TABLE_ITEM.get());
         output.accept(MEDICINE_BENCH_ITEM.get());

@@ -1,8 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "arksurvivalreturns:herbal_bandage",
-    "arksurvivalreturns:healing_mixture",
-    "arksurvivalreturns:concentrated_sedative"
-  ]
+  "values": []
 }

@@ -134,7 +134,7 @@
     {
       "id": "rock",
       "title": "Tha rock",
-      "task": "Bind a rock to a stick: craft a Stone Hatchet.",
+      "task": "Bind a rock to a stick: craft a Rock Axe.",
       "age": "prehistoric",
       "lane": 0,
       "column": 1,
@@ -161,7 +161,7 @@
     {
       "id": "berries",
       "title": "Berries!",
-      "task": "Collect all four berries.",
+      "task": "Collect all four berries: Blackberry, Redberry, Yellowberry and Blueberry.",
       "age": "prehistoric",
       "lane": 0,
       "column": 2,
@@ -192,7 +192,7 @@
     {
       "id": "london",
       "title": "London",
-      "task": "Craft a Stone Knife.",
+      "task": "Craft your first equipment: a rock tool or the flint knife.",
       "age": "prehistoric",
       "lane": 0,
       "column": 3,
@@ -212,7 +212,11 @@
       "trigger": {
         "type": "craft",
         "items": [
-          "arksurvivalreturns:stone_knife"
+          "arksurvivalreturns:rock_pickaxe",
+          "arksurvivalreturns:rock_sword",
+          "arksurvivalreturns:rock_shovel",
+          "arksurvivalreturns:rock_hoe",
+          "arksurvivalreturns:flint_knife"
         ]
       }
     },
@@ -394,8 +398,7 @@
       "trigger": {
         "type": "place_block",
         "blocks": [
-          "arksurvivalreturns:stone_fire",
-          "minecraft:campfire"
+          "arksurvivalreturns:stone_fire"
         ],
         "lit": true
       }
@@ -568,7 +571,7 @@
     {
       "id": "narcotics",
       "title": "Narcotraffic",
-      "task": "Produce narcotics: craft a concentrated sedative.",
+      "task": "Produce narcotics: grind Blackberries in the Mortar & Pestle.",
       "age": "prehistoric",
       "lane": 1,
       "column": 5,
@@ -591,7 +594,7 @@
       "trigger": {
         "type": "craft",
         "items": [
-          "arksurvivalreturns:concentrated_sedative"
+          "arksurvivalreturns:narcotics"
         ]
       }
     },

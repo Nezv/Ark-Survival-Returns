@@ -179,9 +179,9 @@ final class PrimitiveGameTests {
         trigger.observe(new TechEvent(TechEventKind.CONSUME, null, best, null, null, 0L), progress, "dried:");
         h.assertTrue(trigger.satisfied(progress, "dried:", null), "Eating Dried Meat III must complete its node");
 
-        var craft = new TechTrigger.Craft(List.of(Identifier.parse("arksurvivalreturns:stone_knife")), 1);
+        var craft = new TechTrigger.Craft(List.of(Identifier.parse("arksurvivalreturns:rock_sword")), 1);
         TechTribeProgress crafted = new TechTribeProgress();
-        ItemStack knife = new ItemStack(PrimitiveContent.STONE_KNIFE.get());
+        ItemStack knife = new ItemStack(PrimitiveContent.ROCK_SWORD.get());
         craft.observe(new TechEvent(TechEventKind.OBTAIN, null, knife, null, null, 0L), crafted, "london:");
         h.assertFalse(craft.satisfied(crafted, "london:", null), "Picking up a knife is not crafting one");
         craft.observe(new TechEvent(TechEventKind.CRAFT, null, knife, null, null, 0L), crafted, "london:");
@@ -194,11 +194,11 @@ final class PrimitiveGameTests {
         ServerLevel level = h.getLevel();
         var log = Blocks.OAK_LOG.defaultBlockState();
         h.assertTrue(PrimitiveEvents.needsAxe(log, ItemStack.EMPTY), "Bare hands must not harvest logs");
-        h.assertFalse(PrimitiveEvents.needsAxe(log, new ItemStack(PrimitiveContent.STONE_HATCHET.get())), "The stone hatchet must harvest logs");
+        h.assertFalse(PrimitiveEvents.needsAxe(log, new ItemStack(PrimitiveContent.STONE_HATCHET.get())), "The rock axe must harvest logs");
         var recipes = level.getServer().getRecipeManager();
         h.assertTrue(recipes.byKey(recipe("minecraft:furnace")).isEmpty(), "The furnace recipe must be removed");
         h.assertTrue(recipes.byKey(recipe("minecraft:wooden_pickaxe")).isEmpty(), "Wooden tools must be removed");
-        for (String id : List.of("cobblestone_from_rocks", "stone_knife", "stone_hatchet", "fire_starter", "stone_fire",
+        for (String id : List.of("rock_pickaxe", "rock_sword", "rock_shovel", "rock_hoe", "stone_hatchet", "fire_starter", "stone_fire",
                 "primitive_forge", "lead_from_fiber", "cooked_carnivore_meat_from_campfire_cooking")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
         }
@@ -216,6 +216,80 @@ final class PrimitiveGameTests {
             h.assertTrue(meat, "A parasaur carcass must drop herbivore meat");
             h.succeed();
         });
+    }
+
+    /**
+     * The answered recipe-gate decisions (F12): the rock set with Fiber in any slot, mining like stone; the
+     * bedroll on the 3x3 grid; the retired vanilla recipes; Narcotics from the Mortar & Pestle into tranquilizer
+     * arrows; the Bronze Age items left unmade; the Blueberry as food; Tom's Storage without ender pearls.
+     */
+    static void decisions(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        var recipes = level.getServer().getRecipeManager();
+        ItemStack rock = new ItemStack(PrimitiveContent.ROCK.get()), stick = new ItemStack(Items.STICK),
+                fiber = new ItemStack(ModContent.PLANT_FIBER.get()), none = ItemStack.EMPTY;
+        // Pickaxe: the fiber fits any free cell, and the grid position does not matter.
+        for (int free : new int[]{3, 5, 6, 8}) {
+            List<ItemStack> grid = new java.util.ArrayList<>(List.of(rock, rock, rock, none, stick, none, none, stick, none));
+            grid.set(free, fiber);
+            var input = CraftingInput.of(3, 3, grid);
+            var found = recipes.getRecipeFor(RecipeType.CRAFTING, input, level);
+            h.assertTrue(found.isPresent() && found.get().value().assemble(input).is(PrimitiveContent.ROCK_PICKAXE.get()),
+                    "The rock pickaxe must take its fiber in cell " + free);
+        }
+        var bare = CraftingInput.of(3, 3, List.of(rock, rock, rock, none, stick, none, none, stick, none));
+        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, bare, level).isEmpty(), "A rock pickaxe needs its fiber");
+        var twice = CraftingInput.of(3, 3, List.of(rock, rock, rock, fiber, stick, fiber, none, stick, none));
+        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, twice, level).isEmpty(), "Only one fiber binds a tool");
+        var sword = CraftingInput.of(2, 3, List.of(rock, none, rock, fiber, stick, none));
+        var swordRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, sword, level);
+        h.assertTrue(swordRecipe.isPresent() && swordRecipe.get().value().assemble(sword).is(PrimitiveContent.ROCK_SWORD.get()),
+                "A sword column with the fiber beside it must make the rock sword");
+        // Wooden stats, stone tier: iron ore drops for the rock pickaxe, diamond ore does not.
+        ItemStack pickaxe = new ItemStack(PrimitiveContent.ROCK_PICKAXE.get());
+        h.assertTrue(pickaxe.isCorrectToolForDrops(Blocks.IRON_ORE.defaultBlockState()), "The rock pickaxe must mine iron ore");
+        h.assertFalse(pickaxe.isCorrectToolForDrops(Blocks.DIAMOND_ORE.defaultBlockState()), "The rock pickaxe must stop at stone tier");
+        h.assertTrue(pickaxe.getMaxDamage() == 59, "Rock tools keep wooden durability");
+        // Bedroll: nine fiber, so only the Working Station's 3x3 grid makes it.
+        var bedroll = CraftingInput.of(3, 3, java.util.Collections.nCopies(9, fiber));
+        var bed = recipes.getRecipeFor(RecipeType.CRAFTING, bedroll, level);
+        h.assertTrue(bed.isPresent() && bed.get().value().assemble(bedroll).is(ModContent.BEDROLL_ITEM.get()), "Nine fiber must make the bedroll");
+        // Retired vanilla recipes and the Bronze Age items.
+        for (String id : List.of("minecraft:stone_pickaxe", "minecraft:stone_sword", "minecraft:stone_spear", "minecraft:wooden_spear",
+                "minecraft:campfire", "arksurvivalreturns:cobblestone_from_rocks", "arksurvivalreturns:stone_knife",
+                "arksurvivalreturns:concentrated_sedative", "arksurvivalreturns:improved_tranquilizer_arrow")) {
+            h.assertTrue(recipes.byKey(recipe(id)).isEmpty(), "Recipe should be gone: " + id);
+        }
+        // Blackberries grind into Narcotics at the Mortar & Pestle only; Narcotics tip the tranquilizer arrows.
+        ItemStack berry = new ItemStack(ModContent.BERRIES.get("narcoberry").get());
+        var grind = CraftingInput.of(2, 2, List.of(berry, berry, berry, berry));
+        var narcotics = recipes.getRecipeFor(RecipeType.CRAFTING, grind, level);
+        h.assertTrue(narcotics.isPresent() && narcotics.get().value().assemble(grind).is(ModContent.NARCOTICS.get()),
+                "Four blackberries must grind into narcotics");
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.StationContent.mortar(new ItemStack(ModContent.NARCOTICS.get())),
+                "Only the Mortar & Pestle may make narcotics");
+        ItemStack arrow = new ItemStack(Items.ARROW);
+        var tranq = CraftingInput.of(3, 2, List.of(arrow, arrow, arrow, arrow, new ItemStack(ModContent.NARCOTICS.get()), new ItemStack(Items.BONE)));
+        var tranqRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, tranq, level);
+        h.assertTrue(tranqRecipe.isPresent() && tranqRecipe.get().value().assemble(tranq).is(ModContent.TRANQUILIZER_ARROW_ITEM.get()),
+                "Narcotics must tip tranquilizer arrows");
+        // The Blueberry is food: one hunger point.
+        var food = new ItemStack(ModContent.BERRIES.get("azulberry").get()).get(DataComponents.FOOD);
+        h.assertTrue(food != null && food.nutrition() == 1, "The blueberry must satiate one hunger point");
+        // Tom's Storage: no ender pearls, comparators or glowstone left in its recipes.
+        if (net.neoforged.fml.ModList.get().isLoaded("toms_storage")) {
+            for (String id : List.of("inventory_connector", "storage_terminal", "wireless_terminal", "inventory_interface")) {
+                var holder = recipes.byKey(recipe("toms_storage:" + id));
+                h.assertTrue(holder.isPresent(), "Tom's Storage recipe missing: " + id);
+                var shaped = (net.minecraft.world.item.crafting.ShapedRecipe) holder.get().value();
+                for (var cell : shaped.getIngredients()) {
+                    h.assertFalse(cell.isPresent() && (cell.get().test(new ItemStack(Items.ENDER_PEARL))
+                            || cell.get().test(new ItemStack(Items.COMPARATOR)) || cell.get().test(new ItemStack(Items.GLOWSTONE_DUST))),
+                            "Tom's Storage " + id + " still needs an ender pearl, comparator or glowstone");
+                }
+            }
+        }
+        h.succeed();
     }
 
     /**

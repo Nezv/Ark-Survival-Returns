@@ -473,10 +473,11 @@ def journal_section():
 
 
 ITEM_GROUPS = [
-    ('Prehistoric', ['rock', 'sharp_rock', 'stone_knife', 'stone_hatchet', 'fire_starter', 'plant_fiber', 'flint_knife']),
+    ('Prehistoric', ['rock', 'sharp_rock', 'stone_hatchet', 'rock_pickaxe', 'rock_sword', 'rock_shovel', 'rock_hoe',
+                     'fire_starter', 'plant_fiber', 'flint_knife']),
     ('Keratin tier', ['keratin', 'keratin_spear', 'keratin_helmet', 'keratin_chestplate', 'keratin_leggings', 'keratin_boots']),
     ('Food and meat', ['dried_meat', 'dried_ration', 'hearty_stew', 'trail_mix', 'tintoberry', 'amarberry', 'azulberry', 'narcoberry']),
-    ('Medicine', ['fiber_bandage', 'herbal_bandage', 'healing_mixture', 'concentrated_sedative']),
+    ('Mortar & Pestle', ['narcotics', 'herbal_bandage', 'healing_mixture', 'fiber_bandage']),
     ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow', 'companion_whistle',
                           'field_journal', 'pack_harness', 'reinforced_harness']),
     ('Guardian', ['allosaur_heart', 'workshop_schematic', 'guardian_trophy']),

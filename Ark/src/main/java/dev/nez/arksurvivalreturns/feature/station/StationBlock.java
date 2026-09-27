@@ -26,15 +26,16 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * A workbench-style station: the Working Station (the crafting table), the Medicine Bench and the Ark
- * smithing table. Each opens a vanilla menu bound to itself, so the recipe book, JEI transfer and other
+ * A workbench-style station: the Working Station (the crafting table), the Mortar & Pestle, the Medicine Bench
+ * and the Ark smithing table. Each opens a vanilla menu bound to itself, so the recipe book, JEI transfer and other
  * mods' crafting recipes keep working.
  */
 public final class StationBlock extends Block {
-    public enum Kind { WORKING, MEDICINE, SMITHING }
+    public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR }
 
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
+    private static final VoxelShape MORTAR_SHAPE = Block.box(3, 0, 3, 13, 9, 13);
     private final Kind kind;
 
     public StationBlock(Kind kind, Properties properties) {
@@ -66,7 +67,7 @@ public final class StationBlock extends Block {
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return kind == Kind.MORTAR ? MORTAR_SHAPE : SHAPE;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
@@ -84,9 +85,12 @@ public final class StationBlock extends Block {
         Component title = getName();
         return switch (kind) {
             case WORKING -> new SimpleMenuProvider((id, inventory, player) ->
-                    new StationCraftingMenu(id, inventory, access, this, stack -> !StationContent.medicine(stack)), title);
+                    new StationCraftingMenu(id, inventory, access, this,
+                            stack -> !StationContent.medicine(stack) && !StationContent.mortar(stack)), title);
             case MEDICINE -> new SimpleMenuProvider((id, inventory, player) ->
                     new StationCraftingMenu(id, inventory, access, this, StationContent::medicine), title);
+            case MORTAR -> new SimpleMenuProvider((id, inventory, player) ->
+                    new StationCraftingMenu(id, inventory, access, this, StationContent::mortar), title);
             case SMITHING -> new SimpleMenuProvider((id, inventory, player) ->
                     new StationSmithingMenu(id, inventory, access), title);
         };

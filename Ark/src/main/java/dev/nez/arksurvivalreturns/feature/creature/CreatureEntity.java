@@ -255,6 +255,16 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         boolean owner = isOwnedBy(player);
         // Non-owners are decided server-side; the client only predicts for the owner.
         if (!owner && client) return InteractionResult.PASS;
+        // A Blueberry heals a hurt tame and sets it regenerating; tribe members may feed it too.
+        ItemStack held = player.getItemInHand(hand);
+        if (held.is(ModContent.BERRIES.get("azulberry").get()) && !player.isSecondaryUseActive() && getHealth() < getMaxHealth()) {
+            if (client) return InteractionResult.SUCCESS;
+            if (!owner && !TribeService.isTribeMember(this, player)) return InteractionResult.PASS;
+            heal(getMaxHealth() * 0.05f);
+            addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 200, 0));
+            held.consume(1, player);
+            return InteractionResult.SUCCESS;
+        }
         // The whistle owns orders and petting; everything else keeps the mount and inventory contract.
         if (player.getItemInHand(hand).is(ModContent.COMPANION_WHISTLE.get())) {
             if (!owner && !TribeService.canCommand(this, player)) {

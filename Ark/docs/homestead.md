@@ -62,10 +62,11 @@ to worker jobs. Batch counts are per station and configurable.
 
 ## Field medicine
 
-No station is required. Three narcoberries and a plant fiber craft a **concentrated sedative**
-(`concentratedSedativePotency`, default 100), which can be eaten, swung or brewed into ammunition
-through every route the narcoberry has. Four base tranquilizer arrows plus one concentrate craft four
-**improved tranquilizer arrows** carrying that dose. The berry remains the cheap route.
+The **Mortar & Pestle** (a rock over three cobblestone) grinds four Blackberries into four **Narcotics**
+(`concentratedSedativePotency`, default 100), which can be eaten or swung like the berry and tip the
+**tranquilizer arrow** (four arrows, Narcotics and a bone). It also mixes the herbal remedies: the Herbal
+Bandage and the Healing Mixture. The **concentrated sedative** and the **improved tranquilizer arrow** stay
+registered for the Bronze Age, but nothing makes them yet; the Medicine Bench waits for the Iron Age.
 
 ## Smelting and storage
 

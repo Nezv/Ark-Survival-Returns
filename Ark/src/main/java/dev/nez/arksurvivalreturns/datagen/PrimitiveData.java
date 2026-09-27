@@ -71,13 +71,18 @@ final class PrimitiveData {
     // --------------------------------------------------------------------------------------- tools
 
     private void tools() {
-        flatItem("stone_knife", NS + ":item/stone_knife", true);
-        flatItem("stone_hatchet", "minecraft:item/stone_axe", true);
+        // The rock set (tools/build_primitive_items.py): wooden stats, stone mining tier (PrimitiveContent.ROCK_TOOL).
+        for (String tool : List.of("stone_hatchet", "rock_pickaxe", "rock_sword", "rock_shovel", "rock_hoe"))
+            flatItem(tool, NS + ":item/" + tool, true);
         flatItem("fire_starter", NS + ":item/fire_starter", true);
-        shapeless("stone_knife", NS + ":stone_knife", 1, NS + ":rock", NS + ":rock", NS + ":plant_fiber");
+        // The Rock Axe fits the 2x2 grid: logs need an axe, and the Working Station needs logs.
         shapeless("stone_hatchet", NS + ":stone_hatchet", 1, NS + ":rock", "minecraft:stick", NS + ":plant_fiber");
+        // The rest is the vanilla tool pattern with one Plant Fiber in any free slot (BoundShapedRecipe).
+        bound("rock_pickaxe", List.of("RRR", " S ", " S "));
+        bound("rock_sword", List.of("R", "R", "S"));
+        bound("rock_shovel", List.of("R", "S", "S"));
+        bound("rock_hoe", List.of("RR", " S", " S"));
         shapeless("fire_starter", NS + ":fire_starter", 1, "minecraft:stick", "minecraft:stick", NS + ":plant_fiber");
-        shaped("cobblestone_from_rocks", "minecraft:cobblestone", 1, List.of("RR", "RR"), Map.of("R", NS + ":rock"));
         shaped("lead_from_fiber", "minecraft:lead", 1, List.of("FF ", "FF ", "  F"), Map.of("F", NS + ":plant_fiber"));
         // Knapping: one rock struck on another leaves a sharp flake, the arrowhead in place of flint.
         flatItem("sharp_rock", NS + ":item/sharp_rock", false);
@@ -87,6 +92,12 @@ final class PrimitiveData {
                 "pattern", List.of("X", "#", "Y"),
                 "key", Map.of("X", NS + ":sharp_rock", "#", "minecraft:stick", "Y", "minecraft:feather"),
                 "result", Map.of("count", 4, "id", "minecraft:arrow")));
+    }
+
+    private void bound(String id, List<String> pattern) {
+        put.accept(DATA + "recipe/" + id, Map.of("type", NS + ":bound_shaped", "category", "equipment", "group", id,
+                "pattern", pattern, "key", Map.of("R", NS + ":rock", "S", "minecraft:stick"),
+                "binding", NS + ":plant_fiber", "result", Map.of("count", 1, "id", NS + ":" + id)));
     }
 
     // ---------------------------------------------------------------------------------- stone fire
@@ -165,7 +176,8 @@ final class PrimitiveData {
 
         // Better Combat (I11) movesets; ignored when the mod is absent.
         weapon("keratin_spear", "bettercombat:spear");
-        weapon("stone_knife", "bettercombat:dagger");
+        weapon("rock_sword", "bettercombat:sword");
+        weapon("rock_pickaxe", "bettercombat:pickaxe");
         weapon("flint_knife", "bettercombat:dagger");
         weapon("stone_hatchet", "bettercombat:axe");
     }
@@ -246,7 +258,10 @@ final class PrimitiveData {
                 "minecraft:sandstone", "minecraft:red_sandstone", "minecraft:calcite", "minecraft:tuff", "minecraft:mud",
                 "minecraft:packed_mud", "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone");
         tag("minecraft", "item/axes", NS + ":stone_hatchet");
-        tag("minecraft", "item/swords", NS + ":stone_knife");
+        tag("minecraft", "item/swords", NS + ":rock_sword");
+        tag("minecraft", "item/pickaxes", NS + ":rock_pickaxe");
+        tag("minecraft", "item/shovels", NS + ":rock_shovel");
+        tag("minecraft", "item/hoes", NS + ":rock_hoe");
         tag(NS, "item/primitive/keratin_materials", NS + ":keratin");
         tag("minecraft", "item/spears", NS + ":keratin_spear");
         tag("c", "item/tools/spear", NS + ":keratin_spear");
@@ -324,8 +339,11 @@ final class PrimitiveData {
     static void lang(Map<String, String> en, Map<String, String> pt) {
         name(en, pt, "item", "rock", "Rock", "Pedra");
         name(en, pt, "block", "loose_rock", "Loose Rock", "Pedra solta");
-        name(en, pt, "item", "stone_knife", "Stone Knife", "Faca de pedra");
-        name(en, pt, "item", "stone_hatchet", "Stone Hatchet", "Machadinha de pedra");
+        name(en, pt, "item", "stone_hatchet", "Rock Axe", "Machado de pedra");
+        name(en, pt, "item", "rock_pickaxe", "Rock Pickaxe", "Picareta de pedra");
+        name(en, pt, "item", "rock_sword", "Rock Sword", "Espada de pedra");
+        name(en, pt, "item", "rock_shovel", "Rock Shovel", "Pá de pedra");
+        name(en, pt, "item", "rock_hoe", "Rock Hoe", "Enxada de pedra");
         name(en, pt, "item", "fire_starter", "Fire Starter", "Acendedor de fogo");
         name(en, pt, "item", "sharp_rock", "Sharp Rock", "Pedra afiada");
         name(en, pt, "item", "keratin", "Keratin", "Queratina");

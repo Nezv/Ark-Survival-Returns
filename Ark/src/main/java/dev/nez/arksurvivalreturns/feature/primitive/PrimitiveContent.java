@@ -11,7 +11,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.equipment.ArmorMaterial;
@@ -38,8 +42,13 @@ public final class PrimitiveContent {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, ArkSurvivalReturns.MOD_ID);
     public static final TagKey<Item> ROCK_REPAIR = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("primitive/rock_materials"));
     public static final TagKey<Block> LOOSE_ROCK_GROUND = TagKey.create(Registries.BLOCK, ArkSurvivalReturns.id("primitive/loose_rock_ground"));
-    /** Knapped stone: cheap, short-lived, and only ever the first rung. */
-    public static final ToolMaterial KNAPPED_STONE = new ToolMaterial(BlockTags.INCORRECT_FOR_WOODEN_TOOL, 48, 2.0f, 0.0f, 5, ROCK_REPAIR);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
+            DeferredRegister.create(Registries.RECIPE_SERIALIZER, ArkSurvivalReturns.MOD_ID);
+    /** Rock tools: wooden durability, speed and damage, but they break what stone tools break (iron ore included). */
+    public static final ToolMaterial ROCK_TOOL = new ToolMaterial(BlockTags.INCORRECT_FOR_STONE_TOOL, 59, 2.0f, 0.0f, 15, ROCK_REPAIR);
+    /** The rock set's recipe: the vanilla tool pattern plus one Plant Fiber in any free slot. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BoundShapedRecipe>> BOUND_SHAPED =
+            RECIPE_SERIALIZERS.register("bound_shaped", () -> BoundShapedRecipe.SERIALIZER);
 
     public static final DeferredHolder<Feature<?>, LooseRockFeature> LOOSE_ROCK_FEATURE =
             FEATURES.register("loose_rock", () -> new LooseRockFeature(NoneFeatureConfiguration.CODEC));
@@ -48,10 +57,17 @@ public final class PrimitiveContent {
     public static final DeferredBlock<LooseRockBlock> LOOSE_ROCK = ModContent.BLOCKS.registerBlock("loose_rock", LooseRockBlock::new,
             p -> p.instabreak().noCollision().noOcclusion().pushReaction(PushReaction.DESTROY).sound(SoundType.STONE));
 
-    public static final DeferredItem<Item> STONE_KNIFE = ModContent.ITEMS.registerItem("stone_knife", Item::new,
-            p -> p.sword(KNAPPED_STONE, 0.5f, -1.8f));
-    public static final DeferredItem<Item> STONE_HATCHET = ModContent.ITEMS.registerItem("stone_hatchet", Item::new,
-            p -> p.axe(KNAPPED_STONE, 4.0f, -3.2f));
+    /** The Rock Axe keeps the old stone_hatchet id so existing worlds keep their axes. It fits the 2x2 grid. */
+    public static final DeferredItem<AxeItem> STONE_HATCHET = ModContent.ITEMS.registerItem("stone_hatchet",
+            p -> new AxeItem(ROCK_TOOL, 6.0f, -3.2f, p));
+    public static final DeferredItem<Item> ROCK_PICKAXE = ModContent.ITEMS.registerItem("rock_pickaxe", Item::new,
+            p -> p.pickaxe(ROCK_TOOL, 1.0f, -2.8f));
+    public static final DeferredItem<Item> ROCK_SWORD = ModContent.ITEMS.registerItem("rock_sword", Item::new,
+            p -> p.sword(ROCK_TOOL, 3.0f, -2.4f));
+    public static final DeferredItem<ShovelItem> ROCK_SHOVEL = ModContent.ITEMS.registerItem("rock_shovel",
+            p -> new ShovelItem(ROCK_TOOL, 1.5f, -3.0f, p));
+    public static final DeferredItem<HoeItem> ROCK_HOE = ModContent.ITEMS.registerItem("rock_hoe",
+            p -> new HoeItem(ROCK_TOOL, 0.0f, -3.0f, p));
     /** A knapped flake: the arrowhead, in place of flint. */
     public static final DeferredItem<Item> SHARP_ROCK = ModContent.ITEMS.registerSimpleItem("sharp_rock", p -> p.stacksTo(64));
 
@@ -126,14 +142,18 @@ public final class PrimitiveContent {
 
     public static void register(IEventBus bus) {
         FEATURES.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
     }
 
     /** Creative tab order: the progression reads left to right. */
     public static void displayItems(net.minecraft.world.item.CreativeModeTab.Output output) {
         output.accept(ROCK.get());
         output.accept(SHARP_ROCK.get());
-        output.accept(STONE_KNIFE.get());
         output.accept(STONE_HATCHET.get());
+        output.accept(ROCK_PICKAXE.get());
+        output.accept(ROCK_SWORD.get());
+        output.accept(ROCK_SHOVEL.get());
+        output.accept(ROCK_HOE.get());
         output.accept(FIRE_STARTER.get());
         output.accept(STONE_FIRE_ITEM.get());
         output.accept(PRIMITIVE_FORGE_ITEM.get());

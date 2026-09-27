@@ -36,15 +36,13 @@ final class CampGameTests {
         var data = StarterKitData.get(world);
         h.assertFalse(data.granted(player.getUUID()), "A fresh survivor already had a kit");
         StarterKitService.onLogin(player);
-        h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 1, "The kit did not include a bedroll");
-        h.assertTrue(count(player, ModContent.FIBER_BANDAGE.get()) == 2, "The kit did not include two bandages");
-        h.assertTrue(count(player, ModContent.PLANT_FIBER.get()) == 8, "The kit did not include eight fiber");
         h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "The kit did not include a flint knife");
+        h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 0 && count(player, ModContent.PLANT_FIBER.get()) == 0,
+                "The kit is only a flint knife");
         h.assertTrue(data.granted(player.getUUID()), "The kit grant was not recorded");
         // Rejoining never duplicates the kit.
         StarterKitService.onLogin(player);
-        h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 1, "Rejoining duplicated the kit");
-        h.assertTrue(count(player, ModContent.PLANT_FIBER.get()) == 8, "Rejoining duplicated the fiber");
+        h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "Rejoining duplicated the kit");
         // The config switch blocks new kits but does not retract a recorded grant.
         Config.CAMP_STARTER_KIT.set(false);
         try {
@@ -52,7 +50,7 @@ final class CampGameTests {
         } finally {
             Config.CAMP_STARTER_KIT.set(true);
         }
-        h.assertTrue(count(player, ModContent.PLANT_FIBER.get()) == 8, "A disabled kit was granted");
+        h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "A disabled kit was granted");
         h.succeed();
     }
 

@@ -56,25 +56,25 @@ ITEMS = {
     'w_goat': ('Goat', 'mc:item/goat_spawn_egg', None, None),
     # prehistoric
     'rock': ('Rock', 'ark:item/rock', 'standin', None),
-    'blackberry': ('Blackberry', 'ark:item/narcoberry', None, 'Narcoberry'),
-    'redberry': ('Redberry', 'ark:item/tintoberry', None, 'Tintoberry'),
-    'yellowberry': ('Yellowberry', 'ark:item/amarberry', None, 'Amarberry'),
-    'blueberry': ('Blueberry', 'ark:item/azulberry', None, 'Azulberry'),
+    'blackberry': ('Blackberry', 'ark:item/narcoberry', None, None),
+    'redberry': ('Redberry', 'ark:item/tintoberry', None, None),
+    'yellowberry': ('Yellowberry', 'ark:item/amarberry', None, None),
+    'blueberry': ('Blueberry', 'ark:item/azulberry', None, None),
     'berry': ('Any berry', 'ark:item/tintoberry', None, None),
     'fiber': ('Fiber', 'mc:item/wheat', 'standin', 'Plant Fiber'),
     'twig': ('Twig', None, 'new', None),
-    'stick': ('Stick', 'mc:item/stick', None, None),
+    'stick': ('Twig', 'mc:item/stick', None, 'Stick'),
     'flint': ('Flint', 'mc:item/flint', None, None),
     'clay_ball': ('Clay Ball', 'mc:item/clay_ball', None, None),
     'sedative': ('Sedative', None, 'new', None),
-    'narcotics': ('Narcotics', None, 'new', None),
+    'narcotics': ('Narcotics', 'ark:item/narcotics', None, None),
     'medicine': ('Medicine', None, 'new', None),
     'blue_tbd': ('Blueberry product', None, 'new', None),
-    'rock_axe': ('Rock Axe', 'mc:item/stone_axe', 'standin', 'Stone Hatchet'),
-    'rock_pickaxe': ('Rock Pickaxe', None, 'new', None),
-    'rock_sword': ('Rock Sword', None, 'new', 'Stone Knife'),
-    'rock_shovel': ('Rock Shovel', None, 'new', None),
-    'rock_hoe': ('Rock Hoe', None, 'new', None),
+    'rock_axe': ('Rock Axe', 'ark:item/stone_hatchet', None, None),
+    'rock_pickaxe': ('Rock Pickaxe', 'ark:item/rock_pickaxe', None, None),
+    'rock_sword': ('Rock Sword', 'ark:item/rock_sword', None, None),
+    'rock_shovel': ('Rock Shovel', 'ark:item/rock_shovel', None, None),
+    'rock_hoe': ('Rock Hoe', 'ark:item/rock_hoe', None, None),
     'fire_starter': ('Fire Starter', 'ark:item/fire_starter', None, None),
     'bandage': ('Fiber Bandage', 'mc:item/paper', 'standin', None),
     'string': ('String', 'mc:item/string', None, None),
@@ -87,7 +87,7 @@ ITEMS = {
     'wood_spear': ('Wooden Spear', 'mc:item/wooden_spear', None, None),
     'stone_fire': ('Stone Fire', 'cube', None, None),
     'drying_rack': ('Drying Rack', 'cube', None, None),
-    'mortar': ('Mortar & Pestle', 'cube', 'new', None),
+    'mortar': ('Mortar & Pestle', 'cube', None, None),
     'cooking_pot': ('Cooking Pot', 'cube', None, None),
     'forge': ('Primitive Forge', 'cube', None, None),
     'sharp_rock': ('Sharp Rock', 'ark:item/sharp_rock', None, None),
@@ -234,14 +234,14 @@ SPINE = [
             'Loose rocks lie on the ground in every Overworld biome (F02). A rock is not stone: it never turns '
             'into cobblestone. Needs a dedicated sprite.'),
         row('1.2', 'you', [W('w_grass')], [i('blackberry', val='+1 food · torpor'), i('redberry', val='+1 heart · +1 food'),
-                                           i('yellowberry', val='+3 food'), i('blueberry', val='TBD')], 'break, 35%',
+                                           i('yellowberry', val='+3 food'), i('blueberry', val='+1 food · heals tames')], 'break, 35%',
             'In game today: Narcoberry, Tintoberry, Amarberry and Azulberry. A grass block drops a berry 35% of the '
             'time: red, yellow and blue 30% each of that, black 10%. The food values are yours; the red berry '
             'starts the medicine path.'),
         row('1.3', 'you', [W('w_grass')], [i('fiber', ch='45%')], 'break, 45%',
             'Fiber is the primitive rope and goes into every rock tool. Today it is drawn with the wheat sprite.'),
-        row('1.4', 'you', [W('w_leaves')], [i('twig')], 'break',
-            'New item. Today leaves drop a Stick 20% of the time; that drop becomes the Twig.'),
+        row('1.4', 'now', [W('w_leaves')], [i('stick')], 'break',
+            'The vanilla Stick is renamed Twig (Q8): leaves drop it 20% of the time, and planks still make it later.'),
         row('', 'now', [W('w_gravel')], [i('flint', ch='10%'), i('gravel')], 'dig'),
         row('', 'now', [W('w_clay')], [i('clay_ball', 4)], 'dig'),
         row('', 'now', [W('w_sand')], [i('sand')], 'dig'),
@@ -250,13 +250,8 @@ SPINE = [
         row('', 'now', [W('w_farm')], [i('carrot')], 'harvest'),
     ]),
     node('inv', 'station', 'Inventory', '2×2 grid · always open', 'grid2', [
-        row('1.2.1', 'you', [i('blackberry', 4)], [i('sedative', 4)], 'shapeless'),
-        row('1.4', 'prop', [i('twig', 2)], [i('stick')], 'shapeless',
-            'You set Twig → Stick; the 2 → 1 ratio is a proposal. After the axe, planks give sticks cheaply, so '
-            'twigs only matter before the first log.'),
-        row('2.1', 'change', [i('rock'), i('stick'), i('fiber')], [i('rock_axe', val='wood stats')], 'shapeless',
-            'Today this is the Stone Hatchet. It has to fit the 2×2 grid: logs need an axe, and the Working '
-            'Station needs logs. Uses the vanilla stone axe sprite (B04).'),
+        row('2.1', 'now', [i('rock'), i('stick'), i('fiber')], [i('rock_axe', val='wood stats, stone tier')], 'shapeless',
+            'The Rock Axe (old id stone_hatchet) fits the 2×2 grid: logs need an axe, and the Working Station needs logs.'),
         row('', 'now', [i('rock', 2)], [i('sharp_rock')], 'shapeless',
             'Knapping: one rock struck on another. The sharp flake tips arrows in place of flint.'),
         row('', 'now', [i('stick', 2), i('fiber')], [i('fire_starter')], 'shapeless'),
@@ -275,27 +270,24 @@ SPINE = [
             'wood are Nether-only, so 10 kinds remain.'),
     ], item='rock_axe'),
     node('table', 'station', 'Working Station', '3×3 grid · replaces the crafting table', 'grid3', [
-        row('1.3', 'change', [i('fiber', 9)], [i('bedroll')], 'shapeless',
-            'Today: 4 Fiber + 1 Leather. Nine items need the 3×3 grid, so the bedroll arrives right after the '
-            'axe and the Working Station, not at step 1 (Q2).'),
-        row('2.2', 'you', [i('rock', 3), i('stick', 2), i('fiber')], [i('rock_pickaxe', val='wood stats')],
-            'pickaxe + fiber', 'The vanilla pickaxe pattern with one Fiber in any free slot (Q3). Its mining '
-            'tier decides whether copper and iron can ever be reached (Q1).'),
-        row('2.3', 'you', [i('rock', 2), i('stick'), i('fiber')], [i('rock_sword', val='wood stats')],
-            'sword + fiber', 'Replaces the Stone Knife; the London tech node moves to it (Q6).'),
-        row('', 'prop', [i('rock'), i('stick', 2), i('fiber')], [i('rock_shovel', val='wood stats')], 'shovel + fiber'),
-        row('', 'prop', [i('rock', 2), i('stick', 2), i('fiber')], [i('rock_hoe', val='wood stats')], 'hoe + fiber'),
+        row('1.3', 'now', [i('fiber', 9)], [i('bedroll')], 'shaped',
+            'Nine fiber needs the 3×3 grid, so the bedroll comes right after the Working Station (Q2).'),
+        row('2.2', 'now', [i('rock', 3), i('stick', 2), i('fiber')], [i('rock_pickaxe', val='wood stats, stone tier')],
+            'pickaxe + fiber', 'The vanilla pickaxe pattern with one Fiber in any free slot (Q3). It mines what a stone '
+            'pickaxe mines, iron ore included, with wooden durability and speed (Q1).'),
+        row('2.3', 'now', [i('rock', 2), i('stick'), i('fiber')], [i('rock_sword', val='wood stats')],
+            'sword + fiber', 'The Stone Knife is gone (Q6); crafting any rock tool or the flint knife completes London.'),
+        row('', 'now', [i('rock'), i('stick', 2), i('fiber')], [i('rock_shovel', val='wood stats')], 'shovel + fiber'),
+        row('', 'now', [i('rock', 2), i('stick', 2), i('fiber')], [i('rock_hoe', val='wood stats')], 'hoe + fiber'),
         row('', 'cut', [i('rock', 4)], [i('cobblestone')], '2×2',
             'Removed by your spec: cobblestone only comes from mining stone with the rock pickaxe.'),
         row('', 'cut', [i('cobblestone', 3), i('stick', 2)], [i('stone_tools')], 'vanilla',
             'Stone pickaxe, axe, shovel, hoe, sword and spear. Wooden tools are already removed.'),
-        row('', 'cut', [i('planks'), i('stick')], [i('wood_spear')], 'vanilla',
-            'The 1.21.11 wooden spear is missing from today\'s wooden-tool filter, so it is still craftable.'),
+        row('', 'cut', [i('planks'), i('stick')], [i('wood_spear')], 'vanilla', 'Removed with the wooden tools.'),
         row('', 'now', [i('rock', 5), i('stick')], [i('stone_fire')], 'shaped'),
         row('2.3.1', 'change', [i('log', 2), i('stick', 4)], [i('drying_rack')], 'shaped',
             'You asked for wood and sticks; the 2 logs + 4 sticks split is a proposal. Today: 4 Sticks + 1 Fiber.'),
-        row('', 'prop', [i('cobblestone', 3), i('rock')], [i('mortar')], 'shaped',
-            'Planned station (B02). The recipe is a proposal: a stone bowl and a rock pestle.'),
+        row('', 'now', [i('cobblestone', 3), i('rock')], [i('mortar')], 'shaped', 'A stone bowl and a rock pestle (B02).'),
         row('', 'now', [i('cobblestone', 4), i('fiber', 2)], [i('cooking_pot')], 'shapeless'),
         row('2.2', 'now', [i('cobblestone', 8), i('stone_fire')], [i('forge')], 'shaped',
             'Your step "Stone → Forge": stone only, eight cobblestone walled around a Stone Fire (no clay). '
@@ -308,15 +300,15 @@ SPINE = [
         row('', 'now', [i('keratin', 7)], [i('keratin_leggings', val='2 armour')], 'leggings'),
         row('', 'now', [i('keratin', 4)], [i('keratin_boots', val='1 armour')], 'boots',
             'The first armour tier: 8 points for the set, above leather (7) and below copper (10).'),
-        row('', 'cut', [i('flint'), i('stick'), i('fiber')], [i('flint_knife')], 'shapeless',
-            'Proposed removal: the Rock Sword covers the knife role. It is also in the starter kit (Q4, Q6).'),
+        row('', 'now', [i('flint'), i('stick'), i('fiber')], [i('flint_knife')], 'shapeless',
+            'The flint knife stays, and it is the whole starter kit (Q4, Q6).'),
         row('', 'now', [i('stick', 3), i('string', 3)], [i('bow')], 'vanilla'),
         row('', 'change', [i('sharp_rock'), i('stick'), i('feather')], [i('arrow', 4)], 'shaped',
             'The vanilla arrow recipe now takes a Sharp Rock; flint no longer tips arrows.'),
-        row('', 'change', [i('arrow', 4), i('sedative'), i('bone')], [i('tranq_arrow', 4)], 'shapeless',
-            'Today it takes a Narcoberry. The Sedative replaces it (Q7).'),
-        row('', 'change', [i('tranq_arrow', 4), i('narcotics')], [i('improved_tranq', 4)], 'shapeless',
-            'Today it takes a Concentrated Sedative. Narcotics replace it (Q7).'),
+        row('', 'now', [i('arrow', 4), i('narcotics'), i('bone')], [i('tranq_arrow', 4)], 'shapeless',
+            'Narcotics tip the tranquilizer arrow (Q7).'),
+        row('', 'cut', [i('tranq_arrow', 4), i('conc_sedative')], [i('improved_tranq', 4)], 'shapeless',
+            'Waits for the Bronze Age with the Concentrated Sedative (Q7).'),
         row('', 'now', [i('fiber', 5)], [i('lead')], 'shaped'),
         row('', 'now', [i('leather', 3), i('fiber', 2)], [i('pack_harness')], 'shapeless'),
         row('', 'now', [i('pack_harness'), i('leather'), i('flint'), i('fiber', 2)], [i('reinforced_harness')], 'shapeless'),
@@ -330,13 +322,13 @@ SPINE = [
             'one look while each keeps its own slots, so Tom\'s Storage, hoppers and tame cargo never count '
             'twice.'),
         row('', 'now', [i('coal'), i('stick')], [i('torch', 4)], 'vanilla'),
-        row('', 'now', [i('log', 3), i('stick', 3), i('coal')], [i('campfire')], 'vanilla',
-            'Also lights the "A little warmth" node. Keep it beside the Stone Fire? (Q12)'),
+        row('', 'cut', [i('log', 3), i('stick', 3), i('coal')], [i('campfire')], 'vanilla',
+            'Removed: the Stone Fire is its redesign, with more features, not a parallel (Q12).'),
         row('', 'now', [i('planks', 3)], [i('wood_slab', 6)], 'vanilla'),
         row('', 'now', [i('stone', 3)], [i('stone_slab', 6)], 'vanilla'),
         row('', 'now', [i('glass', 3)], [i('glass_bottle', 3)], 'vanilla'),
-        row('', 'now', [i('fiber', 2), i('glass_bottle'), i('planks', 3), i('log', 2)], [i('medicine_bench')], 'shaped',
-            'F14. The only place medicine is made; the Working Station leaves it out.'),
+        row('', 'block', [i('ingots', 2), i('glass_bottle'), i('planks', 3), i('log', 2)], [i('medicine_bench')], 'shaped',
+            'Iron Age (Q15): the bench needs iron, and its medicine is still to be designed.'),
         row('', 'now', [i('log', 2), i('grindstone'), i('cobblestone', 5)], [i('crusher')], 'shaped',
             'F14. Unpowered: a flywheel turns while it grinds.'),
         row('', 'now', [i('stick', 2), i('stone_slab'), i('planks', 2)], [i('grindstone')], 'vanilla'),
@@ -351,9 +343,7 @@ SPINE = [
     node('pick', 'gate', 'Rock Pickaxe', '2.2 · mines stone', 'g_pickaxe', [
         row('2.2', 'you', [W('w_stone')], [i('cobblestone')], 'mine'),
         row('', 'now', [W('w_coal_ore')], [i('coal')], 'mine'),
-        row('', 'block', [W('w_metal_ore')], [i('raw_ores')], 'mine',
-            'At wood tier the pickaxe cannot harvest copper, iron or lapis ore, and stone tools are gone. '
-            'Nothing that needs metal is reachable until this is decided (Q1).'),
+        row('', 'now', [W('w_metal_ore')], [i('raw_ores')], 'mine', 'The rock pickaxe mines at stone tier: copper, iron and lapis (Q1).'),
         row('', 'block', [W('w_redstone_ore')], [i('redstone')], 'mine',
             'Redstone ore needs an iron pickaxe, so it waits on the metals too (Q1).'),
     ], item='rock_pickaxe'),
@@ -389,19 +379,17 @@ SPINE = [
         row('', 'now', [i('dried_food', 2), i('meat'), i('carrot')], [i('hearty_stew', val='regeneration')], '4 slots'),
         row('', 'now', [i('dried_food', 2), i('berry', 2)], [i('trail_mix', val='speed')], '4 slots'),
     ], item='cooking_pot'),
-    node('medbench', 'station', 'Medicine Bench', 'crafting grid · medicine only', 'cube', [
-        row('', 'now', [i('bandage', 2), i('blueberry'), i('yellowberry'), i('fiber')],
-            [i('herbal_bandage', 2, val='double heal · regeneration')], 'shapeless'),
-        row('', 'now', [i('glass_bottle'), i('blueberry', 2), i('redberry'), i('fiber')],
-            [i('healing_mixture', val='regeneration II · cures poison')], 'shapeless'),
-        row('', 'now', [i('blackberry', 4), i('fiber')], [i('conc_sedative')], 'shapeless',
-            'Only the Medicine Bench makes it now (F14). Your spec replaces it with Narcotics from the mortar '
-            '(Q7, Q15).'),
+    node('medbench', 'station', 'Medicine Bench', 'Iron Age · medicine to be designed', 'cube', [
+        row('', 'cut', [i('blackberry', 4), i('fiber')], [i('conc_sedative')], 'shapeless',
+            'The Concentrated Sedative waits for the Bronze Age (Q7); nothing makes it now.'),
     ], item='medicine_bench'),
-    node('mortar', 'station', 'Mortar & Pestle', 'planned · B02', 'cube', [
-        row('1.2.1', 'you', [i('sedative', 4)], [i('narcotics', 4)], 'grind'),
-        row('1.2.2', 'tbd', [i('redberry')], [i('medicine')], 'grind', 'The medicine path starts here; recipes to be decided.'),
-        row('1.2.4', 'tbd', [i('blueberry')], [i('blue_tbd')], 'grind'),
+    node('mortar', 'station', 'Mortar & Pestle', 'grinds herbs · makes nothing else', 'cube', [
+        row('1.2.1', 'now', [i('blackberry', 4)], [i('narcotics', 4)], 'grind', 'Blackberries grind straight into Narcotics (Q7).'),
+        row('', 'now', [i('bandage', 2), i('blueberry'), i('yellowberry'), i('fiber')],
+            [i('herbal_bandage', 2, val='double heal · regeneration')], 'mix', 'The herbal remedies moved here from the Medicine Bench (Q15).'),
+        row('', 'now', [i('glass_bottle'), i('blueberry', 2), i('redberry'), i('fiber')],
+            [i('healing_mixture', val='regeneration II · cures poison')], 'mix'),
+        row('1.2.2', 'tbd', [i('redberry')], [i('medicine')], 'grind', 'More medicine from the Redberry path, to be decided.'),
     ], item='mortar'),
     node('forge', 'station', 'Primitive Forge', 'two blocks · stone bloomery', 'cube', [
         row('', 'now', [i('raw_ores')], [i('ingots')], 'smelt', 'Ore tier: see Q1.'),
@@ -414,17 +402,11 @@ SPINE = [
             'Every non-food smelting recipe, modded ones included. Food goes to the Stone Fire.'),
     ], item='forge'),
     node('crusher', 'station', 'Crusher', 'unpowered · flywheel and rollers', 'cube', [
-        row('', 'now', [i('flint')], [i('gunpowder')], 'crush',
-            'Flint grinds into gunpowder, so TNT no longer depends on chest loot (Q11). The Crusher also '
-            'grinds cobblestone to gravel, gravel to sand, bones to 5 bone meal, wool to 4 string, flowers '
-            'to 2 dyes and raw metal blocks back into 10 raw.'),
-        row('', 'now', [i('cobblestone')], [i('gravel')], 'crush'),
+        row('', 'now', [i('cobblestone')], [i('gravel')], 'crush', 'No ore doubling (Q14) and no gunpowder until the Bronze Age (Q11).'),
         row('', 'now', [i('gravel')], [i('sand')], 'crush'),
         row('', 'now', [i('bone')], [i('bone_meal', 5)], 'crush'),
         row('', 'now', [i('wool')], [i('string', 4)], 'crush'),
         row('', 'now', [i('flowers')], [i('dyes', 2)], 'crush'),
-        row('', 'block', [i('ore_block')], [i('raw_ores', 2)], 'crush',
-            'Ore blocks only drop with Silk Touch, and enchanting is removed, so ore doubling cannot happen (Q14).'),
     ], item='crusher'),
     node('stonecutter', 'station', 'Stonecutter', '3 Stone + Iron ingot', 'g_stonecutter', [
         row('', 'now', [i('stone_family')], [i('stone_variants')], 'cut'),
@@ -474,22 +456,22 @@ NETS = [
     ('WOOD', 'Rock Axe · 2.1', 'mc:block/oak_log', [
         f('Planks, sticks', '2x2'), f('Slabs, stairs, fences, gates, doors, trapdoors, plates, buttons, signs, boats, shelves', 'T', need='×10 woods'),
         f('Hanging signs', need='+ chain'), f('Working Station, Storage Crate', need='replace the crafting table and chests'),
-        f('Barrel, bowl, ladder, composter'), f('Medicine Bench', need='+ bottle, fiber'),
+        f('Barrel, bowl, ladder, composter'), f('Mortar & Pestle', need='rock + cobblestone'),
         f('Loom, cartography table', st='cut', need='removed'),
         f('Bookshelf, lectern, chiseled bookshelf', need='+ book'), f('Beds', need='+ wool ×16'),
         f('Item frame, painting', need='+ leather / wool'), f('Charcoal', 'FG'),
-        f('Wooden tools', st='cut'), f('Wooden spear', st='spec', need='still craftable'),
+        f('Wooden tools and spear', st='cut'),
         f('Crimson and warped sets', st='starved', need='Nether only'),
     ]),
     ('STONE', 'Rock Pickaxe · 2.2', 'mc:block/cobblestone', [
         f('Stone, smooth stone', 'FG'), f('Stone, brick, deepslate, tuff, andesite, diorite, granite, sandstone, mud and resin families', 'SC', need='~275 cuts'),
         f('Lever, stone button and plate, grindstone'), f('Armor stand', need='+ smooth slab'),
         f('Gravel, sand', 'CR', need='crushed from cobblestone'), f('Crusher', need='+ grindstone, logs'),
-        f('Stone tools, stone spear', st='spec', need='removed'), f('Cobblestone from 4 rocks', st='spec', need='removed'),
+        f('Stone tools, stone spear', st='cut'), f('Cobblestone from 4 rocks', st='cut'),
         f('Furnace, smoker, blast furnace', st='cut'), f('Brewing stand', st='cut'),
     ]),
     ('COAL', 'Rock Pickaxe (ore) · Forge (charcoal)', 'mc:item/coal', [
-        f('Torch', '2x2'), f('Campfire, coal block'), f('Lantern, copper torch, copper lantern', need='+ nuggets'),
+        f('Torch', '2x2'), f('Coal block'), f('Campfire', st='cut', need='the Stone Fire replaces it'), f('Lantern, copper torch, copper lantern', need='+ nuggets'),
         f('Soul torch, lantern, campfire', st='cut'), f('Fire charge', st='cut'),
     ]),
     ('LEATHER', 'kills · 2.3', 'mc:item/leather', [
@@ -505,7 +487,7 @@ NETS = [
         f('Carpets ×16'), f('Beds ×16'), f('Banners ×16', need='plain: no loom'), f('Painting'),
     ]),
     ('BONE · FEATHER · FLINT', 'kills · gravel', 'mc:item/bone', [
-        f('Bone meal, bone block, white dye', '2x2'), f('Bone meal ×5', 'CR'), f('Gunpowder', 'CR', need='from flint'),
+        f('Bone meal, bone block, white dye', '2x2'), f('Bone meal ×5', 'CR'),
         f('Arrows', st='spec', need='sharp rock + feather'),
         f('Writable book', need='+ ink sac'), f('Flint and steel', need='+ iron'), f('Fletching table'),
         f('Spectral arrow', st='starved', need='glowstone'),
@@ -518,7 +500,7 @@ NETS = [
         f('Bricks, flower pot, decorated pot', 'FG', need='sherds by brush'), f('Terracotta ×17, glazed ×16', 'FG'),
         f('Glass, panes, stained ×16, bottle', 'FG'), f('Sandstone families', 'SC'),
         f('Concrete powder ×16', need='+ gravel, dye; set by water'), f('Tinted glass', need='+ amethyst'),
-        f('TNT, TNT minecart', need='gunpowder from the Crusher'), f('Glass bottle', need='→ Medicine Bench'), f('Beacon', st='cut'),
+        f('TNT, TNT minecart', st='starved', need='gunpowder: Bronze Age sulphur'), f('Glass bottle', need='→ Mortar & Pestle'), f('Beacon', st='cut'),
     ]),
     ('COPPER', 'Forge · ore tier Q1', 'mc:item/copper_ingot', [
         f('Copper tools ×6 (axe, pickaxe, shovel, hoe, sword, spear)', need='becomes tier 2'),
@@ -573,32 +555,26 @@ NETS = [
     ("TOM'S STORAGE", 'pack mod (I04)', 'mc:block/barrel_side', [
         f('Trim, open crate, cable, proxy, filing cabinet, item filter, basic hopper, configurator'),
         f('Crafting terminal', need='+ storage terminal'),
-        f('Storage terminal, level emitter', st='starved', need='comparator, glowstone'),
-        f('Inventory connector, interface, cable connector, wireless terminals', st='starved', need='ender pearls'),
+        f('Storage terminal, level emitter, filters', need='copper instead of comparators and glowstone'),
+        f('Inventory connector, interface, cable connector, wireless terminals', need='iron instead of ender pearls'),
     ]),
 ]
 
 # ---------------------------------------------------------------- cut list and decisions
 CUTS = [
-    ('Your spec removes', [
-        'Wooden tools (already gone) and the vanilla <b>wooden spear</b>, which slipped through the filter',
-        'Vanilla <b>stone tools</b> ×6, stone spear included',
-        '<b>4 Rock → Cobblestone</b>',
-        'Leaves → Stick (becomes Leaves → Twig)',
-        'Bedroll from 4 Fiber + Leather (becomes 9 Fiber)',
+    ('Removed on 2026-09-26', [
+        '<b>Stone tools</b> ×6 (stone spear included) and the <b>wooden spear</b>: the rock set replaces them',
+        '<b>Stone Knife</b> (the Flint Knife stays)',
+        '<b>4 Rock → Cobblestone</b>: cobblestone only comes from mining stone',
+        'The vanilla <b>campfire</b> recipe: the Stone Fire is its redesign',
+        '<b>Recovery Cache</b>; the <b>Flint Spear</b> (replaced by the Keratin Spear); flint in arrows (Sharp Rock)',
+        '<b>Loom</b> and <b>Cartography Table</b>; the crafting table, chests and smithing table (replaced, F14)',
+        'Crusher <b>ore doubling</b> and <b>flint → gunpowder</b>',
     ]),
-    ('Done on 2026-09-26', [
-        '<b>Recovery Cache</b> removed: deaths drop items as usual',
-        '<b>Flint Spear</b> replaced by the <b>Keratin Spear</b>',
-        'Flint in arrows replaced by the <b>Sharp Rock</b>',
-        'Clay removed from the <b>Primitive Forge</b> recipe',
-        '<b>Loom</b> and <b>Cartography Table</b> removed: no recipe, and village ones do nothing (banners stay plain; Xaero\'s map replaces map editing)',
-        'The <b>crafting table</b>, <b>chests</b> and the <b>smithing table</b> are replaced by the Working Station, the Storage Crate and Ark\'s Smithing Table (F14)',
-    ]),
-    ('Proposed with it', [
-        '<b>Stone Knife</b> → Rock Sword; <b>Flint Knife</b> removed',
-        '<b>Concentrated Sedative</b> → Narcotics',
-        'The <b>starter kit</b> (bedroll, 2 bandages, 8 fiber, flint knife), if "starts with nothing" is literal',
+    ('Moved to a later age', [
+        '<b>Concentrated Sedative</b> and the <b>Improved Tranquilizer Arrow</b>: Bronze Age',
+        '<b>Gunpowder</b>: Bronze Age, from sulphur and cinnabar crystals in caves (F15)',
+        '<b>Medicine Bench</b>: Iron Age, medicine to be designed',
     ]),
     ('Already removed by the theme ({{CUT}} vanilla recipes)', [
         'Magic: enchanting table, brewing stand, potions, tipped arrows, golden apple, glistering melon',
@@ -608,71 +584,64 @@ CUTS = [
         'Furnace, smoker, blast furnace, furnace minecart; beacon, conduit, recovery compass',
         'Copper bulbs: re-added by Ark with a torch instead of the blaze rod',
     ]),
-    ('Recipe stays, material has no source', [
+    ('Recipe stays, material has no source (accepted)', [
         '<b>Nether quartz</b> → comparator, observer, daylight detector',
         '<b>Glowstone</b> (cleric trades only) → redstone lamp, spectral arrow',
-        '<b>Ender pearls</b> → Tom\'s Storage connector, interface and wireless terminals',
         'Prismarine, sponge, trident, crimson and warped wood, 11 trim templates, harness, copper golem statue',
     ]),
 ]
 
 DECISIONS = [
-    ('Q1', 'Blocking', 'Rock tool mining tier',
-     'The rock set uses the wooden tier today, which cannot harvest copper, iron or lapis ore. With stone '
-     'tools removed nothing past the forge can be reached.',
-     'Keep wood stats (speed, durability, damage) but let the rock pickaxe mine at stone level. Copper then '
-     'becomes the second tool tier.'),
-    ('Q2', 'Spec gap', 'The bedroll needs the 3×3 grid',
-     '9 Fiber does not fit the 2×2 inventory, so the bedroll comes after the axe and the table.',
-     'Accept it. Step 1 stays "gather", and the first night comes after the first log.'),
-    ('Q3', 'Answer', 'Fiber in any slot',
-     'Yes, this works: a custom shaped recipe type matches the tool pattern and accepts one Fiber in any empty '
-     'slot. JEI shows it in one slot with a note.',
-     'Use it for the whole rock set.'),
-    ('Q4', 'Spec gap', 'Starter kit',
-     'New players still get a bedroll, 2 bandages, 8 fiber and a flint knife, which contradicts "starts with '
-     'nothing".',
-     'Remove it, or reduce it to the Field Journal.'),
-    ('Q5', 'Naming', 'Berry names',
-     'The chart uses your names; the game has Narco-, Tinto-, Amar- and Azulberry.',
-     'Rename them to Black-, Red-, Yellow- and Blueberry and keep the old ids so existing worlds load.'),
-    ('Q6', 'Content', 'One rock set',
-     'Stone Knife and Flint Knife overlap with the new set; the Keratin Spear is now the first weapon tier.',
-     'The Stone Knife becomes the Rock Sword (London node moves) and the Flint Knife goes.'),
-    ('Q7', 'Content', 'Sedative chain',
-     'Blackberry → Sedative (2×2) → Narcotics (mortar) replaces Concentrated Sedative, which the Medicine Bench '
-     'makes today from 4 Blackberries and a Fiber.',
-     'Tranq Arrow takes a Sedative, Improved Tranq takes Narcotics, and Narcotraffic tracks Narcotics.'),
-    ('Q8', 'Balance', 'Twig and rack ratios',
-     'Twig → Stick and the rack\'s wood + sticks need numbers.',
-     '2 Twig → 1 Stick; Drying Rack = 2 Log + 4 Stick.'),
-    ('Q9', 'Blocking', 'No quartz',
-     'Without the Nether there is no nether quartz: comparator, observer and daylight detector cannot be made.',
-     'Add an Overworld quartz source (a deep ore or a geode drop), or give those three Ark recipes.'),
-    ('Q10', 'Blocking', "Tom's Storage can't be built",
-     'The inventory connector, interface and wireless terminals need ender pearls. The storage terminal needs '
-     'a comparator and glowstone. None of these can be crafted, so no storage network works in survival.',
-     'Override those recipes in Ark data, for example with diamond, redstone and copper.'),
-    ('Q11', 'Answer', 'Gunpowder',
-     'Creepers, ghasts and witches are gone, but the Crusher (F14) grinds flint into gunpowder, so TNT has a '
-     'renewable source again.',
-     'Keep it.'),
-    ('Q12', 'Content', 'Vanilla campfire',
-     'The vanilla campfire (logs, sticks, coal) cooks like the Stone Fire and also completes the warmth node.',
-     'Keep it as the coal-era option.'),
-    ('Q13', 'Yours', 'Open design',
-     'Blueberry effect, the Redberry medicine path and creature drops (blood, heart…).',
-     'Left open, as in your spec.'),
-    ('Q14', 'Spec gap', 'Crusher ore doubling',
-     'The Crusher turns an ore block into two raw metal, but ore blocks only drop with Silk Touch, and '
-     'enchanting is removed. Only raw metal blocks can be crushed, for one extra raw per block.',
-     'Let the Crusher double raw metal instead (1 raw → 2, slower), so it pays off once Q1 opens the ores.'),
-    ('Q15', 'Content', 'Medicine Bench and the Mortar',
-     'Your spec grinds Sedative into Narcotics and starts the medicine path at a Mortar & Pestle (B02). The '
-     'new Medicine Bench (F14) already makes the medicine: Herbal Bandage, Healing Mixture and Concentrated '
-     'Sedative.',
-     'Fold the mortar into the Medicine Bench: Narcotics and the Redberry medicines become bench recipes, and '
-     'the mortar model sits on the bench.'),
+    ('Q1', 'Decided', 'Rock tool mining tier',
+     'The rock set used the wooden tier, which cannot harvest copper, iron or lapis ore.',
+     'Done: wood stats (durability 59, speed, damage), but the rock tools break what stone tools break.'),
+    ('Q2', 'Decided', 'The bedroll needs the 3×3 grid',
+     '9 Fiber does not fit the 2×2 inventory.',
+     'Done: the bedroll is made at the Working Station.'),
+    ('Q3', 'Decided', 'Fiber in any slot',
+     'A shaped recipe that accepts one Fiber in any free slot.',
+     'Done for the whole rock set: a bound_shaped recipe type; the recipe book shows the Fiber in one slot.'),
+    ('Q4', 'Decided', 'Starter kit',
+     'New players got a bedroll, 2 bandages, 8 fiber and a flint knife.',
+     'Done: only a flint knife.'),
+    ('Q5', 'Decided', 'Berry names',
+     'The game had Narco-, Tinto-, Amar- and Azulberry.',
+     'Done: Blackberry, Redberry, Yellowberry and Blueberry; the old ids stay so existing worlds load.'),
+    ('Q6', 'Decided', 'One rock set',
+     'The Stone Knife and Flint Knife overlapped with the new set.',
+     'Done: the Stone Knife is deleted, the Flint Knife stays, and London completes on the first equipment '
+     '(any rock tool or the flint knife).'),
+    ('Q7', 'Decided', 'Sedative chain',
+     'Blackberry, Narcotics and the tranquilizer arrows.',
+     'Done: Blackberries grind into Narcotics in the Mortar & Pestle, and Narcotics tip the Tranquilizer Arrow. '
+     'The Concentrated Sedative and the Improved Tranquilizer Arrow wait for the Bronze Age.'),
+    ('Q8', 'Decided', 'Twig',
+     'Twig and Stick overlapped.',
+     'Done: the vanilla Stick is renamed Twig. Still open: the Drying Rack recipe (2 logs + 4 twigs proposed).'),
+    ('Q9', 'Decided', 'No quartz',
+     'Comparator, observer and daylight detector need nether quartz.',
+     'Accepted: they do not fit a prehistoric survival theme, so they stay without a source.'),
+    ('Q10', 'Decided', "Tom's Storage recipes",
+     'The connector, interface and terminals needed ender pearls, comparators and glowstone.',
+     'Done: ender pearls became iron ingots and every redstone part and glowstone became copper, so the storage '
+     'network arrives with the metals.'),
+    ('Q11', 'Decided', 'Gunpowder',
+     'Creepers, ghasts and witches are gone.',
+     'Bronze Age: new gunpowder recipes from sulphur and cinnabar crystals in caves (dashboard F15). The Crusher '
+     'no longer makes it.'),
+    ('Q12', 'Decided', 'Vanilla campfire',
+     'The campfire cooked like the Stone Fire.',
+     'Done: its recipe is removed; the Stone Fire is the redesign, not a parallel.'),
+    ('Q13', 'Decided', 'Blueberry',
+     'The Blueberry had no effect.',
+     'Done: it restores one hunger point, and fed to a hurt tame it heals it and starts regeneration.'),
+    ('Q14', 'Decided', 'Crusher ore doubling',
+     'Crushing ore needed Silk Touch ore blocks.',
+     'Done: the Crusher no longer processes ore at all.'),
+    ('Q15', 'Decided', 'Medicine Bench and the Mortar',
+     'Both made medicine.',
+     'Done: the herbal remedies moved to the Mortar & Pestle; the Medicine Bench needs iron and waits for the Iron '
+     'Age medicine.'),
 ]
 
 
@@ -810,7 +779,7 @@ def decisions_html():
         f'<li class="q" id="{q}"><div class="qhead"><span class="qid">{q}</span>'
         f'<span class="qtag t-{tag.lower().replace(" ", "-")}">{html.escape(tag)}</span>'
         f'<h3>{html.escape(title)}</h3></div><p>{html.escape(body)}</p>'
-        f'<p class="rec"><span>Recommendation</span>{html.escape(rec)}</p></li>'
+        f'<p class="rec"><span>{"Decision" if tag == "Decided" else "Recommendation"}</span>{html.escape(rec)}</p></li>'
         for q, tag, title, body, rec in DECISIONS)
 
 
@@ -889,6 +858,7 @@ def main():
     page = page.replace('{{TOTAL}}', f'{total:,}').replace('{{CUT}}', str(cut))
     page = page.replace('{{STATIONS}}', str(sum(1 for n in SPINE if n['item'] and n['st'] != 'cut')))
     page = page.replace('{{DECISIONS}}', str(len(DECISIONS)))
+    page = page.replace('{{DECIDED}}', str(sum(1 for d in DECISIONS if d[1] == 'Decided')))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding='utf-8')
     items = data['items']

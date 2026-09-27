@@ -1,4 +1,4 @@
-"""Build the Prehistoric item sprites: rock, stone knife, fire starter, dried meat and dinosaur meats.
+"""Build the Prehistoric item sprites: rock, fire starter, dried meat and dinosaur meats.
 
 Meats start from the vanilla meat sprites in the local Minecraft source jar, doubled to 32 px with
 nearest-neighbour scaling (so the pixel grid stays crisp) and re-toned per meat family; prime meat
@@ -116,29 +116,6 @@ def paint(rows, palette):
     return img
 
 
-def stone_knife():
-    # A knapped leaf-shaped blade with a fiber-wrapped grip.
-    return paint(["................",
-                  "............hL..",
-                  "...........hLLd.",
-                  "..........hLLdd.",
-                  ".........hLLdd..",
-                  "........hLLdd...",
-                  ".......hLLdd....",
-                  "......hLddd.....",
-                  ".....bLddd......",
-                  "....ffbd........",
-                  "...FfF..........",
-                  "..fFf...........",
-                  ".FfF............",
-                  ".ow.............",
-                  "................",
-                  "................"],
-                 {'h': (205, 203, 196, 255), 'L': (160, 157, 150, 255), 'd': (108, 104, 98, 255),
-                  'b': (84, 80, 76, 255), 'f': (178, 146, 84, 255), 'F': (126, 98, 52, 255),
-                  'o': (92, 66, 36, 255), 'w': (70, 50, 28, 255)})
-
-
 def fire_starter():
     # A hand drill: spindle on a notched fireboard, with an ember in the notch.
     return paint(["................",
@@ -169,7 +146,6 @@ def save(image, name):
 
 def main():
     save(double(rock()), 'rock')
-    save(double(stone_knife()), 'stone_knife')
     save(double(fire_starter()), 'fire_starter')
     save(double(retone(vanilla('cooked_beef'), 0.03, 0.70, 0.72)), 'dried_meat')
     for family, (raw, cooked, hue, sat, val, marbled) in MEATS.items():

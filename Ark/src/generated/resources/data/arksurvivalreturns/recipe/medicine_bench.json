@@ -4,12 +4,12 @@
   "group": "medicine_bench",
   "key": {
     "B": "minecraft:glass_bottle",
-    "F": "arksurvivalreturns:plant_fiber",
+    "I": "#c:ingots/iron",
     "L": "#minecraft:logs",
     "P": "#minecraft:planks"
   },
   "pattern": [
-    "FBF",
+    "IBI",
     "PPP",
     "L L"
   ],

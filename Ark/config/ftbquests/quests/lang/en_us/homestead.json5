@@ -34,7 +34,7 @@
     "Craft a cooking pot from cobblestone and fiber.",
     "Hearty stew takes two dried rations, one meat and one carrot; trail mix takes two rations and two Ark berries.",
     "Fill every slot; the pot consumes one item from each.",
-    "Place the pot on a campfire and light it. Extinguishing the fire pauses cooking without consuming ingredients."
+    "Place the pot on a Stone Fire and light it. Extinguishing the fire pauses cooking without consuming ingredients."
   ],
   "task.00000000000004A6.title": "Craft a cooking pot",
   "task.00000000000004A7.title": "Cook a hearty stew",

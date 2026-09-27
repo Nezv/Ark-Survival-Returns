@@ -160,15 +160,15 @@ Xaero's installed fullscreen World Map shows one nest glyph per discovered habit
 
 ## Berries
 
-Breaking **short grass or tall grass** without shears has a **35%** chance to drop **1–2 berries of one type**, in addition to vanilla loot. Relative weights are 30 Tintoberry (red) / 30 Amarberry (yellow) / 30 Azulberry (blue) / 10 Narcoberry (dark purple, sedative).
+Breaking **short grass or tall grass** without shears has a **35%** chance to drop **1–2 berries of one type**, in addition to vanilla loot. Relative weights are 30 Redberry / 30 Yellowberry / 30 Blueberry / 10 Blackberry (sedative). The item ids keep the old names (tintoberry, amarberry, azulberry, narcoberry) so existing worlds load.
 
-The upper half of tall grass does not make a second roll. Grass blocks, ferns, sheared grass and creative breaking do not yield bonuses. Explosions use vanilla survival filtering. Tintoberry, amarberry and azulberry are taming food; narcoberry is a sedative that can be eaten, swung or crafted into a tranquilizer arrow.
+The upper half of tall grass does not make a second roll. Grass blocks, ferns, sheared grass and creative breaking do not yield bonuses. Explosions use vanilla survival filtering. Redberry, Yellowberry and Blueberry are taming food; the Blueberry also restores one hunger point and heals a hurt tame it is fed to. The Blackberry is a sedative that can be eaten or swung, and the Mortar & Pestle grinds it into Narcotics.
 
 ## Taming, torpor and riding
 
 Every one of the 41 registered creatures can be tamed and ridden. Feeding while awake tames ordinary animals and small herbivores; large or dangerous creatures must be knocked out first and fed from their own inventory; flying creatures take fish when they are hungry. Sedation applies to creatures, players and ordinary vanilla animals through one server-authoritative system.
 
-- **Sedatives.** Narcoberries can be eaten (which sedates the user), swung at a creature, or crafted into tranquilizer arrows (four arrows, one narcoberry and one bone). Torpor is a normalized meter with size-dependent ceilings of 60/150/350/700, a ten second recovery delay and 0.5% recovery per second; an entity wakes below 20% of its maximum.
+- **Sedatives.** Narcoberries can be eaten (which sedates the user), swung at a creature, or ground into Narcotics, which tip tranquilizer arrows (four arrows, Narcotics and one bone). Torpor is a normalized meter with size-dependent ceilings of 60/150/350/700, a ten second recovery delay and 0.5% recovery per second; an entity wakes below 20% of its maximum.
 - **Taming.** Progress comes from meals, never from waiting. A profile's target duration and the twenty second feeding interval derive the progress each meal is worth, and a species' favourite food is worth 1.5×. Damage during an attempt costs ten points, and waking early abandons the attempt while keeping the deposited food.
 - **Riding.** Tame it, put a saddle in its saddle slot, then use it to mount. Flying creatures climb and dive with the look direction; swimmers steer in three dimensions. Sneak-use opens the vanilla horse-style inventory, which also serves as the knock-out taming screen.
 

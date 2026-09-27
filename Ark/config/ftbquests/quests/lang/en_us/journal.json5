@@ -27,16 +27,16 @@
     "Break short and tall grass for berries.",
     "Bones come from ordinary animal carcasses; hunt with a stone tool."
   ],
-  "task.00000000000001A4.title": "Gather 3 tintoberries",
+  "task.00000000000001A4.title": "Gather 3 Redberries",
   "task.00000000000001A5.title": "Gather 2 bones",
 
   "quest.0000000000000104.title": "Sedation and Capture",
   "quest.0000000000000104.quest_subtitle": "Bring down something bigger than you.",
   "quest.0000000000000104.quest_desc": [
-    "Craft tranquilizer arrows: four arrows, one narcoberry and a bone.",
+    "Craft tranquilizer arrows: four arrows, Narcotics and a bone.",
     "Knock out a large creature, open it, and feed it from its own inventory."
   ],
-  "task.00000000000001A6.title": "Gather a narcoberry",
+  "task.00000000000001A6.title": "Gather a Blackberry",
   "task.00000000000001A7.title": "Craft 2 tranquilizer arrows",
 
   "quest.0000000000000105.title": "A Trusted Companion",

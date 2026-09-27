@@ -70,7 +70,11 @@ public final class ModContent {
                     p -> p.stacksTo(16));
     public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
-    /** Concentrated sedative: crafted from narcoberries and fiber, a stronger dose than the berry itself. */
+    /** Narcotics: Blackberries ground in the Mortar & Pestle; the stronger dose that tips tranquilizer arrows. */
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem> NARCOTICS =
+            ITEMS.registerItem("narcotics", dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem::new,
+                    p -> p.stacksTo(64));
+    /** Concentrated sedative: kept for the Bronze Age redesign; nothing makes it in the Prehistoric age. */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem> CONCENTRATED_SEDATIVE =
             ITEMS.registerItem("concentrated_sedative",
                     dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem::new, p -> p.stacksTo(16));
@@ -221,8 +225,11 @@ public final class ModContent {
                     .sound(net.minecraft.world.level.block.SoundType.GRASS)));
             NEST_EGGS.put(s, ITEMS.registerSimpleItem(s.id + "_egg", p -> p.stacksTo(16)));
         }
-        for (String id : new String[]{"tintoberry", "amarberry", "azulberry"})
+        for (String id : new String[]{"tintoberry", "amarberry"})
             BERRIES.put(id, ITEMS.registerSimpleItem(id, p -> p.stacksTo(64)));
+        // Blueberry (azulberry): one hunger point, and it regenerates a tame it is fed to (CreatureEntity).
+        BERRIES.put("azulberry", ITEMS.registerSimpleItem("azulberry", p -> p.stacksTo(64)
+                .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.1f).alwaysEdible().build())));
         // Narcoberry is the baseline sedative: consumed, swung or crafted into a tranquilizer arrow.
         BERRIES.put("narcoberry", ITEMS.registerItem("narcoberry", SedativeItem::new, p -> p.stacksTo(64)));
         TABS.register("main", () -> CreativeModeTab.builder()

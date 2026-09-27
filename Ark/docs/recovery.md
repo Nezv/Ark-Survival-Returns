@@ -9,8 +9,7 @@ removed on 2026-09-26: a real death drops items as in vanilla.
 
 - **Plant fiber** drops from short and tall grass next to the berries; shears suppress both.
 - **Flint** comes from gravel, as in vanilla, and repairs the flint knife.
-- **A starter kit** lands on a player's first join in a world: one primitive bedroll, two fiber
-  bandages, eight plant fiber and one flint knife. The granted flag is world SavedData, so
+- **A starter kit** lands on a player's first join in a world: a single flint knife. The granted flag is world SavedData, so
   rejoining never duplicates it. Disable with `camp.starterKit=false`.
 - **Recipes:** flint knife = flint + stick + fiber; keratin spear = keratin + two sticks + fiber
   (keratin drops from horned, plated and beaked creatures); fiber bandage = three fiber + string

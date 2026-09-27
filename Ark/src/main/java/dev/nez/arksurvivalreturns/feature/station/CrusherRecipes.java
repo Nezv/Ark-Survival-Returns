@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 /**
- * What the crusher grinds: stone down to gravel and sand, ores into doubled raw metal, and the usual
+ * What the crusher grinds: stone down to gravel and sand, and the usual
  * powders (bone meal, blaze powder, sugar, dyes from flowers, string from wool). The first matching
  * entry wins, so specific items come before tags.
  */
@@ -31,19 +31,6 @@ public final class CrusherRecipes {
     }
 
     public static final List<Recipe> RECIPES = List.of(
-            // Ores: a crushed ore yields twice the raw metal of a pickaxe.
-            of(c("ores/iron"), Items.RAW_IRON, 2, 160),
-            of(c("ores/gold"), Items.RAW_GOLD, 2, 160),
-            of(c("ores/copper"), Items.RAW_COPPER, 6, 160),
-            of(c("ores/coal"), Items.COAL, 2, 120),
-            of(c("ores/redstone"), Items.REDSTONE, 6, 160),
-            of(c("ores/lapis"), Items.LAPIS_LAZULI, 8, 160),
-            of(c("ores/diamond"), Items.DIAMOND, 2, 240),
-            of(c("ores/emerald"), Items.EMERALD, 2, 240),
-            of(c("ores/quartz"), Items.QUARTZ, 3, 160),
-            of(Items.RAW_IRON_BLOCK, Items.RAW_IRON, 10, 240),
-            of(Items.RAW_GOLD_BLOCK, Items.RAW_GOLD, 10, 240),
-            of(Items.RAW_COPPER_BLOCK, Items.RAW_COPPER, 10, 240),
             // Stone down the chain: stone -> cobblestone -> gravel -> sand.
             of(Items.STONE, Items.COBBLESTONE, 1, 60),
             of(Items.COBBLESTONE, Items.GRAVEL, 1, 80),
@@ -59,7 +46,6 @@ public final class CrusherRecipes {
             of(Items.BONE_BLOCK, Items.BONE_MEAL, 12, 100),
             of(Items.BLAZE_ROD, Items.BLAZE_POWDER, 3, 60),
             of(Items.SUGAR_CANE, Items.SUGAR, 2, 40),
-            of(Items.FLINT, Items.GUNPOWDER, 1, 120),
             of(ItemTags.WOOL, Items.STRING, 4, 60),
             of(Items.WHEAT, Items.WHEAT_SEEDS, 2, 40),
             of(Items.COCOA_BEANS, Items.BROWN_DYE, 2, 40),

@@ -50,7 +50,7 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
 .sheetno { font-size: 11px; letter-spacing: .08em; border: 1.2px solid var(--ink); padding: 3px 8px; white-space: nowrap; }
 
 /* workstation spine: tools/spine.css, mapped onto this page's tokens */
-#spine { --sp-ink: var(--ink); --sp-ink2: var(--ink2); --sp-rule: var(--rule); --sp-wire: var(--wire); --sp-chip: var(--chip);
+#spine, .sp-legend { --sp-ink: var(--ink); --sp-ink2: var(--ink2); --sp-rule: var(--rule); --sp-wire: var(--wire); --sp-chip: var(--chip);
   --sp-sheet: var(--sheet); --sp-gate: var(--gate); --sp-you: var(--you); --sp-prop: var(--prop); --sp-now: var(--now);
   --sp-change: var(--change); --sp-cut: var(--cut); --sp-tbd: var(--tbd);
   --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono); }
@@ -86,7 +86,7 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
 .qid { font-weight: 600; font-size: 14px; }
 .qtag { font: 500 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; border: 1.2px solid currentColor; padding: 0 6px; color: var(--ink2); }
 .qtag.t-blocking { color: var(--cut); } .qtag.t-spec-gap { color: var(--change); } .qtag.t-answer { color: var(--wire); }
-.qtag.t-content { color: var(--prop); } .qtag.t-yours { color: var(--tbd); }
+.qtag.t-content { color: var(--prop); } .qtag.t-decided { color: var(--wire); } .qtag.t-yours { color: var(--tbd); }
 .q p { margin: 6px 0 0; font-size: 14px; max-width: 70ch; }
 .q .rec span { display: block; font: 500 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
 @media (max-width: 720px) {
@@ -99,14 +99,14 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
 
 <div class="wrap">
   <header>
-    <p class="eyebrow">Ark: Survival Returns · item progression · draft for approval · 2026-09-26</p>
+    <p class="eyebrow">Ark: Survival Returns · item progression · decisions applied · 2026-09-26</p>
     <h1>Recipe Gates</h1>
     <p class="lede">Every item from bare hands to the metal stations, placed in the first column where it can be made: the columns count crafting steps from nothing, so late items sit to the right and every line shows what they are built from. Items are grouped under the station or tool that makes them, and each station points to its groups. Your steps (1.1 to 2.3.2) are the small numbers on the chips.</p>
     <ul class="facts">
       <li><b>{{STATIONS}}</b> stations and tool gates</li>
       <li><b>{{TOTAL}}</b> vanilla 26.1.2 recipes read</li>
       <li><b>{{CUT}}</b> already removed by the theme</li>
-      <li><b>{{DECISIONS}}</b> decisions for you</li>
+      <li><b>{{DECIDED}}</b> of {{DECISIONS}} decisions made</li>
     </ul>
     <nav class="sheets" aria-label="Sheets">
       <a href="#spine">1 · Dependency map</a><a href="#netlist">2 · Vanilla netlist</a><a href="#cuts">Cut list</a><a href="#decisions">Decisions</a>
@@ -156,7 +156,7 @@ nav.sheets a:hover, nav.sheets a:focus-visible { background: var(--ink); color: 
   </section>
 
   <section class="sheet" id="decisions">
-    <div class="sheethead"><div><h2>Decisions</h2><p>Blocking items first stop the progression; the others shape it. Each has a recommendation you can accept or replace.</p></div></div>
+    <div class="sheethead"><div><h2>Decisions</h2><p>Your answers of 2026-09-26, as implemented.</p></div></div>
     <ol class="qs">
 <!--DECISIONS-->
     </ol>

@@ -143,9 +143,9 @@ final class TamingGameTests {
         var input = CraftingInput.of(3, 2, List.of(
                 new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
                 new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
-                new ItemStack(ModContent.BERRIES.get("narcoberry").get()), new ItemStack(Items.BONE)));
+                new ItemStack(ModContent.NARCOTICS.get()), new ItemStack(Items.BONE)));
         h.assertTrue(shapeless.matches(input, h.getLevel()),
-                "Tranquilizer arrow recipe no longer matches four arrows, narcoberry and bone");
+                "Tranquilizer arrow recipe no longer matches four arrows, narcotics and bone");
         var crafted = shapeless.assemble(input);
         h.assertTrue(crafted.is(ModContent.TRANQUILIZER_ARROW_ITEM.get()) && crafted.getCount() == 4,
                 "Tranquilizer arrow recipe result changed: " + crafted);

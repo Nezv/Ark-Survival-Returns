@@ -29,10 +29,22 @@ final class StationData {
             item(put, id, id);
             loot(put, id);
         }
+        mortar(put);
         crate(put);
         crusher(put);
         recipes(put);
         tags(put);
+    }
+
+    /** The Mortar & Pestle model comes from the design pack (tools/build_prehistoric_camp.py). */
+    private static void mortar(BiConsumer<String, Object> put) {
+        var variants = new LinkedHashMap<String, Object>();
+        for (String facing : DIRECTIONS)
+            variants.put("facing=" + facing, Map.of("model", NS + ":block/prehistoric/mortar_empty", "y", DIRECTIONS.indexOf(facing) * 90));
+        put.accept(ASSETS + "blockstates/mortar_and_pestle", Map.of("variants", variants));
+        put.accept(ASSETS + "models/item/mortar_and_pestle", Map.of("parent", NS + ":block/prehistoric/mortar_empty"));
+        put.accept(ASSETS + "items/mortar_and_pestle", Map.of("model", Map.of("type", "minecraft:model", "model", NS + ":item/mortar_and_pestle")));
+        loot(put, "mortar_and_pestle");
     }
 
     private static void crate(BiConsumer<String, Object> put) {
@@ -70,12 +82,15 @@ final class StationData {
         shaped(put, "storage_crate", 1, List.of("PPP", "P P", "PPP"), Map.of("P", "#minecraft:planks"));
         shaped(put, "smithing_table", 1, List.of("II", "SS", "PP"),
                 Map.of("I", "minecraft:iron_ingot", "S", "minecraft:smooth_stone", "P", "#minecraft:planks"));
-        shaped(put, "medicine_bench", 1, List.of("FBF", "PPP", "L L"), Map.of("F", NS + ":plant_fiber",
+        // Iron Age: the bench waits for iron; its medicine is still to be designed.
+        shaped(put, "medicine_bench", 1, List.of("IBI", "PPP", "L L"), Map.of("I", "#c:ingots/iron",
                 "B", "minecraft:glass_bottle", "P", "#minecraft:planks", "L", "#minecraft:logs"));
+        // A stone bowl and a rock pestle.
+        shaped(put, "mortar_and_pestle", 1, List.of(" R ", "C C", " C "), Map.of("R", NS + ":rock", "C", "minecraft:cobblestone"));
         shaped(put, "crusher", 1, List.of("LGL", "C C", "CCC"),
                 Map.of("L", "#minecraft:logs", "G", "minecraft:grindstone", "C", "minecraft:cobblestone"));
-        // Made only at the Medicine Bench (the item tag arksurvivalreturns:medicine); five or more ingredients,
-        // so none fits the player's own 2x2 grid.
+        // Made only at the Mortar & Pestle (the item tag arksurvivalreturns:mortar).
+        shapeless(put, "narcotics", 4, NS + ":narcoberry", NS + ":narcoberry", NS + ":narcoberry", NS + ":narcoberry");
         shapeless(put, "herbal_bandage", 2, NS + ":fiber_bandage", NS + ":fiber_bandage", NS + ":azulberry", NS + ":amarberry",
                 NS + ":plant_fiber");
         shapeless(put, "healing_mixture", 1, "minecraft:glass_bottle", NS + ":azulberry", NS + ":azulberry",
@@ -83,8 +98,9 @@ final class StationData {
     }
 
     private static void tags(BiConsumer<String, Object> put) {
-        put.accept(DATA + "tags/item/medicine", Map.of("replace", false, "values",
-                List.of(NS + ":herbal_bandage", NS + ":healing_mixture", NS + ":concentrated_sedative")));
+        put.accept(DATA + "tags/item/medicine", Map.of("replace", false, "values", List.of()));
+        put.accept(DATA + "tags/item/mortar", Map.of("replace", false, "values",
+                List.of(NS + ":narcotics", NS + ":herbal_bandage", NS + ":healing_mixture")));
         // Other mods look for chests and workbenches through the common tags.
         for (String kind : List.of("item", "block")) {
             put.accept("data/c/tags/" + kind + "/chests", Map.of("replace", false, "values", List.of(NS + ":storage_crate")));
@@ -95,7 +111,7 @@ final class StationData {
         put.accept("data/minecraft/tags/block/mineable/axe", Map.of("replace", false,
                 "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate")));
         put.accept("data/minecraft/tags/block/mineable/pickaxe", Map.of("replace", false,
-                "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge")));
+                "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle")));
     }
 
     static void messages(Map<String, String> en, Map<String, String> pt) {
@@ -107,6 +123,8 @@ final class StationData {
         pt.put("block." + NS + ".smithing_table", "Mesa de ferraria");
         en.put("block." + NS + ".medicine_bench", "Medicine Bench");
         pt.put("block." + NS + ".medicine_bench", "Bancada de medicina");
+        en.put("block." + NS + ".mortar_and_pestle", "Mortar & Pestle");
+        pt.put("block." + NS + ".mortar_and_pestle", "Pilão");
         en.put("block." + NS + ".crusher", "Crusher");
         pt.put("block." + NS + ".crusher", "Triturador");
         en.put("item." + NS + ".herbal_bandage", "Herbal Bandage");

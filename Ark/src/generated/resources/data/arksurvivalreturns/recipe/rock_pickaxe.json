@@ -1,0 +1,19 @@
+{
+  "type": "arksurvivalreturns:bound_shaped",
+  "binding": "arksurvivalreturns:plant_fiber",
+  "category": "equipment",
+  "group": "rock_pickaxe",
+  "key": {
+    "R": "arksurvivalreturns:rock",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "RRR",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:rock_pickaxe"
+  }
+}

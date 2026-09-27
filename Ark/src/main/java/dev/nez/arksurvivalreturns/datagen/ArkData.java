@@ -196,8 +196,9 @@ public final class ArkData implements DataProvider {
         }
         pt.put("chat." + NS + ".biome_unrated", "[ARK] %s | Fora das zonas de perigo do mundo normal");
         String[] ids = {"tintoberry", "amarberry", "azulberry", "narcoberry"};
-        String[] names = {"Tintoberry", "Amarberry", "Azulberry", "Narcoberry (Sedative)"};
-        String[] portuguese = {"Tintoberry", "Amarberry", "Azulberry", "Narcoberry (Sedativa)"};
+        // Old ids, new names (recipe gates Q5): existing worlds keep their berries.
+        String[] names = {"Redberry", "Yellowberry", "Blueberry", "Blackberry"};
+        String[] portuguese = {"Baga vermelha", "Baga amarela", "Baga azul", "Baga preta"};
         for (int i = 0; i < ids.length; i++) {
             model(ids[i]); en.put("item." + NS + "." + ids[i], names[i]); pt.put("item." + NS + "." + ids[i], portuguese[i]);
         }
@@ -318,14 +319,14 @@ public final class ArkData implements DataProvider {
         }
         tag("item/taming/raw_meat", rawMeat.toArray(String[]::new));
         tag("item/taming/fish", "cod", "salmon", NS + ":" + dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.MARINE.rawId());
-        tag("item/taming/sedative", NS + ":narcoberry", NS + ":tranquilizer_arrow");
+        tag("item/taming/sedative", NS + ":narcoberry", NS + ":narcotics", NS + ":tranquilizer_arrow");
         tag("item/taming/knockout_food", "#" + NS + ":taming/plant_food", "#" + NS + ":taming/raw_meat",
                 "#" + NS + ":taming/fish");
         json("data/" + NS + "/recipe/tranquilizer_arrow", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"tranquilizer_arrow",
                  "ingredients":["minecraft:arrow","minecraft:arrow",
                                 "minecraft:arrow","minecraft:arrow",
-                                "%s:narcoberry","minecraft:bone"],
+                                "%s:narcotics","minecraft:bone"],
                  "result":{"count":4,"id":"%s:tranquilizer_arrow"}}
                 """.formatted(NS, NS));
     }
@@ -538,12 +539,12 @@ public final class ArkData implements DataProvider {
                  "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","minecraft:string"],
                  "result":{"count":2,"id":"%s:fiber_bandage"}}
                 """.formatted(NS, NS, NS, NS));
+        // Nine fiber: only the Working Station's 3x3 grid takes it.
         json("data/" + NS + "/recipe/bedroll", """
-                {"type":"minecraft:crafting_shapeless","category":"misc","group":"bedroll",
-                 "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","%s:plant_fiber",
-                                "minecraft:leather"],
+                {"type":"minecraft:crafting_shaped","category":"misc","group":"bedroll",
+                 "pattern":["FFF","FFF","FFF"],"key":{"F":"%s:plant_fiber"},
                  "result":{"count":1,"id":"%s:bedroll"}}
-                """.formatted(NS, NS, NS, NS, NS));
+                """.formatted(NS, NS));
     }
 
     /** Cargo rigs: the two harness tiers and their primitive recipes. Vanilla textures stand in. */
@@ -624,21 +625,17 @@ public final class ArkData implements DataProvider {
         vanillaModel("trail_mix", "minecraft:item/cookie");
     }
 
-    /** Concentration: narcoberries and fiber become a stronger dose, a mixture only the Medicine Bench makes. */
+    /**
+     * Narcotics come from the Mortar & Pestle (StationData). The Concentrated Sedative and the Improved
+     * Tranquilizer Arrow wait for the Bronze Age: the items stay registered, but nothing makes them yet.
+     */
     private void medicine() {
+        model("narcotics");
         vanillaModel("concentrated_sedative", "minecraft:item/gunpowder");
         vanillaModel("improved_tranquilizer_arrow", "minecraft:item/spectral_arrow");
-        json("data/" + NS + "/recipe/concentrated_sedative", """
-                {"type":"minecraft:crafting_shapeless","category":"misc","group":"concentrated_sedative",
-                 "ingredients":["%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:narcoberry","%s:plant_fiber"],
-                 "result":{"count":1,"id":"%s:concentrated_sedative"}}
-                """.formatted(NS, NS, NS, NS, NS, NS));
-        json("data/" + NS + "/recipe/improved_tranquilizer_arrow", """
-                {"type":"minecraft:crafting_shapeless","category":"misc","group":"improved_tranquilizer_arrow",
-                 "ingredients":["%s:tranquilizer_arrow","%s:tranquilizer_arrow","%s:tranquilizer_arrow",
-                                "%s:tranquilizer_arrow","%s:concentrated_sedative"],
-                 "result":{"count":4,"id":"%s:improved_tranquilizer_arrow"}}
-                """.formatted(NS, NS, NS, NS, NS, NS));
+        // The recipe gates rename the vanilla Stick: the leaves drop it, and it is the twig of the spec.
+        put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig"));
+        put("assets/minecraft/lang/pt_br", Map.of("item.minecraft.stick", "Graveto"));
     }
 
     /** The downed state's two hidden discovery advancements. */
@@ -757,14 +754,16 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".drying_rack", "Varal de secagem");
         en.put("item." + NS + ".dried_ration", "Dried Ration");
         pt.put("item." + NS + ".dried_ration", "Ra\u00e7\u00e3o seca");
-        en.put("block." + NS + ".tintoberry_bush", "Tintoberry Bush");
-        pt.put("block." + NS + ".tintoberry_bush", "Arbusto de tintoberry");
-        en.put("block." + NS + ".amarberry_bush", "Amarberry Bush");
-        pt.put("block." + NS + ".amarberry_bush", "Arbusto de amarberry");
-        en.put("block." + NS + ".azulberry_bush", "Azulberry Bush");
-        pt.put("block." + NS + ".azulberry_bush", "Arbusto de azulberry");
-        en.put("block." + NS + ".narcoberry_bush", "Narcoberry Bush");
-        pt.put("block." + NS + ".narcoberry_bush", "Arbusto de narcoberry");
+        en.put("block." + NS + ".tintoberry_bush", "Redberry Bush");
+        pt.put("block." + NS + ".tintoberry_bush", "Arbusto de baga vermelha");
+        en.put("block." + NS + ".amarberry_bush", "Yellowberry Bush");
+        pt.put("block." + NS + ".amarberry_bush", "Arbusto de baga amarela");
+        en.put("block." + NS + ".azulberry_bush", "Blueberry Bush");
+        pt.put("block." + NS + ".azulberry_bush", "Arbusto de baga azul");
+        en.put("block." + NS + ".narcoberry_bush", "Blackberry Bush");
+        pt.put("block." + NS + ".narcoberry_bush", "Arbusto de baga preta");
+        en.put("item." + NS + ".narcotics", "Narcotics");
+        pt.put("item." + NS + ".narcotics", "Narcóticos");
         en.put("item." + NS + ".concentrated_sedative", "Concentrated Sedative");
         pt.put("item." + NS + ".concentrated_sedative", "Sedativo concentrado");
         en.put("item." + NS + ".improved_tranquilizer_arrow", "Improved Tranquilizer Arrow");
@@ -1028,7 +1027,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
-                "primitive_tall_stations", "primitive_keratin", "stations",
+                "primitive_tall_stations", "primitive_keratin", "stations", "recipe_decisions",
                 "integration_curios", "integration_toms_storage", "integration_terralith", "integration_better_combat"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",

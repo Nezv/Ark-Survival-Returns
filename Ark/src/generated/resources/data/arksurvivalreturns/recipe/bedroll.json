@@ -1,13 +1,14 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
   "group": "bedroll",
-  "ingredients": [
-    "arksurvivalreturns:plant_fiber",
-    "arksurvivalreturns:plant_fiber",
-    "arksurvivalreturns:plant_fiber",
-    "arksurvivalreturns:plant_fiber",
-    "minecraft:leather"
+  "key": {
+    "F": "arksurvivalreturns:plant_fiber"
+  },
+  "pattern": [
+    "FFF",
+    "FFF",
+    "FFF"
   ],
   "result": {
     "count": 1,

@@ -1,0 +1,19 @@
+{
+  "type": "arksurvivalreturns:bound_shaped",
+  "binding": "arksurvivalreturns:plant_fiber",
+  "category": "equipment",
+  "group": "rock_sword",
+  "key": {
+    "R": "arksurvivalreturns:rock",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "R",
+    "R",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:rock_sword"
+  }
+}

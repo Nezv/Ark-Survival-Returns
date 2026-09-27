@@ -12,17 +12,17 @@
   "task.415200000B6D2EF5.title": "Chronicle objective",
   "quest.41520000006AFECA.title": "Tha rock",
   "quest.41520000006AFECA.quest_desc": [
-    "Bind a rock to a stick: craft a Stone Hatchet."
+    "Bind a rock to a stick: craft a Rock Axe."
   ],
   "task.41520000006AFECB.title": "Chronicle objective",
   "quest.41520001E5F00C68.title": "Berries!",
   "quest.41520001E5F00C68.quest_desc": [
-    "Collect all four berries."
+    "Collect all four berries: Blackberry, Redberry, Yellowberry and Blueberry."
   ],
   "task.41520001E5F00C69.title": "Chronicle objective",
   "quest.415200017D363430.title": "London",
   "quest.415200017D363430.quest_desc": [
-    "Craft a Stone Knife."
+    "Craft your first equipment: a rock tool or the flint knife."
   ],
   "task.415200017D363431.title": "Chronicle objective",
   "quest.41520001FA63EB18.title": "Long-lasting",
@@ -92,7 +92,7 @@
   "task.415200015657701F.title": "Chronicle objective",
   "quest.415200009F04BBE0.title": "Narcotraffic",
   "quest.415200009F04BBE0.quest_desc": [
-    "Produce narcotics: craft a concentrated sedative."
+    "Produce narcotics: grind Blackberries in the Mortar & Pestle."
   ],
   "task.415200009F04BBE1.title": "Chronicle objective"
 }

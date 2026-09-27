@@ -72,7 +72,13 @@ final class IntegrationGameTests {
         level.addFreshEntity(trike);
         TamingService.of(trike).setOwner(owner.getUUID());
         trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
-        h.assertTrue(CargoTransferService.load(owner, trike) == 3, "Fast Load must pull the cabinet's swords");
+        int loaded = CargoTransferService.load(owner, trike);
+        h.assertTrue(loaded == 3, "Fast Load must pull the cabinet's swords (moved " + loaded + ", cargo holds "
+                + trike.tamingInventory().countItem(Items.IRON_SWORD) + " swords, cabinet " + (contains(handler, 3) ? "full" : "short")
+                + ", cargo slots " + trike.tamingInventory().getContainerSize() + ", capacity "
+                + dev.nez.arksurvivalreturns.feature.mass.MassService.creatureCapacity(trike) + ", sword mass "
+                + dev.nez.arksurvivalreturns.feature.mass.MassCalculator.massOf(new ItemStack(Items.IRON_SWORD)) + ", tamed "
+                + TamingService.of(trike).tamed() + ")");
         h.assertTrue(trike.tamingInventory().countItem(Items.IRON_SWORD) == 3, "The swords must land in the cargo");
         h.assertTrue(CargoTransferService.unload(owner, trike) == 3, "Fast Unload must return them to the cabinet");
         h.assertTrue(contains(handler, 3), "The cabinet must hold the swords again");
@@ -121,12 +127,14 @@ final class IntegrationGameTests {
                     new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.KERATIN_SPEAR.get()));
             h.assertTrue(spear != null && "spear".equals(spear.category()) && spear.isTwoHanded() && spear.rangeBonus() > 0,
                     "The keratin spear has no Better Combat spear moveset");
-            var knife = net.bettercombat.logic.WeaponRegistry.getAttributes(
-                    new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.STONE_KNIFE.get()));
-            h.assertTrue(knife != null && "dagger".equals(knife.category()), "The stone knife must swing as a dagger");
+            var knife = net.bettercombat.logic.WeaponRegistry.getAttributes(new ItemStack(ModContent.FLINT_KNIFE.get()));
+            h.assertTrue(knife != null && "dagger".equals(knife.category()), "The flint knife must swing as a dagger");
+            var sword = net.bettercombat.logic.WeaponRegistry.getAttributes(
+                    new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.ROCK_SWORD.get()));
+            h.assertTrue(sword != null && "sword".equals(sword.category()), "The rock sword must swing as a sword");
             var hatchet = net.bettercombat.logic.WeaponRegistry.getAttributes(
                     new ItemStack(dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.STONE_HATCHET.get()));
-            h.assertTrue(hatchet != null && "axe".equals(hatchet.category()), "The stone hatchet must swing as an axe");
+            h.assertTrue(hatchet != null && "axe".equals(hatchet.category()), "The rock axe must swing as an axe");
             h.succeed();
         }
     }

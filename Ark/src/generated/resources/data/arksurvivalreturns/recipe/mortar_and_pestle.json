@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "cobblestone_from_rocks",
+  "group": "mortar_and_pestle",
   "key": {
+    "C": "minecraft:cobblestone",
     "R": "arksurvivalreturns:rock"
   },
   "pattern": [
-    "RR",
-    "RR"
+    " R ",
+    "C C",
+    " C "
   ],
   "result": {
     "count": 1,
-    "id": "minecraft:cobblestone"
+    "id": "arksurvivalreturns:mortar_and_pestle"
   }
 }

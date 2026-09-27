@@ -36,7 +36,13 @@ import net.neoforged.neoforge.event.level.BlockDropsEvent;
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class PrimitiveEvents {
     public static final Set<String> WOODEN_TOOLS = Set.of("minecraft:wooden_pickaxe", "minecraft:wooden_axe",
-            "minecraft:wooden_shovel", "minecraft:wooden_hoe", "minecraft:wooden_sword");
+            "minecraft:wooden_shovel", "minecraft:wooden_hoe", "minecraft:wooden_sword", "minecraft:wooden_spear");
+    /**
+     * Vanilla results the recipe gates retire: the rock set replaces the stone tools, and the Stone Fire is the
+     * campfire's redesign, not a parallel to it.
+     */
+    public static final Set<String> RETIRED = Set.of("minecraft:stone_pickaxe", "minecraft:stone_axe", "minecraft:stone_shovel",
+            "minecraft:stone_hoe", "minecraft:stone_sword", "minecraft:stone_spear", "minecraft:campfire");
     public static final Set<String> FURNACES = Set.of("minecraft:furnace", "minecraft:smoker", "minecraft:blast_furnace");
     /** Vanilla recipes Ark replaces with its own (NeoForge ships its own copy, so a data override would lose). */
     public static final Set<String> REPLACED = Set.of("minecraft:arrow");
@@ -93,7 +99,8 @@ public final class PrimitiveEvents {
             if (entry.getKey().getNamespace().equals(ArkSurvivalReturns.MOD_ID)) return false;
             if (REPLACED.contains(entry.getKey().toString())) return true; // arksurvivalreturns:arrow takes over
             String result = result(entry.getValue());
-            return result != null && (noWood && WOODEN_TOOLS.contains(result) || noFurnace && FURNACES.contains(result));
+            return result != null && (RETIRED.contains(result) || noWood && WOODEN_TOOLS.contains(result)
+                    || noFurnace && FURNACES.contains(result));
         });
         if (before != event.getRecipeJsons().size()) {
             ArkSurvivalReturns.LOGGER.info("Prehistoric progression removed {} recipes", before - event.getRecipeJsons().size());

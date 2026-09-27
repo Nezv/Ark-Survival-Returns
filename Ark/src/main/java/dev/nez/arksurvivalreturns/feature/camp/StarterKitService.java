@@ -8,9 +8,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Grants the one-time recovery kit on a player's first join in a world.
+ * Grants the one-time starter kit on a player's first join in a world: a single flint knife, so a fresh
+ * start begins with nothing else.
  *
- * <p>The kit exists so a fresh start can always build a bedroll and treat a wound; the flag is
+ * <p>The flag is
  * world-scoped SavedData, so rejoining or moving between dimensions never duplicates it.
  */
 public final class StarterKitService {
@@ -29,11 +30,7 @@ public final class StarterKitService {
     }
 
     public static List<ItemStack> kit() {
-        return List.of(
-                new ItemStack(ModContent.BEDROLL.get()),
-                new ItemStack(ModContent.FIBER_BANDAGE.get(), 2),
-                new ItemStack(ModContent.PLANT_FIBER.get(), 8),
-                new ItemStack(ModContent.FLINT_KNIFE.get()));
+        return List.of(new ItemStack(ModContent.FLINT_KNIFE.get()));
     }
 
     private StarterKitService() {}
