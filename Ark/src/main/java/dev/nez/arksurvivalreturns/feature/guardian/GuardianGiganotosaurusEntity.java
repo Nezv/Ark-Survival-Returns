@@ -109,6 +109,12 @@ public class GuardianGiganotosaurusEntity extends CreatureEntity {
     public void tick() {
         super.tick();
         if (level().isClientSide() || !isAlive() || home == null) return;
+        // A ritual Guardian no active encounter owns (reset while its chunk was away, or cleared by an operator)
+        // would stand at its lair forever, idle and unrewarded; it leaves instead.
+        if (tickCount % 20 == 0 && !anchorKey.isEmpty() && GuardianService.encounterFor(this).isEmpty()) {
+            discard();
+            return;
+        }
         if (leashCooldown > 0) leashCooldown--;
         double arena = Config.GUARDIAN_ARENA_RADIUS.get();
         double distance = Math.sqrt(distanceToSqr(home.getX() + 0.5, home.getY() + 0.5, home.getZ() + 0.5));

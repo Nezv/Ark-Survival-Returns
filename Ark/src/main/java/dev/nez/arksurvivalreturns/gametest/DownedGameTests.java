@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns.gametest;
 import com.mojang.authlib.GameProfile;
 import java.util.UUID;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.recovery.DownedHandler;
 import dev.nez.arksurvivalreturns.feature.recovery.DownedPolicy;
 import dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments;
 import dev.nez.arksurvivalreturns.registry.ModContent;
@@ -57,6 +58,45 @@ final class DownedGameTests {
         // The journal discovery is granted through TamingService.discovery, but NeoForge refuses
         // advancement grants for FakePlayers, so the award itself is checked by the manual playtest.
         h.succeed();
+    }
+
+    /**
+     * An expired rescue window and /kill on a downed player each end in one ordinary death. The finishing
+     * blow used to re-enter the downed branch, which absorbed it and expired again until the stack overflowed.
+     */
+    static void bleedOut(GameTestHelper h) {
+        ServerLevel world = h.getLevel();
+        FakePlayer victim = vulnerable(world, "ArkBleedOutVictim");
+        var state = victim.getData(RecoveryAttachments.DOWNED);
+        state.start(100, victim.position());
+        victim.setHealth(1.0f);
+
+        // An ordinary hit while downed is absorbed into the rescue window.
+        h.assertFalse(victim.hurtServer(world, world.damageSources().generic(), 5f), "A downed player took an ordinary hit");
+        h.assertTrue(victim.getHealth() == 1.0f, "The absorbed hit still cost health");
+        int left = DownedPolicy.bleedOut(100, 5f, Config.DOWNED_BLEED_FACTOR.get());
+        h.assertTrue(state.downed() && state.ticksLeft() == left, "The hit did not shorten the window: " + state.ticksLeft());
+
+        // The window runs out: one finishing blow, no recursion.
+        for (int tick = 0; tick <= left && state.downed(); tick++) DownedHandler.step(victim);
+        h.assertFalse(state.downed(), "The rescue window never expired");
+        h.assertTrue(victim.isDeadOrDying(), "An expired rescue window did not kill the player");
+
+        // /kill is fatal for a downed player as well.
+        FakePlayer killed = vulnerable(world, "ArkBleedOutKilled");
+        killed.getData(RecoveryAttachments.DOWNED).start(100, killed.position());
+        killed.setHealth(1.0f);
+        killed.hurtServer(world, world.damageSources().genericKill(), Float.MAX_VALUE);
+        h.assertTrue(killed.isDeadOrDying(), "/kill on a downed player was absorbed");
+        h.succeed();
+    }
+
+    /** Fake players refuse ordinary damage by default; the bleed-out checks need it to land. */
+    private static FakePlayer vulnerable(ServerLevel world, String name) {
+        FakePlayer player = FakePlayerFactory.get(world, new GameProfile(UUID.randomUUID(), name));
+        player.setInvulnerable(false);
+        player.connection.markClientLoaded();
+        return player;
     }
 
     private DownedGameTests() {}

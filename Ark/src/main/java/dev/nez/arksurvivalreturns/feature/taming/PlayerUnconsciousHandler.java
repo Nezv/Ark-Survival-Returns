@@ -159,7 +159,10 @@ public final class PlayerUnconsciousHandler {
     @SubscribeEvent public static void death(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             TorporService.clear(player);
-            player.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED).clear();
+            var downed = player.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED);
+            // /kill on a downed player dies here, not through the bleed-out: drop the bleed-out HUD too.
+            if (downed.downed()) dev.nez.arksurvivalreturns.feature.recovery.DownedSync.clear(player);
+            downed.clear();
             TamingService.onWakeWithoutCompletion(player);
         }
     }

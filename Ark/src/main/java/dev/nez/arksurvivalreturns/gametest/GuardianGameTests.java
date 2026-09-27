@@ -7,6 +7,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.DataResult;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.debug.DinoDebugSnapshot;
+import dev.nez.arksurvivalreturns.feature.guardian.GuardianBar;
 import dev.nez.arksurvivalreturns.feature.guardian.GuardianData;
 import dev.nez.arksurvivalreturns.feature.guardian.GuardianEncounter;
 import dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity;
@@ -21,9 +23,12 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
@@ -138,6 +143,60 @@ final class GuardianGameTests {
         discard(world, pos, ModContent.WORKSHOP_SCHEMATIC.get().getDefaultInstance());
         discard(world, pos, ModContent.GUARDIAN_TROPHY.get().getDefaultInstance());
         h.succeed();
+    }
+
+    /**
+     * The Guardian skips the wildlife goals, so a non-lethal hit, a save and the debug snapshot used to meet a
+     * null controller: a ticking-entity crash for arrows and tames, and a boss that never persisted.
+     */
+    static void hitAndSave(GameTestHelper h) {
+        ServerLevel world = h.getLevel();
+        BlockPos pos = h.absolutePos(new BlockPos(8, 3, 8));
+        String key = "test|hit_and_save|" + UUID.randomUUID();
+        var guardian = guardian(world, pos, key);
+        float before = guardian.getHealth();
+        h.assertTrue(guardian.hurtServer(world, world.damageSources().generic(), 5f), "The Guardian refused an ordinary hit");
+        h.assertTrue(guardian.isAlive() && guardian.getHealth() < before, "The non-lethal hit did not land");
+
+        var output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, world.registryAccess());
+        guardian.saveWithoutId(output);
+        var restored = ModContent.GUARDIAN_GIGANOTOSAURUS.get().create(world, EntitySpawnReason.LOAD);
+        restored.load(TagValueInput.create(ProblemReporter.DISCARDING, world.registryAccess(), output.buildResult()));
+        h.assertTrue(key.equals(restored.guardianKey()) && pos.equals(restored.guardianHome()),
+                "The ritual anchor or the lair did not survive a save");
+        h.assertTrue(Math.abs(restored.getMaxHealth() - 400f) < 1e-3f
+                && Math.abs(restored.getHealth() - guardian.getHealth()) < 1e-3f, "The boss pool or its wounds did not survive a save");
+        h.assertFalse(DinoDebugSnapshot.capture(guardian).isEmpty(), "The debug snapshot of the Guardian failed");
+        guardian.discard();
+        h.succeed();
+    }
+
+    /** A ritual Guardian that no active encounter owns leaves on its own; the Guardian of an active one stays. */
+    static void orphanLeaves(GameTestHelper h) {
+        ServerLevel world = h.getLevel();
+        BlockPos pos = h.absolutePos(new BlockPos(8, 3, 8));
+        var orphan = guardian(world, pos, "test|orphan|" + UUID.randomUUID());
+        String key = "test|owned|" + UUID.randomUUID();
+        var owned = guardian(world, pos, key);
+        GuardianData data = GuardianData.get(world);
+        data.put(new GuardianEncounter(key, world.dimension(), pos, STRUCTURE, UUID.randomUUID(), GuardianState.ACTIVE,
+                Optional.of(owned.getUUID()), Set.of(), Set.of(), 400.0, false, 0L, 0L));
+        h.runAfterDelay(30, () -> {
+            h.assertTrue(orphan.isRemoved(), "An unowned ritual Guardian stayed in the world");
+            h.assertFalse(owned.isRemoved(), "The Guardian of an active encounter was removed");
+            owned.discard();
+            data.remove(key);
+            GuardianBar.hide(key);
+            h.succeed();
+        });
+    }
+
+    private static GuardianGiganotosaurusEntity guardian(ServerLevel world, BlockPos pos, String key) {
+        var guardian = ModContent.GUARDIAN_GIGANOTOSAURUS.get().create(world, EntitySpawnReason.MOB_SUMMONED);
+        guardian.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0f, 0f);
+        world.addFreshEntity(guardian);
+        guardian.initializeGuardian(key, pos, 400.0, 1.0, 8.0);
+        return guardian;
     }
 
     private static CreatureEntity allosaurus(ServerLevel world, BlockPos pos, EntitySpawnReason reason) {

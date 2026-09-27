@@ -62,6 +62,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
         FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
+        FUNCTIONS.register("downed_bleed_out", () -> DownedGameTests::bleedOut);
         FUNCTIONS.register("spawn_pipeline", () -> SpawnerGameTests::pipeline);
         FUNCTIONS.register("primitive_rocks", () -> PrimitiveGameTests::rocks);
         FUNCTIONS.register("primitive_fire", () -> PrimitiveGameTests::fire);
@@ -92,6 +93,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("guardian_registration", () -> GuardianGameTests::registration);
         FUNCTIONS.register("guardian_persistence", () -> GuardianGameTests::persistence);
         FUNCTIONS.register("guardian_rewards", () -> GuardianGameTests::rewards);
+        FUNCTIONS.register("guardian_hit_and_save", () -> GuardianGameTests::hitAndSave);
+        FUNCTIONS.register("guardian_orphan", () -> GuardianGameTests::orphanLeaves);
         FUNCTIONS.register("tech_tree", () -> TechGameTests::tree);
         FUNCTIONS.register("tech_progress", () -> TechGameTests::progress);
         FUNCTIONS.register("tech_triggers", () -> TechGameTests::triggers);

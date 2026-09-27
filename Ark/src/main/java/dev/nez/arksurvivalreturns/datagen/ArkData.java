@@ -1005,7 +1005,7 @@ public final class ArkData implements DataProvider {
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
                 "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn",
-                "downed_revive"))
+                "downed_revive", "downed_bleed_out"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
@@ -1022,7 +1022,7 @@ public final class ArkData implements DataProvider {
                 "function", NS + ":spawn_apex", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
         for (String name : List.of("guardian_heart", "guardian_policy", "guardian_registration",
-                "guardian_persistence", "guardian_rewards"))
+                "guardian_persistence", "guardian_rewards", "guardian_hit_and_save", "guardian_orphan"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));

@@ -352,7 +352,14 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public int creatureLevel() { return entityData.get(LEVEL); }
     public UUID packId() { return packId; }
     public boolean isNaturalWildlife() { return naturalWildlife && !isPersistenceRequired(); }
-    public WildlifeController wildlife() { return wildlife; }
+    /**
+     * The wild routine. Types whose registerGoals replaces the realm goals (the Guardian) get an unregistered
+     * one on first use, so saving, loading and waking never meet a null controller.
+     */
+    public WildlifeController wildlife() {
+        if (wildlife == null) wildlife = createController();
+        return wildlife;
+    }
     public BehaviorState behavior() { return BehaviorState.values()[Math.clamp(entityData.get(BEHAVIOR), 0, BehaviorState.values().length - 1)]; }
     public void setBehavior(BehaviorState state) { entityData.set(BEHAVIOR, state.ordinal()); }
     public void setNightActive(boolean value) { if (!species.flyer()) entityData.set(NIGHT_ACTIVE, value); }
@@ -549,7 +556,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 float target = nightActive() && isAlive() && !behavior().sleeping() ? 1 : 0;
                 eyeGlow += Math.clamp(target - eyeGlow, -0.05f, 0.05f);
             } else if (WildlifeSenses.hasNightCycle(this) && species.sleeps() && behavior().sleeping()
-                    && (isInWater() || isInLava() || isOnFire() || !onGround())) wildlife.interruptSleep();
+                    && (isInWater() || isInLava() || isOnFire() || !onGround())) wildlife().interruptSleep();
         }
         double distance = Math.hypot(getX() - xo, getZ() - zo);
         animationBlocksPerSecond += (Math.min(30, distance * 20) - animationBlocksPerSecond) * 0.35;
@@ -610,7 +617,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         output.putBoolean("NaturalWildlife", naturalWildlife);
         tamingInventory.serialize(output.child("TamingInventory"));
         ContainerHelper.saveAllItems(output.child("Harness"), harnessSlot.getItems());
-        wildlife.save(output);
+        wildlife().save(output);
     }
     @Override protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
@@ -625,7 +632,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         });
         // Adopt the new movement baseline for old saves without stacking a multiplier on each load.
         applyMovementTuning();
-        wildlife.load(input);
+        wildlife().load(input);
         try { packId = UUID.fromString(input.getStringOr("PackId", packId.toString())); }
         catch (IllegalArgumentException ignored) { packId = UUID.randomUUID(); }
         // Vanilla persists attributes and current HP. Never reroll or heal saved creatures.
@@ -707,7 +714,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         }
         if (hit && isAlive() && WildlifeSenses.hasNightCycle(this)) {
             boolean sleeping = behavior().sleeping();
-            wildlife.interruptSleep();
+            wildlife().interruptSleep();
             if (sleeping) playCue(BehaviorAction.Cue.WAKE);
         }
         return hit;

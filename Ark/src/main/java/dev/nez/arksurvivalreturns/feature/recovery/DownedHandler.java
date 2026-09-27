@@ -25,22 +25,25 @@ public final class DownedHandler {
     @SubscribeEvent public static void incoming(LivingIncomingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!Config.DOWNED_ENABLED.get()) return;
+        var source = event.getSource();
+        // /kill and the bleed-out always land, downed or not: absorbing them would call expire() again from
+        // inside its own finishing blow and recurse until the stack overflows.
+        if (source.is(DamageTypes.GENERIC_KILL)) return;
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
         float damage = event.getAmount();
         if (state.downed()) {
             event.setCanceled(true);
             state.bleed(damage, Config.DOWNED_BLEED_FACTOR.get());
             DownedSync.send(player, state);
-            if (state.ticksLeft() <= 0) expire(player);
+            // A drained window ends on the next player tick, never inside this damage event.
             return;
         }
         if (damage < player.getHealth()) return;
-        var source = event.getSource();
         boolean lethal = DownedPolicy.lethal(damage, player.getMaxHealth(), Config.DOWNED_OVERKILL.get(),
                 Config.DOWNED_VOID_LETHAL.get() && source.is(DamageTypes.FELL_OUT_OF_WORLD),
                 Config.DOWNED_LAVA_LETHAL.get() && (source.is(DamageTypes.LAVA)
                         || source.is(DamageTypes.IN_FIRE) || source.is(DamageTypes.ON_FIRE)));
-        if (lethal || source.is(DamageTypes.GENERIC_KILL)) return;
+        if (lethal) return;
         event.setCanceled(true);
         player.setHealth(1.0f);
         state.start(Config.DOWNED_WINDOW.get(), player.position());
@@ -50,7 +53,11 @@ public final class DownedHandler {
     }
 
     @SubscribeEvent public static void tick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (event.getEntity() instanceof ServerPlayer player) step(player);
+    }
+
+    /** One tick of the rescue window; public so the headless suite can drive it (fake players never tick). */
+    public static void step(ServerPlayer player) {
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
         if (!state.downed()) return;
         if (player.isDeadOrDying()) {
@@ -77,7 +84,9 @@ public final class DownedHandler {
     }
 
     private static void expire(ServerPlayer player) {
-        // Bypasses the downed interception: generic_kill is on the lethal list.
+        // Leave the downed state before the finishing blow, so it is an ordinary death.
+        player.getData(RecoveryAttachments.DOWNED).clear();
+        DownedSync.clear(player);
         player.hurtServer(player.level(), player.damageSources().genericKill(), Float.MAX_VALUE);
     }
 

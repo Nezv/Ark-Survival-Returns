@@ -29,6 +29,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
@@ -217,8 +218,11 @@ public final class GuardianService {
             GuardianEncounter encounter, long now) {
         Entity entity = encounter.boss().map(level::getEntity).orElse(null);
         if (!(entity instanceof GuardianGiganotosaurusEntity boss) || !boss.isAlive()) {
-            // The boss chunk is loaded but the Guardian is gone: end the attempt without rewards.
-            if (level.isLoaded(encounter.anchor())) reset(level, data, encounter, false);
+            // The Guardian is gone only once every chunk it can stand in has loaded its entities: they arrive
+            // after the terrain, and resetting before the saved boss does would orphan it next to a new one.
+            if (level.isLoaded(encounter.anchor()) && leashLoaded(level, encounter.anchor())) {
+                reset(level, data, encounter, false);
+            }
             return;
         }
         Set<UUID> participants = nearbyParticipants(server, level, encounter.tribe(), encounter.anchor());
@@ -240,9 +244,21 @@ public final class GuardianService {
             reset(level, data, updated, true);
             return;
         }
-        GuardianBar.update(encounter.key(), boss);
+        // show() recreates the bar for a fight restored from disk; the bar map does not survive a restart.
+        GuardianBar.show(encounter.key(), boss);
         GuardianBar.sync(encounter.key(), barViewers(server, level, updated, boss));
         if (!updated.equals(encounter)) data.put(updated);
+    }
+
+    /** True when every chunk inside the Guardian's leash (twice the arena around its lair) has loaded its entities. */
+    private static boolean leashLoaded(ServerLevel level, BlockPos anchor) {
+        int reach = Config.GUARDIAN_ARENA_RADIUS.get() * 2 + Config.GUARDIAN_SPAWN_RADIUS.get() + 16;
+        for (int x = (anchor.getX() - reach) >> 4; x <= (anchor.getX() + reach) >> 4; x++) {
+            for (int z = (anchor.getZ() - reach) >> 4; z <= (anchor.getZ() + reach) >> 4; z++) {
+                if (!level.areEntitiesLoaded(ChunkPos.pack(x, z))) return false;
+            }
+        }
+        return true;
     }
 
     private static List<ServerPlayer> barViewers(MinecraftServer server, ServerLevel level,
