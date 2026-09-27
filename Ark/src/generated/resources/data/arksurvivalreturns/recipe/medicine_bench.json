@@ -4,14 +4,15 @@
   "group": "medicine_bench",
   "key": {
     "B": "minecraft:glass_bottle",
-    "I": "#c:ingots/iron",
+    "G": "minecraft:glass",
+    "I": "#c:ingots/bronze",
     "L": "#minecraft:logs",
     "P": "#minecraft:planks"
   },
   "pattern": [
     "IBI",
     "PPP",
-    "L L"
+    "LGL"
   ],
   "result": {
     "count": 1,

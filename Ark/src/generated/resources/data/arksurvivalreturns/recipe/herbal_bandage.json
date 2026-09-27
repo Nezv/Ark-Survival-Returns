@@ -3,11 +3,9 @@
   "category": "misc",
   "group": "herbal_bandage",
   "ingredients": [
-    "arksurvivalreturns:fiber_bandage",
-    "arksurvivalreturns:fiber_bandage",
-    "arksurvivalreturns:azulberry",
     "arksurvivalreturns:amarberry",
-    "arksurvivalreturns:plant_fiber"
+    "arksurvivalreturns:narcoberry",
+    "minecraft:short_grass"
   ],
   "result": {
     "count": 2,

@@ -82,25 +82,35 @@ final class StationData {
         shaped(put, "storage_crate", 1, List.of("PPP", "P P", "PPP"), Map.of("P", "#minecraft:planks"));
         shaped(put, "smithing_table", 1, List.of("II", "SS", "PP"),
                 Map.of("I", "minecraft:iron_ingot", "S", "minecraft:smooth_stone", "P", "#minecraft:planks"));
-        // Iron Age: the bench waits for iron; its medicine is still to be designed.
-        shaped(put, "medicine_bench", 1, List.of("IBI", "PPP", "L L"), Map.of("I", "#c:ingots/iron",
-                "B", "minecraft:glass_bottle", "P", "#minecraft:planks", "L", "#minecraft:logs"));
+        // Bronze Age: the bench needs a bronze ingot and a pane of glass; its medicine is field-grade.
+        shaped(put, "medicine_bench", 1, List.of("IBI", "PPP", "LGL"), Map.of("I", "#c:ingots/bronze",
+                "B", "minecraft:glass_bottle", "P", "#minecraft:planks", "L", "#minecraft:logs", "G", "minecraft:glass"));
         // A stone bowl and a rock pestle.
         shaped(put, "mortar_and_pestle", 1, List.of(" R ", "C C", " C "), Map.of("R", NS + ":rock", "C", "minecraft:cobblestone"));
         shaped(put, "crusher", 1, List.of("LGL", "C C", "CCC"),
                 Map.of("L", "#minecraft:logs", "G", "minecraft:grindstone", "C", "minecraft:cobblestone"));
         // Made only at the Mortar & Pestle (the item tag arksurvivalreturns:mortar).
         shapeless(put, "narcotics", 4, NS + ":narcoberry", NS + ":narcoberry", NS + ":narcoberry", NS + ":narcoberry");
-        shapeless(put, "herbal_bandage", 2, NS + ":fiber_bandage", NS + ":fiber_bandage", NS + ":azulberry", NS + ":amarberry",
-                NS + ":plant_fiber");
         shapeless(put, "healing_mixture", 1, "minecraft:glass_bottle", NS + ":azulberry", NS + ":azulberry",
                 NS + ":tintoberry", NS + ":plant_fiber");
+        // The Bandage: field medicine grown out at the Medicine Bench (the item tag arksurvivalreturns:medicine).
+        shapeless(put, "herbal_bandage", 2, NS + ":amarberry", NS + ":narcoberry", "minecraft:short_grass");
+        // Vitamins: a water bottle steeped with berries. The bottle is consumed here and returned when eaten
+        // (Item.Properties#usingConvertsTo on the finished item), so only water matches, not any other potion.
+        put.accept(DATA + "recipe/vitamins", Map.of("type", "minecraft:crafting_shaped", "category", "misc", "group", "vitamins",
+                "pattern", List.of("BRB", "RWR", "BRB"),
+                "key", Map.of("B", NS + ":azulberry", "R", NS + ":tintoberry", "W", Map.of(
+                        "neoforge:ingredient_type", "neoforge:components",
+                        "items", "minecraft:potion",
+                        "components", Map.of("minecraft:potion_contents", "minecraft:water"))),
+                "result", Map.of("count", 1, "id", NS + ":vitamins")));
     }
 
     private static void tags(BiConsumer<String, Object> put) {
-        put.accept(DATA + "tags/item/medicine", Map.of("replace", false, "values", List.of()));
+        put.accept(DATA + "tags/item/medicine", Map.of("replace", false, "values",
+                List.of(NS + ":herbal_bandage", NS + ":vitamins")));
         put.accept(DATA + "tags/item/mortar", Map.of("replace", false, "values",
-                List.of(NS + ":narcotics", NS + ":herbal_bandage", NS + ":healing_mixture")));
+                List.of(NS + ":narcotics", NS + ":healing_mixture")));
         // Other mods look for chests and workbenches through the common tags.
         for (String kind : List.of("item", "block")) {
             put.accept("data/c/tags/" + kind + "/chests", Map.of("replace", false, "values", List.of(NS + ":storage_crate")));
@@ -131,10 +141,13 @@ final class StationData {
         pt.put("item." + NS + ".herbal_bandage", "Bandagem de ervas");
         en.put("item." + NS + ".healing_mixture", "Healing Mixture");
         pt.put("item." + NS + ".healing_mixture", "Mistura curativa");
+        en.put("item." + NS + ".vitamins", "Vitamins");
+        pt.put("item." + NS + ".vitamins", "Vitaminas");
     }
 
     static void itemModels(BiConsumer<String, Object> put) {
-        for (var entry : Map.of("herbal_bandage", "minecraft:item/paper", "healing_mixture", "minecraft:item/honey_bottle").entrySet()) {
+        for (var entry : Map.of("herbal_bandage", NS + ":item/herbal_bandage", "healing_mixture", "minecraft:item/honey_bottle",
+                "vitamins", NS + ":item/vitamins").entrySet()) {
             put.accept(ASSETS + "models/item/" + entry.getKey(), Map.of("parent", "minecraft:item/generated",
                     "textures", Map.of("layer0", entry.getValue())));
             put.accept(ASSETS + "items/" + entry.getKey(), Map.of("model", Map.of("type", "minecraft:model",
