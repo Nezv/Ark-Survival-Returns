@@ -10,6 +10,8 @@ description='''ARK-style survival for Minecraft: 41 prehistoric creatures, hidde
 config="arksurvivalreturns.mixins.json"
 [[mixins]]
 config="arksurvivalreturns.accessories.mixins.json"
+[[mixins]]
+config="arksurvivalreturns.stations.mixins.json"
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"

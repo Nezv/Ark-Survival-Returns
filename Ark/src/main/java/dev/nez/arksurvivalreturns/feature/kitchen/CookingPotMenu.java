@@ -33,6 +33,11 @@ public final class CookingPotMenu extends AbstractContainerMenu {
 
     public boolean isHeated() { return data.get(2) != 0; }
 
+    /** Finished cooking batches and the batches a meal needs; synced for the screen's progress arrow. */
+    public int progress() { return data.get(DATA_PROGRESS); }
+
+    public int maxProgress() { return data.get(DATA_MAX); }
+
     private void layout(Inventory inventory) {
         for (int slot = 0; slot < CookingPotBlockEntity.INPUT_SLOTS; slot++) {
             addSlot(new Slot(pot, slot, 62 + (slot % 2) * 18, 17 + (slot / 2) * 18));

@@ -96,7 +96,7 @@ public final class StationContent {
         event.registerBlockEntity(Capabilities.Item.BLOCK, STORAGE_CRATE_BLOCK_ENTITY.get(),
                 (crate, side) -> VanillaContainerWrapper.of(crate));
         event.registerBlockEntity(Capabilities.Item.BLOCK, CRUSHER_BLOCK_ENTITY.get(),
-                (crusher, side) -> VanillaContainerWrapper.of(crusher));
+                net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper::new);
     }
 
     public static void displayItems(CreativeModeTab.Output output) {

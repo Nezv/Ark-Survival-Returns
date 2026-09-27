@@ -3,7 +3,7 @@
 Every texture starts from the vanilla 26.1.2 original in the local source jar, so every slot, arrow and
 widget keeps its exact position (the game draws them at fixed coordinates). Neutral greys are remapped:
 
-* Containers (inventory, chests, crafting, the cooking pot's dispenser panel...) become light limestone
+* Containers (inventory, chests, crafting, the cooking pot panel...) become light limestone
   with a fine grain and moss-grey slots. Vanilla draws container titles in dark grey, so the panel stays
   light enough to read them.
 * Buttons, tabs, sliders, the hotbar and tooltips become dark basalt with moss and ember accents, the
@@ -210,6 +210,42 @@ def mod_screens():
     return count
 
 
+# Cooking pot panel: must match CookingPotMenu (inputs 62/80 x 17/35, meal 116,26) and CookingPotScreen (arrow).
+POT_MOD = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui/container/cooking_pot.png'
+POT_PACK = PACK / 'assets/arksurvivalreturns/textures/gui/container/cooking_pot.png'
+POT_ARROW = (98, 29)   # empty arrow on the panel; the filled copy sits at u=176, v=0 (16x11)
+ARROW = ["..........##....", "..........###...", "..........####..", "############.##.", "#............##.",
+         "#.............##", "#............##.", "############.##.", "..........####..", "..........###...",
+         "..........##...."]
+
+
+def cooking_pot():
+    """The dispenser panel cut down to the pot: a 2x2 input grid, a meal slot and a progress arrow.
+
+    The dispenser's third column and third row are painted over with the panel face, the meal slot reuses a
+    grid cell frame, and the arrow is drawn in vanilla's empty-arrow grey with a filled copy beside the panel.
+    """
+    base = vanilla('container/dispenser.png')
+    panel = base.getpixel((8, 30))
+    px = base.load()
+    for x in range(61, 115):
+        for y in range(16, 70):
+            if x >= 97 or y >= 52:
+                px[x, y] = panel
+    base.alpha_composite(base.crop((61, 16, 79, 34)), (115, 25))
+    for row, line in enumerate(ARROW):
+        for col, ch in enumerate(line):
+            if ch == '#':
+                px[POT_ARROW[0] + col, POT_ARROW[1] + row] = (139, 139, 139, 255)
+            if ch != '.' or (3 < row < 7 and col < 13) or (row in (1, 2, 8, 9) and 10 < col < 10 + min(row, 10 - row) + 1):
+                px[176 + col, row] = (255, 255, 255, 255)
+    POT_MOD.parent.mkdir(parents=True, exist_ok=True)
+    base.save(POT_MOD)
+    POT_PACK.parent.mkdir(parents=True, exist_ok=True)
+    remap(base, LIGHT, grain=(190, 205), seed=99).save(POT_PACK)
+    return 2
+
+
 # Ark inventory layout (I07, Curios fork): must match ArkLayout.java in pack/src/curios.
 ARK_WIDTH = 244
 # Slot order: head, head, necklace, body, belt, legs, feet, feet | back, hands, bracelet, bracelet, ring, ring,
@@ -336,7 +372,7 @@ def preview():
 def main():
     pack_meta()
     legs_icon()
-    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory()
+    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + cooking_pot()
     preview()
     print(f'Wrote {count} textures to {PACK}')
 

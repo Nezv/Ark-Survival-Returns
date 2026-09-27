@@ -744,10 +744,10 @@ public final class ArkData implements DataProvider {
                 pt.put(kind + NS + "." + wood[0] + "_trough", "Cocho de " + wood[2]);
             }
         }
-        en.put("kitchen." + NS + ".heated", "Campfire lit");
-        pt.put("kitchen." + NS + ".heated", "Fogueira acesa");
-        en.put("kitchen." + NS + ".needs_fire", "Needs a lit campfire below");
-        pt.put("kitchen." + NS + ".needs_fire", "Acenda a fogueira abaixo");
+        en.put("kitchen." + NS + ".heated", "Fire lit");
+        pt.put("kitchen." + NS + ".heated", "Fogo aceso");
+        en.put("kitchen." + NS + ".needs_fire", "Needs a lit fire below");
+        pt.put("kitchen." + NS + ".needs_fire", "Acenda o fogo abaixo");
         en.put("block." + NS + ".drying_rack", "Drying Rack");
         pt.put("block." + NS + ".drying_rack", "Varal de secagem");
         en.put("item." + NS + ".drying_rack", "Drying Rack");
@@ -1029,7 +1029,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
-                "primitive_tall_stations", "primitive_keratin", "stations", "recipe_decisions",
+                "primitive_tall_stations", "primitive_keratin", "stations", "station_guards", "recipe_decisions",
                 "integration_curios", "integration_toms_storage", "integration_terralith", "integration_better_combat"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
