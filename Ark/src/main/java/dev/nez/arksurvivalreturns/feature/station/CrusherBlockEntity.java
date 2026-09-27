@@ -47,7 +47,8 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
         // The flywheel turns a quarter of its tooth pitch every three ticks while grinding.
         if (level.getGameTime() % 3 == 0 || !state.getValue(CrusherBlock.RUNNING)) {
             state = state.setValue(CrusherBlock.RUNNING, true).setValue(CrusherBlock.SPIN, (state.getValue(CrusherBlock.SPIN) + 1) % 4);
-            level.setBlock(pos, state, Block.UPDATE_CLIENTS);
+            // Visual only: no shape updates, so observers and neighbours do not fire every three ticks.
+            level.setBlock(pos, state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
         }
         if (level.getGameTime() % 16 == 0) {
             level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.35f, 0.7f + level.getRandom().nextFloat() * 0.2f);

@@ -24,7 +24,8 @@ public final class WorkProtection extends SavedData {
     private static final int MAX_ENTRIES = 65536;
     public static final Codec<WorkProtection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.optionalFieldOf("schema_version", SCHEMA_VERSION).forGetter(data -> data.schemaVersion),
-            Codec.LONG.listOf().optionalFieldOf("placed", List.of()).forGetter(data -> List.copyOf(data.placed))
+            // Saved oldest first, so FIFO eviction still removes the oldest entry after a restart.
+            Codec.LONG.listOf().optionalFieldOf("placed", List.of()).forGetter(data -> List.copyOf(data.order))
     ).apply(instance, WorkProtection::new));
     public static final SavedDataType<WorkProtection> TYPE = new SavedDataType<>(
             ArkSurvivalReturns.id("work_protection"), WorkProtection::new, CODEC);
@@ -39,8 +40,8 @@ public final class WorkProtection extends SavedData {
 
     public WorkProtection(int schemaVersion, List<Long> placed) {
         this.schemaVersion = schemaVersion;
-        this.placed = new HashSet<>(placed);
-        this.order = new ArrayDeque<>(placed);
+        this.order = new ArrayDeque<>(new java.util.LinkedHashSet<>(placed));
+        this.placed = new HashSet<>(this.order);
     }
 
     public static WorkProtection get(ServerLevel level) {

@@ -88,8 +88,13 @@ public final class StoneFireBlockEntity extends BlockEntity {
 
     private Optional<RecipeHolder<CampfireCookingRecipe>> recipe(ItemStack stack) {
         if (!(level instanceof ServerLevel server) || stack.isEmpty()) return Optional.empty();
-        return server.recipeAccess().getRecipeFor(RecipeType.CAMPFIRE_COOKING, new SingleRecipeInput(stack), server);
+        var found = server.recipeAccess().getRecipeFor(RecipeType.CAMPFIRE_COOKING, new SingleRecipeInput(stack), server, lastRecipe);
+        found.ifPresent(holder -> lastRecipe = holder.id());
+        return found;
     }
+
+    /** The last matched recipe, tried first: the same meat usually stays on the spit. */
+    private net.minecraft.resources.@org.jspecify.annotations.Nullable ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> lastRecipe;
 
     public boolean isLit() { return burnTicks > 0 && getBlockState().getValue(StoneFireBlock.LIT); }
     public boolean hasFuel() { return burnTicks > 0; }

@@ -101,6 +101,17 @@ final class WorkGameTests {
             rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, true, level.getServer());
         }
 
+        // The eviction order survives a save: it used to reload in hash order, so eviction dropped random entries.
+        var fifo = new WorkProtection();
+        var first = new BlockPos(900, 70, -900);
+        var second = new BlockPos(-5, 64, 12);
+        var third = new BlockPos(40, 80, 40);
+        fifo.record(first); fifo.record(second); fifo.record(third);
+        var saved = WorkProtection.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, fifo).getOrThrow();
+        var reloaded = WorkProtection.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, saved).getOrThrow();
+        h.assertTrue(reloaded.snapshot().equals(java.util.List.of(first.asLong(), second.asLong(), third.asLong())),
+                "Work protection lost its oldest-first order on reload");
+
         h.assertTrue(level.getChunkSource().getLoadedChunksCount() == chunks, "Work scans must not load chunks");
         trike.discard();
         owner.discard();

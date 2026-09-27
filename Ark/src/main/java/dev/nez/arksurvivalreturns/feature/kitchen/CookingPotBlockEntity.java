@@ -96,7 +96,7 @@ public final class CookingPotBlockEntity extends BlockEntity implements Containe
         return removed;
     }
 
-    @Override public ItemStack removeItemNoUpdate(int slot) { return items.get(slot).isEmpty() ? ItemStack.EMPTY : items.get(slot).split(0); }
+    @Override public ItemStack removeItemNoUpdate(int slot) { return ContainerHelper.takeItem(items, slot); }
 
     @Override public void setItem(int slot, ItemStack stack) {
         items.set(slot, stack);

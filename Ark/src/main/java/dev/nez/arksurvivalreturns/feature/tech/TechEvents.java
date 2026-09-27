@@ -69,7 +69,15 @@ public final class TechEvents {
         BlockState state = event.getLevel().getBlockState(event.getPos());
         if (!state.hasProperty(CampfireBlock.LIT) || state.getValue(CampfireBlock.LIT)) return;
         if (!event.getItemStack().is(Items.FLINT_AND_STEEL)) return;
-        TechService.notify(player, TechEvent.place(player, state.setValue(CampfireBlock.LIT, true)));
+        // Checked after the click resolves: a cancelled use (downed player) or a waterlogged campfire earns nothing.
+        var server = player.level().getServer();
+        var level = player.level();
+        var pos = event.getPos().immutable();
+        server.schedule(new net.minecraft.server.TickTask(server.getTickCount(), () -> {
+            BlockState now = level.getBlockState(pos);
+            if (now.hasProperty(CampfireBlock.LIT) && now.getValue(CampfireBlock.LIT) && !player.isRemoved())
+                TechService.notify(player, TechEvent.place(player, now));
+        }));
     }
 
     @SubscribeEvent public static void wake(PlayerWakeUpEvent event) {

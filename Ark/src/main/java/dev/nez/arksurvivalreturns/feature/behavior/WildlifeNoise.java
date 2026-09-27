@@ -38,6 +38,7 @@ public final class WildlifeNoise {
             if (source != null && !WildlifeSenses.validTarget(source)) continue;
             double distance = listener.position().distanceToSqr(sound.position);
             double radius = sound.radius * (world.isRaining() ? 0.65 : 1);
+            if (distance >= radius * radius || distance >= best) continue;   // out of earshot even unobstructed
             if (!dev.nez.arksurvivalreturns.feature.spawn.SpawnRules.loaded(world,
                     new net.minecraft.world.phys.AABB(listener.position(), sound.position).inflate(1))) continue;
             var obstruction = world.clip(new net.minecraft.world.level.ClipContext(listener.getEyePosition(), sound.position,

@@ -105,6 +105,7 @@ public final class Config {
             DOWNED_LAVA_LETHAL, DOWNED_VOID_LETHAL;
     public static final ModConfigSpec.IntValue DOWNED_WINDOW;
     public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL;
+    public static final ModConfigSpec.DoubleValue SOUND_RANGE_MULTIPLIER;
     // ------------------------------------------------------------------------- guardian
     public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED, GUARDIAN_ANNOUNCE;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GUARDIAN_STRUCTURES;
@@ -523,6 +524,11 @@ public final class Config {
         TECH_SCAN_TICKS = b.comment("Ticks between possession scans for collection tasks (100 = five seconds; "
                         + "0 disables the periodic pass).")
                 .defineInRange("scanTicks", 100, 0, 1200);
+        b.pop().push("sound");
+        SOUND_RANGE_MULTIPLIER = b.comment("How much farther than vanilla sounds carry (sound physics). The server "
+                        + "sends each sound to players this many times farther away, so lower it on busy servers "
+                        + "(1 = vanilla, 16 blocks).")
+                .defineInRange("rangeMultiplier", 4.0, 1.0, 8.0);
         b.pop();
         SPEC = b.build();
     }

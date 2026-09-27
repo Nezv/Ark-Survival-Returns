@@ -215,8 +215,13 @@ public final class NaturalPopulations {
                 creature.discard();
                 continue;
             }
-            data = creature.finalizeSpawn(level, level.getCurrentDifficultyAt(creature.blockPosition()),
+            // Through FinalizeSpawnEvent, so other mods can adjust or cancel these spawns.
+            data = EventHooks.finalizeMobSpawn(creature, level, level.getCurrentDifficultyAt(creature.blockPosition()),
                     EntitySpawnReason.NATURAL, data);
+            if (creature.isSpawnCancelled()) {
+                creature.discard();
+                continue;
+            }
             level.addFreshEntityWithPassengers(creature);
             placed++;
         }

@@ -101,12 +101,13 @@ public final class TamingService {
             TorporService.log("rejected", creature, "feeding refused: " + claim);
             return claim;
         }
-        if (!profile.accepts(held)) return reject(creature, TamingFeedback.Result.WRONG_FOOD);
+        if (!profile.accepts(held) || held.getCount() < Config.FOOD_UNITS_PER_MEAL.get())
+            return reject(creature, TamingFeedback.Result.WRONG_FOOD);
         if (!state.hungryEnough()) return reject(creature, TamingFeedback.Result.NOT_HUNGRY);
         if (!cooldownElapsed(state, clock)) return reject(creature, TamingFeedback.Result.COOLDOWN);
 
         boolean favourite = profile.preferred(held);
-        held.shrink(Config.FOOD_UNITS_PER_MEAL.get());
+        held.consume(Config.FOOD_UNITS_PER_MEAL.get(), player);
         // An expired lease is transferred to the player who resumes the attempt, so the tame is never
         // awarded to somebody who walked away two minutes ago.
         if (claimantMissing(state) || state.claimExpired()) state.claim(player.getUUID(), clock);
@@ -129,7 +130,7 @@ public final class TamingService {
         var inventory = creature.tamingInventory();
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             ItemStack stack = inventory.getItem(slot);
-            if (!profile.accepts(stack)) continue;
+            if (!profile.accepts(stack) || stack.getCount() < Config.FOOD_UNITS_PER_MEAL.get()) continue;
             boolean favourite = profile.preferred(stack);
             stack.shrink(Config.FOOD_UNITS_PER_MEAL.get());
             inventory.setChanged();

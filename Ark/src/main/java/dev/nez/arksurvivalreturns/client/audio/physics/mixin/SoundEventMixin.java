@@ -14,7 +14,11 @@ public class SoundEventMixin {
         if (!SoundPhysicsMod.isEnabled()) {
             return value;
         }
-        return value * SoundPhysicsMod.CONFIG.soundDistanceAllowance.get();
+        // The server config decides (it is synced, so client and server agree); before a world loads, the default.
+        float multiplier = dev.nez.arksurvivalreturns.Config.SPEC.isLoaded()
+                ? (float) (double) dev.nez.arksurvivalreturns.Config.SOUND_RANGE_MULTIPLIER.get()
+                : SoundPhysicsMod.CONFIG.soundDistanceAllowance.get();
+        return value * multiplier;
     }
 
 }

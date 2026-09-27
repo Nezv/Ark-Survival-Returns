@@ -38,6 +38,7 @@ public final class PrimitiveForgeBlockEntity extends BlockEntity {
     private int burnTotal;
     private int smeltTicks;
     private float experience;
+    private net.minecraft.resources.@org.jspecify.annotations.Nullable ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> lastRecipe;
 
     public PrimitiveForgeBlockEntity(BlockPos pos, BlockState state) {
         super(PrimitiveContent.PRIMITIVE_FORGE_BLOCK_ENTITY.get(), pos, state);
@@ -52,6 +53,12 @@ public final class PrimitiveForgeBlockEntity extends BlockEntity {
     public void step() {
         boolean wasBurning = burnTicks > 0;
         if (burnTicks > 0) burnTicks--;
+        if (burnTicks == 0 && !isFuel(items.get(FUEL))) {
+            // Nothing can smelt without fuel: skip the recipe lookup and let the progress cool down.
+            if (smeltTicks > 0) smeltTicks = Math.max(0, smeltTicks - 2);
+            if (wasBurning) setChanged();
+            return;
+        }
         var recipe = recipe(items.get(INPUT));
         boolean canSmelt = recipe.isPresent() && fits(recipe.get());
         if (canSmelt && burnTicks == 0 && isFuel(items.get(FUEL))) {
@@ -93,8 +100,10 @@ public final class PrimitiveForgeBlockEntity extends BlockEntity {
     public Optional<RecipeHolder<SmeltingRecipe>> recipe(ItemStack stack) {
         if (!(level instanceof ServerLevel server) || stack.isEmpty()) return Optional.empty();
         var input = new SingleRecipeInput(stack);
-        return server.recipeAccess().getRecipeFor(RecipeType.SMELTING, input, server)
+        var found = server.recipeAccess().getRecipeFor(RecipeType.SMELTING, input, server, lastRecipe)
                 .filter(holder -> !holder.value().assemble(input).has(DataComponents.FOOD));
+        found.ifPresent(holder -> lastRecipe = holder.id());
+        return found;
     }
 
     public boolean isSmeltable(ItemStack stack) { return recipe(stack).isPresent(); }

@@ -35,6 +35,7 @@ public final class GuardianEvents {
         if (!(event.getEntity() instanceof CreatureEntity creature)) return;
         if (creature.species() != Species.ALLOSAURUS || !creature.isNaturalWildlife()) return;
         if (!(creature.level() instanceof ServerLevel level)) return;
+        if (!level.getGameRules().get(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS)) return;
         if (!creditToPlayerOrTame(event.getSource())) return;
         // Exactly one heart; the event never consults Looting, so the drop cannot multiply.
         ItemEntity drop = new ItemEntity(level, creature.getX(), creature.getY(0.5), creature.getZ(),

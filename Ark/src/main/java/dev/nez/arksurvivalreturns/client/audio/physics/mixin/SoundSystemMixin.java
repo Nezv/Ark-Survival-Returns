@@ -1,5 +1,6 @@
 package dev.nez.arksurvivalreturns.client.audio.physics.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysics;
 import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysicsMod;
 import net.minecraft.client.Minecraft;
@@ -11,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -33,8 +33,8 @@ public class SoundSystemMixin {
         return instance;
     }
 
-    @Inject(method = "tickInGameSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sounds/ChannelAccess$ChannelHandle;isStopped()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void tickNonPaused(CallbackInfo ci, Iterator<?> iterator, Map.Entry<SoundInstance, ChannelAccess.ChannelHandle> map, ChannelAccess.ChannelHandle channelHandle, SoundInstance sound) {
+    @Inject(method = "tickInGameSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sounds/ChannelAccess$ChannelHandle;isStopped()Z"))
+    private void tickNonPaused(CallbackInfo ci, @Local ChannelAccess.ChannelHandle channelHandle, @Local SoundInstance sound) {
         if (!SoundPhysicsMod.CONFIG.updateMovingSounds.get()) {
             return;
         }

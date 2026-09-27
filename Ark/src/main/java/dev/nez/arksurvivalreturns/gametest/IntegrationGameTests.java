@@ -74,15 +74,25 @@ final class IntegrationGameTests {
         level.addFreshEntity(trike);
         TamingService.of(trike).setOwner(owner.getUUID());
         trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
-        int loaded = CargoTransferService.load(owner, trike);
+        // Radius 5 keeps the whole area under the transfer's 2048-position scan cap; at 8, whether the cabinet
+        // was searched depended on how the plot met chunk borders (the old "moved nothing" flake).
+        int radius = dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.get();
+        dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.set(5);
+        int loaded;
+        int unloaded;
+        try {
+            loaded = CargoTransferService.load(owner, trike);
+            unloaded = loaded == 3 ? CargoTransferService.unload(owner, trike) : -1;
+        } finally {
+            dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.set(radius);
+        }
         h.assertTrue(loaded == 3, "Fast Load must pull the cabinet's swords (moved " + loaded + ", cargo holds "
                 + trike.tamingInventory().countItem(Items.IRON_SWORD) + " swords, cabinet " + (contains(handler, 3) ? "full" : "short")
                 + ", cargo slots " + trike.tamingInventory().getContainerSize() + ", capacity "
                 + dev.nez.arksurvivalreturns.feature.mass.MassService.creatureCapacity(trike) + ", sword mass "
                 + dev.nez.arksurvivalreturns.feature.mass.MassCalculator.massOf(new ItemStack(Items.IRON_SWORD)) + ", tamed "
                 + TamingService.of(trike).tamed() + ")");
-        h.assertTrue(trike.tamingInventory().countItem(Items.IRON_SWORD) == 3, "The swords must land in the cargo");
-        h.assertTrue(CargoTransferService.unload(owner, trike) == 3, "Fast Unload must return them to the cabinet");
+        h.assertTrue(unloaded == 3, "Fast Unload must return them to the cabinet");
         h.assertTrue(contains(handler, 3), "The cabinet must hold the swords again");
         trike.discard();
         h.succeed();

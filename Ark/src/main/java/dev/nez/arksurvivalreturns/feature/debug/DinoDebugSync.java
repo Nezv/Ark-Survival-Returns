@@ -47,6 +47,11 @@ public final class DinoDebugSync {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!DebugSpyglass.using(player)) { clear(player); return; }
         if (player.tickCount % UPDATE_TICKS != 0) return;
+        // It reveals any creature's full saved data (owners, inventories, homes): operators only.
+        if (!net.minecraft.commands.Commands.LEVEL_GAMEMASTERS.check(player.createCommandSourceStack().permissions())) {
+            clear(player);
+            return;
+        }
         var dino = target(player);
         if (dino == null) { clear(player); return; }
         var view = VIEWS.computeIfAbsent(player.getUUID(), ignored -> new View(dino.getUUID()));

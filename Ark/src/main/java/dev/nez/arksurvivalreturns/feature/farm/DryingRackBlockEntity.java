@@ -55,7 +55,8 @@ public final class DryingRackBlockEntity extends BlockEntity {
         if (!input.is(FarmTags.DRYING_INPUTS)) return false;
         ItemStack result = driedFrom(input);
         ItemStack output = items.get(1);
-        if (!output.isEmpty() && (!ItemStack.isSameItemSameComponents(output, result) || output.getCount() >= output.getMaxStackSize()))
+        if (!output.isEmpty() && (!ItemStack.isSameItemSameComponents(withoutDay(output), withoutDay(result))
+                || output.getCount() >= output.getMaxStackSize()))
             return false;
         progress++;
         if (progress < Config.FARM_DRYING_BATCHES.get()) {
@@ -66,9 +67,20 @@ public final class DryingRackBlockEntity extends BlockEntity {
         curing = 0;
         input.shrink(1);
         if (output.isEmpty()) items.set(1, result);
-        else output.grow(1);
+        else {
+            output.grow(1);
+            // The stack takes the newest day, so the aged-food objectives never count fresh items as aged.
+            stamp(output);
+        }
         setChanged();
         return true;
+    }
+
+    /** A copy without the day stamp: results from different days stack. */
+    private static ItemStack withoutDay(ItemStack stack) {
+        ItemStack copy = stack.copy();
+        CustomData.update(DataComponents.CUSTOM_DATA, copy, tag -> tag.remove(TechTrigger.DRIED_DAY_TAG));
+        return copy;
     }
 
     /** Hanging dried meat cures one batch; the whole shelf moves up a tier together. */

@@ -71,6 +71,7 @@ public final class TrophyDrops {
     @SubscribeEvent static void creatureDrops(LivingDropsEvent event) {
         if (!(event.getEntity() instanceof CreatureEntity creature) || !(creature.level() instanceof ServerLevel level)) return;
         if (!(event.getSource().getEntity() instanceof Player killer) || !TABLE.containsKey(creature.species())) return;
+        if (!level.getGameRules().get(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS)) return;
         LootParams params = new LootParams.Builder(level)
                 .withParameter(LootContextParams.THIS_ENTITY, creature)
                 .withParameter(LootContextParams.ORIGIN, creature.position())

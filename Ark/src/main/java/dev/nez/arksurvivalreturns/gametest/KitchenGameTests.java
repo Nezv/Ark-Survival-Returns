@@ -68,6 +68,9 @@ final class KitchenGameTests {
         h.assertTrue(!pot.isHeated(), "Removing the fire must remove heat");
         h.assertTrue(!level.getBlockState(potPos).getValue(dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlock.ON_CAMPFIRE),
                 "The pot must return to the short feet on a solid surface");
+        ItemStack taken = pot.removeItemNoUpdate(CookingPotBlockEntity.OUTPUT_SLOT);
+        h.assertTrue(taken.is(ModContent.TRAIL_MIX.get()) && pot.getItem(CookingPotBlockEntity.OUTPUT_SLOT).isEmpty(),
+                "removeItemNoUpdate must take the meal out of the pot");
         h.assertTrue(level.getChunkSource().getLoadedChunksCount() == chunks, "Cooking must not load chunks");
         h.succeed();
     }

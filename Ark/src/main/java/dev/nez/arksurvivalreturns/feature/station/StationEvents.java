@@ -80,7 +80,7 @@ public final class StationEvents {
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             ItemStack stack = inventory.getItem(slot);
             Item target = fallback(stack);
-            if (target != null) inventory.setItem(slot, new ItemStack(target, stack.getCount()));
+            if (target != null) inventory.setItem(slot, stack.transmuteCopy(target));
         }
     }
 
