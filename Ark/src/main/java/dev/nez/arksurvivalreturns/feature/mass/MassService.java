@@ -86,6 +86,23 @@ public final class MassService {
         rider.sendOverlayMessage(Component.translatable(key));
     }
 
+    /** A creature that left its level (unloaded, dead, culled, changed dimension) recomputes when it joins again. */
+    public static void forget(CreatureEntity creature) {
+        CREATURE_LOADS.remove(creature.getUUID());
+        DIRTY_CREATURES.remove(creature.getUUID());
+    }
+
+    /** Server stop: nothing carries into the next world (singleplayer keeps the class loaded). */
+    public static void reset() {
+        LOADS.clear();
+        CREATURE_LOADS.clear();
+        SENT_MASS.clear();
+        SENT_TICK.clear();
+        DIRTY.clear();
+        DIRTY_CREATURES.clear();
+        rulesHash = 0;
+    }
+
     /** Drops all tracked state and the movement modifier, e.g. on logout or with mass disabled. */
     public static void clear(ServerPlayer player) {
         UUID id = player.getUUID();

@@ -31,6 +31,13 @@ public final class FiberBandageItem extends Item {
     }
 
     @Override public InteractionResult interactLivingEntity(ItemStack stack, Player player, net.minecraft.world.entity.LivingEntity target, InteractionHand hand) {
+        if (player.level().isClientSide()) {
+            // The downed flag is synced to nearby players: predicting the revive stops the click from also
+            // bandaging the reviver (a second bandage and the cooldown).
+            return target instanceof Player other
+                    && other.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED).downed()
+                    ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
         if (!(target instanceof net.minecraft.server.level.ServerPlayer downed)
                 || !(player instanceof net.minecraft.server.level.ServerPlayer reviver)) {
             return InteractionResult.PASS;

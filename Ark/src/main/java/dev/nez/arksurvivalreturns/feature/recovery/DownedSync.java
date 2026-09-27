@@ -18,8 +18,15 @@ public final class DownedSync {
         PacketDistributor.sendToPlayer(player, new DownedPayload(state.downed(), state.ticksLeft(), state.totalTicks()));
     }
 
+    /** Call after the state is cleared: it also tells nearby clients the player is no longer downed. */
     public static void clear(ServerPlayer player) {
         PacketDistributor.sendToPlayer(player, new DownedPayload(false, 0, 0));
+        share(player);
+    }
+
+    /** Pushes the synced attachment to the player and everyone tracking them. */
+    public static void share(ServerPlayer player) {
+        player.syncData(RecoveryAttachments.DOWNED);
     }
 
     private DownedSync() {}

@@ -857,7 +857,7 @@ public final class ArkData implements DataProvider {
         pt.put("guardian." + NS + ".bar", "%s | %s/%s");
         String[] keys = {"requires_mod", "no_monolith", "active", "resetting", "downed", "chunks", "no_room",
                 "failed", "awakened", "reawakened", "retreated", "victory", "status_line", "status_health",
-                "status_none", "command.reset", "command.clear", "command.grant"};
+                "status_none", "command.reset", "command.clear", "command.grant", "claimed"};
         String[] english = {
                 "[ARK] The First Guardian sleeps inside Ancient Remnants monoliths. Install the mod to continue this hunt.",
                 "[ARK] Offer the heart at a block directly beneath the monolith.",
@@ -876,7 +876,8 @@ public final class ArkData implements DataProvider {
                 "[ARK] No guardian encounter is recorded for your tribe.",
                 "[ARK] The nearest encounter was reset to a free retry.",
                 "[ARK] The nearest encounter record was removed.",
-                "[ARK] Granted the Workshop Schematic to %s."};
+                "[ARK] Granted the Workshop Schematic to %s.",
+                "[ARK] Another tribe paid for this rite. Only they can wake the Guardian again."};
         String[] portuguese = {
                 "[ARK] O Primeiro Guardi\u00e3o dorme dentro dos mon\u00f3litos de Ancient Remnants. Instale o mod para continuar esta ca\u00e7ada.",
                 "[ARK] Ofere\u00e7a o cora\u00e7\u00e3o em um bloco logo abaixo do mon\u00f3lito.",
@@ -895,7 +896,8 @@ public final class ArkData implements DataProvider {
                 "[ARK] Nenhum encontro de guardi\u00e3o est\u00e1 registrado para sua tribo.",
                 "[ARK] O encontro mais pr\u00f3ximo foi reiniciado para uma nova tentativa gratuita.",
                 "[ARK] O registro do encontro mais pr\u00f3ximo foi removido.",
-                "[ARK] Esquema da Oficina concedido a %s."};
+                "[ARK] Esquema da Oficina concedido a %s.",
+                "[ARK] Outra tribo pagou por este ritual. Só ela pode despertar o Guardião de novo."};
         for (int i = 0; i < keys.length; i++) {
             en.put("guardian." + NS + "." + keys[i], english[i]);
             pt.put("guardian." + NS + "." + keys[i], portuguese[i]);
@@ -975,7 +977,7 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
-        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "cargo_reach", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
+        for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "cargo_reach", "cargo_death_and_cull", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         put("data/" + NS + "/test_environment/population", spawningRules);

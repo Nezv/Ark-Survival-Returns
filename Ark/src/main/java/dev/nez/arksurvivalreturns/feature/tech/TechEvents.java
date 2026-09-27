@@ -36,9 +36,11 @@ public final class TechEvents {
     }
 
     @SubscribeEvent public static void obtain(ItemEntityPickupEvent.Post event) {
-        if (event.getPlayer() instanceof ServerPlayer player) {
-            TechService.notify(player, TechEvent.obtain(player, event.getCurrentStack()));
-        }
+        if (!(event.getPlayer() instanceof ServerPlayer player)) return;
+        // getCurrentStack() is what is left on the ground, so a full pickup used to count as zero.
+        var before = event.getOriginalStack();
+        int picked = before.getCount() - event.getCurrentStack().getCount();
+        if (picked > 0) TechService.notify(player, TechEvent.obtain(player, before.copyWithCount(picked)));
     }
 
     @SubscribeEvent public static void crafted(PlayerEvent.ItemCraftedEvent event) {

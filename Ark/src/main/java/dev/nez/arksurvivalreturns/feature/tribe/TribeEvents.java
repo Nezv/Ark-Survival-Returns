@@ -13,9 +13,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class TribeEvents {
     @SubscribeEvent public static void changedTeam(dev.ftb.mods.ftbteams.api.neoforge.FTBTeamsEvent.PlayerChangedTeam event) {
-        var data = event.getEventData();
-        if (data.player() == null) return;
-        TribePermissions.get(data.player().level()).clear(data.playerId());
+        // The player may be offline (kicked while away); the flags live in the overworld's saved data either way.
+        var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server != null) TribePermissions.get(server.overworld()).clear(event.getEventData().playerId());
     }
 
     private TribeEvents() {}

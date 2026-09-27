@@ -254,8 +254,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private InteractionResult interactWhileTamed(Player player, InteractionHand hand) {
         boolean client = level().isClientSide();
         boolean owner = isOwnedBy(player);
-        // Non-owners are decided server-side; the client only predicts for the owner.
-        if (!owner && client) return InteractionResult.PASS;
+        // Non-owners are decided server-side. The client cannot see tribe membership, so it predicts a consumed
+        // click whenever the server might accept one: a PASS would also use the held item and try the off hand.
+        if (!owner && client) return strangerMayInteract(player, hand) ? InteractionResult.CONSUME : InteractionResult.PASS;
         // A Blueberry heals a hurt tame and sets it regenerating; tribe members may feed it too.
         ItemStack held = player.getItemInHand(hand);
         if (held.is(ModContent.BERRIES.get("azulberry").get()) && !player.isSecondaryUseActive() && getHealth() < getMaxHealth()) {
@@ -306,6 +307,14 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return InteractionResult.SUCCESS;
     }
 
+    /** Client guess for a non-owner: the berry heal, the whistle, the cargo sneak-click and mounting a saddled tame. */
+    private boolean strangerMayInteract(Player player, InteractionHand hand) {
+        ItemStack held = player.getItemInHand(hand);
+        if (held.is(ModContent.BERRIES.get("azulberry").get()) && !player.isSecondaryUseActive() && getHealth() < getMaxHealth()) return true;
+        return held.is(ModContent.COMPANION_WHISTLE.get()) || player.isSecondaryUseActive()
+                || isSaddled() && getPassengers().isEmpty() && player.getVehicle() == null;
+    }
+
     /** Tells a tribe member why an action is not permitted; strangers stay silent. */
     private void denied(Player player, String key) {
         if (level().isClientSide() || !TribeService.isTribeMember(this, player)) return;
@@ -338,9 +347,12 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
 
     /** Contents are dropped exactly once, so a failed attempt never silently eats a player's supplies. */
-    @Override protected void dropCustomDeathLoot(ServerLevel level, net.minecraft.world.damagesource.DamageSource source,
-            boolean hitByPlayer) {
-        super.dropCustomDeathLoot(level, source, hitByPlayer);
+    /**
+     * The hold and the harness are the player's items, not loot: like a horse's chest they drop in
+     * dropEquipment, which runs even with doMobLoot off (dropCustomDeathLoot does not).
+     */
+    @Override protected void dropEquipment(ServerLevel level) {
+        super.dropEquipment(level);
         tamingInventory.dropAll(level, position());
         if (!harnessSlot.isEmpty()) {
             ItemStack rig = harnessSlot.removeItemNoUpdate(0);

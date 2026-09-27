@@ -46,6 +46,11 @@ public final class Nests {
     }
     /** Bounded search around the bird for a free nest spot. Returns the claimed position or null. */
     public static BlockPos placeNear(ServerLevel world, FlyingCreatureEntity bird) {
+        return placeNear(world, bird, true);
+    }
+
+    /** As above; a nest that replaces a lost one starts without an egg, so breaking nests farms nothing. */
+    public static BlockPos placeNear(ServerLevel world, FlyingCreatureEntity bird, boolean withEgg) {
         var species = bird.species();
         var origin = bird.blockPosition();
         int radius = species.flyerProfile() == null ? 16 : species.flyerProfile().nestRadius();
@@ -58,7 +63,8 @@ public final class Nests {
             var box = SpawnRules.bounds(species, pos.above(4));
             if (!SpawnRules.loaded(world, box.inflate(1)) || !world.getWorldBorder().isWithinBounds(box)
                     || !world.noCollision(null, box, true) || box.maxY >= world.getMaxY()) continue;
-            if (!world.setBlock(pos, ModContent.NESTS.get(species).get().defaultBlockState(), Block.UPDATE_ALL)) continue;
+            var state = ModContent.NESTS.get(species).get().defaultBlockState().setValue(NestBlock.EGG, withEgg);
+            if (!world.setBlock(pos, state, Block.UPDATE_ALL)) continue;
             return pos;
         }
         return null;

@@ -87,6 +87,20 @@ final class WorkGameTests {
         h.assertFalse(WorkProtection.get(level).protectedAt(h.absolutePos(protectedTuft)),
                 "Breaking forgets the protection entry");
 
+        // With mobGriefing off, grazing (which changes nothing) goes on and every block-changing job stops.
+        var rules = level.getGameRules();
+        BlockPos griefTuft = new BlockPos(6, 3, 8);
+        h.setBlock(griefTuft, Blocks.SHORT_GRASS.defaultBlockState());
+        rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, false, level.getServer());
+        try {
+            h.assertFalse(WorkGoal.isTarget(trike, level, h.absolutePos(griefTuft)), "mobGriefing off must stop cutting");
+            h.assertTrue(WorkGoal.isTarget(trike, level, h.absolutePos(grass)), "mobGriefing off must still allow grazing");
+            WorkGoal.harvest(trike, h.absolutePos(griefTuft));
+            h.assertFalse(level.getBlockState(h.absolutePos(griefTuft)).isAir(), "mobGriefing off: the tuft must survive");
+        } finally {
+            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, true, level.getServer());
+        }
+
         h.assertTrue(level.getChunkSource().getLoadedChunksCount() == chunks, "Work scans must not load chunks");
         trike.discard();
         owner.discard();

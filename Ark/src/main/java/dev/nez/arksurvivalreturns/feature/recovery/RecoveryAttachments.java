@@ -10,9 +10,13 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public final class RecoveryAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, ArkSurvivalReturns.MOD_ID);
-    /** Serializable but not auto-synced: the HUD uses the dedicated downed payload. */
+    /**
+     * Synced to the player and everyone who can see them (so a reviver's client knows who is downed) when it
+     * starts and ends; the owner's HUD countdown still uses the dedicated downed payload.
+     */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<DownedState>> DOWNED =
-            ATTACHMENTS.register("downed", () -> AttachmentType.serializable(DownedState::new).build());
+            ATTACHMENTS.register("downed", () -> AttachmentType.serializable(DownedState::new)
+                    .sync(DownedState.STREAM_CODEC).build());
 
     public static void register(net.neoforged.bus.api.IEventBus bus) {
         ATTACHMENTS.register(bus);

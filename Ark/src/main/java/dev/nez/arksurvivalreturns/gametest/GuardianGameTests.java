@@ -139,6 +139,20 @@ final class GuardianGameTests {
         GuardianService.onBossDeath(guardian);
         h.assertTrue(drops(world, pos, ModContent.WORKSHOP_SCHEMATIC.get().getDefaultInstance()) == schematics,
                 "Rewards were issued twice");
+
+        // Another tribe wakes the same monolith and wins: the rewards are per tribe, not per structure.
+        UUID rival = UUID.randomUUID();
+        var second = ModContent.GUARDIAN_GIGANOTOSAURUS.get().create(world, EntitySpawnReason.MOB_SUMMONED);
+        second.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0f, 0f);
+        world.addFreshEntity(second);
+        second.initializeGuardian(key, pos, 100.0, 1.0, 8.0);
+        data.put(new GuardianEncounter(key, world.dimension(), pos, STRUCTURE, rival, GuardianState.ACTIVE,
+                Optional.of(second.getUUID()), Set.of(), Set.of(), 100.0, true, 0L, 0L));
+        second.hurtServer(world, world.damageSources().generic(), 1000f);
+        h.assertTrue(TribeProgressData.get(world).has(rival, TribeProgressData.WORKSHOP_SCHEMATIC),
+                "A second tribe's victory must grant its own schematic flag");
+        h.assertTrue(drops(world, pos, ModContent.WORKSHOP_SCHEMATIC.get().getDefaultInstance()) == schematics + 1,
+                "A second tribe's victory must drop its own schematic");
         data.remove(key);
         discard(world, pos, ModContent.WORKSHOP_SCHEMATIC.get().getDefaultInstance());
         discard(world, pos, ModContent.GUARDIAN_TROPHY.get().getDefaultInstance());

@@ -233,6 +233,7 @@
   "guardian.arksurvivalreturns.awakened": "[ARK] O Coração de Alossauro se consome. O Guardião desperta!",
   "guardian.arksurvivalreturns.bar": "%s | %s/%s",
   "guardian.arksurvivalreturns.chunks": "[ARK] A arena ainda não está totalmente carregada.",
+  "guardian.arksurvivalreturns.claimed": "[ARK] Outra tribo pagou por este ritual. Só ela pode despertar o Guardião de novo.",
   "guardian.arksurvivalreturns.command.clear": "[ARK] O registro do encontro mais próximo foi removido.",
   "guardian.arksurvivalreturns.command.grant": "[ARK] Esquema da Oficina concedido a %s.",
   "guardian.arksurvivalreturns.command.reset": "[ARK] O encontro mais próximo foi reiniciado para uma nova tentativa gratuita.",

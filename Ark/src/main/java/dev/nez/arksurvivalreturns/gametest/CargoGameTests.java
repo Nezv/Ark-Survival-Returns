@@ -160,6 +160,19 @@ final class CargoGameTests {
         }
         chest(h, new BlockPos(12, 3, 8), new ItemStack(Items.DIAMOND));
 
+        // Radius 5 keeps the whole area under the 2048-position scan cap, so only the wall decides.
+        int radius = Config.CARGO_TRANSFER_RADIUS.get();
+        Config.CARGO_TRANSFER_RADIUS.set(5);
+        try {
+            reachChecks(h, owner, trike, cargo);
+        } finally {
+            Config.CARGO_TRANSFER_RADIUS.set(radius);
+        }
+        trike.discard();
+        h.succeed();
+    }
+
+    private static void reachChecks(GameTestHelper h, FakePlayer owner, CreatureEntity trike, Container cargo) {
         int moved = CargoTransferService.load(owner, trike);
         h.assertTrue(cargo.countItem(Items.RAW_IRON) == 1, "A chest in sight must load");
         h.assertTrue(cargo.countItem(Items.GOLD_INGOT) == 1, "A chest seen past another chest must load");
@@ -171,7 +184,55 @@ final class CargoGameTests {
         }
         h.assertTrue(CargoTransferService.load(owner, trike) == 1, "Without the wall the far chest must load");
         h.assertTrue(cargo.countItem(Items.DIAMOND) == 1, "The far chest's diamond must land in the hold");
-        trike.discard();
+    }
+
+    /**
+     * The hold and the harness drop on death even with doMobLoot off, a creature that leaves the level is
+     * forgotten by the load map, and the population budget never culls a creature someone is taming.
+     */
+    static void deathAndCull(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        FakePlayer owner = hauler(h, "ArkCargoMourner");
+        CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(8, 3, 8));
+        level.addFreshEntity(trike);
+        TamingService.of(trike).setOwner(owner.getUUID());
+        trike.applyTameState();
+        trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
+        trike.tamingInventory().setItem(0, new ItemStack(Items.COBBLESTONE, 5));
+        var rules = level.getGameRules();
+        rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS, false, level.getServer());
+        try {
+            trike.hurtServer(level, level.damageSources().genericKill(), Float.MAX_VALUE);
+        } finally {
+            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS, true, level.getServer());
+        }
+        var around = trike.getBoundingBox().inflate(4);
+        int stone = 0, harness = 0;
+        for (var item : level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, around)) {
+            if (item.getItem().is(Items.COBBLESTONE)) stone += item.getItem().getCount();
+            if (item.getItem().is(ModContent.PACK_HARNESS.get())) harness += item.getItem().getCount();
+            item.discard();
+        }
+        h.assertTrue(stone == 5 && harness == 1, "doMobLoot off deleted the hold (" + stone + " stone, " + harness + " harness)");
+
+        CreatureEntity leaving = create(h, Species.TRICERATOPS, new BlockPos(4, 3, 4));
+        level.addFreshEntity(leaving);
+        leaving.tamingInventory().setItem(0, new ItemStack(Items.COBBLESTONE, 64));
+        MassService.refreshCreature(leaving);
+        h.assertTrue(MassService.creatureLoad(leaving).mass() > 0, "The load must be tracked while in the level");
+        leaving.discard();
+        h.assertTrue(MassService.creatureLoad(leaving).mass() == 0, "A creature that left the level must be forgotten");
+
+        CreatureEntity wild = create(h, Species.PARASAUR, new BlockPos(12, 3, 12));
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.cullable(wild), "Plain wildlife must stay cullable");
+        TamingService.of(wild).claim(owner.getUUID(), level.getGameTime());
+        h.assertFalse(dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.cullable(wild), "A claimed creature was cullable");
+        CreatureEntity fed = create(h, Species.PARASAUR, new BlockPos(12, 3, 4));
+        TamingService.of(fed).setProgress(10f);
+        h.assertFalse(dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.cullable(fed), "A half-tamed creature was cullable");
+        CreatureEntity stocked = create(h, Species.PARASAUR, new BlockPos(4, 3, 12));
+        stocked.tamingInventory().setItem(0, new ItemStack(Items.WHEAT, 3));
+        h.assertFalse(dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.cullable(stocked), "A creature holding food was cullable");
         h.succeed();
     }
 

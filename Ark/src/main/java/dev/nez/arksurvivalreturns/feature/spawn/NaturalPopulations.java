@@ -8,6 +8,8 @@ import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.taming.TamingService;
+import dev.nez.arksurvivalreturns.feature.taming.TorporService;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -61,7 +63,7 @@ public final class NaturalPopulations {
         double minDistance = Config.POPULATION_MIN_DISTANCE.get();
         for (var player : players) {
             int nearby = 0;
-            for (var creature : wilds) if (creature.distanceToSqr(player) <= radius * radius) nearby++;
+            for (var creature : wilds) if (!creature.isRemoved() && creature.distanceToSqr(player) <= radius * radius) nearby++;
             int target = Config.POPULATION_TARGET.get();
             if (nearby > target + Config.POPULATION_CULL_MARGIN.get()) {
                 var local = new ArrayList<CreatureEntity>();
@@ -103,14 +105,26 @@ public final class NaturalPopulations {
         return wilds;
     }
 
-    /** Discards the farthest cullable wilds first; tames, riders and leashed creatures are immune. */
+    /** Discards the farthest cullable wilds first; tames, riders, leashed and mid-tame creatures are immune. */
     private static void cull(ServerLevel level, List<CreatureEntity> candidates, int excess) {
         if (excess <= 0) return;
         var cullable = candidates.stream()
-                .filter(c -> !c.isPersistenceRequired() && !c.isPassenger() && !c.isVehicle() && !c.isLeashed())
+                .filter(NaturalPopulations::cullable)
                 .sorted(Comparator.comparingDouble(c -> -nearestPlayerDistanceSqr(level, c)))
                 .limit(excess).toList();
         for (var creature : cullable) creature.discard();
+    }
+
+    /**
+     * A creature someone is taming is not spare wildlife: knocked out, claimed, fed or holding deposited
+     * food, it would vanish with the tamer's food and progress. The list may be stale after an earlier cull.
+     */
+    public static boolean cullable(CreatureEntity c) {
+        if (c.isRemoved() || c.isPersistenceRequired() || c.isPassenger() || c.isVehicle() || c.isLeashed()) return false;
+        if (TorporService.restricted(c) || !c.tamingInventory().isEmpty()) return false;
+        if (!TamingService.tracked(c)) return true;
+        var taming = TamingService.of(c);
+        return taming.claimant() == null && taming.progress() <= 0f;
     }
 
     private static double nearestPlayerDistanceSqr(ServerLevel level, CreatureEntity creature) {

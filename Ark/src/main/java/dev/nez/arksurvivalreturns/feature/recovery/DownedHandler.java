@@ -65,6 +65,7 @@ public final class DownedHandler {
         event.setNewDamage(Math.max(0.0f, pool - 1.0f));
         state.start(Config.DOWNED_WINDOW.get(), player.position());
         DownedSync.send(player, state);
+        DownedSync.share(player);
         notifyDown(player, state);
         TamingService.discovery(player, "journal/first_downed");
     }

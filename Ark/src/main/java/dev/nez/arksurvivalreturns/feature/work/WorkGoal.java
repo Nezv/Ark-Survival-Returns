@@ -28,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -157,12 +158,17 @@ public final class WorkGoal extends Goal {
         BlockState state = level.getBlockState(pos);
         if (!state.is(tag)) return false;
         if (level.getBlockEntity(pos) != null) return false;
+        // Grazing leaves grass as it is; every other job changes the block, which mobGriefing governs.
+        if (!state.is(Blocks.GRASS_BLOCK) && !EventHooks.canEntityGrief(level, mob)) return false;
         return !Config.WORK_RESPECT_PLACED.get() || !WorkProtection.get(level).protectedAt(pos);
     }
 
     /** One harvest action; public so the headless suite can drive it without AI arbitration. */
     public static void harvest(CreatureEntity mob, BlockPos pos) {
         if (!(mob.level() instanceof ServerLevel level) || !isTarget(mob, level, pos)) return;
+        BlockState state = level.getBlockState(pos);
+        // Claim and protection mods veto a creature breaking blocks through this event.
+        if (!state.is(Blocks.GRASS_BLOCK) && !EventHooks.onEntityDestroyBlock(mob, pos, state)) return;
         WorkProfiles.Job job = WorkProfiles.of(mob.species()).job();
         if (job == WorkProfiles.Job.FORAGE) forage(mob, level, pos);
         else if (job == WorkProfiles.Job.MINERAL) mine(mob, level, pos);

@@ -38,6 +38,13 @@ final class FlyingGameTests {
         var bird = (FlyingCreatureEntity) ModContent.CREATURES.get(Species.PTERANODON).get().create(world, EntitySpawnReason.NATURAL);
         bird.setPos(Vec3.atBottomCenterOf(origin));
         var nest = Nests.placeNear(world, bird);
+        // A replacement nest (the first one was lost) starts empty, so breaking nests farms no eggs.
+        var spare = Nests.placeNear(world, bird, false);
+        if (spare != null) {
+            h.assertFalse(world.getBlockState(spare).getValue(dev.nez.arksurvivalreturns.feature.flying.NestBlock.EGG),
+                    "A replacement nest must start without an egg");
+            world.removeBlock(spare, false);
+        }
         h.assertTrue(nest != null, "Natural flyer failed to claim a local nest");
         bird.assignNest(nest);
         h.assertTrue(world.getBlockState(nest).getBlock() == ModContent.NESTS.get(Species.PTERANODON).get(), "Claimed nest block missing");

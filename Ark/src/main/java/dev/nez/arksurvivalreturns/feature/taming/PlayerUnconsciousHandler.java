@@ -161,8 +161,9 @@ public final class PlayerUnconsciousHandler {
             TorporService.clear(player);
             var downed = player.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED);
             // /kill on a downed player dies here, not through the bleed-out: drop the bleed-out HUD too.
-            if (downed.downed()) dev.nez.arksurvivalreturns.feature.recovery.DownedSync.clear(player);
+            boolean wasDowned = downed.downed();
             downed.clear();
+            if (wasDowned) dev.nez.arksurvivalreturns.feature.recovery.DownedSync.clear(player);
             TamingService.onWakeWithoutCompletion(player);
         }
     }

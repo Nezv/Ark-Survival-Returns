@@ -34,6 +34,25 @@ type="required"
 versionRange="[5.5.2,6)"
 ordering="AFTER"
 side="BOTH"
+# The tribe layer, the journal and the tech tree call FTB Quests, Teams and Library directly.
+[[dependencies.${mod_id}]]
+modId="ftblibrary"
+type="required"
+versionRange="[26.1.2,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="ftbteams"
+type="required"
+versionRange="[26.1.2,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="ftbquests"
+type="required"
+versionRange="[26.1.2,)"
+ordering="AFTER"
+side="BOTH"
 [[dependencies.${mod_id}]]
 modId="curios"
 type="optional"

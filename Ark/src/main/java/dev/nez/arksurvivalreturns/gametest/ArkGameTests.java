@@ -84,6 +84,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);
         FUNCTIONS.register("cargo_reach", () -> CargoGameTests::reach);
+        FUNCTIONS.register("cargo_death_and_cull", () -> CargoGameTests::deathAndCull);
         FUNCTIONS.register("overload_flight", () -> CargoGameTests::overloadFlight);
         FUNCTIONS.register("overload_swim", () -> CargoGameTests::overloadSwim);
         FUNCTIONS.register("work_harvest", () -> WorkGameTests::harvest);

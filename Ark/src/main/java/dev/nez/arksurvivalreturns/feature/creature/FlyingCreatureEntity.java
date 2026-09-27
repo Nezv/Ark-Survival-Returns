@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.*;
 import net.minecraft.world.phys.*;
+import net.neoforged.neoforge.event.EventHooks;
 
 /**
  * Nest-anchored flight. No day schedule, needs, target acquisition or pack-follow goal: the bird flies smooth
@@ -40,6 +41,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(FlyingCreatureEntity.class, EntityDataSerializers.INT);
     private UUID thiefId;
     private BlockPos center, nest;
+    private boolean nestLost;
     private Vec3 destination;
     private long defenseUntil, nextSwoop, lastSeen;
     private int phaseTicks, nextPerch, nextDestination, nextAdoption, swoopTicks, blockedTicks;
@@ -156,9 +158,10 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         }
         if (tickCount >= nextAdoption) {
             nextAdoption = tickCount + 200 + Math.floorMod(getId(), 40);
-            if (nest != null && !(world.getBlockState(nest).getBlock() instanceof NestBlock)) { nest = null; if (thiefId != null) endDefense(); }
-            // A natural flyer claims one local nest of its own; no colony record is kept.
-            if (nest == null && isNaturalWildlife()) nest = Nests.placeNear(world, this);
+            if (nest != null && !(world.getBlockState(nest).getBlock() instanceof NestBlock)) { nest = null; nestLost = true; if (thiefId != null) endDefense(); }
+            // A natural flyer claims one local nest of its own; no colony record is kept. Building one is block
+            // griefing, and only the bird's first nest holds an egg.
+            if (nest == null && isNaturalWildlife() && EventHooks.canEntityGrief(world, this)) nest = Nests.placeNear(world, this, !nestLost);
         }
         if (behaviorTier() == BehaviorTier.FULL) considerTerritorialDefense(world);
         Player thief = thiefId != null && world.getEntity(thiefId) instanceof Player player ? player : null;
@@ -395,12 +398,14 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         super.addAdditionalSaveData(out);
         BlockPos home = habitatCenter(); out.putLong("FlightHome", home.asLong());
         if (nest != null) out.putLong("FlightNest", nest.asLong());
+        out.putBoolean("FlightNestLost", nestLost);
     }
     @Override protected void readAdditionalSaveData(ValueInput in) {
         super.readAdditionalSaveData(in);
         center = BlockPos.of(in.getLongOr("FlightHome", wildlife().home().asLong()));
         long perch = in.getLongOr("FlightNest", Long.MIN_VALUE);
         nest = perch == Long.MIN_VALUE ? null : BlockPos.of(perch);
+        nestLost = in.getBooleanOr("FlightNestLost", false);
         thiefId = null; setTarget(null); entityData.set(PHASE, Phase.ROAM.ordinal()); setBehavior(BehaviorState.ROAM); setNoGravity(true);
         orbitInitialized = false; destination = null; lap = null;
     }

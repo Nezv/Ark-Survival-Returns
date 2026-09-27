@@ -7,12 +7,14 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerContainerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 /**
@@ -41,6 +43,11 @@ public final class MassEvents {
     @SubscribeEvent public static void joinedLevel(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof CreatureEntity creature) MassService.markDirty(creature);
     }
+    /** Without this every creature the population budget ever spawned would stay in the load map. */
+    @SubscribeEvent public static void leftLevel(EntityLeaveLevelEvent event) {
+        if (!event.getLevel().isClientSide() && event.getEntity() instanceof CreatureEntity creature) MassService.forget(creature);
+    }
+    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { MassService.reset(); }
     /** Mount and dismount both move the rider's load between the player and the animal. */
     @SubscribeEvent public static void mounted(EntityMountEvent event) {
         if (event.getEntity() instanceof CreatureEntity creature) MassService.markDirty(creature);

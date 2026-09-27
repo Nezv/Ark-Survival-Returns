@@ -233,6 +233,7 @@
   "guardian.arksurvivalreturns.awakened": "[ARK] The Allosaur Heart burns away. The Guardian awakens!",
   "guardian.arksurvivalreturns.bar": "%s | %s/%s",
   "guardian.arksurvivalreturns.chunks": "[ARK] The arena is not fully loaded yet.",
+  "guardian.arksurvivalreturns.claimed": "[ARK] Another tribe paid for this rite. Only they can wake the Guardian again.",
   "guardian.arksurvivalreturns.command.clear": "[ARK] The nearest encounter record was removed.",
   "guardian.arksurvivalreturns.command.grant": "[ARK] Granted the Workshop Schematic to %s.",
   "guardian.arksurvivalreturns.command.reset": "[ARK] The nearest encounter was reset to a free retry.",

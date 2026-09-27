@@ -107,6 +107,11 @@ public final class GuardianService {
         }
         boolean offering = state == GuardianState.LOCKED || state == GuardianState.DEFEATED;
         if (offering && !heart) return InteractionResult.PASS;
+        // A free retry belongs to the tribe that paid the heart; nobody else can take it over.
+        if (!offering && existing != null && !inTribe(player.getUUID(), existing.tribe())) {
+            player.sendSystemMessage(Component.translatable("guardian.arksurvivalreturns.claimed"), true);
+            return InteractionResult.SUCCESS;
+        }
         if (player.getData(RecoveryAttachments.DOWNED).downed() || TorporService.restricted(player)) {
             player.sendSystemMessage(Component.translatable("guardian.arksurvivalreturns.downed"), true);
             return InteractionResult.SUCCESS;
@@ -292,7 +297,8 @@ public final class GuardianService {
         Optional<GuardianEncounter> found = data.find(boss.guardianKey());
         if (found.isEmpty() || !found.get().owns(boss.getUUID())) return;
         GuardianEncounter encounter = found.get();
-        boolean firstVictory = !encounter.rewardsIssued();
+        // The schematic and the advancement are per tribe: another tribe beating the same Guardian earns them too.
+        boolean firstVictory = !TribeProgressData.get(level).has(encounter.tribe(), TribeProgressData.WORKSHOP_SCHEMATIC);
         // Persist the defeat before any reward is issued, so a crash cannot double the payout.
         encounter = encounter.withState(GuardianState.DEFEATED).withBoss(null).withRewardsIssued(true)
                 .withEmptySince(0L).withResetAt(0L);
