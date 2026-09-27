@@ -34,8 +34,11 @@ public final class StationBlock extends Block {
     public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR }
 
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    /** Collision: the bench tops. The outlines below also cover the tools and bottles standing on them. */
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
-    private static final VoxelShape MORTAR_SHAPE = Block.box(3, 0, 3, 13, 9, 13);
+    private static final VoxelShape WORKING_OUTLINE = Block.box(0, 0, 0, 16, 17, 16);
+    private static final VoxelShape MEDICINE_OUTLINE = Block.box(0, 0, 0, 16, 18.5, 16);
+    private static final VoxelShape MORTAR_SHAPE = Block.box(2.4, 0, 2.4, 13.6, 9, 13.6);
     private final Kind kind;
 
     public StationBlock(Kind kind, Properties properties) {
@@ -67,6 +70,15 @@ public final class StationBlock extends Block {
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return switch (kind) {
+            case MORTAR -> MORTAR_SHAPE;
+            case WORKING -> WORKING_OUTLINE;
+            case MEDICINE -> MEDICINE_OUTLINE;
+            case SMITHING -> SHAPE;
+        };
+    }
+
+    @Override protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return kind == Kind.MORTAR ? MORTAR_SHAPE : SHAPE;
     }
 

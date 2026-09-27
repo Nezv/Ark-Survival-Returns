@@ -152,6 +152,27 @@ final class StationGameTests {
                 "The stone fire outline must reach the spit");
         h.assertTrue(fire.getCollisionShape(level, BlockPos.ZERO, CollisionContext.empty()).max(Direction.Axis.Y) <= 7.01 / 16,
                 "The stone fire must stay walkable");
+
+        // Low fixes: outlines cover the models, pick-block works without item forms, stations leave foreign items alone.
+        var crusherState = StationContent.CRUSHER.get().defaultBlockState();
+        h.assertTrue(crusherState.getShape(level, BlockPos.ZERO).max(Direction.Axis.X) > 1.25
+                && crusherState.getCollisionShape(level, BlockPos.ZERO).max(Direction.Axis.X) <= 1.0,
+                "The crusher outline must include the flywheel, its collision must not");
+        h.assertTrue(StationContent.MEDICINE_BENCH.get().defaultBlockState().getShape(level, BlockPos.ZERO).max(Direction.Axis.Y) >= 18.5 / 16,
+                "The Medicine Bench outline must cover its bottles");
+        h.assertTrue(ModContent.NARCOBERRY_BUSH.get().defaultBlockState().getCloneItemStack(level, BlockPos.ZERO, false).is(berry)
+                && PrimitiveContent.LOOSE_ROCK.get().defaultBlockState().getCloneItemStack(level, BlockPos.ZERO, false).is(PrimitiveContent.ROCK.get()),
+                "Pick-block on a bush or a loose rock must give its item");
+        BlockPos troughRel = new BlockPos(9, 2, 5);
+        h.setBlock(troughRel, ModContent.TROUGH.get().defaultBlockState());
+        var torch = new ItemStack(Items.TORCH);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, torch);
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(h.absolutePos(troughRel)),
+                Direction.UP, h.absolutePos(troughRel), false);
+        var result = level.getBlockState(h.absolutePos(troughRel)).useItemOn(torch, level, player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+        h.assertTrue(result == net.minecraft.world.InteractionResult.PASS, "A trough must pass on items it does not take, like the client");
+        h.setBlock(troughRel, Blocks.AIR.defaultBlockState());
         h.succeed();
     }
 

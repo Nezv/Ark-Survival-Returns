@@ -210,6 +210,32 @@ def mod_screens():
     return count
 
 
+# Tom's Storage cable parts without a particle texture: breaking a cable showed the missing-texture particle.
+TOMS_PARTICLE_MODELS = ['cable_open', 'cable_closed', 'cable_connector/base', 'cable_connector/ext', 'cable_connector/item_framed']
+
+
+def mod_models():
+    """Copies of integrated mods' block models with a missing ``particle`` filled from their first texture."""
+    import glob
+    jars = sorted(glob.glob(str(ROOT / 'shared-mods/toms_storage-*.jar')))
+    if not jars:
+        return 0
+    count = 0
+    with zipfile.ZipFile(jars[-1]) as jar:
+        for name in TOMS_PARTICLE_MODELS:
+            path = f'assets/toms_storage/models/block/{name}.json'
+            model = json.loads(jar.read(path))
+            textures = model.setdefault('textures', {})
+            if 'particle' in textures or not textures:
+                continue
+            textures['particle'] = '#' + sorted(textures)[0]
+            target = PACK / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(model, indent=2) + '\n', encoding='utf-8')
+            count += 1
+    return count
+
+
 # Cooking pot panel: must match CookingPotMenu (inputs 62/80 x 17/35, meal 116,26) and CookingPotScreen (arrow).
 POT_MOD = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui/container/cooking_pot.png'
 POT_PACK = PACK / 'assets/arksurvivalreturns/textures/gui/container/cooking_pot.png'
@@ -372,7 +398,7 @@ def preview():
 def main():
     pack_meta()
     legs_icon()
-    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + cooking_pot()
+    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + cooking_pot() + mod_models()
     preview()
     print(f'Wrote {count} textures to {PACK}')
 

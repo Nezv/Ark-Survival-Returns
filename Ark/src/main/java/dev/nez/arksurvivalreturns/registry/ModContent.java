@@ -237,6 +237,7 @@ public final class ModContent {
                 .icon(() -> BERRIES.get("narcoberry").get().getDefaultInstance())
                 .displayItems((parameters, output) -> {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
+                    output.accept(NARCOTICS.get());
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
                     output.accept(CONCENTRATED_SEDATIVE.get());
                     output.accept(IMPROVED_TRANQUILIZER_ARROW_ITEM.get());

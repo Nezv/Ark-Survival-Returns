@@ -38,6 +38,9 @@ public final class CrusherBlock extends BaseEntityBlock {
     public static final IntegerProperty SPIN = IntegerProperty.create("spin", 0, 3);
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
+    /** Outline with the flywheel and its bearing, which stand out of the east side of the north-facing model. */
+    private static final java.util.Map<Direction, VoxelShape> OUTLINES = dev.nez.arksurvivalreturns.feature.camp.CampShapes.horizontal(
+            net.minecraft.world.phys.shapes.Shapes.or(SHAPE, Block.box(15, 2, 3.5, 20.5, 14, 12.5)));
 
     public CrusherBlock(Properties properties) {
         super(properties);
@@ -63,6 +66,11 @@ public final class CrusherBlock extends BaseEntityBlock {
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return OUTLINES.get(state.getValue(FACING));
+    }
+
+    /** Walking and neighbours only meet the body; the flywheel is decoration. */
+    @Override protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
@@ -82,8 +90,8 @@ public final class CrusherBlock extends BaseEntityBlock {
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!(level.getBlockEntity(pos) instanceof CrusherBlockEntity crusher)) return InteractionResult.PASS;
         if (CrusherRecipes.find(stack) == null) return InteractionResult.TRY_WITH_EMPTY_HAND;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-        return crusher.insert(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        if (!level.isClientSide()) crusher.insert(stack); // A full hopper still takes the click, like the client predicted.
+        return InteractionResult.SUCCESS;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,

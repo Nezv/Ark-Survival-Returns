@@ -39,7 +39,9 @@ public final class MassClient {
     }
 
     private static void render(GuiGraphicsExtractor graphics) {
-        if (!visible || capacity <= 0f || Minecraft.getInstance().options.hideGui) return;
+        // The gauge sits top-left, where the F3 screen prints: step aside while it is open.
+        if (!visible || capacity <= 0f || Minecraft.getInstance().options.hideGui
+                || Minecraft.getInstance().getDebugOverlay().showDebugScreen()) return;
         var font = Minecraft.getInstance().font;
         MassRules.Band current = MassRules.Band.values()[Math.clamp(band, 0, MassRules.Band.values().length - 1)];
         int color = switch (current) {

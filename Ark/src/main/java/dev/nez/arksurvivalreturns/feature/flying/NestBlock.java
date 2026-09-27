@@ -40,6 +40,10 @@ public final class NestBlock extends Block {
     @Override protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return useWithoutItem(state, level, pos, player, hit);
     }
+    /** Pick-block gives this species' egg: the nest has no item form. */
+    @Override protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        return new ItemStack(ModContent.NEST_EGGS.get(species()).get());
+    }
     public static boolean takeEgg(ServerLevel world, BlockPos pos, Player player) {
         var state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof NestBlock nest) || !state.getValue(EGG) || player.isSpectator()) return false;

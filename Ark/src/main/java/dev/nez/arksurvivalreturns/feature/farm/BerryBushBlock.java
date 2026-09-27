@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -82,6 +83,11 @@ public final class BerryBushBlock extends VegetationBlock {
         level.setBlock(pos, state.setValue(AGE, 1), Block.UPDATE_CLIENTS);
         level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS,
                 1.0f, 0.8f + level.getRandom().nextFloat() * 0.4f);
+    }
+
+    /** Pick-block gives the berry, as vanilla's sweet berry bush does: the bush has no item form. */
+    @Override protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        return new ItemStack(berry.get());
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

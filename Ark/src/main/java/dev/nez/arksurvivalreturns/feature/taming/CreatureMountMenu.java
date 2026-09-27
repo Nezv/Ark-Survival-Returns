@@ -50,6 +50,8 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
 
     private final @Nullable CreatureEntity creature;
     private final Container storage;
+    /** Live values on the server; on the client, the copy the data slots write into. */
+    private final ContainerData data;
 
     public CreatureMountMenu(int containerId, Inventory playerInventory, @Nullable CreatureEntity creature) {
         super(ModContent.CREATURE_MOUNT_MENU.get(), containerId);
@@ -75,14 +77,15 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
             }
         }
         this.addStandardInventorySlots(playerInventory, 8, 84);
-        this.addDataSlots(containerData());
+        this.data = creature != null && !creature.level().isClientSide()
+                ? liveData(creature) : new SimpleContainerData(DATA_COUNT);
+        this.addDataSlots(this.data);
     }
 
     /** Progress, appetite, sedation and method, so the screen can show the attempt without extra packets. */
-    private ContainerData containerData() {
+    private static ContainerData liveData(CreatureEntity creature) {
         return new SimpleContainerData(DATA_COUNT) {
             @Override public int get(int id) {
-                if (creature == null) return 0;
                 var torpor = TorporService.of(creature);
                 var taming = TamingService.of(creature);
                 return switch (id) {
@@ -110,27 +113,27 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
     }
 
     public int rawProgress() {
-        return containerData().get(DATA_PROGRESS);
+        return data.get(DATA_PROGRESS);
     }
 
     public int rawHunger() {
-        return containerData().get(DATA_HUNGER);
+        return data.get(DATA_HUNGER);
     }
 
     public int rawTorpor() {
-        return containerData().get(DATA_TORPOR);
+        return data.get(DATA_TORPOR);
     }
 
     public int rawTorporMax() {
-        return containerData().get(DATA_TORPOR_MAX);
+        return data.get(DATA_TORPOR_MAX);
     }
 
     public int rawCargoMass() {
-        return containerData().get(DATA_CARGO);
+        return data.get(DATA_CARGO);
     }
 
     public int rawCargoMax() {
-        return containerData().get(DATA_CARGO_MAX);
+        return data.get(DATA_CARGO_MAX);
     }
 
     public static int inventoryColumns() {

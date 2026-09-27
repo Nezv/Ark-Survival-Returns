@@ -125,9 +125,11 @@ public final class DryingRackBlock extends BaseEntityBlock {
         // An empty hand must fall through to useWithoutItem, or taking contents out never runs.
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (stack.is(asItem())) return InteractionResult.PASS; // Let the block item place the next tier.
+        // Decided from the item tag, which both sides know: anything else is used or placed normally on both sides.
+        if (!stack.is(FarmTags.DRYING_INPUTS)) return InteractionResult.PASS;
         if (!(level.getBlockEntity(TallBlocks.base(state, pos)) instanceof DryingRackBlockEntity rack)) return InteractionResult.PASS;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-        return rack.insert(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        if (!level.isClientSide()) rack.insert(stack); // A full rack still takes the click, like the client predicted.
+        return InteractionResult.SUCCESS;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,

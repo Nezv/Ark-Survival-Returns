@@ -144,7 +144,8 @@ public final class StoneFireBlock extends BaseEntityBlock {
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         boolean igniter = stack.is(Items.FLINT_AND_STEEL) || stack.is(Items.FIRE_CHARGE) || stack.is(PrimitiveContent.FIRE_STARTER.get());
         if (igniter) {
-            if (state.getValue(LIT) || !fire.hasFuel()) return InteractionResult.PASS;
+            // FUELED is block state, so the client knows it too (the burn timer itself is server-only).
+            if (state.getValue(LIT) || !state.getValue(FUELED)) return InteractionResult.PASS;
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             boolean caught;
             if (stack.is(PrimitiveContent.FIRE_STARTER.get())) {
@@ -171,13 +172,15 @@ public final class StoneFireBlock extends BaseEntityBlock {
             if (player instanceof ServerPlayer server) TechService.notify(server, TechEvent.simple(TechEventKind.LIGHT_TORCH, server));
             return InteractionResult.SUCCESS;
         }
+        // Both checks use data the client has (the synced campfire inputs, fuel values), so both sides agree; a full
+        // spit or fire still takes the click instead of passing it on to the item.
         if (fire.isCookable(stack)) {
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-            return fire.insertFood(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            if (!level.isClientSide()) fire.insertFood(stack);
+            return InteractionResult.SUCCESS;
         }
         if (fire.isFuel(stack)) {
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-            return fire.addFuel(stack) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            if (!level.isClientSide()) fire.addFuel(stack);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS; // Anything else, such as a cooking pot, is placed normally.
     }

@@ -81,6 +81,11 @@ public final class LooseRockBlock extends Block {
         return direction == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;
     }
 
+    /** Pick-block gives the rock: the loose rock has no item form. */
+    @Override protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        return new ItemStack(PrimitiveContent.ROCK.get());
+    }
+
     /** Picking a rock up is the same as breaking it, without the swing. */
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;

@@ -110,10 +110,15 @@ public final class PrimitiveForgeBlock extends BaseEntityBlock {
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!(level.getBlockEntity(TallBlocks.base(state, pos)) instanceof PrimitiveForgeBlockEntity forge)) return InteractionResult.PASS;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-        boolean toFuel = player.isSecondaryUseActive() || !forge.isSmeltable(stack);
-        int moved = forge.insert(stack, toFuel ? PrimitiveForgeBlockEntity.FUEL : PrimitiveForgeBlockEntity.INPUT);
-        return moved > 0 ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        // Furnace inputs (a synced set) and fuel values are known on both sides, so the client predicts the same
+        // answer; anything else is used or placed normally. Food smelts are still refused by the server.
+        boolean furnaceInput = level.recipeAccess().propertySet(net.minecraft.world.item.crafting.RecipePropertySet.FURNACE_INPUT).test(stack);
+        if (!furnaceInput && !forge.isFuel(stack)) return InteractionResult.PASS;
+        if (!level.isClientSide()) {
+            boolean toFuel = player.isSecondaryUseActive() || !forge.isSmeltable(stack);
+            forge.insert(stack, toFuel ? PrimitiveForgeBlockEntity.FUEL : PrimitiveForgeBlockEntity.INPUT);
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {

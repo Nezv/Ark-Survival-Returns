@@ -257,6 +257,14 @@ public final class ArkData implements DataProvider {
         pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
         pt.put("key.category." + NS + ".keys", "Ark Survival Returns");
+        // The tech-tree key (P) has its own Controls category (TechClient).
+        en.put("key.category." + NS + ".progression", "Ark Survival Returns: Progression");
+        pt.put("key.category." + NS + ".progression", "Ark Survival Returns: Progressão");
+        // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
+        en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
+        pt.put("entity." + NS + ".guardian_giganotosaurus", "Giganotossauro Guardião");
+        en.put("entity." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
+        pt.put("entity." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
         tamingMessages(en, pt);
         tribeMessages(en, pt);
         campMessages(en, pt);

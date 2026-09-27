@@ -93,9 +93,11 @@ public final class TroughBlock extends BaseEntityBlock {
             Player player, InteractionHand hand, BlockHitResult hit) {
         // An empty hand must fall through to useWithoutItem, or taking contents out never runs.
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
+        // Decided from the item tag, which both sides know: anything else is used or placed normally on both sides.
+        if (!stack.is(FarmTags.TROUGH_FOOD)) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof TroughBlockEntity trough)) return InteractionResult.PASS;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-        return trough.insert(stack) > 0 ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+        if (!level.isClientSide()) trough.insert(stack); // A full trough still takes the click, like the client predicted.
+        return InteractionResult.SUCCESS;
     }
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,

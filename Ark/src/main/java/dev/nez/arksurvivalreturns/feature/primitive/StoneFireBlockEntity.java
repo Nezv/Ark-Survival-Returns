@@ -103,8 +103,10 @@ public final class StoneFireBlockEntity extends BlockEntity {
     public ItemStack spit() { return items.get(SPIT); }
     public ItemStack cooked() { return items.get(COOKED); }
 
+    /** Any campfire recipe input; the input set is synced, so the client predicts the same answer as the server. */
     public boolean isCookable(ItemStack stack) {
-        return level != null && !level.isClientSide() ? recipe(stack).isPresent() : !stack.isEmpty() && stack.has(net.minecraft.core.component.DataComponents.FOOD);
+        return level != null && !stack.isEmpty()
+                && level.recipeAccess().propertySet(net.minecraft.world.item.crafting.RecipePropertySet.CAMPFIRE_INPUT).test(stack);
     }
 
     public boolean isFuel(ItemStack stack) {
