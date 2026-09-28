@@ -12,10 +12,18 @@ ROOT=Path(__file__).resolve().parents[1]
 GUI=ROOT/'src/main/resources/assets/arksurvivalreturns/textures/gui/tech'
 DESIGN=ROOT/'design/tech-menu'
 SPEC=json.loads((ROOT/'design/technology-tree/technology-tree.json').read_text(encoding='utf-8'))
-ORIGINS=[0,680,1250]
+# Prehistoric and Bronze both run starter + four lane columns + finale (six columns); Iron is just a
+# starter and a finale (two columns). Each origin leaves a 70-unit gap after the previous age's widest column.
+ORIGINS=[0,680,1360]
 # The map is 344 units tall (TechScreen.MAP_HEIGHT). Lanes are 76 apart and centred on the gate row, so a
-# three-lane age and the four-lane Prehistoric share the same gate height.
+# three-lane age and the four-lane Prehistoric/Bronze share the same gate height.
 GATE_Y,LANE_STEP=180,76
+# Node ids whose icon the Art agent paints directly at the runtime path below; the exporter must never
+# generate, overwrite or delete that file, only point the node at it (the client tolerates a missing texture).
+FORCE_ICON={'forge','shiny','home','coal','ironsmelt','minerals','sparklers','glass','ambulance','bandage',
+            'vitamins','knight','tools','tincan','colossus','kaboom','steel','subdue'}
+# Nodes removed by proposal 03; their stale per-node icon (if any) is deleted so no orphaned art ships.
+DELETED_ICON_IDS={'prepare','rawr','greed','harder','faster','stronger','charcoal','prometheus'}
 
 
 def lane_y(lane,lanes):
@@ -66,7 +74,54 @@ def art():
         im.save(GUI/('node_'+name+'.png'))
 
 
+# Portuguese (pt_br) title/task for every shipped node; the FTB mirror is the only place these strings are
+# localized (the native TechScreen renders the tree's own text directly, English only, as raw data).
+PT_TITLE={'monkeys':'Macacos','dried':'Carne Seca III','rock':'A pedra','berries':'Frutinhas!','london':'Londres',
+    'lasting':'Longa duração','fight':'Devíamos lutar com eles','ride':'Devíamos montar neles',
+    'companions':'Companheiros','scavenge':'Batedor','mattress':'Boa noite, enfim','warmth':'Prometeu',
+    'dish':'Delicioso','narcotics':'Narcotráfico','sharp':'Pensamento afiado','horn':'Duro como chifre',
+    'pointy':'Ponta afiada','armoured':'Pele grossa','forge':'Forja Infernal',
+    'shiny':'Brilhante','golden':'Carne Dourada de Raptor','home':'Lar, doce lar','feed':'Alimente a fera',
+    'theri':'Canivete suíço','slavery':'Escravidão','coal':'Ouro negro','ironsmelt':'Feito para durar',
+    'minerals':'Segredos da Terra','sparklers':'Fogos de artifício','glass':'Invisível',
+    'ambulance':'Chame a ambulância','bandage':'Mas não para mim','vitamins':'Tome suas vitaminas',
+    'knight':'Cavaleiro do Reino','tools':'Ferramentas do ofício','tincan':'Lata de conserva','colossus':'Colosso',
+    'kaboom':'Cabum!',
+    'steel':'Juntos é melhor','cocaine':'Cocaína','subdue':'Dome a natureza'}
+PT_TASK={'monkeys':'Pegue uma pedra solta.',
+    'dried':'Coma Carne Seca III: carne curada no varal por três dias do jogo.',
+    'rock':'Amarre uma pedra a um graveto: crie um Machado de Pedra.',
+    'berries':'Colete as quatro frutas: Amora, Framboesa, Amarelinha e Mirtilo.',
+    'london':'Crie seu primeiro equipamento: uma ferramenta de pedra ou a faca de sílex.',
+    'lasting':'Seque carne em um varal.','fight':'Cause dano a um dinossauro.',
+    'ride':'Crie uma corda de guia.','companions':'Domestique qualquer dinossauro.',
+    'scavenge':'Tenha um dinossauro coletando recursos.','mattress':'Crie um Colchão.',
+    'warmth':'Acenda uma fogueira de pedra.','dish':'Cozinhe qualquer prato em uma panela de barro.',
+    'narcotics':'Produza narcóticos: moa Amoras no Pilão.',
+    'sharp':'Lascar uma Pedra Afiada: bata uma pedra na outra.',
+    'horn':'Retire queratina de uma criatura com chifres, placas ou bico.',
+    'pointy':'Crie uma Lança de Queratina.',
+    'armoured':'Possua o conjunto completo de armadura de queratina: capacete, peitoral, calças e botas.',
+    'forge':'Crie uma Forja Primitiva.',
+    'shiny':'Funda Bronze: retire um Lingote de Bronze da Forja Primitiva.',
+    'golden':'Crie Carne Dourada de Raptor.','home':'Crie um Saco de Dormir.',
+    'feed':'Deixe seu tamed comer em uma cocheira.','theri':'Domestique um Therizinosaurus.',
+    'slavery':'Tenha um tamed voltando de uma caçada e outro voltando com uma carga de recursos.',
+    'coal':'Consiga carvão: minere minério de carvão ou produza carvão vegetal.',
+    'ironsmelt':'Funda ferro: retire um Lingote de Ferro da Forja Primitiva.',
+    'minerals':'Consiga enxofre.','sparklers':'Crie pólvora na Britadeira.','glass':'Consiga vidro.',
+    'ambulance':'Coloque uma Bancada de Medicina.','bandage':'Consiga uma Atadura de Ervas.',
+    'vitamins':'Crie vitaminas.','knight':'Consiga uma Espada Longa de Bronze ou um Martelo de Bronze.',
+    'tools':'Crie qualquer ferramenta de bronze.','tincan':'Crie qualquer peça de armadura de bronze.',
+    'colossus':'Possua o conjunto completo de armadura de bronze: capacete, peitoral, calças e botas.',
+    'kaboom':'Crie Flechas Explosivas.',
+    'steel':'Forje aço.','cocaine':'Pólvora + narcóticos + fruta amarela.','subdue':'Crie munição.'}
+
+
 def export():
+    for deleted in DELETED_ICON_IDS:
+        stale=GUI/'icons'/(deleted+'.png')
+        if stale.exists():stale.unlink()
     ages=[];nodes=[];ftbmap={}
     for index,age in enumerate(SPEC['ages']):
         ages.append(dict(id=age['id'],title=age['name'].title()+' Age',order=index,color=COLORS[index],
@@ -82,14 +137,20 @@ def export():
         n['trigger']=source.get('trigger',{'type':'future'})
         # Food placement is cosmetic; actual prerequisites still apply.
         if n['id']=='dried':n['requires']=['lasting']
-        icon=None
-        if n['id'] in overrides:
-            icon=ROOT/'design/prehistoric-camp/orthographic'/(overrides[n['id']]+'.png')
-        elif source.get('icon'):
-            icon=ROOT/'design/technology-tree/icons'/(source['icon']+'.png')
-        if icon and icon.exists():
-            Image.open(icon).convert('RGBA').resize((64,64),Image.Resampling.LANCZOS).save(GUI/'icons'/(n['id']+'.png'))
+        if n['id'] in FORCE_ICON:
+            # Owned by the Art agent's own worktree/branch: reference the runtime path without touching the
+            # file, so a PNG dropped there later (or already there from a merge) is neither generated over
+            # nor deleted by this exporter. The client shows an empty ring until the texture exists.
             n['icon']='arksurvivalreturns:textures/gui/tech/icons/'+n['id']+'.png'
+        else:
+            icon=None
+            if n['id'] in overrides:
+                icon=ROOT/'design/prehistoric-camp/orthographic'/(overrides[n['id']]+'.png')
+            elif source.get('icon'):
+                icon=ROOT/'design/technology-tree/icons'/(source['icon']+'.png')
+            if icon and icon.exists():
+                Image.open(icon).convert('RGBA').resize((64,64),Image.Resampling.LANCZOS).save(GUI/'icons'/(n['id']+'.png'))
+                n['icon']='arksurvivalreturns:textures/gui/tech/icons/'+n['id']+'.png'
         nodes.append(n)
         ftbmap[n['id']]=f'{quest_id(n["id"]):016X}'
     assert len(nodes)==len(SPEC['nodes']) and len(set(ftbmap.values()))==len(nodes)
@@ -100,6 +161,7 @@ def export():
         chapter_id=f'{0x4152FFFF00000100+index:016X}'
         filename='ark_tech_'+age['id'];quests=[]
         lang={f'chapter.{chapter_id}.title':age['title']+' - Chronicle'}
+        lang_pt={f'chapter.{chapter_id}.title':age['title']+' - Crônica'}
         for n in nodes:
             if n['age']!=age['id']:continue
             qid=ftbmap[n['id']];tid=f'{quest_id(n["id"])+1:016X}'
@@ -110,9 +172,13 @@ def export():
             # Never duplicate secret objectives into FTB's client-side quest description.
             lang[f'quest.{qid}.quest_desc']=['???' if n['kind']=='side' else n['task']]
             lang[f'task.{tid}.title']='Chronicle objective'
+            lang_pt[f'quest.{qid}.title']=PT_TITLE.get(n['id'],n['title'])
+            lang_pt[f'quest.{qid}.quest_desc']=['???' if n['kind']=='side' else PT_TASK.get(n['id'],n['task'])]
+            lang_pt[f'task.{tid}.title']='Objetivo da crônica'
         chapter=dict(id=chapter_id,filename=filename,group='',order_index=20+index,always_invisible=True,quests=quests)
         write(ROOT/'config/ftbquests/quests/chapters'/(filename+'.json5'),chapter)
         write(ROOT/'config/ftbquests/quests/lang/en_us'/(filename+'.json5'),lang)
+        write(ROOT/'config/ftbquests/quests/lang/pt_br'/(filename+'.json5'),lang_pt)
     return tree
 
 
@@ -144,8 +210,9 @@ def preview(tree):
         if n['kind']=='side':d.text((x-8,y-7),'???',font=font,fill='#8c8464');continue
         status='complete' if n['id'] in completed else 'ready' if all(r in completed for r in n['requires']) else 'locked'
         halo=Image.open(GUI/('node_'+status+'.png')).resize((48,48));im.alpha_composite(halo,(x-24,y-24))
-        if n.get('icon'):
-            icon=Image.open(GUI/'icons'/(n['id']+'.png')).resize((40,40))
+        icon_path=GUI/'icons'/(n['id']+'.png')
+        if n.get('icon') and icon_path.exists():
+            icon=Image.open(icon_path).resize((40,40))
             if status=='locked':icon.putalpha(icon.getchannel('A').point(lambda v:v*145//255))
             im.alpha_composite(icon,(x-20,y-20))
     d=ImageDraw.Draw(im)

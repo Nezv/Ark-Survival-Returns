@@ -2,9 +2,11 @@ package dev.nez.arksurvivalreturns.feature.primitive;
 
 import com.mojang.serialization.MapCodec;
 import dev.nez.arksurvivalreturns.feature.camp.TallBlocks;
+import dev.nez.arksurvivalreturns.feature.tech.TechEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -124,7 +126,13 @@ public final class PrimitiveForgeBlock extends BaseEntityBlock {
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!(level.getBlockEntity(TallBlocks.base(state, pos)) instanceof PrimitiveForgeBlockEntity forge)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
+        // extract() drains the output slot first, so a taken stack counts as smelted only when the output
+        // was not already empty before the take.
+        boolean fromOutput = !forge.output().isEmpty();
         ItemStack taken = forge.extract();
+        if (fromOutput && !taken.isEmpty() && player instanceof ServerPlayer serverPlayer) {
+            TechEvents.onForgeSmelt(serverPlayer, taken);
+        }
         if (!taken.isEmpty() && !player.getInventory().add(taken)) player.drop(taken, false);
         return InteractionResult.SUCCESS;
     }

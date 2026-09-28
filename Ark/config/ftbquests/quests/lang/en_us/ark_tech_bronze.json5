@@ -1,15 +1,20 @@
 {
   "chapter.4152FFFF00000101.title": "Bronze Age - Chronicle",
-  "quest.41520001DA0C1A0E.title": "Prepare for it!",
-  "quest.41520001DA0C1A0E.quest_desc": [
-    "Embed an arrow with tranquilizer."
+  "quest.415200000D0ADAFE.title": "Shiny",
+  "quest.415200000D0ADAFE.quest_desc": [
+    "Smelt Bronze: take a Bronze Ingot out of the Primitive Forge."
   ],
-  "task.41520001DA0C1A0F.title": "Chronicle objective",
+  "task.415200000D0ADAFF.title": "Chronicle objective",
   "quest.415200016C23EA12.title": "Golden Raptor Meat",
   "quest.415200016C23EA12.quest_desc": [
     "???"
   ],
   "task.415200016C23EA13.title": "Chronicle objective",
+  "quest.415200000061E9BE.title": "Home Sweet Home",
+  "quest.415200000061E9BE.quest_desc": [
+    "Craft a Bedroll."
+  ],
+  "task.415200000061E9BF.title": "Chronicle objective",
   "quest.41520000005FCB3C.title": "Feed the Beast",
   "quest.41520000005FCB3C.quest_desc": [
     "Have your tame eat from a feeding trough."
@@ -22,42 +27,72 @@
   "task.415200000D26ECD1.title": "Chronicle objective",
   "quest.41520001028C2CBC.title": "Slavery",
   "quest.41520001028C2CBC.quest_desc": [
-    "Return with a hunt and a resource haul from your tames."
+    "Have a tame return from a kill and another return from a resource haul."
   ],
   "task.41520001028C2CBD.title": "Chronicle objective",
-  "quest.415200000D0ADAFE.title": "Shiny",
-  "quest.415200000D0ADAFE.quest_desc": [
-    "Collect copper and tin."
+  "quest.41520000005D5B2E.title": "Black Gold",
+  "quest.41520000005D5B2E.quest_desc": [
+    "Acquire coal: mine coal ore or produce charcoal."
   ],
-  "task.415200000D0ADAFF.title": "Chronicle objective",
-  "quest.415200000B134696.title": "Better Together",
-  "quest.415200000B134696.quest_desc": [
-    "Smelt your first bronze."
+  "task.41520000005D5B2F.title": "Chronicle objective",
+  "quest.4152000188CFD896.title": "Made to Last",
+  "quest.4152000188CFD896.quest_desc": [
+    "Smelt iron: take an Iron Ingot out of the Primitive Forge."
   ],
-  "task.415200000B134697.title": "Chronicle objective",
-  "quest.41520001A19B8438.title": "Made to last",
-  "quest.41520001A19B8438.quest_desc": [
-    "Craft your first bronze weapon."
-  ],
-  "task.41520001A19B8439.title": "Chronicle objective",
-  "quest.41520000AB2F4BDA.title": "Black Gold",
-  "quest.41520000AB2F4BDA.quest_desc": [
-    "Produce charcoal."
-  ],
-  "task.41520000AB2F4BDB.title": "Chronicle objective",
-  "quest.415200015D901D92.title": "Earths Secrets",
+  "task.4152000188CFD897.title": "Chronicle objective",
+  "quest.415200015D901D92.title": "Earth Secrets",
   "quest.415200015D901D92.quest_desc": [
-    "Collect sulfur and saltpeter."
+    "Acquire sulphur."
   ],
   "task.415200015D901D93.title": "Chronicle objective",
   "quest.41520001C239BBAE.title": "Sparklers",
   "quest.41520001C239BBAE.quest_desc": [
-    "Craft gunpowder."
+    "Craft gunpowder in the Crusher."
   ],
   "task.41520001C239BBAF.title": "Chronicle objective",
-  "quest.41520000006A9A94.title": "Rawr!",
-  "quest.41520000006A9A94.quest_desc": [
-    "Tame a Tyrannosaur."
+  "quest.415200000BBC0EF8.title": "Invisible",
+  "quest.415200000BBC0EF8.quest_desc": [
+    "Acquire glass."
   ],
-  "task.41520000006A9A95.title": "Chronicle objective"
+  "task.415200000BBC0EF9.title": "Chronicle objective",
+  "quest.41520000ED6F0B38.title": "Call ambulance",
+  "quest.41520000ED6F0B38.quest_desc": [
+    "Place a Medicine Bench."
+  ],
+  "task.41520000ED6F0B39.title": "Chronicle objective",
+  "quest.41520001D7CB9554.title": "But not for me",
+  "quest.41520001D7CB9554.quest_desc": [
+    "Acquire a Herbal Bandage."
+  ],
+  "task.41520001D7CB9555.title": "Chronicle objective",
+  "quest.41520000BF6A6182.title": "Take your vitamins",
+  "quest.41520000BF6A6182.quest_desc": [
+    "Craft vitamins."
+  ],
+  "task.41520000BF6A6183.title": "Chronicle objective",
+  "quest.4152000179ABDD1A.title": "Knight of the Realm",
+  "quest.4152000179ABDD1A.quest_desc": [
+    "Acquire a Bronze Longsword or a Bronze Hammer."
+  ],
+  "task.4152000179ABDD1B.title": "Chronicle objective",
+  "quest.415200000D2D93B6.title": "Tools of the Trade",
+  "quest.415200000D2D93B6.quest_desc": [
+    "Craft any bronze tool."
+  ],
+  "task.415200000D2D93B7.title": "Chronicle objective",
+  "quest.4152000197DA992E.title": "Tin Can",
+  "quest.4152000197DA992E.quest_desc": [
+    "Craft any bronze armour piece."
+  ],
+  "task.4152000197DA992F.title": "Chronicle objective",
+  "quest.41520001B50B48DA.title": "Colossus",
+  "quest.41520001B50B48DA.quest_desc": [
+    "Own the whole bronze armour set: helmet, chestplate, leggings and boots."
+  ],
+  "task.41520001B50B48DB.title": "Chronicle objective",
+  "quest.4152000178375A82.title": "Kaboom!",
+  "quest.4152000178375A82.quest_desc": [
+    "Craft Explosive Arrows."
+  ],
+  "task.4152000178375A83.title": "Chronicle objective"
 }

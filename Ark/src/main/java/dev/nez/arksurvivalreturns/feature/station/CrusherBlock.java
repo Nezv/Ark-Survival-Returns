@@ -1,8 +1,10 @@
 package dev.nez.arksurvivalreturns.feature.station;
 
 import com.mojang.serialization.MapCodec;
+import dev.nez.arksurvivalreturns.feature.tech.TechEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -99,6 +101,7 @@ public final class CrusherBlock extends BaseEntityBlock {
         if (!(level.getBlockEntity(pos) instanceof CrusherBlockEntity crusher)) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         ItemStack taken = crusher.takeOutput();
+        if (!taken.isEmpty() && player instanceof ServerPlayer serverPlayer) TechEvents.crusherOutput(serverPlayer, taken);
         if (!taken.isEmpty() && !player.getInventory().add(taken)) player.drop(taken, false);
         return InteractionResult.SUCCESS;
     }

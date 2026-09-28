@@ -1,5 +1,5 @@
 {
-  "status": "Design proposal 02; no game patch",
+  "status": "Design proposal 03; Bronze Age completion, no game patch",
   "ages": [
     {
       "id": "prehistoric",
@@ -19,10 +19,10 @@
       ],
       "column_counts": [
         2,
-        3,
-        3,
-        3,
-        3,
+        4,
+        4,
+        4,
+        4,
         1
       ]
     },
@@ -30,46 +30,40 @@
       "id": "bronze",
       "name": "BRONZE",
       "x": 2890,
-      "width": 2345,
+      "width": 2745,
       "start": 2945,
-      "cols": 5,
+      "cols": 6,
       "fill": "#f1dec6",
       "accent": "#875b38",
       "shadow": "#d6c1a7",
       "lanes": [
-        "WORKING DINOSAURS",
-        "METAL & CRAFT",
-        "FIELD CHEMISTRY"
+        "HEARTH & HERD",
+        "FIRE & MINERALS",
+        "FIELD MEDICINE",
+        "BRONZE ARMS"
       ],
       "column_counts": [
         2,
-        3,
-        3,
-        3,
+        4,
+        4,
+        4,
+        4,
         1
       ]
     },
     {
       "id": "iron",
       "name": "IRON",
-      "x": 5270,
-      "width": 2800,
-      "start": 5325,
-      "cols": 6,
+      "x": 5760,
+      "width": 905,
+      "start": 5815,
+      "cols": 2,
       "fill": "#dfe8ed",
       "accent": "#485f72",
       "shadow": "#c0cdd5",
-      "lanes": [
-        "FORGE & PRECISION",
-        "HARDER / BETTER / FASTER / STRONGER",
-        "HOME & DEFENCE"
-      ],
+      "lanes": [],
       "column_counts": [
         2,
-        3,
-        3,
-        3,
-        1,
         1
       ]
     }
@@ -116,13 +110,13 @@
         380,
         238
       ],
-      "acquisition_requires": [
-        "lasting"
-      ],
       "requires": [
         "monkeys"
       ],
       "optional": true,
+      "acquisition_requires": [
+        "lasting"
+      ],
       "trigger": {
         "type": "consume",
         "items": [
@@ -351,7 +345,7 @@
     {
       "id": "mattress",
       "title": "Finally Goodnight",
-      "task": "Craft a Primitive Bedroll.",
+      "task": "Craft a Mattress.",
       "age": "prehistoric",
       "lane": 2,
       "column": 1,
@@ -371,13 +365,13 @@
       "trigger": {
         "type": "craft",
         "items": [
-          "arksurvivalreturns:bedroll"
+          "arksurvivalreturns:mattress"
         ]
       }
     },
     {
       "id": "warmth",
-      "title": "A little warmth",
+      "title": "Prometheus",
       "task": "Light a stone fire.",
       "age": "prehistoric",
       "lane": 2,
@@ -404,13 +398,13 @@
       }
     },
     {
-      "id": "prometheus",
-      "title": "Prometheus",
-      "task": "Light a torch in the stone fire.",
+      "id": "dish",
+      "title": "Delicious",
+      "task": "Cook any dish in a cooking pot.",
       "age": "prehistoric",
       "lane": 2,
       "column": 3,
-      "icon": null,
+      "icon": "cooking_pot",
       "kind": "main",
       "note": null,
       "box": [
@@ -424,18 +418,21 @@
       ],
       "optional": false,
       "trigger": {
-        "type": "event",
-        "kind": "light_torch"
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:hearty_stew",
+          "arksurvivalreturns:trail_mix"
+        ]
       }
     },
     {
-      "id": "dish",
-      "title": "Delicious",
-      "task": "Cook any dish in a cooking pot.",
+      "id": "narcotics",
+      "title": "Narcotraffic",
+      "task": "Produce narcotics: grind Blackberries in the Mortar & Pestle.",
       "age": "prehistoric",
       "lane": 2,
       "column": 4,
-      "icon": "cooking_pot",
+      "icon": "narcotics",
       "kind": "main",
       "note": null,
       "box": [
@@ -445,14 +442,13 @@
         238
       ],
       "requires": [
-        "prometheus"
+        "dish"
       ],
       "optional": false,
       "trigger": {
-        "type": "collect",
+        "type": "craft",
         "items": [
-          "arksurvivalreturns:hearty_stew",
-          "arksurvivalreturns:trail_mix"
+          "arksurvivalreturns:narcotics"
         ]
       }
     },
@@ -559,23 +555,23 @@
       "optional": false,
       "trigger": {
         "type": "collect",
+        "distinct": true,
         "items": [
           "arksurvivalreturns:keratin_helmet",
           "arksurvivalreturns:keratin_chestplate",
           "arksurvivalreturns:keratin_leggings",
           "arksurvivalreturns:keratin_boots"
-        ],
-        "distinct": true
+        ]
       }
     },
     {
-      "id": "narcotics",
-      "title": "Narcotraffic",
-      "task": "Produce narcotics: grind Blackberries in the Mortar & Pestle.",
+      "id": "forge",
+      "title": "Hell Forge",
+      "task": "Craft a Primitive Forge.",
       "age": "prehistoric",
       "lane": 1,
       "column": 5,
-      "icon": "narcotics",
+      "icon": null,
       "kind": "finale",
       "note": "AGE FINALE / ALL 4 PATHS",
       "box": [
@@ -587,25 +583,25 @@
       "requires": [
         "lasting",
         "scavenge",
-        "dish",
+        "narcotics",
         "armoured"
       ],
       "optional": false,
       "trigger": {
         "type": "craft",
         "items": [
-          "arksurvivalreturns:narcotics"
+          "arksurvivalreturns:primitive_forge"
         ]
       }
     },
     {
-      "id": "prepare",
-      "title": "Prepare for it!",
-      "task": "Embed an arrow with tranquilizer.",
+      "id": "shiny",
+      "title": "Shiny",
+      "task": "Smelt Bronze: take a Bronze Ingot out of the Primitive Forge.",
       "age": "bronze",
       "lane": 1,
       "column": 0,
-      "icon": "tranquilizer",
+      "icon": null,
       "kind": "starter",
       "note": "AGE STARTER",
       "box": [
@@ -615,9 +611,16 @@
         238
       ],
       "requires": [
-        "narcotics"
+        "forge"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "produce",
+        "kind": "smelt",
+        "items": [
+          "arksurvivalreturns:bronze_ingot"
+        ]
+      }
     },
     {
       "id": "golden",
@@ -635,13 +638,40 @@
         380,
         238
       ],
+      "requires": [
+        "shiny"
+      ],
+      "optional": true,
       "acquisition_requires": [
-        "prepare"
+        "shiny"
+      ]
+    },
+    {
+      "id": "home",
+      "title": "Home Sweet Home",
+      "task": "Craft a Bedroll.",
+      "age": "bronze",
+      "lane": 0,
+      "column": 1,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3400,
+        445,
+        380,
+        238
       ],
       "requires": [
-        "prepare"
+        "shiny"
       ],
-      "optional": true
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:bedroll"
+        ]
+      }
     },
     {
       "id": "feed",
@@ -649,20 +679,24 @@
       "task": "Have your tame eat from a feeding trough.",
       "age": "bronze",
       "lane": 0,
-      "column": 1,
+      "column": 2,
       "icon": "trough",
       "kind": "main",
       "note": null,
       "box": [
-        3400,
+        3855,
         445,
         380,
         238
       ],
       "requires": [
-        "prepare"
+        "home"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "event",
+        "kind": "trough_feed"
+      }
     },
     {
       "id": "theri",
@@ -670,12 +704,12 @@
       "task": "Tame a Therizinosaurus.",
       "age": "bronze",
       "lane": 0,
-      "column": 2,
+      "column": 3,
       "icon": "therizinosaurus",
       "kind": "main",
       "note": null,
       "box": [
-        3855,
+        4310,
         445,
         380,
         238
@@ -683,20 +717,24 @@
       "requires": [
         "feed"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "tame",
+        "species": "arksurvivalreturns:therizinosaurus"
+      }
     },
     {
       "id": "slavery",
       "title": "Slavery",
-      "task": "Return with a hunt and a resource haul from your tames.",
+      "task": "Have a tame return from a kill and another return from a resource haul.",
       "age": "bronze",
       "lane": 0,
-      "column": 3,
+      "column": 4,
       "icon": "harness",
       "kind": "main",
       "note": null,
       "box": [
-        4310,
+        4765,
         445,
         380,
         238
@@ -704,41 +742,33 @@
       "requires": [
         "theri"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "all_of",
+        "parts": [
+          {
+            "type": "event",
+            "kind": "tame_kill"
+          },
+          {
+            "type": "event",
+            "kind": "tame_work"
+          }
+        ]
+      }
     },
     {
-      "id": "shiny",
-      "title": "Shiny",
-      "task": "Collect copper and tin.",
+      "id": "coal",
+      "title": "Black Gold",
+      "task": "Acquire coal: mine coal ore or produce charcoal.",
       "age": "bronze",
       "lane": 1,
       "column": 1,
-      "icon": "copper",
-      "kind": "main",
-      "note": null,
-      "box": [
-        3400,
-        815,
-        380,
-        238
-      ],
-      "requires": [
-        "prepare"
-      ],
-      "optional": false
-    },
-    {
-      "id": "alloy",
-      "title": "Better Together",
-      "task": "Smelt your first bronze.",
-      "age": "bronze",
-      "lane": 1,
-      "column": 2,
       "icon": null,
       "kind": "main",
       "note": null,
       "box": [
-        3855,
+        3400,
         815,
         380,
         238
@@ -746,12 +776,47 @@
       "requires": [
         "shiny"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "minecraft:coal",
+          "minecraft:charcoal"
+        ]
+      }
     },
     {
-      "id": "weapon",
-      "title": "Made to last",
-      "task": "Craft your first bronze weapon.",
+      "id": "ironsmelt",
+      "title": "Made to Last",
+      "task": "Smelt iron: take an Iron Ingot out of the Primitive Forge.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3855,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "coal"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "produce",
+        "kind": "smelt",
+        "items": [
+          "minecraft:iron_ingot"
+        ]
+      }
+    },
+    {
+      "id": "minerals",
+      "title": "Earth Secrets",
+      "task": "Acquire sulphur.",
       "age": "bronze",
       "lane": 1,
       "column": 3,
@@ -765,18 +830,52 @@
         238
       ],
       "requires": [
-        "alloy"
+        "ironsmelt"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:sulphur"
+        ]
+      }
     },
     {
-      "id": "charcoal",
-      "title": "Black Gold",
-      "task": "Produce charcoal.",
+      "id": "sparklers",
+      "title": "Sparklers",
+      "task": "Craft gunpowder in the Crusher.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 4,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        4765,
+        815,
+        380,
+        238
+      ],
+      "requires": [
+        "minerals"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "produce",
+        "kind": "crusher_output",
+        "items": [
+          "minecraft:gunpowder"
+        ]
+      }
+    },
+    {
+      "id": "glass",
+      "title": "Invisible",
+      "task": "Acquire glass.",
       "age": "bronze",
       "lane": 2,
       "column": 1,
-      "icon": "charcoal",
+      "icon": null,
       "kind": "main",
       "note": null,
       "box": [
@@ -786,14 +885,20 @@
         238
       ],
       "requires": [
-        "prepare"
+        "shiny"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "minecraft:glass"
+        ]
+      }
     },
     {
-      "id": "minerals",
-      "title": "Earths Secrets",
-      "task": "Collect sulfur and saltpeter.",
+      "id": "ambulance",
+      "title": "Call ambulance",
+      "task": "Place a Medicine Bench.",
       "age": "bronze",
       "lane": 2,
       "column": 2,
@@ -807,18 +912,24 @@
         238
       ],
       "requires": [
-        "charcoal"
+        "glass"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "place_block",
+        "blocks": [
+          "arksurvivalreturns:medicine_bench"
+        ]
+      }
     },
     {
-      "id": "sparklers",
-      "title": "Sparklers",
-      "task": "Craft gunpowder.",
+      "id": "bandage",
+      "title": "But not for me",
+      "task": "Acquire a Herbal Bandage.",
       "age": "bronze",
       "lane": 2,
       "column": 3,
-      "icon": "gunpowder",
+      "icon": null,
       "kind": "main",
       "note": null,
       "box": [
@@ -828,51 +939,210 @@
         238
       ],
       "requires": [
-        "minerals"
+        "ambulance"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:herbal_bandage"
+        ]
+      }
     },
     {
-      "id": "rawr",
-      "title": "Rawr!",
-      "task": "Tame a Tyrannosaur.",
+      "id": "vitamins",
+      "title": "Take your vitamins",
+      "task": "Craft vitamins.",
       "age": "bronze",
-      "lane": 1,
+      "lane": 2,
       "column": 4,
-      "icon": "tyrannosaur",
-      "kind": "finale",
-      "note": "AGE FINALE / ALL 3 PATHS",
+      "icon": null,
+      "kind": "main",
+      "note": null,
       "box": [
         4765,
+        1185,
+        380,
+        238
+      ],
+      "requires": [
+        "bandage"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:vitamins"
+        ]
+      }
+    },
+    {
+      "id": "knight",
+      "title": "Knight of the Realm",
+      "task": "Acquire a Bronze Longsword or a Bronze Hammer.",
+      "age": "bronze",
+      "lane": 3,
+      "column": 1,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3400,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "shiny"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "items": [
+          "arksurvivalreturns:bronze_longsword",
+          "arksurvivalreturns:bronze_hammer"
+        ]
+      }
+    },
+    {
+      "id": "tools",
+      "title": "Tools of the Trade",
+      "task": "Craft any bronze tool.",
+      "age": "bronze",
+      "lane": 3,
+      "column": 2,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        3855,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "knight"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:bronze_pickaxe",
+          "arksurvivalreturns:bronze_axe",
+          "arksurvivalreturns:bronze_shovel",
+          "arksurvivalreturns:bronze_hoe"
+        ]
+      }
+    },
+    {
+      "id": "tincan",
+      "title": "Tin Can",
+      "task": "Craft any bronze armour piece.",
+      "age": "bronze",
+      "lane": 3,
+      "column": 3,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        4310,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "tools"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:bronze_helmet",
+          "arksurvivalreturns:bronze_chestplate",
+          "arksurvivalreturns:bronze_leggings",
+          "arksurvivalreturns:bronze_boots"
+        ]
+      }
+    },
+    {
+      "id": "colossus",
+      "title": "Colossus",
+      "task": "Own the whole bronze armour set: helmet, chestplate, leggings and boots.",
+      "age": "bronze",
+      "lane": 3,
+      "column": 4,
+      "icon": null,
+      "kind": "main",
+      "note": null,
+      "box": [
+        4765,
+        1555,
+        380,
+        238
+      ],
+      "requires": [
+        "tincan"
+      ],
+      "optional": false,
+      "trigger": {
+        "type": "collect",
+        "distinct": true,
+        "items": [
+          "arksurvivalreturns:bronze_helmet",
+          "arksurvivalreturns:bronze_chestplate",
+          "arksurvivalreturns:bronze_leggings",
+          "arksurvivalreturns:bronze_boots"
+        ]
+      }
+    },
+    {
+      "id": "kaboom",
+      "title": "Kaboom!",
+      "task": "Craft Explosive Arrows.",
+      "age": "bronze",
+      "lane": 1,
+      "column": 5,
+      "icon": null,
+      "kind": "finale",
+      "note": "AGE FINALE / ALL 4 PATHS",
+      "box": [
+        5220,
         815,
         380,
         238
       ],
       "requires": [
         "slavery",
-        "weapon",
-        "sparklers"
+        "sparklers",
+        "vitamins",
+        "colossus"
       ],
-      "optional": false
+      "optional": false,
+      "trigger": {
+        "type": "craft",
+        "items": [
+          "arksurvivalreturns:explosive_arrow"
+        ]
+      }
     },
     {
-      "id": "greed",
-      "title": "Greed",
-      "task": "Have gunpowder.",
+      "id": "steel",
+      "title": "Better Together",
+      "task": "Forge steel.",
       "age": "iron",
-      "lane": 1,
+      "lane": 0,
       "column": 0,
-      "icon": "gunpowder",
+      "icon": null,
       "kind": "starter",
       "note": "AGE STARTER",
       "box": [
-        5325,
-        815,
+        5815,
+        445,
         380,
         238
       ],
       "requires": [
-        "rawr"
+        "kaboom"
       ],
       "optional": false
     },
@@ -887,251 +1157,39 @@
       "kind": "bonus",
       "note": "OPTIONAL BOOSTING FOOD",
       "box": [
-        5325,
+        5815,
         445,
         380,
         238
       ],
+      "requires": [
+        "steel"
+      ],
+      "optional": true,
       "acquisition_requires": [
-        "greed",
+        "steel",
         "narcotics",
         "berries"
-      ],
-      "requires": [
-        "greed"
-      ],
-      "optional": true
-    },
-    {
-      "id": "forge",
-      "title": "Hell Forge",
-      "task": "Have a forging table.",
-      "age": "iron",
-      "lane": 0,
-      "column": 1,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        5780,
-        445,
-        380,
-        238
-      ],
-      "requires": [
-        "greed"
-      ],
-      "optional": false
-    },
-    {
-      "id": "glass",
-      "title": "I see you",
-      "task": "Craft glass.",
-      "age": "iron",
-      "lane": 0,
-      "column": 2,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        6235,
-        445,
-        380,
-        238
-      ],
-      "requires": [
-        "forge"
-      ],
-      "optional": false
-    },
-    {
-      "id": "trickshot",
-      "title": "Trick-shot",
-      "task": "Kill a carnivore with a scoped weapon.",
-      "age": "iron",
-      "lane": 0,
-      "column": 3,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        6690,
-        445,
-        380,
-        238
-      ],
-      "requires": [
-        "glass"
-      ],
-      "optional": false
-    },
-    {
-      "id": "harder",
-      "title": "Harder",
-      "task": "Forge iron.",
-      "age": "iron",
-      "lane": 1,
-      "column": 1,
-      "icon": "iron",
-      "kind": "main",
-      "note": null,
-      "box": [
-        5780,
-        815,
-        380,
-        238
-      ],
-      "requires": [
-        "greed"
-      ],
-      "optional": false
-    },
-    {
-      "id": "better",
-      "title": "Better",
-      "task": "Craft your first iron weapon.",
-      "age": "iron",
-      "lane": 1,
-      "column": 2,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        6235,
-        815,
-        380,
-        238
-      ],
-      "requires": [
-        "harder"
-      ],
-      "optional": false
-    },
-    {
-      "id": "faster",
-      "title": "Faster",
-      "task": "Have engineered boots.",
-      "age": "iron",
-      "lane": 1,
-      "column": 3,
-      "icon": "boots",
-      "kind": "main",
-      "note": null,
-      "box": [
-        6690,
-        815,
-        380,
-        238
-      ],
-      "requires": [
-        "better"
-      ],
-      "optional": false
-    },
-    {
-      "id": "stronger",
-      "title": "Stronger",
-      "task": "Have a piece of iron armor.",
-      "age": "iron",
-      "lane": 1,
-      "column": 4,
-      "icon": "armor",
-      "kind": "main",
-      "note": null,
-      "box": [
-        7145,
-        815,
-        380,
-        238
-      ],
-      "requires": [
-        "faster"
-      ],
-      "optional": false
-    },
-    {
-      "id": "home",
-      "title": "Home Sweet Home",
-      "task": "Sleep in a bed.",
-      "age": "iron",
-      "lane": 2,
-      "column": 1,
-      "icon": "bedroll",
-      "kind": "main",
-      "note": null,
-      "box": [
-        5780,
-        1185,
-        380,
-        238
-      ],
-      "requires": [
-        "greed"
-      ],
-      "optional": false
-    },
-    {
-      "id": "vault",
-      "title": "Vault it!",
-      "task": "Store items in a reinforced vault.",
-      "age": "iron",
-      "lane": 2,
-      "column": 2,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        6235,
-        1185,
-        380,
-        238
-      ],
-      "requires": [
-        "home"
-      ],
-      "optional": false
-    },
-    {
-      "id": "curtain",
-      "title": "Iron-Curtain",
-      "task": "Place 10 iron spikes.",
-      "age": "iron",
-      "lane": 2,
-      "column": 3,
-      "icon": null,
-      "kind": "main",
-      "note": null,
-      "box": [
-        6690,
-        1185,
-        380,
-        238
-      ],
-      "requires": [
-        "vault"
-      ],
-      "optional": false
+      ]
     },
     {
       "id": "subdue",
       "title": "Subdue Nature",
       "task": "Craft ammunition.",
       "age": "iron",
-      "lane": 1,
-      "column": 5,
+      "lane": 0,
+      "column": 1,
       "icon": null,
       "kind": "finale",
-      "note": "AGE FINALE / ALL 3 PATHS",
+      "note": "AGE FINALE",
       "box": [
-        7600,
-        815,
+        6270,
+        445,
         380,
         238
       ],
       "requires": [
-        "trickshot",
-        "stronger",
-        "curtain"
+        "steel"
       ],
       "optional": false
     }
@@ -1183,30 +1241,58 @@
     ],
     [
       "warmth",
-      "prometheus"
-    ],
-    [
-      "prometheus",
       "dish"
-    ],
-    [
-      "lasting",
-      "narcotics"
-    ],
-    [
-      "scavenge",
-      "narcotics"
     ],
     [
       "dish",
       "narcotics"
     ],
     [
-      "prepare",
+      "monkeys",
+      "sharp"
+    ],
+    [
+      "sharp",
+      "horn"
+    ],
+    [
+      "horn",
+      "pointy"
+    ],
+    [
+      "pointy",
+      "armoured"
+    ],
+    [
+      "lasting",
+      "forge"
+    ],
+    [
+      "scavenge",
+      "forge"
+    ],
+    [
+      "narcotics",
+      "forge"
+    ],
+    [
+      "armoured",
+      "forge"
+    ],
+    [
+      "forge",
+      "shiny"
+    ],
+    [
+      "shiny",
       "golden"
     ],
     [
-      "prepare",
+      "shiny",
+      "home"
+    ],
+    [
+      "home",
       "feed"
     ],
     [
@@ -1218,23 +1304,15 @@
       "slavery"
     ],
     [
-      "prepare",
-      "shiny"
-    ],
-    [
       "shiny",
-      "alloy"
+      "coal"
     ],
     [
-      "alloy",
-      "weapon"
+      "coal",
+      "ironsmelt"
     ],
     [
-      "prepare",
-      "charcoal"
-    ],
-    [
-      "charcoal",
+      "ironsmelt",
       "minerals"
     ],
     [
@@ -1242,90 +1320,75 @@
       "sparklers"
     ],
     [
-      "slavery",
-      "rawr"
-    ],
-    [
-      "weapon",
-      "rawr"
-    ],
-    [
-      "sparklers",
-      "rawr"
-    ],
-    [
-      "narcotics",
-      "prepare"
-    ],
-    [
-      "greed",
-      "cocaine"
-    ],
-    [
-      "greed",
-      "forge"
-    ],
-    [
-      "forge",
+      "shiny",
       "glass"
     ],
     [
       "glass",
-      "trickshot"
+      "ambulance"
     ],
     [
-      "greed",
-      "harder"
+      "ambulance",
+      "bandage"
     ],
     [
-      "harder",
-      "better"
+      "bandage",
+      "vitamins"
     ],
     [
-      "better",
-      "faster"
+      "shiny",
+      "knight"
     ],
     [
-      "faster",
-      "stronger"
+      "knight",
+      "tools"
     ],
     [
-      "greed",
-      "home"
+      "tools",
+      "tincan"
     ],
     [
-      "home",
-      "vault"
+      "tincan",
+      "colossus"
     ],
     [
-      "vault",
-      "curtain"
+      "slavery",
+      "kaboom"
     ],
     [
-      "trickshot",
+      "sparklers",
+      "kaboom"
+    ],
+    [
+      "vitamins",
+      "kaboom"
+    ],
+    [
+      "colossus",
+      "kaboom"
+    ],
+    [
+      "kaboom",
+      "steel"
+    ],
+    [
+      "steel",
+      "cocaine"
+    ],
+    [
+      "steel",
       "subdue"
-    ],
-    [
-      "stronger",
-      "subdue"
-    ],
-    [
-      "curtain",
-      "subdue"
-    ],
-    [
-      "rawr",
-      "greed"
     ]
   ],
   "notes": [
     "Monkeys retained as the Prehistoric starter; its gather-stone task overlaps Tha rock pending author refinement.",
-    "Narcotraffic ends Prehistoric; Prepare for it! starts Bronze; Rawr! ends Bronze; Greed starts Iron; Subdue Nature ends Iron.",
-    "Prehistoric columns 2-3-3-3-3-1. Bronze columns 2-3-3-3-1; Greed is the following singleton and also Iron starter, not a duplicate Bronze node.",
-    "Iron columns 2-3-3-3-1-1 preserve all four middle-path achievements.",
-    "Slavery inherits the previous Working Giants requirement; Multi-tool inherits Therizinosaurus taming.",
+    "Prehistoric: Monkeys -> four four-step paths -> Hell Forge (craft a Primitive Forge). Prometheus (the torch node) is deleted; the old 'warmth' node keeps its campfire icon and trigger but is retitled Prometheus. Narcotraffic moves from the old finale into lane 2 as the last step before the new finale.",
+    "Bronze: Shiny (smelt a Bronze Ingot out of the Primitive Forge) -> four four-step paths -> Kaboom! (craft Explosive Arrows). Four lanes now, matching Prehistoric's shape: HEARTH & HERD (Home Sweet Home, Feed the Beast, Multi-tool, Slavery), FIRE & MINERALS (Black Gold, Made to Last, Earth Secrets, Sparklers), FIELD MEDICINE (Invisible, Call ambulance, But not for me, Take your vitamins), BRONZE ARMS (Knight of the Realm, Tools of the Trade, Tin Can, Colossus).",
+    "Iron: Better Together (forge steel) -> Subdue Nature (craft ammunition) directly; no lanes between the starter and the finale yet. Cocaine sits on the starter column. Prepare for it!, Rawr!, Greed and the old Harder/Better/Faster/Stronger middle path are deleted along with the old Iron Hell Forge/I see you/Home Sweet Home (those ids and titles now belong to Prehistoric and Bronze nodes above).",
+    "Slavery inherits the prior Working Giants requirement (a tame's kill and a tame's harvest); Multi-tool inherits Therizinosaurus taming, now filtered by species.",
     "Food bonuses are optional. acquisition_requires describes later food availability, independently of diagram placement.",
     "Cocaine is a fictional humorous boosting food: gunpowder + narcotics + yellow berry. White dust uses the existing sugar sprite.",
-    "Mattress, new blocks and weapons remain text-only. Approved bed icon moves to Iron. Boots and armor use vanilla placeholder sprites."
+    "Smelting (Shiny, Made to Last) and the Crusher's Sparklers use a dedicated 'produce' trigger keyed to the station's own extraction event, never mere possession: an ingot looted or traded must not finish the node.",
+    "Item ids owned by other plans (mattress, bedroll's new recipe, bronze_*, sulphur, herbal_bandage, vitamins, explosive_arrow, medicine_bench) do not exist in this worktree yet; their triggers reference the agreed string ids and simply never fire until those items exist."
   ]
 }

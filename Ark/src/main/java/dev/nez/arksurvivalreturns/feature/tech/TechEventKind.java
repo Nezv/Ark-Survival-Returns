@@ -15,7 +15,11 @@ public enum TechEventKind implements StringRepresentable {
     TAME_KILL("tame_kill"),
     CRAFT("craft"),
     DAMAGE_CREATURE("damage_creature"),
-    LIGHT_TORCH("light_torch");
+    LIGHT_TORCH("light_torch"),
+    /** A player takes a smelted result out of a station (currently the Primitive Forge); never mere possession. */
+    SMELT("smelt"),
+    /** A player takes a ground result out of the Crusher; never mere possession. */
+    CRUSHER_OUTPUT("crusher_output");
 
     public static final Codec<TechEventKind> CODEC = StringRepresentable.fromEnum(TechEventKind::values);
     private final String name;

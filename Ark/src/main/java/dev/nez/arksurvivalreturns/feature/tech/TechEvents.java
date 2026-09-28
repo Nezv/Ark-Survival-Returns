@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -131,6 +132,16 @@ public final class TechEvents {
 
     private static Player online(ServerLevel level, UUID owner) {
         return level.getServer().getPlayerList().getPlayer(owner);
+    }
+
+    /** Called by a station's manual, hopper-free extraction when the taken stack was its smelted result. */
+    public static void onForgeSmelt(ServerPlayer player, ItemStack stack) {
+        TechService.notify(player, TechEvent.produce(TechEventKind.SMELT, player, stack));
+    }
+
+    /** Called when a player takes ground output out of the Crusher by hand. */
+    public static void crusherOutput(ServerPlayer player, ItemStack stack) {
+        TechService.notify(player, TechEvent.produce(TechEventKind.CRUSHER_OUTPUT, player, stack));
     }
 
     private TechEvents() {}

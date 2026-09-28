@@ -52,24 +52,24 @@
   "task.4152000196C91E99.title": "Chronicle objective",
   "quest.41520000254D71CE.title": "Finally Goodnight",
   "quest.41520000254D71CE.quest_desc": [
-    "Craft a Primitive Bedroll."
+    "Craft a Mattress."
   ],
   "task.41520000254D71CF.title": "Chronicle objective",
-  "quest.41520001A13A2772.title": "A little warmth",
+  "quest.41520001A13A2772.title": "Prometheus",
   "quest.41520001A13A2772.quest_desc": [
     "Light a stone fire."
   ],
   "task.41520001A13A2773.title": "Chronicle objective",
-  "quest.41520000546311D4.title": "Prometheus",
-  "quest.41520000546311D4.quest_desc": [
-    "Light a torch in the stone fire."
-  ],
-  "task.41520000546311D5.title": "Chronicle objective",
   "quest.41520000005E1B34.title": "Delicious",
   "quest.41520000005E1B34.quest_desc": [
     "Cook any dish in a cooking pot."
   ],
   "task.41520000005E1B35.title": "Chronicle objective",
+  "quest.415200009F04BBE0.title": "Narcotraffic",
+  "quest.415200009F04BBE0.quest_desc": [
+    "Produce narcotics: grind Blackberries in the Mortar & Pestle."
+  ],
+  "task.415200009F04BBE1.title": "Chronicle objective",
   "quest.415200000D0A9FD4.title": "Sharp thinking",
   "quest.415200000D0A9FD4.quest_desc": [
     "Knap a Sharp Rock: strike one rock with another."
@@ -90,9 +90,9 @@
     "Own the whole keratin armour set: helmet, chestplate, leggings and boots."
   ],
   "task.415200015657701F.title": "Chronicle objective",
-  "quest.415200009F04BBE0.title": "Narcotraffic",
-  "quest.415200009F04BBE0.quest_desc": [
-    "Produce narcotics: grind Blackberries in the Mortar & Pestle."
+  "quest.415200000BA316CE.title": "Hell Forge",
+  "quest.415200000BA316CE.quest_desc": [
+    "Craft a Primitive Forge."
   ],
-  "task.415200009F04BBE1.title": "Chronicle objective"
+  "task.415200000BA316CF.title": "Chronicle objective"
 }

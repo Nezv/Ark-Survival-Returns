@@ -1070,7 +1070,8 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("sulphur_growth", "sulphur_cluster_drop", "sulphur_worldgen", "crusher_gunpowder", "explosive_arrow_blast"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
-        for (String name : List.of("tech_tree", "tech_progress", "tech_triggers", "tech_flow", "tech_future"))
+        for (String name : List.of("tech_tree", "tech_progress", "tech_triggers", "tech_flow", "tech_future",
+                "tech_bronze_wiring", "tech_bronze_flow"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":tech",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
