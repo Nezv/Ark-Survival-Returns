@@ -99,6 +99,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("guardian_rewards", () -> GuardianGameTests::rewards);
         FUNCTIONS.register("guardian_hit_and_save", () -> GuardianGameTests::hitAndSave);
         FUNCTIONS.register("guardian_orphan", () -> GuardianGameTests::orphanLeaves);
+        FUNCTIONS.register("sulphur_growth", () -> SulphurGameTests::growth);
+        FUNCTIONS.register("sulphur_cluster_drop", () -> SulphurGameTests::clusterDrop);
+        FUNCTIONS.register("sulphur_worldgen", () -> SulphurGameTests::worldgen);
+        FUNCTIONS.register("crusher_gunpowder", () -> SulphurGameTests::crusherGunpowder);
+        FUNCTIONS.register("explosive_arrow_blast", () -> SulphurGameTests::explosiveArrow);
         FUNCTIONS.register("tech_tree", () -> TechGameTests::tree);
         FUNCTIONS.register("tech_progress", () -> TechGameTests::progress);
         FUNCTIONS.register("tech_triggers", () -> TechGameTests::triggers);

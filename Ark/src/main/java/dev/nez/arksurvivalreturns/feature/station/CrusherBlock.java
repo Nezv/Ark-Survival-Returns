@@ -89,7 +89,7 @@ public final class CrusherBlock extends BaseEntityBlock {
         // An empty hand falls through to useWithoutItem, which takes the output.
         if (stack.isEmpty()) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!(level.getBlockEntity(pos) instanceof CrusherBlockEntity crusher)) return InteractionResult.PASS;
-        if (CrusherRecipes.find(stack) == null) return InteractionResult.TRY_WITH_EMPTY_HAND;
+        if (!CrusherRecipes.accepts(stack)) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (!level.isClientSide()) crusher.insert(stack); // A full hopper still takes the click, like the client predicted.
         return InteractionResult.SUCCESS;
     }

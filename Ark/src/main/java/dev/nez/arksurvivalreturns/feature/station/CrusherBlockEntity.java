@@ -24,12 +24,13 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 /**
  * Slot 0 is the hopper (fed from above or the sides, or by hand), slot 1 the chute (taken from below or by
- * hand). One item is ground at a time; the crusher stalls rather than overfill the chute.
+ * hand), slot 2 a second hopper for two-ingredient recipes (also fed from above or the sides, or by hand).
+ * One recipe is ground at a time; the crusher stalls rather than overfill the chute.
  */
 public final class CrusherBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    public static final int INPUT = 0, OUTPUT = 1;
-    private static final int[] TOP_AND_SIDES = {INPUT}, BOTTOM = {OUTPUT};
-    private NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+    public static final int INPUT = 0, OUTPUT = 1, INPUT_B = 2;
+    private static final int[] TOP_AND_SIDES = {INPUT, INPUT_B}, BOTTOM = {OUTPUT};
+    private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private int progress;
 
     public CrusherBlockEntity(BlockPos pos, BlockState state) {
@@ -37,7 +38,7 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CrusherBlockEntity crusher) {
-        var recipe = CrusherRecipes.find(crusher.items.get(INPUT));
+        var recipe = CrusherRecipes.match(crusher.items.get(INPUT), crusher.items.get(INPUT_B));
         boolean running = recipe != null && crusher.fits(recipe);
         if (!running) {
             crusher.progress = 0;
@@ -58,12 +59,21 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
         }
         if (++crusher.progress < recipe.ticks()) return;
         crusher.progress = 0;
-        crusher.items.get(INPUT).shrink(1);
-        ItemStack out = crusher.items.get(OUTPUT);
-        if (out.isEmpty()) crusher.items.set(OUTPUT, new ItemStack(recipe.output(), recipe.count()));
-        else out.grow(recipe.count());
+        crusher.items.get(INPUT).shrink(recipe.primaryCount());
+        if (recipe.twoIngredient()) crusher.items.get(INPUT_B).shrink(recipe.secondaryCount());
+        crusher.produceOutput(recipe);
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 0.6f, 0.8f);
         crusher.setChanged();
+    }
+
+    /**
+     * The one place the ground result leaves the crusher and becomes real output. Kept as its own method
+     * so the tech tree's crusher hook has a single obvious line to add.
+     */
+    private void produceOutput(CrusherRecipes.Recipe recipe) {
+        ItemStack out = items.get(OUTPUT);
+        if (out.isEmpty()) items.set(OUTPUT, new ItemStack(recipe.output(), recipe.count()));
+        else out.grow(recipe.count());
     }
 
     private boolean fits(CrusherRecipes.Recipe recipe) {
@@ -72,14 +82,22 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
         return out.is(recipe.output()) && out.getCount() + recipe.count() <= out.getMaxStackSize();
     }
 
-    /** Moves as much of the stack as fits into the hopper; returns the amount moved. */
+    /** Moves as much of the stack as fits into whichever hopper slot accepts it; returns the amount moved. */
     public int insert(ItemStack stack) {
-        if (CrusherRecipes.find(stack) == null) return 0;
-        ItemStack current = items.get(INPUT);
+        if (CrusherRecipes.acceptsPrimary(stack)) {
+            int moved = insertInto(INPUT, stack);
+            if (moved > 0) return moved;
+        }
+        if (CrusherRecipes.acceptsSecondary(stack)) return insertInto(INPUT_B, stack);
+        return 0;
+    }
+
+    private int insertInto(int slot, ItemStack stack) {
+        ItemStack current = items.get(slot);
         if (current.isEmpty()) {
-            items.set(INPUT, stack.split(stack.getMaxStackSize()));
+            items.set(slot, stack.split(stack.getMaxStackSize()));
             setChanged();
-            return items.get(INPUT).getCount();
+            return items.get(slot).getCount();
         }
         if (!ItemStack.isSameItemSameComponents(current, stack)) return 0;
         int moved = Math.min(stack.getCount(), current.getMaxStackSize() - current.getCount());
@@ -97,7 +115,7 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
         return out;
     }
 
-    @Override public int getContainerSize() { return 2; }
+    @Override public int getContainerSize() { return 3; }
 
     @Override protected NonNullList<ItemStack> getItems() { return items; }
 
@@ -111,7 +129,9 @@ public final class CrusherBlockEntity extends BaseContainerBlockEntity implement
     @Override protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) { return null; }
 
     @Override public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot == INPUT && CrusherRecipes.find(stack) != null;
+        if (slot == INPUT) return CrusherRecipes.acceptsPrimary(stack);
+        if (slot == INPUT_B) return CrusherRecipes.acceptsSecondary(stack);
+        return false;
     }
 
     @Override public boolean canTakeItem(Container target, int slot, ItemStack stack) { return slot == OUTPUT; }

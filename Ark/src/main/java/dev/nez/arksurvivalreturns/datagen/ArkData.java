@@ -29,6 +29,7 @@ public final class ArkData implements DataProvider {
         IntegrationData.generate(this::put);
         StationData.generate(this::put);
         StationData.itemModels(this::put);
+        SulphurData.generate(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
         files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
         // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
@@ -307,6 +308,7 @@ public final class ArkData implements DataProvider {
         PrimitiveData.lang(en, pt);
         BronzeData.lang(en, pt);
         AccessoryData.lang(en, pt);
+        SulphurData.lang(en, pt);
         put("assets/" + NS + "/lang/en_us", en); put("assets/" + NS + "/lang/pt_br", pt);
     }
     private void model(String id) {
@@ -1044,6 +1046,9 @@ public final class ArkData implements DataProvider {
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
+        for (String name : List.of("sulphur_growth", "sulphur_cluster_drop", "sulphur_worldgen", "crusher_gunpowder", "explosive_arrow_blast"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
         for (String name : List.of("tech_tree", "tech_progress", "tech_triggers", "tech_flow", "tech_future"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":tech",
