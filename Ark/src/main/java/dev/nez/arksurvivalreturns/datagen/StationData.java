@@ -111,7 +111,10 @@ final class StationData {
         put.accept("data/minecraft/tags/block/mineable/axe", Map.of("replace", false,
                 "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate")));
         put.accept("data/minecraft/tags/block/mineable/pickaxe", Map.of("replace", false,
-                "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle")));
+                "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle",
+                        // Sulphur crystals (SulphurData): kept here so this datagen run writes the tag file once.
+                        NS + ":sulphur_block", NS + ":budding_sulphur", NS + ":small_sulphur_bud",
+                        NS + ":medium_sulphur_bud", NS + ":large_sulphur_bud", NS + ":sulphur_cluster")));
     }
 
     static void messages(Map<String, String> en, Map<String, String> pt) {
