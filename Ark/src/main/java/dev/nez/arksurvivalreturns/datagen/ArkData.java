@@ -25,6 +25,7 @@ public final class ArkData implements DataProvider {
         terralith = loadTerralith();
         tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); downed(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
+        BronzeData.generate(this::put);
         IntegrationData.generate(this::put);
         StationData.generate(this::put);
         StationData.itemModels(this::put);
@@ -304,6 +305,7 @@ public final class ArkData implements DataProvider {
         model("workshop_schematic");
         model("guardian_trophy");
         PrimitiveData.lang(en, pt);
+        BronzeData.lang(en, pt);
         AccessoryData.lang(en, pt);
         put("assets/" + NS + "/lang/en_us", en); put("assets/" + NS + "/lang/pt_br", pt);
     }
@@ -1045,6 +1047,10 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("tech_tree", "tech_progress", "tech_triggers", "tech_flow", "tech_future"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":tech",
+                    "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
+        for (String name : List.of("bronze_tin_ore", "bronze_smelting", "bronze_recipes", "bronze_armor", "bronze_weapons"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
+                    "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
     }
 }

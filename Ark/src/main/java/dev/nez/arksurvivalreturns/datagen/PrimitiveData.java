@@ -257,22 +257,23 @@ final class PrimitiveData {
                 "minecraft:gravel", "minecraft:stone", "minecraft:granite", "minecraft:diorite", "minecraft:andesite",
                 "minecraft:sandstone", "minecraft:red_sandstone", "minecraft:calcite", "minecraft:tuff", "minecraft:mud",
                 "minecraft:packed_mud", "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone");
-        tag("minecraft", "item/axes", NS + ":stone_hatchet");
-        tag("minecraft", "item/swords", NS + ":rock_sword");
-        tag("minecraft", "item/pickaxes", NS + ":rock_pickaxe");
-        tag("minecraft", "item/shovels", NS + ":rock_shovel");
-        tag("minecraft", "item/hoes", NS + ":rock_hoe");
+        // Each vanilla tool/armour tag is written once for the whole mod: rock, keratin and bronze together.
+        tag("minecraft", "item/axes", NS + ":stone_hatchet", NS + ":bronze_axe");
+        tag("minecraft", "item/swords", NS + ":rock_sword", NS + ":bronze_longsword");
+        tag("minecraft", "item/pickaxes", NS + ":rock_pickaxe", NS + ":bronze_pickaxe");
+        tag("minecraft", "item/shovels", NS + ":rock_shovel", NS + ":bronze_shovel");
+        tag("minecraft", "item/hoes", NS + ":rock_hoe", NS + ":bronze_hoe");
         tag(NS, "item/primitive/keratin_materials", NS + ":keratin");
         tag("minecraft", "item/spears", NS + ":keratin_spear");
         tag("c", "item/tools/spear", NS + ":keratin_spear");
-        tag("minecraft", "item/head_armor", NS + ":keratin_helmet");
-        tag("minecraft", "item/chest_armor", NS + ":keratin_chestplate");
-        tag("minecraft", "item/leg_armor", NS + ":keratin_leggings");
-        tag("minecraft", "item/foot_armor", NS + ":keratin_boots");
-        tag("c", "item/armors/helmets", NS + ":keratin_helmet");
-        tag("c", "item/armors/chestplates", NS + ":keratin_chestplate");
-        tag("c", "item/armors/leggings", NS + ":keratin_leggings");
-        tag("c", "item/armors/boots", NS + ":keratin_boots");
+        tag("minecraft", "item/head_armor", NS + ":keratin_helmet", NS + ":bronze_helmet");
+        tag("minecraft", "item/chest_armor", NS + ":keratin_chestplate", NS + ":bronze_chestplate");
+        tag("minecraft", "item/leg_armor", NS + ":keratin_leggings", NS + ":bronze_leggings");
+        tag("minecraft", "item/foot_armor", NS + ":keratin_boots", NS + ":bronze_boots");
+        tag("c", "item/armors/helmets", NS + ":keratin_helmet", NS + ":bronze_helmet");
+        tag("c", "item/armors/chestplates", NS + ":keratin_chestplate", NS + ":bronze_chestplate");
+        tag("c", "item/armors/leggings", NS + ":keratin_leggings", NS + ":bronze_leggings");
+        tag("c", "item/armors/boots", NS + ":keratin_boots", NS + ":bronze_boots");
         List<String> raw = new ArrayList<>(), cooked = new ArrayList<>();
         for (DinoMeat meat : DinoMeat.values()) {
             raw.add(NS + ":" + meat.rawId());
