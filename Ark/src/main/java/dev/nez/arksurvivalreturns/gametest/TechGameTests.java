@@ -44,8 +44,8 @@ final class TechGameTests {
     static void tree(GameTestHelper h) {
         TechTree tree = TechTree.current();
         h.assertTrue(tree != null, "The technology tree did not load");
-        // 57: Prehistoric 19, Bronze 19, Iron 19 (starter, bonus, a 4x4 block of '???' mystery nodes whose
-        // logic is still to be designed, and a finale needing all four of their lanes).
+        // 57: Prehistoric 19, Bronze 19, Iron 19 (starter, bonus, four planned four-step lanes whose items do
+        // not exist yet, and a finale needing all four of them).
         h.assertTrue(tree.nodes().size() == 57, "Node count changed: " + tree.nodes().size());
         h.assertTrue(tree.ages().size() == 3, "Age count changed: " + tree.ages().size());
         for (TechNode node : tree.nodes()) {
@@ -59,13 +59,21 @@ final class TechGameTests {
                 "shiny must be the Bronze starter");
         h.assertTrue(tree.node("steel").map(node -> node.kind() == TechNodeKind.GATE).orElse(false),
                 "steel must be the Iron starter");
-        for (char lane : "abcd".toCharArray()) {
-            for (int column = 1; column <= 4; column++) {
-                String id = "iron_" + lane + column;
-                h.assertTrue(tree.node(id).map(node -> node.title().equals("???") && node.trigger().type() == TechTrigger.Type.FUTURE)
-                        .orElse(false), "Iron mystery node missing or wired early: " + id);
+        List<List<String>> ironLanes = List.of(List.of("cartography", "radar", "target", "completionist"),
+                List.of("wires", "generator", "circuit", "shock"), List.of("steel_set", "backpack", "boots", "rifle"),
+                List.of("engine", "sheet", "pipe", "screw"));
+        for (int lane = 0; lane < ironLanes.size(); lane++) {
+            String previous = "steel";
+            for (String id : ironLanes.get(lane)) {
+                int index = lane;
+                String requires = previous;
+                // Planned only: every Iron item is still unregistered, so a live trigger could never fire.
+                h.assertTrue(tree.node(id).map(node -> node.age().equals("iron") && node.lane() == index
+                        && node.requires().equals(List.of(requires)) && node.trigger().type() == TechTrigger.Type.FUTURE)
+                        .orElse(false), "Iron node missing, misplaced or wired early: " + id);
+                previous = id;
             }
-            h.assertTrue(tree.node("subdue").orElseThrow().requires().contains("iron_" + lane + 4), "subdue must need Iron lane " + lane);
+            h.assertTrue(tree.node("subdue").orElseThrow().requires().contains(previous), "subdue must need Iron lane " + lane);
         }
         for (String deleted : List.of("prepare", "greed", "rawr", "prometheus", "alloy", "weapon", "charcoal",
                 "harder", "better", "faster", "stronger", "vault", "curtain", "trickshot")) {

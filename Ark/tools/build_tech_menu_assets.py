@@ -12,17 +12,20 @@ ROOT=Path(__file__).resolve().parents[1]
 GUI=ROOT/'src/main/resources/assets/arksurvivalreturns/textures/gui/tech'
 DESIGN=ROOT/'design/tech-menu'
 SPEC=json.loads((ROOT/'design/technology-tree/technology-tree.json').read_text(encoding='utf-8'))
-# Every age runs starter + four lane columns + finale (six columns); Iron's 4x4 lanes are mystery nodes
-# ('???') until their logic is designed. Each origin leaves a 70-unit gap after the previous age's widest column.
+# Every age runs starter + four lane columns + finale (six columns); Iron's lanes are planned, their triggers
+# stay future until the items exist. Each origin leaves a 70-unit gap after the previous age's widest column.
 ORIGINS=[0,680,1360]
 # The map is 344 units tall (TechScreen.MAP_HEIGHT). Lanes are 76 apart and centred on the gate row, so a
 # three-lane age and the four-lane Prehistoric/Bronze share the same gate height.
 GATE_Y,LANE_STEP=180,76
 # Node ids whose icon an art script (build_bronze_age_art.py, build_prehistoric_icons.py) paints directly at the runtime path below; the exporter must never
 # generate, overwrite or delete that file, only point the node at it (the client tolerates a missing texture).
-# tools/build_prehistoric_icons.py paints monkeys, rock, fight, london and sharp the same way.
+# tools/build_prehistoric_icons.py paints monkeys, rock, fight, london and sharp the same way, and
+# tools/build_iron_age_art.py the sixteen Iron lane icons.
 FORCE_ICON={'monkeys','rock','fight','london','sharp','forge','shiny','home','coal','ironsmelt','minerals','sparklers','glass','ambulance','bandage',
-            'vitamins','knight','tools','tincan','colossus','kaboom','steel','subdue'}
+            'vitamins','knight','tools','tincan','colossus','kaboom','steel','subdue',
+            'cartography','radar','target','completionist','wires','generator','circuit','shock',
+            'steel_set','backpack','boots','rifle','engine','sheet','pipe','screw'}
 # Nodes removed by proposal 03; their stale per-node icon (if any) is deleted so no orphaned art ships.
 DELETED_ICON_IDS={'prepare','rawr','greed','harder','faster','stronger','charcoal','prometheus'}
 
@@ -88,7 +91,12 @@ PT_TITLE={'monkeys':'Macacos','dried':'Carne Seca III','rock':'A pedra','berries
     'ambulance':'Chame a ambulância','bandage':'Mas não para mim','vitamins':'Tome suas vitaminas',
     'knight':'Cavaleiro do Reino','tools':'Ferramentas do ofício','tincan':'Lata de conserva','colossus':'Colosso',
     'kaboom':'Cabum!',
-    'steel':'Juntos é melhor','cocaine':'Cocaína','subdue':'Dome a natureza'}
+    'steel':'Juntos é melhor','cocaine':'Cocaína','subdue':'Dome a natureza',
+    'cartography':'Eles vão falhar','radar':'Poder soviético supremo','target':'Alvo adquirido',
+    'completionist':'Completista','wires':'Aterrem-se','generator':'Eletrodos prontos',
+    'circuit':'Fechando o circuito','shock':'Iniciando a terapia de choque','steel_set':'Mais duro',
+    'backpack':'Melhor','boots':'Mais rápido','rifle':'Mais forte','engine':'Engenharia demais',
+    'sheet':'Meganewtons','pipe':'Quase lá','screw':'Metalurgia'}
 PT_TASK={'monkeys':'Pegue uma pedra solta.',
     'dried':'Coma Carne Seca III: carne curada no varal por três dias do jogo.',
     'rock':'Amarre uma pedra a um graveto: crie um Machado de Pedra.',
@@ -116,7 +124,15 @@ PT_TASK={'monkeys':'Pegue uma pedra solta.',
     'tools':'Crie qualquer ferramenta de bronze.','tincan':'Crie qualquer peça de armadura de bronze.',
     'colossus':'Possua o conjunto completo de armadura de bronze: capacete, peitoral, calças e botas.',
     'kaboom':'Crie Flechas Explosivas.',
-    'steel':'Forje aço.','cocaine':'Pólvora + narcóticos + fruta amarela.','subdue':'Crie munição.'}
+    'steel':'Forje aço.','cocaine':'Pólvora + narcóticos + fruta amarela.','subdue':'Crie munição.',
+    'cartography':'Crie um mapa.','radar':'Crie um radar.','target':'Encontre uma certa espécie.',
+    'completionist':'Tenha abatido todas as espécies de dinossauro.','wires':'Crie fio de cobre.',
+    'generator':'Crie um gerador.','circuit':'Crie um Taco Elétrico.',
+    'shock':'Mate um carnívoro com o Taco Elétrico.',
+    'steel_set':'Vista o conjunto completo de armadura de aço: capacete, peitoral, calças e botas.',
+    'backpack':'Vista uma mochila.','boots':'Calce botas especializadas.','rifle':'Crie um rifle.',
+    'engine':'Crie um motor.','sheet':'Crie uma chapa de metal.','pipe':'Crie um cano de metal.',
+    'screw':'Crie um parafuso de metal.'}
 
 
 def export():

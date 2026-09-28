@@ -56,23 +56,23 @@
       "title": "Iron Age",
       "order": 2,
       "color": "#a6b6b6",
-      "laneSummary": "??? / ??? / ??? / ???",
+      "laneSummary": "SURVEY & HUNT / POWER & CIRCUITS / STEEL KIT / MACHINE PARTS",
       "lanes": [
         {
           "index": 0,
-          "title": "???"
+          "title": "SURVEY & HUNT"
         },
         {
           "index": 1,
-          "title": "???"
+          "title": "POWER & CIRCUITS"
         },
         {
           "index": 2,
-          "title": "???"
+          "title": "STEEL KIT"
         },
         {
           "index": 3,
-          "title": "???"
+          "title": "MACHINE PARTS"
         }
       ]
     }
@@ -1099,9 +1099,9 @@
       "icon": "arksurvivalreturns:textures/gui/tech/icons/cocaine.png"
     },
     {
-      "id": "iron_a1",
-      "title": "???",
-      "task": "???",
+      "id": "cartography",
+      "title": "They will fail",
+      "task": "Craft a map.",
       "age": "iron",
       "lane": 0,
       "requires": [
@@ -1114,19 +1114,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/cartography.png"
     },
     {
-      "id": "iron_a2",
-      "title": "???",
-      "task": "???",
+      "id": "radar",
+      "title": "Soviet power supreme",
+      "task": "Craft a radar.",
       "age": "iron",
       "lane": 0,
       "requires": [
-        "iron_a1"
+        "cartography"
       ],
       "kind": "main",
       "box": [
@@ -1135,19 +1136,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/radar.png"
     },
     {
-      "id": "iron_a3",
-      "title": "???",
-      "task": "???",
+      "id": "target",
+      "title": "Target acquired",
+      "task": "Find a certain species.",
       "age": "iron",
       "lane": 0,
       "requires": [
-        "iron_a2"
+        "radar"
       ],
       "kind": "main",
       "box": [
@@ -1156,19 +1158,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/target.png"
     },
     {
-      "id": "iron_a4",
-      "title": "???",
-      "task": "???",
+      "id": "completionist",
+      "title": "Completionist",
+      "task": "Have killed every dinosaur species.",
       "age": "iron",
       "lane": 0,
       "requires": [
-        "iron_a3"
+        "target"
       ],
       "kind": "main",
       "box": [
@@ -1177,15 +1180,16 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/completionist.png"
     },
     {
-      "id": "iron_b1",
-      "title": "???",
-      "task": "???",
+      "id": "wires",
+      "title": "Ground yourselves",
+      "task": "Craft copper wire.",
       "age": "iron",
       "lane": 1,
       "requires": [
@@ -1198,19 +1202,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/wires.png"
     },
     {
-      "id": "iron_b2",
-      "title": "???",
-      "task": "???",
+      "id": "generator",
+      "title": "Electrodes ready",
+      "task": "Craft a generator.",
       "age": "iron",
       "lane": 1,
       "requires": [
-        "iron_b1"
+        "wires"
       ],
       "kind": "main",
       "box": [
@@ -1219,19 +1224,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/generator.png"
     },
     {
-      "id": "iron_b3",
-      "title": "???",
-      "task": "???",
+      "id": "circuit",
+      "title": "Completing circuit",
+      "task": "Craft an Electric Bat.",
       "age": "iron",
       "lane": 1,
       "requires": [
-        "iron_b2"
+        "generator"
       ],
       "kind": "main",
       "box": [
@@ -1240,19 +1246,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/circuit.png"
     },
     {
-      "id": "iron_b4",
-      "title": "???",
-      "task": "???",
+      "id": "shock",
+      "title": "Commencing shock therapy",
+      "task": "Kill a carnivore with the Electric Bat.",
       "age": "iron",
       "lane": 1,
       "requires": [
-        "iron_b3"
+        "circuit"
       ],
       "kind": "main",
       "box": [
@@ -1261,15 +1268,16 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/shock.png"
     },
     {
-      "id": "iron_c1",
-      "title": "???",
-      "task": "???",
+      "id": "steel_set",
+      "title": "Harder",
+      "task": "Wear the full steel armour set: helmet, chestplate, leggings and boots.",
       "age": "iron",
       "lane": 2,
       "requires": [
@@ -1282,19 +1290,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/steel_set.png"
     },
     {
-      "id": "iron_c2",
-      "title": "???",
-      "task": "???",
+      "id": "backpack",
+      "title": "Better",
+      "task": "Wear a backpack.",
       "age": "iron",
       "lane": 2,
       "requires": [
-        "iron_c1"
+        "steel_set"
       ],
       "kind": "main",
       "box": [
@@ -1303,19 +1312,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/backpack.png"
     },
     {
-      "id": "iron_c3",
-      "title": "???",
-      "task": "???",
+      "id": "boots",
+      "title": "Faster",
+      "task": "Wear specialized boots.",
       "age": "iron",
       "lane": 2,
       "requires": [
-        "iron_c2"
+        "backpack"
       ],
       "kind": "main",
       "box": [
@@ -1324,19 +1334,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/boots.png"
     },
     {
-      "id": "iron_c4",
-      "title": "???",
-      "task": "???",
+      "id": "rifle",
+      "title": "Stronger",
+      "task": "Craft a rifle.",
       "age": "iron",
       "lane": 2,
       "requires": [
-        "iron_c3"
+        "boots"
       ],
       "kind": "main",
       "box": [
@@ -1345,15 +1356,16 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/rifle.png"
     },
     {
-      "id": "iron_d1",
-      "title": "???",
-      "task": "???",
+      "id": "engine",
+      "title": "Overengineered",
+      "task": "Craft an engine.",
       "age": "iron",
       "lane": 3,
       "requires": [
@@ -1366,19 +1378,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/engine.png"
     },
     {
-      "id": "iron_d2",
-      "title": "???",
-      "task": "???",
+      "id": "sheet",
+      "title": "Meganewtons",
+      "task": "Craft a metal sheet.",
       "age": "iron",
       "lane": 3,
       "requires": [
-        "iron_d1"
+        "engine"
       ],
       "kind": "main",
       "box": [
@@ -1387,19 +1400,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/sheet.png"
     },
     {
-      "id": "iron_d3",
-      "title": "???",
-      "task": "???",
+      "id": "pipe",
+      "title": "Almost There",
+      "task": "Craft a metal pipe.",
       "age": "iron",
       "lane": 3,
       "requires": [
-        "iron_d2"
+        "sheet"
       ],
       "kind": "main",
       "box": [
@@ -1408,19 +1422,20 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/pipe.png"
     },
     {
-      "id": "iron_d4",
-      "title": "???",
-      "task": "???",
+      "id": "screw",
+      "title": "Metalworks",
+      "task": "Craft a metal screw.",
       "age": "iron",
       "lane": 3,
       "requires": [
-        "iron_d3"
+        "pipe"
       ],
       "kind": "main",
       "box": [
@@ -1429,10 +1444,11 @@
         40,
         40
       ],
-      "note": "MYSTERY (logic pending)",
+      "note": "PLANNED (items not implemented)",
       "trigger": {
         "type": "future"
-      }
+      },
+      "icon": "arksurvivalreturns:textures/gui/tech/icons/screw.png"
     },
     {
       "id": "subdue",
@@ -1441,10 +1457,10 @@
       "age": "iron",
       "lane": 0,
       "requires": [
-        "iron_a4",
-        "iron_b4",
-        "iron_c4",
-        "iron_d4"
+        "completionist",
+        "shock",
+        "rifle",
+        "screw"
       ],
       "kind": "gate",
       "box": [
