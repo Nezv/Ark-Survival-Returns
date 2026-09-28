@@ -104,6 +104,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("tech_triggers", () -> TechGameTests::triggers);
         FUNCTIONS.register("tech_flow", () -> TechGameTests::flow);
         FUNCTIONS.register("tech_future", () -> TechGameTests::future);
+        FUNCTIONS.register("tech_bronze_wiring", () -> TechGameTests::bronzeWiring);
+        FUNCTIONS.register("tech_bronze_flow", () -> TechGameTests::bronzeFlow);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);

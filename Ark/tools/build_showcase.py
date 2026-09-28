@@ -399,14 +399,20 @@ def starfish_path(cx, cy, radius):
 def trigger_text(trigger):
     kind = trigger.get('type')
     items = ', '.join(i.split(':')[1].replace('_', ' ') for i in trigger.get('items', trigger.get('blocks', [])))
+    if kind == 'tame':
+        species = trigger.get('species')
+        return f'Tame: {species.split(":")[1].replace("_", " ")}' if species else 'Tame any dinosaur'
+    if kind == 'all_of':
+        return ' + '.join(trigger_text(part) for part in trigger.get('parts', []))
     return {
         'collect': f'Have: {items}' + (' (all of them)' if trigger.get('distinct') else ''),
         'craft': f'Craft: {items}',
         'consume': f'Eat: {items}' + (f' (tier {trigger["dryness"]})' if trigger.get('dryness') else ''),
-        'place_block': f'Light: {items}',
+        'place_block': f'Place: {items}',
+        'produce': f'{trigger.get("kind", "produce").replace("_", " ").title()}: {items}',
         'event': {'damage_creature': 'Damage a dinosaur', 'tame_work': 'A tame completes a work job',
-                  'light_torch': 'Light a torch in the stone fire'}.get(trigger.get('kind'), trigger.get('kind', '')),
-        'tame': 'Tame any dinosaur',
+                  'tame_kill': 'A tame kills something', 'light_torch': 'Light a torch in the stone fire',
+                  'trough_feed': 'A tame eats from a trough'}.get(trigger.get('kind'), trigger.get('kind', '')),
     }.get(kind, 'Planned: trigger not wired yet')
 
 

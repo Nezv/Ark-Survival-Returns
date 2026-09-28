@@ -48,7 +48,7 @@ The mod JAR carries tree data, GUI code and textures. **FTB quest configuration 
 
 ## Deliberately unfinished gameplay
 
-Prehistoric nodes have real triggers (authored as `trigger` in design/technology-tree/technology-tree.json, exported by the generator); every Bronze and Iron node still uses `{"type":"future"}`. This intentionally prevents the previous 24-node trigger rules from completing revised objectives incorrectly. Existing event hooks and trigger codecs remain available; the menu can be tested with operator grants or FTB administration. No recipe locks, item restrictions, rewards or game-mechanic implementations are added by this UI pass.
+Prehistoric and Bronze nodes have real triggers (authored as `trigger` in design/technology-tree/technology-tree.json, exported by the generator); every Iron node still uses `{"type":"future"}` pending Iron gameplay. Bronze's triggers reference item/block ids owned by other in-flight plans (mattress, bedroll's new recipe, bronze_*, sulphur, herbal_bandage, vitamins, explosive_arrow, medicine_bench) that do not exist in every worktree yet; they resolve lazily by id string and simply never fire until those items ship, without crashing the loader. Two new trigger primitives support this: `produce` (a result taken directly from a station's own output, e.g. `smelt` from the Primitive Forge or `crusher_output` from the Crusher) so possession bought or looted elsewhere never substitutes for making it, and `tame` now carries an optional `species` filter. Existing event hooks and trigger codecs remain available; the menu can still be tested with operator grants or FTB administration. No recipe locks, item restrictions, rewards or game-mechanic implementations beyond these triggers are added.
 
 Implement the next stage in this order:
 
@@ -61,11 +61,11 @@ Implement the next stage in this order:
 
 ## Preserved design decisions and ambiguities
 
-- Prehistoric: Monkeys → four four-step paths → Narcotraffic. Monkeys is retained from the original sketch; its stone-gathering task overlaps Tha rock and still needs author refinement.
-- Bronze: Prepare for it! → three three-step paths → Rawr!. Sparklers crafts gunpowder. Slavery inherits the prior Working Giants objective (hunt + resource haul from tames).
-- Iron: Greed (have gunpowder) → three paths → Subdue Nature. The middle path preserves all four Harder/Better/Faster/Stronger entries, giving it an extra column.
+- Prehistoric (proposal 03): Monkeys → four four-step paths → Hell Forge (craft a Primitive Forge). Monkeys is retained from the original sketch; its stone-gathering task overlaps Tha rock and still needs author refinement. Prometheus (the torch node) is deleted; the old `warmth` node keeps its campfire trigger and icon but is retitled Prometheus. Narcotraffic moved off the old finale slot into lane 2's fourth step; Hell Forge (the old Iron node, id `forge`) is the new finale.
+- Bronze (proposal 03): Shiny (smelt a Bronze Ingot out of the Primitive Forge) → four four-step paths → Kaboom! (craft Explosive Arrows). Four lanes now, matching Prehistoric: Hearth & Herd, Fire & Minerals, Field Medicine, Bronze Arms. Sparklers crafts gunpowder in the Crusher. Slavery inherits the prior Working Giants objective (a tame's kill and a tame's harvest, via `tame_kill` + `tame_work`). Prepare for it!, Rawr!, the old three-lane shape, alloy, weapon and the old Bronze charcoal node are deleted.
+- Iron (proposal 03): Better Together (forge steel, id `steel`) → Subdue Nature (craft ammunition) directly; nothing in between yet. Cocaine sits on the starter column. Greed, the Harder/Better/Faster/Stronger middle path, and the old Iron Hell Forge/I see you/Home Sweet Home (those ids and titles now belong to Prehistoric and Bronze) are deleted.
 - The Iron scoped-kill objective precedes the craft-ammunition finale. The future gameplay designer must provide a way to obtain ammunition before crafting it, or ask the author to revise that dependency. No substitute order is silently invented here.
-- Dried Meat III sits above the age starter but actually requires Long-lasting. Golden Raptor Meat follows Prepare for it!. Cocaine is the fictional gunpowder/narcotics/yellow-berry food; its normal description stays hidden until completion.
+- Dried Meat III sits above the age starter but actually requires Long-lasting. Golden Raptor Meat now follows Shiny (the Bronze starter). Cocaine now follows Better Together (the Iron starter) and is the fictional gunpowder/narcotics/yellow-berry food; its normal description stays hidden until completion.
 
 ## Save migration
 

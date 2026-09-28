@@ -51,6 +51,7 @@ public interface TechTrigger {
         PLACE_BLOCK("place_block"),
         EVENT("event"),
         TAME("tame"),
+        PRODUCE("produce"),
         ALL_OF("all_of"),
         FUTURE("future");
 
@@ -69,6 +70,7 @@ public interface TechTrigger {
                 case PLACE_BLOCK -> PlaceBlock.CODEC;
                 case EVENT -> Event.CODEC;
                 case TAME -> Tame.CODEC;
+                case PRODUCE -> Produce.CODEC;
                 case ALL_OF -> AllOf.codec(self);
                 case FUTURE -> Future.CODEC;
             };
@@ -301,6 +303,42 @@ public interface TechTrigger {
         @Override
         public boolean satisfied(TechTribeProgress progress, String prefix, @Nullable Player player) {
             return progress.marked(prefix + "tamed:" + species.map(Identifier::toString).orElse("any"));
+        }
+    }
+
+    /**
+     * A result taken directly from a station's output, such as smelting or crushing. Unlike {@link Collect},
+     * satisfaction never falls back to live possession: a bronze ingot bought or looted must not count as one
+     * the tribe smelted themselves, so only the dedicated station event ({@code kind}) advances the counter.
+     */
+    record Produce(TechEventKind kind, List<Identifier> items, int count) implements TechTrigger {
+        public static final MapCodec<Produce> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                TechEventKind.CODEC.fieldOf("kind").forGetter(Produce::kind),
+                Identifier.CODEC.listOf().fieldOf("items").forGetter(Produce::items),
+                Codec.INT.optionalFieldOf("count", 1).forGetter(Produce::count)
+        ).apply(instance, Produce::new));
+
+        @Override
+        public Type type() {
+            return Type.PRODUCE;
+        }
+
+        @Override
+        public boolean observe(TechEvent event, TechTribeProgress progress, String prefix) {
+            if (event.kind() != kind || event.stack() == null) return false;
+            boolean changed = false;
+            for (Identifier item : items) {
+                if (matches(event.stack(), item)) changed |= progress.addCount(prefix + "produced:" + item, event.stack().getCount());
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean satisfied(TechTribeProgress progress, String prefix, @Nullable Player player) {
+            for (Identifier item : items) {
+                if (progress.count(prefix + "produced:" + item) >= count) return true;
+            }
+            return false;
         }
     }
 

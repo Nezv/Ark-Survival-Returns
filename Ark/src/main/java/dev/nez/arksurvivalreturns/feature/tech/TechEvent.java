@@ -44,6 +44,11 @@ public record TechEvent(
         return new TechEvent(TechEventKind.TAME, player, null, null, species, day(player));
     }
 
+    /** A result taken directly from a station's output slot: {@link TechEventKind#SMELT} or {@link TechEventKind#CRUSHER_OUTPUT}. */
+    public static TechEvent produce(TechEventKind kind, Player player, ItemStack stack) {
+        return new TechEvent(kind, player, stack.copy(), null, null, day(player));
+    }
+
     public static TechEvent simple(TechEventKind kind, Player player) {
         return new TechEvent(kind, player, null, null, null, day(player));
     }
