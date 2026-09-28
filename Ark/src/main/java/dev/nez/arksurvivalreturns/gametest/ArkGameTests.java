@@ -61,6 +61,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("journal_taming_unlock", () -> JournalGameTests::tamingUnlock);
         FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
+        FUNCTIONS.register("camp_mattress_sleep", () -> CampGameTests::mattressSleep);
         FUNCTIONS.register("downed_revive", () -> DownedGameTests::downedRevive);
         FUNCTIONS.register("downed_bleed_out", () -> DownedGameTests::bleedOut);
         FUNCTIONS.register("downed_mitigated", () -> DownedGameTests::mitigated);

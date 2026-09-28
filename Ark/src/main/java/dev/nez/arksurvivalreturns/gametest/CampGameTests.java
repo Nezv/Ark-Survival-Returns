@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import dev.nez.arksurvivalreturns.feature.camp.BedrollBlock;
+import dev.nez.arksurvivalreturns.feature.camp.MattressBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -37,7 +38,8 @@ final class CampGameTests {
         h.assertFalse(data.granted(player.getUUID()), "A fresh survivor already had a kit");
         StarterKitService.onLogin(player);
         h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "The kit did not include a flint knife");
-        h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 0 && count(player, ModContent.PLANT_FIBER.get()) == 0,
+        h.assertTrue(count(player, ModContent.BEDROLL_ITEM.get()) == 0 && count(player, ModContent.MATTRESS_ITEM.get()) == 0
+                        && count(player, ModContent.PLANT_FIBER.get()) == 0,
                 "The kit is only a flint knife");
         h.assertTrue(data.granted(player.getUUID()), "The kit grant was not recorded");
         // Rejoining never duplicates the kit.
@@ -60,7 +62,7 @@ final class CampGameTests {
         player.getInventory().clearContent();
         BlockPos pos = h.absolutePos(new BlockPos(4, 2, 4));
         BlockPos head = pos.north();
-        // Ground under the mat and beside it, where the owner stands up.
+        // Ground under the 2x2 footprint and beside it, where the owner stands up.
         for (BlockPos ground : BlockPos.betweenClosed(pos.offset(-1, -1, -2), pos.offset(1, -1, 1))) {
             world.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
         }
@@ -71,16 +73,16 @@ final class CampGameTests {
         h.assertTrue(result.consumesAction(), "The bedroll did not accept the interaction");
         var config = player.getRespawnConfig();
         h.assertTrue(config != null, "The respawn point was not set");
-        h.assertTrue(config.respawnData().globalPos().pos().equals(head), "The respawn point must be the bedroll's head");
+        h.assertTrue(config.respawnData().globalPos().pos().equals(head), "The respawn point must be the bedroll's head-left cell");
         h.assertTrue(world.getBlockState(head).getRespawnPosition(EntityType.PLAYER, world, head, 0.0f).isPresent(),
                 "Respawning at the bedroll must find a place to stand beside it");
 
         // The saved point lives in player data, not in the block: destroying it must not strand anyone.
         world.removeBlock(pos, false);
-        h.assertTrue(world.getBlockState(head).isAir(), "The head must break with the foot");
+        h.assertTrue(world.getBlockState(head).isAir(), "The whole 2x2 footprint must break together");
         h.assertTrue(player.getRespawnConfig() != null, "Destroying the bedroll removed the respawn point");
 
-        // Sneak-use rolls both halves back up and leaves the saved respawn point alone.
+        // Sneak-use rolls every cell back up and leaves the saved respawn point alone.
         placeBedroll(world, pos);
         player.setShiftKeyDown(true);
         ModContent.BEDROLL.get().useWithoutItem(world.getBlockState(pos), world, pos, player, hit);
@@ -91,11 +93,53 @@ final class CampGameTests {
         h.succeed();
     }
 
-    /** The two halves as the block item places them, facing north: foot here, head one block north. */
-    private static void placeBedroll(ServerLevel world, BlockPos foot) {
+    /**
+     * Mattress: sleeping through at least one tick consumes both halves with no drop and never sets a
+     * respawn point, unlike the reusable Bedroll.
+     */
+    static void mattressSleep(GameTestHelper h) {
+        ServerLevel world = h.getLevel();
+        FakePlayer player = survivor(world);
+        player.getInventory().clearContent();
+        BlockPos pos = h.absolutePos(new BlockPos(4, 2, 4));
+        BlockPos head = pos.north();
+        for (BlockPos ground : BlockPos.betweenClosed(pos.offset(-1, -1, -2), pos.offset(1, -1, 1))) {
+            world.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
+        }
+        var state = ModContent.MATTRESS.get().defaultBlockState();
+        world.setBlockAndUpdate(pos, state);
+        world.setBlockAndUpdate(head, state.setValue(MattressBlock.PART, BedPart.HEAD));
+        player.setPos(Vec3.atBottomCenterOf(pos));
+        var beforeRespawn = player.getRespawnConfig();
+        var hit = new BlockHitResult(Vec3.atCenterOf(head), Direction.UP, head, false);
+
+        var result = ModContent.MATTRESS.get().useWithoutItem(world.getBlockState(head), world, head, player, hit);
+        h.assertTrue(result.consumesAction(), "The mattress did not accept the interaction");
+        h.assertTrue(player.isSleeping(), "The player must actually fall asleep in a mattress");
+        h.assertTrue(java.util.Objects.equals(player.getRespawnConfig(), beforeRespawn),
+                "Sleeping in a mattress must never set a respawn point");
+
+        // Advance a couple of sleep ticks (FakePlayer is not part of the level's tick loop) before waking.
+        player.tick();
+        player.tick();
+        h.assertTrue(player.getSleepTimer() > 0, "The sleep timer must have advanced before waking");
+        player.stopSleepInBed(true, true);
+
+        h.assertTrue(world.getBlockState(pos).isAir() && world.getBlockState(head).isAir(),
+                "The mattress must be consumed once its sleeper wakes");
+        h.assertTrue(count(player, ModContent.MATTRESS_ITEM.get()) == 0, "A consumed mattress must not drop");
+        h.assertTrue(java.util.Objects.equals(player.getRespawnConfig(), beforeRespawn),
+                "Consuming the mattress must not touch the respawn point either");
+        h.succeed();
+    }
+
+    /** The four cells as the block item places them, facing north: foot-left here, the rest derived from it. */
+    private static void placeBedroll(ServerLevel world, BlockPos footLeft) {
         var state = ModContent.BEDROLL.get().defaultBlockState();
-        world.setBlockAndUpdate(foot, state);
-        world.setBlockAndUpdate(foot.north(), state.setValue(BedrollBlock.PART, BedPart.HEAD));
+        world.setBlockAndUpdate(footLeft, state);
+        world.setBlockAndUpdate(footLeft.east(), state.setValue(BedrollBlock.SIDE, BedrollBlock.Side.RIGHT));
+        world.setBlockAndUpdate(footLeft.north(), state.setValue(BedrollBlock.PART, BedPart.HEAD));
+        world.setBlockAndUpdate(footLeft.north().east(), state.setValue(BedrollBlock.PART, BedPart.HEAD).setValue(BedrollBlock.SIDE, BedrollBlock.Side.RIGHT));
     }
 
     private static int count(Player player, Item item) {

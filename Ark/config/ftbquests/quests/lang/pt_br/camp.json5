@@ -7,16 +7,16 @@
   "quest.0000000000000201.title": "Um lugar para voltar",
   "quest.0000000000000201.quest_subtitle": "Acampe primeiro.",
   "quest.0000000000000201.quest_desc": [
-    "Crie um rolo de dormir primitivo com quatro fibras vegetais e um couro. Ele ocupa dois blocos, como uma cama.",
-    "Coloque-o e use-o para definir seu ponto de renascimento; o ponto permanece mesmo se o rolo for destru\u00eddo."
+    "Crie um colch\u00e3o com nove fibras vegetais na Esta\u00e7\u00e3o de trabalho. Ele ocupa dois blocos, como uma cama.",
+    "Durma nele para passar a noite; ele se desfaz depois desse \u00fanico uso e nunca define um ponto de renascimento. Um Saco de dormir reutiliz\u00e1vel vem depois, quando sobrar couro."
   ],
-  "task.00000000000002A1.title": "Crie o rolo de dormir primitivo",
+  "task.00000000000002A1.title": "Crie o colch\u00e3o",
 
   "quest.0000000000000202.title": "Fibra da terra",
   "quest.0000000000000202.quest_subtitle": "A terra fornece a amarra\u00e7\u00e3o.",
   "quest.0000000000000202.quest_desc": [
     "Quebre grama curta e alta para obter fibra vegetal; tesouras n\u00e3o a coletam.",
-    "A fibra une ferramentas, bandagens e o rolo de dormir."
+    "A fibra une ferramentas, bandagens e o colch\u00e3o."
   ],
   "task.00000000000002A2.title": "Junte 8 fibras vegetais",
 

@@ -249,10 +249,14 @@ public final class ArkData implements DataProvider {
         pt.put("item." + NS + ".fiber_bandage", "Bandagem de fibra");
         en.put("item." + NS + ".flint_knife", "Flint Knife");
         pt.put("item." + NS + ".flint_knife", "Faca de s\u00edlex");
-        en.put("block." + NS + ".bedroll", "Primitive Bedroll");
-        pt.put("block." + NS + ".bedroll", "Rolo de dormir primitivo");
-        en.put("item." + NS + ".bedroll", "Primitive Bedroll");
-        pt.put("item." + NS + ".bedroll", "Rolo de dormir primitivo");
+        en.put("block." + NS + ".mattress", "Mattress");
+        pt.put("block." + NS + ".mattress", "Colchão");
+        en.put("item." + NS + ".mattress", "Mattress");
+        pt.put("item." + NS + ".mattress", "Colchão");
+        en.put("block." + NS + ".bedroll", "Bedroll");
+        pt.put("block." + NS + ".bedroll", "Saco de dormir");
+        en.put("item." + NS + ".bedroll", "Bedroll");
+        pt.put("item." + NS + ".bedroll", "Saco de dormir");
         en.put("key." + NS + ".journal", "Open Field Journal");
         pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
@@ -510,14 +514,25 @@ public final class ArkData implements DataProvider {
         vanillaModel("plant_fiber", "minecraft:item/wheat");
         vanillaModel("fiber_bandage", "minecraft:item/paper");
         vanillaModel("flint_knife", "minecraft:item/flint");
+        // Painted flat icons (item/mattress.png, item/bedroll.png), not the 3D block models.
+        vanillaModel("mattress", NS + ":item/mattress");
+        vanillaModel("bedroll", NS + ":item/bedroll");
+        CampAssetsData.mattress(this::put);
         CampAssetsData.bedroll(this::put);
-        // Two halves like a bed: only the head drops the item.
+        // Disposable: two halves like a bed. Whichever half is actually mined carries the drop (matching
+        // vanilla beds); AbstractSleepingBlock#playerWillDestroy removes the other half without ever
+        // invoking its loot table, so a hand break always drops exactly one, regardless of which half.
+        json("data/" + NS + "/loot_table/blocks/mattress", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
+             {"condition":"minecraft:survives_explosion"}],
+             "entries":[{"type":"minecraft:item","name":"%s:mattress"}]}]}
+            """.formatted(NS));
+        // Reusable: four cells (2x2); same one-drop-per-instance rule as the mattress, from any cell.
         json("data/" + NS + "/loot_table/blocks/bedroll", """
             {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-             {"condition":"minecraft:survives_explosion"},
-             {"condition":"minecraft:block_state_property","block":"%s:bedroll","properties":{"part":"head"}}],
+             {"condition":"minecraft:survives_explosion"}],
              "entries":[{"type":"minecraft:item","name":"%s:bedroll"}]}]}
-            """.formatted(NS, NS));
+            """.formatted(NS));
         // Plant fiber shares the grass route with the berries; shears still suppress it.
         json("data/" + NS + "/loot_modifiers/grass_fiber", """
             {"type":"neoforge:add_table","table":"arksurvivalreturns:gameplay/grass_fiber","conditions":[
@@ -547,12 +562,18 @@ public final class ArkData implements DataProvider {
                  "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","minecraft:string"],
                  "result":{"count":2,"id":"%s:fiber_bandage"}}
                 """.formatted(NS, NS, NS, NS));
-        // Nine fiber: only the Working Station's 3x3 grid takes it.
+        // Nine fiber: only the Working Station's 3x3 grid takes it. Unchanged from the old bedroll recipe.
+        json("data/" + NS + "/recipe/mattress", """
+                {"type":"minecraft:crafting_shaped","category":"misc","group":"mattress",
+                 "pattern":["FFF","FFF","FFF"],"key":{"F":"%s:plant_fiber"},
+                 "result":{"count":1,"id":"%s:mattress"}}
+                """.formatted(NS, NS));
+        // A mattress becomes reusable with hide and more fiber; the 3-wide top row still forces the station.
         json("data/" + NS + "/recipe/bedroll", """
                 {"type":"minecraft:crafting_shaped","category":"misc","group":"bedroll",
-                 "pattern":["FFF","FFF","FFF"],"key":{"F":"%s:plant_fiber"},
+                 "pattern":["LLL","FMF"],"key":{"L":"#c:leathers","F":"%s:plant_fiber","M":"%s:mattress"},
                  "result":{"count":1,"id":"%s:bedroll"}}
-                """.formatted(NS, NS));
+                """.formatted(NS, NS, NS));
     }
 
     /** Cargo rigs: the two harness tiers and their primitive recipes. Vanilla textures stand in. */
@@ -670,8 +691,8 @@ public final class ArkData implements DataProvider {
         pt.put("camp." + NS + ".starter_kit", "Um kit de sobrevivente: rolo de dormir, bandagens de fibra, fibra vegetal e uma faca de s\u00edlex.");
         en.put("camp." + NS + ".bedroll_set", "Respawn point set. It stays here even if the bedroll is destroyed.");
         pt.put("camp." + NS + ".bedroll_set", "Ponto de renascimento definido. Ele permanece mesmo se o rolo for destru\u00eddo.");
-        en.put("camp." + NS + ".bedroll_picked", "Bedroll rolled up.");
-        pt.put("camp." + NS + ".bedroll_picked", "Rolo de dormir recolhido.");
+        en.put("camp." + NS + ".rolled_up", "%s rolled up.");
+        pt.put("camp." + NS + ".rolled_up", "%s enrolado.");
         en.put("camp." + NS + ".bedroll_disabled", "Setting respawn with a bedroll is disabled on this server.");
         pt.put("camp." + NS + ".bedroll_disabled", "Definir o renascimento com um rolo de dormir est\u00e1 desativado neste servidor.");
         en.put("camp." + NS + ".bandaged", "Bandaged +%s health.");
@@ -1014,7 +1035,7 @@ public final class ArkData implements DataProvider {
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
                 "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
-                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn",
+                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn", "camp_mattress_sleep",
                 "downed_revive", "downed_bleed_out", "downed_mitigated"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",

@@ -7,10 +7,10 @@
   "quest.0000000000000101.title": "A Place to Return To",
   "quest.0000000000000101.quest_subtitle": "Camp first.",
   "quest.0000000000000101.quest_desc": [
-    "Place a bedroll and a fire where you can come back to.",
+    "Place a mattress and a fire where you can come back to.",
     "Camp is the point you return to after every risk."
   ],
-  "task.00000000000001A1.title": "Set up camp with a bedroll and a fire",
+  "task.00000000000001A1.title": "Set up camp with a mattress and a fire",
 
   "quest.0000000000000102.title": "Tools of the Survivor",
   "quest.0000000000000102.quest_subtitle": "Stone changes what is possible.",

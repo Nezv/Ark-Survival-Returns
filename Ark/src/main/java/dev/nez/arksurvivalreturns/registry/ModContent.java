@@ -105,7 +105,15 @@ public final class ModContent {
     /** Flint knife: fast, fragile and repairable with flint. */
     public static final DeferredItem<Item> FLINT_KNIFE = ITEMS.registerItem("flint_knife", Item::new,
             p -> p.sword(dev.nez.arksurvivalreturns.feature.camp.CampMaterials.FLINT, 1.0f, -1.6f));
-    /** Bedroll: sets the personal respawn point; the saved point survives the block. */
+    /** Mattress: disposable Prehistoric sleep prop; consumed once its sleeper wakes, never a respawn point. */
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.camp.MattressBlock> MATTRESS =
+            BLOCKS.registerBlock("mattress", dev.nez.arksurvivalreturns.feature.camp.MattressBlock::new,
+                    p -> p.strength(0.4f).noOcclusion().noCollision()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                            .sound(net.minecraft.world.level.block.SoundType.WOOL));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> MATTRESS_ITEM =
+            ITEMS.registerSimpleBlockItem(MATTRESS, p -> p.stacksTo(1));
+    /** Bedroll: reusable Bronze Age bed; sets the personal respawn point, the saved point survives the block. */
     public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.camp.BedrollBlock> BEDROLL =
             BLOCKS.registerBlock("bedroll", dev.nez.arksurvivalreturns.feature.camp.BedrollBlock::new,
                     p -> p.strength(0.4f).noOcclusion().noCollision()
@@ -250,6 +258,7 @@ public final class ModContent {
                     output.accept(FIBER_BANDAGE.get());
                     dev.nez.arksurvivalreturns.feature.station.StationContent.displayItems(output);
                     output.accept(FLINT_KNIFE.get());
+                    output.accept(MATTRESS_ITEM.get());
                     output.accept(BEDROLL_ITEM.get());
                     TROUGHS.values().forEach(block -> output.accept(block.get()));
                     output.accept(DRYING_RACK_ITEM.get());
