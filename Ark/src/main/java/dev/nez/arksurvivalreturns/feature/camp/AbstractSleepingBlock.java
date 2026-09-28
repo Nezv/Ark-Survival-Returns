@@ -12,8 +12,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BedBlock;
@@ -22,7 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
@@ -43,8 +44,8 @@ import org.jspecify.annotations.Nullable;
  *       monster, or manually) still counts as a use and consumes it, matching "night skipped or woke
  *       normally". Breaking it by hand before anyone ever sleeps in it still drops the item normally,
  *       since that path never goes through {@link #disposeAfterSleep}.</li>
- *   <li>{@code setsRespawn} (the Bedroll): right-clicking only sets the personal respawn point at the
- *       head cell and never puts the player to sleep, exactly like the original Primitive Bedroll.</li>
+ *   <li>{@code setsRespawn} (the Bedroll): the same sleep flow, but the respawn point it sets is kept
+ *       (config {@code camp.bedrollSetsSpawn}) and the Bedroll is never consumed.</li>
  * </ul>
  * The flags are mutually exclusive today but kept separate in case a future prop wants both or neither.
  */
@@ -75,8 +76,18 @@ public abstract class AbstractSleepingBlock extends Block {
         if (!(level instanceof ServerLevel world) || !(player instanceof ServerPlayer server)) return InteractionResult.SUCCESS;
         if (player.isSecondaryUseActive() && Config.CAMP_BEDROLL_PICKUP.get()) return rollUp(world, pos, state, player);
         BlockPos head = headPos(state, pos);
-        return disposable ? sleep(world, head, server) : setRespawn(world, head, server);
+        return sleep(world, head, server, setsRespawn && Config.CAMP_BEDROLL_SETS_SPAWN.get());
     }
+
+    /** Both props are beds to the sleep code: without this the sleeper is woken on the next tick. */
+    @Override
+    public boolean isBed(BlockState state, BlockGetter level, BlockPos pos, LivingEntity sleeper) {
+        return true;
+    }
+
+    /** There is no OCCUPIED property; the vanilla default would throw. */
+    @Override
+    public void setBedOccupied(BlockState state, Level level, BlockPos pos, LivingEntity sleeper, boolean occupied) {}
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
@@ -84,27 +95,17 @@ public abstract class AbstractSleepingBlock extends Block {
         return useWithoutItem(state, level, pos, player, hit);
     }
 
-    /** Sets the personal respawn point; unchanged from the original Primitive Bedroll. */
-    private InteractionResult setRespawn(ServerLevel world, BlockPos head, ServerPlayer server) {
-        if (!Config.CAMP_BEDROLL_SETS_SPAWN.get()) {
-            server.sendSystemMessage(Component.translatable("camp.arksurvivalreturns.bedroll_disabled"), true);
-            return InteractionResult.SUCCESS;
-        }
-        server.setRespawnPosition(new ServerPlayer.RespawnConfig(
-                LevelData.RespawnData.of(world.dimension(), head, server.getYRot(), server.getXRot()), false), true);
-        server.sendSystemMessage(Component.translatable("camp.arksurvivalreturns.bedroll_set"), false);
-        return InteractionResult.SUCCESS;
-    }
-
     /**
      * Runs the normal vanilla sleep flow (range, obstruction and monster checks; messages, stats and
-     * advancements) and then immediately reverts the respawn point {@link ServerPlayer#startSleepInBed}
-     * sets as a side effect whenever the dimension allows it: the Mattress is never a spawn point.
+     * advancements). {@link ServerPlayer#startSleepInBed} sets the respawn point as a side effect, even by
+     * day; unless {@code keepRespawn} (the Bedroll with spawn-setting enabled) that is reverted at once.
      */
-    private InteractionResult sleep(ServerLevel world, BlockPos head, ServerPlayer server) {
+    private InteractionResult sleep(ServerLevel world, BlockPos head, ServerPlayer server, boolean keepRespawn) {
         ServerPlayer.RespawnConfig before = server.getRespawnConfig();
         var result = server.startSleepInBed(head);
-        if (!Objects.equals(server.getRespawnConfig(), before)) server.setRespawnPosition(before, false);
+        if (!keepRespawn && !Objects.equals(server.getRespawnConfig(), before)) server.setRespawnPosition(before, false);
+        if (setsRespawn && !keepRespawn)
+            server.sendSystemMessage(Component.translatable("camp.arksurvivalreturns.bedroll_disabled"), true);
         result.ifLeft(problem -> {
             if (problem.message() != null) server.sendOverlayMessage(problem.message());
         });

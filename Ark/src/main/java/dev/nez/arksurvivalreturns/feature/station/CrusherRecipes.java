@@ -38,8 +38,9 @@ public final class CrusherRecipes {
         return new Recipe(stack -> stack.is(input), 1, null, 0, output, count, ticks);
     }
 
-    private static Recipe of2(Item primary, int primaryCount, Item secondary, int secondaryCount, Item output, int count, int ticks) {
-        return new Recipe(stack -> stack.is(primary), primaryCount, stack -> stack.is(secondary), secondaryCount, output, count, ticks);
+    /** The secondary is a predicate so mod items resolve lazily, not while this list is built. */
+    private static Recipe of2(Item primary, int primaryCount, Predicate<ItemStack> secondary, int secondaryCount, Item output, int count, int ticks) {
+        return new Recipe(stack -> stack.is(primary), primaryCount, secondary, secondaryCount, output, count, ticks);
     }
 
     public static final List<Recipe> RECIPES = List.of(
@@ -66,7 +67,7 @@ public final class CrusherRecipes {
             of(Items.CORNFLOWER, Items.BLUE_DYE, 2, 40),
             of(Items.LILY_OF_THE_VALLEY, Items.WHITE_DYE, 2, 40),
             // Bronze Age gunpowder: coal in the hopper, sulphur in the second slot.
-            of2(Items.COAL, 2, SulphurContent.SULPHUR.get(), 2, Items.GUNPOWDER, 2, 100));
+            of2(Items.COAL, 2, stack -> stack.is(SulphurContent.SULPHUR.get()), 2, Items.GUNPOWDER, 2, 100));
 
     /** Backward-compatible single-stack lookup: only ever matches a recipe with no secondary ingredient. */
     public static Recipe find(ItemStack stack) {

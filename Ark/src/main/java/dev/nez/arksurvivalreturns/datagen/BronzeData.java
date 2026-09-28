@@ -43,13 +43,13 @@ final class BronzeData {
         blockItem(id, NS + ":block/" + id);
     }
 
-    /** The copper/iron ore pattern: silk touch keeps the block, otherwise raw ore with a fortune bonus. */
+    /** The iron ore pattern: silk touch keeps the block, otherwise raw ore with a fortune bonus. */
     private void oreLoot(String ore, String rawItem) {
         var silkTouch = Map.of("type", "minecraft:item", "name", NS + ":" + ore, "conditions", List.of(
                 Map.of("condition", "minecraft:match_tool", "predicate", Map.of("predicates", Map.of(
                         "minecraft:enchantments", List.of(Map.of("enchantments", "minecraft:silk_touch", "levels", Map.of("min", 1))))))));
+        // One raw tin per ore like iron (copper drops 2-5): the alloy takes three copper to one tin.
         var rawDrop = Map.of("type", "minecraft:item", "name", NS + ":" + rawItem, "functions", List.of(
-                Map.of("function", "minecraft:set_count", "add", false, "count", Map.of("type", "minecraft:uniform", "min", 2.0, "max", 5.0)),
                 Map.of("function", "minecraft:apply_bonus", "enchantment", "minecraft:fortune", "formula", "minecraft:ore_drops"),
                 Map.of("function", "minecraft:explosion_decay")));
         var alternatives = Map.of("type", "minecraft:alternatives", "children", List.of(silkTouch, rawDrop));

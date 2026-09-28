@@ -259,7 +259,7 @@ final class PrimitiveData {
                 "minecraft:packed_mud", "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone");
         // Each vanilla tool/armour tag is written once for the whole mod: rock, keratin and bronze together.
         tag("minecraft", "item/axes", NS + ":stone_hatchet", NS + ":bronze_axe");
-        tag("minecraft", "item/swords", NS + ":rock_sword", NS + ":bronze_longsword");
+        tag("minecraft", "item/swords", NS + ":rock_sword", NS + ":bronze_longsword", NS + ":bronze_hammer");
         tag("minecraft", "item/pickaxes", NS + ":rock_pickaxe", NS + ":bronze_pickaxe");
         tag("minecraft", "item/shovels", NS + ":rock_shovel", NS + ":bronze_shovel");
         tag("minecraft", "item/hoes", NS + ":rock_hoe", NS + ":bronze_hoe");

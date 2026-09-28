@@ -31,9 +31,9 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Bedroll: a reusable field bed built from the {@code camp/field_bedroll_*} art, occupying a 2x2 area
- * (four block instances) instead of the old single-column Primitive Bedroll. Right-clicking sets the
- * personal respawn point at the head-left cell exactly like the original Primitive Bedroll did; unlike
- * the disposable {@link MattressBlock} it is never removed and never puts anyone to sleep.
+ * (four block instances) instead of the old single-column Primitive Bedroll. Right-clicking sleeps in it
+ * and keeps the personal respawn point at the head-left cell; unlike the disposable {@link MattressBlock}
+ * it is never removed.
  *
  * <p>Layout: {@link #PART} (HEAD/FOOT) runs along {@code FACING}, exactly like a vanilla bed. {@link
  * #SIDE} (LEFT/RIGHT) is the extra width, defined relative to the placer's right hand ({@code
