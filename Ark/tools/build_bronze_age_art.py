@@ -864,7 +864,9 @@ def main():
         'sulphur_cluster': sulphur('block/amethyst_cluster', 0.8, 0.14),
     }
     for name, image in blocks.items():
-        save(image, TEX / 'block' / f'{name}.png')
+        # Buds and the cluster double as their item sprites, and item sprites ship at 32x32 (verify_assets).
+        crystal = name.endswith(('_bud', '_cluster'))
+        save(item32(image) if crystal else image, TEX / 'block' / f'{name}.png')
 
     layers = {layer: armour_layer(layer) for layer in ('humanoid', 'humanoid_leggings')}
     for layer, image in layers.items():

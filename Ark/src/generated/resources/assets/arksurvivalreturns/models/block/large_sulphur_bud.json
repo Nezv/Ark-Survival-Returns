@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "arksurvivalreturns:block/large_sulphur_bud"
+  }
+}

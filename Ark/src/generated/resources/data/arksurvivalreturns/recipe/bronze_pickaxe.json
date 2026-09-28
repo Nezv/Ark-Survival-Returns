@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "bronze_pickaxe",
+  "key": {
+    "#": "minecraft:stick",
+    "X": "arksurvivalreturns:bronze_ingot"
+  },
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bronze_pickaxe"
+  }
+}

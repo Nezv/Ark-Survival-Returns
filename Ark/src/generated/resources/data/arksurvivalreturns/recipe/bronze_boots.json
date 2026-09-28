@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "bronze_boots",
+  "key": {
+    "X": "arksurvivalreturns:bronze_ingot"
+  },
+  "pattern": [
+    "X X",
+    "X X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bronze_boots"
+  }
+}

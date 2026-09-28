@@ -10,7 +10,8 @@
           "block": "arksurvivalreturns:bedroll",
           "condition": "minecraft:block_state_property",
           "properties": {
-            "part": "head"
+            "part": "head",
+            "side": "left"
           }
         }
       ],

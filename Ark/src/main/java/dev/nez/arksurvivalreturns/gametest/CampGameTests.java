@@ -67,8 +67,10 @@ final class CampGameTests {
             world.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
         }
         placeBedroll(world, pos);
+        player.setPos(Vec3.atBottomCenterOf(pos));
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
 
+        // By day the sleep attempt fails but, like a vanilla bed, still saves the respawn point.
         var result = ModContent.BEDROLL.get().useWithoutItem(world.getBlockState(pos), world, pos, player, hit);
         h.assertTrue(result.consumesAction(), "The bedroll did not accept the interaction");
         var config = player.getRespawnConfig();
@@ -76,6 +78,14 @@ final class CampGameTests {
         h.assertTrue(config.respawnData().globalPos().pos().equals(head), "The respawn point must be the bedroll's head-left cell");
         h.assertTrue(world.getBlockState(head).getRespawnPosition(EntityType.PLAYER, world, head, 0.0f).isPresent(),
                 "Respawning at the bedroll must find a place to stand beside it");
+
+        // By night it is a real bed that survives the sleep: reusable, unlike the Mattress.
+        atNight(world, () -> {
+            ModContent.BEDROLL.get().useWithoutItem(world.getBlockState(pos), world, pos, player, hit);
+            h.assertTrue(player.isSleeping(), "The player must fall asleep in a bedroll at night");
+            player.stopSleepInBed(true, true);
+            h.assertTrue(world.getBlockState(head).is(ModContent.BEDROLL.get()), "The bedroll must survive a night's sleep");
+        });
 
         // The saved point lives in player data, not in the block: destroying it must not strand anyone.
         world.removeBlock(pos, false);
@@ -94,7 +104,7 @@ final class CampGameTests {
     }
 
     /**
-     * Mattress: sleeping through at least one tick consumes both halves with no drop and never sets a
+     * Mattress: waking up from it consumes both halves with no drop and never sets a
      * respawn point, unlike the reusable Bedroll.
      */
     static void mattressSleep(GameTestHelper h) {
@@ -113,17 +123,15 @@ final class CampGameTests {
         var beforeRespawn = player.getRespawnConfig();
         var hit = new BlockHitResult(Vec3.atCenterOf(head), Direction.UP, head, false);
 
-        var result = ModContent.MATTRESS.get().useWithoutItem(world.getBlockState(head), world, head, player, hit);
-        h.assertTrue(result.consumesAction(), "The mattress did not accept the interaction");
-        h.assertTrue(player.isSleeping(), "The player must actually fall asleep in a mattress");
-        h.assertTrue(java.util.Objects.equals(player.getRespawnConfig(), beforeRespawn),
-                "Sleeping in a mattress must never set a respawn point");
+        atNight(world, () -> {
+            var result = ModContent.MATTRESS.get().useWithoutItem(world.getBlockState(head), world, head, player, hit);
+            h.assertTrue(result.consumesAction(), "The mattress did not accept the interaction");
+            h.assertTrue(player.isSleeping(), "The player must actually fall asleep in a mattress");
+            h.assertTrue(java.util.Objects.equals(player.getRespawnConfig(), beforeRespawn),
+                    "Sleeping in a mattress must never set a respawn point");
 
-        // Advance a couple of sleep ticks (FakePlayer is not part of the level's tick loop) before waking.
-        player.tick();
-        player.tick();
-        h.assertTrue(player.getSleepTimer() > 0, "The sleep timer must have advanced before waking");
-        player.stopSleepInBed(true, true);
+            player.stopSleepInBed(true, true);
+        });
 
         h.assertTrue(world.getBlockState(pos).isAir() && world.getBlockState(head).isAir(),
                 "The mattress must be consumed once its sleeper wakes");
@@ -131,6 +139,20 @@ final class CampGameTests {
         h.assertTrue(java.util.Objects.equals(player.getRespawnConfig(), beforeRespawn),
                 "Consuming the mattress must not touch the respawn point either");
         h.succeed();
+    }
+
+    /** Runs {@code body} at midnight (sky darkness refreshed at once) and restores the clock afterwards. */
+    private static void atNight(ServerLevel world, Runnable body) {
+        var clock = world.dimensionType().defaultClock().orElseThrow();
+        long oldTime = world.getDefaultClockTime();
+        try {
+            world.clockManager().setTotalTicks(clock, 18000);
+            world.updateSkyBrightness();
+            body.run();
+        } finally {
+            world.clockManager().setTotalTicks(clock, oldTime);
+            world.updateSkyBrightness();
+        }
     }
 
     /** The four cells as the block item places them, facing north: foot-left here, the rest derived from it. */

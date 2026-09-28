@@ -399,10 +399,12 @@ final class PrimitiveGameTests {
         h.assertTrue(level.getBlockState(headPos).is(ModContent.BEDROLL.get()), "The bedroll must be two blocks long");
         h.assertTrue(level.getBlockState(footRight).is(ModContent.BEDROLL.get()) && level.getBlockState(headRight).is(ModContent.BEDROLL.get()),
                 "The bedroll must occupy its full 2x2 footprint");
-        // A real mining break goes through playerWillDestroy before the block is actually removed.
+        // A real mining break (ServerPlayerGameMode#destroyBlock): playerWillDestroy clears the other cells,
+        // the mined cell is removed, and loot comes from the state captured before the break.
         var footState = level.getBlockState(foot);
         footState.getBlock().playerWillDestroy(level, foot, footState, player);
-        level.destroyBlock(foot, true, player);
+        level.removeBlock(foot, false);
+        net.minecraft.world.level.block.Block.dropResources(footState, level, foot, null, player, ItemStack.EMPTY);
         h.assertTrue(level.getBlockState(headPos).isAir() && level.getBlockState(footRight).isAir() && level.getBlockState(headRight).isAir(),
                 "The whole 2x2 bedroll must break together");
         h.assertTrue(dropped(level, foot, ModContent.BEDROLL_ITEM.get()) == 1, "A broken bedroll drops exactly one bedroll");

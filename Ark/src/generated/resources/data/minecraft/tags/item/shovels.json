@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:rock_shovel"
+    "arksurvivalreturns:rock_shovel",
+    "arksurvivalreturns:bronze_shovel"
   ]
 }

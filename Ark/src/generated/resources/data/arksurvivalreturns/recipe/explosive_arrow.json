@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "explosive_arrow",
+  "key": {
+    "A": "minecraft:arrow",
+    "G": "minecraft:gunpowder"
+  },
+  "pattern": [
+    " A ",
+    "AGA",
+    " A "
+  ],
+  "result": {
+    "count": 4,
+    "id": "arksurvivalreturns:explosive_arrow"
+  }
+}

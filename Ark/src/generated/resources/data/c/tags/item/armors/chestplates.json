@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:keratin_chestplate"
+    "arksurvivalreturns:keratin_chestplate",
+    "arksurvivalreturns:bronze_chestplate"
   ]
 }

@@ -37,13 +37,9 @@ import org.jspecify.annotations.Nullable;
  * <ul>
  *   <li>{@code disposable} (the Mattress): right-clicking runs the ordinary vanilla sleep flow through
  *       {@link ServerPlayer#startSleepInBed}, immediately undoing the respawn point that vanilla sets as
- *       a side effect (the Mattress never becomes a spawn point). Once the sleeper wakes, every cell is
- *       removed with no drop, provided at least one sleep tick elapsed while they were down — an instant
- *       interrupt on the very tick the player lay down (0 elapsed ticks) leaves the mattress standing,
- *       since it was never meaningfully used. Waking up early after actually dozing off (interrupted by a
- *       monster, or manually) still counts as a use and consumes it, matching "night skipped or woke
- *       normally". Breaking it by hand before anyone ever sleeps in it still drops the item normally,
- *       since that path never goes through {@link #disposeAfterSleep}.</li>
+ *       a side effect (the Mattress never becomes a spawn point). When the sleeper wakes (morning, a
+ *       monster, or by hand) every cell is removed with no drop. Breaking it before anyone sleeps in it
+ *       still drops the item, since that path never goes through {@link #disposeAfterSleep}.</li>
  *   <li>{@code setsRespawn} (the Bedroll): the same sleep flow, but the respawn point it sets is kept
  *       (config {@code camp.bedrollSetsSpawn}) and the Bedroll is never consumed.</li>
  * </ul>
@@ -112,7 +108,7 @@ public abstract class AbstractSleepingBlock extends Block {
         return InteractionResult.SUCCESS;
     }
 
-    /** Called by {@link SleepEvents} once the sleeper wakes, provided at least one sleep tick elapsed. */
+    /** Called by {@link SleepEvents} once the sleeper wakes. */
     void disposeAfterSleep(ServerLevel level, BlockPos head) {
         BlockState state = level.getBlockState(head);
         if (!state.is(this)) return;
@@ -123,28 +119,35 @@ public abstract class AbstractSleepingBlock extends Block {
     private void removeQuietly(ServerLevel level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         if (!state.is(this)) return;
-        level.setBlock(pos, Blocks.AIR.defaultBlockState(), UPDATE_ALL | UPDATE_SUPPRESS_DROPS);
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), SILENT_REMOVE);
         level.levelEvent(2001, pos, getId(state));
     }
 
     /**
-     * Breaking any cell (by hand or in creative) always clears every other cell of the same instance,
-     * silently: only the loot-table condition on the anchor cell (see the subclasses' Javadoc) ever
-     * drops an item, so the rest must never re-trigger it. This is deliberately unconditional rather than
-     * relying on {@link #updateShape}'s neighbour cascade, since the Bedroll's extra "side" pairing is
-     * left non-destructive (an old, two-cell Primitive Bedroll save has no side partner at all, and must
-     * keep working rather than vanish the next time a neighbour update touches it).
+     * Removes a partner cell without drops and without the neighbour-shape cascade: in 26.1 that cascade
+     * clears UPDATE_SUPPRESS_DROPS, so a partner reacting to the gap would drop a second item.
+     */
+    private static final int SILENT_REMOVE = UPDATE_ALL | UPDATE_SUPPRESS_DROPS | UPDATE_KNOWN_SHAPE;
+
+    /**
+     * Exactly one item per instance: only the anchor ({@link #headPos}) has loot. Mining the anchor removes
+     * the other cells silently and drops through the normal loot path; mining any other cell destroys the
+     * anchor (dropping unless the player prevents drops, e.g. creative) and silently clears the rest.
+     * Explosions and lost support follow the same rule through the anchor's loot condition.
      */
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide()) {
+            BlockPos anchor = headPos(state, pos);
             for (BlockPos other : otherParts(state, pos)) {
+                if (other.equals(anchor)) continue;
                 BlockState otherState = level.getBlockState(other);
                 if (otherState.is(this)) {
-                    level.setBlock(other, Blocks.AIR.defaultBlockState(), UPDATE_ALL | UPDATE_SUPPRESS_DROPS);
+                    level.setBlock(other, Blocks.AIR.defaultBlockState(), SILENT_REMOVE);
                     level.levelEvent(player, 2001, other, getId(otherState));
                 }
             }
+            if (!anchor.equals(pos) && level.getBlockState(anchor).is(this)) level.destroyBlock(anchor, !player.preventsBlockDrops(), player);
         }
         return super.playerWillDestroy(level, pos, state, player);
     }

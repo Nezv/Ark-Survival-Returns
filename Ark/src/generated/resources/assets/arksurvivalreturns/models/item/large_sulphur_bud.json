@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arksurvivalreturns:block/large_sulphur_bud"
+  }
+}

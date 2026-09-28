@@ -1,3 +1,6 @@
 {
-  "parent": "arksurvivalreturns:block/prehistoric/primitive_bedroll_rolled"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arksurvivalreturns:item/bedroll"
+  }
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:stone_hatchet"
+    "arksurvivalreturns:stone_hatchet",
+    "arksurvivalreturns:bronze_axe"
   ]
 }

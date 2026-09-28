@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "tin_ingot_from_blasting_raw",
+  "ingredient": "arksurvivalreturns:raw_tin",
+  "result": {
+    "id": "arksurvivalreturns:tin_ingot"
+  }
+}

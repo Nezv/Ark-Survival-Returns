@@ -4,6 +4,14 @@
     "arksurvivalreturns:smithing_table",
     "arksurvivalreturns:crusher",
     "arksurvivalreturns:primitive_forge",
-    "arksurvivalreturns:mortar_and_pestle"
+    "arksurvivalreturns:mortar_and_pestle",
+    "arksurvivalreturns:tin_ore",
+    "arksurvivalreturns:deepslate_tin_ore",
+    "arksurvivalreturns:sulphur_block",
+    "arksurvivalreturns:budding_sulphur",
+    "arksurvivalreturns:small_sulphur_bud",
+    "arksurvivalreturns:medium_sulphur_bud",
+    "arksurvivalreturns:large_sulphur_bud",
+    "arksurvivalreturns:sulphur_cluster"
   ]
 }

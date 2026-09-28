@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:rock_hoe"
+    "arksurvivalreturns:rock_hoe",
+    "arksurvivalreturns:bronze_hoe"
   ]
 }

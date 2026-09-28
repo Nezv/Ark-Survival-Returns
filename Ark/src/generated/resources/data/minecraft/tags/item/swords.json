@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:rock_sword"
+    "arksurvivalreturns:rock_sword",
+    "arksurvivalreturns:bronze_longsword",
+    "arksurvivalreturns:bronze_hammer"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:keratin_helmet"
+    "arksurvivalreturns:keratin_helmet",
+    "arksurvivalreturns:bronze_helmet"
   ]
 }

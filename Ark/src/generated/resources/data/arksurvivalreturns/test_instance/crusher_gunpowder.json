@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:crusher_gunpowder",
+  "max_ticks": 200,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

@@ -44,11 +44,12 @@ def verify_camp_assets():
     checked = 0
     for path in (GENERATED / 'blockstates').glob('*.json'):
         name = path.stem
-        if name not in ('bedroll', 'drying_rack', 'cooking_pot', 'trough') and not name.endswith('_trough'): continue
+        if name not in ('bedroll', 'mattress', 'drying_rack', 'cooking_pot', 'trough') and not name.endswith('_trough'): continue
         data = json.loads(path.read_text())
         if 'variants' in data:
             for value in data['variants'].values(): check_model(value['model'])
-            assert len(data['variants']) == (16 if name == 'cooking_pot' else 8), name
+            # The Bedroll is 2x2: facing x part x side.
+            assert len(data['variants']) == (16 if name in ('cooking_pot', 'bedroll') else 8), name
         else:
             parts = data['multipart']
             for part in parts: check_model(part['apply']['model'])

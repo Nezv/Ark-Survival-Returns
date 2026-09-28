@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "mattress",
+  "key": {
+    "F": "arksurvivalreturns:plant_fiber"
+  },
+  "pattern": [
+    "FFF",
+    "FFF",
+    "FFF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:mattress"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "sulphur_block",
+  "key": {
+    "#": "arksurvivalreturns:sulphur"
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "id": "arksurvivalreturns:sulphur_block"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "bronze_longsword",
+  "key": {
+    "#": "minecraft:stick",
+    "X": "arksurvivalreturns:bronze_ingot"
+  },
+  "pattern": [
+    " X",
+    "XX",
+    " #"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:bronze_longsword"
+  }
+}

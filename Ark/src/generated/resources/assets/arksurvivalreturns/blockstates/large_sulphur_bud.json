@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud"
+    },
+    "facing=west": {
+      "model": "arksurvivalreturns:block/large_sulphur_bud",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

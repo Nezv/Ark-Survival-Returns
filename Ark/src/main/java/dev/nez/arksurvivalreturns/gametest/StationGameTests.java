@@ -1,8 +1,6 @@
 package dev.nez.arksurvivalreturns.gametest;
 
 import java.util.List;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import dev.nez.arksurvivalreturns.feature.station.CrusherRecipes;
 import dev.nez.arksurvivalreturns.feature.station.StationContent;
 import dev.nez.arksurvivalreturns.feature.station.StorageCrateBlockEntity;
@@ -51,9 +49,7 @@ final class StationGameTests {
     static void run(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
-        // medicine_bench is checked separately below: it needs #c:ingots/bronze (Plan C), which does not
-        // resolve in every worktree, so the RecipeManager may legitimately drop it before that merge.
-        for (String id : List.of("working_station", "storage_crate", "smithing_table", "crusher",
+        for (String id : List.of("working_station", "medicine_bench", "storage_crate", "smithing_table", "crusher",
                 "mortar_and_pestle", "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing station recipe " + id);
         }
@@ -78,26 +74,16 @@ final class StationGameTests {
         h.assertTrue(StationContent.medicine(new ItemStack(StationContent.HERBAL_BANDAGE.get()))
                 && StationContent.medicine(new ItemStack(StationContent.VITAMINS.get())), "Medicine tag is incomplete");
 
-        // The bench recipe: bronze replaces iron, and it now also needs a pane of glass. The #c:ingots/bronze
-        // tag (Plan C) has no members in every worktree, which makes the whole recipe file fail to parse
-        // (a missing tag is a hard error for an Ingredient, not an always-empty match) and drops it from the
-        // RecipeManager entirely. So this reads the generated recipe JSON straight off the classpath instead
-        // of asking the RecipeManager for it; it keeps working the same way after the Bronze Age items merge.
-        JsonObject benchJson;
-        try (var in = StationGameTests.class.getResourceAsStream("/data/arksurvivalreturns/recipe/medicine_bench.json")) {
-            h.assertTrue(in != null, "Missing station recipe file medicine_bench");
-            benchJson = JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
-        } catch (java.io.IOException e) {
-            throw new java.io.UncheckedIOException(e);
-        }
-        var benchKey = benchJson.getAsJsonObject("key");
-        h.assertTrue(benchJson.getAsJsonArray("pattern").toString().equals("[\"IBI\",\"PPP\",\"LGL\"]"),
-                "The Medicine Bench pattern must keep its shape");
-        h.assertTrue(benchKey.get("I").getAsString().equals("#c:ingots/bronze"), "The Medicine Bench must take bronze, not iron");
-        h.assertTrue(benchKey.get("G").getAsString().equals("minecraft:glass"), "The Medicine Bench must require a pane of glass");
-        h.assertTrue(benchKey.get("B").getAsString().equals("minecraft:glass_bottle")
-                && benchKey.get("P").getAsString().equals("#minecraft:planks")
-                && benchKey.get("L").getAsString().equals("#minecraft:logs"), "The rest of the Medicine Bench pattern must be unchanged");
+        // The bench recipe (Bronze Age): bronze ingots replace iron, and it needs a block of glass.
+        ItemStack bronze = new ItemStack(dev.nez.arksurvivalreturns.feature.bronze.BronzeContent.BRONZE_INGOT.get());
+        ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE), plank = new ItemStack(Items.OAK_PLANKS), log = new ItemStack(Items.OAK_LOG);
+        ItemStack glass = new ItemStack(Items.GLASS);
+        var benchGrid = CraftingInput.of(3, 3, List.of(bronze, bottle, bronze, plank, plank, plank, log, glass, log));
+        var benchRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, benchGrid, level);
+        h.assertTrue(benchRecipe.isPresent() && benchRecipe.get().value().assemble(benchGrid).is(StationContent.MEDICINE_BENCH_ITEM.get()),
+                "Bronze, glass, a bottle, planks and logs must make the Medicine Bench");
+        var ironGrid = CraftingInput.of(3, 3, List.of(iron, bottle, iron, plank, plank, plank, log, glass, log));
+        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, ironGrid, level).isEmpty(), "Iron no longer makes the Medicine Bench");
 
         // Craft the Bandage and Vitamins at the Medicine Bench; nowhere else makes them.
         var medicinePlayer = FakePlayerFactory.get(level, new GameProfile(java.util.UUID.randomUUID(), "ArkMedicineBench"));

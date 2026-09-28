@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "arksurvivalreturns:block/tin_ore"
+  }
+}

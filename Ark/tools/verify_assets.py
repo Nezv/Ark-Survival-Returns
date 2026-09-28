@@ -153,9 +153,9 @@ def main():
                          f'assets/arksurvivalreturns/models/item/{identifier}_egg.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}_nest.json'):
             check((generated/relative).is_file(), f'Missing nest asset: {relative}')
-    # Camp blocks: the bedroll owns a state, a model and a loot table.
-    # The two-block bedroll points its states straight at the authored head and foot models.
-    for identifier, model in (('bedroll', 'prehistoric/primitive_bedroll_head'),):
+    # Camp blocks: each sleeping prop owns a state, a model and a loot table. The two-block Mattress points
+    # its states at the authored grass models; the 2x2 Bedroll at the retextured field-bedroll models.
+    for identifier, model in (('mattress', 'prehistoric/primitive_bedroll_head'), ('bedroll', 'camp/bedroll_head_west')):
         for relative in (f'assets/arksurvivalreturns/blockstates/{identifier}.json',
                          f'data/arksurvivalreturns/loot_table/blocks/{identifier}.json'):
             check((generated/relative).is_file(), f'Missing block asset: {relative}')
@@ -172,7 +172,7 @@ def main():
             check(f'entity.arksurvivalreturns.{identifier}' in lang, f'Missing name: {locale}/{identifier}')
         for identifier in FLYERS:
             check(f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}')
-        check('block.arksurvivalreturns.bedroll' in lang, f'{locale}: missing bedroll name')
+        check('block.arksurvivalreturns.bedroll' in lang and 'block.arksurvivalreturns.mattress' in lang, f'{locale}: missing bedroll/mattress name')
         check('item.arksurvivalreturns.keratin_spear' in lang, f'{locale}: missing keratin spear name')
     try:
         verify_camp_assets()

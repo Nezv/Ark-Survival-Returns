@@ -3,12 +3,13 @@
   "category": "misc",
   "group": "bedroll",
   "key": {
-    "F": "arksurvivalreturns:plant_fiber"
+    "F": "arksurvivalreturns:plant_fiber",
+    "L": "#c:leathers",
+    "M": "arksurvivalreturns:mattress"
   },
   "pattern": [
-    "FFF",
-    "FFF",
-    "FFF"
+    "LLL",
+    "FMF"
   ],
   "result": {
     "count": 1,

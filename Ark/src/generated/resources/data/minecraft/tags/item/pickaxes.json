@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "arksurvivalreturns:rock_pickaxe"
+    "arksurvivalreturns:rock_pickaxe",
+    "arksurvivalreturns:bronze_pickaxe"
   ]
 }

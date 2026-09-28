@@ -523,20 +523,20 @@ public final class ArkData implements DataProvider {
         vanillaModel("bedroll", NS + ":item/bedroll");
         CampAssetsData.mattress(this::put);
         CampAssetsData.bedroll(this::put);
-        // Disposable: two halves like a bed. Whichever half is actually mined carries the drop (matching
-        // vanilla beds); AbstractSleepingBlock#playerWillDestroy removes the other half without ever
-        // invoking its loot table, so a hand break always drops exactly one, regardless of which half.
+        // Disposable: two halves like a bed; only the head drops (AbstractSleepingBlock#playerWillDestroy).
         json("data/" + NS + "/loot_table/blocks/mattress", """
             {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-             {"condition":"minecraft:survives_explosion"}],
+             {"condition":"minecraft:survives_explosion"},
+             {"condition":"minecraft:block_state_property","block":"%s:mattress","properties":{"part":"head"}}],
              "entries":[{"type":"minecraft:item","name":"%s:mattress"}]}]}
-            """.formatted(NS));
-        // Reusable: four cells (2x2); same one-drop-per-instance rule as the mattress, from any cell.
+            """.formatted(NS, NS));
+        // Reusable: four cells (2x2); only the head-left anchor drops, same rule as the mattress.
         json("data/" + NS + "/loot_table/blocks/bedroll", """
             {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-             {"condition":"minecraft:survives_explosion"}],
+             {"condition":"minecraft:survives_explosion"},
+             {"condition":"minecraft:block_state_property","block":"%s:bedroll","properties":{"part":"head","side":"left"}}],
              "entries":[{"type":"minecraft:item","name":"%s:bedroll"}]}]}
-            """.formatted(NS));
+            """.formatted(NS, NS));
         // Plant fiber shares the grass route with the berries; shears still suppress it.
         json("data/" + NS + "/loot_modifiers/grass_fiber", """
             {"type":"neoforge:add_table","table":"arksurvivalreturns:gameplay/grass_fiber","conditions":[

@@ -258,24 +258,23 @@ final class TechGameTests {
         h.assertTrue(ironsmelt.satisfied(TechProgressData.get(level).progress(smelterTribe), "ironsmelt:", smelter),
                 "Extracting from the real forge must satisfy the smelt trigger");
 
-        // --- crusher: the hand-extraction hook, proven live against the real block and against the loaded
-        //     'sparklers' node (the Crusher's own two-input gunpowder recipe is Plan D's addition) ---
+        // --- crusher: 2 coal + 2 sulphur ground into gunpowder and taken by hand satisfies Sparklers ---
         BlockPos crusherRel = new BlockPos(10, 3, 8);
         h.setBlock(crusherRel, StationContent.CRUSHER.get().defaultBlockState());
         BlockPos crusherPos = h.absolutePos(crusherRel);
         CrusherBlockEntity crusher = (CrusherBlockEntity) level.getBlockEntity(crusherPos);
         h.assertTrue(crusher != null, "The crusher block entity is missing");
-        crusher.insert(new ItemStack(Items.STONE));
-        for (int tick = 0; tick < 100; tick++) CrusherBlockEntity.tick(level, crusherPos, level.getBlockState(crusherPos), crusher);
+        crusher.insert(new ItemStack(Items.COAL, 2));
+        crusher.insert(new ItemStack(dev.nez.arksurvivalreturns.feature.sulphur.SulphurContent.SULPHUR.get(), 2));
+        for (int tick = 0; tick < 200; tick++) CrusherBlockEntity.tick(level, crusherPos, level.getBlockState(crusherPos), crusher);
         FakePlayer crusherTaker = player(level, "ArkCrusher");
         level.addFreshEntity(crusherTaker);
         level.getBlockState(crusherPos).useWithoutItem(level, crusherTaker, hit(crusherPos));
-        h.assertTrue(crusherTaker.getInventory().countItem(Items.COBBLESTONE) == 1, "The crusher must hand its ground output to the player");
+        h.assertTrue(crusherTaker.getInventory().countItem(Items.GUNPOWDER) > 0, "The crusher must grind coal and sulphur into gunpowder");
         UUID crusherTribe = TechService.tribeOf(crusherTaker);
-        TechEvents.crusherOutput(crusherTaker, new ItemStack(Items.GUNPOWDER));
         h.assertTrue(tree.node("sparklers").orElseThrow().trigger()
                         .satisfied(TechProgressData.get(level).progress(crusherTribe), "sparklers:", crusherTaker),
-                "The crusher-output hook must satisfy Sparklers once the Crusher can make gunpowder");
+                "Gunpowder taken from the real crusher must satisfy Sparklers");
 
         // --- trough feed and species tame, from real creatures ---
         FakePlayer rancher = player(level, "ArkRancher");
