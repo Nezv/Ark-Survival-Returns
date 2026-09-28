@@ -126,6 +126,14 @@ public final class TechScreen extends Screen {
                 Identifier id = Identifier.tryParse(n.icon());
                 if (id != null) blit(g, id, n.x() - 20, n.y() - 20, 40,
                         n.state() == TechView.State.LOCKED ? 0x88999988 : -1);
+            } else if ("???".equals(n.title())) {
+                // A mystery node whose objective is not designed yet: a large ink question mark in the ring.
+                g.pose().pushMatrix();
+                g.pose().translate(n.x(), n.y());
+                g.pose().scale(2f, 2f);
+                g.text(font, "?", -font.width("?") / 2, -4,
+                        n.state() == TechView.State.LOCKED ? 0xFF827956 : 0xFF4E5039, false);
+                g.pose().popMatrix();
             }
             if (hover == n) blit(g, texture("node_hover"), n.x() - 28, n.y() - 28, 56, -1);
         }

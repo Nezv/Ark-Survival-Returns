@@ -24,7 +24,7 @@
     {
       "id": "4152000070273BAC",
       "x": 23.666666666666668,
-      "y": 3.6333333333333333,
+      "y": 1.1,
       "dependencies": [
         "415200000D15A396"
       ],
@@ -38,11 +38,270 @@
       "optional": true
     },
     {
-      "id": "4152000195B83F68",
+      "id": "41520000F68CCD8E",
       "x": 25.5,
-      "y": 3.0,
+      "y": 1.1,
       "dependencies": [
         "415200000D15A396"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCD8F",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCD90",
+      "x": 27.333333333333332,
+      "y": 1.1,
+      "dependencies": [
+        "41520000F68CCD8E"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCD91",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCD92",
+      "x": 29.166666666666668,
+      "y": 1.1,
+      "dependencies": [
+        "41520000F68CCD90"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCD93",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCD94",
+      "x": 31.0,
+      "y": 1.1,
+      "dependencies": [
+        "41520000F68CCD92"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCD95",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCDCC",
+      "x": 25.5,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "415200000D15A396"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCDCD",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCDCE",
+      "x": 27.333333333333332,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520000F68CCDCC"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCDCF",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCDD0",
+      "x": 29.166666666666668,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520000F68CCDCE"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCDD1",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCDD2",
+      "x": 31.0,
+      "y": 2.3666666666666667,
+      "dependencies": [
+        "41520000F68CCDD0"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCDD3",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE0A",
+      "x": 25.5,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "415200000D15A396"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE0B",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE0C",
+      "x": 27.333333333333332,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520000F68CCE0A"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE0D",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE0E",
+      "x": 29.166666666666668,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520000F68CCE0C"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE0F",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE10",
+      "x": 31.0,
+      "y": 3.6333333333333333,
+      "dependencies": [
+        "41520000F68CCE0E"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE11",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE48",
+      "x": 25.5,
+      "y": 4.9,
+      "dependencies": [
+        "415200000D15A396"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE49",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE4A",
+      "x": 27.333333333333332,
+      "y": 4.9,
+      "dependencies": [
+        "41520000F68CCE48"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE4B",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE4C",
+      "x": 29.166666666666668,
+      "y": 4.9,
+      "dependencies": [
+        "41520000F68CCE4A"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE4D",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "41520000F68CCE4E",
+      "x": 31.0,
+      "y": 4.9,
+      "dependencies": [
+        "41520000F68CCE4C"
+      ],
+      "tasks": [
+        {
+          "id": "41520000F68CCE4F",
+          "type": "custom"
+        }
+      ],
+      "rewards": [],
+      "optional": false
+    },
+    {
+      "id": "4152000195B83F68",
+      "x": 32.833333333333336,
+      "y": 3.0,
+      "dependencies": [
+        "41520000F68CCD94",
+        "41520000F68CCDD2",
+        "41520000F68CCE10",
+        "41520000F68CCE4E"
       ],
       "tasks": [
         {

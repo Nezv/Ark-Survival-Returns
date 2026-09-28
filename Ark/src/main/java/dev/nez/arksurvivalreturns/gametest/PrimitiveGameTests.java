@@ -347,7 +347,25 @@ final class PrimitiveGameTests {
                     .mapToInt(item -> item.getItem().getCount()).sum();
             drops.forEach(ItemEntity::discard);
             h.assertTrue(keratin >= 2, "A Triceratops carcass must drop at least two keratin, got " + keratin);
-            h.succeed();
+            // A Flint Knife kill cuts three more (2-4 becomes 5-7).
+            FakePlayer butcher = player(level, "ArkButcher");
+            butcher.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(ModContent.FLINT_KNIFE.get()));
+            CreatureEntity carcass = ModContent.CREATURES.get(Species.TRICERATOPS).get().create(level, EntitySpawnReason.COMMAND);
+            carcass.setNoAi(true);
+            carcass.setPos(Vec3.atBottomCenterOf(spot));
+            level.addFreshEntity(carcass);
+            // Straight to the death loot, with the knife-wielding player as the attacker (the creature's own
+            // damage handling is not what this checks).
+            carcass.setHealth(0f);
+            carcass.die(level.damageSources().playerAttack(butcher));
+            h.runAfterDelay(2, () -> {
+                var knifeDrops = level.getEntitiesOfClass(ItemEntity.class, new AABB(spot).inflate(5));
+                int cut = knifeDrops.stream().filter(item -> item.getItem().is(PrimitiveContent.KERATIN.get()))
+                        .mapToInt(item -> item.getItem().getCount()).sum();
+                knifeDrops.forEach(ItemEntity::discard);
+                h.assertTrue(cut >= 5, "A Flint Knife kill must cut at least five keratin, got " + cut);
+                h.succeed();
+            });
         });
     }
 

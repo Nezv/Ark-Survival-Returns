@@ -517,7 +517,10 @@ public final class ArkData implements DataProvider {
         // No new PNGs: each model reuses a vanilla texture that reads as the primitive equivalent.
         vanillaModel("plant_fiber", "minecraft:item/wheat");
         vanillaModel("fiber_bandage", "minecraft:item/paper");
-        vanillaModel("flint_knife", "minecraft:item/flint");
+        // Knapped flint blade bound to a haft (tools/build_prehistoric_icons.py), held like a tool.
+        vanillaModel("flint_knife", NS + ":item/flint_knife");
+        put("assets/" + NS + "/models/item/flint_knife", Map.of("parent", "minecraft:item/handheld",
+                "textures", Map.of("layer0", NS + ":item/flint_knife")));
         // Painted flat icons (item/mattress.png, item/bedroll.png), not the 3D block models.
         vanillaModel("mattress", NS + ":item/mattress");
         vanillaModel("bedroll", NS + ":item/bedroll");

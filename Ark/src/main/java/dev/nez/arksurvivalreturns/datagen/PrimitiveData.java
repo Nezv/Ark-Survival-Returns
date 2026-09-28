@@ -232,12 +232,31 @@ final class PrimitiveData {
                 }
                 if (DinoMeat.hide(species)) pools.add(pool("minecraft:leather", 0, Math.clamp(Math.round(species.health / 40.0), 1, 6), List.of()));
                 int keratin = DinoMeat.keratin(species);
-                if (keratin > 0) pools.add(pool(NS + ":keratin", keratin / 2, keratin, List.of()));
+                if (keratin > 0) pools.add(keratinPool(keratin / 2, keratin));
                 if (meat == DinoMeat.BIRD) pools.add(pool("minecraft:feather", 1, 3, List.of()));
                 pools.add(pool("minecraft:bone", 0, 2, List.of()));
             }
             put.accept(DATA + "loot_table/entities/" + species.id, Map.of("type", "minecraft:entity", "pools", pools));
         }
+    }
+
+    /** Extra keratin the Flint Knife cuts from a carcass it killed (1-2 by hand becomes 4-5). */
+    static final int KNIFE_KERATIN = 3;
+
+    /** Keratin: a Flint Knife in the killer's main hand cuts {@link #KNIFE_KERATIN} more from the carcass. */
+    private static Map<String, Object> keratinPool(int min, int max) {
+        var knife = new LinkedHashMap<String, Object>(entry(NS + ":keratin", min + KNIFE_KERATIN, max + KNIFE_KERATIN));
+        knife.put("conditions", List.of(Map.of("condition", "minecraft:entity_properties", "entity", "attacker",
+                "predicate", Map.of("equipment", Map.of("mainhand", Map.of("items", NS + ":flint_knife"))))));
+        return Map.of("rolls", 1, "entries", List.of(Map.of("type", "minecraft:alternatives",
+                "children", List.of(knife, entry(NS + ":keratin", min, max)))));
+    }
+
+    private static Map<String, Object> entry(String item, int min, int max) {
+        return Map.of("type", "minecraft:item", "name", item, "functions", List.of(
+                Map.of("function", "minecraft:set_count", "count", Map.of("type", "minecraft:uniform", "min", min, "max", max)),
+                Map.of("function", "minecraft:enchanted_count_increase", "enchantment", "minecraft:looting",
+                        "count", Map.of("type", "minecraft:uniform", "min", 0, "max", 1))));
     }
 
     private static Map<String, Object> pool(String item, int min, int max, List<Map<String, Object>> extra) {

@@ -1,4 +1,4 @@
-"""Export the approved 40-node progression, GUI art and FTB mirror chapters.
+"""Export the approved progression, GUI art and FTB mirror chapters.
 
 Source of truth: design/technology-tree/technology-tree.json (proposal 02).
 Triggers come from each design node's optional 'trigger'; nodes without one stay future.
@@ -12,15 +12,16 @@ ROOT=Path(__file__).resolve().parents[1]
 GUI=ROOT/'src/main/resources/assets/arksurvivalreturns/textures/gui/tech'
 DESIGN=ROOT/'design/tech-menu'
 SPEC=json.loads((ROOT/'design/technology-tree/technology-tree.json').read_text(encoding='utf-8'))
-# Prehistoric and Bronze both run starter + four lane columns + finale (six columns); Iron is just a
-# starter and a finale (two columns). Each origin leaves a 70-unit gap after the previous age's widest column.
+# Every age runs starter + four lane columns + finale (six columns); Iron's 4x4 lanes are mystery nodes
+# ('???') until their logic is designed. Each origin leaves a 70-unit gap after the previous age's widest column.
 ORIGINS=[0,680,1360]
 # The map is 344 units tall (TechScreen.MAP_HEIGHT). Lanes are 76 apart and centred on the gate row, so a
 # three-lane age and the four-lane Prehistoric/Bronze share the same gate height.
 GATE_Y,LANE_STEP=180,76
-# Node ids whose icon the Art agent paints directly at the runtime path below; the exporter must never
+# Node ids whose icon an art script (build_bronze_age_art.py, build_prehistoric_icons.py) paints directly at the runtime path below; the exporter must never
 # generate, overwrite or delete that file, only point the node at it (the client tolerates a missing texture).
-FORCE_ICON={'forge','shiny','home','coal','ironsmelt','minerals','sparklers','glass','ambulance','bandage',
+# tools/build_prehistoric_icons.py paints monkeys, rock, fight, london and sharp the same way.
+FORCE_ICON={'monkeys','rock','fight','london','sharp','forge','shiny','home','coal','ironsmelt','minerals','sparklers','glass','ambulance','bandage',
             'vitamins','knight','tools','tincan','colossus','kaboom','steel','subdue'}
 # Nodes removed by proposal 03; their stale per-node icon (if any) is deleted so no orphaned art ships.
 DELETED_ICON_IDS={'prepare','rawr','greed','harder','faster','stronger','charcoal','prometheus'}
@@ -98,7 +99,7 @@ PT_TASK={'monkeys':'Pegue uma pedra solta.',
     'scavenge':'Tenha um dinossauro coletando recursos.','mattress':'Crie um Colchão.',
     'warmth':'Acenda uma fogueira de pedra.','dish':'Cozinhe qualquer prato em uma panela de barro.',
     'narcotics':'Produza narcóticos: moa Amoras no Pilão.',
-    'sharp':'Lascar uma Pedra Afiada: bata uma pedra na outra.',
+    'sharp':'Crie uma Faca de Sílex: sílex, graveto e fibra. Carcaças abatidas com ela dão três queratinas a mais.',
     'horn':'Retire queratina de uma criatura com chifres, placas ou bico.',
     'pointy':'Crie uma Lança de Queratina.',
     'armoured':'Possua o conjunto completo de armadura de queratina: capacete, peitoral, calças e botas.',
@@ -138,7 +139,7 @@ def export():
         # Food placement is cosmetic; actual prerequisites still apply.
         if n['id']=='dried':n['requires']=['lasting']
         if n['id'] in FORCE_ICON:
-            # Owned by the Art agent's own worktree/branch: reference the runtime path without touching the
+            # Owned by an art script: reference the runtime path without touching the
             # file, so a PNG dropped there later (or already there from a merge) is neither generated over
             # nor deleted by this exporter. The client shows an empty ring until the texture exists.
             n['icon']='arksurvivalreturns:textures/gui/tech/icons/'+n['id']+'.png'
