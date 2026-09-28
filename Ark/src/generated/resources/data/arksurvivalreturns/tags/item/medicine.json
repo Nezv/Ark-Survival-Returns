@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "arksurvivalreturns:herbal_bandage",
+    "arksurvivalreturns:vitamins"
+  ]
 }

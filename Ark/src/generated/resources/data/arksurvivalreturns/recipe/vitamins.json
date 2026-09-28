@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "vitamins",
+  "key": {
+    "B": "arksurvivalreturns:azulberry",
+    "R": "arksurvivalreturns:tintoberry",
+    "W": {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": "minecraft:water"
+      },
+      "items": "minecraft:potion"
+    }
+  },
+  "pattern": [
+    "BRB",
+    "RWR",
+    "BRB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arksurvivalreturns:vitamins"
+  }
+}

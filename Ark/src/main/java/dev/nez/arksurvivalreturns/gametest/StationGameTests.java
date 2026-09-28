@@ -1,6 +1,8 @@
 package dev.nez.arksurvivalreturns.gametest;
 
 import java.util.List;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dev.nez.arksurvivalreturns.feature.station.CrusherRecipes;
 import dev.nez.arksurvivalreturns.feature.station.StationContent;
 import dev.nez.arksurvivalreturns.feature.station.StorageCrateBlockEntity;
@@ -11,8 +13,12 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -45,8 +51,10 @@ final class StationGameTests {
     static void run(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
-        for (String id : List.of("working_station", "storage_crate", "smithing_table", "medicine_bench", "crusher",
-                "mortar_and_pestle", "herbal_bandage", "healing_mixture", "narcotics")) {
+        // medicine_bench is checked separately below: it needs #c:ingots/bronze (Plan C), which does not
+        // resolve in every worktree, so the RecipeManager may legitimately drop it before that merge.
+        for (String id : List.of("working_station", "storage_crate", "smithing_table", "crusher",
+                "mortar_and_pestle", "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing station recipe " + id);
         }
         for (String id : List.of("crafting_table", "chest", "trapped_chest", "smithing_table")) {
@@ -62,12 +70,85 @@ final class StationGameTests {
         h.assertTrue(hopper.isPresent() && hopper.get().value().assemble(withCrate).is(Items.HOPPER),
                 "Five iron around a Storage Crate must make a hopper");
 
-        // The herbal remedies belong to the Mortar & Pestle; the Medicine Bench waits for the Iron Age.
-        h.assertTrue(StationContent.mortar(new ItemStack(StationContent.HERBAL_BANDAGE.get()))
-                && StationContent.mortar(new ItemStack(StationContent.HEALING_MIXTURE.get()))
+        // The Bandage and Vitamins are Bronze Age medicine, made only at the Medicine Bench.
+        h.assertTrue(StationContent.mortar(new ItemStack(StationContent.HEALING_MIXTURE.get()))
                 && StationContent.mortar(new ItemStack(ModContent.NARCOTICS.get())), "Mortar tag is incomplete");
         h.assertFalse(StationContent.mortar(new ItemStack(ModContent.FIBER_BANDAGE.get())), "The fiber bandage stays a field craft");
-        h.assertFalse(StationContent.medicine(new ItemStack(StationContent.HERBAL_BANDAGE.get())), "The Medicine Bench makes nothing yet");
+        h.assertFalse(StationContent.mortar(new ItemStack(StationContent.HERBAL_BANDAGE.get())), "The Bandage left the Mortar & Pestle");
+        h.assertTrue(StationContent.medicine(new ItemStack(StationContent.HERBAL_BANDAGE.get()))
+                && StationContent.medicine(new ItemStack(StationContent.VITAMINS.get())), "Medicine tag is incomplete");
+
+        // The bench recipe: bronze replaces iron, and it now also needs a pane of glass. The #c:ingots/bronze
+        // tag (Plan C) has no members in every worktree, which makes the whole recipe file fail to parse
+        // (a missing tag is a hard error for an Ingredient, not an always-empty match) and drops it from the
+        // RecipeManager entirely. So this reads the generated recipe JSON straight off the classpath instead
+        // of asking the RecipeManager for it; it keeps working the same way after the Bronze Age items merge.
+        JsonObject benchJson;
+        try (var in = StationGameTests.class.getResourceAsStream("/data/arksurvivalreturns/recipe/medicine_bench.json")) {
+            h.assertTrue(in != null, "Missing station recipe file medicine_bench");
+            benchJson = JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (java.io.IOException e) {
+            throw new java.io.UncheckedIOException(e);
+        }
+        var benchKey = benchJson.getAsJsonObject("key");
+        h.assertTrue(benchJson.getAsJsonArray("pattern").toString().equals("[\"IBI\",\"PPP\",\"LGL\"]"),
+                "The Medicine Bench pattern must keep its shape");
+        h.assertTrue(benchKey.get("I").getAsString().equals("#c:ingots/bronze"), "The Medicine Bench must take bronze, not iron");
+        h.assertTrue(benchKey.get("G").getAsString().equals("minecraft:glass"), "The Medicine Bench must require a pane of glass");
+        h.assertTrue(benchKey.get("B").getAsString().equals("minecraft:glass_bottle")
+                && benchKey.get("P").getAsString().equals("#minecraft:planks")
+                && benchKey.get("L").getAsString().equals("#minecraft:logs"), "The rest of the Medicine Bench pattern must be unchanged");
+
+        // Craft the Bandage and Vitamins at the Medicine Bench; nowhere else makes them.
+        var medicinePlayer = FakePlayerFactory.get(level, new GameProfile(java.util.UUID.randomUUID(), "ArkMedicineBench"));
+        BlockPos benchRel = new BlockPos(9, 2, 9);
+        BlockPos benchPos = h.absolutePos(benchRel);
+        h.setBlock(benchRel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
+        var bench = new StationCraftingMenu(20, medicinePlayer.getInventory(), ContainerLevelAccess.create(level, benchPos),
+                StationContent.MEDICINE_BENCH.get(), StationContent::medicine);
+        ItemStack amarberry = new ItemStack(ModContent.BERRIES.get("amarberry").get());
+        ItemStack narcoberry = new ItemStack(ModContent.BERRIES.get("narcoberry").get());
+        ItemStack grass = new ItemStack(Items.SHORT_GRASS);
+        h.assertTrue(fillItems(bench, 1, amarberry, narcoberry, grass).is(StationContent.HERBAL_BANDAGE.get()),
+                "The Medicine Bench must make the Bandage from a Yellowberry, a Blackberry and grass");
+
+        ItemStack blueberry = new ItemStack(ModContent.BERRIES.get("azulberry").get());
+        ItemStack redberry = new ItemStack(ModContent.BERRIES.get("tintoberry").get());
+        ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
+        ItemStack[] vitaminsGrid = {blueberry, redberry, blueberry, redberry, waterBottle, redberry, blueberry, redberry, blueberry};
+        h.assertTrue(fillItems(bench, 1, vitaminsGrid).is(StationContent.VITAMINS.get()),
+                "The Medicine Bench must make Vitamins from berries around a water bottle");
+        // Any other potion in the centre (no water potion_contents) must not match.
+        ItemStack[] wrongBottle = vitaminsGrid.clone();
+        wrongBottle[4] = new ItemStack(Items.POTION);
+        h.assertTrue(fillItems(bench, 1, wrongBottle).isEmpty(), "Only a bottle of water may sit in the Vitamins' centre");
+        clearGrid(bench, 1, 9);
+
+        // Neither result appears outside the Medicine Bench: not the 2x2 grid, not a plain crafting table, not the Crafter.
+        h.assertTrue(fillItems(medicinePlayer.inventoryMenu, 1, amarberry, narcoberry, grass).isEmpty(),
+                "The 2x2 inventory grid must not make the Bandage");
+        BlockPos tableRel = new BlockPos(9, 2, 11);
+        BlockPos tablePos = h.absolutePos(tableRel);
+        h.setBlock(tableRel, net.minecraft.world.level.block.Blocks.CRAFTING_TABLE.defaultBlockState());
+        var craftingTable = new CraftingMenu(21, medicinePlayer.getInventory(), ContainerLevelAccess.create(level, tablePos));
+        h.assertTrue(fillItems(craftingTable, 1, amarberry, narcoberry, grass).isEmpty(),
+                "A plain crafting table must not make the Bandage");
+        h.assertTrue(fillItems(craftingTable, 1, vitaminsGrid).isEmpty(), "A plain crafting table must not make Vitamins");
+        h.setBlock(tableRel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        h.setBlock(benchRel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+
+        var bandageGrid = CraftingInput.of(3, 3, List.of(amarberry, narcoberry, grass, none, none, none, none, none, none));
+        h.assertTrue(CrafterBlock.getPotentialResults(level, bandageGrid).isEmpty(), "The Crafter must not make the Bandage");
+        var vitaminsInput = CraftingInput.of(3, 3, List.of(vitaminsGrid));
+        h.assertTrue(CrafterBlock.getPotentialResults(level, vitaminsInput).isEmpty(), "The Crafter must not make Vitamins");
+
+        // Eating Vitamins applies both effects and returns a bottle of water's glass.
+        ItemStack vitaminsStack = new ItemStack(StationContent.VITAMINS.get());
+        medicinePlayer.setItemInHand(InteractionHand.MAIN_HAND, vitaminsStack);
+        ItemStack remainder = vitaminsStack.finishUsingItem(level, medicinePlayer);
+        h.assertTrue(remainder.is(Items.GLASS_BOTTLE), "Eating Vitamins must return a glass bottle");
+        h.assertTrue(medicinePlayer.hasEffect(MobEffects.HEALTH_BOOST) && medicinePlayer.hasEffect(MobEffects.REGENERATION),
+                "Eating Vitamins must give Health Boost and Regeneration");
 
         // A crate keeps and exposes only its own 27 slots.
         BlockPos rel = new BlockPos(4, 3, 4);
@@ -181,6 +262,19 @@ final class StationGameTests {
         for (int i = 0; i < 4; i++) menu.getSlot(first + i).set(new ItemStack(item));
         menu.broadcastChanges();
         return menu.getSlot(0).getItem();
+    }
+
+    /** One stack per grid cell starting at {@code first}; returns the result slot. */
+    private static ItemStack fillItems(AbstractContainerMenu menu, int first, ItemStack... items) {
+        for (int i = 0; i < items.length; i++) menu.getSlot(first + i).set(items[i].copy());
+        menu.broadcastChanges();
+        return menu.getSlot(0).getItem();
+    }
+
+    /** Empties grid cells [first, first + count) so the next test starts from a clean bench. */
+    private static void clearGrid(AbstractContainerMenu menu, int first, int count) {
+        for (int i = 0; i < count; i++) menu.getSlot(first + i).set(ItemStack.EMPTY);
+        menu.broadcastChanges();
     }
 
     private StationGameTests() {}

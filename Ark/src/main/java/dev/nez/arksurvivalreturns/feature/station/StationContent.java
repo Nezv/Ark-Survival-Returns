@@ -14,6 +14,9 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.consume_effects.RemoveStatusEffectsConsumeEffect;
@@ -33,7 +36,7 @@ import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
  * blocks now make these, and stray vanilla items convert on pickup ({@link StationEvents}).
  */
 public final class StationContent {
-    /** Results only the Medicine Bench makes. Empty until the Iron Age medicine is designed. */
+    /** Results only the Medicine Bench makes: the Bandage and Vitamins. */
     public static final TagKey<Item> MEDICINE = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("medicine"));
     /** Results only the Mortar & Pestle makes: Narcotics and the herbal remedies. */
     public static final TagKey<Item> MORTAR = TagKey.create(Registries.ITEM, ArkSurvivalReturns.id("mortar"));
@@ -79,6 +82,15 @@ public final class StationContent {
                             .onConsume(new ApplyStatusEffectsConsumeEffect(List.of(new MobEffectInstance(MobEffects.REGENERATION, 300, 1))))
                             .onConsume(new RemoveStatusEffectsConsumeEffect(MobEffects.POISON))
                             .build()));
+    /** Vitamins: a bottled brew from the Medicine Bench. Eating it returns the glass bottle. */
+    public static final DeferredItem<Item> VITAMINS = ModContent.ITEMS.registerSimpleItem("vitamins", p -> p.stacksTo(16)
+            .usingConvertsTo(Items.GLASS_BOTTLE)
+            .food(new FoodProperties.Builder().nutrition(1).saturationModifier(0.1f).alwaysEdible().build(),
+                    Consumable.builder().consumeSeconds(1.6f).animation(ItemUseAnimation.EAT)
+                            .onConsume(new ApplyStatusEffectsConsumeEffect(List.of(
+                                    new MobEffectInstance(MobEffects.HEALTH_BOOST, 3600, 0),
+                                    new MobEffectInstance(MobEffects.REGENERATION, 200, 0))))
+                            .build()));
 
     public static boolean medicine(ItemStack stack) { return stack.is(MEDICINE); }
 
@@ -108,6 +120,7 @@ public final class StationContent {
         output.accept(CRUSHER_ITEM.get());
         output.accept(HERBAL_BANDAGE.get());
         output.accept(HEALING_MIXTURE.get());
+        output.accept(VITAMINS.get());
     }
 
     private StationContent() {}
