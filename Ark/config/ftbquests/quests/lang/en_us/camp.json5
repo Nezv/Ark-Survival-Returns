@@ -7,16 +7,16 @@
   "quest.0000000000000201.title": "A Place to Return To",
   "quest.0000000000000201.quest_subtitle": "Camp first.",
   "quest.0000000000000201.quest_desc": [
-    "Craft a primitive bedroll from four plant fiber and one leather. It lies two blocks long, like a bed.",
-    "Place it and use it to set your respawn point; the point stays even if the bedroll is destroyed."
+    "Craft a mattress from nine plant fiber at the Working Station. It lies two blocks long, like a bed.",
+    "Sleep in it to pass the night; it wears out after that one use, and it never sets a respawn point. A reusable Bedroll comes later, once you have hide to spare."
   ],
-  "task.00000000000002A1.title": "Craft the primitive bedroll",
+  "task.00000000000002A1.title": "Craft the mattress",
 
   "quest.0000000000000202.title": "Fiber from the Land",
   "quest.0000000000000202.quest_subtitle": "The land provides the binding.",
   "quest.0000000000000202.quest_desc": [
     "Break short and tall grass for plant fiber; shears skip it.",
-    "Fiber ties tools, bandages and the bedroll together."
+    "Fiber ties tools, bandages and the mattress together."
   ],
   "task.00000000000002A2.title": "Gather 8 plant fiber",
 

@@ -13,15 +13,34 @@ final class CampAssetsData {
     private static final String ASSETS = "assets/" + NS + "/";
     private static final List<String> DIRECTIONS = List.of("north", "east", "south", "west");
 
-    /** Primitive Bedroll: two halves like a bed, the grass models from build_prehistoric_camp.py. */
-    static void bedroll(BiConsumer<String, Object> put) {
+    /** Mattress (disposable): two halves like a bed, the grass models from build_prehistoric_camp.py. */
+    static void mattress(BiConsumer<String, Object> put) {
         var variants = new LinkedHashMap<String, Object>();
         for (String facing : DIRECTIONS) for (String part : List.of("foot", "head")) {
             variants.put("facing=" + facing + ",part=" + part, Map.of("model", NS + ":block/prehistoric/primitive_bedroll_" + part,
                     "y", DIRECTIONS.indexOf(facing) * 90));
         }
+        put.accept(ASSETS + "blockstates/mattress", Map.of("variants", variants));
+    }
+
+    /**
+     * Bedroll (reusable): a 2x2, four-cell field bed built from the {@code camp/field_bedroll_*} art
+     * (see tools/build_camp_assets.py), retextured to hide/fur/cord via the {@code camp/bedroll_*}
+     * child models (build_camp_assets.py's own canvas/leather/iron skin was never shipped as a placeable
+     * block). "side" left/right is fixed to the head-west/head-east (etc.) art regardless of facing: a
+     * single {@code y} rotation per facing reproduces every orientation, see {@link
+     * dev.nez.arksurvivalreturns.feature.camp.BedrollBlock}'s Javadoc for why that holds.
+     */
+    static void bedroll(BiConsumer<String, Object> put) {
+        var variants = new LinkedHashMap<String, Object>();
+        for (String facing : DIRECTIONS) {
+            int y = DIRECTIONS.indexOf(facing) * 90;
+            variants.put("facing=" + facing + ",part=head,side=left", Map.of("model", NS + ":block/camp/bedroll_head_west", "y", y));
+            variants.put("facing=" + facing + ",part=head,side=right", Map.of("model", NS + ":block/camp/bedroll_head_east", "y", y));
+            variants.put("facing=" + facing + ",part=foot,side=left", Map.of("model", NS + ":block/camp/bedroll_foot_west", "y", y));
+            variants.put("facing=" + facing + ",part=foot,side=right", Map.of("model", NS + ":block/camp/bedroll_foot_east", "y", y));
+        }
         put.accept(ASSETS + "blockstates/bedroll", Map.of("variants", variants));
-        item(put, "bedroll", NS + ":block/prehistoric/primitive_bedroll_rolled");
     }
 
     static void farm(BiConsumer<String, Object> put) {

@@ -1,0 +1,10 @@
+{
+  "parent": "arksurvivalreturns:block/camp/field_bedroll_foot_east",
+  "textures": {
+    "canvas": "arksurvivalreturns:block/prehistoric/hide",
+    "canvas_light": "arksurvivalreturns:block/prehistoric/fur",
+    "linen": "arksurvivalreturns:block/prehistoric/fur_light",
+    "leather": "arksurvivalreturns:block/prehistoric/cord",
+    "iron": "arksurvivalreturns:block/prehistoric/stone_dark"
+  }
+}

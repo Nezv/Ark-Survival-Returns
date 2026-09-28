@@ -220,8 +220,9 @@ final class PrimitiveGameTests {
 
     /**
      * The answered recipe-gate decisions (F12): the rock set with Fiber in any slot, mining like stone; the
-     * bedroll on the 3x3 grid; the retired vanilla recipes; Narcotics from the Mortar & Pestle into tranquilizer
-     * arrows; the Bronze Age items left unmade; the Blueberry as food; Tom's Storage without ender pearls.
+     * mattress on the 3x3 grid and the bedroll built from it; the retired vanilla recipes; Narcotics from the
+     * Mortar & Pestle into tranquilizer arrows; the Bronze Age items left unmade; the Blueberry as food; Tom's
+     * Storage without ender pearls.
      */
     static void decisions(GameTestHelper h) {
         ServerLevel level = h.getLevel();
@@ -250,10 +251,15 @@ final class PrimitiveGameTests {
         h.assertTrue(pickaxe.isCorrectToolForDrops(Blocks.IRON_ORE.defaultBlockState()), "The rock pickaxe must mine iron ore");
         h.assertFalse(pickaxe.isCorrectToolForDrops(Blocks.DIAMOND_ORE.defaultBlockState()), "The rock pickaxe must stop at stone tier");
         h.assertTrue(pickaxe.getMaxDamage() == 59, "Rock tools keep wooden durability");
-        // Bedroll: nine fiber, so only the Working Station's 3x3 grid makes it.
-        var bedroll = CraftingInput.of(3, 3, java.util.Collections.nCopies(9, fiber));
-        var bed = recipes.getRecipeFor(RecipeType.CRAFTING, bedroll, level);
-        h.assertTrue(bed.isPresent() && bed.get().value().assemble(bedroll).is(ModContent.BEDROLL_ITEM.get()), "Nine fiber must make the bedroll");
+        // Mattress: nine fiber, so only the Working Station's 3x3 grid makes it.
+        var mattressGrid = CraftingInput.of(3, 3, java.util.Collections.nCopies(9, fiber));
+        var mat = recipes.getRecipeFor(RecipeType.CRAFTING, mattressGrid, level);
+        h.assertTrue(mat.isPresent() && mat.get().value().assemble(mattressGrid).is(ModContent.MATTRESS_ITEM.get()), "Nine fiber must make the mattress");
+        // Bedroll: a mattress, three hide and two fiber, still wider than the personal 2x2 grid.
+        ItemStack mattress = new ItemStack(ModContent.MATTRESS.get()), leather = new ItemStack(Items.LEATHER);
+        var bedrollGrid = CraftingInput.of(3, 2, List.of(leather, leather, leather, fiber, mattress, fiber));
+        var bed = recipes.getRecipeFor(RecipeType.CRAFTING, bedrollGrid, level);
+        h.assertTrue(bed.isPresent() && bed.get().value().assemble(bedrollGrid).is(ModContent.BEDROLL_ITEM.get()), "A mattress, hide and fiber must make the bedroll");
         // Retired vanilla recipes and the Bronze Age items.
         for (String id : List.of("minecraft:stone_pickaxe", "minecraft:stone_sword", "minecraft:stone_spear", "minecraft:wooden_spear",
                 "minecraft:campfire", "arksurvivalreturns:cobblestone_from_rocks", "arksurvivalreturns:stone_knife",
@@ -382,12 +388,23 @@ final class PrimitiveGameTests {
         h.assertTrue(level.getBlockState(rackTop).isAir(), "Breaking the base must take the top half");
         h.assertTrue(dropped(level, rackPos, ModContent.DRYING_RACK_ITEM.get()) == 1, "A broken rack drops exactly one rack");
 
-        // A fake player looks south: the head lies one block south of the foot.
-        BlockPos foot = place(h, player, new BlockPos(4, 1, 10), ModContent.BEDROLL_ITEM.get());
+        // A fake player looks south: the reusable Bedroll's 2x2 footprint extends south (head) and west (the
+        // extra side); place()'s cross-shaped floor already covers the south and west neighbours, only the
+        // south-west corner (under the head-right cell) needs its own support block.
+        BlockPos floorRel = new BlockPos(4, 1, 10);
+        h.setBlock(floorRel.south().west(), Blocks.STONE.defaultBlockState());
+        BlockPos foot = place(h, player, floorRel, ModContent.BEDROLL_ITEM.get());
         BlockPos headPos = foot.relative(player.getDirection());
+        BlockPos footRight = foot.west(), headRight = headPos.west();
         h.assertTrue(level.getBlockState(headPos).is(ModContent.BEDROLL.get()), "The bedroll must be two blocks long");
-        level.destroyBlock(foot, true);
-        h.assertTrue(level.getBlockState(headPos).isAir(), "The head must break with the foot");
+        h.assertTrue(level.getBlockState(footRight).is(ModContent.BEDROLL.get()) && level.getBlockState(headRight).is(ModContent.BEDROLL.get()),
+                "The bedroll must occupy its full 2x2 footprint");
+        // A real mining break goes through playerWillDestroy before the block is actually removed.
+        var footState = level.getBlockState(foot);
+        footState.getBlock().playerWillDestroy(level, foot, footState, player);
+        level.destroyBlock(foot, true, player);
+        h.assertTrue(level.getBlockState(headPos).isAir() && level.getBlockState(footRight).isAir() && level.getBlockState(headRight).isAir(),
+                "The whole 2x2 bedroll must break together");
         h.assertTrue(dropped(level, foot, ModContent.BEDROLL_ITEM.get()) == 1, "A broken bedroll drops exactly one bedroll");
         h.succeed();
     }

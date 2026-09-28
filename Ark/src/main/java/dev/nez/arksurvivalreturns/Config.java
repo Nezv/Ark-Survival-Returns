@@ -187,10 +187,11 @@ public final class Config {
         CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (bedroll, bandages, fiber and a flint knife) "
                         + "on their first join in a world.")
                 .define("starterKit", true);
-        CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the bedroll to set the personal respawn point.")
+        CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the reusable Bedroll to set the personal respawn point. "
+                        + "The disposable Mattress never sets one regardless of this switch.")
                 .define("bedrollSetsSpawn", true);
-        CAMP_BEDROLL_PICKUP = b.comment("Allow sneak-use to roll the bedroll back into an item. The saved respawn "
-                        + "point survives either way.")
+        CAMP_BEDROLL_PICKUP = b.comment("Allow sneak-use to roll the Mattress or the Bedroll back into an item. "
+                        + "The Bedroll's saved respawn point survives either way.")
                 .define("bedrollPickup", true);
         CAMP_BANDAGE_HEAL = b.comment("Health restored by one fiber bandage.")
                 .defineInRange("bandageHeal", 4.0, 1.0, 20.0);

@@ -4,7 +4,7 @@
   "group": "",
   "order_index": 1,
   "icon": {
-    "id": "arksurvivalreturns:bedroll"
+    "id": "arksurvivalreturns:mattress"
   },
   "quests": [
     {
@@ -16,7 +16,7 @@
           "id": "00000000000002A1",
           "type": "item",
           "item": {
-            "id": "arksurvivalreturns:bedroll"
+            "id": "arksurvivalreturns:mattress"
           },
           "only_from_crafting": true
         }
