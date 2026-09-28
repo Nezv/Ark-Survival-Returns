@@ -1,8 +1,8 @@
 """Recipe gates: the item progression spec (Prehistoric + vanilla) drawn as a schematic page.
 
-Sheet 1 is the dependency map: every item once, in the first column (crafting steps from bare hands) where
-it can be made, grouped under the station or tool that makes it, with a line from each ingredient. Hovering an
-item lights its whole ancestry and everything it unlocks (tools/spine.js). Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
+Sheet 1 is the dependency map: every item once, in four stage columns (Primitives, Early, Mid, End), in a card
+for the station or tool that makes it, with an arrow in each workbench's colour to the cards it opens. Hovering an
+item lights its whole ancestry and everything it unlocks, with its ingredient lines (tools/spine.js). Sheet 2 is the vanilla netlist: what each material unlocks. Then the cut list and the open
 decisions.
 
 Sources: the user's recipe-gate spec (2026-09-26), the mod's generated recipes and theme policy, and the
@@ -445,6 +445,23 @@ SPINE = [
     ]),
 ]
 
+# The map's four columns. A station's recipes start at its stage; an item sits in the earliest stage it can be
+# made in, never before its ingredients or its station.
+STAGES = [
+    {'name': 'Primitives', 'sub': 'bare hands and the 2×2 grid'},
+    {'name': 'Early', 'sub': 'Working Station and rock tools'},
+    {'name': 'Mid', 'sub': 'fire, rack, mortar, pot, forge, crusher'},
+    {'name': 'End', 'sub': 'metal stations and the Guardian'},
+]
+STATION_STAGE = {'hands': 0, 'inv': 0, 'axe': 0, 'table': 1, 'pick': 1, 'sword': 1, 'composter': 1,
+                 'fire': 2, 'rack': 2, 'mortar': 2, 'pot': 2, 'forge': 2, 'crusher': 2, 'grindstone': 2,
+                 'medbench': 3, 'stonecutter': 3, 'anvil': 3, 'smithing': 3, 'crafter': 3, 'guardian': 3,
+                 'furnaces': 3, 'brewing': 3, 'enchanting': 3}
+ITEM_STAGE = {'redstone': 3, 'medicine_bench': 3, 'stonecutter': 3, 'anvil': 3, 'smithing_table': 3}  # wait on iron (Q1, Q15)
+# Workbench colours: slots of the --sp-wb1..8 palette in spine.css. Unlisted stations draw in neutral ink.
+WORKBENCH_COLOUR = {'table': 1, 'fire': 2, 'crusher': 3, 'rack': 4, 'mortar': 5, 'axe': 6, 'pick': 6, 'sword': 6,
+                    'pot': 7, 'forge': 8}
+
 # ---------------------------------------------------------------- sheet 2: vanilla netlist
 # station tags: 2x2, T Working Station, SC stonecutter, FG forge, FI stone fire, CR crusher, MB medicine bench, W world
 # status: now, spec (your spec changes it), cut, starved (recipe stays, the material has no source)
@@ -786,7 +803,7 @@ def decisions_html():
 TITLE_BLOCK = {
     'title': 'Recipe Gates · dependency map', 'project': 'Ark: Survival Returns', 'rev': 'Draft A',
     'source': 'Your spec · mod data · vanilla 26.1.2', 'date': '2026-09-26',
-    'notes': ['Columns count crafting steps from bare hands; every item sits in the first column where it can be made.',
+    'notes': ['Columns are stages; every item sits in the earliest stage it can be made in, in the card of its workbench.',
               'Small numbers on a chip are the steps of your recipe-gate spec (F12); circled numbers point to the notes.'],
 }
 
@@ -802,16 +819,30 @@ LEGEND = [
         ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-tbd)" stroke-width="2" stroke-dasharray=".5 3.5" stroke-linecap="round"/>', 'Yours to decide'),
     ]),
     ('Reading the map', [
-        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-gate)" stroke="var(--sp-ink)" stroke-width="2"/>', 'Station or tool gate: it opens the groups it points to'),
-        ('<rect x="1" y="2" width="42" height="16" rx="8" fill="none" stroke="var(--sp-ink2)" stroke-dasharray="3 2.5"/>', 'Gathered from the world'),
+        ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-gate)" stroke="var(--sp-ink)" stroke-width="1.8"/>'
+         '<rect x="2" y="3" width="3.5" height="14" fill="var(--sp-wb1)"/>', 'Station or tool: the stripe is its workbench colour'),
+        ('<path d="M2 5H17Q21 5 21 9V11Q21 15 25 15H36" fill="none" stroke="var(--sp-wb1)" stroke-width="1.8"/>'
+         '<path d="M43 15l-7-4v8z" fill="var(--sp-wb1)"/>', 'Workbench arrow: the station opens the card it points to'),
+        ('<path d="M2 10C16 10 26 4 42 4" fill="none" stroke="var(--sp-wb1)" stroke-width="2"/>', 'Ingredient line, in the colour of the workbench using it (on hover)'),
         ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-ink2)" stroke-dasharray="1 2"/>', '"Any of": any member will do'),
-        ('<path d="M2 10C16 10 26 4 42 4" fill="none" stroke="var(--sp-wire)" stroke-width="1.6"/>', 'Ingredient: goes into the item on the right'),
-        ('<path d="M2 10C16 10 26 16 42 16" fill="none" stroke="var(--sp-ink2)" stroke-width="1.2" stroke-dasharray="4 3"/>', 'Needs this station or tool'),
         ('<rect x="1" y="2" width="42" height="16" rx="3" fill="var(--sp-chip)" stroke="var(--sp-cut)" stroke-dasharray="1 2" opacity=".55"/>', 'Waits on a blocked decision further back'),
         ('<rect x="14" y="2" width="16" height="16" fill="url(#sp-legend-hatch)" stroke="var(--sp-ink2)" stroke-width=".6"/>', 'Needs a new sprite'),
         ('<rect x="14" y="2" width="16" height="16" fill="var(--sp-rule)"/><path d="M24 1h7v7z" fill="var(--sp-change)"/>', 'Drawn with a borrowed sprite today'),
     ]),
 ]
+
+
+def workbench_legend():
+    """One row per workbench colour: a short arrow and the stations that share it."""
+    names = {}
+    for n in SPINE:
+        if n['key'] in WORKBENCH_COLOUR and n['st'] != 'cut':
+            names.setdefault(WORKBENCH_COLOUR[n['key']], []).append(n['name'])
+    rows = [(f'<path d="M2 10H34" stroke="var(--sp-wb{k})" stroke-width="2.4"/><path d="M42 10l-8-4.5v9z" fill="var(--sp-wb{k})"/>',
+             ', '.join(v)) for k, v in sorted(names.items())]
+    rows.append(('<path d="M2 10H34" stroke="var(--sp-ink2)" stroke-width="2.4"/><path d="M42 10l-8-4.5v9z" fill="var(--sp-ink2)"/>',
+                 'Other stations, the 2×2 grid and bare hands'))
+    return ('Workbench colours', rows)
 
 
 def legend_html():
@@ -820,7 +851,7 @@ def legend_html():
              '<line x1="0" y1="0" x2="0" y2="4" stroke="var(--sp-change)" stroke-width="1.5"/></pattern></defs></svg>')
     groups = ''.join(f'<div><h4>{html.escape(title)}</h4><ul>'
                      + ''.join(f'<li><svg width="44" height="20" aria-hidden="true">{mark}</svg>{html.escape(text)}</li>' for mark, text in rows)
-                     + '</ul></div>' for title, rows in LEGEND)
+                     + '</ul></div>' for title, rows in LEGEND + [workbench_legend()])
     return hatch + groups
 
 
@@ -828,8 +859,9 @@ def spine_payload():
     """Everything the shared renderer (spine.js) needs, plus the numbered notes."""
     items, glyphs, _ = load_icons()
     notes = notes_and_numbers()
-    return {'spine': SPINE, 'groups': GROUPS, 'items': items, 'glyphs': glyphs, 'notes': notes,
-            'titleBlock': TITLE_BLOCK}, notes
+    spine = [dict(n, stage=STATION_STAGE[n['key']], wb=WORKBENCH_COLOUR.get(n['key'], 0)) for n in SPINE]
+    return {'spine': spine, 'groups': GROUPS, 'items': items, 'glyphs': glyphs, 'notes': notes, 'stages': STAGES,
+            'itemStage': ITEM_STAGE, 'titleBlock': TITLE_BLOCK}, notes
 
 
 def notes_html(notes):
