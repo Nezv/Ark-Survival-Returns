@@ -104,6 +104,11 @@ public final class ArkGameTests {
         FUNCTIONS.register("tech_triggers", () -> TechGameTests::triggers);
         FUNCTIONS.register("tech_flow", () -> TechGameTests::flow);
         FUNCTIONS.register("tech_future", () -> TechGameTests::future);
+        FUNCTIONS.register("bronze_tin_ore", () -> BronzeGameTests::tinOre);
+        FUNCTIONS.register("bronze_smelting", () -> BronzeGameTests::smelting);
+        FUNCTIONS.register("bronze_recipes", () -> BronzeGameTests::recipes);
+        FUNCTIONS.register("bronze_armor", () -> BronzeGameTests::armor);
+        FUNCTIONS.register("bronze_weapons", () -> BronzeGameTests::weapons);
     }
     private static CreatureEntity create(GameTestHelper h, Species species) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);
