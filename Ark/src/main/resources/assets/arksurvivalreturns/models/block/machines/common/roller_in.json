@@ -1,0 +1,154 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "alloy": "arksurvivalreturns:block/machines/alloy",
+  "particle": "arksurvivalreturns:block/machines/casing"
+ },
+ "elements": [
+  {
+   "from": [
+    13.25,
+    5.25,
+    4
+   ],
+   "to": [
+    15.75,
+    7.75,
+    12
+   ],
+   "faces": {
+    "east": {
+     "uv": [
+      4,
+      8.25,
+      12,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "west": {
+     "uv": [
+      4,
+      8.25,
+      12,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "up": {
+     "uv": [
+      13.25,
+      4,
+      15.75,
+      12
+     ],
+     "texture": "#alloy"
+    },
+    "down": {
+     "uv": [
+      13.25,
+      4,
+      15.75,
+      12
+     ],
+     "texture": "#alloy"
+    },
+    "south": {
+     "uv": [
+      13.25,
+      8.25,
+      15.75,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "north": {
+     "uv": [
+      0.25,
+      8.25,
+      2.75,
+      10.75
+     ],
+     "texture": "#alloy"
+    }
+   }
+  },
+  {
+   "from": [
+    13.25,
+    5.25,
+    4.1
+   ],
+   "to": [
+    15.75,
+    7.75,
+    11.9
+   ],
+   "faces": {
+    "east": {
+     "uv": [
+      4.1,
+      8.25,
+      11.9,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "west": {
+     "uv": [
+      4.1,
+      8.25,
+      11.9,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "up": {
+     "uv": [
+      13.25,
+      4.1,
+      15.75,
+      11.9
+     ],
+     "texture": "#alloy"
+    },
+    "down": {
+     "uv": [
+      13.25,
+      4.1,
+      15.75,
+      11.9
+     ],
+     "texture": "#alloy"
+    },
+    "south": {
+     "uv": [
+      13.25,
+      8.25,
+      15.75,
+      10.75
+     ],
+     "texture": "#alloy"
+    },
+    "north": {
+     "uv": [
+      0.25,
+      8.25,
+      2.75,
+      10.75
+     ],
+     "texture": "#alloy"
+    }
+   },
+   "rotation": {
+    "origin": [
+     14.5,
+     6.5,
+     8
+    ],
+    "axis": "z",
+    "angle": 45
+   }
+  }
+ ]
+}

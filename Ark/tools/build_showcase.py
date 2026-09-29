@@ -4,7 +4,8 @@ Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
 (design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the recipe-gate
-spine (build_item_flow.py, drawn by spine.js), the Ark UI previews and Dashboard.csv for the roadmap.
+spine (build_item_flow.py, drawn by spine.js), the live 3D models (showcase_models.py, drawn by three.js), the Ark UI
+previews and Dashboard.csv for the roadmap.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
 the nav, the home index and the pager switch between them.
@@ -634,6 +635,7 @@ def build():
         'BLOCKS': blocks_section(),
         'ITEMS': items_section(names),
         **__import__('showcase_accessories').section(names, uri, e),
+        **__import__('showcase_models').section(uri, e),
         'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
         'ROADMAP': roadmap_section(rows),
         'INTEGRATIONS': integrations,

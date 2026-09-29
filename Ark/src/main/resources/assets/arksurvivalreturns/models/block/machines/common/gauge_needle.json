@@ -1,0 +1,77 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "needle": "arksurvivalreturns:block/machines/needle",
+  "particle": "arksurvivalreturns:block/machines/casing"
+ },
+ "elements": [
+  {
+   "from": [
+    12.25,
+    3,
+    -1
+   ],
+   "to": [
+    12.75,
+    4.75,
+    -0.75
+   ],
+   "faces": {
+    "east": {
+     "uv": [
+      0.75,
+      11.25,
+      1,
+      13
+     ],
+     "texture": "#needle"
+    },
+    "west": {
+     "uv": [
+      15,
+      11.25,
+      15.25,
+      13
+     ],
+     "texture": "#needle"
+    },
+    "up": {
+     "uv": [
+      12.25,
+      15,
+      12.75,
+      15.25
+     ],
+     "texture": "#needle"
+    },
+    "down": {
+     "uv": [
+      12.25,
+      0.75,
+      12.75,
+      1
+     ],
+     "texture": "#needle"
+    },
+    "south": {
+     "uv": [
+      12.25,
+      11.25,
+      12.75,
+      13
+     ],
+     "texture": "#needle"
+    },
+    "north": {
+     "uv": [
+      3.25,
+      11.25,
+      3.75,
+      13
+     ],
+     "texture": "#needle"
+    }
+   }
+  }
+ ]
+}

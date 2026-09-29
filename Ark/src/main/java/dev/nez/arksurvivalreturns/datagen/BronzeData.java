@@ -111,8 +111,8 @@ final class BronzeData {
 
     /** The two Bronze weapons, either unlocking "Knight of the Realm": a longsword and a heavy hammer. */
     private void weapons() {
-        handheld("bronze_longsword");
-        handheld("bronze_hammer");
+        handheld3d("bronze_longsword");
+        handheld3d("bronze_hammer");
         Map<String, String> key = Map.of("X", NS + ":bronze_ingot", "#", "minecraft:stick");
         // A wider, two-handed-feeling blade: three ingots around a single-cell offset, not the vanilla column.
         shaped("bronze_longsword", NS + ":bronze_longsword", 1, List.of(" X", "XX", " #"), key);
@@ -177,6 +177,20 @@ final class BronzeData {
         put.accept(ASSETS + "models/item/" + id, Map.of("parent", "minecraft:item/handheld",
                 "textures", Map.of("layer0", NS + ":item/" + id)));
         itemDefinition(id);
+    }
+
+    /**
+     * The flat sprite in the inventory, on the ground and in frames; the 3D model from tools/build_weapon_models.py
+     * (models/item/{@code id}_3d, authored in src/main/resources) in the hands.
+     */
+    private void handheld3d(String id) {
+        put.accept(ASSETS + "models/item/" + id, Map.of("parent", "minecraft:item/handheld",
+                "textures", Map.of("layer0", NS + ":item/" + id)));
+        put.accept(ASSETS + "items/" + id, Map.of("model", Map.of(
+                "type", "minecraft:select", "property", "minecraft:display_context",
+                "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
+                        "model", Map.of("type", "minecraft:model", "model", NS + ":item/" + id))),
+                "fallback", Map.of("type", "minecraft:model", "model", NS + ":item/" + id + "_3d"))));
     }
 
     private void blockItem(String id, String model) {

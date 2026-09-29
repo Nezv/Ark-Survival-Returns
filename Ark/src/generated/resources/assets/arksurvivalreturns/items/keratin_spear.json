@@ -17,7 +17,7 @@
     ],
     "fallback": {
       "type": "minecraft:model",
-      "model": "arksurvivalreturns:item/keratin_spear_in_hand"
+      "model": "arksurvivalreturns:item/keratin_spear_3d"
     },
     "property": "minecraft:display_context"
   },

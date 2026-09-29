@@ -162,7 +162,6 @@ def main():
         'keratin': keratin_sprite(),
         'sharp_rock': sharp_rock_sprite(),
         'keratin_spear': retone(vanilla('item/stone_spear'), grey),
-        'keratin_spear_in_hand': retone(vanilla('item/stone_spear_in_hand'), grey),
         **{f'keratin_{piece}': retone(vanilla(f'item/copper_{piece}')) for piece in ('helmet', 'chestplate', 'leggings', 'boots')},
     }
     (TEX / 'item').mkdir(parents=True, exist_ok=True)

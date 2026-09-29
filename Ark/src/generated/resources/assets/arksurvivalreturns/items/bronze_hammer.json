@@ -1,6 +1,24 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "arksurvivalreturns:item/bronze_hammer"
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "arksurvivalreturns:item/bronze_hammer"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed",
+          "on_shelf"
+        ]
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "arksurvivalreturns:item/bronze_hammer_3d"
+    },
+    "property": "minecraft:display_context"
   }
 }

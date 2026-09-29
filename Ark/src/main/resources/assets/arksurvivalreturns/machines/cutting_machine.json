@@ -1,0 +1,139 @@
+{
+ "machine": "cutting_machine",
+ "model": "arksurvivalreturns:block/machines/cutting_machine/base",
+ "footprint": {
+  "blocks": [
+   1,
+   2,
+   1
+  ]
+ },
+ "sides": {
+  "front": "north",
+  "input": "east",
+  "output": "west",
+  "heat_in": "south"
+ },
+ "rpm_by_heat": {
+  "none": 0,
+  "heated": 32,
+  "superheated": 64
+ },
+ "workpiece": [
+  [
+   3,
+   8,
+   7,
+   13,
+   9.5,
+   9,
+   "steel"
+  ]
+ ],
+ "rules": {
+  "units": "px (1/16 block), degrees, ticks; right-hand-rule rotations",
+  "spin": "angle = rpm * 0.3 * (spin_proc if processing else spin_idle) * ticks",
+  "cycle": "only while processing: period = cycle_ticks * 32 / rpm, value = keys at u = (t % period) / period; otherwise the first key (rest pose)",
+  "heat": "angle = heat_angles[heat] + jitter * sin(1.7 * ticks)",
+  "keys": "[u, value, ease_to_next], ease in linear|in|out|inout|hold",
+  "transform": "translate along axis by value, or rotate about pivot by value; apply the part's own transform, then its parent's, then FACING rotation about (8,8,8)"
+ },
+ "parts": [
+  {
+   "mode": "rotate",
+   "axis": "z",
+   "pivot": [
+    14.5,
+    6.5,
+    8
+   ],
+   "drive": "spin",
+   "spin_idle": 1,
+   "spin_proc": 1,
+   "name": "roller_in",
+   "model": "arksurvivalreturns:block/machines/common/roller_in"
+  },
+  {
+   "mode": "rotate",
+   "axis": "z",
+   "pivot": [
+    1.5,
+    6.5,
+    8
+   ],
+   "drive": "spin",
+   "spin_idle": 1,
+   "spin_proc": 1,
+   "name": "roller_out",
+   "model": "arksurvivalreturns:block/machines/common/roller_out"
+  },
+  {
+   "mode": "rotate",
+   "axis": "z",
+   "pivot": [
+    12.5,
+    3,
+    -0.875
+   ],
+   "drive": "heat",
+   "heat_angles": {
+    "none": -70,
+    "heated": 10,
+    "superheated": 70
+   },
+   "jitter": 3,
+   "name": "gauge_needle",
+   "model": "arksurvivalreturns:block/machines/common/gauge_needle"
+  },
+  {
+   "mode": "rotate",
+   "axis": "x",
+   "pivot": [
+    8,
+    20,
+    15
+   ],
+   "drive": "cycle",
+   "cycle_ticks": 40,
+   "keys": [
+    [
+     0,
+     25,
+     "inout"
+    ],
+    [
+     0.45,
+     0,
+     "hold"
+    ],
+    [
+     0.6,
+     0,
+     "inout"
+    ],
+    [
+     1,
+     25,
+     "hold"
+    ]
+   ],
+   "name": "arm",
+   "model": "arksurvivalreturns:block/machines/cutting_machine/arm"
+  },
+  {
+   "parent": "arm",
+   "mode": "rotate",
+   "axis": "x",
+   "pivot": [
+    8,
+    12,
+    7
+   ],
+   "drive": "spin",
+   "spin_idle": -3,
+   "spin_proc": -3,
+   "name": "blade",
+   "model": "arksurvivalreturns:block/machines/cutting_machine/blade"
+  }
+ ]
+}

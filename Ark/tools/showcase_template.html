@@ -249,6 +249,20 @@
   .accessory-card .dino-body > p { font-size: 14px; margin: 0; }
   .accessory-card .bonuses { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ok); }
   .accessory-card dl { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .model-view { position: relative; height: 280px;
+                background: radial-gradient(120% 90% at 50% 100%, #2b3526 0%, #1b1f18 60%, #161814 100%); }
+  .model-view img, .model-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .model-view img { image-rendering: pixelated; }
+  .model-view canvas { opacity: 0; cursor: grab; touch-action: none; }
+  .model-view canvas:active { cursor: grabbing; }
+  .model-card.live .model-view canvas { opacity: 1; }
+  .model-card.live .model-poster { visibility: hidden; }
+  .model-card .dino-body > p { font-size: 14px; margin: 0; }
+  .heat { display: flex; gap: 6px; flex-wrap: wrap; }
+  .heat button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 4px 12px;
+                 font: 600 13px var(--body); cursor: pointer; }
+  .heat button[aria-pressed="true"] { background: var(--ember); color: #fff; border-color: var(--ember); }
   table.parts img { width: 32px; height: 32px; image-rendering: pixelated; vertical-align: middle; }
   .item-group { display: grid; gap: 10px; }
   .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 10px; }
@@ -305,7 +319,7 @@
     <nav class="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
       <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#recipes">Recipe Tree</a><a href="#accessories">Accessories</a>
-      <a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
+      <a href="#models">Models</a><a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
     <button class="theme" id="theme" type="button">Theme: system</button>
   </div>
@@ -330,6 +344,7 @@
     <a href="#blocks"><span class="eyebrow">Camp and blocks</span><b>Stations</b><span>Every Ark block, rendered from the in-game models.</span></a>
     <a href="#recipes"><span class="eyebrow">Recipe Tree</span><b>Recipe map and items</b><span>What every item needs, back to bare hands, and every item sprite.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
+    <a href="#models"><span class="eyebrow">Models</span><b>3D models</b><span>%%MODELS_COUNT%% machines, armour sets and weapons, working and turning in the browser.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
     <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
@@ -467,6 +482,20 @@
     <div class="table-wrap"><table class="parts"><thead><tr><th>Part</th><th>From</th></tr></thead><tbody>%%ACC_TROPHIES%%</tbody></table></div>
   </section>
 
+  <section id="models">
+    <div><div class="eyebrow">Models</div><h2>Every authored 3D model, live</h2></div>
+    <p class="lede">Built from Minecraft cuboids and drawn here from the files the mod ships: the same elements, UVs and textures, in three.js. Machines run their real animation rules, armour turns on a walking player, weapons turn in place. Drag any model to turn it. Offline, each card shows a still render instead.</p>
+    <h3>Machines</h3>
+    <p class="muted">The Iron Age line (planned): press, mill and cutter share one 1&times;2 chassis with a belt that hands items from machine to machine. Heat at the back sets the speed, like Create's tiers: cold stops the line, superheated doubles it. Pick the heat under each machine.</p>
+    <div class="dinos model-grid">%%MODELS_MACHINES%%</div>
+    <h3>Armour</h3>
+    <p class="muted">One set per age. Keratin and bronze are painted on the vanilla armour model; the Iron Age steel set is a real knight's harness built from its own plates.</p>
+    <div class="dinos model-grid">%%MODELS_ARMOUR%%</div>
+    <h3>Authored weapons</h3>
+    <p class="muted">In the inventory these keep their sprites; in the hands they are these models, laid on the same diagonal as the sprite so the vanilla grip poses still fit.</p>
+    <div class="dinos model-grid">%%MODELS_WEAPONS%%</div>
+  </section>
+
   <section id="interface">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
     <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page, so shaders and the menus share one look. Containers become light limestone, so vanilla's dark titles stay readable. Buttons, the hotbar and tooltips become dark basalt with moss and ember accents. Every slot stays exactly where vanilla puts it, so other mods' screens still line up.</p>
@@ -515,6 +544,167 @@
 
 <script>
 %%SPINEJS%%
+</script>
+<script>
+// Models page: one shared WebGL renderer (three.js, loaded from jsDelivr when the page first opens) draws each
+// visible card and copies the frame into the card's own canvas. Machine parts follow the animation spec rules
+// of tools/build_machine_assets.py (spin, cycle keys, heat needle); armour walks, everything else turns.
+window.arkModels = (function () {
+  var MODELS = %%MODELS_DATA%%;
+  var THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+  var EASE = { linear: function (s) { return s; }, 'in': function (s) { return s * s; },
+               out: function (s) { return 1 - (1 - s) * (1 - s); }, inout: function (s) { return s * s * (3 - 2 * s); },
+               hold: function () { return 0; } };
+  var loading = null, running = false, renderer = null, views = [];
+  function keyframe(keys, u) {
+    for (var i = 0; i + 1 < keys.length; i++) {
+      var a = keys[i], b = keys[i + 1];
+      if (u <= b[0]) {
+        var s = b[0] > a[0] ? (u - a[0]) / (b[0] - a[0]) : 1;
+        return a[1] + (b[1] - a[1]) * EASE[a[2]](Math.min(1, Math.max(0, s)));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+  function partValue(a, t, rpm, heat) {
+    if (a.drive === 'spin') return rpm * 0.3 * a.spin_proc * t;  // the showcase line always has a workpiece
+    if (a.drive === 'cycle') {
+      if (!rpm) return a.keys[0][1];
+      var period = a.cycle_ticks * 32 / rpm;
+      return keyframe(a.keys, (t % period) / period);
+    }
+    if (a.drive === 'heat') return a.heat_angles[heat] + (rpm ? a.jitter * Math.sin(1.7 * t) : 0);
+    return 0;
+  }
+  function build(THREE, model, card) {
+    var canvas = card.querySelector('canvas');
+    var scene = new THREE.Scene();
+    scene.add(new THREE.AmbientLight(0xffffff, 1.7));
+    var sun = new THREE.DirectionalLight(0xffffff, 1.5);
+    sun.position.set(-0.4, 1, 0.8);
+    scene.add(sun);
+    var loader = new THREE.TextureLoader();
+    var mats = model.textures.map(function (src) {
+      var tex = loader.load(src);
+      tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.generateMipmaps = false;
+      tex.colorSpace = THREE.SRGBColorSpace;
+      return new THREE.MeshLambertMaterial({ map: tex, alphaTest: 0.1 });
+    });
+    var turn = new THREE.Group(), root = new THREE.Group();
+    root.position.set(-model.centre[0], -model.centre[1], -model.centre[2]);
+    turn.add(root); scene.add(turn);
+    var nodes = model.parts.map(function (part) {
+      var parent = part.parent == null ? null : model.parts[part.parent];
+      var pivot = new THREE.Group(), anim = new THREE.Group();
+      pivot.position.set(part.pivot[0] - (parent ? parent.pivot[0] : 0), part.pivot[1] - (parent ? parent.pivot[1] : 0),
+                         part.pivot[2] - (parent ? parent.pivot[2] : 0));
+      pivot.add(anim);
+      Object.keys(part.mesh).forEach(function (key) {
+        var m = part.mesh[key], index = [];
+        for (var o = 0; o < m.p.length / 3; o += 4) index.push(o, o + 1, o + 2, o, o + 2, o + 3);
+        var g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.Float32BufferAttribute(m.p, 3));
+        g.setAttribute('uv', new THREE.Float32BufferAttribute(m.uv, 2));
+        g.setIndex(index);
+        g.computeVertexNormals();
+        anim.add(new THREE.Mesh(g, mats[+key]));
+      });
+      return { pivot: pivot, anim: anim, spec: part.anim };
+    });
+    model.parts.forEach(function (part, i) { (part.parent == null ? root : nodes[part.parent].anim).add(nodes[i].pivot); });
+    var s = model.radius * 0.92;  // the bounding sphere, trimmed: a box never shows its full diagonal at once
+    var camera = new THREE.OrthographicCamera(-s, s, s, -s, -1000, 1000);
+    camera.position.set(0, 0, 200);
+    var view = model.view || { yaw: 150, pitch: 22 };
+    var v = { model: model, card: card, canvas: canvas, ctx: canvas.getContext('2d'), scene: scene, camera: camera, turn: turn,
+              nodes: nodes, size: s, yaw: view.yaw * Math.PI / 180, pitch: view.pitch * Math.PI / 180, heat: 'heated',
+              visible: false, drag: null, pause: 0, last: 0 };
+    function resize() {
+      var r = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(canvas.clientWidth * r)); canvas.height = Math.max(1, Math.round(canvas.clientHeight * r));
+      var aspect = canvas.width / canvas.height;
+      camera.left = -s * Math.max(1, aspect); camera.right = -camera.left;
+      camera.top = s * Math.max(1, 1 / aspect); camera.bottom = -camera.top;
+      camera.updateProjectionMatrix();
+    }
+    v.resize = resize;
+    resize();
+    canvas.addEventListener('pointerdown', function (ev) { v.drag = { x: ev.clientX, y: ev.clientY, yaw: v.yaw, pitch: v.pitch }; canvas.setPointerCapture(ev.pointerId); });
+    canvas.addEventListener('pointermove', function (ev) {
+      if (!v.drag) return;
+      v.yaw = v.drag.yaw + (ev.clientX - v.drag.x) * 0.012;
+      v.pitch = Math.max(-1.2, Math.min(1.2, v.drag.pitch + (ev.clientY - v.drag.y) * 0.012));
+    });
+    function release() { v.drag = null; v.pause = performance.now() + 2500; }
+    canvas.addEventListener('pointerup', release); canvas.addEventListener('pointercancel', release);
+    card.querySelectorAll('.heat button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        v.heat = b.dataset.heat;
+        card.querySelectorAll('.heat button').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      });
+    });
+    card.classList.add('live');
+    return v;
+  }
+  function tick(v, now) {
+    var seconds = now / 1000, t = seconds * 20;
+    var rpm = v.model.machine ? v.model.machine.rpm[v.heat] : 0;
+    v.nodes.forEach(function (n) {
+      var a = n.spec;
+      if (!a) return;
+      if (a.mode === 'swing') { n.anim.rotation.x = Math.sin(seconds * 4) * a.amp * Math.PI / 180; return; }
+      var value = partValue(a, t, rpm, v.heat);
+      if (a.mode === 'translate') n.anim.position.set(a.axis === 'x' ? value : 0, a.axis === 'y' ? value : 0, a.axis === 'z' ? value : 0);
+      else { n.anim.rotation.set(0, 0, 0); n.anim.rotation[a.axis] = value * Math.PI / 180; }
+    });
+    if (v.model.spin && !v.drag && now > v.pause) v.yaw += Math.min(100, now - v.last) * 0.00045;
+    v.last = now;
+    v.turn.rotation.set(v.pitch, v.yaw, 0);
+  }
+  function frame(now) {
+    if (!running) return;
+    views.forEach(function (v) {
+      if (!v.visible) { v.last = now; return; }
+      tick(v, now);
+      var w = v.canvas.width, h = v.canvas.height;
+      renderer.setSize(w, h, false);
+      renderer.render(v.scene, v.camera);
+      v.ctx.clearRect(0, 0, w, h);
+      v.ctx.drawImage(renderer.domElement, 0, 0, w, h);
+    });
+    requestAnimationFrame(frame);
+  }
+  function load() {
+    if (loading) return loading;
+    loading = import(THREE_URL).then(function (THREE) {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setClearColor(0x000000, 0);
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { views.forEach(function (v) { if (v.card === entry.target) v.visible = entry.isIntersecting; }); });
+      });
+      MODELS.forEach(function (model) {
+        var card = document.querySelector('.model-card[data-model="' + model.id + '"]');
+        if (!card) return;
+        var v = build(THREE, model, card);
+        views.push(v);
+        observer.observe(card);
+      });
+      window.addEventListener('resize', function () { views.forEach(function (v) { v.resize(); }); });
+    }).catch(function (err) { console.warn('3D models unavailable, showing still renders', err); });
+    return loading;
+  }
+  return {
+    show: function (on) {
+      if (!on) { running = false; return; }
+      load().then(function () {
+        if (running || !renderer) return;
+        running = true;
+        views.forEach(function (v) { v.resize(); });
+        requestAnimationFrame(frame);
+      });
+    }
+  };
+})();
 </script>
 <script>
 (function () {
@@ -718,6 +908,7 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (current && current.id === 'world') draw();
     if (current && current.id === 'behavior') renderDiagrams();
+    window.arkModels.show(!!current && current.id === 'models');
   }
   window.addEventListener('hashchange', route);
   route();

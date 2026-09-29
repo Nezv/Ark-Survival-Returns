@@ -140,18 +140,19 @@ final class PrimitiveData {
 
     // ------------------------------------------------------------------------------------- keratin
 
-    /** The keratin tier: sprites from tools/build_keratin_items.py, the spear follows the vanilla spear models. */
+    /**
+     * The keratin tier: sprites from tools/build_keratin_items.py. The spear shows its sprite in the inventory and
+     * its 3D model (tools/build_weapon_models.py, vanilla spear display transforms) in the hands.
+     */
     private void keratin() {
         flatItem("keratin", NS + ":item/keratin", false);
         put.accept(ASSETS + "models/item/keratin_spear", Map.of("parent", "minecraft:item/generated",
                 "textures", Map.of("layer0", NS + ":item/keratin_spear")));
-        put.accept(ASSETS + "models/item/keratin_spear_in_hand", Map.of("parent", "minecraft:item/spear_in_hand",
-                "textures", Map.of("layer0", NS + ":item/keratin_spear_in_hand")));
         put.accept(ASSETS + "items/keratin_spear", Map.of("swap_animation_scale", 1.95, "model", Map.of(
                 "type", "minecraft:select", "property", "minecraft:display_context",
                 "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
                         "model", Map.of("type", "minecraft:model", "model", NS + ":item/keratin_spear"))),
-                "fallback", Map.of("type", "minecraft:model", "model", NS + ":item/keratin_spear_in_hand"))));
+                "fallback", Map.of("type", "minecraft:model", "model", NS + ":item/keratin_spear_3d"))));
         String texture = NS + ":keratin";
         put.accept(ASSETS + "equipment/keratin", Map.of("layers", Map.of(
                 "humanoid", List.of(Map.of("texture", texture)),
