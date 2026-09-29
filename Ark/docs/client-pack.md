@@ -8,9 +8,10 @@ Installed and checked on 20 September 2026 for Minecraft 26.1.2 / NeoForge 26.1.
 | [Xaero World Map Bridge](https://modrinth.com/mod/xaero-world-map-bridge/version/4UvyllQl) | 0.1.2, NeoForge 26.1.2 | Hook for Ark's colored danger overlay |
 | [Sodium](https://modrinth.com/mod/sodium/version/zg4YQ9EL) | 0.9.2, NeoForge 26.1.2 | Rendering performance and Iris dependency |
 | [Iris](https://modrinth.com/mod/iris/version/qE5Y7GrZ) | 1.11.4, NeoForge 26.1.2 | Shader loader |
+| [Bliss](https://modrinth.com/shader/bliss-shader/version/kC2Y8q1P) | 2.1.2 | Default prehistoric survival preset |
 | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/version/111gsk0f) | r5.9 | Shader pack, available in Video Settings → Shader Packs |
 
-The shader ZIP is downloaded but is not forced on. Select **Complementary Reimagined** in Video Settings → Shader Packs; start with its Medium preset and adjust during play. Existing graphics, sound and shader settings are preserved. Environmental ambience, material-aware footsteps and sound physics are built into Ark Survival Returns; do not install their standalone source mods alongside it. Ark's server-side hearing decisions remain governed by its own behavior model.
+New instances enable **Bliss 2.1.2** with the authored prehistoric survival preset. Existing instances retain their shader choice unless explicitly reset. Complementary Reimagined remains available as a fallback in Video Settings → Shader Packs. Existing sound and unrelated graphics settings are preserved. Environmental ambience, material-aware footsteps and sound physics are built into Ark Survival Returns; do not install their standalone source mods alongside it. Ark's server-side hearing decisions remain governed by its own behavior model.
 
 No terrain generator, extra creature pack, minimap entity radar or combat overhaul was added. The existing biome layout, spawn ecology and combat rules stay consistent with the Ark work.
 
@@ -34,6 +35,29 @@ python tools/verify_client_pack.py
 The selected Iris release declares Sodium `zg4YQ9EL`, which is the stable NeoForge 0.9.2 artifact this pack installs; the mismatched Fabric Sodium metadata link from the earlier release line no longer applies. This metadata check is not a substitute for a graphical compatibility test.
 
 Xaero is pinned to 1.46.0 with bridge 0.1.2, whose bytecode-verified compatibility baseline covers the 1.46 release line. The installed bridge's bytecode insertion descriptor matches exactly one invocation in the installed Xaero `GuiMap` renderer; camera, scale and viewed-dimension fields also exist. The bridge labels NeoForge support experimental. Keep the pair pinned until a later combination is checked. [Bridge API and compatibility](https://github.com/billstark001/xaero-world-map-bridge).
+
+## Bliss prehistoric survival preset
+
+The unmodified [official Bliss release](https://github.com/X0nk/Bliss-Shader) is pinned by URL and SHA-512. `config/client-defaults/config/iris.properties` selects it; `config/client-defaults/shaderpacks/Bliss_v2.1.2_(Chocapic13_Shaders_edit).zip.txt` contains the preset. Iris requires that exact ZIP filename plus `.txt` beside the archive. The installer and Gradle client preparation seed only missing files; the Modrinth pack includes both files under `client-overrides`. Later in-game edits survive normal launches and installer reruns.
+
+| Area | Preset intent and settings |
+| --- | --- |
+| Lighting | Warm 6000 K sunlight, cooler 10000 K moonlight with moon phases, amber torchlight at 1.2 strength; 0.7 minimum light and automatic exposure preserve a small visibility floor. |
+| Atmosphere | Stronger dawn mist, lighter midday haze, jungle and swamp fog, native daily weather and moving cloud shadows. Biome-specific effects use Bliss's own biome detection; custom Terralith biomes are not individually remapped. |
+| Water and foliage | Mild sediment (0.2), reflections and refraction, restrained waves and plant movement, rain puddles. |
+| Clarity | AgX tone mapping, slightly reduced saturation, half-strength bloom; motion blur and depth of field off. |
+| GPU budget | Starting point for the RTX 3050 6 GB laptop: 2048 shadow map, 128-block shadow distance, entity shadows out to 64 blocks, clouds at 0.35 resolution, eight fog samples, 20 reflection steps. LPV, high-quality SSGI and POM stay off. |
+| Distant Horizons | Bliss terrain/water integration and overdraw prevention enabled; distant shadow maps off. Existing DH distance, worker and Sodium settings are retained; P12 profiling remains outstanding. |
+
+To install or restore the authored preset on an existing checkout, close Minecraft and run from the repository root:
+
+```powershell
+./Install-Ark-Extras.ps1 -ResetShaderPreset
+```
+
+This backs up replaced files under `Ark/run/shader-backups/<timestamp>/` and preserves unrelated Iris preferences. To restore, close Minecraft and copy the backup files to their matching locations under `Ark/run/`. To disable shaders or switch to Complementary, use Video Settings → Shader Packs; relaunching keeps that choice.
+
+Validation checks every configured Bliss option and its allowed values against the pinned ZIP, plus checksums and client/server dependency separation. It does not compile shaders on the GPU. Check dawn, noon, rain, a moonlit night and a cave with a torch; inspect dinosaur shadows, water edges and the DH transition. If GPU performance is insufficient, first lower `CLOUDS_QUALITY` to `0.25`, then `shadowMapResolution` to `1536` in Shader Pack Settings. No FPS target has been measured. The existing 24-chunk render / 12-chunk simulation distances remain unchanged.
 
 ## Difficulty map and unlock
 

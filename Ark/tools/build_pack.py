@@ -217,6 +217,12 @@ def main():
             if path.is_file():
                 overrides[f'overrides/config/{folder}/{path.relative_to(root).as_posix()}'] = path.read_bytes()
 
+    # Iris and the matching Bliss ZIP sidecar belong only to client instances.
+    root = ARK / 'config/client-defaults'
+    for path in root.rglob('*'):
+        if path.is_file():
+            overrides[f'client-overrides/{path.relative_to(root).as_posix()}'] = path.read_bytes()
+
     index = {'formatVersion': 1, 'game': 'minecraft', 'versionId': version, 'name': 'Ark Survival Returns',
              'summary': 'ARK-style survival for Minecraft 26.1.2 with every integration branded and pre-configured.',
              'files': index_files,

@@ -202,5 +202,24 @@ tasks.register('prepareDevRuntime') {
     }
 }
 tasks.named('runClient') { dependsOn 'verifyDevDependencies', 'verifyClientPack', 'prepareDevRuntime' }
+// Seed client settings once, so later shader choices and in-game adjustments survive launches.
+def shaderDefaults = file('config/client-defaults')
+def shaderRunDirectory = file('run')
+tasks.register('prepareClientShaders') {
+    group = 'application'
+    description = 'Seeds missing Iris and Bliss prehistoric defaults without replacing user settings.'
+    doLast {
+        shaderDefaults.eachFileRecurse { source ->
+            if (source.isFile()) {
+                def target = new File(shaderRunDirectory, shaderDefaults.toPath().relativize(source.toPath()).toString())
+                if (!target.exists()) {
+                    target.parentFile.mkdirs()
+                    target.bytes = source.bytes
+                }
+            }
+        }
+    }
+}
+tasks.named('prepareClientRun') { dependsOn 'prepareClientShaders' }
 tasks.named('runServer') { dependsOn 'prepareDevRuntime' }
 tasks.named('runGameTestServer') { dependsOn 'prepareDevRuntime' }

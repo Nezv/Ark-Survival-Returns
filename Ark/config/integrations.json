@@ -160,7 +160,7 @@
     {
       "id": "I06",
       "title": "Rendering and shaders",
-      "status": "pinned",
+      "status": "configured",
       "side": "client",
       "mods": [
         {
@@ -192,9 +192,9 @@
           "build": "shader"
         }
       ],
-      "uses": "Sodium renders chunks and Iris loads shader packs. Bliss is pinned as the planned default pack; Complementary stays as the tested fallback.",
-      "changed": "Nothing yet. This is the last pass: Sodium, Iris and Bliss settings, plus Distant Horizons LOD settings, tuned together.",
-      "next": "Profile GPU and CPU (P12), then ship tuned Sodium, Iris and shader configs."
+      "uses": "Sodium renders chunks and Iris loads shader packs. Bliss 2.1.2 is the configured prehistoric default; Complementary remains available as fallback.",
+      "changed": "Authored Iris and Bliss defaults: dawn mist, biome fog, warm camp light, restrained water and bloom, 2048 shadows at 128 blocks, moderate clouds, no motion blur or depth of field. Installer and client preparation seed defaults; explicit reset backs up settings; Modrinth client overrides ship them.",
+      "next": "In-client visual and FPS validation on RTX 3050 6 GB; P12 CPU/GPU profiling and Sodium/DH distance tuning remain outstanding."
     },
     {
       "id": "I07",

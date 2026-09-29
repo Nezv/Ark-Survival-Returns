@@ -1,7 +1,8 @@
-# Downloads the reviewed, pinned client presentation pack and shared gameplay mods. Never changes saves or user configs.
+# Downloads pinned extras and seeds missing shader defaults. Existing settings require -ResetShaderPreset to replace.
 [CmdletBinding()]
-param([switch]$VerifyOnly)
+param([switch]$VerifyOnly, [switch]$ResetShaderPreset)
 $ErrorActionPreference = 'Stop'
+if ($VerifyOnly -and $ResetShaderPreset) { throw 'Choose VerifyOnly or ResetShaderPreset, not both.' }
 $packRoot = Join-Path $PSScriptRoot 'Ark'
 $allowedHosts = @('cdn.modrinth.com', 'maven.ftb.dev')
 function Install-Pack([string]$relativeManifest) {
@@ -38,8 +39,9 @@ function Install-Pack([string]$relativeManifest) {
 }
 Install-Pack 'config/client-mods.lock.json'
 Install-Pack 'config/shared-mods.lock.json'
+& (Join-Path $PSScriptRoot 'scripts/Set-Ark-Shaders.ps1') -VerifyOnly:$VerifyOnly -ResetPreset:$ResetShaderPreset
 Write-Host 'Ark extras are ready. Start-Ark-Mod.bat loads them automatically.' -ForegroundColor Green
-Write-Host 'Enable Complementary Reimagined in Video Settings > Shader Packs when you want shaders.'
+Write-Host 'New instances use the Bliss prehistoric preset. Existing shader choices are preserved; -ResetShaderPreset backs up and reapplies Bliss.'
 
 $devPlan = Get-Content -LiteralPath (Join-Path $packRoot 'config/dev-dependencies.json') -Raw | ConvertFrom-Json
 foreach ($dependency in $devPlan.dependencies) {

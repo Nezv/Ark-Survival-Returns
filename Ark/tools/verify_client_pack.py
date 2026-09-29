@@ -4,6 +4,7 @@ from io import BytesIO
 import hashlib
 import fnmatch
 import json
+import re
 import tomllib
 import zipfile
 
@@ -15,6 +16,47 @@ INTEGRATED_STANDALONE_GLOBS = (
     "PresenceFootsteps*.jar",
     "Presence-Footsteps*.jar",
 )
+
+
+def verify_shader_defaults(manifest):
+    """Reject misspelled options and out-of-range values against the exact pinned shader."""
+    defaults = ROOT / 'config/client-defaults'
+
+    def properties(path):
+        return dict(line.split('=', 1) for line in path.read_text().splitlines()
+                    if line.strip() and not line.lstrip().startswith('#'))
+
+    iris = properties(defaults / 'config/iris.properties')
+    bliss = next(e for e in manifest['entries'] if e['project'] == 'bliss-shader')
+    assert iris['shaderPack'] == bliss['filename'], 'Iris default does not select the pinned Bliss archive'
+    assert iris['enableShaders'] == 'true', 'New instances must enable Bliss'
+    options = properties(defaults / 'shaderpacks' / (bliss['filename'] + '.txt'))
+    declarations = {}
+    with zipfile.ZipFile(ROOT / 'run/shaderpacks' / bliss['filename']) as shader:
+        for name in shader.namelist():
+            if not name.endswith(('.glsl', '.vsh', '.fsh', '.csh')):
+                continue
+            for line in shader.read(name).decode().splitlines():
+                match = re.match(r'^\s*(?://\s*)?#define\s+(\w+)\b(.*)', line)
+                constant = re.match(r'^\s*const\s+(?:int|float|bool)\s+(\w+)\s*=\s*([^;]+);(.*)', line)
+                if constant:
+                    key, value, comment = constant.groups()
+                elif match:
+                    key, rest = match.groups()
+                    value, _, comment = rest.partition('//')
+                else:
+                    continue
+                value = value.strip()
+                allowed = re.search(r'\[([^\]]+)\]', comment)
+                if allowed:
+                    declarations.setdefault(key, set()).update(allowed[1].split() + [value])
+                elif not value:
+                    declarations.setdefault(key, set()).update(('true', 'false'))
+    for key, value in options.items():
+        assert key in declarations, f'Unknown Bliss option: {key}'
+        assert value in declarations[key], f'Unsupported Bliss value: {key}={value}'
+    assert int(iris['maxShadowRenderDistance']) * 16 >= float(options['shadowDistance'])
+    print(f'Validated {len(options)} prehistoric preset options against the pinned Bliss source.')
 
 
 def verify():
@@ -62,6 +104,7 @@ def verify():
     for owner, required in requirements:
         assert required in mods or required in {"minecraft", "neoforge"}, f"{owner} requires missing {required}"
     shaders = sum(1 for entry in manifest["entries"] if entry["kind"] == "shader")
+    verify_shader_defaults(manifest)
     print(f"Verified {len(expected)} pinned NeoForge JARs, {shaders} shader packs, checksums and required mod IDs.")
     print("Embedded XaeroLib:", mods["xaerolib"])
     print("Rendering/audio compatibility still requires the user's client playtest.")

@@ -1,0 +1,93 @@
+# Ark prehistoric survival / Bliss 2.1.2 / RTX 3050 6 GB starting preset.
+# Only supported upstream options; keep the downloaded shader ZIP unmodified.
+# Soft daylight, warm camp light, moon phases and a small visibility floor.
+TONEMAP=ToneMap_AgX_minimal
+Sun_temp=6000
+Moon_temp=10000
+moon_illuminance=40.0
+MOONPHASE_BASED_MOONLIGHT=true
+MIN_LIGHT_AMOUNT=0.7
+ambient_brightness=1.0
+TORCH_AMOUNT=1.2
+TORCH_R=1.0
+TORCH_G=0.65
+TORCH_B=0.45
+Hand_Held_lights=true
+HANDHELD_LIGHT_RANGE=10
+AUTO_EXPOSURE=true
+EXPOSURE_MULTIPLIER=1.0
+Exposure_Speed=0.75
+Fake_purkinje=true
+Purkinje_strength=0.6
+# Mist builds at dawn and after sunset; midday stays useful for scouting.
+TOGGLE_VL_FOG=true
+VL_SAMPLES=8
+Haze_amount=1.25
+RainFog_amount=0.12
+Morning_Uniform_Fog=0.04
+Morning_Cloudy_Fog=0.08
+Noon_Uniform_Fog=0.01
+Noon_Cloudy_Fog=0.0
+Evening_Uniform_Fog=0.04
+Evening_Cloudy_Fog=0.03
+Night_Uniform_Fog=0.12
+Night_Cloudy_Fog=0.04
+PER_BIOME_ENVIRONMENT=true
+SWAMP_ENV=true
+SWAMP_UNIFORM_DENSITY=0.2
+SWAMP_CLOUDY_DENSITY=0.04
+JUNGLE_ENV=true
+JUNGLE_UNIFORM_DENSITY=0.12
+JUNGLE_CLOUDY_DENSITY=0.12
+DARKFOREST_ENV=true
+DARKFOREST_UNIFORM_DENSITY=0.1
+CAVE_FOG=true
+BorderFog=true
+# Native weather variation and moving cloud shadows, at moderate resolution.
+Daily_Weather=true
+VOLUMETRIC_CLOUDS=true
+CLOUDS_QUALITY=0.35
+CLOUDS_SHADOWS=true
+CLOUD_SHADOW_STRENGTH=0.7
+Cloud_Speed=0.8
+Seasons=false
+# Subtle movement and sediment in water, without obscuring nearby wildlife.
+WAVY_PLANTS=true
+WAVY_STRENGTH=0.75
+WAVY_SPEED=0.8
+WATER_WAVE_STRENGTH=0.8
+WATER_WAVE_SPEED=0.8
+Dirt_Amount=0.2
+WATER_REFLECTIONS=true
+SCREENSPACE_REFLECTIONS=true
+SSR_STEPS=20
+Refraction=true
+Puddles=true
+WATER_CAUSTICS_BRIGHTNESS=0.7
+# Ground creatures with shadows; keep costly optional lighting features off.
+shadowMapResolution=2048
+shadowDistance=128.0
+entityShadowDistanceMul=0.50
+RENDER_ENTITY_SHADOWS=true
+RENDER_PLAYER_SHADOWS=true
+SCREENSPACE_CONTACT_SHADOWS=true
+SHADOW_FILTER_SAMPLE_COUNT=8
+indirect_effect=1
+HQ_SSGI=false
+LPV_ENABLED=false
+POM=false
+# Retain distant terrain/water support without a second long-range shadow pass.
+DISTANT_HORIZONS_SUPPORT=true
+DISTANT_HORIZONS_SHADOWMAP=false
+DH_OVERDRAW_PREVENTION=true
+DH_SCREENSPACE_REFLECTIONS=true
+# Clear movement and restrained highlights for survival play.
+TAA=true
+TAA_UPSCALING=false
+SHARPENING=0.25
+SATURATION=-0.06
+BLOOM_STRENGTH=0.5
+BLOOMY_FOG=0.75
+MOTION_BLUR=false
+DOF_QUALITY=-1
+SCREENSHOT_MODE=false
