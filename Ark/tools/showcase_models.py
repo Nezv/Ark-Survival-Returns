@@ -24,7 +24,7 @@ MACHINES = [('mechanical_press', 'Mechanical Press', 'Presses metal sheets. The 
 WEAPONS = [('bronze_longsword', 'Bronze Longsword', 'Faceted pommel, wrapped grip, rolled crossguard and a fullered blade with bright edges.'),
            ('bronze_hammer', 'Bronze Hammer', 'A wrapped haft, socket langets and a flared two-faced head.'),
            ('keratin_spear', 'Keratin Spear', 'A leaf-shaped keratin head on a mid-ridge, a fiber binding and an ochre-dyed grip.')]
-STEEL_PIECES = ('helmet', 'chestplate', 'leggings', 'boots')
+ARMOUR_PIECES = ('helmet', 'chestplate', 'leggings', 'boots')
 WALK = {'right_arm': (-18, 0, 4), 'left_arm': (18, 0, -4), 'right_leg': (16, 0, 0), 'left_leg': (-16, 0, 0)}
 
 
@@ -135,28 +135,6 @@ def to_world(v):
     return (float(v[0]), -float(v[1]), -float(v[2]))
 
 
-def layer_quads(texture, layer):
-    """The vanilla humanoid armour model (outer layer: helmet, chestplate, boots; inner: leggings)."""
-    size = texture.size
-    if layer == 'humanoid':
-        cubes = [('head', (-4, -8, -4), (8, 8, 8), 1.0, (0, 0)), ('head', (-4, -8, -4), (8, 8, 8), 1.5, (32, 0)),
-                 ('body', (-4, 0, -2), (8, 12, 4), 1.0, (16, 16)),
-                 ('right_arm', (-3, -2, -2), (4, 12, 4), 1.0, (40, 16), False),
-                 ('left_arm', (-1, -2, -2), (4, 12, 4), 1.0, (40, 16), True),
-                 ('right_leg', (-2, 0, -2), (4, 12, 4), 1.0, (0, 16), False),
-                 ('left_leg', (-2, 0, -2), (4, 12, 4), 1.0, (0, 16), True)]
-    else:
-        cubes = [('body', (-4, 0, -2), (8, 12, 4), 0.5, (16, 16)),
-                 ('right_leg', (-2, 0, -2), (4, 12, 4), 0.5, (0, 16), False),
-                 ('left_leg', (-2, 0, -2), (4, 12, 4), 0.5, (0, 16), True)]
-    out = []
-    for cube in cubes:
-        part, origin, dims, grow, uv = cube[:5]
-        mirror = cube[5] if len(cube) > 5 else False
-        out.append((part, A._cube_faces(origin, dims, (grow,) * 3, uv, size, mirror)))
-    return out
-
-
 def armour(ident, title, note, chip, layers, uri):
     """A set on a walking player: layers is [(part, part-space quads, texture key, PIL image)]."""
     asset = Asset(ident, title, 'armour', note, chip)
@@ -190,27 +168,19 @@ def _player_part_space():
     return out
 
 
-def vanilla_layer_set(material):
+def authored_set(material):
+    """Native worn models of any armour tier, with their declared textures."""
     groups = []
-    for layer in ('humanoid', 'humanoid_leggings'):
-        image = Image.open(ASSETS / f'textures/entity/equipment/{layer}/{material}.png').convert('RGBA')
-        groups += [(part, quads, f'{material}_{layer}', image) for part, quads in layer_quads(image, layer)]
-    return groups
-
-
-def steel_set():
-    """The steel knight harness: worn models from tools/build_steel_armour.py, drawn like accessories."""
-    groups = []
-    for piece in STEEL_PIECES:
-        model_path = ASSETS / f'armour/steel_{piece}.json'
-        texture_path = ASSETS / f'textures/entity/armour/steel_{piece}.png'
-        if not model_path.exists() or not texture_path.exists():
-            return None
+    for piece in ARMOUR_PIECES:
+        model_path = ASSETS / f'armour/{material}_{piece}.json'
         model = json.loads(model_path.read_text(encoding='utf-8'))
-        image = Image.open(texture_path).convert('RGBA')
+        texture = model['texture']
+        namespace, path = texture.split(':', 1)
+        assert namespace == 'arksurvivalreturns', texture
+        image = Image.open(ASSETS / path).convert('RGBA')
         for part, root_quads, _ in A.worn_quads(model, image, pose={}, arms='wide'):
             offset = np.array(A.PART_POSE[part], dtype=float)
-            groups.append((part, [(verts - offset, uvs) for verts, uvs in root_quads], f'steel_{piece}', image))
+            groups.append((part, [(verts - offset, uvs) for verts, uvs in root_quads], f'{material}_{piece}', image))
     return groups
 
 
@@ -235,15 +205,17 @@ def section(uri, e):
     assets = {'machines': [], 'armour': [], 'weapons': []}
     for ident, title, note in MACHINES:
         assets['machines'].append(machine(ident, title, note, uri))
-    steel = steel_set()
+    steel = authored_set('steel')
     if steel:
         assets['armour'].append(armour('steel_armour', 'Steel armour', 'The Iron Age knight: a great helm, keeled '
                                        'breastplate, lamed pauldrons, tassets, knee cops and sabatons.',
                                        'Iron Age (planned)', steel, uri))
-    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'The Bronze Age set on the vanilla armour model.',
-                                   'In game', vanilla_layer_set('bronze'), uri))
-    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'The first set, from horn, plate and beak.',
-                                   'In game', vanilla_layer_set('keratin'), uri))
+    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'Early bronze-age armour: an open '
+                                   'crested cap, hammered cuirass, studded leather skirt and strapped greaves over sandals.',
+                                   '3D design', authored_set('bronze'), uri))
+    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'Prehistoric armour: horn scutes '
+                                   'lashed onto hide, a swept horn cap, fiber ties and fur-cuffed moccasins.',
+                                   '3D design', authored_set('keratin'), uri))
     for ident, title, note in WEAPONS:
         assets['weapons'].append(weapon(ident, title, note, uri))
     data = [a for group in assets.values() for a, _ in group]

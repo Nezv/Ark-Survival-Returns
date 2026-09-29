@@ -168,7 +168,9 @@ def bronze_tool(name):
 
 
 def armour_piece(piece):
-    return retone(vanilla(f'item/iron_{piece}'), BRONZE, **BRONZE_TONE)
+    # Keep inventory art aligned with the native early bronze-age worn models.
+    from build_early_armour import item_sprite
+    return item_sprite('bronze', piece)
 
 
 def armour_layer(layer):
@@ -743,11 +745,8 @@ def glass_icon():
 
 
 def colossus_icon(items):
-    """The whole bronze set stacked as it is worn: boots over the greaves, the helmet over the gorget."""
-    art = Image.new('RGBA', (32, 32))
-    for piece, top in (('leggings', 13), ('boots', 18), ('chestplate', 4), ('helmet', -3)):
-        art.alpha_composite(armour_piece(piece), (8, top))
-    return icon(art)
+    from build_early_armour import set_icon
+    return set_icon('bronze')
 
 
 # --------------------------------------------------------------------------------------- icon effects

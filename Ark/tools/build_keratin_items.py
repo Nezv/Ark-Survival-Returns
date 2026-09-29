@@ -1,8 +1,9 @@
 """Sprites for the keratin tier and the sharp rock.
 
-Keratin and the sharp rock are drawn here at 32 px like the rock. The spear and the armour are the vanilla
-stone spear and copper armour re-toned to a horn ramp (dark root to pale tip), with faint growth bands on
-the worn layers, so their silhouettes match vanilla exactly. Tech tree icons are 4x nearest upscales.
+Keratin and the sharp rock are drawn here at 32 px like the rock. The vanilla stone spear is re-toned
+to a horn ramp (dark root to pale tip). Armour sprites come from the native
+prehistoric models in build_early_armour.py; copper-based worn layers remain the in-game fallback until
+the custom armour renderer is wired. Tech tree icons are nearest upscales.
 
 Run from Ark: python tools/build_keratin_items.py
 """
@@ -158,11 +159,12 @@ def icon(image):
 
 
 def main():
+    from build_early_armour import item_sprite
     items = {
         'keratin': keratin_sprite(),
         'sharp_rock': sharp_rock_sprite(),
         'keratin_spear': retone(vanilla('item/stone_spear'), grey),
-        **{f'keratin_{piece}': retone(vanilla(f'item/copper_{piece}')) for piece in ('helmet', 'chestplate', 'leggings', 'boots')},
+        **{f'keratin_{piece}': item_sprite('keratin', piece) for piece in ('helmet', 'chestplate', 'leggings', 'boots')},
     }
     (TEX / 'item').mkdir(parents=True, exist_ok=True)
     for name, image in items.items():
