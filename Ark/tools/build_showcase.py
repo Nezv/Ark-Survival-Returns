@@ -3,9 +3,9 @@
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
 (design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
-journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the recipe-gate
-spine (build_item_flow.py, drawn by spine.js), the live 3D models (showcase_models.py, drawn by three.js), the Ark UI
-previews and Dashboard.csv for the roadmap.
+journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
+screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
+(showcase_models.py, drawn by three.js), the Ark UI previews and Dashboard.csv for the roadmap.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
 the nav, the home index and the pager switch between them.
@@ -545,20 +545,6 @@ def blocks_section():
     return '\n'.join(cards)
 
 
-def spine_section():
-    """The recipe-gate spine from the Recipe Gates chart, with its notes and open decisions."""
-    import build_item_flow as flow
-    data, notes = flow.spine_payload()
-    css, js = flow.spine_assets()
-    return {
-        'SPINECSS': css, 'SPINEJS': js,
-        'SPINEDATA': json.dumps(data, ensure_ascii=False, separators=(',', ':')),
-        'SPINELEGEND': flow.legend_html(), 'SPINENOTES': flow.notes_html(notes), 'SPINENOTECOUNT': len(notes),
-        'SPINEDECISIONS': flow.decisions_html(),
-        'SPINEDECCOUNT': len(flow.DECISIONS),
-    }
-
-
 def ui_section():
     # The title screen as tools/preview_title_scene.py renders it: both GLSL layers, the creature and the layout.
     title = Image.open(ARK / 'docs/title-scene.jpg').convert('RGB')
@@ -630,7 +616,7 @@ def build():
         'HABITATS': habitats_section(species),
         **behavior_section(names, species),
         'TREE': tree_section(),
-        **spine_section(),
+        **__import__('showcase_recipes').section(uri, e),
         'JOURNAL': journal_section(),
         'BLOCKS': blocks_section(),
         'ITEMS': items_section(names),
