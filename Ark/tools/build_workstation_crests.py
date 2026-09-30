@@ -5,8 +5,12 @@ edge, not an ornament above it: a band around all four sides that covers the pan
 pieces, a crossbar between the graph well and the craft bar, the bench's sigil in a medallion set into the top edge and
 a smaller piece at the bottom. Riveted steel with leather straps for the Armoury, logs lashed with rope for the Working
 Station, cut stone blocks and a millstone for the Mortar & Pestle, a vine-wrapped branch with herbs for the Medicine
-Bench, and hammered iron with gold bolts, chains and forge heat for the Smithing Table. Tones sit a step darker than
-the materials' items so the frame belongs to the screen's dark palette; light comes from the top left, like the GUI.
+Bench, hammered iron with gold bolts, chains and forge heat for the Smithing Table, a ring of fire-blackened
+fieldstones with a spit on forked sticks and a heap of embers for the Campfire, dressed blocks of every stone it cuts
+round a carved saw ring for the Stonecutter, smoke-blackened fired brick with a glowing iron bar, bellows and a
+tapping arch for the Primitive Forge, and the Mechanical Press's dark wooden frame, riveted casing and copper drive
+gear. Tones sit a step darker than the materials' items so the frame belongs to the screen's dark palette; light
+comes from the top left, like the GUI.
 Sigils are 16x16 pixel art, like an item.
 
 Every bench also gets a baroque frame, the same for all of them but for the sigil in its cartouche: a carved moulding
@@ -144,6 +148,65 @@ SIGILS = {
                "..DDDDDDDDDDDDD.",
                "................"],
               {'L': '#8f979d', 'W': '#c9d0d4', 'M': '#5a6268', 'D': '#30363a', 'Y': '#ffd35a', 'O': '#ff8a3a'}),
+
+    # Three logs in a tipi, a flame rising out of them, a ring of stones.
+    'campfire': (["................",
+                  "........Y.......",
+                  ".......YO.......",
+                  "......YOY...Y...",
+                  "......OWYO..O...",
+                  ".....OYWWYOOY...",
+                  ".....OYWWYYO....",
+                  "....ROYYWYYOR...",
+                  "....RLOYYYOLR...",
+                  "...LLlLOOOLlLL..",
+                  "..LllLlLLLlLllL.",
+                  "..BLllLlllLllB..",
+                  ".SSBBLLllLLBBSS.",
+                  ".SsSSBBBBBBSSsS.",
+                  "..SSs.SSSS.sSS..",
+                  "................"],
+                 {'Y': '#ffd35a', 'O': '#ff8a3a', 'W': '#fff4c8', 'R': '#c8402a', 'L': '#8a5a34', 'l': '#5a3a20',
+                  'B': '#3a2618', 'S': '#8f8f86', 's': '#5d5d56'}),
+    # A clay bloomery with its glowing mouth and a curl of smoke.
+    'bloomery': (["..........ss....",
+                  ".........s..s...",
+                  "..........ss....",
+                  "......CCCC......",
+                  "......CccC......",
+                  ".....CCccCC.....",
+                  ".....CcCCcC.....",
+                  "....CCcCCccC....",
+                  "....CcCCCCcC....",
+                  "...CCCOYYOCCC...",
+                  "...CcCYWWYCcC...",
+                  "..CCcCOYYOCcCC..",
+                  "..CcCCROORCCcC..",
+                  ".KKKKKKKKKKKKKK.",
+                  ".KkkKkkkKkkkKkK.",
+                  "................"],
+                 {'C': '#b8714a', 'c': '#7a3f27', 'O': '#ff8a3a', 'Y': '#ffd35a', 'W': '#fff4c8', 'R': '#c8402a',
+                  'K': '#6c6e67', 'k': '#3c3e3c', 's': '#8a8f86'}),
+    # A screw press: posts, a beam with the screw and its bar, the platen on a stack of paper.
+    'press': (["................",
+               "..HHHHHHHHHHHH..",
+               ".......SS.......",
+               ".PPWWWWSSWWWWPP.",
+               ".PwwwwwSSwwwwwP.",
+               ".Pp....ss....pP.",
+               ".Pp....SS....pP.",
+               ".Pp..LLLLLL..pP.",
+               ".Pp..llllll..pP.",
+               ".Pp..QQQQQQ..pP.",
+               ".Pp..qqqqqq..pP.",
+               ".Pp..QQQQQQ..pP.",
+               ".PBBBBBBBBBBBBP.",
+               ".PbbbbbbbbbbbbP.",
+               ".PP..........PP.",
+               "................"],
+              {'H': '#cf7a44', 'S': '#c3ccd2', 's': '#8b959c', 'P': '#8f5037', 'p': '#5c3022', 'W': '#a0643f',
+               'w': '#5c3022', 'L': '#9aa3a9', 'l': '#5a6268', 'Q': '#f2ecd6', 'q': '#c9bf9e', 'B': '#474c50',
+               'b': '#24272a'}),
 }
 
 
@@ -165,9 +228,38 @@ def hammer():
     return image
 
 
+def saw():
+    """A circular saw blade with eight teeth, sunk into a block of cut stone."""
+    image = Image.new('RGBA', (16, 16))
+    px = image.load()
+    cx, cy = 8, 7
+    for y in range(16):
+        for x in range(16):
+            dx, dy = x + 0.5 - cx, y + 0.5 - cy
+            d = math.hypot(dx, dy)
+            a = (math.atan2(dy, dx) / (2 * math.pi) * 8) % 1
+            if d <= 1.2:
+                px[x, y] = rgb('#2a2d30')
+            elif d <= 4.6 or (d <= 6.4 and a < 0.42 - (d - 4.6) * 0.2):
+                fc = facing(dx, dy)
+                px[x, y] = rgb('#eef3f6' if fc > 0.55 and d > 2 else '#c3ccd2' if fc > -0.1 else
+                               '#9aa3a9' if fc > -0.6 else '#6f787e')
+    for y in range(10, 15):
+        for x in range(1, 15):
+            edge = y == 10 or x == 1
+            px[x, y] = rgb('#b4b7af' if edge else '#4a4d48' if y == 14 or x == 14 else '#8e918a')
+    for x in range(5, 11):   # the kerf the blade has cut
+        px[x, 10] = rgb('#2a2d30')
+    for x, y in ((4, 12), (9, 12), (11, 13), (6, 13)):
+        px[x, y] = rgb('#6c6f68')
+    return image
+
+
 def sigil(name):
     if name == 'hammer':
         return outline(hammer())
+    if name == 'saw':
+        return outline(saw())
     rows, palette = SIGILS[name]
     return outline(paint(rows, palette))
 
@@ -906,6 +998,424 @@ def iron(sigil_name, accent):
     return f.finish()
 
 
+# ------------------------------------------------------------------------ the fire, the saw, the forge, the press
+
+COPPER = ['#3a1a0a', '#6e3416', '#a4542a', '#cf7a44', '#eba36c']
+
+
+def lump(f, cells, face, light, dark, ramp=None):
+    """A rounded stone: its pixels shaded as a dome lit from the top left."""
+    xs, ys = [x for x, _ in cells], [y for _, y in cells]
+    cx, cy = (min(xs) + max(xs) + 1) / 2, (min(ys) + max(ys) + 1) / 2
+    rx, ry = (max(xs) - min(xs) + 1) / 2, (max(ys) - min(ys) + 1) / 2
+    for x, y in cells:
+        dx, dy = (x + 0.5 - cx) / rx, (y + 0.5 - cy) / ry
+        fc = facing(dx, dy) * min(1, math.hypot(dx, dy) * 1.3)
+        tone = light if fc > 0.35 else face if fc > -0.3 else dark
+        f.put(x, y, tone if ramp is None else ramp[tone])
+
+
+def cobbles(f, x0, y0, x1, y1, horizontal, short, long_, face=(3, 4)):
+    """Rounded fieldstones along a band: each one a dome, dark gaps between."""
+    for x, y in rect(x0, y0, x1, y1):
+        f.put(x, y, 0)
+    a, end = (x0, x1) if horizontal else (y0, y1)
+    lo, hi = (y0, y1) if horizontal else (x0, x1)
+    while a <= end:
+        b = min(end, a + f.rng.randint(short, long_))
+        if end - b < short // 2:
+            b = end
+        last = b if b == end else b - 1
+        cells = {(u, v) if horizontal else (v, u) for u in range(a, last + 1) for v in range(lo, hi + 1)
+                 if not (u in (a, last) and v in (lo, hi))}
+        tone = f.rng.choice(face)
+        lump(f, cells, tone, tone + 1, tone - 1)
+        a = b + 1
+
+
+HEARTH = ['#121010', '#211d1a', '#332d28', '#48403a', '#5f564d', '#7a6f63', '#978a7a']
+CHAR = ['#0e0a07', '#1d1510', '#2e2219', '#433224', '#5a4431']
+
+
+def hearth(sigil_name, accent):
+    """Campfire: a ring of fire-blackened fieldstones, a spit on forked sticks across the craft bar, embers glowing
+    in the gaps of the lower stones and heaped under the bottom, sparks over the top."""
+    f, t = Frame(HEARTH, 'hearth'), 7
+    q = 7
+    cobbles(f, q + 1, -t, PANEL_W - q - 2, LIP - 1, True, 7, 12)
+    cobbles(f, q + 1, PANEL_H - LIP, PANEL_W - q - 2, PANEL_H + t - 1, True, 7, 12)
+    cobbles(f, -t, q + 1, LIP - 1, PANEL_H - q - 2, False, 7, 12)
+    cobbles(f, PANEL_W - LIP, q + 1, PANEL_W + t - 1, PANEL_H - q - 2, False, 7, 12)
+    # boulders at the corners
+    for piece in corners({(x, y) for x in range(-t - 2, q + 1) for y in range(-t - 2, q + 1)
+                          if math.hypot(x - (q - t - 2) / 2, y - (q - t - 2) / 2) <= (q + t + 3) / 2}):
+        lump(f, piece, 4, 5, 2)
+        for x, y in list(piece):
+            if f.rng.random() < 0.1:
+                f.shift(x, y, -1)
+    # soot: the stones darken toward the fire (inside) and toward the top, where the smoke goes
+    for (x, y), tone in list(f.tones.items()):
+        inner = min(x, y, PANEL_W - 1 - x, PANEL_H - 1 - y)
+        if -2 <= inner <= LIP - 1 and f.rng.random() < 0.55:
+            f.shift(x, y, -1)
+        if y < -2 and f.rng.random() < 0.25:
+            f.shift(x, y, -1)
+    # embers in the gaps of the lower half, brighter toward the bottom
+    for (x, y), tone in list(f.tones.items()):
+        if tone == 0:
+            heat = (y - PANEL_H * 0.62) / (PANEL_H * 0.38)
+            if heat > 0 and f.rng.random() < heat * 0.55:
+                f.put(x, y, EMBER[2] if f.rng.random() < 0.6 else EMBER[1])
+                if heat > 0.85 and f.rng.random() < 0.3:
+                    f.put(x, y, EMBER[3])
+    # the spit: a charred stick across the craft bar, resting in a forked stick at each side
+    for side in (1, -1):
+        base = -t - 6 if side == 1 else PANEL_W + t + 3
+        for y in range(RAIL + 2, RAIL + 20):
+            f.put(base, y, CHAR[4])
+            f.put(base + 1, y, CHAR[3])
+            f.put(base + 2, y, CHAR[1])
+        for k in range(1, 6):   # the fork's two tines
+            f.put(base - (k + 1) // 2, RAIL + 2 - k, CHAR[4])
+            f.put(base + 1 - (k + 1) // 2, RAIL + 2 - k, CHAR[2])
+            f.put(base + 2 + (k + 1) // 2, RAIL + 2 - k, CHAR[3])
+            f.put(base + 3 + (k + 1) // 2, RAIL + 2 - k, CHAR[1])
+    for x in range(-t - 9, PANEL_W + t + 8):
+        for k, tone in enumerate((4, 3, 2, 1)):
+            f.put(x, RAIL - 1 + k, CHAR[tone])
+        if f.rng.random() < 0.2:
+            f.put(x, RAIL + f.rng.randint(0, 1), CHAR[1])
+    for x in (-t - 9, PANEL_W + t + 7):   # the cut ends of the stick
+        for k, c in enumerate(('#6b5238', '#8a6c4a', '#6b5238', '#4a3826')):
+            f.put(x, RAIL - 1 + k, c)
+    for x in range(CX - 70, CX + 70):
+        if f.rng.random() < 0.09:
+            f.put(x, RAIL + f.rng.randint(0, 1), EMBER[3] if abs(x - CX) < 36 else EMBER[2])
+    # the medallion: a ring of small stones round the fire's sigil, warmed on their inner faces
+    def ring(f, x, y, dx, dy, d):
+        a = (math.atan2(dy, dx) / (2 * math.pi) * 11) % 1
+        fc = facing(dx, dy)
+        if d <= 10.4:
+            f.put(x, y, EMBER[1] if d > 9.4 else '#130c09')
+        elif a < 0.12:
+            f.put(x, y, 0)
+        else:
+            f.put(x, y, 5 if fc > 0.45 else 4 if fc > -0.2 else 3 if d > 11.5 else 2)
+            if d < 11.3 and fc < 0:
+                f.put(x, y, mix(f.get(x, y), EMBER[3], 0.45))
+    seal(f, ring, '#130c09', sigil_name, r=14, hole=10.4)
+    # embers heaped under the bottom stones, a few flames licking up the front
+    heap = set()
+    for y in range(PANEL_H + t - 2, PANEL_H + t + 10):
+        half = 24 - max(0, y - (PANEL_H + t)) * 2.4
+        heap |= {(x, y) for x in range(int(CX - half), int(CX + half))}
+    for x, y in heap:
+        r, depth = f.rng.random(), abs(x + 0.5 - CX) / 24 + (y - PANEL_H - t) / 14
+        if depth < 0.45:
+            f.put(x, y, EMBER[4] if r < 0.5 else EMBER[3])
+        elif depth < 0.8:
+            f.put(x, y, EMBER[3] if r < 0.45 else EMBER[2])
+        else:
+            f.put(x, y, EMBER[2] if r < 0.4 else EMBER[1] if r < 0.8 else CHAR[1])
+    for x in range(CX - 14, CX + 14, 5):   # charred ends sticking out of the embers
+        for k in range(3):
+            f.put(x + k, PANEL_H + t + 3 + (k + x) % 2, CHAR[3])
+    for x, h in ((CX - 11, 4), (CX - 6, 7), (CX - 1, 9), (CX + 4, 7), (CX + 9, 5), (CX + 13, 3)):
+        for k in range(h):   # flames licking up over the bottom stones
+            y = PANEL_H + t - 2 - k
+            f.put(x, y, EMBER[4] if k < h * 0.6 else EMBER[3])
+            if k < h - 2:
+                f.put(x + 1, y, EMBER[3] if k < h * 0.5 else EMBER[2])
+    # sparks drifting over the top
+    for x, y in ((CX - 30, -12), (CX - 22, -16), (CX + 25, -14), (CX + 33, -10), (CX - 44, -9), (CX + 47, -12)):
+        f.put(x, y, EMBER[4])
+    return f.finish()
+
+
+ASHLAR = {'stone': ['#1e1f1f', '#353634', '#4e4f4b', '#686964', '#838480', '#a2a39d', '#c1c2bb'],
+          'deepslate': ['#151519', '#24242a', '#34343c', '#46464f', '#5a5a64', '#72727c', '#8c8c96'],
+          'granite': ['#231613', '#3d2721', '#5a3a30', '#7a5243', '#966a58', '#b0846f', '#c9a08b'],
+          'sandstone': ['#2a2418', '#4a4029', '#6e5f3d', '#8f7d53', '#ad9a6c', '#c9b889', '#e0d2a6'],
+          'tuff': ['#1a1c19', '#2e312c', '#434740', '#595e55', '#70766b', '#8a9085', '#a4aa9e']}
+
+
+def mason(sigil_name, accent):
+    """Stonecutter: one course of dressed blocks, every stone kind it cuts, each drafted at its margin and tooled
+    with chisel lines; carved quoins, a lintel over the craft bar, a carved ring round the saw, stepped stone below."""
+    f, t = Frame(ASHLAR['stone'], 'mason'), 7
+    q = 7
+    kinds = list(ASHLAR)
+
+    def course(x0, y0, x1, y1, horizontal):
+        for x, y in rect(x0, y0, x1, y1):
+            f.put(x, y, '#141514')
+        a, end = (x0, x1) if horizontal else (y0, y1)
+        while a <= end:
+            b = min(end, a + f.rng.randint(16, 28))
+            if end - b < 8:
+                b = end
+            block = rect(a, y0, b - 1 if b < end else b, y1) if horizontal else rect(x0, a, x1, b - 1 if b < end else b)
+            ramp = ASHLAR[f.rng.choice(kinds)]
+            dress(block, ramp)
+            a = b + 1
+
+    def dress(block, ramp):
+        f.bevel(block, 4, 5, 2, ramp=ramp)
+        xs, ys = [x for x, _ in block], [y for _, y in block]
+        x0, y0, x1, y1 = min(xs) + 1, min(ys) + 1, max(xs) - 1, max(ys) - 1
+        slant = f.rng.choice((1, -1))
+        for x, y in block:
+            inside = x0 < x < x1 and y0 < y < y1
+            if inside and (x * slant + y) % 3 == 0 and f.rng.random() < 0.55:
+                f.put(x, y, ramp[3])   # chisel tooling
+            elif inside and f.rng.random() < 0.08:
+                f.put(x, y, ramp[5])
+    course(q + 1, -t, PANEL_W - q - 2, LIP - 1, True)
+    course(q + 1, PANEL_H - LIP, PANEL_W - q - 2, PANEL_H + t - 1, True)
+    course(-t, q + 1, LIP - 1, PANEL_H - q - 2, False)
+    course(PANEL_W - LIP, q + 1, PANEL_W + t - 1, PANEL_H - q - 2, False)
+    # quoins with a mason's mark cut in
+    for i, piece in enumerate(corners(rect(-t - 2, -t - 2, q, q))):
+        dress(piece, ASHLAR['stone'])
+        xs, ys = [x for x, _ in piece], [y for _, y in piece]
+        cx, cy = (min(xs) + max(xs)) // 2, (min(ys) + max(ys)) // 2
+        for k in range(-3, 4):
+            f.put(cx + k, cy, ASHLAR['stone'][1])
+            f.put(cx, cy + k, ASHLAR['stone'][1])
+        for k in (-3, 3):
+            f.put(cx + k, cy - 1, ASHLAR['stone'][1])
+            f.put(cx - 1, cy + k, ASHLAR['stone'][1])
+    # the lintel over the craft bar, its ends set into the side courses
+    for x, y in rect(LIP, RAIL - 1, PANEL_W - LIP - 1, RAIL + 3):
+        f.put(x, y, ASHLAR['stone'][(5, 4, 4, 3, 1)[y - RAIL + 1]])
+    for x in range(LIP, PANEL_W - LIP):
+        if f.rng.random() < 0.3:
+            f.put(x, RAIL + f.rng.randint(0, 1), ASHLAR['stone'][3])
+    for piece in ends(rect(-t - 2, RAIL - 3, -1, RAIL + 6)):
+        dress(piece, ASHLAR['stone'])
+    # stone dust along the foot of the frame
+    for _ in range(26):
+        x = f.rng.randint(-t, PANEL_W + t - 1)
+        f.put(x, PANEL_H + t, ASHLAR['stone'][5])
+
+    def ring(f, x, y, dx, dy, d):
+        fc = facing(dx, dy)
+        a = (math.atan2(dy, dx) / (2 * math.pi) * 8) % 1
+        tone = 5 if fc > 0.5 else 4 if fc > -0.1 else 3 if fc > -0.6 else 2
+        if 11.2 < d < 12.2:
+            tone = 2 if fc > 0 else 5      # the carved groove
+        elif d > 13 and a < 0.08:
+            tone = 1                       # notches round the rim
+        f.put(x, y, ASHLAR['stone'][tone])
+    seal(f, ring, '#101111', sigil_name, r=14, hole=10)
+    # stepped stone under the bottom course: the shapes this bench cuts
+    steps = set()
+    for i, half in enumerate((22, 16, 10)):
+        y0 = PANEL_H + t - 1 + i * 4
+        steps |= rect(CX - half, y0, CX + half - 1, y0 + 3)
+    dress(steps, ASHLAR['sandstone'])
+    for i, half in enumerate((22, 16, 10)):
+        for x in range(CX - half, CX + half):
+            f.put(x, PANEL_H + t - 1 + i * 4, ASHLAR['sandstone'][5])
+        f.put(CX - half, PANEL_H + t - 1 + i * 4 + 3, ASHLAR['sandstone'][2])
+    return f.finish()
+
+
+CLAY = ['#1a0d08', '#31170f', '#4b2317', '#673221', '#83432c', '#9e5a3b', '#b8744f']
+SOOT = '#141110'
+
+
+def bloomery(sigil_name, accent):
+    """Primitive Forge: courses of fired clay brick, blackened by smoke toward the top and glowing with heat below,
+    stone footings at the corners, a hot iron bar across the craft bar with bellows at its ends, the round mouth of the
+    furnace round the sigil and a glowing tapping arch under the bottom."""
+    f, t = Frame(CLAY, 'bloomery'), 7
+
+    def bricks(x0, y0, x1, y1, horizontal):
+        for x, y in rect(x0, y0, x1, y1):
+            f.put(x, y, 1)
+        rows = range(y0, y1 + 1) if horizontal else range(x0, x1 + 1)
+        span = (x0, x1) if horizontal else (y0, y1)
+        size = 4
+        for r, row in enumerate(range(rows.start, rows.stop, size)):
+            offset = 0 if r % 2 == 0 else 7
+            a = span[0] - offset
+            while a <= span[1]:
+                b = a + 13
+                cells = set()
+                for u in range(max(a, span[0]), min(b, span[1] + 1)):
+                    for v in range(row, min(row + size - 1, rows.stop)):
+                        cells.add((u, v) if horizontal else (v, u))
+                if cells:
+                    face = f.rng.choice((3, 3, 4))
+                    f.bevel(cells, face, face + 1, face - 1)
+                    for x, y in cells:
+                        if f.rng.random() < 0.1:
+                            f.shift(x, y, -1)
+                a = b + 1
+    q = 6
+    bricks(q + 1, -t, PANEL_W - q - 2, LIP - 1, True)
+    bricks(q + 1, PANEL_H - LIP, PANEL_W - q - 2, PANEL_H + t - 1, True)
+    bricks(-t, q + 1, LIP - 1, PANEL_H - q - 2, False)
+    bricks(PANEL_W - LIP, q + 1, PANEL_W + t - 1, PANEL_H - q - 2, False)
+    # smoke blackens the upper bricks; heat reddens the mortar of the lower ones
+    for (x, y), tone in list(f.tones.items()):
+        up = 1 - (y + t) / (PANEL_H * 0.7)
+        if up > 0:
+            f.put(x, y, mix(f.get(x, y), SOOT, min(0.7, up * 0.75 + (0.15 if f.rng.random() < 0.2 else 0))))
+        down = (y - PANEL_H * 0.6) / (PANEL_H * 0.4)
+        if tone == 1 and down > 0 and f.rng.random() < down * 0.8:
+            f.put(x, y, EMBER[2] if down > 0.75 else EMBER[1])
+    # stone footings at the corners
+    for piece in corners(rect(-t - 2, -t - 2, q, q)):
+        f.bevel(piece, 4, 5, 2, ramp=STONE)
+        for x, y in piece:
+            if f.rng.random() < 0.14:
+                f.put(x, y, STONE[f.rng.choice((2, 3, 5))])
+    # the iron bar across the craft bar, glowing where it crosses the fire
+    for x in range(-t - 3, PANEL_W + t + 3):
+        heat = max(0.0, 1 - abs(x + 0.5 - CX) / (PANEL_W * 0.42))
+        for k, tone in enumerate((5, 4, 3, 1)):
+            base = IRON[tone]
+            f.put(x, RAIL - 1 + k, mix(base, EMBER[4] if k < 2 else EMBER[2], heat * (0.9 if k < 3 else 0.6)))
+    for x in (-t - 1, PANEL_W + t - 1):
+        rivet(f, x, RAIL, IRON[6], IRON[4], IRON[3], IRON[0])
+    # bellows hanging under both ends of the bar: the nozzle up into it, leather folds between two boards
+    for cx in (-t - 5, PANEL_W + t + 4):
+        for k in range(2):   # the nozzle
+            f.put(cx, RAIL + 3 + k, IRON[5])
+            f.put(cx + 1, RAIL + 3 + k, IRON[3])
+        for k in range(13):
+            y = RAIL + 5 + k
+            half = min(5, 1 + k // 2)
+            for x in range(cx - half, cx + half + 2):
+                edge = x in (cx - half, cx + half + 1)
+                f.put(x, y, WOOD[5] if edge and x < cx else WOOD[3] if edge else
+                      LEATHER[4] if k % 3 == 1 else LEATHER[3] if x <= cx else LEATHER[2])
+        for x in range(cx - 6, cx + 8):
+            f.put(x, RAIL + 18, WOOD[5] if x < cx else WOOD[4])
+            f.put(x, RAIL + 19, WOOD[2])
+        for k in range(3):   # the handle
+            f.put(cx, RAIL + 20 + k, WOOD[4])
+            f.put(cx + 1, RAIL + 20 + k, WOOD[2])
+    # the furnace mouth: a thick fired-clay collar, the fire showing at its inner lip
+    def ring(f, x, y, dx, dy, d):
+        fc = facing(dx, dy)
+        a = (math.atan2(dy, dx) / (2 * math.pi) * 14) % 1
+        if d <= 10.3:
+            f.put(x, y, EMBER[2] if d > 9.5 else '#140a07')
+        elif a < 0.1:
+            f.put(x, y, 1)
+        else:
+            f.put(x, y, 5 if fc > 0.45 else 4 if fc > -0.2 else 3 if fc > -0.6 else 2)
+            if d < 11.6:
+                f.put(x, y, mix(f.get(x, y), EMBER[3], 0.5))
+    seal(f, ring, '#140a07', sigil_name, r=14, hole=10.3)
+    # the tapping arch under the bottom course, fire inside it
+    arch = set()
+    for y in range(PANEL_H + t - 3, PANEL_H + t + 8):
+        for x in range(CX - 13, CX + 13):
+            if math.hypot(x + 0.5 - CX, max(0, PANEL_H + t + 3 - y)) <= 13:
+                arch.add((x, y))
+    f.bevel(arch, 4, 5, 2)
+    for x, y in arch:
+        dx, dy = x + 0.5 - CX, max(0, PANEL_H + t + 3 - y)
+        if math.hypot(dx, dy) <= 8.5 and y > PANEL_H + t - 2:
+            glow = 1 - math.hypot(dx, dy * 1.4) / 9
+            f.put(x, y, EMBER[4] if glow > 0.55 else EMBER[3] if glow > 0.3 else EMBER[2] if glow > 0.05 else EMBER[1])
+    return f.finish()
+
+
+PRESSWOOD = ['#170b07', '#2a150e', '#401f15', '#572a1d', '#703726', '#8a4632', '#a35a42']
+CASING = ['#141617', '#222527', '#313538', '#43484c', '#575d61', '#70777c', '#8d959a']
+VERDIGRIS = ['#2f6b58', '#4f9a80', '#79c2a4']
+
+
+def press(sigil_name, accent):
+    """Mechanical Press: the machine's dark wooden frame round riveted steel casing plates, capped corners, the steel
+    press bed across the craft bar with a copper gear at each end, the copper drive gear (verdigris in its teeth)
+    round the sigil, and the maker's plate under the bottom."""
+    f, t = Frame(PRESSWOOD, 'press'), 7
+    outer = 4
+    for x, y, side, d in band(t):
+        if d < outer:
+            f.put(x, y, shade([5, 4, 3, 2], side, d))
+        else:
+            f.put(x, y, CASING[shade([4, 3, 3, 2, 1], side, d - outer)])
+    # grain in the beams, seams and rivets in the casing
+    for (x, y), tone in list(f.tones.items()):
+        if f.rng.random() < 0.12:
+            f.shift(x, y, -1)
+    for s in range(34, PANEL_W - 30, 42):
+        for x in (s, PANEL_W - 1 - s):
+            for y0 in (-t + outer, PANEL_H - LIP):
+                for k in range(0, t + LIP - outer):
+                    f.put(x, y0 + k, CASING[0])
+            for y in (-t + outer + 1, PANEL_H + t - outer - 2):
+                f.put(x - 2, y, STEEL[6])
+                f.put(x + 2, y, STEEL[6])
+    for s in range(34, PANEL_H - 30, 40):
+        for y in (s, PANEL_H - 1 - s):
+            for x0 in (-t + outer, PANEL_W - LIP):
+                for k in range(0, t + LIP - outer):
+                    f.put(x0 + k, y, CASING[0])
+    # capped corner posts
+    for piece in corners(rect(-t - 2, -t - 2, 5, 5)):
+        f.bevel(piece, 4, 5, 2)
+    for x, y in spots([(-t - 1, -t - 1)], 3, 3):
+        for i, j, c in ((0, 0, 6), (1, 0, 5), (0, 1, 5), (1, 1, 4), (2, 1, 2), (1, 2, 2), (2, 2, 1)):
+            f.put(x + i, y + j, STEEL[c])
+    # the press bed across the craft bar
+    for x in range(LIP, PANEL_W - LIP):
+        for k, tone in enumerate((5, 4, 2, 0)):
+            f.put(x, RAIL + k, CASING[tone])
+        if x % 12 == 6:
+            f.put(x, RAIL + 1, STEEL[6])
+            f.put(x + 1, RAIL + 2, CASING[0])
+    # copper gears at both ends of the bed, half set into the frame
+    def gear(cx, cy, r, teeth, spin=0.0):
+        for y in range(cy - r - 2, cy + r + 3):
+            for x in range(cx - r - 2, cx + r + 3):
+                dx, dy = x + 0.5 - cx, y + 0.5 - cy
+                d = math.hypot(dx, dy)
+                a = (math.atan2(dy, dx) / (2 * math.pi) * teeth + spin) % 1
+                fc = facing(dx, dy)
+                if d <= 1.6:
+                    f.put(x, y, CASING[1])
+                elif d <= r * 0.45:
+                    f.put(x, y, COPPER[3] if fc > 0 else COPPER[1])
+                elif d <= r or (d <= r + 2 and a < 0.5):
+                    tone = 4 if fc > 0.5 else 3 if fc > -0.1 else 2 if fc > -0.6 else 1
+                    f.put(x, y, COPPER[tone])
+                    if a < 0.5 and d > r - 1 and f.rng.random() < 0.25:
+                        f.put(x, y, VERDIGRIS[f.rng.randint(0, 2)])
+    for cx in (-t // 2 - 1, PANEL_W + t // 2):
+        gear(cx, RAIL + 1, 5, 8)
+
+    def ring(f, x, y, dx, dy, d):
+        fc = facing(dx, dy)
+        a = (math.atan2(dy, dx) / (2 * math.pi) * 14) % 1
+        if d <= 10.4:
+            f.put(x, y, CASING[3] if d > 9.6 else '#101112')
+        elif d <= 12.2 or a < 0.5:
+            tone = 4 if fc > 0.5 else 3 if fc > -0.1 else 2 if fc > -0.6 else 1
+            f.put(x, y, COPPER[tone])
+            if d > 12.2 and f.rng.random() < 0.35:
+                f.put(x, y, VERDIGRIS[1 if fc > 0 else 0])
+    seal(f, ring, '#101112', sigil_name, r=14, hole=10.4)
+    # the maker's plate: a riveted cream plaque with its red mark
+    plate = rect(CX - 8, PANEL_H + t - 2, CX + 7, PANEL_H + t + 8)
+    f.bevel(plate, 4, 5, 2, ramp=CASING)
+    for x, y in rect(CX - 6, PANEL_H + t, CX + 5, PANEL_H + t + 6):
+        f.put(x, y, '#d9ceb0' if (x + y) % 5 else '#bfb393')
+    for i, j in ((-2, 1), (-1, 1), (0, 1), (1, 1), (-2, 2), (-2, 3), (-1, 3), (0, 3), (-2, 4), (-2, 5), (-1, 5), (0, 5), (1, 5)):
+        f.put(CX + i, PANEL_H + t + j - 1, '#a02820')
+    for x in (CX - 7, CX + 6):
+        f.put(x, PANEL_H + t - 1, STEEL[6])
+        f.put(x, PANEL_H + t + 7, STEEL[5])
+    return f.finish()
+
+
 # ---------------------------------------------------------------------------------------------- baroque
 
 # The panel's own tones (graph_style palette: outline, bevel dark, well, face, button, bevel light, button light, faint,
@@ -1140,7 +1650,8 @@ def baroque(sigil_name, accent):
     return f.finish()
 
 
-PAINTERS = {'steel': steel, 'wood': wood, 'stone': stone, 'vine': vine, 'iron': iron}
+PAINTERS = {'steel': steel, 'wood': wood, 'stone': stone, 'vine': vine, 'iron': iron, 'hearth': hearth,
+            'mason': mason, 'bloomery': bloomery, 'press': press}
 
 
 def frame(style_name, sigil_name, accent):

@@ -64,8 +64,8 @@
     "minecraft:spyglass": {
       "fate": "stay",
       "bench": "working_station",
-      "place": "metal/copper",
-      "note": "Not in the Armoury: an ingredient of the scanner (radar) (2026-09-29)."
+      "place": "redstone/power",
+      "note": "Not in the Armoury: an ingredient of the scanner (radar), next to it (2026-09-29)."
     },
     "minecraft:shield": {
       "bench": "armoury",

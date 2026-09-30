@@ -1,0 +1,35 @@
+{
+  "station": "arksurvivalreturns:primitive_forge",
+  "title": "Primitive Forge",
+  "about": "P14 design data (see armoury.json). Everything fired or smelted: ores into ingots, alloys (bronze from its blend, later steel), nuggets cast and melted back, clay fired into bricks, terracotta and pots, glass melted, blown into bottles and stained, and stone fired smooth or cracked. It burns fuel and takes each recipe's time. Food and charcoal went to the Campfire and the smelted dyes to the Mortar & Pestle.",
+  "accent": "#e0703a",
+  "verb": "Smelt",
+  "crest": {"frame": "bloomery", "sigil": "bloomery"},
+  "well": "soot",
+  "categories": [
+    {"id": "stone", "title": "Fired stone", "icon": "minecraft:smooth_stone", "color": "#9a9d93", "level": 1},
+    {
+      "id": "clay", "title": "Clay", "icon": "minecraft:brick", "color": "#b0583f", "level": 2, "after": "stone",
+      "items": [
+        {"group": "fired", "title": "Bricks and terracotta", "icon": "minecraft:terracotta"},
+        {"group": "glazed", "title": "Glazed terracotta", "icon": "minecraft:orange_glazed_terracotta"},
+        {"group": "pottery", "title": "Pots", "icon": "minecraft:flower_pot"}
+      ]
+    },
+    {"id": "glass", "title": "Glass", "icon": "minecraft:glass", "color": "#9fd0d8", "level": 2, "after": "clay"},
+    {
+      "id": "ores", "title": "Ores", "icon": "minecraft:raw_iron", "color": "#b8bcc2", "level": 8, "after": "stone",
+      "items": [
+        {"group": "ingots", "title": "Ingots", "icon": "minecraft:iron_ingot"},
+        {"group": "minerals", "title": "Coal and gems", "icon": "minecraft:diamond"}
+      ]
+    },
+    {"id": "nuggets", "title": "Nuggets", "icon": "minecraft:iron_nugget", "color": "#d8c37a", "level": 8, "after": "ores"},
+    {
+      "id": "alloys", "title": "Alloys", "icon": "arksurvivalreturns:bronze_ingot", "color": "#c98545", "level": 10, "after": "ores",
+      "items": [
+        {"item": "arksurvivalreturns:steel_ingot", "level": 25, "planned": true, "cost": {"minecraft:iron_ingot": 1, "#minecraft:coals": 2}}
+      ]
+    }
+  ]
+}

@@ -144,6 +144,29 @@ window.ArkWorkstationUI = (function () {
         x.fillStyle = css(rnd() < 0.3 ? '#3a2410' : pal.wellDot);
         x.fillRect(Math.floor(rnd() * w), Math.floor(rnd() * h), 1, 1);
       }
+    } else if (kind === 'embers') {
+      for (i = 0; i < w * h / 120; i++) {
+        x.fillStyle = css(rnd() < 0.3 ? '#43200e' : pal.wellDot);
+        px = Math.floor(rnd() * w); py = Math.floor(rnd() * h);
+        x.fillRect(px, py, 1, 1);
+        if (rnd() < 0.15) x.fillRect(px, py - 1, 1, 1);
+      }
+    } else if (kind === 'soot' || kind === 'ashlar') {
+      // Faint courses: brick for the forge (short, staggered), dressed stone for the Stonecutter (long, uneven).
+      var course = kind === 'soot' ? 8 : 12, row = 0;
+      for (py = course - 1; py < h; py += course, row++) {
+        for (px = 0; px < w; px++) if (rnd() < 0.6) x.fillRect(px, py, 1, 1);
+        px = kind === 'soot' ? (row % 2 ? 0 : 9) : Math.floor(rnd() * 20);
+        for (; px < w; px += kind === 'soot' ? 18 : 20 + Math.floor(rnd() * 18)) {
+          for (i = 1; i < course; i++) if (rnd() < 0.6) x.fillRect(px, py - i, 1, 1);
+        }
+      }
+    } else if (kind === 'plates') {
+      for (px = 24; px < w; px += 48) for (py = 0; py < h; py++) if (rnd() < 0.7) x.fillRect(px, py, 1, 1);
+      for (py = 30; py < h; py += 36) for (px = 0; px < w; px++) if (rnd() < 0.7) x.fillRect(px, py, 1, 1);
+      for (px = 24; px < w; px += 48) {
+        for (py = 30; py < h; py += 36) [[-3, -3], [2, -3], [-3, 2], [2, 2]].forEach(function (d) { x.fillRect(px + d[0], py + d[1], 1, 1); });
+      }
     } else {
       for (px = 6; px < w - 2; px += 12) for (py = 6; py < h - 2; py += 12) x.fillRect(px, py, 1, 1);
     }
@@ -384,6 +407,11 @@ window.ArkWorkstationUI = (function () {
       return o;
     }
 
+    /** What the bench does (its design's verb: Craft, Cook, Cut, Grind, Smelt, Mix, Forge, Press) and its past tense. */
+    var PAST = { Cut: 'Cut', Grind: 'Ground' };
+    function verb() { var d = station().data; return (d && d.verb) || 'Craft'; }
+    function done() { var v = verb(); return PAST[v] || v + (/e$/.test(v) ? 'd' : 'ed'); }
+
     /** Why the current craft cannot happen, or '' when it can. */
     function blocker(times) {
       var sel = graph.selected;
@@ -418,6 +446,7 @@ window.ArkWorkstationUI = (function () {
           : entry.planned || meta(variant.item).planned ? ['Planned item', pal.planned]
           : variant.apply ? ['Trims an armour piece', pal.muted]
           : [((variant.count || 1) > 1 ? 'Makes ' + variant.count + ' · have ' : 'Have ') + have(variant.item) +
+             (variant.time ? ' · ' + variant.time + ' s' : '') +
              (many ? ' · ' + (sel.variant + 1) + '/' + entry.variants.length : ''), pal.muted];
       if (st.note) sub = [st.note.text, st.note.color];
       text(font.fit(sub[0], o.text.w), o.text.x, o.y + 17, sub[1], false);
@@ -430,7 +459,7 @@ window.ArkWorkstationUI = (function () {
       widgets.push({ id: 'count', x: o.count.x, y: o.count.y, w: o.count.w, h: o.count.h, enabled: !locked });
       button('plus', o.plus, '+', !locked && st.amount < 99);
       button('max', o.max, 'Max', !locked && max > 0);
-      button('craft', o.craft, variant.apply ? 'Apply' : 'Craft', !blocker(st.amount));
+      button('craft', o.craft, variant.apply ? 'Apply' : verb(), !blocker(st.amount));
     }
 
     function drawPending() {
@@ -470,8 +499,9 @@ window.ArkWorkstationUI = (function () {
           lines = [[n.entry.variants.length > 1 ? familyTitle(n) : vname(n.item), WHITE]];
           if (n.entry.variants.length > 1) lines.push([vname(n.item) + '  ' + (n.variant + 1) + '/' + n.entry.variants.length, GRAY]);
           if (locked) lines.push(['Requires level ' + G.levelOf(n.cat, n.entry, n.group), pal.missing]);
-          else if (n === graph.selected) lines.push([n.item.apply ? 'Click again to apply' : 'Click again to craft', GRAY]);
+          else if (n === graph.selected) lines.push([n.item.apply ? 'Click again to apply' : 'Click again to ' + verb().toLowerCase(), GRAY]);
           if ((n.item.count || 1) > 1) lines.push(['Makes ' + n.item.count, GRAY]);
+          if (n.item.time) lines.push(['Takes ' + n.item.time + ' s over the fire', GRAY]);
           if (n.entry.variants.length > 1) lines.push(['Scroll for the other variants', GRAY]);
           if (n.entry.planned || info.planned) lines.push(['Planned item', pal.planned]);
         }
@@ -482,7 +512,7 @@ window.ArkWorkstationUI = (function () {
       if (!sel) return null;
       if (h.widget === 'craft') {
         var why = blocker(st.amount), made = (sel.item.count || 1) * st.amount;
-        return [[(sel.item.apply ? 'Apply ' : 'Craft ') + (made > 1 ? made + ' ' : '') + vname(sel.item), WHITE]]
+        return [[(sel.item.apply ? 'Apply ' : verb() + ' ') + (made > 1 ? made + ' ' : '') + vname(sel.item), WHITE]]
             .concat(why ? [[why, pal.missing]] : [['Shift: all you can', GRAY]]);
       }
       if (h.widget === 'max') return [['As many as you can make', WHITE], [String(G.maxCrafts(sel.item, st.inv)), GRAY]];
@@ -530,7 +560,7 @@ window.ArkWorkstationUI = (function () {
       } else {
         G.pay(variant, times, st.inv);
         st.inv[variant.item] = have(variant.item) + made;
-        note('Crafted ' + (made > 1 ? made + ' ' : '') + vname(variant), pal.craftable);
+        note(done() + ' ' + (made > 1 ? made + ' ' : '') + vname(variant), pal.craftable);
       }
       graph.nodes.forEach(function (n) { if (n.need) n.pulse = M.pulse; });
       sel.pulse = M.pulse;

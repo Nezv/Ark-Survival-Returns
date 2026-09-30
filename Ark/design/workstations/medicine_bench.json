@@ -2,6 +2,7 @@
   "station": "arksurvivalreturns:medicine_bench",
   "title": "Medicine Bench",
   "about": "P14 design data (see armoury.json). Bronze Age medicine: bandages, remedies and the suspicious stews, which become tonics here (the flower picks the effect). The fiber bandage stays a field craft as well.",
+  "verb": "Mix",
   "accent": "#7fc88a",
   "crest": {"frame": "vine", "sigil": "flask"},
   "well": "leaves",

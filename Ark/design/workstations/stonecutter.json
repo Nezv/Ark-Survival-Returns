@@ -1,0 +1,19 @@
+{
+  "station": "minecraft:stonecutter",
+  "title": "Stonecutter",
+  "about": "P14 design data (see armoury.json). Every stone building block and shape, by stone: pick the stone, then blocks, stairs, slabs or walls. The Stonecutter cuts one block into one piece (two slabs), so the old grid recipes for these shapes go; the blocks the grid made from something else (sandstone from sand, bricks from brick items, mud bricks) stay here with their cuts. Copper building blocks are cut here too, with their waxing. Its own recipe is proposed without iron (rock, flint and planks), so stone building stays open from the start.",
+  "accent": "#a9b2b8",
+  "verb": "Cut",
+  "crest": {"frame": "mason", "sigil": "saw"},
+  "well": "ashlar",
+  "categories": [
+    {"id": "stone", "title": "Stone", "icon": "minecraft:stone_bricks", "color": "#9a9d93", "level": 0},
+    {"id": "igneous", "title": "Granite, diorite and andesite", "icon": "minecraft:polished_granite", "color": "#b07a64", "level": 1, "after": "stone"},
+    {"id": "sandstone", "title": "Sandstone", "icon": "minecraft:cut_sandstone", "color": "#d8c68f", "level": 2, "after": "stone"},
+    {"id": "bricks", "title": "Bricks and mud", "icon": "minecraft:bricks", "color": "#b0583f", "level": 2, "after": "sandstone"},
+    {"id": "deepslate", "title": "Deepslate", "icon": "minecraft:deepslate_tiles", "color": "#6a6a74", "level": 3, "after": "igneous"},
+    {"id": "tuff", "title": "Tuff", "icon": "minecraft:tuff_bricks", "color": "#7c8078", "level": 3, "after": "deepslate"},
+    {"id": "resin", "title": "Resin bricks", "icon": "minecraft:resin_bricks", "color": "#d9772b", "level": 4, "after": "bricks"},
+    {"id": "copper", "title": "Copper blocks", "icon": "minecraft:cut_copper", "color": "#c46f45", "level": 10, "after": "tuff"}
+  ]
+}

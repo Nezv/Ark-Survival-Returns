@@ -1,7 +1,8 @@
 {
   "station": "arksurvivalreturns:mortar_and_pestle",
   "title": "Mortar & Pestle",
-  "about": "P14 design data (see armoury.json). Everything that is ground or pounded: narcotics and remedies from berries, every dye from flowers (the rules move the vanilla dye recipes here), bone meal, sugar and red ochre.",
+  "about": "P14 design data (see armoury.json). Everything that is ground or pounded: narcotics and remedies from berries, every dye from flowers (the rules move the vanilla dye recipes here, and green and lime dye are ground from cactus and sea pickles instead of smelted), bone meal, sugar and red ochre.",
+  "verb": "Grind",
   "accent": "#b58ad6",
   "crest": {"frame": "stone", "sigil": "mortar"},
   "well": "speckle",

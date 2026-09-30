@@ -25,8 +25,6 @@ DESIGN = ARK / 'design/workstations'
 CRESTS = DESIGN / 'crests'
 GENERATED = ARK / 'src/generated/resources'
 JAR = ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-sources.jar'
-TITLES = {'armoury': 'Armoury', 'working_station': 'Working Station', 'mortar_and_pestle': 'Mortar & Pestle',
-          'medicine_bench': 'Medicine Bench', 'smithing_table': 'Smithing Table', **wp.MACHINES}
 TAG_NAMES = {'#minecraft:planks': 'Any Planks', '#minecraft:logs': 'Any Log', '#minecraft:wool': 'Any Wool',
              '#minecraft:wooden_slabs': 'Any Wooden Slab', '#minecraft:coals': 'Coal or Charcoal',
              '#minecraft:stone_crafting_materials': 'Cobblestone (any)', '#minecraft:stone_tool_materials': 'Cobblestone (any)',
@@ -35,7 +33,9 @@ TAG_NAMES = {'#minecraft:planks': 'Any Planks', '#minecraft:logs': 'Any Log', '#
              '#minecraft:candles': 'Any Candle', '#minecraft:wool_carpets': 'Any Carpet', '#minecraft:beds': 'Any Bed',
              '#minecraft:decorated_pot_ingredients': 'Brick or Pottery Sherd', '#minecraft:soul_fire_base_blocks': 'Soul Sand or Soil',
              '#minecraft:metal_nuggets': 'Iron or Copper Nugget', '#c:leathers': 'Leather', '#c:ingots/bronze': 'Bronze Ingot',
-             '#c:ores/tin': 'Tin Ore', '#arksurvivalreturns:berries': 'Any Berry'}
+             '#c:ores/tin': 'Tin Ore', '#arksurvivalreturns:berries': 'Any Berry', '#minecraft:meat': 'Any Meat',
+             '#minecraft:piglin_loved': 'Golden Tool or Armour', '#minecraft:logs_that_burn': 'Any Log',
+             '#minecraft:smelts_to_glass': 'Sand or Red Sand', '#minecraft:leaves': 'Any Leaves'}
 TAG_ITEMS = {'#c:leathers': 'minecraft:leather', '#c:ingots/bronze': 'arksurvivalreturns:bronze_ingot',
              '#c:ores/tin': 'arksurvivalreturns:tin_ore'}
 DISPLAY = {'minecraft:water_bottle': 'Water Bottle'}
@@ -76,6 +76,12 @@ def item_name(item_id, table, source):
         if pattern:
             return pattern + ' Template'
     return table.get(f'item.{ns}.{path}') or table.get(f'block.{ns}.{path}') or path.replace('_', ' ').title()
+
+
+def lang_has(table, item_id):
+    """True when the lang table names the item: it is registered, not planned."""
+    key = item_id.replace(':', '.')
+    return f'item.{key}' in table or f'block.{key}' in table
 
 
 def short_path(item_id):
@@ -226,22 +232,27 @@ def section(uri, e):
     baroque_meta = {'margin': frames.B_MARGIN, 'top': frames.B_TOP, 'bottom': frames.B_BOTTOM}
     sigils = {bench: Image.open(CRESTS / f'{bench}_sigil.png').convert('RGBA') for bench in wp.BENCHES
               if (CRESTS / f'{bench}_sigil.png').is_file()}
-    icons = Icons(overrides={f'{wp.NS}:armoury': sigils.get('armoury')} if 'armoury' in sigils else {})
+    # A planned bench block has no model yet: its sigil stands in for it. A planned item a design titles is named so.
+    blocks = {designs[b]['station']: b for b in wp.BENCHES}
+    icons = Icons(overrides={station: sigils[bench] for station, bench in blocks.items() if bench in sigils
+                             and station.startswith(wp.NS + ':') and not lang_has(table, station)})
+    planned_names = {entry['item']: entry['title'] for data in designs.values()
+                     for _, entry in wp.design_entries(data) if entry.get('planned') and entry.get('title')}
     ids = ids_of(trees, records)
     icon_atlas, cells = atlas(ids, icons, source, uri)
     before = old.get('items', {})
     items = {}
     for item_id in ids:
-        planned = item_id.startswith(wp.NS + ':') and f"item.{item_id.replace(':', '.')}" not in table \
-            and f"block.{item_id.replace(':', '.')}" not in table
-        name = item_name(item_id, table, source) if jar or item_id not in before else before[item_id]['name']
+        planned = item_id.startswith(wp.NS + ':') and not lang_has(table, item_id)
+        name = planned_names.get(item_id) if planned else None
+        name = name or (item_name(item_id, table, source) if jar or item_id not in before else before[item_id]['name'])
         items[item_id] = {'name': name, 'icon': cells.get(item_id, 0), **({'stack': 64} if item_id in STACKABLE else {}),
                           **({'planned': True} if planned else {})}
     font = font_atlas(jar, uri) if jar else old.get('font')
     if not font:
         raise SystemExit(f'{JAR} is missing: run ./gradlew build once so the Recipes page gets the vanilla font')
     stations = []
-    for bench in wp.BENCHES:
+    for bench in wp.BENCHES:  # one tab per bench, in the plan's order
         tree = trees[bench]
         crest, baroque = CRESTS / f'{bench}.png', CRESTS / f'{bench}_baroque.png'
         stations.append({'id': bench, 'title': tree['title'], 'accent': tree.get('accent', '#e6e8e1'), 'well': tree.get('well', 'dots'),
@@ -255,7 +266,8 @@ def section(uri, e):
     payload = {'style': style, 'stations': stations, 'items': items, 'font': font, 'atlas': icon_atlas,
                'presets': {'empty': {}, 'starter': STARTER, 'stocked': {i: 64 for i in costs}},
                'review': {'records': [compact(r) for r in records], 'decisions': decisions,
-                          'benches': TITLES, 'places': place_titles(designs)}}
+                          'benches': {bench: trees[bench]['title'] for bench in wp.BENCHES},
+                          'places': place_titles(designs)}}
     armoury = trees['armoury']
     families = sum(len(entry['items']) if 'group' in entry else 1 for tree in trees.values()
                    for c in tree['categories'] for entry in c['items'])

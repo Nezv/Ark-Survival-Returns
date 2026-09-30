@@ -11,8 +11,8 @@ window.ArkRecipeReview = (function () {
   'use strict';
   var FATES = ['go', 'stay', 'change', 'decide'];
   var LABEL = { go: 'Go', stay: 'Stay', change: 'Change', decide: '?' };
-  var ORDER = ['armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'primitive_forge',
-               'stone_fire', 'stonecutter', ''];
+  var ORDER = ['armoury', 'working_station', 'campfire', 'stonecutter', 'mortar_and_pestle', 'primitive_forge',
+               'medicine_bench', 'smithing_table', 'mechanical_press', ''];
   var STORE = 'ark-p14-recipe-edits';
   var PAGE = 120;
 

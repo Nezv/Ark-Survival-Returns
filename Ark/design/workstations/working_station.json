@@ -1,7 +1,7 @@
 {
   "station": "arksurvivalreturns:working_station",
   "title": "Working Station",
-  "about": "P14 design data (see armoury.json). The Working Station keeps everything that is not a weapon, tool, armour piece, dye or remedy: most vanilla recipes land here through the rules in tools/workstation_plan.py, grouped by material, with variants (wood types, colours, stone kinds) folded into one node. Groups only hold what the plan places in them; the items written below are new.",
+  "about": "P14 design data (see armoury.json). The Working Station keeps what is put together by hand: carpentry, camp gear, accessories, textiles and redstone. Everything made somewhere else moved there: food to the Campfire, stone shapes to the Stonecutter, anything fired or smelted to the Primitive Forge, metal goods to the Smithing Table, paper, books and pressed blocks to the Mechanical Press. The rules in tools/workstation_plan.py place the vanilla recipes, grouped by material, with variants (wood types, colours) folded into one node; the items written below are new or changed.",
   "accent": "#8fb07f",
   "crest": {"frame": "wood", "sigil": "hammer"},
   "well": "grain",
@@ -11,27 +11,18 @@
       "items": [
         {"group": "planks", "title": "Planks, twigs and torches", "icon": "minecraft:oak_planks"},
         {"group": "building", "title": "Stairs, fences and doors", "icon": "minecraft:oak_stairs"},
-        {"group": "switches", "title": "Buttons and plates", "icon": "minecraft:oak_button"},
         {"group": "signs", "title": "Signs, shelves and frames", "icon": "minecraft:oak_sign"},
         {"group": "furniture", "title": "Furniture", "icon": "minecraft:barrel"},
-        {"group": "boats", "title": "Boats", "icon": "minecraft:oak_boat"},
-        {"group": "resin", "title": "Resin", "icon": "minecraft:resin_clump"}
-      ]
-    },
-    {
-      "id": "stone", "title": "Stone", "icon": "minecraft:cobblestone", "color": "#9a9d93", "level": 0, "after": "wood",
-      "items": [
-        {"group": "stairs", "title": "Stairs and slabs", "icon": "minecraft:stone_brick_stairs"},
-        {"group": "walls", "title": "Walls", "icon": "minecraft:cobblestone_wall"},
-        {"group": "bricks", "title": "Bricks and polished stone", "icon": "minecraft:stone_bricks"},
-        {"group": "machines", "title": "Workshop", "icon": "minecraft:stonecutter"}
+        {"group": "boats", "title": "Boats", "icon": "minecraft:oak_boat"}
       ]
     },
     {
       "id": "camp", "title": "Camp", "icon": "arksurvivalreturns:bedroll", "color": "#b5895a", "level": 0, "after": "wood",
       "items": [
         {"group": "stations", "title": "Stations", "icon": "arksurvivalreturns:working_station", "items": [
-          {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "arksurvivalreturns:rock": 4, "arksurvivalreturns:plant_fiber": 3}}
+          {"item": "minecraft:stonecutter", "cost": {"arksurvivalreturns:rock": 4, "minecraft:flint": 2, "#minecraft:planks": 2}},
+          {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "arksurvivalreturns:rock": 4, "arksurvivalreturns:plant_fiber": 3}},
+          {"item": "arksurvivalreturns:mechanical_press", "planned": true, "level": 12, "cost": {"arksurvivalreturns:bronze_ingot": 4, "#minecraft:logs": 4, "minecraft:smooth_stone": 2, "minecraft:copper_ingot": 2}}
         ]},
         {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress"},
         {"group": "tame", "title": "Tame gear", "icon": "arksurvivalreturns:pack_harness"}
@@ -47,46 +38,21 @@
         {"group": "charms", "title": "Charms and totems", "icon": "arksurvivalreturns:rex_totem"}
       ]
     },
+    {"id": "farm", "title": "Farm", "icon": "minecraft:wheat", "color": "#b9c35a", "level": 1, "after": "camp"},
+    {"id": "earth", "title": "Clay, mud and snow", "icon": "minecraft:clay_ball", "color": "#c07b5a", "level": 2, "after": "wood"},
     {
-      "id": "farm", "title": "Farm", "icon": "minecraft:wheat", "color": "#b9c35a", "level": 1, "after": "camp",
-      "items": [
-        {"group": "food", "title": "Food", "icon": "minecraft:bread"},
-        {"group": "crops", "title": "Crops and bales", "icon": "minecraft:hay_block"},
-        {"group": "honey", "title": "Honey, wax and slime", "icon": "minecraft:honey_bottle"}
-      ]
-    },
-    {
-      "id": "earth", "title": "Clay and sand", "icon": "minecraft:clay_ball", "color": "#c07b5a", "level": 2, "after": "stone",
-      "items": [
-        {"group": "clay", "title": "Clay, mud and terracotta", "icon": "minecraft:bricks"},
-        {"group": "sand", "title": "Sandstone and glass", "icon": "minecraft:glass"},
-        {"group": "snow", "title": "Snow and ice", "icon": "minecraft:snow_block"}
-      ]
-    },
-    {
-      "id": "fibre", "title": "Wool and paper", "icon": "minecraft:white_wool", "color": "#d8d4c8", "level": 3, "after": "farm",
+      "id": "fibre", "title": "Wool and leather", "icon": "minecraft:white_wool", "color": "#d8d4c8", "level": 3, "after": "farm",
       "items": [
         {"group": "wool", "title": "Wool and carpets", "icon": "minecraft:white_carpet"},
         {"group": "banners", "title": "Beds and banners", "icon": "minecraft:red_bed"},
-        {"group": "leather", "title": "Leather and string", "icon": "minecraft:bundle"},
-        {"group": "paper", "title": "Paper and books", "icon": "minecraft:book"}
+        {"group": "leather", "title": "Leather and string", "icon": "minecraft:bundle"}
       ]
     },
     {
-      "id": "metal", "title": "Metals", "icon": "minecraft:iron_ingot", "color": "#b8bcc2", "level": 10, "after": "earth",
+      "id": "redstone", "title": "Redstone", "icon": "minecraft:redstone", "color": "#d9443a", "level": 2, "after": "earth",
       "items": [
-        {"group": "blocks", "title": "Ingots and blocks", "icon": "minecraft:iron_block", "level": 8},
-        {"group": "copper", "title": "Copper blocks", "icon": "minecraft:cut_copper", "level": 8},
-        {"group": "copper_goods", "title": "Copper goods", "icon": "minecraft:lightning_rod", "level": 8},
-        {"group": "iron", "title": "Iron", "icon": "minecraft:bucket", "level": 12},
-        {"group": "gold", "title": "Gold", "icon": "minecraft:clock", "level": 18},
-        {"group": "rails", "title": "Rails and carts", "icon": "minecraft:rail", "level": 14}
-      ]
-    },
-    {
-      "id": "redstone", "title": "Redstone", "icon": "minecraft:redstone", "color": "#d9443a", "level": 14, "after": "metal",
-      "items": [
-        {"group": "power", "title": "Power and logic", "icon": "minecraft:repeater", "items": [
+        {"group": "switches", "title": "Buttons, plates and levers", "icon": "minecraft:lever"},
+        {"group": "power", "title": "Power and logic", "icon": "minecraft:repeater", "level": 14, "items": [
           {"item": "arksurvivalreturns:radar", "title": "Radar (scanner)", "level": 28, "planned": true, "cost": {"minecraft:spyglass": 1, "arksurvivalreturns:steel_ingot": 2, "arksurvivalreturns:copper_wire": 4, "minecraft:redstone": 2}}
         ]},
         {"group": "mechanisms", "title": "Mechanisms", "icon": "minecraft:piston", "level": 16}

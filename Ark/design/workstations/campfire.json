@@ -1,0 +1,29 @@
+{
+  "station": "arksurvivalreturns:stone_fire",
+  "title": "Campfire",
+  "about": "P14 design data (see armoury.json). The Stone Fire's screen: everything cooked over the fire. Meat and fish on the spit, vegetables in the embers, bread and pies baked on the stones, stews in a bowl, and charcoal charred from logs. The pot meals need the Cooking Pot sitting on the fire; dried meat and rations are interchangeable in them. Cooking takes the recipe's time and the fire's fuel. The furnace and smoker versions of these recipes go: the fire cooks them.",
+  "accent": "#e8893a",
+  "verb": "Cook",
+  "crest": {"frame": "hearth", "sigil": "campfire"},
+  "well": "embers",
+  "categories": [
+    {
+      "id": "meat", "title": "Meat", "icon": "arksurvivalreturns:cooked_prime_meat", "color": "#c0583f", "level": 0,
+      "items": [
+        {"group": "creatures", "title": "Creature meat", "icon": "arksurvivalreturns:cooked_herbivore_meat"},
+        {"group": "farm", "title": "Farm animals", "icon": "minecraft:cooked_beef"}
+      ]
+    },
+    {"id": "fish", "title": "Fish and kelp", "icon": "minecraft:cooked_cod", "color": "#5f9fc0", "level": 0, "after": "meat"},
+    {"id": "embers", "title": "Charcoal", "icon": "minecraft:charcoal", "color": "#7a746a", "level": 0, "after": "meat"},
+    {"id": "garden", "title": "Vegetables", "icon": "minecraft:baked_potato", "color": "#c9a24a", "level": 1, "after": "fish"},
+    {"id": "baking", "title": "Baking", "icon": "minecraft:bread", "color": "#d8a860", "level": 2, "after": "garden"},
+    {
+      "id": "pot", "title": "Stews and the pot", "icon": "arksurvivalreturns:hearty_stew", "color": "#a0763f", "level": 3, "after": "baking",
+      "items": [
+        {"item": "arksurvivalreturns:hearty_stew", "level": 4, "cost": {"arksurvivalreturns:dried_meat": 2, "#minecraft:meat": 1, "minecraft:carrot": 1}},
+        {"item": "arksurvivalreturns:trail_mix", "level": 4, "cost": {"arksurvivalreturns:dried_ration": 2, "#arksurvivalreturns:berries": 2}}
+      ]
+    }
+  ]
+}
