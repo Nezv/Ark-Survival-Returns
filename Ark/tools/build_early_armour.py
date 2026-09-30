@@ -1,8 +1,8 @@
 """Keratin and Bronze armour, using the Steel harness's native worn-model format.
 
 Keratin: a closed dark hide hood, tapered ribbed horn face guard, broad carapace
-shoulder scutes (no feathers), sewn hide sleeves/trousers and bound horn bracers. Bronze: an early metal-age open crested cap,
-hammered cuirass, leather skirt tabs and strapped greaves over sandals.
+shoulder scutes (no feathers), sewn hide sleeves/trousers and bound horn bracers. Bronze: a red-crested cheek-guard helmet, russet leather cuirass, diagonal bronze
+baldric, segmented shoulders, red undercloth and tall golden greaves.
 
 Run from Ark: python tools/build_early_armour.py [keratin|bronze ...]
 Writes armour/<tier>_<piece>.json, textures/entity/armour/<tier>_<piece>.png,
@@ -30,7 +30,6 @@ CORD = [(75, 52, 30), (137, 106, 61), (190, 159, 98), (222, 199, 146)]
 HIDE = [(47, 29, 21), (79, 47, 31), (108, 65, 39), (144, 91, 54), (174, 121, 74)]
 FUR = [(67, 45, 31), (112, 77, 46), (151, 109, 66), (185, 145, 94)]
 BRONZE_RAMP = [rgb(c) for c in BRONZE]
-PATINA = (71, 100, 74)
 plate, sym = S.plate, S.sym
 
 
@@ -67,19 +66,20 @@ class Cord(A.Mat):
 
 
 class Bronze(S.Steel):
-    """Hammered bronze with rolled edges and sparse green oxidation at the seams."""
+    """Warm golden bronze with rolled edges and broad highlighted shoulder panels."""
 
-    def __init__(self, key, base=0.60, marks=None):
+    def __init__(self, key, base=0.76, marks=None, inner=False, scales=False):
         super().__init__(key, base=base, ramp=BRONZE_RAMP, marks=marks,
-                         curve=0.15, top=0.13, bottom=-0.12, noise=0.025, streak=0.0)
+                         curve=0.12, top=0.13, bottom=-0.10, noise=0.025, streak=0.0, inner=inner)
+        self.scales = scales
 
     def pattern(self, c):
         t, a = super().pattern(c)
         if isinstance(t, tuple):
             return t, a
         h = S.hash01(self.key, c.face, c.i, c.j)
-        if c.fw >= 4 and c.fh >= 3 and c.j == c.fh - 1 and h < 0.10:
-            return PATINA, 255
+        if self.scales and c.face in ('north', 'south', 'west', 'east'):
+            t += 0.075 if (c.i // 2 + c.j) % 2 else -0.055
         return t + (0.035 if h > 0.88 else -0.045 if h < 0.12 else 0), a
 
 
@@ -243,82 +243,125 @@ def keratin_boots():
     return w
 
 
+class OchreRed(S.Leather):
+    """Dyed cloth, red leather cuffs and the helmet's short horsehair crest."""
+    def __init__(self, key, crest=False, inner=False):
+        super().__init__(key, ramp=[(50, 11, 10), (83, 17, 13), (124, 26, 18),
+                                   (163, 39, 26), (197, 62, 36), (221, 86, 45)],
+                         base=0.76 if crest else 0.58, top=0.08, bottom=-0.13,
+                         noise=0.07, streak=0.09, inner=inner)
+
+
+class CuirassHide(S.Leather):
+    """Russet hide cuirass with broad sewn bands and a bronze diagonal baldric."""
+    def __init__(self, key, baldric=False, row0=0, inner=False):
+        super().__init__(key, ramp=[(44, 22, 13), (66, 31, 17), (88, 41, 21),
+                                   (113, 51, 24), (138, 65, 30), (162, 82, 42)],
+                         base=0.54, top=0.08, bottom=-0.10, noise=0.08, streak=0.06, inner=inner)
+        self.baldric, self.row0 = baldric, row0
+
+    def pattern(self, c):
+        t, alpha = super().pattern(c)
+        if c.face in ('north', 'south'):
+            if c.j % 3 == 2:
+                t -= 0.12
+            if self.baldric:
+                i = c.i if c.face == 'north' else c.fw - 1 - c.i
+                distance = abs(i - (0.1 + (c.j + self.row0) * 0.91))
+                if distance < 1.15:
+                    return BRONZE_RAMP[6 if distance < 0.65 else 5], 255
+        return t, alpha
+
+
 def bronze_helmet():
     w = A.Worn('bronze_helmet', 64, 64)
-    b = w.bone('head', 'open_crested_cap')
-    sym(b, 4.72, (-8.7, -5.85), (-4.72, 4.72), Bronze('cap'), (9, 3, 9))
-    sym(b, 3.75, (-9.65, -8.5), (-3.75, 3.75), Bronze('dome', 0.70), (8, 1, 8))
-    sym(b, 4.90, (-6.2, -5.15), (-4.98, -3.7), Bronze('brow'), (10, 1, 1))
-    sym(b, 4.76, (-5.45, -1.95), (3.6, 4.82), Bronze('neck_guard', 0.48), (10, 4, 1))
+    b = w.bone('head', 'bronze_crest_cheek_guards_and_nasal')
+    # A stepped, rounded crown and rolled brow, distinct from Steel's great helm.
+    sym(b, 4.79, (-8.76, -5.63), (-4.79, 4.84), Bronze('helmet_shell', 0.77), (10, 3, 10))
+    sym(b, 4.14, (-9.52, -8.62), (-4.15, 4.25), Bronze('raised_crown', 0.83), (8, 1, 8))
+    sym(b, 3.22, (-9.96, -9.39), (-3.14, 3.43), Bronze('crown_top', 0.78), (6, 1, 7))
+    sym(b, 5.05, (-6.09, -4.92), (-5.34, -4.49), Bronze('rolled_brow', 0.86), (10, 1, 1))
+    sym(b, 4.93, (-5.76, 0.39), (3.94, 5.12), Bronze('nape_guard', 0.69), (10, 6, 1))
     for side in (-1, 1):
-        x0, x1 = sorted((side * 3.87, side * 4.87))
-        plate(b, (x0, -5.7, -0.6), (x1, -0.95, 3.75), Bronze('side_guard'), (1, 5, 4))
-        x0, x1 = sorted((side * 3.15, side * 4.70))
-        plate(b, (x0, -3.65, -4.76), (x1, -0.90, -3.85), Bronze('cheek'), (2, 3, 1))
-    # Integral bronze crest (no knight visor, nasal bar or horsehair plume).
-    sym(b, 0.60, (-11.25, -9.4), (-2.75, 4.00), Bronze('cast_crest', 0.77), (1, 2, 7))
-    sym(b, 0.45, (-10.4, -8.85), (-4.30, -2.70), Bronze('crest_front', 0.66), (1, 2, 2))
+        x0, x1 = sorted((side * 4.14, side * 4.94))
+        plate(b, (x0, -5.69, -4.60), (x1, 0.16, 4.27), Bronze('temple_guard', 0.73), (1, 6, 9))
+        x0, x1 = sorted((side * 1.63, side * 4.81))
+        plate(b, (x0, -4.48, -5.02), (x1, -0.57, -4.27), Bronze('long_cheek_guard', 0.80), (3, 4, 1))
+        x0, x1 = sorted((side * 2.19, side * 4.71))
+        plate(b, (x0, -0.67, -4.88), (x1, 0.30, -4.17), Bronze('cheek_point', 0.75), (3, 1, 1))
+    sym(b, 0.53, (-5.24, -0.66), (-5.47, -4.84), Bronze('nasal', 0.86), (1, 5, 1))
+    # A red, front-to-back horsehair crest, held in a narrow bronze socket.
+    sym(b, 0.82, (-10.39, -9.79), (-3.44, 3.78), Bronze('crest_socket', 0.74), (2, 1, 7))
+    for k, (z0, z1, top) in enumerate(((-3.22, -1.45, -13.25), (-1.45, 0.25, -13.80),
+                                      (0.25, 1.95, -13.55), (1.95, 3.48, -12.76))):
+        sym(b, 0.57, (top, -10.22), (z0, z1), OchreRed(f'horsehair{k}', crest=True), (1, 4, 2))
     return w
 
 
 def bronze_chestplate():
     w = A.Worn('bronze_chestplate', 64, 64)
-    b = w.bone('body', 'hammered_cuirass')
-    sym(b, 4.50, (0.75, 9.88), (-2.50, 2.50), Hide('lining'), (9, 9, 5))
-    sym(b, 4.73, (1.55, 8.82), (-3.07, -2.28), Bronze('breastplate'), (9, 7, 1))
-    sym(b, 4.58, (1.75, 9.35), (2.30, 3.02), Bronze('backplate', 0.52), (9, 8, 1))
-    # Two shallow bosses and a broad waist lip suggest beaten metal, not a knight's keel.
-    for side in (-1, 1):
-        x0, x1 = sorted((side * 0.40, side * 3.75))
-        plate(b, (x0, 2.12, -3.38), (x1, 4.55, -2.99), Bronze('chest_boss', 0.68), (3, 2, 1))
-        x0, x1 = sorted((side * 2.35, side * 3.55))
-        strap(b, (x0, -0.10, -2.72), (x1, 1.42, 2.72), 'shoulder_strap')
-        # Small fasteners at the shoulders, in the same bronze as the cuirass.
-        plate(b, (x0 + 0.16, 0.4, -2.90), (x1 - 0.16, 1.3, -2.65), Bronze('shoulder_pin', 0.80), (1, 1, 1))
-    sym(b, 4.86, (8.95, 10.15), (-3.12, -2.22), Bronze('waist_lip'), (10, 1, 1))
+    b = w.bone('body', 'russet_cuirass_and_bronze_baldric')
+    # Full cloth underneath keeps the collar, elbow and waist gaps intentional.
+    sym(b, 4.49, (-0.38, 12.54), (-2.59, 2.61), OchreRed('tunic'), (9, 13, 5))
+    sym(b, 4.60, (0.75, 10.07), (-2.89, 2.96), CuirassHide('cuirass', baldric=True), (9, 9, 6))
+    # Raised seams retain the reference's broad leather bands, rather than a metal keel.
+    for k, y in enumerate((3.29, 6.38, 9.45)):
+        sym(b, 4.72, (y, y + 0.53), (-3.04 - k * 0.025, 3.10 + k * 0.025),
+            CuirassHide(f'cuirass_seam{k}', baldric=True, row0=(y - 0.75) * 9 / 9.32), (9, 1, 6))
+    # A narrow solid end at the shoulder makes the textured diagonal strap read in silhouette.
+    plate(b, (-4.08, -0.19, -3.20), (-2.44, 1.14, 3.30), Bronze('baldric_shoulder', 0.80), (2, 1, 6))
+    sym(b, 4.86, (9.98, 10.92), (-3.16, 3.20), Bronze('waist_border', 0.85), (10, 1, 6))
     def arm(a):
-        # Narrow bronze shoulder cap and a strapped forearm shield; elbows/hands are exposed.
-        plate(a, (-3.7, -2.55, -2.65), (1.43, -0.65, 2.65), Bronze('shoulder_cap'), (5, 2, 5))
-        strap(a, (-3.50, 0.05, -2.36), (1.45, 1.20, 2.36), 'arm_strap')
-        plate(a, (-3.67, 5.65, -2.93), (1.62, 8.55, -2.10), Bronze('forearm'), (5, 3, 1))
-        for y in (5.9, 7.82):
-            strap(a, (-3.50, y, -2.40), (1.45, y + 0.6, 2.40), 'forearm_tie')
+        plate(a, (-3.43, -2.56, -2.53), (1.43, 10.61, 2.57), OchreRed('red_sleeve'), (5, 13, 5))
+        # Three short bronze segments rest on red cloth, with a leather shoulder yoke.
+        plate(a, (-3.88, -3.04, -2.85), (1.53, -1.14, 2.89), CuirassHide('shoulder_yoke'), (5, 2, 6))
+        for k, (y0, y1, outer) in enumerate(((-1.85, 0.43, -4.18), (0.58, 2.54, -4.34),
+                                              (2.69, 4.52, -4.04))):
+            plate(a, (outer, y0, -3.17 - k * 0.10), (1.69, y1, 3.23 + k * 0.10),
+                  Bronze(f'segmented_shoulder{k}', 0.79, scales=True), (6, 2, 6))
+        plate(a, (-3.66, 4.54, -2.82), (1.57, 5.33, 2.87), OchreRed('shoulder_red_border'), (5, 1, 6))
+        plate(a, (-3.58, 6.62, -2.79), (1.61, 9.27, 2.84), Bronze('bronze_bracer', 0.80), (5, 3, 6))
+        plate(a, (-3.73, 9.18, -2.95), (1.76, 9.85, 3.00), OchreRed('wrist_binding'), (6, 1, 6))
+        plate(a, (-3.61, 9.76, -2.69), (1.64, 10.76, 2.74), OchreRed('red_leather_glove'), (5, 1, 5))
     w.arm(arm, sided=False)
     return w
 
 
 def bronze_leggings():
     w = A.Worn('bronze_leggings', 64, 64)
-    b = w.bone('body', 'leather_skirt_belt')
-    sym(b, 4.52, (10.45, 12.40), (-2.59, 2.59), Hide('belt'), (9, 2, 5))
-    sym(b, 1.0, (10.65, 12.05), (-2.95, -2.47), Bronze('belt_clasp', 0.72), (2, 1, 1))
+    b = w.bone('body', 'red_belt_and_bronze_trim')
+    sym(b, 4.70, (10.58, 12.74), (-2.87, 2.92), OchreRed('red_belt'), (9, 2, 6))
+    sym(b, 4.83, (12.09, 12.83), (-3.09, 3.16), Bronze('belt_lower_trim', 0.85), (10, 1, 6))
+    sym(b, 0.79, (10.98, 12.05), (-3.24, -2.83), Bronze('belt_toggle', 0.78), (2, 1, 1))
     def leg(l):
-        # Three independently leg-bound leather skirt tabs with bronze studs, open behind the knee.
-        for k, x in enumerate((-2.70, -1.18, 0.34)):
-            end = (4.65, 5.30, 4.85)[k]
-            plate(l, (x, 0.25, -2.91), (x + 1.22, end, -2.31), Hide(f'skirt_tab{k}'), (1, 5, 1))
-            plate(l, (x + 0.20, 0.8, -3.12), (x + 0.95, 1.45, -2.85), Bronze('tab_stud', 0.76), (1, 1, 1))
-        plate(l, (-2.84, 0.45, -1.9), (-2.31, 4.1, 2.0), Hide('side_tab'), (1, 4, 4))
-        plate(l, (-2.61, 0.45, 2.28), (1.58, 4.45, 2.89), Hide('rear_tab'), (4, 4, 1))
-        plate(l, (-2.55, 5.55, -2.95), (1.42, 7.75, -2.26), Bronze('greave_knee'), (4, 2, 1))
-        plate(l, (-2.38, 7.85, -2.87), (1.28, 9.70, -2.24), Bronze('upper_greave'), (4, 2, 1))
-        strap(l, (-2.38, 6.5, -2.40), (2.45, 7.1, 2.40), 'greave_strap')
+        plate(l, (-2.48, -0.41, -2.54), (2.43, 9.78, 2.60), OchreRed('red_leg_wrap', inner=True), (5, 10, 5))
+        # Short leather pteruges move with each leg; cloth backs all the gaps.
+        for k, x in enumerate((-2.76, -0.88, 1.00)):
+            end = (2.62, 3.22, 2.81)[k]
+            plate(l, (x, 0.16, -3.06 - k * 0.06), (x + 1.64, end, -2.57),
+                  CuirassHide(f'skirt_tab{k}', inner=True), (3, 3, 1))
+            plate(l, (x + 0.07, end - 0.55, -3.17 - k * 0.06), (x + 1.57, end + 0.02, -2.96 - k * 0.06),
+                  Bronze(f'skirt_tip{k}', 0.82, inner=True), (3, 1, 1))
+        plate(l, (-2.81, 0.27, 2.57), (2.69, 2.89, 3.06), CuirassHide('rear_skirt', inner=True), (5, 3, 1))
+        plate(l, (-2.89, 0.30, -2.28), (-2.44, 3.05, 2.33), CuirassHide('side_skirt'), (1, 3, 5))
+        # Tall, broad golden greaves over the red wraps; no articulated knight knee caps.
+        plate(l, (-2.66, 2.93, -2.81), (2.59, 6.63, 2.90), Bronze('upper_greave', 0.78, inner=True), (5, 4, 6))
+        plate(l, (-2.55, 6.77, -2.85), (2.48, 9.61, 2.96), Bronze('lower_greave', 0.81, inner=True), (5, 3, 6))
     leg_pair(w, leg)
     return w
 
 
 def bronze_boots():
-    w = A.Worn('bronze_boots', 64, 32)
+    w = A.Worn('bronze_boots', 64, 64)
     def leg(l):
-        # Separate lower greave over an open sandal: no articulated steel toe/knight sabaton.
-        plate(l, (-2.44, 9.86, -2.94), (1.38, 11.28, -2.24), Bronze('lower_greave'), (4, 1, 1))
-        strap(l, (-2.59, 10.15, -2.40), (2.45, 10.75, 2.40), 'ankle_strap')
-        plate(l, (-2.55, 11.50, -3.15), (2.39, 12.45, 2.58), Hide('sandal_sole'), (5, 1, 6))
-        plate(l, (-2.36, 10.85, -3.13), (2.45, 11.47, -1.30), Hide('sandal_front_tie'), (5, 1, 2))
-        plate(l, (-2.35, 10.85, 0.7), (2.45, 11.47, 2.15), Hide('sandal_rear_tie'), (5, 1, 1))
+        # Red ankle bindings and a simple bronze toe over an enclosed leather foot wrap.
+        plate(l, (-2.63, 9.32, -2.71), (2.58, 11.25, 2.77), OchreRed('ankle_wrap', inner=True), (5, 2, 6))
+        plate(l, (-2.79, 9.82, -2.94), (2.73, 10.56, 3.03), CuirassHide('ankle_tie', inner=True), (6, 1, 6))
+        plate(l, (-2.67, 10.88, -3.39), (2.61, 12.54, 2.95), CuirassHide('leather_sandal', inner=True), (5, 2, 6))
+        plate(l, (-2.75, 11.22, -3.60), (2.69, 12.23, -1.02), Bronze('bronze_toe', 0.84, inner=True), (5, 1, 3))
+        plate(l, (-2.76, 12.21, -3.47), (2.71, 12.82, 3.06), CuirassHide('sandal_sole', inner=True), (5, 1, 7))
     leg_pair(w, leg)
     return w
-
 
 BUILDERS = {tier: {p: globals()[f'{tier}_{p}'] for p in PIECES} for tier in TIERS}
 
@@ -348,22 +391,24 @@ def set_icon(tier):
                    centre=(0, 6, 0), background=None)
 
 
-def verify_keratin_coverage(built):
+def verify_coverage(built, open_face=False):
     """An opaque magenta player reveals any exposed skin or clothing in the full set.
 
-    Checks both base and outer skin layers, wide/slim arms, front/back views and
-    a walking pose. Face slots are backed by the hood, so they expose no skin.
+    Checks base and outer skin layers, wide/slim arms, front/back views and
+    walking. Bronze deliberately exposes the face inside its cheek guards;
+    the head is excluded there, while clothing and all other skin must be covered.
     """
     marker = Image.new('RGBA', (64, 64), (255, 0, 255, 255))
     for slim in (False, True):
         for pose_name, pose in (('standing', {}), ('walking', S.WALK)):
-            groups = A.player_quads(slim, skin=marker, pose=pose)
+            groups = [g for g in A.player_quads(slim, skin=marker, pose=pose)
+                      if not open_face or g[0] != 'head']
             for worn, tex, _ in built.values():
                 groups += A.worn_quads(worn, tex, pose=pose, arms='slim' if slim else 'wide')
             for yaw in (0, -35, 180, 145):
                 pixels = np.array(S.frame(groups, yaw, 12, size=(220, 300), scale=7.5))
                 exposed = (pixels[..., 0] > 40) & (pixels[..., 1] < 20) & (pixels[..., 2] > 40)
-                assert not exposed.any(), f'Keratin exposes skin: slim={slim}, {pose_name}, yaw={yaw}, {exposed.sum()} pixels'
+                assert not exposed.any(), f'{built["helmet"][0].id} exposes skin/clothing: slim={slim}, {pose_name}, yaw={yaw}, {exposed.sum()} pixels'
 
 
 def verify(built):
@@ -387,24 +432,43 @@ def verify(built):
         # A real shared plane is a z-fight; nearby faces on closed hide wraps are intentional.
         clashes = S.zfight(built, arms, tol=0.001)
         assert not clashes, '\n'.join([f'{arms} overlapping faces:'] + clashes)
-    if built['helmet'][0].id == 'keratin_helmet':
-        verify_keratin_coverage(built)
+    verify_coverage(built, open_face=built['helmet'][0].id == 'bronze_helmet')
+
+
+def bronze_set_sheet(built):
+    """Leave room for the taller red crest in every review pose."""
+    frames = []
+    for slim, pose, yaw, pitch, title in ((False, S.STAND, 0, 4, 'front'),
+                                        (False, S.STAND, 180, 4, 'back'),
+                                        (False, S.WALK, -34, 12, 'three-quarter'),
+                                        (False, S.WALK, 146, 14, 'back three-quarter'),
+                                        (True, S.WALK, -34, 12, 'Alex (slim arms)')):
+        groups = S.scene(built, PIECES, slim=slim, pose=pose)
+        frames.append(S.label(S.frame(groups, yaw, pitch, scale=7.8, centre=(0, 5.2, 0)), title))
+    far = [S.frame(S.scene(built, PIECES), yaw, 6, size=(70, 96), scale=2.0, centre=(0, 5.2, 0))
+           for yaw in (0, -34, 146)]
+    small = S.strip(far, gap=4)
+    distance = Image.new('RGBA', (small.width, 350), S.BG)
+    distance.alpha_composite(small, (0, 120))
+    frames.append(S.label(distance, 'at a distance'))
+    return S.strip(frames)
 
 
 def previews(tier, built):
-    S.set_sheet(built).save(DESIGN / f'{tier}_set.png')
-    if tier == 'keratin':
-        frames = [S.label(S.frame(S.scene(built, PIECES, pose=S.WALK), yaw, 10,
-                                  size=(360, 500), scale=12.2, centre=(0, 7.0, 0)), label)
-                  for yaw, label in ((-32, 'Keratin - front'), (148, 'Keratin - back'))]
-        S.strip(frames).save(DESIGN / 'keratin_review.png')
+    (bronze_set_sheet(built) if tier == 'bronze' else S.set_sheet(built)).save(DESIGN / f'{tier}_set.png')
+    centre, scale = ((0, 5.2, 0), 11.2) if tier == 'bronze' else ((0, 7.0, 0), 12.2)
+    frames = [S.label(S.frame(S.scene(built, PIECES, pose=S.WALK), yaw, 10,
+                              size=(360, 500), scale=scale, centre=centre), label)
+              for yaw, label in ((-32, f'{tier.title()} - front'), (148, f'{tier.title()} - back'))]
+    S.strip(frames).save(DESIGN / f'{tier}_review.png')
     for piece in PIECES:
         worn, tex, icon = built[piece]
         card = Image.new('RGBA', (140, 350), S.BG)
         card.alpha_composite(icon.resize((128, 128), Image.Resampling.NEAREST), (6, 110))
         S.label(card, f'{tier}_{piece}')
         groups = S.scene(built, [piece], pose=S.WALK)
-        S.strip([card, S.frame(groups, -34, 14), S.frame(groups, 146, 14)]).save(DESIGN / f'{tier}_{piece}.png')
+        settings = {'scale': 7.8, 'centre': (0, 5.2, 0)} if tier == 'bronze' else {}
+        S.strip([card, S.frame(groups, -34, 14, **settings), S.frame(groups, 146, 14, **settings)]).save(DESIGN / f'{tier}_{piece}.png')
     tiles = []
     for piece, (_, tex, _) in built.items():
         tile = Image.new('RGBA', (tex.width * 3, tex.height * 3 + 20), (40, 42, 46, 255))
@@ -449,7 +513,8 @@ def comparison():
     frames = []
     for tier, title in (('keratin', 'Keratin - Prehistoric'), ('bronze', 'Bronze - Early metal age'), ('steel', 'Steel - Knight reference')):
         built = {p: (S.build(p) if tier == 'steel' else build(tier, p)) for p in PIECES}
-        frames.append(S.label(S.frame(S.scene(built, PIECES, pose=S.WALK), -34, 12), title))
+        settings = {'scale': 7.8, 'centre': (0, 5.2, 0)} if tier == 'bronze' else {}
+        frames.append(S.label(S.frame(S.scene(built, PIECES, pose=S.WALK), -34, 12, **settings), title))
     S.strip(frames).save(DESIGN / 'early_armour_comparison.png')
 
 

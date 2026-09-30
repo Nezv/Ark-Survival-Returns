@@ -214,8 +214,8 @@ def section(uri, e):
         assets['armour'].append(armour('steel_armour', 'Steel armour', 'The Iron Age knight: a great helm, keeled '
                                        'breastplate, lamed pauldrons, tassets, knee cops and sabatons.',
                                        'Iron Age (planned)', steel, uri))
-    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'Early bronze-age armour: an open '
-                                   'crested cap, hammered cuirass, studded leather skirt and strapped greaves over sandals.',
+    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'A red-crested bronze helmet with long '
+                                   'cheek guards, a russet cuirass and diagonal baldric, segmented golden shoulders, red undercloth and tall greaves.',
                                    '3D design', authored_set('bronze'), uri))
     assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'A hooded prehistoric hide suit: a '
                                    'ribbed keratin face guard, broad carapace shoulder scales, horn-bound bracers and enclosed boots. No feathers.',
