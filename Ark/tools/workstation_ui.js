@@ -165,9 +165,11 @@ window.ArkWorkstationUI = (function () {
     font.image.onload = function () { dirty = true; };
     if (world && !world.complete) world.addEventListener('load', function () { backdropKey = ''; dirty = true; });
     var st = { station: 0, level: 8, preset: 'starter', inv: {}, amount: 1, mouse: null, hover: null, widget: null,
-               press: null, dragging: null, flies: [], note: null };
+               press: null, dragging: null, flies: [], note: null, frame: 'themed' };
 
     function station() { return payload.stations[st.station]; }
+    /** The frame the page shows round the panel: the bench's material ('themed'), the shared baroque one, or none. */
+    function frameMeta() { var s = station(); return st.frame === 'baroque' ? s.baroque : st.frame === 'themed' ? s.crest : null; }
     function meta(id) { return payload.items[id] || { name: id, icon: 0 }; }
     function have(id) { return st.inv[id] || 0; }
     function nodeId(n) {
@@ -239,8 +241,8 @@ window.ArkWorkstationUI = (function () {
     // ------------------------------------------------------------------------------------ view and layout
 
     /** Units the bench's frame adds above and below the panel; the panel and its frame are centred together. */
-    function frameTop() { var c = station().crest; return c ? c.top : 0; }
-    function frameBottom() { var c = station().crest; return c ? c.bottom || 0 : 0; }
+    function frameTop() { var c = frameMeta(); return c ? c.top : 0; }
+    function frameBottom() { var c = frameMeta(); return c ? c.bottom || 0 : 0; }
 
     function layout() {
       var rect = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
@@ -303,7 +305,8 @@ window.ArkWorkstationUI = (function () {
       g.drawImage(well, A.x, A.y);
       // The bench's frame is the panel's edge: it covers the outline and bevel above, and the crossbar sits on the
       // well's lower edge. The graph, clipped to the well, and the craft bar draw over it.
-      if (crest) g.drawImage(crest, -s.crest.margin, -s.crest.top);
+      var meta = frameMeta();
+      if (crest && meta) g.drawImage(crest, -meta.margin, -meta.top);
     }
 
     function ringColour(n, locked) {
@@ -698,13 +701,27 @@ window.ArkWorkstationUI = (function () {
       st.flies = [];
       graph = station().data ? new G.Graph(station().data, style) : null;
       if (graph) graph.level = st.level;
+      loadFrame();
+      Array.prototype.forEach.call(tabs.children, function (b, j) { b.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
+      if (running) layout();
+      dirty = true;
+    }
+
+    function loadFrame() {
+      var meta = frameMeta();
       crest = null;
-      if (station().crest) {
+      if (meta) {
         crest = new Image();
         crest.onload = function () { dirty = true; };
-        crest.src = station().crest.image;
+        crest.src = meta.image;
       }
-      Array.prototype.forEach.call(tabs.children, function (b, j) { b.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
+    }
+
+    function frameStyle(name) {
+      st.frame = name;
+      try { localStorage.setItem('ws-frame', name); } catch (e) { /* the choice just isn't remembered */ }
+      pressed('frame', name);
+      loadFrame();
       if (running) layout();
       dirty = true;
     }
@@ -775,6 +792,7 @@ window.ArkWorkstationUI = (function () {
 
     levelInput.addEventListener('input', function () { level(+levelInput.value); });
     root.querySelectorAll('[data-control="preset"] button').forEach(function (b) { b.addEventListener('click', function () { preset(b.dataset.value); }); });
+    root.querySelectorAll('[data-control="frame"] button').forEach(function (b) { b.addEventListener('click', function () { frameStyle(b.dataset.value); }); });
     root.querySelector('.ws-reset').addEventListener('click', reset);
     fullButton.addEventListener('click', function () {
       if (document.fullscreenElement) document.exitFullscreen();
@@ -793,6 +811,8 @@ window.ArkWorkstationUI = (function () {
     table();
     preset('starter');
     level(8);
+    try { var kept = localStorage.getItem('ws-frame'); if (kept === 'baroque' || kept === 'plain') st.frame = kept; } catch (e) { /* default */ }
+    pressed('frame', st.frame);
     useStation(0);
 
     return {

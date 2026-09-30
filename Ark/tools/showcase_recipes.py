@@ -223,6 +223,7 @@ def section(uri, e):
     style = load(DESIGN / 'graph_style.json')
     frames = __import__('build_workstation_crests')
     crest_meta = {'margin': frames.MARGIN, 'top': frames.PANEL_TOP, 'bottom': frames.PANEL_BOTTOM}
+    baroque_meta = {'margin': frames.B_MARGIN, 'top': frames.B_TOP, 'bottom': frames.B_BOTTOM}
     sigils = {bench: Image.open(CRESTS / f'{bench}_sigil.png').convert('RGBA') for bench in wp.BENCHES
               if (CRESTS / f'{bench}_sigil.png').is_file()}
     icons = Icons(overrides={f'{wp.NS}:armoury': sigils.get('armoury')} if 'armoury' in sigils else {})
@@ -242,9 +243,10 @@ def section(uri, e):
     stations = []
     for bench in wp.BENCHES:
         tree = trees[bench]
-        crest = CRESTS / f'{bench}.png'
+        crest, baroque = CRESTS / f'{bench}.png', CRESTS / f'{bench}_baroque.png'
         stations.append({'id': bench, 'title': tree['title'], 'accent': tree.get('accent', '#e6e8e1'), 'well': tree.get('well', 'dots'),
                          'crest': {'image': uri(Image.open(crest), 'PNG'), **crest_meta} if crest.is_file() else None,
+                         'baroque': {'image': uri(Image.open(baroque), 'PNG'), **baroque_meta} if baroque.is_file() else None,
                          'sigil': uri(sigils[bench], 'PNG') if bench in sigils else '', 'data': tree})
     costs = list(dict.fromkeys(i for tree in trees.values() for c in tree['categories'] for entry in c['items']
                                for family in (entry['items'] if 'group' in entry else [entry])
