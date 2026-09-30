@@ -1,6 +1,6 @@
 /*
  * Workstation screen preview (P14). Draws a tools/workstation_graph.js graph the way the mod's WorkstationScreen
- * will: laid out in design units (the panel is graph_style.panel.width x height, the bench's crest above it), with
+ * will: laid out in design units (the panel is graph_style.panel.width x height, set in the bench's frame), with
  * the whole screen scaled so the panel spans panel.widthFraction of the window. The canvas renders a whole number of
  * device pixels per unit and the browser only scales down, so item icons and the vanilla bitmap font stay crisp.
  * Drawing goes through a GuiGraphics-sized set of calls (fill, blit, item, text, tooltip), so the Java screen can
@@ -238,18 +238,19 @@ window.ArkWorkstationUI = (function () {
 
     // ------------------------------------------------------------------------------------ view and layout
 
-    /** Units the crest adds above the panel; the panel and its crest are centred together. */
-    function crestTop() { var c = station().crest; return c ? c.top : 0; }
+    /** Units the bench's frame adds above and below the panel; the panel and its frame are centred together. */
+    function frameTop() { var c = station().crest; return c ? c.top : 0; }
+    function frameBottom() { var c = station().crest; return c ? c.bottom || 0 : 0; }
 
     function layout() {
       var rect = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
       if (!rect.width || !rect.height) return false;
-      var tall = P.height + crestTop();
+      var tall = P.height + frameTop() + frameBottom();
       var panel = Math.min(rect.width * P.widthFraction, rect.height * P.maxHeightFraction * P.width / tall);
       var scale = panel / P.width, k = Math.max(1, Math.min(8, Math.ceil(scale * dpr - 0.01)));
       var uw = Math.ceil(rect.width / scale), uh = Math.ceil(rect.height / scale);
       view = { dpr: dpr, scale: scale, k: k, uw: uw, uh: uh, px: Math.floor((uw - P.width) / 2),
-               py: Math.floor((uh - tall) / 2) + crestTop() };
+               py: Math.floor((uh - tall) / 2) + frameTop() };
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
       off.width = uw * k;
@@ -300,6 +301,8 @@ window.ArkWorkstationUI = (function () {
       fill(A.x - 1, A.y - 1, A.x + A.w, A.y + A.h, pal.bevelDark);
       if (!well || well.kind !== s.well) { well = wellPattern(s.well, A.w, A.h, pal); well.kind = s.well; }
       g.drawImage(well, A.x, A.y);
+      // The bench's frame is the panel's edge: it covers the outline and bevel above, and the crossbar sits on the
+      // well's lower edge. The graph, clipped to the well, and the craft bar draw over it.
       if (crest) g.drawImage(crest, -s.crest.margin, -s.crest.top);
     }
 

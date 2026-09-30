@@ -4,7 +4,7 @@ tools/workstation_plan.py decides where every vanilla and Ark recipe goes and co
 benches with tools/workstation_ui.js on the shared graph core tools/workstation_graph.js, and lists every recipe with
 tools/recipe_review.js, where the user marks what goes, stays or changes and saves design/workstations/vanilla_fates.json.
 This module gathers what the page needs: item names (vanilla and Ark lang, with Ark's renames of vanilla items), one
-icon atlas for every item the page shows (tools/item_icons.py), the crests (tools/build_workstation_crests.py), the
+icon atlas for every item the page shows (tools/item_icons.py), the frames (tools/build_workstation_crests.py), the
 vanilla bitmap font as a small glyph atlas, and the inventory presets of the preview. build_showcase.py calls section().
 """
 import io
@@ -221,7 +221,8 @@ def section(uri, e):
                             pattern = short_path(variant['item']).replace('_armor_trim_smithing_template', '')
                             variant['name'] = table.get(f'trim_pattern.minecraft.{pattern}', pattern.title() + ' Armor Trim')
     style = load(DESIGN / 'graph_style.json')
-    crest_meta = {'margin': __import__('build_workstation_crests').MARGIN, 'top': __import__('build_workstation_crests').PANEL_TOP}
+    frames = __import__('build_workstation_crests')
+    crest_meta = {'margin': frames.MARGIN, 'top': frames.PANEL_TOP, 'bottom': frames.PANEL_BOTTOM}
     sigils = {bench: Image.open(CRESTS / f'{bench}_sigil.png').convert('RGBA') for bench in wp.BENCHES
               if (CRESTS / f'{bench}_sigil.png').is_file()}
     icons = Icons(overrides={f'{wp.NS}:armoury': sigils.get('armoury')} if 'armoury' in sigils else {})
