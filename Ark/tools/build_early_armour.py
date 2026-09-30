@@ -1,7 +1,7 @@
 """Keratin and Bronze armour, using the Steel harness's native worn-model format.
 
-Keratin: prehistoric horn scutes lashed onto hide, an open face, short swept horn
-tips, cord ties and moccasins. Bronze: an early metal-age open crested cap,
+Keratin: a closed dark hide hood, tapered ribbed horn face guard, broad carapace
+shoulder scutes (no feathers), sewn hide sleeves/trousers and bound horn bracers. Bronze: an early metal-age open crested cap,
 hammered cuirass, leather skirt tabs and strapped greaves over sandals.
 
 Run from Ark: python tools/build_early_armour.py [keratin|bronze ...]
@@ -97,83 +97,148 @@ def leg_pair(w, draw):
     w.mirror(b, 'left_leg', 'left_leg')
 
 
+class RawHide(A.Mat):
+    """Matte sewn hide with broad worn patches, not polished plate edge highlights."""
+    def __init__(self, key, hood=False, inner=False, harness=False):
+        tones = ([(16, 17, 20), (25, 25, 28), (35, 33, 32), (47, 43, 38), (60, 53, 44)] if hood else
+                 [(23, 19, 17), (39, 30, 23), (56, 41, 29), (76, 55, 37), (98, 73, 48), (121, 91, 61)])
+        super().__init__(*tones, light=True)
+        self.key, self.inner, self.harness = key, inner, harness
+
+    def pattern(self, c):
+        i = c.i
+        if self.inner and c.face in ('north', 'south', 'down', 'up'):
+            edge = 0 if c.face == 'south' else c.fw - 1
+            if abs(i - edge) <= 1:
+                i = edge
+        patch = S.hash01(self.key, c.face, i // 2, c.j // 2)
+        t = 0.43 + (patch - 0.5) * 0.38
+        if c.face == 'north' and self.harness:
+            # A broad diagonal rawhide strap is part of the sewn jerkin surface.
+            if abs(i - (1.0 + c.j * 0.58)) < 1.0:
+                t = 0.19 if abs(i - (1.0 + c.j * 0.58)) < 0.65 else 0.35
+            if c.j >= c.fh - 2:
+                t -= 0.10
+        if c.face in ('north', 'south') and c.fw > 3 and i in (0, c.fw - 1):
+            t -= 0.07
+        return t, 255
+
+
+class RawHorn(A.Mat):
+    """Dull keratin: visible growth ridges and broad scutes, no feather-like geometry."""
+    def __init__(self, key, dark=False, inner=False):
+        tones = ([(29, 27, 25), (43, 39, 32), (59, 52, 40), (80, 69, 51), (109, 95, 72)] if dark else
+                 [(81, 65, 43), (132, 110, 76), (173, 151, 112), (207, 189, 149), (232, 218, 181)])
+        super().__init__(*tones, light=True)
+        self.key, self.dark, self.inner = key, dark, inner
+
+    def pattern(self, c):
+        i = c.i
+        if self.inner and c.face in ('north', 'south', 'down', 'up'):
+            edge = 0 if c.face == 'south' else c.fw - 1
+            if abs(i - edge) <= 1:
+                i = edge
+        t = (0.53 if self.dark else 0.70) + (S.hash01(self.key, c.face, i // 2, c.j // 2) - 0.5) * 0.14
+        if c.face in ('north', 'south', 'west', 'east'):
+            if c.j == 0:
+                t += 0.12
+            elif c.j == c.fh - 1:
+                t -= 0.18
+            if i == 0:
+                t -= 0.10
+        return t, 255
+
+
 def keratin_helmet():
     w = A.Worn('keratin_helmet', 64, 64)
-    b = w.bone('head', 'hide_cap_and_scutes')
-    sym(b, 4.72, (-8.75, -6.15), (-4.70, 4.70), Hide('skullcap'), (9, 3, 9))
-    sym(b, 3.65, (-9.65, -8.50), (-3.65, 3.65), Horn('crown'), (7, 1, 7))
-    sym(b, 4.92, (-6.65, -5.20), (-4.94, -3.75), Horn('brow'), (10, 2, 1))
-    sym(b, 4.78, (-6.0, -1.8), (3.7, 4.90), Hide('nape'), (10, 4, 1))
-    # A short raised central scute continues backwards along the crown.
-    sym(b, 0.95, (-10.7, -9.5), (-2.6, 3.5), Horn('crown_ridge', 0.74), (2, 1, 6))
+    b = w.bone('head', 'hide_hood_and_ribbed_mask')
+    # A closed hood hides the skin/hair beneath the mask slots. Its stepped crown
+    # and inward cheek folds replace the earlier open horn cap entirely.
+    sym(b, 5.12, (-8.82, 0.68), (-5.12, 5.18), RawHide('hood', hood=True), (10, 10, 10))
+    sym(b, 4.64, (-9.70, -8.55), (-4.70, 4.72), RawHide('hood_crown', hood=True), (9, 1, 9))
+    sym(b, 3.80, (-10.22, -9.55), (-3.55, 4.02), RawHide('hood_fold', hood=True), (8, 1, 8))
     for side in (-1, 1):
-        # Small swept horn tips sit behind the temples, leaving eyes and jaw exposed.
-        def box(x0, x1, y0, y1, z0, z1, key, base=0.65):
-            lo, hi = sorted((side * x0, side * x1))
-            plate(b, (lo, y0, z0), (hi, y1, z1), Horn(key, base))
-        box(3.9, 5.15, -5.5, -1.15, 0.1, 3.8, 'temple')
-        box(4.7, 5.75, -7.1, -5.25, 1.6, 4.3, 'horn_root', 0.52)
-        box(5.2, 6.15, -8.3, -6.8, 3.1, 5.5, 'horn_tip', 0.83)
-        lashing(b, side * 3.6, -6.35, -5.12)
+        for k, (inner, outer, y0, y1) in enumerate(((4.0, 5.55, -7.5, -4.45),
+                                                   (3.55, 5.38, -4.35, -1.65),
+                                                   (2.65, 4.89, -1.55, 0.48))):
+            x0, x1 = sorted((side * inner, side * outer))
+            plate(b, (x0, y0, -5.97 + k * 0.11), (x1, y1, -4.94 + k * 0.10),
+                  RawHide(f'hood_cheek{k}', hood=True))
+    # Horizontal horn ribs taper toward the chin; the only openings are deliberate
+    # dark slots in the face guard, never a naked jaw or an exposed forehead.
+    for k, (half, y0, y1) in enumerate(((3.95, -6.95, -6.10), (3.78, -5.65, -4.80),
+                                       (3.46, -4.35, -3.50), (3.05, -3.05, -2.20),
+                                       (2.63, -1.75, -0.90), (2.10, -0.45, 0.32))):
+        sym(b, half, (y0, y1), (-5.81 - k * 0.025, -5.00 + k * 0.02),
+            RawHorn(f'mask_rib{k}'), (max(1, round(half * 2)), 1, 1))
+    sym(b, 0.43, (-7.07, 0.38), (-6.20, -5.67), RawHorn('mask_spine'), (1, 7, 1))
     return w
 
 
 def keratin_chestplate():
     w = A.Worn('keratin_chestplate', 64, 64)
-    b = w.bone('body', 'hide_vest_and_lashed_scutes')
-    sym(b, 4.45, (0.65, 10.15), (-2.48, 2.48), Hide('vest'), (9, 10, 5))
-    # Separate irregular scutes: gaps expose the hide and cord rather than a solid cuirass.
-    for k, (y, half, h) in enumerate(((1.55, 4.12, 2.5), (4.30, 3.92, 2.4), (7.00, 3.62, 2.3))):
-        for side in (-1, 1):
-            x0, x1 = sorted((side * 0.38, side * half))
-            plate(b, (x0, y + (0.25 if side > 0 else 0), -3.18 - k * 0.07),
-                  (x1, y + h, -2.34), Horn(f'breast_scute{k}_{side}'))
-            lashing(b, side * (half - 0.75), y + 0.65, -3.42 - k * 0.07)
-        sym(b, half - 0.25, (y + 0.15, y + h - 0.25), (2.3, 3.05 + k * 0.06),
-            Horn(f'back_scute{k}', 0.56))
-    for side in (-1, 1):
-        x0, x1 = sorted((side * 2.25, side * 3.40))
-        strap(b, (x0, -0.15, -2.75), (x1, 1.35, 2.78), 'shoulder_binding')
-    # Bound scutes at the shoulders and wrists; hands and most of the arms stay visible.
+    b = w.bone('body', 'sewn_hide_jerkin_and_carapace_mantle')
+    sym(b, 4.56, (-0.42, 12.57), (-2.59, 2.62), RawHide('jerkin', harness=True), (9, 13, 5))
+    # A wrap collar and an uninterrupted hide mantle sit under large shell scutes.
+    sym(b, 4.94, (-0.73, 2.34), (-3.20, 3.23), RawHide('mantle_collar', hood=True), (10, 3, 6))
+    for k, (x0, x1, end) in enumerate(((-4.70, -1.65, 4.20), (-1.53, 1.34, 3.55), (1.46, 4.73, 4.65))):
+        plate(b, (x0, 1.9, -3.42 - k * 0.10), (x1, end, -2.92 + k * 0.10),
+              RawHorn(f'front_mantle_scute{k}', dark=True))
+        plate(b, (x0 + 0.07, 1.82, 2.94 + k * 0.11), (x1 - 0.06, end + 0.17, 3.44 + k * 0.11),
+              RawHorn(f'back_mantle_scute{k}', dark=True))
+    # Thick, broad, irregular osteoderms replace the reference's feathers. The
+    # mantle travels with the arm; a full sleeve beneath it closes the armpit/elbow.
     def arm(a):
-        plate(a, (-3.75, -2.70, -2.9), (1.48, -0.35, 2.9), Horn('shoulder_shell'), (5, 2, 6))
-        plate(a, (-4.18, -1.45, -2.6), (-3.55, 1.25, 2.6), Horn('shoulder_edge', 0.74), (1, 3, 5))
-        strap(a, (-3.43, 0.9, -2.39), (1.42, 2.15, 2.39), 'upper_arm_tie')
-        strap(a, (-3.40, 6.85, -2.38), (1.42, 8.8, 2.38), 'wrist_wrap')
-        plate(a, (-3.15, 5.60, -2.96), (1.05, 9.15, -2.18), Horn('wrist_scute'), (4, 4, 1))
-        lashing(a, -1.0, 6.85, -3.15)
+        plate(a, (-3.44, -2.57, -2.52), (1.44, 10.48, 2.56), RawHide('sleeve'), (5, 13, 5))
+        plate(a, (-4.45, -3.28, -3.25), (1.62, 2.96, 3.29), RawHide('shoulder_mantle', hood=True), (6, 6, 7))
+        for k, (x0, x1, y0, y1) in enumerate(((-4.75, -1.40, -2.90, -0.30),
+                                              (-1.25, 1.35, -2.62, -0.12),
+                                              (-4.48, -1.85, -0.10, 2.38),
+                                              (-1.67, 1.10, 0.10, 2.69),
+                                              (-4.08, -1.43, 2.52, 4.15))):
+            plate(a, (x0, y0, -3.79 - k * 0.15), (x1, y1, -3.11 + k * 0.09),
+                  RawHorn(f'shoulder_scute{k}', dark=True))
+            plate(a, (x0 + 0.06, y0 + 0.13, 3.14 + k * 0.10),
+                  (x1 - 0.04, y1 + 0.11, 3.83 + k * 0.15), RawHorn(f'rear_scute{k}', dark=True))
+        plate(a, (-4.87, -2.17, -2.73), (-4.35, 0.37, 2.78), RawHorn('outer_shell', dark=True), (1, 3, 6))
+        plate(a, (-4.55, 0.56, -2.42), (-3.99, 3.41, 2.48), RawHorn('lower_outer_shell', dark=True), (1, 3, 5))
+        # Bound horn strips enclose the forearm all round, above a dark hide glove.
+        plate(a, (-3.64, 5.20, -2.77), (1.66, 9.59, 2.81), RawHorn('bracer_base'), (5, 4, 6))
+        for k, y in enumerate((5.33, 6.77, 8.21)):
+            plate(a, (-3.79 - k * 0.10, y, -3.03 - k * 0.11),
+                  (1.83 + k * 0.10, y + 0.78, 3.08 + k * 0.11), RawHorn(f'bracer_rib{k}'), (6, 1, 6))
+        plate(a, (-3.58, 9.80, -2.67), (1.61, 10.69, 2.70), RawHide('hide_glove'), (5, 1, 5))
     w.arm(arm, sided=False)
     return w
 
 
 def keratin_leggings():
     w = A.Worn('keratin_leggings', 64, 64)
-    b = w.bone('body', 'rawhide_waist_tie')
-    sym(b, 4.52, (10.60, 12.4), (-2.60, 2.60), Hide('waistband'), (9, 2, 5))
-    sym(b, 4.65, (11.05, 11.70), (-2.74, -2.50), Cord(), (9, 1, 1))
-    sym(b, 0.48, (11.2, 13.5), (-2.98, -2.61), Cord(), (1, 2, 1))
+    b = w.bone('body', 'tied_hide_belt')
+    sym(b, 4.73, (10.40, 12.73), (-2.81, 2.85), RawHide('belt'), (9, 2, 6))
+    sym(b, 0.95, (10.94, 12.0), (-3.17, -2.76), RawHorn('horn_toggle'), (2, 1, 1))
+    sym(b, 0.29, (11.3, 13.24), (-3.45, -3.07), Cord(), (1, 2, 1))
     def leg(l):
-        # Front and rear rawhide apron panels follow each leg independently when walking.
-        plate(l, (-2.78, 0.1, -2.73), (1.56, 4.95, -2.30), Hide('apron'), (4, 5, 1))
-        plate(l, (-2.74, 0.15, 2.29), (1.53, 4.40, 2.74), Hide('rear_apron'), (4, 4, 1))
-        plate(l, (-2.95, 0.55, -3.15), (1.24, 2.65, -2.65), Horn('hip_scute'), (4, 2, 1))
-        plate(l, (-2.45, 2.85, -3.04), (0.84, 4.65, -2.65), Horn('thigh_scute', 0.71), (3, 2, 1))
-        lashing(l, -1.8, 0.70, -3.30)
-        strap(l, (-2.44, 6.15, -2.44), (2.36, 7.05, 2.44), 'knee_tie')
-        plate(l, (-2.63, 5.8, -2.86), (1.12, 7.55, -2.32), Horn('knee_scute'), (4, 2, 1))
+        plate(l, (-2.49, -0.40, -2.53), (2.43, 9.61, 2.57), RawHide('hide_trousers', inner=True), (5, 10, 5))
+        plate(l, (-2.78, 0.26, -2.88), (2.65, 3.15, -2.26), RawHide('front_skirt', inner=True), (5, 3, 1))
+        plate(l, (-2.68, 0.33, 2.31), (2.56, 3.32, 2.93), RawHide('rear_skirt', inner=True), (5, 3, 1))
+        # Small patches on the outside of the thigh, leaving the full trousers visible.
+        plate(l, (-2.99, 1.68, -1.69), (-2.41, 4.46, 1.73), RawHorn('thigh_patch'), (1, 3, 3))
+        plate(l, (-2.76, 4.60, -2.92), (2.58, 6.53, -2.40), RawHide('knee_patch', inner=True), (5, 2, 1))
+        plate(l, (-2.86, 7.0, -2.78), (2.71, 7.65, 2.81), RawHide('shin_binding', inner=True), (6, 1, 6))
     leg_pair(w, leg)
     return w
 
 
 def keratin_boots():
-    w = A.Worn('keratin_boots', 64, 32)
+    w = A.Worn('keratin_boots', 64, 64)
     def leg(l):
-        plate(l, (-2.57, 8.05, -2.58), (2.43, 11.05, 2.58), Hide('moccasin_cuff'), (5, 3, 5))
-        plate(l, (-2.73, 7.65, -2.75), (2.52, 8.85, 2.75), Hide('fur_cuff', fur=True), (5, 1, 5))
-        plate(l, (-2.72, 10.5, -3.5), (2.59, 12.16, 2.72), Hide('moccasin'), (5, 2, 6))
-        plate(l, (-2.41, 9.15, -2.91), (1.23, 10.90, -2.49), Horn('ankle_scute'), (4, 2, 1))
-        plate(l, (-2.27, 10.20, -3.65), (1.87, 11.75, -3.20), Horn('toe_scute', 0.59), (4, 2, 1))
-        lashing(l, -0.8, 8.70, -3.06)
+        # High hide boots overlap the trousers; toes, ankles and calves stay enclosed.
+        plate(l, (-2.65, 8.73, -2.73), (2.61, 11.34, 2.77), RawHide('boot_shaft', inner=True), (5, 3, 6))
+        plate(l, (-2.82, 10.90, -3.38), (2.76, 12.54, 2.95), RawHide('hide_boot', inner=True), (6, 2, 6))
+        plate(l, (-2.97, 8.52, -2.92), (2.89, 9.35, 2.97), RawHorn('boot_cuff', inner=True), (6, 1, 6))
+        plate(l, (-2.87, 9.63, -3.02), (2.81, 10.39, 3.09), RawHide('boot_lashing', inner=True), (6, 1, 6))
+        plate(l, (-2.53, 11.1, -3.59), (2.46, 11.99, -3.12), RawHorn('toe_guard', inner=True), (5, 1, 1))
     leg_pair(w, leg)
     return w
 
@@ -283,6 +348,24 @@ def set_icon(tier):
                    centre=(0, 6, 0), background=None)
 
 
+def verify_keratin_coverage(built):
+    """An opaque magenta player reveals any exposed skin or clothing in the full set.
+
+    Checks both base and outer skin layers, wide/slim arms, front/back views and
+    a walking pose. Face slots are backed by the hood, so they expose no skin.
+    """
+    marker = Image.new('RGBA', (64, 64), (255, 0, 255, 255))
+    for slim in (False, True):
+        for pose_name, pose in (('standing', {}), ('walking', S.WALK)):
+            groups = A.player_quads(slim, skin=marker, pose=pose)
+            for worn, tex, _ in built.values():
+                groups += A.worn_quads(worn, tex, pose=pose, arms='slim' if slim else 'wide')
+            for yaw in (0, -35, 180, 145):
+                pixels = np.array(S.frame(groups, yaw, 12, size=(220, 300), scale=7.5))
+                exposed = (pixels[..., 0] > 40) & (pixels[..., 1] < 20) & (pixels[..., 2] > 40)
+                assert not exposed.any(), f'Keratin exposes skin: slim={slim}, {pose_name}, yaw={yaw}, {exposed.sum()} pixels'
+
+
 def verify(built):
     """Check the runtime model contract and all intended faces before writing assets."""
     for piece, (worn, tex, icon) in built.items():
@@ -301,12 +384,20 @@ def verify(built):
                 x, y, z = c.size
                 assert u >= 0 and v >= 0 and u + 2 * (x + z) <= worn.width and v + z + y <= worn.height
     for arms in ('wide', 'slim'):
-        clashes = S.zfight(built, arms)
+        # A real shared plane is a z-fight; nearby faces on closed hide wraps are intentional.
+        clashes = S.zfight(built, arms, tol=0.001)
         assert not clashes, '\n'.join([f'{arms} overlapping faces:'] + clashes)
+    if built['helmet'][0].id == 'keratin_helmet':
+        verify_keratin_coverage(built)
 
 
 def previews(tier, built):
     S.set_sheet(built).save(DESIGN / f'{tier}_set.png')
+    if tier == 'keratin':
+        frames = [S.label(S.frame(S.scene(built, PIECES, pose=S.WALK), yaw, 10,
+                                  size=(360, 500), scale=12.2, centre=(0, 7.0, 0)), label)
+                  for yaw, label in ((-32, 'Keratin - front'), (148, 'Keratin - back'))]
+        S.strip(frames).save(DESIGN / 'keratin_review.png')
     for piece in PIECES:
         worn, tex, icon = built[piece]
         card = Image.new('RGBA', (140, 350), S.BG)
@@ -371,8 +462,7 @@ def main():
         verify(built)
         write(tier, built)
     refresh_icons(tiers)
-    if set(tiers) == set(TIERS):
-        comparison()
+    comparison()
     print('Validated wide and slim models, UV bounds, positive geometry and no coplanar face overlaps.')
 
 

@@ -155,7 +155,11 @@ def armour(ident, title, note, chip, layers, uri):
     asset.frame(*extent(points))
     asset.data['view'] = {'yaw': -28, 'pitch': 12}
     posed = [(p, A._to_root(p, qs, dict(WALK)), np.array(img.convert('RGBA'))) for p, qs, _, img in groups]
-    poster = A.rasterise(posed, (300, 300), -28, 12, 8.2, (0, 12, 0), None)
+    posed_points = [v for _, quads, _ in posed for verts, _ in quads for v in verts]
+    lo, hi = extent(posed_points)
+    centre = (lo + hi) / 2
+    scale = 264 / max(hi - lo)
+    poster = A.rasterise(posed, (300, 300), -28, 12, scale, centre, None)
     return asset.data, poster
 
 
@@ -213,8 +217,8 @@ def section(uri, e):
     assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'Early bronze-age armour: an open '
                                    'crested cap, hammered cuirass, studded leather skirt and strapped greaves over sandals.',
                                    '3D design', authored_set('bronze'), uri))
-    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'Prehistoric armour: horn scutes '
-                                   'lashed onto hide, a swept horn cap, fiber ties and fur-cuffed moccasins.',
+    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'A hooded prehistoric hide suit: a '
+                                   'ribbed keratin face guard, broad carapace shoulder scales, horn-bound bracers and enclosed boots. No feathers.',
                                    '3D design', authored_set('keratin'), uri))
     for ident, title, note in WEAPONS:
         assets['weapons'].append(weapon(ident, title, note, uri))
