@@ -1,0 +1,106 @@
+{
+  "about": "The user's decisions on the recipe plan (P14), read by tools/workstation_plan.py after its rules and the bench designs. A key is a recipe id, or family:<name> for every recipe of a family; a value may set fate (go, stay, change, decide), bench, place and note. The showcase Recipes page saves this file from its review list (Save decisions).",
+  "decisions": {
+    "minecraft:copper_pickaxe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:copper_axe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:copper_shovel": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:copper_hoe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:copper_sword": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:copper_spear": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_pickaxe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_axe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_shovel": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_hoe": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_sword": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:iron_spear": {
+      "fate": "go",
+      "note": "Copper and iron tools are gone (2026-09-29)."
+    },
+    "minecraft:brush": {
+      "fate": "go",
+      "note": "The brush is gone (2026-09-29)."
+    },
+    "minecraft:turtle_helmet": {
+      "fate": "go",
+      "note": "The turtle helmet is gone (2026-09-29)."
+    },
+    "minecraft:wolf_armor": {
+      "fate": "go",
+      "note": "Wolf armour is gone (2026-09-29)."
+    },
+    "minecraft:spyglass": {
+      "fate": "stay",
+      "bench": "working_station",
+      "place": "metal/copper",
+      "note": "Not in the Armoury: an ingredient of the scanner (radar) (2026-09-29)."
+    },
+    "minecraft:shield": {
+      "bench": "armoury",
+      "place": "wood",
+      "note": "Into the Wood category (2026-09-29)."
+    },
+    "minecraft:crossbow": {
+      "bench": "armoury",
+      "place": "wood",
+      "note": "Into the Wood category (2026-09-29)."
+    },
+    "minecraft:leather_helmet": {
+      "bench": "armoury",
+      "place": "leather",
+      "note": "Leather is included (2026-09-29)."
+    },
+    "minecraft:leather_chestplate": {
+      "bench": "armoury",
+      "place": "leather",
+      "note": "Leather is included (2026-09-29)."
+    },
+    "minecraft:leather_leggings": {
+      "bench": "armoury",
+      "place": "leather",
+      "note": "Leather is included (2026-09-29)."
+    },
+    "minecraft:leather_boots": {
+      "bench": "armoury",
+      "place": "leather",
+      "note": "Leather is included (2026-09-29)."
+    },
+    "minecraft:wooden_spear": {
+      "bench": "armoury",
+      "place": "wood",
+      "note": "The wooden spear is back (2026-09-29)."
+    }
+  }
+}

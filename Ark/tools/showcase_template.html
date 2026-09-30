@@ -251,6 +251,56 @@
   .ws-table tr.ws-cat th .muted { font: 400 13px var(--body); }
   .ws-cost { display: flex; flex-wrap: wrap; gap: 4px 14px; }
   .ws-cost span { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+  .ws-tabs button img { width: 16px; height: 16px; image-rendering: pixelated; vertical-align: -3px; margin-right: 6px; }
+  .ws-hint { font-size: 13px; }
+  .ico { display: inline-block; width: 24px; height: 24px; flex: none; image-rendering: pixelated; vertical-align: middle; }
+  /* recipe review list (tools/recipe_review.js) */
+  .rv { display: grid; gap: 10px; }
+  .rv-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+  .rv-summary { font-size: 14px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  .rv-count { font: 600 13px var(--body); padding: 2px 8px; border-radius: 999px; background: var(--chip); }
+  .rv-count.f-go, .rv-fate .f-go[aria-pressed="true"] { color: var(--red); }
+  .rv-count.f-stay, .rv-fate .f-stay[aria-pressed="true"] { color: var(--ok); }
+  .rv-count.f-change, .rv-fate .f-change[aria-pressed="true"] { color: var(--blue); }
+  .rv-count.f-decide, .rv-fate .f-decide[aria-pressed="true"] { color: var(--check); }
+  .rv-edits { font: 600 13px var(--body); color: var(--ember); }
+  .rv-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rv-actions button, .rv-toggle, .rv-more, .rv-filters select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px;
+                                                   padding: 4px 12px; font: 600 13px var(--body); cursor: pointer; }
+  .rv-actions .rv-save { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .rv-toggle[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .rv-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+  .rv-search { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 12px; font: 14px var(--body); min-width: 200px; }
+  .rv-status:empty { display: none; }
+  .rv-list { display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .rv-row { display: grid; grid-template-columns: 22px minmax(170px, 1.3fr) minmax(150px, 1.2fr) auto minmax(150px, 1fr) minmax(90px, .8fr) 52px;
+            gap: 10px; align-items: center; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .rv-member { background: var(--raised); padding-left: 24px; }
+  .rv-exp { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 0; width: 22px; }
+  .rv-name { display: flex; gap: 8px; align-items: center; min-width: 0; }
+  .rv-name > span { display: grid; min-width: 0; }
+  .rv-name b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rv-name small { color: var(--muted); font-size: 12px; }
+  .rv-id { font: 11px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rv-cost { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font: 600 12px var(--mono); }
+  .rv-cost span { display: inline-flex; align-items: center; gap: 2px; }
+  .rv-arrow { font-style: normal; color: var(--muted); font: 600 11px var(--body); }
+  .rv-fate { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .rv-fate button { border: 0; border-right: 1px solid var(--line); background: var(--surface); color: var(--muted); padding: 3px 9px; font: 600 12px var(--body); cursor: pointer; }
+  .rv-fate button:last-child { border-right: 0; }
+  .rv-fate button[aria-pressed="true"] { background: var(--chip); }
+  .rv-where { display: grid; gap: 2px; min-width: 0; }
+  .rv-where small { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rv-bench { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 2px 4px; font: 13px var(--body); max-width: 100%; }
+  .rv-note { border: 1px solid transparent; background: transparent; color: var(--muted); border-radius: 6px; padding: 3px 6px; font: 13px var(--body); min-width: 0; width: 100%; }
+  .rv-note:hover, .rv-note:focus { border-color: var(--line); background: var(--surface); color: var(--ink); }
+  .rv-by { font: 600 11px var(--mono); color: var(--muted); text-align: right; }
+  .rv-by.user { color: var(--ok); } .rv-by.design { color: var(--blue); } .rv-by.edited { color: var(--ember); }
+  .rv-more { justify-self: center; }
+  @media (max-width: 980px) {
+    .rv-row { grid-template-columns: 22px minmax(0, 1fr) auto; }
+    .rv-cost, .rv-where, .rv-note, .rv-by { grid-column: 2 / -1; }
+  }
   .quests { margin: 4px 0 0; padding-left: 20px; display: grid; gap: 3px; font-size: 14px; }
 
   /* blocks, items, ui */
@@ -471,31 +521,51 @@
 
   <section id="recipes">
     <div><div class="eyebrow">Recipes</div><h2>Workstations you read like a map</h2></div>
-    <p class="lede">The crafting rework (P14, in design): no station keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, and a recipe can ask for more than nine items, so no vanilla table can make it. The Working Station hands every weapon, tool and armour piece to the new Armoury, the first station designed: %%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials. The game keeps its current recipes until the whole rework is designed.</p>
+    <p class="lede">The crafting rework (P14, in design): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, under its own crest, and a recipe can ask for more than nine items, so no vanilla table can make it. Five benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station everything else, the Mortar &amp; Pestle what is ground, the Medicine Bench the remedies and the Smithing Table the trims. The game keeps its current recipes until the whole rework is designed.</p>
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
       <div class="ws-frame">
-        <canvas class="ws-canvas" tabindex="0" aria-label="Workstation screen preview. Click a material, then an item, then the item again to craft; Escape steps back. The recipe table below lists the same recipes."></canvas>
+        <canvas class="ws-canvas" tabindex="0" aria-label="Workstation screen preview. Click a material, then a group or a recipe, then the recipe again to craft; scroll over a recipe for its other variants; Escape steps back. The review list below lists every recipe."></canvas>
         <button type="button" class="ws-full">Full screen (1:1)</button>
       </div>
       <div class="ws-controls">
         <label class="ws-level">Player level <input type="range" min="0" max="40" value="8"><output>8</output></label>
         <div class="ws-seg" data-control="preset" role="group" aria-label="Inventory"><span>Inventory</span>
           <button type="button" data-value="empty" aria-pressed="false">Empty</button><button type="button" data-value="starter" aria-pressed="true">Starter</button><button type="button" data-value="stocked" aria-pressed="false">Stocked</button></div>
-        <div class="ws-seg" data-control="mode" role="group" aria-label="Where crafted items go"><span>Crafted items go</span>
-          <button type="button" data-value="direct" aria-pressed="true">Into the inventory</button><button type="button" data-value="tray" aria-pressed="false">Into an output tray</button></div>
         <button type="button" class="ws-reset">Reset</button>
+        <span class="muted ws-hint">Level and inventory exist only in this preview.</span>
       </div>
       <div class="ws-inv" aria-live="polite"></div>
     </div>
     <div class="grid-3">
-      <div class="card"><h4>The graph</h4><p class="muted">Materials float like notes in Obsidian, dimmed until the player's level unlocks them. Click one and its items grow out of it and push the rest aside; click an item and its ingredients grow beside it, each marked with the amount it needs, red while short. Names show only on hover. Drag any node; click empty space or press Escape to step back.</p></div>
-      <div class="card"><h4>Crafting</h4><p class="muted">Click the selected item again, or Craft, to make it; Shift makes as many as the inventory pays for, and the amount box multiplies the cost. Where the result lands is still open: straight into the inventory, or into an output tray you empty. Try both with the switch under the frame; the level, inventory and switch only exist in this preview.</p></div>
-      <div class="card"><h4>One source for page and mod</h4><p class="muted">Recipes, levels and the look live in <code>Ark/design/workstations</code> (<code>armoury.json</code>, <code>graph_style.json</code>). The page runs the same deterministic graph code the mod will port to Java (<code>tools/workstation_graph.js</code>), drawn in the same units, font and sprites, so what is tuned here carries over.</p></div>
+      <div class="card"><h4>The graph</h4><p class="muted">Materials float like notes in Obsidian, dimmed until the player's permanent level unlocks them. Click one and what it makes grows out of it and pushes the rest aside; a double ring is a group that opens the same way. Click a recipe and its ingredients grow beside it, each marked with the amount it needs, red while short. Names show only on hover; drag any node, click empty space or press Escape to step back.</p></div>
+      <div class="card"><h4>Crafting</h4><p class="muted">Click the selected recipe again, or Craft: the result goes straight into the inventory. Shift makes as many as the inventory pays for, and the amount box multiplies the cost. A node with dots under it holds variants (wood types, colours, stone kinds): scroll over it, or use the arrows in the bar, to switch.</p></div>
+      <div class="card"><h4>One source for page and mod</h4><p class="muted">The benches live in <code>Ark/design/workstations</code>: one design file per bench, <code>graph_style.json</code> for the look, crests from <code>tools/build_workstation_crests.py</code>. <code>tools/workstation_plan.py</code> places every recipe; the page runs the same deterministic graph code the mod will port to Java (<code>tools/workstation_graph.js</code>), in the same units, font and icons.</p></div>
     </div>
     <details class="ws-recipes"><summary>All %%RECIPES_COUNT%% Armoury recipes</summary>
       <div class="table-wrap"><table class="ws-table"><thead><tr><th>Item</th><th>Level</th><th>Cost</th><th>Items</th></tr></thead><tbody></tbody></table></div>
     </details>
+
+    <h3>Every vanilla recipe: go, stay or change</h3>
+    <p class="lede">All %%RECIPES_VANILLA%% vanilla recipes with the plan for each, %%RECIPES_DECIDE%% still to decide. <b>Go</b> removes it, <b>Stay</b> keeps its grid cost at the bench shown, <b>Change</b> keeps it with a new cost, <b>?</b> leaves it to decide. The plan comes from rules (the theme policy, closed dimensions, what each bench is for), the bench designs and your saved decisions; a row that folds variants opens into its recipes. Change a fate, a bench or a note here, then <b>Save decisions</b> and put the file at <code>Ark/design/workstations/vanilla_fates.json</code>: the next build applies it.</p>
+    <div class="rv" id="rv">
+      <div class="rv-bar">
+        <div class="rv-summary" aria-live="polite"></div>
+        <div class="rv-actions"><button type="button" class="rv-save">Save decisions</button><button type="button" class="rv-copy">Copy JSON</button><button type="button" class="rv-discard">Discard changes</button></div>
+      </div>
+      <div class="rv-filters">
+        <input type="search" class="rv-search" placeholder="Search recipes" aria-label="Search recipes">
+        <div class="ws-seg" role="group" aria-label="Fate"><button type="button" data-filter="fate" data-value="all" aria-pressed="true">All</button><button type="button" data-filter="fate" data-value="decide" aria-pressed="false">To decide</button><button type="button" data-filter="fate" data-value="go" aria-pressed="false">Go</button><button type="button" data-filter="fate" data-value="stay" aria-pressed="false">Stay</button><button type="button" data-filter="fate" data-value="change" aria-pressed="false">Change</button></div>
+        <select data-filter="bench" aria-label="Bench"></select>
+        <div class="ws-seg" role="group" aria-label="Source"><button type="button" data-filter="source" data-value="vanilla" aria-pressed="true">Vanilla</button><button type="button" data-filter="source" data-value="ark" aria-pressed="false">Ark</button><button type="button" data-filter="source" data-value="all" aria-pressed="false">Both</button></div>
+        <select data-filter="kind" aria-label="Recipe type"><option value="all">Every type</option><option value="crafting">Crafting</option><option value="other">Furnace, stonecutter, smithing</option></select>
+        <button type="button" class="rv-toggle" data-filter="edited" aria-pressed="false">Only changed here</button>
+      </div>
+      <p class="rv-status muted" aria-live="polite"></p>
+      <div class="rv-list"></div>
+      <button type="button" class="rv-more" hidden></button>
+    </div>
+
     <h3>Item sprites</h3>
     <p class="muted">Crisp 32 px originals or re-toned vanilla sprites; dinosaur meats are drawn larger in hand and on the ground than normal Minecraft meat.</p>
     %%ITEMS%%
@@ -837,7 +907,9 @@ window.arkModels = (function () {
   });
 
   // Recipes: the workstation screen preview (tools/workstation_ui.js), running only while its page is open.
-  window.arkRecipes = window.ArkWorkstationUI.mount(document.getElementById('ws'), JSON.parse(document.getElementById('ws-data').textContent));
+  var recipeData = JSON.parse(document.getElementById('ws-data').textContent);
+  window.arkRecipes = window.ArkWorkstationUI.mount(document.getElementById('ws'), recipeData);
+  window.arkReview = window.ArkRecipeReview.mount(document.getElementById('rv'), recipeData, window.arkRecipes.icon);
 
   // Behaviour models: one tab per model and per distance tier; a filled matrix cell explains its transition.
   var models = Array.prototype.slice.call(document.querySelectorAll('#behavior .model'));

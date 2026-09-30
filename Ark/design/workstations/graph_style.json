@@ -1,11 +1,11 @@
 {
-  "about": "P14 client constants for every workstation screen, read by tools/workstation_graph.js and tools/workstation_ui.js (showcase) and, once shipped, by the mod's WorkstationScreen as assets/arksurvivalreturns/workstation/graph_style.json. Sizes are design units: the panel is always width x height units, scaled so it spans widthFraction of the window (capped at maxHeightFraction of its height). Forces follow d3-force: charge is the many-body strength per node kind, links pull to their rest length, centre and focus pull toward the middle of the graph (focus only on the selected item, else the open material). One tick is 1/60 s.",
+  "about": "P14 client constants for every workstation screen, read by tools/workstation_graph.js and tools/workstation_ui.js (showcase) and, once shipped, by the mod's WorkstationScreen as assets/arksurvivalreturns/workstation/graph_style.json. Sizes are design units: the panel is always width x height units, scaled so it spans widthFraction of the window (capped at maxHeightFraction of its height). Forces follow d3-force: charge is the many-body strength per node kind (a group is a folder of families inside a material), links pull to their rest length (groupItem: a group to its families), centre and focus pull toward the middle of the graph (focus on the deepest open node: the selected item, else the open group, else the open material; pathFocus is the share the rest of that path gets). One tick is 1/60 s.",
   "panel": {"width": 320, "height": 200, "widthFraction": 0.5, "maxHeightFraction": 0.8, "title": 15, "bar": 30, "inset": 4},
-  "node": {"category": 12, "item": 10, "ingredient": 9, "gap": 3},
-  "link": {"chain": 48, "item": 36, "ingredient": 27, "parentWeight": 0.12},
+  "node": {"category": 12, "group": 11, "item": 10, "ingredient": 9, "gap": 3},
+  "link": {"chain": 48, "item": 36, "groupItem": 31, "ingredient": 27, "parentWeight": 0.12},
   "force": {
-    "chargeCategory": -130, "chargeItem": -70, "chargeIngredient": -45,
-    "centre": 0.025, "focus": 0.14, "collide": 0.6,
+    "chargeCategory": -130, "chargeGroup": -85, "chargeItem": -70, "chargeIngredient": -45,
+    "centre": 0.025, "focus": 0.22, "pathFocus": 0.45, "collide": 0.6,
     "velocityDecay": 0.42, "alphaDecay": 0.0228, "alphaMin": 0.002, "reheat": 0.85, "dragTarget": 0.3, "maxSpeed": 9
   },
   "motion": {"grow": 12, "shrink": 9, "fly": 20, "shake": 12, "pulse": 10},

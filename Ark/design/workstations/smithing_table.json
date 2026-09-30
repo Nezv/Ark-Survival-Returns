@@ -1,0 +1,12 @@
+{
+  "station": "arksurvivalreturns:smithing_table",
+  "title": "Smithing Table",
+  "about": "P14 design data (see armoury.json). Armour trims: copy a template you found (a template, diamonds and its base block make two) and apply a trim to an armour piece. Netherite upgrades are gone with netherite; templates only found in closed places are left to decide.",
+  "accent": "#d8b25a",
+  "crest": {"frame": "iron", "sigil": "anvil"},
+  "well": "sparks",
+  "categories": [
+    {"id": "templates", "title": "Templates", "icon": "minecraft:coast_armor_trim_smithing_template", "color": "#6fb3c9", "level": 15},
+    {"id": "trims", "title": "Trims", "icon": "minecraft:dune_armor_trim_smithing_template", "color": "#d8b25a", "level": 15, "after": "templates"}
+  ]
+}

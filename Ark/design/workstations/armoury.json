@@ -1,13 +1,18 @@
 {
   "station": "arksurvivalreturns:armoury",
   "title": "Armoury",
-  "about": "P14 design data, read by the showcase (tools/showcase_recipes.py) and, once shipped, by the mod as data/arksurvivalreturns/workstation/armoury.json. Every weapon, tool and armour piece moves here from the Working Station. A category is a fundamental resource; 'after' links it to the previous one in the graph; 'level' is the player experience level that unlocks it (an item may ask for more). A cost is an unordered list of item or #tag counts with no 3x3 limit: first pass = the old grid counts plus a lining or a binding. 'planned' marks Iron Age items that are not registered yet.",
+  "about": "P14 design data, read by tools/workstation_plan.py (the showcase) and, once shipped, by the mod as data/arksurvivalreturns/workstation/armoury.json. Every weapon, tool and armour piece moves here from the Working Station. A category is a fundamental resource; 'after' links it to the previous one in the graph; 'level' is the permanent player level that unlocks it (an item may ask for more). A cost is an unordered list of item or #tag counts with no 3x3 limit. Recipes the rules place here keep their grid cost (the carrot on a stick); the ones written below are new or changed. 'planned' marks Iron Age items that are not registered yet.",
+  "accent": "#e2763f",
+  "crest": {"frame": "steel", "sigil": "helm"},
+  "well": "dots",
   "categories": [
     {
       "id": "wood", "title": "Wood", "icon": "minecraft:oak_log", "color": "#a0763f", "level": 0,
       "items": [
         {"item": "minecraft:wooden_spear", "cost": {"minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 2}},
         {"item": "minecraft:bow", "level": 3, "cost": {"minecraft:stick": 3, "minecraft:string": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "minecraft:crossbow", "level": 12, "cost": {"minecraft:stick": 3, "minecraft:iron_ingot": 1, "minecraft:string": 2, "minecraft:tripwire_hook": 1}},
+        {"item": "minecraft:shield", "level": 4, "cost": {"#minecraft:planks": 6, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 2}},
         {"item": "minecraft:arrow", "count": 4, "level": 3, "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 1, "minecraft:feather": 1}},
         {"item": "arksurvivalreturns:tranquilizer_arrow", "count": 4, "level": 8, "cost": {"minecraft:arrow": 4, "arksurvivalreturns:narcotics": 1, "minecraft:bone": 1}},
         {"item": "arksurvivalreturns:explosive_arrow", "count": 4, "level": 16, "cost": {"minecraft:arrow": 4, "minecraft:gunpowder": 1}},
@@ -23,11 +28,23 @@
         {"item": "arksurvivalreturns:rock_pickaxe", "level": 1, "cost": {"arksurvivalreturns:rock": 3, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:stone_hatchet", "cost": {"arksurvivalreturns:rock": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:rock_shovel", "level": 1, "cost": {"arksurvivalreturns:rock": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:rock_hoe", "level": 2, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}}
+        {"item": "arksurvivalreturns:rock_hoe", "level": 2, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
+        {"item": "minecraft:flint_and_steel", "level": 3, "cost": {"minecraft:iron_ingot": 1, "minecraft:flint": 1}}
       ]
     },
     {
-      "id": "keratin", "title": "Keratin", "icon": "arksurvivalreturns:keratin", "color": "#d9cfa8", "level": 5, "after": "rock",
+      "id": "leather", "title": "Leather", "icon": "minecraft:leather", "color": "#9c6b45", "level": 2, "after": "rock",
+      "items": [
+        {"item": "minecraft:leather_helmet", "cost": {"minecraft:leather": 5, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "minecraft:leather_chestplate", "level": 4, "cost": {"minecraft:leather": 8, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "minecraft:leather_leggings", "level": 3, "cost": {"minecraft:leather": 7, "arksurvivalreturns:plant_fiber": 3}},
+        {"item": "minecraft:leather_boots", "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "minecraft:saddle", "level": 3, "cost": {"minecraft:leather": 3, "minecraft:iron_ingot": 1}},
+        {"item": "minecraft:leather_horse_armor", "level": 4, "cost": {"minecraft:leather": 7}}
+      ]
+    },
+    {
+      "id": "keratin", "title": "Keratin", "icon": "arksurvivalreturns:keratin", "color": "#d9cfa8", "level": 5, "after": "leather",
       "items": [
         {"item": "arksurvivalreturns:keratin_spear", "cost": {"arksurvivalreturns:keratin": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:keratin_helmet", "level": 6, "cost": {"arksurvivalreturns:keratin": 5, "minecraft:leather": 1, "arksurvivalreturns:plant_fiber": 2}},
@@ -45,6 +62,7 @@
         {"item": "arksurvivalreturns:bronze_axe", "cost": {"arksurvivalreturns:bronze_ingot": 3, "minecraft:stick": 2, "minecraft:leather": 1}},
         {"item": "arksurvivalreturns:bronze_shovel", "cost": {"arksurvivalreturns:bronze_ingot": 1, "minecraft:stick": 2, "minecraft:leather": 1}},
         {"item": "arksurvivalreturns:bronze_hoe", "cost": {"arksurvivalreturns:bronze_ingot": 2, "minecraft:stick": 2, "minecraft:leather": 1}},
+        {"item": "minecraft:shears", "cost": {"arksurvivalreturns:bronze_ingot": 2}},
         {"item": "arksurvivalreturns:bronze_helmet", "level": 13, "cost": {"arksurvivalreturns:bronze_ingot": 5, "minecraft:leather": 2}},
         {"item": "arksurvivalreturns:bronze_chestplate", "level": 15, "cost": {"arksurvivalreturns:bronze_ingot": 8, "minecraft:leather": 4}},
         {"item": "arksurvivalreturns:bronze_leggings", "level": 14, "cost": {"arksurvivalreturns:bronze_ingot": 7, "minecraft:leather": 3}},
@@ -69,14 +87,14 @@
     {
       "id": "steel", "title": "Steel", "icon": "arksurvivalreturns:steel_ingot", "color": "#9fb3c6", "level": 25, "after": "bronze", "planned": true,
       "items": [
-        {"item": "arksurvivalreturns:electric_bat", "level": 27, "cost": {"#minecraft:planks": 2, "arksurvivalreturns:copper_wire": 6, "arksurvivalreturns:steel_ingot": 1}},
-        {"item": "arksurvivalreturns:rifle", "level": 30, "cost": {"arksurvivalreturns:steel_ingot": 6, "arksurvivalreturns:metal_pipe": 1, "arksurvivalreturns:metal_screw": 4, "#minecraft:planks": 3}},
-        {"item": "arksurvivalreturns:ammunition", "count": 8, "level": 30, "cost": {"minecraft:copper_ingot": 1, "minecraft:gunpowder": 2}},
-        {"item": "arksurvivalreturns:steel_helmet", "cost": {"arksurvivalreturns:steel_ingot": 5, "minecraft:leather": 2}},
-        {"item": "arksurvivalreturns:steel_chestplate", "level": 27, "cost": {"arksurvivalreturns:steel_ingot": 8, "minecraft:leather": 4}},
-        {"item": "arksurvivalreturns:steel_leggings", "level": 26, "cost": {"arksurvivalreturns:steel_ingot": 7, "minecraft:leather": 3}},
-        {"item": "arksurvivalreturns:steel_boots", "cost": {"arksurvivalreturns:steel_ingot": 4, "minecraft:leather": 2}},
-        {"item": "arksurvivalreturns:specialized_boots", "level": 28, "cost": {"arksurvivalreturns:steel_ingot": 4, "minecraft:leather": 3, "arksurvivalreturns:metal_screw": 2}}
+        {"item": "arksurvivalreturns:electric_bat", "level": 27, "planned": true, "cost": {"#minecraft:planks": 2, "arksurvivalreturns:copper_wire": 6, "arksurvivalreturns:steel_ingot": 1}},
+        {"item": "arksurvivalreturns:rifle", "level": 30, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 6, "arksurvivalreturns:metal_pipe": 1, "arksurvivalreturns:metal_screw": 4, "#minecraft:planks": 3}},
+        {"item": "arksurvivalreturns:ammunition", "count": 8, "level": 30, "planned": true, "cost": {"minecraft:copper_ingot": 1, "minecraft:gunpowder": 2}},
+        {"item": "arksurvivalreturns:steel_helmet", "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 5, "minecraft:leather": 2}},
+        {"item": "arksurvivalreturns:steel_chestplate", "level": 27, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 8, "minecraft:leather": 4}},
+        {"item": "arksurvivalreturns:steel_leggings", "level": 26, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 7, "minecraft:leather": 3}},
+        {"item": "arksurvivalreturns:steel_boots", "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 4, "minecraft:leather": 2}},
+        {"item": "arksurvivalreturns:specialized_boots", "level": 28, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 4, "minecraft:leather": 3, "arksurvivalreturns:metal_screw": 2}}
       ]
     },
     {

@@ -1,12 +1,13 @@
 /*
  * Workstation screen preview (P14). Draws a tools/workstation_graph.js graph the way the mod's WorkstationScreen
- * will: laid out in design units (the panel is graph_style.panel.width x height), with the whole screen scaled so
- * the panel spans panel.widthFraction of the window. The canvas renders a whole number of device pixels per unit
- * and the browser only scales down, so item sprites and the vanilla bitmap font stay crisp. Drawing goes through a
- * GuiGraphics-sized set of calls (fill, item, text, tooltip), so the Java screen can port it call for call.
+ * will: laid out in design units (the panel is graph_style.panel.width x height, the bench's crest above it), with
+ * the whole screen scaled so the panel spans panel.widthFraction of the window. The canvas renders a whole number of
+ * device pixels per unit and the browser only scales down, so item icons and the vanilla bitmap font stay crisp.
+ * Drawing goes through a GuiGraphics-sized set of calls (fill, blit, item, text, tooltip), so the Java screen can
+ * port it call for call. Crafted items go straight into the inventory.
  *
- * ArkWorkstationUI.mount(root, payload) wires one preview: the canvas, the station tabs, the preview controls
- * (level, inventory, where crafted items go) and the recipe table. The payload comes from tools/showcase_recipes.py.
+ * ArkWorkstationUI.mount(root, payload) wires one preview: the canvas, the bench tabs, the preview-only controls
+ * (level, inventory) and the Armoury recipe table. The payload comes from tools/showcase_recipes.py.
  */
 window.ArkWorkstationUI = (function () {
   'use strict';
@@ -117,35 +118,70 @@ window.ArkWorkstationUI = (function () {
     return (shapes[key] = c);
   }
 
+  /** The faint pattern in each bench's graph well, seeded so it never moves. */
+  function wellPattern(kind, w, h, pal) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var x = c.getContext('2d'), seed = 7;
+    function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    x.fillStyle = css(pal.well);
+    x.fillRect(0, 0, w, h);
+    x.fillStyle = css(pal.wellDot);
+    var i, px, py;
+    if (kind === 'grain') {
+      for (py = 3; py < h; py += 5) {
+        for (px = 0; px < w; px++) if (rnd() < 0.55) x.fillRect(px, py + (rnd() < 0.1 ? 1 : 0), 1, 1);
+      }
+    } else if (kind === 'speckle') {
+      for (i = 0; i < w * h / 26; i++) x.fillRect(Math.floor(rnd() * w), Math.floor(rnd() * h), rnd() < 0.2 ? 2 : 1, 1);
+    } else if (kind === 'leaves') {
+      for (i = 0; i < w * h / 180; i++) {
+        px = Math.floor(rnd() * w); py = Math.floor(rnd() * h);
+        x.fillRect(px, py, 2, 1); x.fillRect(px + 1, py + 1, 2, 1);
+      }
+    } else if (kind === 'sparks') {
+      for (i = 0; i < w * h / 150; i++) {
+        x.fillStyle = css(rnd() < 0.3 ? '#3a2410' : pal.wellDot);
+        x.fillRect(Math.floor(rnd() * w), Math.floor(rnd() * h), 1, 1);
+      }
+    } else {
+      for (px = 6; px < w - 2; px += 12) for (py = 6; py < h - 2; py += 12) x.fillRect(px, py, 1, 1);
+    }
+    return c;
+  }
+
   // ------------------------------------------------------------------------------------------------ mount
 
   function mount(root, payload) {
     var style = payload.style, P = style.panel, pal = style.palette, M = style.motion, A = G.graphArea(style);
     var frameEl = root.querySelector('.ws-frame'), canvas = root.querySelector('.ws-canvas'), ctx = canvas.getContext('2d');
     var off = document.createElement('canvas'), g = off.getContext('2d');
-    var font = new Font(payload.font), images = {}, world = document.querySelector('.hero > img.bg');
-    var backdrop = document.createElement('canvas'), backdropKey = '';
+    var font = new Font(payload.font), atlas = new Image(), world = document.querySelector('.hero > img.bg');
+    var backdrop = document.createElement('canvas'), backdropKey = '', crest = null, well = null;
     var view = null, running = false, dirty = true, lastTime = 0, acc = 0, widgets = [];
     var graph = null;
+    atlas.onload = function () { dirty = true; };
+    atlas.src = payload.atlas.image;
     font.image.onload = function () { dirty = true; };
     if (world && !world.complete) world.addEventListener('load', function () { backdropKey = ''; dirty = true; });
-    var st = { station: 0, level: 8, preset: 'starter', inv: {}, mode: 'direct', tray: [null, null, null, null], amount: 1,
-               mouse: null, hover: null, widget: null, press: null, dragging: null, flies: [], note: null };
+    var st = { station: 0, level: 8, preset: 'starter', inv: {}, amount: 1, mouse: null, hover: null, widget: null,
+               press: null, dragging: null, flies: [], note: null };
 
     function station() { return payload.stations[st.station]; }
-    function meta(id) { return payload.items[id] || { name: id, stack: 1 }; }
+    function meta(id) { return payload.items[id] || { name: id, icon: 0 }; }
     function have(id) { return st.inv[id] || 0; }
-    function nodeId(n) { return n.kind === 'category' ? n.cat.icon : n.kind === 'item' ? n.item.item : n.ingredient; }
-    function enough(n) { return have(nodeId(n)) >= n.need * st.amount; }
-
-    function image(id) {
-      if (!images[id]) {
-        images[id] = new Image();
-        images[id].onload = function () { dirty = true; };
-        images[id].src = meta(id).sprite || '';
-      }
-      return images[id];
+    function nodeId(n) {
+      return n.kind === 'category' ? n.cat.icon : n.kind === 'group' ? n.entry.icon : n.kind === 'item' ? n.item.item : n.ingredient;
     }
+    function enough(n) { return have(nodeId(n)) >= n.need * st.amount; }
+    function title(n) {
+      if (n.kind === 'category') return n.cat.title;
+      if (n.kind === 'group') return n.entry.title;
+      return meta(nodeId(n)).name;
+    }
+    function familyTitle(n) { return n.entry.title || vname(n.item); }
+    /** A variant's own name (a trim is named after its pattern), else its item's. */
+    function vname(variant) { return variant.name || meta(variant.item).name; }
 
     // ------------------------------------------------------------------ GuiGraphics-sized drawing calls
 
@@ -155,10 +191,10 @@ window.ArkWorkstationUI = (function () {
     }
     function text(s, x, y, hex, shadow) { font.draw(g, s, x, y, hex, shadow); }
     function item(id, x, y) {
-      var img = image(id);
-      if (img.complete && img.naturalWidth) { g.drawImage(img, x, y, 16, 16); return; }
-      fill(x, y, x + 16, y + 16, '#000000');                    // the missing-texture checker
-      fill(x, y, x + 8, y + 8, '#f800f8'); fill(x + 8, y + 8, x + 16, y + 16, '#f800f8');
+      var cell = meta(id).icon || 0, cols = payload.atlas.cols, size = payload.atlas.size;
+      if (atlas.complete && atlas.naturalWidth) {
+        g.drawImage(atlas, (cell % cols) * size, Math.floor(cell / cols) * size, size, size, x, y, 16, 16);
+      }
     }
     /** An item count in the slot's bottom right, the way the inventory draws stack sizes. */
     function count(n, x, y, hex) { var s = String(n); text(s, x + 17 - font.width(s), y + 9, hex, true); }
@@ -202,14 +238,18 @@ window.ArkWorkstationUI = (function () {
 
     // ------------------------------------------------------------------------------------ view and layout
 
+    /** Units the crest adds above the panel; the panel and its crest are centred together. */
+    function crestTop() { var c = station().crest; return c ? c.top : 0; }
+
     function layout() {
       var rect = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
       if (!rect.width || !rect.height) return false;
-      var panel = Math.min(rect.width * P.widthFraction, rect.height * P.maxHeightFraction * P.width / P.height);
+      var tall = P.height + crestTop();
+      var panel = Math.min(rect.width * P.widthFraction, rect.height * P.maxHeightFraction * P.width / tall);
       var scale = panel / P.width, k = Math.max(1, Math.min(8, Math.ceil(scale * dpr - 0.01)));
       var uw = Math.ceil(rect.width / scale), uh = Math.ceil(rect.height / scale);
-      view = { dpr: dpr, scale: scale, k: k, uw: uw, uh: uh,
-               px: Math.floor((uw - P.width) / 2), py: Math.floor((uh - P.height) / 2) };
+      view = { dpr: dpr, scale: scale, k: k, uw: uw, uh: uh, px: Math.floor((uw - P.width) / 2),
+               py: Math.floor((uh - tall) / 2) + crestTop() };
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
       off.width = uw * k;
@@ -252,22 +292,21 @@ window.ArkWorkstationUI = (function () {
       fill(1, 1, w - 1, h - 1, pal.bevelLight);
       fill(2, 2, w - 1, h - 1, pal.bevelDark);
       fill(2, 2, w - 2, h - 2, pal.face);
-      text(s.title, 8, 4, pal.title, false);
+      text(s.title, 8, 4, s.accent || pal.title, false);
       var level = 'Level ' + st.level;
       text(level, w - 8 - font.width(level) + 1, 4, pal.level, true);
-      // The graph well, sunk into the face.
+      // The graph well, sunk into the face, with the bench's pattern.
       fill(A.x - 1, A.y - 1, A.x + A.w + 1, A.y + A.h + 1, pal.bevelLight);
       fill(A.x - 1, A.y - 1, A.x + A.w, A.y + A.h, pal.bevelDark);
-      fill(A.x, A.y, A.x + A.w, A.y + A.h, pal.well);
-      for (var x = A.x + 6; x < A.x + A.w - 2; x += 12) {
-        for (var y = A.y + 6; y < A.y + A.h - 2; y += 12) fill(x, y, x + 1, y + 1, pal.wellDot);
-      }
+      if (!well || well.kind !== s.well) { well = wellPattern(s.well, A.w, A.h, pal); well.kind = s.well; }
+      g.drawImage(well, A.x, A.y);
+      if (crest) g.drawImage(crest, -s.crest.margin, -s.crest.top);
     }
 
     function ringColour(n, locked) {
       if (locked) return pal.faint;
       if (n === graph.selected) return pal.select;
-      if (n.kind === 'category') return n.cat.color;
+      if (n.kind === 'category' || n.kind === 'group') return n.cat.color;
       if (n.kind === 'ingredient') return enough(n) ? pal.craftable : pal.missing;
       return G.maxCrafts(n.item, st.inv) > 0 ? pal.craftable : mix(n.cat.color, pal.nodeFill, 0.4);
     }
@@ -283,7 +322,7 @@ window.ArkWorkstationUI = (function () {
       graph.links.forEach(function (l) {
         var a = l.a, b = l.b, t = Math.min(ease(a.grow), ease(b.grow)), color, alpha;
         if (l.kind === 'chain') { color = pal.link; alpha = 1; }
-        else if (l.kind === 'item') { color = a.cat.color; alpha = 0.4; }
+        else if (l.kind === 'child') { color = a.cat.color; alpha = 0.4; }
         else { color = enough(b) ? pal.craftable : pal.missing; alpha = 0.75; }
         if (hot && (a === hot || b === hot)) { if (l.kind === 'chain') color = pal.linkHot; alpha = 1; }
         if (!graph.unlocked(a) || !graph.unlocked(b)) alpha *= 0.5;
@@ -301,7 +340,7 @@ window.ArkWorkstationUI = (function () {
       var s = ease(n.grow);
       if (s < 0.03) return;
       var r = n.r, locked = !graph.unlocked(n), ring = ringColour(n, locked);
-      var emphasis = n === graph.selected ? pal.select : n === graph.open ? n.cat.color : null;
+      var emphasis = n === graph.selected ? pal.select : n === graph.open || n === graph.openGroup ? n.cat.color : null;
       if (hot && !locked) ring = mix(ring, WHITE, 0.4);
       if (n.pulse) s *= 1 - 0.14 * Math.sin(Math.PI * n.pulse / M.pulse);
       g.save();
@@ -315,37 +354,39 @@ window.ArkWorkstationUI = (function () {
       }
       g.drawImage(shape(r, 0, pal.nodeFill), -r, -r);
       g.drawImage(shape(r, emphasis ? 2 : 1, ring), -r, -r);
+      if (n.kind === 'group') g.drawImage(shape(r - 2, 1, mix(ring, pal.nodeFill, 0.45)), -r + 2, -r + 2);  // a folder: a second ring
       item(nodeId(n), -8, -8);
+      if (n.kind === 'item' && n.entry.variants.length > 1) {                                            // variant dots
+        for (var i = 0; i < Math.min(3, n.entry.variants.length); i++) fill(-3 + i * 2, r - 2, -2 + i * 2, r - 1, i === 0 ? ring : pal.faint);
+      }
       if (locked) g.drawImage(shape(r - 1, 0, pal.dim), -r + 1, -r + 1);
       if (n.need) count(n.need * st.amount, -8, -8, enough(n) ? WHITE : pal.missing);
       g.restore();
     }
 
-    /** Where everything in the craft bar sits, right to left; drawBar and the craft animation share it. */
+    /** Where everything in the craft bar sits, right to left; drawBar and the input share it. */
     function bar() {
-      var y = A.y + A.h, right = P.width - 8, o = { y: y, slot: { x: 8, y: y + 6 }, tray: [] };
-      if (st.mode === 'tray') {
-        for (var i = 0; i < 4; i++) o.tray.push({ x: right - 18 * (4 - i), y: y + 6, w: 18, h: 18 });
-        right -= 4 * 18 + 6;
-      }
+      var y = A.y + A.h, right = P.width - 8, o = { y: y, slot: { x: 8, y: y + 6 } };
       o.craft = { x: right - 34, y: y + 7, w: 34, h: 16 }; right -= 34 + 6;
       o.max = { x: right - 20, y: y + 9, w: 20, h: 12 }; right -= 21;
       o.plus = { x: right - 11, y: y + 9, w: 11, h: 12 }; right -= 12;
       o.count = { x: right - 18, y: y + 9, w: 18, h: 12 }; right -= 19;
       o.minus = { x: right - 11, y: y + 9, w: 11, h: 12 }; right -= 11;
       o.text = { x: 32, w: right - 6 - 32 };
+      o.next = { x: right - 16, y: y + 5, w: 10, h: 10 };
+      o.prev = { x: right - 27, y: y + 5, w: 10, h: 10 };
       return o;
     }
 
     /** Why the current craft cannot happen, or '' when it can. */
     function blocker(times) {
       var sel = graph.selected;
-      if (!graph.unlocked(sel)) return 'Needs level ' + G.levelOf(sel.cat, sel.item);
+      if (!graph.unlocked(sel)) return 'Needs level ' + G.levelOf(sel.cat, sel.entry, sel.group);
+      if (sel.entry.planned || meta(sel.item.item).planned) return 'Planned: not in the game yet';
       for (var id in sel.item.cost) {
         var short = sel.item.cost[id] * times - have(id);
         if (short > 0) return 'Missing ' + short + ' ' + meta(id).name;
       }
-      if (st.mode === 'tray' && !trayAdd(sel.item.item, (sel.item.count || 1) * times, true)) return 'Output tray is full';
       return '';
     }
 
@@ -353,25 +394,25 @@ window.ArkWorkstationUI = (function () {
       widgets = [];
       var o = bar(), sel = graph.selected;
       slot(o.slot.x, o.slot.y);
-      o.tray.forEach(function (t, i) {
-        slot(t.x, t.y);
-        var stack = st.tray[i];
-        if (stack) { item(stack.id, t.x + 1, t.y + 1); if (stack.count > 1) count(stack.count, t.x + 1, t.y + 1, WHITE); }
-        widgets.push({ id: 'tray' + i, x: t.x, y: t.y, w: 18, h: 18, enabled: !!stack });
-      });
       if (!sel) {
-        var hint = graph.open ? 'Pick an item to see its cost' : 'Pick a material to see its items';
-        text(font.fit(hint, P.width - 40 - (o.tray.length ? 78 : 0)), 32, o.y + 8, pal.muted, false);
-        text(font.fit('Names show on hover; dimmed needs a higher level', P.width - 40 - (o.tray.length ? 78 : 0)),
-             32, o.y + 18, pal.faint, false);
+        var hint = graph.openGroup ? 'Pick a recipe to see its cost' : graph.open ? 'Pick a group or a recipe' : 'Pick a material to see what it makes';
+        text(font.fit(hint, P.width - 40), 32, o.y + 8, pal.muted, false);
+        text(font.fit('Names show on hover; dimmed needs a higher level', P.width - 40), 32, o.y + 18, pal.faint, false);
         return;
       }
-      var entry = sel.item, info = meta(entry.item), locked = !graph.unlocked(sel), max = G.maxCrafts(entry, st.inv);
-      item(entry.item, o.slot.x + 1, o.slot.y + 1);
-      text(font.fit(info.name, o.text.w), o.text.x, o.y + 7, locked ? pal.muted : pal.title, false);
-      var sub = locked ? ['Needs level ' + G.levelOf(sel.cat, entry), pal.missing]
-          : info.planned ? ['Planned item', pal.planned]
-          : [((entry.count || 1) > 1 ? 'Makes ' + entry.count + ' · have ' : 'Have ') + have(entry.item), pal.muted];
+      var entry = sel.entry, variant = sel.item, locked = !graph.unlocked(sel), max = G.maxCrafts(variant, st.inv);
+      var many = entry.variants.length > 1, textW = o.text.w - (many ? 30 : 0);
+      item(variant.item, o.slot.x + 1, o.slot.y + 1);
+      text(font.fit(vname(variant), textW), o.text.x, o.y + 7, locked ? pal.muted : pal.title, false);
+      if (many) {
+        button('prev', o.prev, '<', true);
+        button('next', o.next, '>', true);
+      }
+      var sub = locked ? ['Needs level ' + G.levelOf(sel.cat, entry, sel.group), pal.missing]
+          : entry.planned || meta(variant.item).planned ? ['Planned item', pal.planned]
+          : variant.apply ? ['Trims an armour piece', pal.muted]
+          : [((variant.count || 1) > 1 ? 'Makes ' + variant.count + ' · have ' : 'Have ') + have(variant.item) +
+             (many ? ' · ' + (sel.variant + 1) + '/' + entry.variants.length : ''), pal.muted];
       if (st.note) sub = [st.note.text, st.note.color];
       text(font.fit(sub[0], o.text.w), o.text.x, o.y + 17, sub[1], false);
       button('minus', o.minus, '-', !locked && st.amount > 1);
@@ -383,24 +424,23 @@ window.ArkWorkstationUI = (function () {
       widgets.push({ id: 'count', x: o.count.x, y: o.count.y, w: o.count.w, h: o.count.h, enabled: !locked });
       button('plus', o.plus, '+', !locked && st.amount < 99);
       button('max', o.max, 'Max', !locked && max > 0);
-      button('craft', o.craft, 'Craft', !blocker(st.amount));
+      button('craft', o.craft, variant.apply ? 'Apply' : 'Craft', !blocker(st.amount));
     }
 
     function drawPending() {
       widgets = [];
-      var s = station(), cx = P.width / 2, lines = font.wrap(s.about, 220);
+      var s = station(), cx = P.width / 2, lines = font.wrap(s.about || '', 220);
       text('Design pending', Math.round(cx - (font.width('Design pending') - 1) / 2), A.y + 52, pal.title, false);
       lines.forEach(function (line, i) {
         text(line, Math.round(cx - (font.width(line) - 1) / 2), A.y + 70 + i * 10, pal.muted, false);
       });
-      text('Its recipes stay on the grid until then.', 32, A.y + A.h + 12, pal.faint, false);
     }
 
     function drawFlies() {
       st.flies.forEach(function (f) {
         var t = ease(f.t), x = f.x0 + (f.x1 - f.x0) * t, y = f.y0 + (f.y1 - f.y0) * t - 14 * Math.sin(Math.PI * f.t);
         g.save();
-        g.globalAlpha = f.fade ? Math.max(0, 1 - f.t * f.t) : 1;
+        g.globalAlpha = Math.max(0, 1 - f.t * f.t);
         item(f.id, x - 8, y - 8);
         g.restore();
       });
@@ -410,35 +450,38 @@ window.ArkWorkstationUI = (function () {
       var h = st.hover;
       if (!h || st.dragging) return null;
       if (h.node) {
-        var n = h.node;
-        if (n.kind === 'category') {
-          var lines = [[n.cat.title, WHITE]];
-          lines.push(graph.unlocked(n) ? [n.cat.items.length + ' recipes', GRAY] : ['Requires level ' + n.cat.level, pal.missing]);
+        var n = h.node, lines = [[title(n), WHITE]], locked = !graph.unlocked(n);
+        if (n.kind === 'category' || n.kind === 'group') {
+          var entries = n.kind === 'category' ? n.cat.items || [] : n.entry.items || [];
+          var recipes = entries.reduce(function (sum, e) { return sum + (e.items ? e.items.length : 1); }, 0);
+          lines.push(locked ? ['Requires level ' + (n.kind === 'category' ? n.cat.level : G.levelOf(n.cat, null, n.group)), pal.missing]
+                            : [recipes + (recipes === 1 ? ' recipe' : ' recipes'), GRAY]);
           if (n.cat.planned) lines.push(['Planned: Iron Age', pal.planned]);
           return lines;
         }
-        var id = nodeId(n), info = meta(id), out = [[info.name, WHITE]];
+        var id = nodeId(n), info = meta(id);
         if (n.kind === 'item') {
-          if (!graph.unlocked(n)) out.push(['Requires level ' + G.levelOf(n.cat, n.item), pal.missing]);
-          else if (n === graph.selected) out.push(['Click again to craft', GRAY]);
-          if ((n.item.count || 1) > 1) out.push(['Makes ' + n.item.count, GRAY]);
-          if (info.planned) out.push(['Planned item', pal.planned]);
+          lines = [[n.entry.variants.length > 1 ? familyTitle(n) : vname(n.item), WHITE]];
+          if (n.entry.variants.length > 1) lines.push([vname(n.item) + '  ' + (n.variant + 1) + '/' + n.entry.variants.length, GRAY]);
+          if (locked) lines.push(['Requires level ' + G.levelOf(n.cat, n.entry, n.group), pal.missing]);
+          else if (n === graph.selected) lines.push([n.item.apply ? 'Click again to apply' : 'Click again to craft', GRAY]);
+          if ((n.item.count || 1) > 1) lines.push(['Makes ' + n.item.count, GRAY]);
+          if (n.entry.variants.length > 1) lines.push(['Scroll for the other variants', GRAY]);
+          if (n.entry.planned || info.planned) lines.push(['Planned item', pal.planned]);
         }
-        if (n.need) out.push(['Have ' + have(id) + ' / ' + n.need * st.amount, enough(n) ? GRAY : pal.missing]);
-        return out;
+        if (n.need) lines.push(['Have ' + have(id) + ' / ' + n.need * st.amount, enough(n) ? GRAY : pal.missing]);
+        return lines;
       }
       var sel = graph && graph.selected;
-      if (/^tray/.test(h.widget)) {
-        var stack = st.tray[+h.widget.slice(4)];
-        return stack ? [[meta(stack.id).name + (stack.count > 1 ? ' x' + stack.count : ''), WHITE], ['Click to take', GRAY]] : null;
-      }
       if (!sel) return null;
       if (h.widget === 'craft') {
         var why = blocker(st.amount), made = (sel.item.count || 1) * st.amount;
-        return [['Craft ' + (made > 1 ? made + ' ' : '') + meta(sel.item.item).name, WHITE]].concat(why ? [[why, pal.missing]] : [['Shift: all you can', GRAY]]);
+        return [[(sel.item.apply ? 'Apply ' : 'Craft ') + (made > 1 ? made + ' ' : '') + vname(sel.item), WHITE]]
+            .concat(why ? [[why, pal.missing]] : [['Shift: all you can', GRAY]]);
       }
       if (h.widget === 'max') return [['As many as you can make', WHITE], [String(G.maxCrafts(sel.item, st.inv)), GRAY]];
       if (h.widget === 'count') return [['Amount', WHITE], ['Scroll or use - and +', GRAY]];
+      if (h.widget === 'prev' || h.widget === 'next') return [['Other variant', WHITE], [(sel.variant + 1) + ' of ' + sel.entry.variants.length, GRAY]];
       return null;
     }
 
@@ -465,54 +508,36 @@ window.ArkWorkstationUI = (function () {
 
     // ------------------------------------------------------------------------------------------ crafting
 
-    /** Puts `amount` of an item into the output tray (stacks first, then empty slots); dry runs only check. */
-    function trayAdd(id, amount, dry) {
-      var stack = meta(id).stack || 1, tray = dry ? st.tray.map(function (s) { return s && { id: s.id, count: s.count }; }) : st.tray;
-      for (var i = 0; i < tray.length && amount > 0; i++) {
-        if (tray[i] && tray[i].id === id && tray[i].count < stack) {
-          var move = Math.min(stack - tray[i].count, amount);
-          tray[i].count += move; amount -= move;
-        }
-      }
-      for (i = 0; i < tray.length && amount > 0; i++) {
-        if (!tray[i]) { tray[i] = { id: id, count: Math.min(stack, amount) }; amount -= tray[i].count; }
-      }
-      return amount <= 0;
-    }
-
-    function take(i) {
-      var stack = st.tray[i];
-      if (!stack) return;
-      st.inv[stack.id] = have(stack.id) + stack.count;
-      st.tray[i] = null;
-      inventory(stack.id);
-    }
-
     function note(message, color) { st.note = { text: message, color: color || pal.missing, ttl: 90 }; }
 
     function craft(times) {
       var sel = graph.selected;
       if (!sel) return;
-      var entry = sel.item, max = G.maxCrafts(entry, st.inv);
+      var variant = sel.item, max = G.maxCrafts(variant, st.inv);
       if (times < 0) times = Math.max(1, max);
       var why = blocker(times);
       if (why) { sel.shake = M.shake; note(why); return; }
-      var made = (entry.count || 1) * times, o = bar(), target;
-      G.pay(entry, times, st.inv);
-      if (st.mode === 'tray') {
-        trayAdd(entry.item, made, false);
-        for (var i = 0; i < 4; i++) if (st.tray[i] && st.tray[i].id === entry.item) target = o.tray[i];
+      var made = (variant.count || 1) * times;
+      if (variant.apply) {
+        for (var id in variant.cost) if (id.indexOf('trimmable') < 0) st.inv[id] = have(id) - variant.cost[id] * times;
+        note('Trim applied', pal.craftable);
       } else {
-        st.inv[entry.item] = have(entry.item) + made;
+        G.pay(variant, times, st.inv);
+        st.inv[variant.item] = have(variant.item) + made;
+        note('Crafted ' + (made > 1 ? made + ' ' : '') + vname(variant), pal.craftable);
       }
       graph.nodes.forEach(function (n) { if (n.need) n.pulse = M.pulse; });
       sel.pulse = M.pulse;
-      note('Crafted ' + (made > 1 ? made + ' ' : '') + meta(entry.item).name, pal.craftable);
-      if (!REDUCED) {
-        st.flies.push({ id: entry.item, x0: sel.x, y0: sel.y, t: 0,
-                        x1: target ? target.x + 9 : P.width - 12, y1: target ? target.y + 9 : P.height - 10, fade: !target });
-      }
-      inventory(entry.item);
+      if (!REDUCED && !variant.apply) st.flies.push({ id: variant.item, x0: sel.x, y0: sel.y, t: 0, x1: P.width - 12, y1: P.height - 10 });
+      inventory(variant.item);
+    }
+
+    function cycle(node, step) {
+      if (!node || node.kind !== 'item' || node.entry.variants.length < 2) return false;
+      graph.setVariant(node, node.variant + step);
+      st.note = null;
+      dirty = true;
+      return true;
     }
 
     // ---------------------------------------------------------------------------------------------- input
@@ -552,21 +577,21 @@ window.ArkWorkstationUI = (function () {
       var result = graph.click(node);
       if (result === 'select') { st.amount = 1; st.note = null; }
       if (result === 'craft') craft(shift ? -1 : st.amount);
-      if (result === 'locked') note(node.kind === 'category' ? 'Requires level ' + node.cat.level : 'Requires level ' + G.levelOf(node.cat, node.item));
+      if (result === 'locked') {
+        note('Requires level ' + (node.kind === 'category' ? node.cat.level : G.levelOf(node.cat, node.kind === 'item' ? node.entry : null, node.group)));
+      }
       settleNow();
     }
 
     function clickWidget(id, shift) {
       var sel = graph.selected;
-      if (/^tray/.test(id)) {
-        if (shift) for (var i = 0; i < 4; i++) take(i); else take(+id.slice(4));
-        return;
-      }
       if (!sel) return;
       if (id === 'minus') st.amount = Math.max(1, st.amount - (shift ? 10 : 1));
       if (id === 'plus') st.amount = Math.min(99, st.amount + (shift ? 10 : 1));
       if (id === 'max') st.amount = Math.max(1, Math.min(99, G.maxCrafts(sel.item, st.inv)));
       if (id === 'craft') craft(shift ? -1 : st.amount);
+      if (id === 'prev') cycle(sel, -1);
+      if (id === 'next') cycle(sel, 1);
     }
 
     canvas.addEventListener('pointerdown', function (ev) {
@@ -602,13 +627,21 @@ window.ArkWorkstationUI = (function () {
     });
     canvas.addEventListener('pointerleave', function () { if (!st.press) { st.mouse = null; hover(); dirty = true; } });
     canvas.addEventListener('wheel', function (ev) {
-      if (!graph || !graph.selected || !st.hover || st.hover.widget !== 'count') return;
-      ev.preventDefault();
-      st.amount = Math.max(1, Math.min(99, st.amount + (ev.deltaY < 0 ? 1 : -1)));
-      dirty = true;
+      if (!graph || !st.hover) return;
+      var step = ev.deltaY < 0 ? -1 : 1;
+      if (st.hover.node && cycle(st.hover.node, step)) { ev.preventDefault(); return; }
+      if (st.hover.widget === 'count' && graph.selected) {
+        ev.preventDefault();
+        st.amount = Math.max(1, Math.min(99, st.amount - step));
+        dirty = true;
+      } else if ((st.hover.widget === 'prev' || st.hover.widget === 'next') && cycle(graph.selected, step)) {
+        ev.preventDefault();
+      }
     }, { passive: false });
     canvas.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape' && graph && (graph.selected || graph.open)) { ev.preventDefault(); graph.click(null); settleNow(); dirty = true; }
+      if (ev.key === 'Escape' && graph && (graph.selected || graph.openGroup || graph.open)) {
+        ev.preventDefault(); graph.click(null); settleNow(); dirty = true;
+      }
     });
 
     // ------------------------------------------------------------------------------------- the loop
@@ -648,7 +681,8 @@ window.ArkWorkstationUI = (function () {
       var b = document.createElement('button');
       b.type = 'button';
       b.setAttribute('role', 'tab');
-      b.textContent = s.title;
+      if (s.sigil) { var img = document.createElement('img'); img.src = s.sigil; img.alt = ''; b.appendChild(img); }
+      b.appendChild(document.createTextNode(s.title));
       if (!s.data) { var small = document.createElement('small'); small.textContent = ' pending'; b.appendChild(small); }
       b.addEventListener('click', function () { useStation(i); });
       tabs.appendChild(b);
@@ -661,7 +695,14 @@ window.ArkWorkstationUI = (function () {
       st.flies = [];
       graph = station().data ? new G.Graph(station().data, style) : null;
       if (graph) graph.level = st.level;
+      crest = null;
+      if (station().crest) {
+        crest = new Image();
+        crest.onload = function () { dirty = true; };
+        crest.src = station().crest.image;
+      }
       Array.prototype.forEach.call(tabs.children, function (b, j) { b.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
+      if (running) layout();
       dirty = true;
     }
 
@@ -681,13 +722,6 @@ window.ArkWorkstationUI = (function () {
       dirty = true;
     }
 
-    function mode(value) {
-      if (value === 'direct') for (var i = 0; i < 4; i++) take(i);
-      st.mode = value;
-      pressed('mode', value);
-      dirty = true;
-    }
-
     function level(value) {
       st.level = value;
       levelInput.value = value;
@@ -696,57 +730,48 @@ window.ArkWorkstationUI = (function () {
       dirty = true;
     }
 
+    function icon(id) {
+      var cell = meta(id).icon || 0, cols = payload.atlas.cols;
+      return '<i class="ico" style="background-position:' + (-(cell % cols) * 24) + 'px ' + (-Math.floor(cell / cols) * 24) + 'px"></i>';
+    }
+
     /** The player's inventory under the frame; the item just changed flashes. */
     function inventory(changed) {
-      invEl.innerHTML = '';
       var ids = Object.keys(st.inv).filter(function (id) { return st.inv[id] > 0; });
       if (!ids.length) { invEl.textContent = 'Inventory empty.'; return; }
-      ids.forEach(function (id) {
-        var chip = document.createElement('span'), img = document.createElement('img');
-        img.src = meta(id).sprite || '';
-        img.alt = '';
-        chip.title = meta(id).name;
-        chip.appendChild(img);
-        chip.appendChild(document.createTextNode(st.inv[id]));
-        if (id === changed) chip.className = 'flash';
-        invEl.appendChild(chip);
-      });
+      invEl.innerHTML = ids.map(function (id) {
+        return '<span title="' + esc(meta(id).name) + '"' + (id === changed ? ' class="flash"' : '') + '>' + icon(id) + st.inv[id] + '</span>';
+      }).join('');
     }
 
     function reset() {
       level(8);
-      mode('direct');
-      st.tray = [null, null, null, null];
       preset('starter');
       useStation(st.station);
     }
 
     function table() {
       if (!tableEl) return;
-      var rows = [];
-      payload.stations.forEach(function (s) {
-        if (!s.data) return;
-        s.data.categories.forEach(function (c) {
-          rows.push('<tr class="ws-cat"><th colspan="4">' + esc(c.title) + ' <span class="muted">level ' + c.level +
-                    (c.planned ? ', planned' : '') + '</span></th></tr>');
-          c.items.forEach(function (it) {
-            var cost = Object.keys(it.cost).map(function (id) {
-              return '<span><b>' + it.cost[id] + '</b>' + icon(id) + esc(meta(id).name) + '</span>';
-            }).join('');
-            rows.push('<tr><td>' + icon(it.item) + esc(meta(it.item).name) + ((it.count || 1) > 1 ? ' <span class="muted">x' + it.count + '</span>' : '') +
-                      '</td><td>' + G.levelOf(c, it) + '</td><td><span class="ws-cost">' + cost + '</span></td><td>' +
-                      Object.keys(it.cost).reduce(function (sum, id) { return sum + it.cost[id]; }, 0) + '</td></tr>');
-          });
+      var rows = [], armoury = payload.stations[0].data;
+      armoury.categories.forEach(function (c) {
+        rows.push('<tr class="ws-cat"><th colspan="4">' + esc(c.title) + ' <span class="muted">level ' + c.level +
+                  (c.planned ? ', planned' : '') + '</span></th></tr>');
+        c.items.forEach(function (family) {
+          var v = family.variants[0];
+          var cost = Object.keys(v.cost).map(function (id) {
+            return '<span><b>' + v.cost[id] + '</b>' + icon(id) + esc(meta(id).name) + '</span>';
+          }).join('');
+          rows.push('<tr><td>' + icon(v.item) + esc(meta(v.item).name) + ((v.count || 1) > 1 ? ' <span class="muted">x' + v.count + '</span>' : '') +
+                    '</td><td>' + G.levelOf(c, family, null) + '</td><td><span class="ws-cost">' + cost + '</span></td><td>' +
+                    Object.keys(v.cost).reduce(function (sum, id) { return sum + v.cost[id]; }, 0) + '</td></tr>');
         });
       });
       tableEl.querySelector('tbody').innerHTML = rows.join('');
     }
-    function icon(id) { return '<img src="' + (meta(id).sprite || '') + '" alt="">'; }
     function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
     levelInput.addEventListener('input', function () { level(+levelInput.value); });
     root.querySelectorAll('[data-control="preset"] button').forEach(function (b) { b.addEventListener('click', function () { preset(b.dataset.value); }); });
-    root.querySelectorAll('[data-control="mode"] button').forEach(function (b) { b.addEventListener('click', function () { mode(b.dataset.value); }); });
     root.querySelector('.ws-reset').addEventListener('click', reset);
     fullButton.addEventListener('click', function () {
       if (document.fullscreenElement) document.exitFullscreen();
@@ -756,6 +781,11 @@ window.ArkWorkstationUI = (function () {
       fullButton.textContent = document.fullscreenElement === frameEl ? 'Exit full screen' : 'Full screen (1:1)';
       layout();
     });
+
+    // The atlas also paints the page's own icons (inventory, tables, review list) through one CSS rule.
+    var rule = document.createElement('style');
+    rule.textContent = '.ico{background-image:url(' + payload.atlas.image + ');background-size:' + payload.atlas.cols * 24 + 'px auto}';
+    document.head.appendChild(rule);
 
     table();
     preset('starter');
@@ -767,6 +797,7 @@ window.ArkWorkstationUI = (function () {
         if (on && !running) { running = true; lastTime = 0; layout(); requestAnimationFrame(frame); }
         if (!on) running = false;
       },
+      icon: icon,
       /** For checks: the graph and the preview state. */
       state: function () { return { graph: graph, st: st, view: view }; }
     };

@@ -1,18 +1,18 @@
 /*
  * Workstation graph (P14): the model and physics of a workstation screen, with no DOM or drawing code.
  *
- * It reads a station file (design/workstations/armoury.json) and the shared style (graph_style.json). The showcase
- * draws it with tools/workstation_ui.js; the mod will port this file line by line to a Java WorkstationGraph that
- * reads the same two files. The simulation is deterministic (fixed 1/60 s tick, no randomness, no trigonometry),
- * so the port can be checked against `node tools/workstation_graph.js <station> <style> [clicks...]`, which prints
- * the settled layout.
+ * It reads a compiled bench (tools/workstation_plan.py: categories, groups and families of variants) and the shared
+ * style (design/workstations/graph_style.json). The showcase draws it with tools/workstation_ui.js; the mod will port
+ * this file line by line to a Java WorkstationGraph that reads the same data. The simulation is deterministic (fixed
+ * 1/60 s tick, no randomness, no trigonometry), so the port can be checked against
+ * `node tools/workstation_graph.js <bench.json> <style.json> [clicks...]`, which prints the settled layout.
  *
- * Materials (categories) are linked in a chain by 'after'. Opening one grows its items around it; selecting an
- * item grows its ingredients, and an ingredient that is another item of the same material (arrows for the
- * tranquilizer arrow) links to that item instead of growing a copy. Forces follow d3-force: many-body charge,
- * springs to a rest length, a pull toward the centre (stronger on the selected item, else the open material, so the rest
- * is pushed aside),
- * collision, then velocity decay and the walls of the graph area.
+ * Materials (categories) are linked in a chain by 'after'. Opening one grows its entries around it: groups (a folder
+ * of families, opened the same way) and families. A family is one node for its variants (the twelve wood types of a
+ * stair); the screen picks the variant. Selecting a family grows the ingredients of its variant, and an ingredient that
+ * is a sibling node (arrows for the tranquilizer arrow) links to it instead of growing a copy. Forces follow d3-force:
+ * many-body charge, springs to a rest length, a pull toward the centre (strongest on the focus: the selected item, else
+ * the open group, else the open material, so the rest is pushed aside), collision, velocity decay and the walls.
  */
 (function (root) {
   'use strict';
@@ -30,23 +30,26 @@
     return { x: p.inset, y: p.title, w: p.width - 2 * p.inset, h: p.height - p.title - p.bar - p.inset };
   }
 
-  function levelOf(category, item) {
-    return item && item.level != null ? item.level : category.level;
+  /** The level an entry needs: its own, else its group's, else its material's. */
+  function levelOf(category, entry, group) {
+    if (entry && entry.level != null) return entry.level;
+    if (group && group.level != null) return group.level;
+    return category.level || 0;
   }
 
-  /** How many times the inventory (id -> count) pays for the item's cost. */
-  function maxCrafts(item, have) {
+  /** How many times the inventory (id -> count) pays for a variant's cost. */
+  function maxCrafts(variant, have) {
     var best = -1;
-    for (var id in item.cost) {
-      var times = Math.floor((have[id] || 0) / item.cost[id]);
+    for (var id in variant.cost) {
+      var times = Math.floor((have[id] || 0) / variant.cost[id]);
       best = best < 0 ? times : Math.min(best, times);
     }
     return Math.max(0, best);
   }
 
   /** Takes the cost of `times` crafts out of the inventory. The caller checks maxCrafts first. */
-  function pay(item, times, have) {
-    for (var id in item.cost) have[id] = (have[id] || 0) - item.cost[id] * times;
+  function pay(variant, times, have) {
+    for (var id in variant.cost) have[id] = (have[id] || 0) - variant.cost[id] * times;
   }
 
   function Graph(station, style) {
@@ -57,6 +60,7 @@
     this.links = [];
     this.level = 0;
     this.open = null;
+    this.openGroup = null;
     this.selected = null;
     this.alpha = 1;
     this.alphaTarget = 0;
@@ -65,7 +69,7 @@
     for (var i = 0; i < cats.length; i++) {
       // A loose spiral to start from; settle() below finds the resting shape.
       var d = DIRS[(i * 7) % 16], reach = 10 + 9 * i;
-      var node = this.add('category', 'c:' + cats[i].id, cats[i], null, cx + d[0] * reach * 1.8, cy + d[1] * reach * 0.8);
+      var node = this.add('category', 'c:' + cats[i].id, cats[i], null, null, null, cx + d[0] * reach * 1.8, cy + d[1] * reach * 0.8);
       node.grow = 1;
       byId[cats[i].id] = node;
     }
@@ -75,10 +79,10 @@
     this.settle(600);
   }
 
-  Graph.prototype.add = function (kind, key, category, parent, x, y) {
-    var node = { kind: kind, key: key, cat: category, item: null, ingredient: null, need: 0, parent: parent,
-                 r: this.style.node[kind], x: x, y: y, vx: 0, vy: 0, grow: 0, dying: false, fixed: false,
-                 shake: 0, pulse: 0 };
+  Graph.prototype.add = function (kind, key, category, group, entry, parent, x, y) {
+    var node = { kind: kind, key: key, cat: category, group: group, entry: entry, variant: 0,
+                 item: entry && entry.variants ? entry.variants[0] : null, ingredient: null, need: 0, parent: parent,
+                 r: this.style.node[kind], x: x, y: y, vx: 0, vy: 0, grow: 0, dying: false, fixed: false, shake: 0, pulse: 0 };
     this.nodes.push(node);
     return node;
   };
@@ -94,11 +98,13 @@
 
   Graph.prototype.unlocked = function (node) {
     if (node.kind === 'ingredient') return true;
-    if (this.level < node.cat.level) return false;
-    return node.kind === 'category' || this.level >= levelOf(node.cat, node.item);
+    if (this.level < (node.cat.level || 0)) return false;
+    if (node.kind === 'category') return true;
+    if (this.level < levelOf(node.cat, null, node.group)) return false;
+    return node.kind === 'group' || this.level >= levelOf(node.cat, node.entry, node.group);
   };
 
-  /** Index of the direction closest to the line from `from` to `node`. */
+  /** Index of the direction closest to the line from (fx, fy) to the node. */
   Graph.prototype.outward = function (node, fx, fy) {
     var ox = node.x - fx, oy = node.y - fy, best = 0, dot = -Infinity;
     for (var i = 0; i < 16; i++) {
@@ -112,46 +118,76 @@
     this.alpha = Math.max(this.alpha, alpha == null ? this.style.force.reheat : alpha);
   };
 
+  /** Grows one child node per entry around a parent, fanned around the direction away from (fx, fy). */
+  Graph.prototype.spawn = function (parent, entries, group, fx, fy) {
+    var n = entries.length, base = this.outward(parent, fx, fy);
+    for (var i = 0; i < n; i++) {
+      var d = DIRS[(base + Math.round((i - (n - 1) / 2) * 14 / Math.max(n, 4)) + 32) % 16], entry = entries[i], child;
+      if (entry.group) {
+        child = this.add('group', 'G:' + parent.cat.id + '/' + entry.group, parent.cat, entry, entry, parent,
+                         parent.x + d[0] * 2, parent.y + d[1] * 2);
+      } else {
+        child = this.add('item', 'i:' + parent.cat.id + '/' + (group ? group.group + '/' : '') + entry.family, parent.cat, group,
+                         entry, parent, parent.x + d[0] * 2, parent.y + d[1] * 2);
+      }
+      child.vx = d[0] * 2;
+      child.vy = d[1] * 2;
+      this.link(parent, child, 'child');
+    }
+  };
+
   Graph.prototype.openCategory = function (node) {
     if (this.open === node) return;
     this.closeCategory();
     this.open = node;
-    var items = node.cat.items, n = items.length;
-    var base = this.outward(node, this.area.x + this.area.w / 2, this.area.y + this.area.h / 2);
-    for (var i = 0; i < n; i++) {
-      var d = DIRS[(base + Math.round((i - (n - 1) / 2) * 14 / Math.max(n, 4)) + 32) % 16];
-      var child = this.add('item', 'i:' + items[i].item, node.cat, node, node.x + d[0] * 2, node.y + d[1] * 2);
-      child.item = items[i];
-      child.vx = d[0] * 2;
-      child.vy = d[1] * 2;
-      this.link(node, child, 'item');
-    }
+    this.spawn(node, node.cat.items || [], null, this.area.x + this.area.w / 2, this.area.y + this.area.h / 2);
     this.reheat();
   };
 
   Graph.prototype.closeCategory = function () {
     var open = this.open;
     if (!open) return;
+    this.closeGroup();
     this.clearSelection();
     this.open = null;
     for (var i = 0; i < this.nodes.length; i++) if (this.nodes[i].parent === open) this.nodes[i].dying = true;
     this.reheat();
   };
 
-  Graph.prototype.selectItem = function (node) {
-    if (this.selected === node) return;
-    this.clearSelection();
-    this.selected = node;
+  Graph.prototype.openGroupNode = function (node) {
+    if (this.openGroup === node) return;
+    this.closeGroup();
+    this.openGroup = node;
+    this.spawn(node, node.entry.items || [], node.entry, node.parent.x, node.parent.y);
+    this.reheat();
+  };
+
+  Graph.prototype.closeGroup = function () {
+    var group = this.openGroup;
+    if (!group) return;
+    if (this.selected && this.selected.parent === group) this.clearSelection();
+    this.openGroup = null;
+    for (var i = 0; i < this.nodes.length; i++) if (this.nodes[i].parent === group) this.nodes[i].dying = true;
+    this.reheat(0.6);
+  };
+
+  /** Grows the ingredients of the node's current variant; a sibling that is one of them links instead. */
+  Graph.prototype.growIngredients = function (node) {
     var cost = node.item.cost, keys = Object.keys(cost), n = keys.length, base = this.outward(node, node.parent.x, node.parent.y);
     for (var i = 0; i < n; i++) {
-      var sibling = this.find('i:' + keys[i]);
-      if (sibling && sibling.parent === node.parent) {
+      var sibling = null;
+      for (var j = 0; j < this.nodes.length; j++) {
+        var s = this.nodes[j];
+        if (s !== node && s.kind === 'item' && s.parent === node.parent && !s.dying && s.item && s.item.item === keys[i]) sibling = s;
+      }
+      if (sibling) {
         sibling.need = cost[keys[i]];
         this.link(node, sibling, 'reuse');
         continue;
       }
       var d = DIRS[(base + Math.round((i - (n - 1) / 2) * 2.5) + 32) % 16];
-      var g = this.add('ingredient', 'g:' + node.item.item + '>' + keys[i], node.cat, node, node.x + d[0] * 2, node.y + d[1] * 2);
+      var g = this.add('ingredient', 'g:' + node.key + '>' + keys[i], node.cat, node.group, node.entry, node,
+                       node.x + d[0] * 2, node.y + d[1] * 2);
       g.item = node.item;
       g.ingredient = keys[i];
       g.need = cost[keys[i]];
@@ -159,6 +195,24 @@
       g.vy = d[1] * 2;
       this.link(node, g, 'ingredient');
     }
+  };
+
+  Graph.prototype.dropIngredients = function (node) {
+    for (var i = 0; i < this.nodes.length; i++) {
+      var n = this.nodes[i];
+      if (n.kind === 'ingredient' && n.parent === node) n.dying = true;
+      if (n.kind === 'item') n.need = 0;
+    }
+    var kept = [];
+    for (i = 0; i < this.links.length; i++) if (this.links[i].kind !== 'reuse') kept.push(this.links[i]);
+    this.links = kept;
+  };
+
+  Graph.prototype.selectItem = function (node) {
+    if (this.selected === node) return;
+    this.clearSelection();
+    this.selected = node;
+    this.growIngredients(node);
     this.reheat(0.6);
   };
 
@@ -166,25 +220,31 @@
     var selected = this.selected;
     if (!selected) return;
     this.selected = null;
-    for (var i = 0; i < this.nodes.length; i++) {
-      var n = this.nodes[i];
-      if (n.kind === 'ingredient' && n.parent === selected) n.dying = true;
-      if (n.kind === 'item') n.need = 0;
-    }
-    var kept = [];
-    for (i = 0; i < this.links.length; i++) if (this.links[i].kind !== 'reuse') kept.push(this.links[i]);
-    this.links = kept;
+    this.dropIngredients(selected);
     this.reheat(0.5);
+  };
+
+  /** Switches a family node to another variant; a selected node regrows its ingredients. */
+  Graph.prototype.setVariant = function (node, index) {
+    var variants = node.entry.variants, count = variants.length;
+    node.variant = ((index % count) + count) % count;
+    node.item = variants[node.variant];
+    if (this.selected === node) {
+      this.dropIngredients(node);
+      this.growIngredients(node);
+      this.reheat(0.4);
+    }
   };
 
   /**
    * One click, as the screen reports it. Returns what happened: 'open', 'close', 'select', 'craft' (the selected
-   * item again: the screen crafts), 'locked', 'back' (empty space: drop the selection, else close the material)
-   * or '' (an ingredient: its tooltip says it all).
+   * item again: the screen crafts), 'locked', 'back' (empty space: drop the selection, else close the group, else
+   * close the material) or '' (an ingredient: its tooltip says it all).
    */
   Graph.prototype.click = function (node) {
     if (!node) {
       if (this.selected) { this.clearSelection(); return 'back'; }
+      if (this.openGroup) { this.closeGroup(); return 'back'; }
       if (this.open) { this.closeCategory(); return 'back'; }
       return '';
     }
@@ -197,6 +257,11 @@
       this.openCategory(node);
       return 'open';
     }
+    if (node.kind === 'group') {
+      if (this.openGroup === node) { this.closeGroup(); return 'close'; }
+      this.openGroupNode(node);
+      return 'open';
+    }
     if (node.kind === 'item') {
       if (this.selected === node) return 'craft';
       this.selectItem(node);
@@ -207,13 +272,17 @@
 
   Graph.prototype.charge = function (node) {
     var f = this.style.force;
-    var base = node.kind === 'category' ? f.chargeCategory : node.kind === 'item' ? f.chargeItem : f.chargeIngredient;
+    var base = node.kind === 'category' ? f.chargeCategory : node.kind === 'group' ? f.chargeGroup
+        : node.kind === 'item' ? f.chargeItem : f.chargeIngredient;
     return base * node.grow;
   };
 
   Graph.prototype.rest = function (link) {
     var l = this.style.link;
-    return link.kind === 'chain' ? l.chain : link.kind === 'item' ? l.item : link.kind === 'reuse' ? l.item : l.ingredient;
+    if (link.kind === 'chain') return l.chain;
+    if (link.kind === 'ingredient') return l.ingredient;
+    if (link.kind === 'child' && link.a.kind === 'group') return l.groupItem;
+    return l.item;
   };
 
   Graph.prototype.tick = function () {
@@ -248,13 +317,15 @@
       a.vx += dx * w; a.vy += dy * w;
     }
 
-    // Centring, stretched to the wide graph area. The focus (the selected item, else the open material) is pulled to
-    // the middle, so whatever it grows has room and the rest is pushed aside.
+    // Centring, stretched to the wide graph area. The open path is pulled to the middle: fully on the focus (the
+    // deepest of selected item, open group and open material), partly on the rest of the path, so no branch pins
+    // itself to a wall.
     var cx = this.area.x + this.area.w / 2, cy = this.area.y + this.area.h / 2, aspect = this.area.w / this.area.h;
-    var focus = this.selected || this.open;
+    var focus = this.selected || this.openGroup || this.open;
     for (i = 0; i < n; i++) {
       a = nodes[i];
-      var s = a === focus ? f.focus : a.kind === 'category' ? f.centre : f.centre * 0.3;
+      var s = a === focus ? f.focus : a === this.openGroup || a === this.open ? f.focus * f.pathFocus
+          : a.kind === 'category' ? f.centre : f.centre * 0.3;
       a.vx += (cx - a.x) * s * alpha;
       a.vy += (cy - a.y) * s * aspect * alpha;
     }
@@ -357,7 +428,7 @@
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.ArkWorkstationGraph = api;
 
-  // node tools/workstation_graph.js <station.json> <style.json> [node keys to click...]: the settled layout as JSON.
+  // node tools/workstation_graph.js <bench.json> <style.json> [node keys to click...]: the settled layout as JSON.
   if (typeof require !== 'undefined' && typeof module !== 'undefined' && require.main === module) {
     var fs = require('fs');
     var graph = new Graph(JSON.parse(fs.readFileSync(process.argv[2], 'utf8')), JSON.parse(fs.readFileSync(process.argv[3], 'utf8')));

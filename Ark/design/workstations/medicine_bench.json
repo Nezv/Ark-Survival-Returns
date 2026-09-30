@@ -1,0 +1,26 @@
+{
+  "station": "arksurvivalreturns:medicine_bench",
+  "title": "Medicine Bench",
+  "about": "P14 design data (see armoury.json). Bronze Age medicine: bandages, remedies and the suspicious stews, which become tonics here (the flower picks the effect). The fiber bandage stays a field craft as well.",
+  "accent": "#7fc88a",
+  "crest": {"frame": "vine", "sigil": "flask"},
+  "well": "leaves",
+  "categories": [
+    {
+      "id": "bandages", "title": "Bandages", "icon": "arksurvivalreturns:herbal_bandage", "color": "#e3d8b8", "level": 12,
+      "items": [
+        {"item": "arksurvivalreturns:fiber_bandage", "count": 2, "cost": {"arksurvivalreturns:plant_fiber": 3, "minecraft:string": 1}},
+        {"item": "arksurvivalreturns:herbal_bandage", "count": 2, "cost": {"arksurvivalreturns:amarberry": 1, "arksurvivalreturns:narcoberry": 1, "minecraft:short_grass": 1}}
+      ]
+    },
+    {
+      "id": "remedies", "title": "Remedies", "icon": "arksurvivalreturns:vitamins", "color": "#6fb3d9", "level": 13, "after": "bandages",
+      "items": [
+        {"item": "arksurvivalreturns:vitamins", "cost": {"arksurvivalreturns:azulberry": 4, "arksurvivalreturns:tintoberry": 4, "minecraft:water_bottle": 1}}
+      ]
+    },
+    {
+      "id": "tonics", "title": "Tonics", "icon": "minecraft:suspicious_stew", "color": "#a3c25a", "level": 14, "after": "remedies"
+    }
+  ]
+}
