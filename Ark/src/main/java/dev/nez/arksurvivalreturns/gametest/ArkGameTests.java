@@ -24,6 +24,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ArkGameTests {
     public static final DeferredRegister<Consumer<GameTestHelper>> FUNCTIONS = DeferredRegister.create(Registries.TEST_FUNCTION, ArkSurvivalReturns.MOD_ID);
     static {
+        FUNCTIONS.register("player_levels", () -> LevelGameTests::levels);
+        FUNCTIONS.register("player_levels_persistence", () -> LevelGameTests::persistence);
+        FUNCTIONS.register("player_levels_sources", () -> LevelGameTests::sources);
+        FUNCTIONS.register("player_levels_share", () -> LevelGameTests::share);
+        FUNCTIONS.register("player_levels_commands", () -> LevelGameTests::commands);
         FUNCTIONS.register("levels_persist", () -> ArkGameTests::levelsPersist);
         FUNCTIONS.register("packs_and_damage", () -> ArkGameTests::packsAndDamage);
         FUNCTIONS.register("spawn_rules", () -> ArkGameTests::spawnRules);

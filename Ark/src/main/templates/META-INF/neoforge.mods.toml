@@ -12,6 +12,10 @@ config="arksurvivalreturns.mixins.json"
 config="arksurvivalreturns.accessories.mixins.json"
 [[mixins]]
 config="arksurvivalreturns.stations.mixins.json"
+[[mixins]]
+config="arksurvivalreturns.levels.mixins.json"
+[[mixins]]
+config="arksurvivalreturns.levels.client.mixins.json"
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"

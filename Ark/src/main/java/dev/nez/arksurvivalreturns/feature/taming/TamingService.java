@@ -187,6 +187,13 @@ public final class TamingService {
         state.releaseClaim();
         creature.onTamed(owner);
         applyTameEffects(creature, owner);
+        if (creature.level() instanceof ServerLevel level) {
+            var player = level.getServer().getPlayerList().getPlayer(owner);
+            if (player == null && feeder instanceof net.minecraft.server.level.ServerPlayer server && owner.equals(server.getUUID())) player = server;
+            if (player != null) dev.nez.arksurvivalreturns.feature.levels.ArkLevels.addXp(player,
+                    (long) Config.PLAYER_XP_TAME.get() * creature.creatureLevel(),
+                    dev.nez.arksurvivalreturns.feature.levels.ArkLevels.Source.TAME);
+        }
         TorporService.log("tamed", creature, "owner " + owner);
     }
 

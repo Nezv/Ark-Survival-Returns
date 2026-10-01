@@ -283,6 +283,12 @@ public final class ArkData implements DataProvider {
         kitchenMessages(en, pt);
         guardianMessages(en, pt);
         techMessages(en, pt);
+        en.put("levels." + NS + ".up", "[ARK] Level up! Ark level %s");
+        pt.put("levels." + NS + ".up", "[ARK] Subiu de nível! Nível Ark %s");
+        en.put("levels." + NS + ".status", "[ARK] %s: level %s, XP %s/%s");
+        pt.put("levels." + NS + ".status", "[ARK] %s: nível %s, XP %s/%s");
+        en.put("levels." + NS + ".cap", "[ARK] The maximum Ark level is %s.");
+        pt.put("levels." + NS + ".cap", "[ARK] O nível máximo Ark é %s.");
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
@@ -1013,6 +1019,10 @@ public final class ArkData implements DataProvider {
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);
+        put("data/" + NS + "/test_environment/player_levels", spawningRules);
+        for (String name : List.of("player_levels", "player_levels_persistence", "player_levels_sources", "player_levels_share", "player_levels_commands"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":player_levels", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));
         for (String name : List.of("levels_persist", "packs_and_damage", "spawn_rules", "grass_berries", "progression", "behavior", "combat_timing", "creature_expansion", "mass_load", "cargo_load", "cargo_transfer", "cargo_death_and_cull", "overload_flight", "overload_swim", "work_harvest", "farm_batch", "medicine_dose", "kitchen_cook"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 100, "sky_access", true));

@@ -11,6 +11,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 /** Per-world server configuration; habitat preferences and protected biomes live in data packs. */
 public final class Config {
     public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.IntValue PLAYER_LEVEL_CAP, PLAYER_LEVEL_BASE_XP;
+    public static final ModConfigSpec.DoubleValue PLAYER_LEVEL_EXPONENT, PLAYER_XP_TRIBE_SHARE, PLAYER_XP_TRIBE_RADIUS;
+    public static final ModConfigSpec.IntValue PLAYER_XP_KILL, PLAYER_XP_TAME, PLAYER_XP_FIRST_CRAFT, PLAYER_XP_TECH_NODE, PLAYER_XP_BOSS;
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_ROAM = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_LEASH = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_WATER_MAX = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
@@ -530,6 +533,25 @@ public final class Config {
                         + "sends each sound to players this many times farther away, so lower it on busy servers "
                         + "(1 = vanilla, 16 blocks).")
                 .defineInRange("rangeMultiplier", 4.0, 1.0, 8.0);
+        b.pop();
+        b.push("playerLevels");
+        PLAYER_LEVEL_CAP = b.comment("Maximum permanent Ark player level. New players start at level 0.")
+                .defineInRange("cap", 50, 1, 10000);
+        PLAYER_LEVEL_BASE_XP = b.comment("XP to advance = ceil(baseXp * (current level + 1)^exponent).")
+                .defineInRange("baseXp", 100, 1, 1000000);
+        PLAYER_LEVEL_EXPONENT = b.defineInRange("exponent", 1.5, 0.0, 3.0);
+        PLAYER_XP_KILL = b.comment("XP per creature level for a kill by a player or their tame.")
+                .defineInRange("killPerLevel", 5, 0, 1000000);
+        PLAYER_XP_TAME = b.comment("XP per creature level when taming completes.")
+                .defineInRange("tamePerLevel", 10, 0, 1000000);
+        PLAYER_XP_FIRST_CRAFT = b.comment("XP for the first successful craft of each recipe, remembered permanently.")
+                .defineInRange("firstCraft", 10, 0, 1000000);
+        PLAYER_XP_TECH_NODE = b.defineInRange("techNode", 50, 0, 1000000);
+        PLAYER_XP_BOSS = b.defineInRange("boss", 500, 0, 1000000);
+        PLAYER_XP_TRIBE_SHARE = b.comment("Bonus fraction awarded to each nearby FTB Teams party member; never shares recursively.")
+                .defineInRange("tribeShare", 0.25, 0.0, 1.0);
+        PLAYER_XP_TRIBE_RADIUS = b.comment("Sharing distance in blocks, in the same dimension.")
+                .defineInRange("tribeRadius", 64.0, 0.0, 1024.0);
         b.pop();
         SPEC = b.build();
     }

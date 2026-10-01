@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
 import dev.nez.arksurvivalreturns.feature.tribe.TribeService;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -71,7 +72,10 @@ public final class TechService {
                 if (progress.completed(node.id()) || !tree.requirementsMet(node, progress)) continue;
                 if (!node.trigger().satisfied(progress, node.id() + ":", player)) continue;
                 progress.complete(node.id());
-                if (player != null) TechFtbBridge.complete(player, node.id());
+                if (player != null) {
+                    TechFtbBridge.complete(player, node.id());
+                    ArkLevels.addXp(player, Config.PLAYER_XP_TECH_NODE.get(), ArkLevels.Source.TECH_NODE);
+                }
                 changed = true;
                 any = true;
                 announce(node, tribe, level);
