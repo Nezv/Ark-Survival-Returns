@@ -3,7 +3,7 @@
   "category": "equipment",
   "group": "flint_knife",
   "ingredients": [
-    "minecraft:flint",
+    "arksurvivalreturns:sharp_rock",
     "minecraft:stick",
     "arksurvivalreturns:plant_fiber"
   ],

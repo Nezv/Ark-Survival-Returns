@@ -103,7 +103,7 @@
       ],
       "uses": "An FTB Teams party is the tribe: it shares tame permissions, the Field Journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the 40 tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
       "changed": "No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
-      "next": "In-client check of the journal, tribe permissions and tech-tree mirror. JEI still ships although no JEI is planned (B03 deprecated, P14 bench screens)."
+      "next": "In-client check of the journal, tribe permissions and tech-tree mirror."
     },
     {
       "id": "I04",

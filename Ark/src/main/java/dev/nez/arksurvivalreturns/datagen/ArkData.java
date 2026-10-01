@@ -567,9 +567,9 @@ public final class ArkData implements DataProvider {
         tag("item/camp/flint_materials", "flint");
         json("data/" + NS + "/recipe/flint_knife", """
                 {"type":"minecraft:crafting_shapeless","category":"equipment","group":"flint_knife",
-                 "ingredients":["minecraft:flint","minecraft:stick","%s:plant_fiber"],
+                 "ingredients":["%s:sharp_rock","minecraft:stick","%s:plant_fiber"],
                  "result":{"count":1,"id":"%s:flint_knife"}}
-                """.formatted(NS, NS));
+                """.formatted(NS, NS, NS));
         json("data/" + NS + "/recipe/fiber_bandage", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"fiber_bandage",
                  "ingredients":["%s:plant_fiber","%s:plant_fiber","%s:plant_fiber","minecraft:string"],

@@ -5,7 +5,8 @@
 `Dashboard.csv` (root) tracks every feature/patch: ID, scope, proposer, executor, status and open issues.
 Read it before starting work; update the row's Status when a task finishes. Do not create new
 planning, proposal, audit or report markdown files — put status and open issues in the dashboard.
-`Sync-Dashboard.ps1` syncs it with Google Drive (rclone).
+The showcase parses it in the page; the pre-commit hook in `.githooks` refreshes the embedded copy whenever
+Dashboard.csv is committed (enable once per clone: `git config core.hooksPath .githooks`).
 
 Read only what the task needs. Skip generated/ignored trees: `Ark/src/generated/`, `Creatures/*/source/`,
 `graphify-out/`, `.work/`, `Scratch/`, `Integration/`.

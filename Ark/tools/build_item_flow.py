@@ -300,7 +300,7 @@ SPINE = [
         row('', 'now', [i('keratin', 7)], [i('keratin_leggings', val='2 armour')], 'leggings'),
         row('', 'now', [i('keratin', 4)], [i('keratin_boots', val='1 armour')], 'boots',
             'The first armour tier: 8 points for the set, above leather (7) and below copper (10).'),
-        row('', 'now', [i('flint'), i('stick'), i('fiber')], [i('flint_knife')], 'shapeless',
+        row('', 'now', [i('sharp_rock'), i('stick'), i('fiber')], [i('flint_knife')], 'shapeless',
             'The flint knife stays, and it is the whole starter kit (Q4, Q6).'),
         row('', 'now', [i('stick', 3), i('string', 3)], [i('bow')], 'vanilla'),
         row('', 'change', [i('sharp_rock'), i('stick'), i('feather')], [i('arrow', 4)], 'shaped',

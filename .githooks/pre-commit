@@ -1,0 +1,11 @@
+#!/bin/sh
+# Keep the showcase roadmap in step with Dashboard.csv: when the dashboard is committed, swap the staged CSV into
+# Ark-Survival-Returns.html (milliseconds, no full rebuild) and commit the page with it. Never blocks a commit.
+if git diff --cached --name-only | grep -qx 'Dashboard.csv'; then
+  if python Ark/tools/build_showcase.py --roadmap --staged; then
+    git add Ark-Survival-Returns.html
+  else
+    echo "pre-commit: showcase roadmap not refreshed; run python Ark/tools/build_showcase.py --roadmap" >&2
+  fi
+fi
+exit 0

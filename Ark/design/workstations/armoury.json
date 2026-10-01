@@ -23,7 +23,7 @@
     {
       "id": "rock", "title": "Rock", "icon": "arksurvivalreturns:rock", "color": "#9a9d93", "level": 0, "after": "wood",
       "items": [
-        {"item": "arksurvivalreturns:flint_knife", "cost": {"minecraft:flint": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
+        {"item": "arksurvivalreturns:flint_knife", "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:rock_sword", "level": 1, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:rock_pickaxe", "level": 1, "cost": {"arksurvivalreturns:rock": 3, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
         {"item": "arksurvivalreturns:stone_hatchet", "cost": {"arksurvivalreturns:rock": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},

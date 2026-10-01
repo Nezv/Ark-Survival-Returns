@@ -5,24 +5,30 @@ creature facts (design/showcase/species.json) and the behaviour models with thei
 (design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
 screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
-(showcase_models.py, drawn by three.js), the Ark UI previews and Dashboard.csv for the roadmap.
+(showcase_models.py, drawn by three.js) and the Ark UI previews.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
 the nav, the home index and the pager switch between them.
 
+The roadmap is Dashboard.csv itself: the page parses the CSV in the browser. Served over http it reads the live file
+next to it; opened from disk (where the browser blocks that read) it uses the copy embedded here. `--roadmap` swaps
+only that copy into the existing page, in milliseconds; the pre-commit hook (.githooks) runs it whenever Dashboard.csv
+is committed, so the roadmap never needs a full rebuild.
+
 Vanilla item sprites come from the Minecraft sources jar that a Gradle build unpacks. Without it (a fresh
 checkout), the sprites the current page already shows are carried over instead of dropped.
 
-Run from Ark after runData: python tools/build_showcase.py
+Run from Ark after runData: python tools/build_showcase.py [--roadmap [--staged]]
 """
 import base64
-import csv
 import datetime
 import html
 import io
 import json
 import math
 import re
+import subprocess
+import sys
 import zipfile
 from pathlib import Path
 from PIL import Image
@@ -110,30 +116,27 @@ def lang():
     return load_json(GENERATED / 'assets/arksurvivalreturns/lang/en_us.json')
 
 
-def dashboard():
-    rows = []
-    for name in ('Dashboard.csv', 'Dashboard.additions.csv'):
-        path = REPO / name
-        if not path.is_file():
-            continue
-        with path.open(newline='', encoding='utf-8') as handle:
-            for row in csv.DictReader(handle):
-                key = (row.get('ID', '').strip(), row.get('Item', '').strip())
-                if key[0] and key not in {(r['ID'].strip(), r['Item'].strip()) for r in rows}:
-                    rows.append(row)
-    return rows
+DASHBOARD = REPO / 'Dashboard.csv'
+CSV_BLOCK = re.compile(r'(<script type="text/csv" id="dashboard-csv">)(.*?)(</script>)', re.S)
 
 
-def status_class(status):
-    # Only an explicitly verified row counts as done; implemented work stays unverified until checked.
-    s = status.lower()
-    if s.startswith('verified'):
-        return 'ok'
-    if s.startswith(('implemented', 'in production')):
-        return 'check'
-    if s.startswith(('planned', 'under discussion', 'decided')):
-        return 'idea'
-    return 'todo'
+def dashboard_csv(staged=False):
+    """Dashboard.csv verbatim (the staged copy for the pre-commit hook), safe inside a script element."""
+    if staged:
+        text = subprocess.run(['git', 'show', ':Dashboard.csv'], cwd=REPO, capture_output=True, check=True).stdout.decode('utf-8')
+    else:
+        text = DASHBOARD.read_text(encoding='utf-8')
+    return re.sub(r'</(script)', r'<\\/\1', text, flags=re.I)
+
+
+def refresh_roadmap(staged=False):
+    page = OUT.read_text(encoding='utf-8')
+    text = dashboard_csv(staged)
+    page, count = CSV_BLOCK.subn(lambda m: m.group(1) + text + m.group(3), page)
+    if count != 1:
+        raise SystemExit(f'{OUT.name} has no embedded dashboard; run a full build first.')
+    OUT.write_text(page, encoding='utf-8')
+    print(f'Roadmap refreshed in {OUT.name}')
 
 
 # ---------------------------------------------------------------------------------------- sections
@@ -584,28 +587,11 @@ def integrations_section():
     return '\n'.join(cards), count
 
 
-STATUS_WORDS = re.compile(r'(Verified|Implemented|In production|Planned|Under discussion|Decided|To be done|Postponed|Deprecated)\b', re.I)
-
-
-def roadmap_section(rows):
-    body = []
-    for row in rows:
-        line = row.get('Status', '').strip().split('\n')[0].strip()
-        word = STATUS_WORDS.match(line)
-        status = word.group(1) if word else line.split(';')[0].strip()
-        status = status if len(status) <= 70 else status[:67].rstrip() + '...'
-        body.append(f'<tr><td>{e(row.get("Type", "").strip())}</td><td><code>{e(row.get("ID", "").strip())}</code></td>'
-                    f'<td>{e(row.get("Item", "").strip())}</td><td>{e(row.get("Executed by", "").strip().split(chr(10))[0])}</td>'
-                    f'<td><span class="chip {status_class(status)}" title="{e(line)}">{e(status or "Not set")}</span></td></tr>')
-    return '\n'.join(body)
-
-
 # -------------------------------------------------------------------------------------------- page
 
 def build():
     species = load_json(ARK / 'design/showcase/species.json')['species']
     names = lang()
-    rows = dashboard()
     hero = uri(ASSETS / 'textures/gui/title/background.png', width=1600, quality=78)
     logo = uri(ASSETS / 'textures/gui/title/logo.png', 'PNG', width=900)
     title_shot, ui_sheet, nodes = ui_section()
@@ -629,7 +615,6 @@ def build():
         **__import__('showcase_accessories').section(names, uri, e),
         **__import__('showcase_models').section(uri, e),
         'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
-        'ROADMAP': roadmap_section(rows),
         'INTEGRATIONS': integrations,
         'ARKINVENTORY': uri(ARK / 'design/ui-rework/ark-inventory.png', 'PNG'),
         'DATE': datetime.date.today().isoformat(),
@@ -638,11 +623,15 @@ def build():
     }
     for key, value in replacements.items():
         page = page.replace('%%' + key + '%%', str(value))
+    page = page.replace('%%DASHBOARD%%', dashboard_csv())  # last, so no placeholder inside the CSV is touched
     OUT.write_text(page, encoding='utf-8')
-    print(f'Wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB, {len(species)} creatures, {len(rows)} roadmap rows)')
+    print(f'Wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB, {len(species)} creatures)')
 
 
 TEMPLATE = (Path(__file__).with_name('showcase_template.html')).read_text(encoding='utf-8')
 
 if __name__ == '__main__':
-    build()
+    if '--roadmap' in sys.argv:
+        refresh_roadmap(staged='--staged' in sys.argv)
+    else:
+        build()

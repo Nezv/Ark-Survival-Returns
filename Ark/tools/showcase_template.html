@@ -633,10 +633,10 @@
 
   <section id="roadmap">
     <div><div class="eyebrow">Roadmap</div><h2>Where the project stands</h2></div>
-    <p class="lede">Read straight from the management dashboard (<code>Dashboard.csv</code>) when this page was built.</p>
+    <p class="lede">The management dashboard (<code>Dashboard.csv</code>), parsed by this page: <span id="roadmap-source">the copy embedded at the last commit</span>. Only rows written as verified show as done.</p>
     <div class="table-wrap"><table>
       <thead><tr><th>Type</th><th>ID</th><th>Item</th><th>By</th><th>Status</th></tr></thead>
-      <tbody>%%ROADMAP%%</tbody>
+      <tbody id="roadmap-rows"></tbody>
     </table></div>
   </section>
 
@@ -645,6 +645,54 @@
 
 <footer>Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots. Private project; ARK assets belong to their owners.</footer>
 
+<script type="text/csv" id="dashboard-csv">%%DASHBOARD%%</script>
+<script>
+// Roadmap: Dashboard.csv parsed here. Served over http, the live file next to the page wins; opened from disk the
+// browser blocks that read, so the copy the pre-commit hook embeds (build_showcase.py --roadmap) is shown.
+(() => {
+  const WORDS = /^(Verified|Implemented|In production|Planned|Under discussion|Decided|To be done|Postponed|Deprecated)\b/i;
+  const CLASSES = [[/^verified/i, 'ok'], [/^(implemented|in production)/i, 'check'], [/^(planned|under discussion|decided)/i, 'idea']];
+  const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  function parse(text) {
+    const rows = [];
+    let row = [], field = '', quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (quoted) {
+        if (c !== '"') field += c;
+        else if (text[i + 1] === '"') { field += '"'; i++; }
+        else quoted = false;
+      } else if (c === '"') quoted = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(field); rows.push(row); row = []; field = '';
+      } else field += c;
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    const [head, ...body] = rows;
+    return body.map(r => Object.fromEntries(head.map((h, i) => [h.trim(), (r[i] || '').replace(/\r/g, '').trim()])));
+  }
+  function render(text, source) {
+    document.getElementById('roadmap-rows').innerHTML = parse(text).filter(r => r.ID).map(r => {
+      const line = (r.Status || '').split('\n')[0].trim();
+      const word = line.match(WORDS);
+      let status = word ? word[1] : line.split(';')[0].trim();
+      if (status.length > 70) status = status.slice(0, 67).trimEnd() + '...';
+      const chip = (CLASSES.find(([re]) => re.test(status)) || [null, 'todo'])[1];
+      return `<tr><td>${esc(r.Type || '')}</td><td><code>${esc(r.ID)}</code></td><td>${esc(r.Item || '')}</td>` +
+        `<td>${esc((r['Executed by'] || '').split('\n')[0])}</td>` +
+        `<td><span class="chip ${chip}" title="${esc(line)}">${esc(status || 'Not set')}</span></td></tr>`;
+    }).join('');
+    document.getElementById('roadmap-source').textContent = source;
+  }
+  render(document.getElementById('dashboard-csv').textContent.replace(/<\\\/script/gi, '</script'), 'the copy embedded at the last commit');
+  if (location.protocol.startsWith('http')) {
+    fetch('Dashboard.csv', { cache: 'no-store' }).then(r => r.ok ? r.text() : Promise.reject())
+      .then(text => render(text, 'the live file next to this page')).catch(() => {});
+  }
+})();
+</script>
 <script type="application/json" id="ws-data">%%RECIPES_DATA%%</script>
 <script>
 %%RECIPES_JS%%

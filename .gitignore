@@ -4,7 +4,6 @@ __pycache__/
 *.pyc
 .deepseek-runs/
 .deepseek-worktrees/
-.dashboard-sync.json
 
 # Graphify: keep the shared query graph, not machine-local state or render/cache
 # artifacts. The older Ark-local graph is superseded by the repository graph.
