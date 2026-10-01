@@ -125,12 +125,13 @@ def dashboard():
 
 
 def status_class(status):
+    # Only an explicitly verified row counts as done; implemented work stays unverified until checked.
     s = status.lower()
-    if s.startswith('done') and 'unverified' not in s or s.startswith('verified') or s.startswith('implemented') or s.startswith('published'):
+    if s.startswith('verified'):
         return 'ok'
-    if 'unverified' in s or 'pending' in s:
+    if s.startswith(('implemented', 'in production')):
         return 'check'
-    if 'discussion' in s or 'planned' in s:
+    if s.startswith(('planned', 'under discussion', 'decided')):
         return 'idea'
     return 'todo'
 
@@ -583,14 +584,19 @@ def integrations_section():
     return '\n'.join(cards), count
 
 
+STATUS_WORDS = re.compile(r'(Verified|Implemented|In production|Planned|Under discussion|Decided|To be done|Postponed|Deprecated)\b', re.I)
+
+
 def roadmap_section(rows):
     body = []
     for row in rows:
-        status = row.get('Status', '').strip().split('\n')[0].split(';')[0].strip()
+        line = row.get('Status', '').strip().split('\n')[0].strip()
+        word = STATUS_WORDS.match(line)
+        status = word.group(1) if word else line.split(';')[0].strip()
         status = status if len(status) <= 70 else status[:67].rstrip() + '...'
         body.append(f'<tr><td>{e(row.get("Type", "").strip())}</td><td><code>{e(row.get("ID", "").strip())}</code></td>'
                     f'<td>{e(row.get("Item", "").strip())}</td><td>{e(row.get("Executed by", "").strip().split(chr(10))[0])}</td>'
-                    f'<td><span class="chip {status_class(status)}">{e(status or "Not set")}</span></td></tr>')
+                    f'<td><span class="chip {status_class(status)}" title="{e(line)}">{e(status or "Not set")}</span></td></tr>')
     return '\n'.join(body)
 
 

@@ -25,7 +25,7 @@
       ],
       "uses": "Xaero's fullscreen map, drawn with Ark's colour-coded danger zones through the bridge hook. Map access can be locked until the tribe tames a creature from a rank-5 zone (progression.mapRequiresUnlock).",
       "changed": "No code changes to Xaero (closed source). All Ark behaviour lives in Ark's own overlay (client/XaeroDangerOverlay.java). The jar is only rebranded.",
-      "next": "P10 telemetry technology: a mid-game item or block that turns on the danger overlay, and an end-game one that adds Xaero creature detection."
+      "next": "Telemetry technology (F17, was P10): two items, not blocks, a map for self-location and a radar for creature geolocation."
     },
     {
       "id": "I02",
@@ -57,7 +57,7 @@
       ],
       "uses": "Reverb, occlusion and reflections from Sound Physics Remastered; material footstep recordings from Presence Footsteps; environmental recordings from AmbientSounds. All run in one client-only engine inside the Ark jar.",
       "changed": "Physics code ported into dev.nez.arksurvivalreturns.client.audio.physics. The recordings keep their original asset namespaces (ambientsounds:, presencefootsteps:), and a resource-pack catalog (arksurvivalreturns:audio/catalog.json) replaces AmbientSounds' engine and its CreativeCore dependency. Ambient beds skip ray tracing.",
-      "next": "Keep it embedded. Presence Footsteps has no NeoForge build, and loading the standalone Sound Physics jar next to the port would double-process sounds. Dino calls still need recordings (P02)."
+      "next": "Keep it embedded. Presence Footsteps has no NeoForge build, and loading the standalone Sound Physics jar next to the port would double-process sounds. Original dino calls imported 2026-09-30 (P18); in-client listening pending."
     },
     {
       "id": "I03",
@@ -103,7 +103,7 @@
       ],
       "uses": "An FTB Teams party is the tribe: it shares tame permissions, the Field Journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the 40 tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
       "changed": "No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
-      "next": "B05: the tech_flow test fails (an Ark grant does not reach FTB). B03: JEI categories for the Stone Fire and Primitive Forge, and hide the removed furnace recipes."
+      "next": "In-client check of the journal, tribe permissions and tech-tree mirror. JEI still ships although no JEI is planned (B03 deprecated, P14 bench screens)."
     },
     {
       "id": "I04",
@@ -214,7 +214,7 @@
       ],
       "uses": "Accessory slots in one Ark inventory: crown and hat (head), necklace, shirt (body), belt, pants (legs, added by Ark), socks and shoes (feet), and a charm.",
       "changed": "Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): the inventory key opens a 212 px screen with the curio slots beside the armour column, the shield and charm under the player and crafting on the right. The separate Curios button is off. Ark's data pack defines the slot set. GameTest integration_curios checks all nine slot positions.",
-      "next": "In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. Ark accessories to fill the slots are still to be designed."
+      "next": "In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. The F13 accessories fill the slots."
     },
     {
       "id": "I08",
@@ -273,7 +273,7 @@
       ],
       "uses": "Planned core of the Bronze and Iron ages: basic kinetics and processing only, no complex contraptions.",
       "changed": "Nothing yet. Create has no Minecraft 26.1 release or branch (its newest is 1.21.1), and it needs Flywheel and Ponder ported too.",
-      "next": "Wait for the official 26.1 port. Meanwhile, Bronze basics (alloying, charcoal) can use the Primitive Forge."
+      "next": "Postponed until the official 26.1 port. Meanwhile, Bronze basics (alloying, charcoal) can use the Primitive Forge."
     },
     {
       "id": "I11",
