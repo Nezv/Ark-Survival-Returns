@@ -91,6 +91,41 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 tasks.named('test') { useJUnitPlatform() }
+
+// The reviewed showcase designs are the only authored workstation data and frame assets.
+def phaseABenches = ['armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table']
+def workstationBuild = layout.buildDirectory.dir('workstations')
+tasks.register('generateWorkstationData', Exec) {
+    dependsOn 'createMinecraftArtifacts'
+    inputs.dir 'design/workstations'
+    inputs.files 'tools/workstation_plan.py', 'tools/build_workstation_data.py', 'tools/build_workstation_crests.py', 'tools/showcase_recipes.py',
+            'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePolicy.java',
+            'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/PrimitiveEvents.java'
+    inputs.dir 'src/generated/resources/data/arksurvivalreturns'
+    inputs.files 'src/generated/resources/assets/minecraft/lang/en_us.json', 'src/generated/resources/assets/arksurvivalreturns/lang/en_us.json'
+    outputs.dir workstationBuild
+    commandLine 'python', 'tools/build_workstation_data.py', workstationBuild.get().asFile.absolutePath
+}
+tasks.named('processResources') {
+    dependsOn 'generateWorkstationData'
+    from('design/workstations') {
+        include phaseABenches.collect { it + '.json' }
+        into 'data/arksurvivalreturns/workstation'
+    }
+    from('design/workstations') {
+        include 'graph_style.json'
+        into 'assets/arksurvivalreturns/workstation'
+    }
+    from('design/workstations/crests') {
+        include phaseABenches.collect { it + '.png' }
+        into 'assets/arksurvivalreturns/textures/gui/workstation'
+    }
+    from(workstationBuild.map { it.dir('resources') })
+}
+tasks.named('test') {
+    dependsOn 'generateWorkstationData'
+    workingDir projectDir
+}
 def clientPackClasspath = neoForge.runs.client.sourceSet.get().runtimeClasspath
 def serverPackClasspath = neoForge.runs.gameTestServer.sourceSet.get().runtimeClasspath
 tasks.register('verifyClientPack') {

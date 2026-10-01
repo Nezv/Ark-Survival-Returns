@@ -136,19 +136,12 @@ final class TamingGameTests {
     private static void tranquilizerRecipe(GameTestHelper h) {
         var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id("tranquilizer_arrow"));
         var recipe = h.getLevel().getServer().getRecipeManager().byKey(key);
-        h.assertTrue(recipe.isPresent(), "Tranquilizer arrow recipe did not load from the data pack");
-        h.assertTrue(recipe.get().value() instanceof ShapelessRecipe,
-                "Tranquilizer arrow recipe is not the expected shapeless recipe");
-        var shapeless = (ShapelessRecipe) recipe.get().value();
-        var input = CraftingInput.of(3, 2, List.of(
-                new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
-                new ItemStack(Items.ARROW), new ItemStack(Items.ARROW),
-                new ItemStack(ModContent.NARCOTICS.get()), new ItemStack(Items.BONE)));
-        h.assertTrue(shapeless.matches(input, h.getLevel()),
-                "Tranquilizer arrow recipe no longer matches four arrows, narcotics and bone");
-        var crafted = shapeless.assemble(input);
-        h.assertTrue(crafted.is(ModContent.TRANQUILIZER_ARROW_ITEM.get()) && crafted.getCount() == 4,
-                "Tranquilizer arrow recipe result changed: " + crafted);
+        h.assertTrue(recipe.isEmpty(), "Tranquilizer arrows must not have a grid recipe");
+        var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
+        h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:tranquilizer_arrow")
+                && c.variant().count() == 4 && c.variant().cost().equals(java.util.Map.of("minecraft:arrow", 4,
+                        "arksurvivalreturns:narcotics", 1, "minecraft:bone", 1))),
+                "The Armoury must tip four arrows with Narcotics and bone");
     }
 
     /** The generated Java tables must still agree with the on-disk audit reports. */

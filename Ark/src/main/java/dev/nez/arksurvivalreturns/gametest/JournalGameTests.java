@@ -31,7 +31,9 @@ final class JournalGameTests {
                 "pack_harness", "reinforced_harness", "trough", "drying_rack", "cooking_pot",
                 "narcotics", "mortar_and_pestle", "tranquilizer_arrow"}) {
             var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id(recipe));
-            h.assertFalse(h.getLevel().recipeAccess().byKey(key).isEmpty(), "Recipe is missing: " + recipe);
+            boolean inGraph = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().values().stream()
+                    .flatMap(station -> station.crafts().stream()).anyMatch(c -> ("arksurvivalreturns:" + recipe).equals(c.variant().item()));
+            h.assertTrue(h.getLevel().recipeAccess().byKey(key).isPresent() || inGraph, "Recipe is missing: " + recipe);
         }
         h.succeed();
     }

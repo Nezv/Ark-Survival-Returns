@@ -45,6 +45,10 @@ public final class StationContent {
             p -> new StationBlock(StationBlock.Kind.WORKING, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
     public static final DeferredItem<BlockItem> WORKING_STATION_ITEM = ModContent.ITEMS.registerSimpleBlockItem(WORKING_STATION);
 
+    public static final DeferredBlock<StationBlock> ARMOURY = ModContent.BLOCKS.registerBlock("armoury",
+            p -> new StationBlock(StationBlock.Kind.ARMOURY, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
+    public static final DeferredItem<BlockItem> ARMOURY_ITEM = ModContent.ITEMS.registerSimpleBlockItem(ARMOURY);
+
     public static final DeferredBlock<StationBlock> MEDICINE_BENCH = ModContent.BLOCKS.registerBlock("medicine_bench",
             p -> new StationBlock(StationBlock.Kind.MEDICINE, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
     public static final DeferredItem<BlockItem> MEDICINE_BENCH_ITEM = ModContent.ITEMS.registerSimpleBlockItem(MEDICINE_BENCH);
@@ -113,6 +117,7 @@ public final class StationContent {
 
     public static void displayItems(CreativeModeTab.Output output) {
         output.accept(WORKING_STATION_ITEM.get());
+        output.accept(ARMOURY_ITEM.get());
         output.accept(MORTAR_AND_PESTLE_ITEM.get());
         output.accept(STORAGE_CRATE_ITEM.get());
         output.accept(SMITHING_TABLE_ITEM.get());

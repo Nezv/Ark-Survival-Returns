@@ -1,0 +1,5 @@
+[
+  ["c:wood", "i:wood/bow"],
+  ["c:wood", "i:wood/tranquilizer_arrow", "i:wood/arrow", "back", "c:wood"],
+  ["c:rock", "i:rock/rock_pickaxe", "c:leather", "i:leather/leather_chestplate", "c:wood", "i:wood/shield"]
+]

@@ -22,7 +22,7 @@ final class StationData {
             List.of("south", "east"), List.of("south", "west"));
 
     static void generate(BiConsumer<String, Object> put) {
-        for (String id : List.of("working_station", "medicine_bench", "smithing_table")) {
+        for (String id : List.of("working_station", "medicine_bench", "smithing_table", "armoury")) {
             var variants = new LinkedHashMap<String, Object>();
             for (String facing : DIRECTIONS) variants.put("facing=" + facing, rotated(id, facing));
             put.accept(ASSETS + "blockstates/" + id, Map.of("variants", variants));
@@ -119,7 +119,7 @@ final class StationData {
                     "values", List.of(NS + ":working_station")));
         }
         put.accept("data/minecraft/tags/block/mineable/axe", Map.of("replace", false,
-                "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate")));
+                "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate", NS + ":armoury")));
         put.accept("data/minecraft/tags/block/mineable/pickaxe", Map.of("replace", false,
                 // Bronze Age (F12): tin ore mines like copper and iron, at the same rock-pickaxe tier; sulphur crystals (SulphurData).
                 "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle",
@@ -129,6 +129,8 @@ final class StationData {
     }
 
     static void messages(Map<String, String> en, Map<String, String> pt) {
+        en.put("block." + NS + ".armoury", "Armoury");
+        pt.put("block." + NS + ".armoury", "Arsenal");
         en.put("block." + NS + ".working_station", "Working Station");
         pt.put("block." + NS + ".working_station", "Estação de trabalho");
         en.put("block." + NS + ".storage_crate", "Storage Crate");

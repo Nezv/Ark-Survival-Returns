@@ -154,7 +154,10 @@ final class ThemeGameTests {
         }
         for (String id : List.of("barrel", "iron_pickaxe", "bread", "bookshelf", "bone_meal",
                 "copper_bulb", "waxed_oxidized_copper_bulb", "waxed_copper_bulb_from_honeycomb")) {
-            h.assertTrue(manager.byKey(key(Registries.RECIPE, "minecraft:" + id)).isPresent(), "Recipe was lost: " + id);
+            boolean inGraph = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().values().stream()
+                    .flatMap(station -> station.crafts().stream()).anyMatch(c -> ("minecraft:" + id).equals(c.variant().item())
+                            || ("minecraft:" + id).equals(c.variant().recipe()));
+            h.assertTrue(manager.byKey(key(Registries.RECIPE, "minecraft:" + id)).isPresent() || inGraph, "Recipe was lost: " + id);
         }
     }
 

@@ -58,7 +58,8 @@ public final class AccessoryGameTests {
                         accessory.id + " is missing " + path);
             }
             var key = ResourceKey.create(Registries.RECIPE, ArkSurvivalReturns.id("accessory/" + accessory.id));
-            h.assertTrue(recipes.byKey(key).isPresent(), accessory.id + " has no recipe");
+            h.assertTrue(recipes.byKey(key).isEmpty(), accessory.id + " grid recipe must be removed");
+            WorkstationGameTests.assertCraftable(h, "arksurvivalreturns:" + accessory.id);
             TagKey<Item> slot = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("curios", accessory.slot.id()));
             h.assertTrue(item.getDefaultInstance().is(slot), accessory.id + " is not tagged for the " + accessory.slot.id() + " slot");
             h.assertTrue(item.getDefaultMaxStackSize() == 1, accessory.id + " must not stack");

@@ -11,6 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 /** Per-world server configuration; habitat preferences and protected biomes live in data packs. */
 public final class Config {
     public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.BooleanValue WORKSTATION_LEVEL_GATE;
     public static final ModConfigSpec.IntValue PLAYER_LEVEL_CAP, PLAYER_LEVEL_BASE_XP;
     public static final ModConfigSpec.DoubleValue PLAYER_LEVEL_EXPONENT, PLAYER_XP_TRIBE_SHARE, PLAYER_XP_TRIBE_RADIUS;
     public static final ModConfigSpec.IntValue PLAYER_XP_KILL, PLAYER_XP_TAME, PLAYER_XP_FIRST_CRAFT, PLAYER_XP_TECH_NODE, PLAYER_XP_BOSS;
@@ -552,6 +553,9 @@ public final class Config {
                 .defineInRange("tribeShare", 0.25, 0.0, 1.0);
         PLAYER_XP_TRIBE_RADIUS = b.comment("Sharing distance in blocks, in the same dimension.")
                 .defineInRange("tribeRadius", 64.0, 0.0, 1024.0);
+        b.pop();
+        b.push("workstations");
+        WORKSTATION_LEVEL_GATE = b.comment("Enforce the levels in the workstation designs.").define("levelGates", true);
         b.pop();
         SPEC = b.build();
     }

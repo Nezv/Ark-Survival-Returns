@@ -27,11 +27,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * A workbench-style station: the Working Station (the crafting table), the Mortar & Pestle, the Medicine Bench
- * and the Ark smithing table. Each opens a vanilla menu bound to itself, so the recipe book, JEI transfer and other
- * mods' crafting recipes keep working.
+ * and the Ark smithing table, plus the Armoury. Each opens its position-bound workstation graph.
  */
 public final class StationBlock extends Block {
-    public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR }
+    public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR, ARMOURY }
 
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     /** Collision: the bench tops. The outlines below also cover the tools and bottles standing on them. */
@@ -48,6 +47,15 @@ public final class StationBlock extends Block {
     }
 
     public Kind kind() { return kind; }
+    public String stationId() {
+        return "arksurvivalreturns:" + switch (kind) {
+            case WORKING -> "working_station";
+            case MEDICINE -> "medicine_bench";
+            case SMITHING -> "smithing_table";
+            case MORTAR -> "mortar_and_pestle";
+            case ARMOURY -> "armoury";
+        };
+    }
 
     @Override protected MapCodec<? extends Block> codec() {
         return simpleCodec(properties -> new StationBlock(kind, properties));
@@ -75,6 +83,7 @@ public final class StationBlock extends Block {
             case WORKING -> WORKING_OUTLINE;
             case MEDICINE -> MEDICINE_OUTLINE;
             case SMITHING -> SHAPE;
+            case ARMOURY -> Block.box(1, 0, 1, 15, 24, 15);
         };
     }
 
@@ -85,7 +94,9 @@ public final class StationBlock extends Block {
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
             BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
-        player.openMenu(menu(level, pos));
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(menu(level, pos), data -> { data.writeBlockPos(pos); data.writeUtf(stationId(), 128); });
+        }
         if (player instanceof ServerPlayer server) {
             server.awardStat(kind == Kind.SMITHING ? Stats.INTERACT_WITH_SMITHING_TABLE : Stats.INTERACT_WITH_CRAFTING_TABLE);
         }
@@ -93,18 +104,7 @@ public final class StationBlock extends Block {
     }
 
     private MenuProvider menu(Level level, BlockPos pos) {
-        var access = ContainerLevelAccess.create(level, pos);
         Component title = getName();
-        return switch (kind) {
-            case WORKING -> new SimpleMenuProvider((id, inventory, player) ->
-                    new StationCraftingMenu(id, inventory, access, this,
-                            stack -> !StationContent.medicine(stack) && !StationContent.mortar(stack)), title);
-            case MEDICINE -> new SimpleMenuProvider((id, inventory, player) ->
-                    new StationCraftingMenu(id, inventory, access, this, StationContent::medicine), title);
-            case MORTAR -> new SimpleMenuProvider((id, inventory, player) ->
-                    new StationCraftingMenu(id, inventory, access, this, StationContent::mortar), title);
-            case SMITHING -> new SimpleMenuProvider((id, inventory, player) ->
-                    new StationSmithingMenu(id, inventory, access), title);
-        };
+        return new SimpleMenuProvider((id, inventory, player) -> new WorkstationMenu(id, inventory, pos, stationId()), title);
     }
 }

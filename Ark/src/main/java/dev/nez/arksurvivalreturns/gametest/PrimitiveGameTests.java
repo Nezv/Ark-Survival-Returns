@@ -198,8 +198,7 @@ final class PrimitiveGameTests {
         var recipes = level.getServer().getRecipeManager();
         h.assertTrue(recipes.byKey(recipe("minecraft:furnace")).isEmpty(), "The furnace recipe must be removed");
         h.assertTrue(recipes.byKey(recipe("minecraft:wooden_pickaxe")).isEmpty(), "Wooden tools must be removed");
-        for (String id : List.of("rock_pickaxe", "rock_sword", "rock_shovel", "rock_hoe", "stone_hatchet", "fire_starter", "stone_fire",
-                "primitive_forge", "lead_from_fiber", "cooked_carnivore_meat_from_campfire_cooking")) {
+        for (String id : List.of("stone_hatchet", "cooked_carnivore_meat_from_campfire_cooking")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
         }
 
@@ -229,37 +228,22 @@ final class PrimitiveGameTests {
         var recipes = level.getServer().getRecipeManager();
         ItemStack rock = new ItemStack(PrimitiveContent.ROCK.get()), stick = new ItemStack(Items.STICK),
                 fiber = new ItemStack(ModContent.PLANT_FIBER.get()), none = ItemStack.EMPTY;
-        // Pickaxe: the fiber fits any free cell, and the grid position does not matter.
-        for (int free : new int[]{3, 5, 6, 8}) {
-            List<ItemStack> grid = new java.util.ArrayList<>(List.of(rock, rock, rock, none, stick, none, none, stick, none));
-            grid.set(free, fiber);
-            var input = CraftingInput.of(3, 3, grid);
-            var found = recipes.getRecipeFor(RecipeType.CRAFTING, input, level);
-            h.assertTrue(found.isPresent() && found.get().value().assemble(input).is(PrimitiveContent.ROCK_PICKAXE.get()),
-                    "The rock pickaxe must take its fiber in cell " + free);
-        }
-        var bare = CraftingInput.of(3, 3, List.of(rock, rock, rock, none, stick, none, none, stick, none));
-        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, bare, level).isEmpty(), "A rock pickaxe needs its fiber");
-        var twice = CraftingInput.of(3, 3, List.of(rock, rock, rock, fiber, stick, fiber, none, stick, none));
-        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, twice, level).isEmpty(), "Only one fiber binds a tool");
-        var sword = CraftingInput.of(2, 3, List.of(rock, none, rock, fiber, stick, none));
-        var swordRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, sword, level);
-        h.assertTrue(swordRecipe.isPresent() && swordRecipe.get().value().assemble(sword).is(PrimitiveContent.ROCK_SWORD.get()),
-                "A sword column with the fiber beside it must make the rock sword");
+        // Phase A recipes no longer match any grid. Their cost is the reviewed workstation data.
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:rock_pickaxe")).isEmpty(), "The pickaxe moved to the Armoury");
+        var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
+        h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:rock_pickaxe")
+                && c.variant().cost().equals(java.util.Map.of("arksurvivalreturns:rock", 3, "minecraft:stick", 2, "arksurvivalreturns:plant_fiber", 1))),
+                "The Armoury pickaxe must retain three rocks, two twigs and one fiber");
         // Wooden stats, stone tier: iron ore drops for the rock pickaxe, diamond ore does not.
         ItemStack pickaxe = new ItemStack(PrimitiveContent.ROCK_PICKAXE.get());
         h.assertTrue(pickaxe.isCorrectToolForDrops(Blocks.IRON_ORE.defaultBlockState()), "The rock pickaxe must mine iron ore");
         h.assertFalse(pickaxe.isCorrectToolForDrops(Blocks.DIAMOND_ORE.defaultBlockState()), "The rock pickaxe must stop at stone tier");
         h.assertTrue(pickaxe.getMaxDamage() == 59, "Rock tools keep wooden durability");
-        // Mattress: nine fiber, so only the Working Station's 3x3 grid makes it.
-        var mattressGrid = CraftingInput.of(3, 3, java.util.Collections.nCopies(9, fiber));
-        var mat = recipes.getRecipeFor(RecipeType.CRAFTING, mattressGrid, level);
-        h.assertTrue(mat.isPresent() && mat.get().value().assemble(mattressGrid).is(ModContent.MATTRESS_ITEM.get()), "Nine fiber must make the mattress");
-        // Bedroll: a mattress, three hide and two fiber, still wider than the personal 2x2 grid.
-        ItemStack mattress = new ItemStack(ModContent.MATTRESS.get()), leather = new ItemStack(Items.LEATHER);
-        var bedrollGrid = CraftingInput.of(3, 2, List.of(leather, leather, leather, fiber, mattress, fiber));
-        var bed = recipes.getRecipeFor(RecipeType.CRAFTING, bedrollGrid, level);
-        h.assertTrue(bed.isPresent() && bed.get().value().assemble(bedrollGrid).is(ModContent.BEDROLL_ITEM.get()), "A mattress, hide and fiber must make the bedroll");
+        var working = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:working_station");
+        h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:mattress")
+                && c.variant().cost().getOrDefault("arksurvivalreturns:plant_fiber", 0) == 9), "The Working Station must make the nine-fiber mattress");
+        h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:bedroll")), "The Working Station must make the bedroll");
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:mattress")).isEmpty(), "A grid must not make the mattress");
         // Retired vanilla recipes and the Bronze Age items.
         for (String id : List.of("minecraft:stone_pickaxe", "minecraft:stone_sword", "minecraft:stone_spear", "minecraft:wooden_spear",
                 "minecraft:campfire", "arksurvivalreturns:cobblestone_from_rocks", "arksurvivalreturns:stone_knife",
@@ -270,15 +254,12 @@ final class PrimitiveGameTests {
         ItemStack berry = new ItemStack(ModContent.BERRIES.get("narcoberry").get());
         var grind = CraftingInput.of(2, 2, List.of(berry, berry, berry, berry));
         var narcotics = recipes.getRecipeFor(RecipeType.CRAFTING, grind, level);
-        h.assertTrue(narcotics.isPresent() && narcotics.get().value().assemble(grind).is(ModContent.NARCOTICS.get()),
-                "Four blackberries must grind into narcotics");
-        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.StationContent.mortar(new ItemStack(ModContent.NARCOTICS.get())),
-                "Only the Mortar & Pestle may make narcotics");
-        ItemStack arrow = new ItemStack(Items.ARROW);
-        var tranq = CraftingInput.of(3, 2, List.of(arrow, arrow, arrow, arrow, new ItemStack(ModContent.NARCOTICS.get()), new ItemStack(Items.BONE)));
-        var tranqRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, tranq, level);
-        h.assertTrue(tranqRecipe.isPresent() && tranqRecipe.get().value().assemble(tranq).is(ModContent.TRANQUILIZER_ARROW_ITEM.get()),
-                "Narcotics must tip tranquilizer arrows");
+        h.assertTrue(narcotics.isEmpty(), "Narcotics must not match the 2x2 grid");
+        var mortar = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:mortar_and_pestle");
+        h.assertTrue(mortar.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:narcotics") && c.variant().count() == 4),
+                "The Mortar & Pestle must grind four Narcotics");
+        h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:tranquilizer_arrow")
+                && c.variant().cost().getOrDefault("arksurvivalreturns:narcotics", 0) == 1), "Narcotics must tip tranquilizer arrows at the Armoury");
         // The Blueberry is food: one hunger point.
         var food = new ItemStack(ModContent.BERRIES.get("azulberry").get()).get(DataComponents.FOOD);
         h.assertTrue(food != null && food.nutrition() == 1, "The blueberry must satiate one hunger point");
@@ -305,28 +286,20 @@ final class PrimitiveGameTests {
     static void keratin(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
-        for (String id : List.of("sharp_rock", "keratin_spear", "keratin_helmet", "keratin_chestplate", "keratin_leggings", "keratin_boots")) {
-            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:sharp_rock")).isPresent(), "Sharp rock stays a field craft");
+        var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
+        for (String id : List.of("keratin_spear", "keratin_helmet", "keratin_chestplate", "keratin_leggings", "keratin_boots")) {
+            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Keratin grid recipe survived: " + id);
+            h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:" + id)), "Armoury recipe missing: " + id);
         }
-        ItemStack stick = new ItemStack(Items.STICK), feather = new ItemStack(Items.FEATHER);
-        var arrowInput = CraftingInput.of(1, 3, List.of(new ItemStack(PrimitiveContent.SHARP_ROCK.get()), stick, feather));
-        h.assertTrue(recipes.byKey(recipe("minecraft:arrow")).isEmpty(), "The flint arrow recipe must be replaced");
-        var arrowRecipe = recipes.byKey(recipe("arksurvivalreturns:arrow"));
-        h.assertTrue(arrowRecipe.isPresent(), "The sharp rock arrow recipe is missing");
-        h.assertTrue(arrowRecipe.get().value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
-                        && crafting.matches(arrowInput, level),
-                "A sharp rock, a stick and a feather must make arrows: " + arrowRecipe.get().value().display());
-        var arrow = recipes.getRecipeFor(RecipeType.CRAFTING, arrowInput, level);
-        h.assertTrue(arrow.isPresent() && arrow.get().value().assemble(arrowInput).is(Items.ARROW),
-                "The crafting lookup must find the arrow for a sharp rock: " + arrow.map(r -> r.id().toString()).orElse("none"));
-        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING,
-                CraftingInput.of(1, 3, List.of(new ItemStack(Items.FLINT), stick, feather)), level).isEmpty(),
-                "Flint must no longer tip arrows");
-        ItemStack cobble = new ItemStack(Items.COBBLESTONE), fire = new ItemStack(PrimitiveContent.STONE_FIRE_ITEM.get());
-        var forgeInput = CraftingInput.of(3, 3, List.of(cobble, cobble, cobble, cobble, fire, cobble, cobble, cobble, cobble));
-        var forge = recipes.getRecipeFor(RecipeType.CRAFTING, forgeInput, level);
-        h.assertTrue(forge.isPresent() && forge.get().value().assemble(forgeInput).is(PrimitiveContent.PRIMITIVE_FORGE_ITEM.get()),
-                "Eight cobblestone around a Stone Fire must make the forge");
+        h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("minecraft:arrow")
+                && c.variant().cost().containsKey("arksurvivalreturns:sharp_rock") && !c.variant().cost().containsKey("minecraft:flint")),
+                "Sharp rocks must tip arrows at the Armoury");
+        h.assertTrue(recipes.byKey(recipe("minecraft:arrow")).isEmpty() && recipes.byKey(recipe("arksurvivalreturns:arrow")).isEmpty(),
+                "Grids must not make arrows");
+        var working = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:working_station");
+        h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:primitive_forge")),
+                "The Working Station must make the Primitive Forge");
 
         ItemStack spear = new ItemStack(PrimitiveContent.KERATIN_SPEAR.get());
         h.assertTrue(spear.has(DataComponents.KINETIC_WEAPON) && spear.has(DataComponents.PIERCING_WEAPON), "The keratin spear must be a vanilla spear");

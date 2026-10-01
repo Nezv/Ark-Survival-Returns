@@ -127,6 +127,22 @@ def legs(tex, inset=1, top=12, size=2.5):
 
 # ------------------------------------------------------------------------------------ working station
 
+def armoury():
+    """Phase A placeholder: a freestanding log weapon rack with three bound tools."""
+    e = [box([1, 0, 1], [15, 2, 15], 'planks_dark', 'rack feet')]
+    for x in (2, 12):
+        e.append(box([x, 2, 9], [x + 2, 24, 11], 'log', 'upright'))
+    for y in (6, 19):
+        e.append(box([2, y, 8], [14, y + 2, 12], 'planks', 'crossbar'))
+    for x in (4, 8, 11):
+        e.append(box([x, 3, 7], [x + 1, 21, 8], 'log', 'weapon haft'))
+        e.append(box([x - .4, 16, 6.6], [x + 1.4, 17.5, 8.4], 'rope', 'fiber binding'))
+    e.append(box([3, 19, 6.5], [6.5, 22, 8.5], 'stone', 'rock axe head'))
+    e.append(box([7.4, 20, 6.8], [9.6, 24, 8.2], 'stone', 'spear point'))
+    e.append(box([10.5, 18, 6.6], [12.5, 23, 8.4], 'iron', 'blade'))
+    save('armoury', e, 'log')
+
+
 def working_station():
     e = legs('log')
     e += [box([0, 12, 0], [16, 15, 16], 'bench_top', 'bench top with a scored grid'),
@@ -297,6 +313,7 @@ def main():
     for name in PALETTE:
         material(name)
     working_station()
+    armoury()
     storage_crate()
     smithing_table()
     medicine_bench()

@@ -49,84 +49,53 @@ final class StationGameTests {
     static void run(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
-        for (String id : List.of("working_station", "medicine_bench", "storage_crate", "smithing_table", "crusher",
-                "mortar_and_pestle", "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
-            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing station recipe " + id);
+        WorkstationGameTests.run(h);
+        for (String id : List.of("working_station")) {
+            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing field craft " + id);
         }
-        for (String id : List.of("crafting_table", "chest", "trapped_chest", "smithing_table")) {
-            h.assertTrue(recipes.byKey(recipe("minecraft:" + id)).isEmpty(), "The vanilla recipe survived: " + id);
+        for (String id : List.of("medicine_bench", "storage_crate", "smithing_table", "crusher", "mortar_and_pestle",
+                "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
+            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Phase A grid recipe survived: " + id);
         }
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().size() == 5, "All phase A designs must load");
+        for (String id : List.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table")) {
+            var definition = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:" + id);
+            h.assertTrue(definition != null && !definition.crafts().isEmpty(), "Missing graph recipes for " + id);
+        }
+        h.assertTrue(recipes.byKey(recipe("minecraft:hopper")).isEmpty(), "The hopper moved to the Smithing Table");
+        var smith = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:smithing_table");
+        h.assertTrue(smith.crafts().stream().anyMatch(c -> c.variant().item().equals("minecraft:hopper")
+                && c.variant().cost().containsKey("arksurvivalreturns:storage_crate")), "The smith's hopper must take a crate");
 
-        // Recipes that used a replaced block take the Ark block: the crate is a wooden chest for the hopper
-        // (NeoForge's recipe takes #c:chests/wooden, so a stray vanilla chest still works until it converts).
-        ItemStack iron = new ItemStack(Items.IRON_INGOT), none = ItemStack.EMPTY;
-        var withCrate = CraftingInput.of(3, 3, List.of(iron, none, iron, iron, new ItemStack(StationContent.STORAGE_CRATE_ITEM.get()), iron,
-                none, iron, none));
-        var hopper = recipes.getRecipeFor(RecipeType.CRAFTING, withCrate, level);
-        h.assertTrue(hopper.isPresent() && hopper.get().value().assemble(withCrate).is(Items.HOPPER),
-                "Five iron around a Storage Crate must make a hopper");
-
-        // The Bandage and Vitamins are Bronze Age medicine, made only at the Medicine Bench.
-        h.assertTrue(StationContent.mortar(new ItemStack(StationContent.HEALING_MIXTURE.get()))
-                && StationContent.mortar(new ItemStack(ModContent.NARCOTICS.get())), "Mortar tag is incomplete");
-        h.assertFalse(StationContent.mortar(new ItemStack(ModContent.FIBER_BANDAGE.get())), "The fiber bandage stays a field craft");
-        h.assertFalse(StationContent.mortar(new ItemStack(StationContent.HERBAL_BANDAGE.get())), "The Bandage left the Mortar & Pestle");
-        h.assertTrue(StationContent.medicine(new ItemStack(StationContent.HERBAL_BANDAGE.get()))
-                && StationContent.medicine(new ItemStack(StationContent.VITAMINS.get())), "Medicine tag is incomplete");
-
-        // The bench recipe (Bronze Age): bronze ingots replace iron, and it needs a block of glass.
-        ItemStack bronze = new ItemStack(dev.nez.arksurvivalreturns.feature.bronze.BronzeContent.BRONZE_INGOT.get());
-        ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE), plank = new ItemStack(Items.OAK_PLANKS), log = new ItemStack(Items.OAK_LOG);
-        ItemStack glass = new ItemStack(Items.GLASS);
-        var benchGrid = CraftingInput.of(3, 3, List.of(bronze, bottle, bronze, plank, plank, plank, log, glass, log));
-        var benchRecipe = recipes.getRecipeFor(RecipeType.CRAFTING, benchGrid, level);
-        h.assertTrue(benchRecipe.isPresent() && benchRecipe.get().value().assemble(benchGrid).is(StationContent.MEDICINE_BENCH_ITEM.get()),
-                "Bronze, glass, a bottle, planks and logs must make the Medicine Bench");
-        var ironGrid = CraftingInput.of(3, 3, List.of(iron, bottle, iron, plank, plank, plank, log, glass, log));
-        h.assertTrue(recipes.getRecipeFor(RecipeType.CRAFTING, ironGrid, level).isEmpty(), "Iron no longer makes the Medicine Bench");
-
-        // Craft the Bandage and Vitamins at the Medicine Bench; nowhere else makes them.
         var medicinePlayer = FakePlayerFactory.get(level, new GameProfile(java.util.UUID.randomUUID(), "ArkMedicineBench"));
-        BlockPos benchRel = new BlockPos(9, 2, 9);
-        BlockPos benchPos = h.absolutePos(benchRel);
+        medicinePlayer.experienceLevel = 99;
+        dev.nez.arksurvivalreturns.feature.levels.ArkLevels.setLevel(medicinePlayer, 50);
+        BlockPos benchRel = new BlockPos(9, 2, 9), benchPos = h.absolutePos(benchRel);
         h.setBlock(benchRel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
-        var bench = new StationCraftingMenu(20, medicinePlayer.getInventory(), ContainerLevelAccess.create(level, benchPos),
-                StationContent.MEDICINE_BENCH.get(), StationContent::medicine);
-        ItemStack amarberry = new ItemStack(ModContent.BERRIES.get("amarberry").get());
-        ItemStack narcoberry = new ItemStack(ModContent.BERRIES.get("narcoberry").get());
-        ItemStack grass = new ItemStack(Items.SHORT_GRASS);
-        h.assertTrue(fillItems(bench, 1, amarberry, narcoberry, grass).is(StationContent.HERBAL_BANDAGE.get()),
-                "The Medicine Bench must make the Bandage from a Yellowberry, a Blackberry and grass");
-
-        ItemStack blueberry = new ItemStack(ModContent.BERRIES.get("azulberry").get());
-        ItemStack redberry = new ItemStack(ModContent.BERRIES.get("tintoberry").get());
-        ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
-        ItemStack[] vitaminsGrid = {blueberry, redberry, blueberry, redberry, waterBottle, redberry, blueberry, redberry, blueberry};
-        h.assertTrue(fillItems(bench, 1, vitaminsGrid).is(StationContent.VITAMINS.get()),
-                "The Medicine Bench must make Vitamins from berries around a water bottle");
-        // Any other potion in the centre (no water potion_contents) must not match.
-        ItemStack[] wrongBottle = vitaminsGrid.clone();
-        wrongBottle[4] = new ItemStack(Items.POTION);
-        h.assertTrue(fillItems(bench, 1, wrongBottle).isEmpty(), "Only a bottle of water may sit in the Vitamins' centre");
-        clearGrid(bench, 1, 9);
-
-        // Neither result appears outside the Medicine Bench: not the 2x2 grid, not a plain crafting table, not the Crafter.
-        h.assertTrue(fillItems(medicinePlayer.inventoryMenu, 1, amarberry, narcoberry, grass).isEmpty(),
-                "The 2x2 inventory grid must not make the Bandage");
-        BlockPos tableRel = new BlockPos(9, 2, 11);
-        BlockPos tablePos = h.absolutePos(tableRel);
-        h.setBlock(tableRel, net.minecraft.world.level.block.Blocks.CRAFTING_TABLE.defaultBlockState());
-        var craftingTable = new CraftingMenu(21, medicinePlayer.getInventory(), ContainerLevelAccess.create(level, tablePos));
-        h.assertTrue(fillItems(craftingTable, 1, amarberry, narcoberry, grass).isEmpty(),
-                "A plain crafting table must not make the Bandage");
-        h.assertTrue(fillItems(craftingTable, 1, vitaminsGrid).isEmpty(), "A plain crafting table must not make Vitamins");
-        h.setBlock(tableRel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
-        h.setBlock(benchRel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
-
-        var bandageGrid = CraftingInput.of(3, 3, List.of(amarberry, narcoberry, grass, none, none, none, none, none, none));
-        h.assertTrue(CrafterBlock.getPotentialResults(level, bandageGrid).isEmpty(), "The Crafter must not make the Bandage");
-        var vitaminsInput = CraftingInput.of(3, 3, List.of(vitaminsGrid));
-        h.assertTrue(CrafterBlock.getPotentialResults(level, vitaminsInput).isEmpty(), "The Crafter must not make Vitamins");
+        medicinePlayer.setPos(benchPos.getX() + .5, benchPos.getY() + 1, benchPos.getZ() + .5);
+        var bench = new dev.nez.arksurvivalreturns.feature.station.WorkstationMenu(20, medicinePlayer.getInventory(), benchPos, "arksurvivalreturns:medicine_bench");
+        medicinePlayer.containerMenu = bench;
+        medicinePlayer.getInventory().clearContent();
+        medicinePlayer.getInventory().setItem(0, new ItemStack(ModContent.BERRIES.get("amarberry").get()));
+        medicinePlayer.getInventory().setItem(1, new ItemStack(ModContent.BERRIES.get("narcoberry").get()));
+        medicinePlayer.getInventory().setItem(2, new ItemStack(Items.SHORT_GRASS));
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting.craft(medicinePlayer,
+                new dev.nez.arksurvivalreturns.feature.station.WorkstationPayload.Craft(bench.station, "arksurvivalreturns:herbal_bandage", 1,
+                        "i:bandages/herbal_bandage", 0, 20)), "The Medicine Bench must mix Bandages from the design cost");
+        h.assertTrue(medicinePlayer.getInventory().countItem(StationContent.HERBAL_BANDAGE.get()) == 2, "The design makes two Bandages");
+        medicinePlayer.getInventory().clearContent();
+        medicinePlayer.getInventory().setItem(0, new ItemStack(ModContent.BERRIES.get("azulberry").get(), 4));
+        medicinePlayer.getInventory().setItem(1, new ItemStack(ModContent.BERRIES.get("tintoberry").get(), 4));
+        medicinePlayer.getInventory().setItem(2, new ItemStack(Items.POTION));
+        var vitaminsPacket = new dev.nez.arksurvivalreturns.feature.station.WorkstationPayload.Craft(bench.station,
+                "arksurvivalreturns:vitamins", 1, "i:remedies/vitamins", 0, 20);
+        h.assertFalse(dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting.craft(medicinePlayer, vitaminsPacket), "A non-water potion must fail");
+        h.assertTrue(medicinePlayer.getInventory().getItem(0).getCount() == 4, "Failed payment consumed berries");
+        medicinePlayer.getInventory().setItem(2, PotionContents.createItemStack(Items.POTION, Potions.WATER));
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting.craft(medicinePlayer, vitaminsPacket), "Water and berries must make Vitamins");
+        h.assertTrue(medicinePlayer.getInventory().countItem(StationContent.VITAMINS.get()) == 1, "Vitamins missing after mix");
+        h.setBlock(benchRel, Blocks.AIR.defaultBlockState());
+        medicinePlayer.containerMenu = medicinePlayer.inventoryMenu;
 
         // Eating Vitamins applies both effects and returns a bottle of water's glass.
         ItemStack vitaminsStack = new ItemStack(StationContent.VITAMINS.get());
@@ -180,9 +149,17 @@ final class StationGameTests {
         var village = new CraftingMenu(11, player.getInventory(), ContainerLevelAccess.create(level, table));
         h.assertTrue(fill(village, 1, berry).isEmpty(), "A village crafting table must not grind Narcotics");
         level.setBlockAndUpdate(table, StationContent.MORTAR_AND_PESTLE.get().defaultBlockState());
-        var mortar = new StationCraftingMenu(12, player.getInventory(), ContainerLevelAccess.create(level, table),
-                StationContent.MORTAR_AND_PESTLE.get(), StationContent::mortar);
-        h.assertTrue(fill(mortar, 1, berry).is(ModContent.NARCOTICS.get()), "The Mortar & Pestle must still grind Narcotics");
+        player.getInventory().clearContent();
+        player.getInventory().setItem(0, new ItemStack(berry, 4));
+        player.experienceLevel = 99;
+        dev.nez.arksurvivalreturns.feature.levels.ArkLevels.setLevel(player, 50);
+        player.setPos(table.getX() + .5, table.getY() + 1, table.getZ() + .5);
+        var mortar = new dev.nez.arksurvivalreturns.feature.station.WorkstationMenu(12, player.getInventory(), table, "arksurvivalreturns:mortar_and_pestle");
+        player.containerMenu = mortar;
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting.craft(player,
+                new dev.nez.arksurvivalreturns.feature.station.WorkstationPayload.Craft(mortar.station, "arksurvivalreturns:narcotics", 1,
+                        "i:berries/narcotics", 0, 12)), "The Mortar & Pestle must grind Narcotics from the design");
+        player.containerMenu = player.inventoryMenu;
         level.setBlockAndUpdate(table, Blocks.AIR.defaultBlockState());
         var grid = CraftingInput.of(2, 2, List.of(new ItemStack(berry), new ItemStack(berry), new ItemStack(berry), new ItemStack(berry)));
         h.assertTrue(CrafterBlock.getPotentialResults(level, grid).isEmpty(), "The Crafter must not grind Narcotics");

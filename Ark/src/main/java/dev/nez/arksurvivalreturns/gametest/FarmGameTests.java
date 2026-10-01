@@ -158,17 +158,13 @@ final class FarmGameTests {
             var key = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
                     dev.nez.arksurvivalreturns.ArkSurvivalReturns.id(id));
             var holder = level.getServer().getRecipeManager().byKey(key);
-            h.assertTrue(holder.isPresent(), "Missing variant recipe: " + id);
-            var recipe = (net.minecraft.world.item.crafting.ShapedRecipe) holder.get().value();
-            var plank = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
-                    net.minecraft.resources.Identifier.withDefaultNamespace(entry.getKey() + "_planks"));
-            var slots = new java.util.ArrayList<ItemStack>(List.of(new ItemStack(plank), ItemStack.EMPTY, new ItemStack(plank),
-                    new ItemStack(plank), new ItemStack(Items.RESIN_CLUMP), new ItemStack(plank),
-                    ItemStack.EMPTY, new ItemStack(ModContent.PLANT_FIBER.get()), ItemStack.EMPTY));
-            var input = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, slots);
-            h.assertTrue(recipe.matches(input, level) && recipe.assemble(input).is(block.asItem()), "Wood must survive crafting: " + id);
-            slots.set(4, ItemStack.EMPTY);
-            h.assertTrue(!recipe.matches(net.minecraft.world.item.crafting.CraftingInput.of(3, 3, slots), level), "Resin must be required: " + id);
+            h.assertTrue(holder.isEmpty(), "The trough grid recipe must be removed: " + id);
+            var station = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:working_station");
+            String output = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(block.asItem()).toString();
+            h.assertTrue(station.crafts().stream().anyMatch(c -> c.variant().item().equals(output)
+                    && c.variant().cost().getOrDefault("minecraft:resin_clump", 0) == 1
+                    && c.variant().cost().containsKey("minecraft:" + entry.getKey() + "_planks")),
+                    "The trough's wood and resin must survive workstation crafting: " + id);
         }
     }
 

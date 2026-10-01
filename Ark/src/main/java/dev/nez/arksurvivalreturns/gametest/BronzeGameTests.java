@@ -95,7 +95,8 @@ final class BronzeGameTests {
     private static void assemble(GameTestHelper h, net.minecraft.world.item.crafting.RecipeManager recipes, ServerLevel level,
             CraftingInput input, net.minecraft.world.item.Item expected, String label) {
         var found = recipes.getRecipeFor(RecipeType.CRAFTING, input, level);
-        h.assertTrue(found.isPresent() && found.get().value().assemble(input).is(expected), "Missing or wrong recipe for " + label);
+        h.assertTrue(found.isEmpty(), "Grid recipe survived for " + label);
+        WorkstationGameTests.assertCraftable(h, net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(expected).toString());
     }
 
     private static boolean near(double actual, double expected) { return Math.abs(actual - expected) < 0.001; }
