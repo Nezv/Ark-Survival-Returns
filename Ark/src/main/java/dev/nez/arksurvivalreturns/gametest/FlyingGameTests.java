@@ -36,15 +36,15 @@ final class FlyingGameTests {
 
         // A natural flyer claims a local nest of its own and lays an egg there.
         var bird = (FlyingCreatureEntity) ModContent.CREATURES.get(Species.PTERANODON).get().create(world, EntitySpawnReason.NATURAL);
+        bird.getRandom().setSeed(0L);
         bird.setPos(Vec3.atBottomCenterOf(origin));
         var nest = Nests.placeNear(world, bird);
         // A replacement nest (the first one was lost) starts empty, so breaking nests farms no eggs.
         var spare = Nests.placeNear(world, bird, false);
-        if (spare != null) {
-            h.assertFalse(world.getBlockState(spare).getValue(dev.nez.arksurvivalreturns.feature.flying.NestBlock.EGG),
-                    "A replacement nest must start without an egg");
-            world.removeBlock(spare, false);
-        }
+        h.assertTrue(spare != null, "Replacement nest placement failed on prepared nesting terrain");
+        h.assertFalse(world.getBlockState(spare).getValue(dev.nez.arksurvivalreturns.feature.flying.NestBlock.EGG),
+                "A replacement nest must start without an egg");
+        world.removeBlock(spare, false);
         h.assertTrue(nest != null, "Natural flyer failed to claim a local nest");
         bird.assignNest(nest);
         h.assertTrue(world.getBlockState(nest).getBlock() == ModContent.NESTS.get(Species.PTERANODON).get(), "Claimed nest block missing");
@@ -140,6 +140,37 @@ final class FlyingGameTests {
         h.runAfterDelay(475, () -> {
             h.assertTrue(bird.getY() > nest.getY() + 1, "Bird could not escape water; phase=" + bird.flightPhase() + " y=" + bird.getY() + " fluid=" + bird.isInWater());
             bird.discard(); player.discard(); bystander.discard(); world.removeBlock(nest, false); world.removeBlock(nest.offset(20, 0, 0), false); h.succeed();
+        });
+    }
+    /** Normal ground physics and AI; no target pinning, teleports or direct strike calls. */
+    static void groundSwoop(GameTestHelper h, Species species) {
+        var world = h.getLevel();
+        for (int x = 16; x < 112; x++) for (int z = 16; z < 112; z++) { h.setBlock(x, 0, z, Blocks.STONE); h.setBlock(x, 1, z, Blocks.SAND); }
+        var nest = h.absolutePos(new BlockPos(60, 2, 60));
+        world.setBlock(nest, ModContent.NESTS.get(species).get().defaultBlockState(), 3);
+        var bird = (FlyingCreatureEntity) ModContent.CREATURES.get(species).get().create(world, EntitySpawnReason.COMMAND);
+        bird.setUUID(new UUID(0x41524B47524F554EL, species.ordinal() * 2L));
+        bird.getRandom().setSeed(0L); bird.initializeLevel(1); bird.setPersistenceRequired();
+        bird.setPos(Vec3.atBottomCenterOf(nest)); bird.wildlife().home(); bird.assignNest(nest);
+        bird.setPos(bird.position().add(0, 8, 0)); world.addFreshEntity(bird);
+        var thief = h.makeMockPlayer(GameType.SURVIVAL);
+        thief.setPos(Vec3.atBottomCenterOf(nest.east())); world.addFreshEntity(thief);
+        h.assertTrue(world.getBlockState(nest).useWithoutItem(world, thief,
+                new net.minecraft.world.phys.BlockHitResult(Vec3.atCenterOf(nest), net.minecraft.core.Direction.UP, nest, false)).consumesAction(), "Real nest interaction failed");
+        h.assertTrue(thief.getInventory().countItem(ModContent.NEST_EGGS.get(species).get()) == 1 && thief.getUUID().equals(bird.eggThief()),
+                "Ground thief did not collect and provoke the nest's bird");
+        thief.setPos(Vec3.atBottomCenterOf(nest.offset(8, 0, 0)));
+        var bystander = h.makeMockPlayer(GameType.SURVIVAL);
+        bystander.setPos(Vec3.atBottomCenterOf(nest.offset(-8, 0, 0))); world.addFreshEntity(bystander);
+        GameTestCleanup.onFinish(h, () -> { bird.discard(); thief.discard(); bystander.discard(); });
+        boolean[] swooped = {false};
+        h.onEachTick(() -> { if (bird.flightPhase() == FlyingCreatureEntity.Phase.SWOOP) swooped[0] = true; });
+        h.runAfterDelay(180, () -> {
+            h.assertTrue(swooped[0], "Ground thief never triggered a swoop: " + species + " phase=" + bird.flightPhase() + " bird=" + bird.position() + " thief=" + thief.position() + " authority=" + bird.eggThief());
+            h.assertTrue(thief.getHealth() < 20, "Ground swoop missed contact: " + species + " phase=" + bird.flightPhase()
+                    + " bird=" + bird.position() + " thief=" + thief.position());
+            h.assertTrue(bystander.getHealth() == 20, "Ground defense damaged a bystander");
+            bird.discard(); thief.discard(); bystander.discard(); h.succeed();
         });
     }
     private FlyingGameTests() {}

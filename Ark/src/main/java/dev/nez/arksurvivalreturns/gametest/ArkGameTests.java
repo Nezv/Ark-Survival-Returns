@@ -24,6 +24,21 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ArkGameTests {
     public static final DeferredRegister<Consumer<GameTestHelper>> FUNCTIONS = DeferredRegister.create(Registries.TEST_FUNCTION, ArkSurvivalReturns.MOD_ID);
     static {
+        FUNCTIONS.register("pack_runtime_contract", () -> RuntimeGameTests::pack);
+        FUNCTIONS.register("tech_real_event_flow", () -> ProgressionGameTests::events);
+        FUNCTIONS.register("tech_lighting_flow", () -> ProgressionGameTests::lighting);
+        FUNCTIONS.register("progression_restart", () -> ProgressionGameTests::reload);
+        FUNCTIONS.register("tribe_party_flow", () -> TribeGameTests::partyFlow);
+        FUNCTIONS.register("flying_ground_pteranodon", () -> h -> FlyingGameTests.groundSwoop(h, Species.PTERANODON));
+        FUNCTIONS.register("flying_ground_argentavis", () -> h -> FlyingGameTests.groundSwoop(h, Species.ARGENTAVIS));
+        FUNCTIONS.register("companion_live_navigation", () -> NavigationGameTests::companion);
+        FUNCTIONS.register("companion_blocked_route", () -> NavigationGameTests::blocked);
+        FUNCTIONS.register("work_live_harvest", () -> NavigationGameTests::work);
+        FUNCTIONS.register("cargo_request_guards", () -> CargoRegressionGameTests::requests);
+        FUNCTIONS.register("cargo_storage_guards", () -> CargoRegressionGameTests::storageGuards);
+        FUNCTIONS.register("cargo_scan_limits", () -> CargoRegressionGameTests::scanLimits);
+        FUNCTIONS.register("cargo_unloaded_boundary", () -> CargoRegressionGameTests::unloadedBoundary);
+        FUNCTIONS.register("cargo_toms_network", () -> CargoRegressionGameTests::tomsNetwork);
         FUNCTIONS.register("player_levels", () -> LevelGameTests::levels);
         FUNCTIONS.register("player_levels_persistence", () -> LevelGameTests::persistence);
         FUNCTIONS.register("player_levels_sources", () -> LevelGameTests::sources);

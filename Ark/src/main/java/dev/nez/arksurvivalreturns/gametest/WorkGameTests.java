@@ -89,6 +89,7 @@ final class WorkGameTests {
 
         // With mobGriefing off, grazing (which changes nothing) goes on and every block-changing job stops.
         var rules = level.getGameRules();
+        boolean mobGriefing = rules.get(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING);
         BlockPos griefTuft = new BlockPos(6, 3, 8);
         h.setBlock(griefTuft, Blocks.SHORT_GRASS.defaultBlockState());
         rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, false, level.getServer());
@@ -98,7 +99,7 @@ final class WorkGameTests {
             WorkGoal.harvest(trike, h.absolutePos(griefTuft));
             h.assertFalse(level.getBlockState(h.absolutePos(griefTuft)).isAir(), "mobGriefing off: the tuft must survive");
         } finally {
-            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, true, level.getServer());
+            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_GRIEFING, mobGriefing, level.getServer());
         }
 
         // The eviction order survives a save: it used to reload in hash order, so eviction dropped random entries.

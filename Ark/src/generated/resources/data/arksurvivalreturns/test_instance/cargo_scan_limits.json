@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:regression",
+  "function": "arksurvivalreturns:cargo_scan_limits",
+  "max_ticks": 400,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

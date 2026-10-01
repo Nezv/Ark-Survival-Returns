@@ -75,10 +75,7 @@ public final class AccessoryGameTests {
 
     /** With Curios installed: worn detection, the one-of-each rule and the attribute bonuses. */
     static void curios(GameTestHelper h) {
-        if (!ModList.get().isLoaded("curios")) {
-            h.succeed();
-            return;
-        }
+        h.assertTrue(ModList.get().isLoaded("curios"), "Required Curios integration is missing");
         CuriosProbe.check(h);
     }
 

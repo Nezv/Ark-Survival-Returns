@@ -61,6 +61,7 @@ final class MassGameTests {
         h.assertTrue(player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(MassService.OVERLOAD_MODIFIER) == null,
                 "Emptying the inventory must remove the modifier");
 
+        var preset = Config.MASS_PRESET.get();
         Config.MASS_PRESET.set(MassRules.Preset.OFF);
         try {
             player.getInventory().add(new ItemStack(Items.STONE, 64));
@@ -69,7 +70,7 @@ final class MassGameTests {
             h.assertTrue(player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(MassService.OVERLOAD_MODIFIER) == null,
                     "The off preset must remove the modifier");
         } finally {
-            Config.MASS_PRESET.set(MassRules.Preset.STANDARD);
+            Config.MASS_PRESET.set(preset);
             player.getInventory().clearContent();
             MassService.refresh(player);
         }

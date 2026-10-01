@@ -28,7 +28,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 /**
  * Integrations listed in config/integrations.json. Each probe touches the other mod's classes only through
- * a nested holder, so the suite still loads (and passes as "not installed") without that mod.
+ * a nested holder. The dev and shipped-pack suites both require these gameplay integrations.
  */
 final class IntegrationGameTests {
     /**
@@ -36,10 +36,7 @@ final class IntegrationGameTests {
      * rings, belt, legs, two feet, charm, curio).
      */
     static void curios(GameTestHelper h) {
-        if (!ModList.get().isLoaded("curios")) {
-            h.succeed();
-            return;
-        }
+        h.assertTrue(ModList.get().isLoaded("curios"), "Required Curios integration is missing");
         CuriosProbe.check(h);
     }
 
@@ -48,10 +45,7 @@ final class IntegrationGameTests {
      * which holds unstackable items only.
      */
     static void tomsStorage(GameTestHelper h) {
-        if (!ModList.get().isLoaded("toms_storage")) {
-            h.succeed();
-            return;
-        }
+        h.assertTrue(ModList.get().isLoaded("toms_storage"), "Required Tom's Storage integration is missing");
         ServerLevel level = h.getLevel();
         var cabinetBlock = BuiltInRegistries.BLOCK.getValue(Identifier.parse("toms_storage:filing_cabinet"));
         // Keep the entire radius-8 scan inside this 128-block plot, away from other tests' storage.
@@ -81,6 +75,8 @@ final class IntegrationGameTests {
         int unloaded;
         try {
             loaded = CargoTransferService.load(owner, trike);
+            h.assertTrue(loaded == 3 && contains(handler, 0) && trike.tamingInventory().countItem(Items.IRON_SWORD) == 3,
+                    "Capability load must conserve exactly three swords and empty the cabinet");
             unloaded = loaded == 3 ? CargoTransferService.unload(owner, trike) : -1;
         } finally {
             dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.set(radius);
@@ -92,7 +88,7 @@ final class IntegrationGameTests {
                 + dev.nez.arksurvivalreturns.feature.mass.MassCalculator.massOf(new ItemStack(Items.IRON_SWORD)) + ", tamed "
                 + TamingService.of(trike).tamed() + ")");
         h.assertTrue(unloaded == 3, "Fast Unload must return them to the cabinet");
-        h.assertTrue(contains(handler, 3), "The cabinet must hold the swords again");
+        h.assertTrue(contains(handler, 3) && trike.tamingInventory().isEmpty(), "The cabinet must hold exactly three swords again with empty cargo");
         trike.discard();
         h.succeed();
     }
@@ -100,15 +96,12 @@ final class IntegrationGameTests {
     private static boolean contains(net.neoforged.neoforge.transfer.ResourceHandler<ItemResource> handler, int amount) {
         int total = 0;
         for (int i = 0; i < handler.size(); i++) if (handler.getResource(i).is(Items.IRON_SWORD)) total += handler.getAmountAsInt(i);
-        return total >= amount;
+        return total == amount;
     }
 
     /** I08: Terralith biomes inherit Ark habitats through their vanilla analog; danger comes from the area only. */
     static void terralith(GameTestHelper h) {
-        if (!ModList.get().isLoaded("terralith")) {
-            h.succeed();
-            return;
-        }
+        h.assertTrue(ModList.get().isLoaded("terralith"), "Required Terralith integration is missing");
         var biomes = h.getLevel().registryAccess().lookupOrThrow(Registries.BIOME);
         var rainforest = biomes.get(ResourceKey.create(Registries.BIOME, Identifier.parse("terralith:amethyst_rainforest")));
         h.assertTrue(rainforest.isPresent(), "Terralith's amethyst rainforest must be registered");
@@ -125,10 +118,7 @@ final class IntegrationGameTests {
      * slash as daggers and the hatchet as an axe.
      */
     static void betterCombat(GameTestHelper h) {
-        if (!ModList.get().isLoaded("bettercombat")) {
-            h.succeed();
-            return;
-        }
+        h.assertTrue(ModList.get().isLoaded("bettercombat"), "Required Better Combat integration is missing");
         BetterCombatProbe.check(h);
     }
 
@@ -161,7 +151,10 @@ final class IntegrationGameTests {
             h.assertTrue(slots.get("feet").getSize() >= 2, "Ark gives players two feet slots (socks, shoes)");
             h.assertTrue(slots.get("ring").getSize() >= 2, "Ark gives players a ring on each hand");
             h.assertTrue(slots.get("bracelet").getSize() >= 2, "Ark gives players a bracelet on each wrist");
+            if (Boolean.getBoolean("arksurvivalreturns.testPack"))
+                h.assertTrue(arkFork(), "Shipped pack must load the Ark Curios fork");
             if (arkFork()) layout(h);
+            else org.slf4j.LoggerFactory.getLogger(IntegrationGameTests.class).info("Curios slot behavior verified; Ark fork layout applies only to -ParkPack runs.");
             h.succeed();
         }
 

@@ -210,11 +210,12 @@ final class CargoGameTests {
         trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
         trike.tamingInventory().setItem(0, new ItemStack(Items.COBBLESTONE, 5));
         var rules = level.getGameRules();
+        boolean mobDrops = rules.get(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS);
         rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS, false, level.getServer());
         try {
             trike.hurtServer(level, level.damageSources().genericKill(), Float.MAX_VALUE);
         } finally {
-            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS, true, level.getServer());
+            rules.set(net.minecraft.world.level.gamerules.GameRules.MOB_DROPS, mobDrops, level.getServer());
         }
         var around = trike.getBoundingBox().inflate(4);
         int stone = 0, harness = 0;

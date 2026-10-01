@@ -238,9 +238,15 @@ final class LevelGameTests {
     // NeoForge custom payloads. Register fake players in the online collections so the real FTB
     // APIs, UUID attribution and command selectors run without bypassing their production code.
     @SuppressWarnings("unchecked")
-    private static ServerPlayer online(GameTestHelper h, String name) {
+    static ServerPlayer online(GameTestHelper h, String name) {
         var player = player(h, name);
-        var list = h.getLevel().getServer().getPlayerList();
+        online(player);
+        return player;
+    }
+
+    @SuppressWarnings("unchecked")
+    static void online(ServerPlayer player) {
+        var list = player.level().getServer().getPlayerList();
         try {
             var players = PlayerList.class.getDeclaredField("players");
             var byUuid = PlayerList.class.getDeclaredField("playersByUUID");
@@ -248,13 +254,12 @@ final class LevelGameTests {
             byUuid.setAccessible(true);
             ((List<ServerPlayer>) players.get(list)).add(player);
             ((java.util.Map<UUID, ServerPlayer>) byUuid.get(list)).put(player.getUUID(), player);
-            ((TeamManagerImpl) FTBTeamsAPI.api().getManager()).playerLoggedIn(player, player.getUUID(), name);
-            return player;
+            ((TeamManagerImpl) FTBTeamsAPI.api().getManager()).playerLoggedIn(player, player.getUUID(), player.getGameProfile().name());
         } catch (ReflectiveOperationException e) { throw new IllegalStateException(e); }
     }
 
     @SuppressWarnings("unchecked")
-    private static void offline(ServerPlayer player) {
+    static void offline(ServerPlayer player) {
         var list = player.level().getServer().getPlayerList();
         try {
             ((TeamManagerImpl) FTBTeamsAPI.api().getManager()).playerLoggedOut(player);

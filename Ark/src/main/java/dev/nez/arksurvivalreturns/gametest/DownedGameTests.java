@@ -47,12 +47,13 @@ final class DownedGameTests {
         h.assertTrue(state.downed(), "The refused revive cleared the downed state");
 
         // With the gate relaxed the bandage revives at the configured fraction.
+        boolean requireTribe = Config.DOWNED_REQUIRE_TRIBE.get();
         Config.DOWNED_REQUIRE_TRIBE.set(false);
         try {
             var revived = ModContent.FIBER_BANDAGE.get().interactLivingEntity(bandage, reviver, victim, InteractionHand.MAIN_HAND);
             h.assertTrue(revived == InteractionResult.SUCCESS_SERVER, "The bandage did not revive the player");
         } finally {
-            Config.DOWNED_REQUIRE_TRIBE.set(true);
+            Config.DOWNED_REQUIRE_TRIBE.set(requireTribe);
         }
         h.assertFalse(state.downed(), "The revive did not clear the downed state");
         h.assertTrue(victim.getHealth() >= victim.getMaxHealth() * 0.29f, "The revive health is below the fraction");
@@ -130,7 +131,8 @@ final class DownedGameTests {
                 "Going down left " + soaked.getHealth() + " health, " + soaked.getAbsorptionAmount() + " absorption");
         state.clear();
 
-        if (ModList.get().isLoaded("curios")) AmberProbe.check(h, world);
+        h.assertTrue(ModList.get().isLoaded("curios"), "Required Curios integration is missing");
+        AmberProbe.check(h, world);
         h.succeed();
     }
 

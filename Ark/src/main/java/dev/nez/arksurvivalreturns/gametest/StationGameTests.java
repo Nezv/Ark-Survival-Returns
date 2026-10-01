@@ -19,7 +19,6 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -27,7 +26,6 @@ import com.mojang.authlib.GameProfile;
 import dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
 import dev.nez.arksurvivalreturns.feature.station.CrusherBlockEntity;
-import dev.nez.arksurvivalreturns.feature.station.StationCraftingMenu;
 import dev.nez.arksurvivalreturns.feature.tech.TechTrigger;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -127,7 +125,7 @@ final class StationGameTests {
         h.setBlock(rel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         h.setBlock(rel.east(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
 
-        // The crusher table: stone down the chain, ores doubled.
+        // The crusher table: stone down the chain; ore doubling is disabled.
         h.assertTrue(CrusherRecipes.find(new ItemStack(Items.COBBLESTONE)).output() == Items.GRAVEL, "Cobblestone must crush to gravel");
         h.assertTrue(CrusherRecipes.find(new ItemStack(Items.IRON_ORE)) == null, "The crusher no longer doubles ore");
         h.assertTrue(CrusherRecipes.find(new ItemStack(Items.FLINT)) == null, "Gunpowder waits for the Bronze Age");
@@ -225,19 +223,6 @@ final class StationGameTests {
         for (int i = 0; i < 4; i++) menu.getSlot(first + i).set(new ItemStack(item));
         menu.broadcastChanges();
         return menu.getSlot(0).getItem();
-    }
-
-    /** One stack per grid cell starting at {@code first}; returns the result slot. */
-    private static ItemStack fillItems(AbstractContainerMenu menu, int first, ItemStack... items) {
-        for (int i = 0; i < items.length; i++) menu.getSlot(first + i).set(items[i].copy());
-        menu.broadcastChanges();
-        return menu.getSlot(0).getItem();
-    }
-
-    /** Empties grid cells [first, first + count) so the next test starts from a clean bench. */
-    private static void clearGrid(AbstractContainerMenu menu, int first, int count) {
-        for (int i = 0; i < count; i++) menu.getSlot(first + i).set(ItemStack.EMPTY);
-        menu.broadcastChanges();
     }
 
     private StationGameTests() {}

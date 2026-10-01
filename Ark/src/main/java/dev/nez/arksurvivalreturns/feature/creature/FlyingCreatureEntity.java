@@ -278,6 +278,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     /** Starts the swoop bite; the flyer's own {@code doHurtTarget} revalidates and flags the hit when it lands. */
     private boolean doContact(ServerLevel world, Player thief) {
         if (thief != null && !struck && isWithinMeleeAttackRange(thief) && seesPlayer(world, thief)) strike(thief);
+        if (isStriking()) {
+            // Brake at contact for the animated bite. Continuing the dive can overshoot a stationary
+            // thief before the hit frame; a thief who moves away can still dodge the pending strike.
+            destination = position();
+            setDeltaMovement(Vec3.ZERO);
+        }
         return false;
     }
     @Override public boolean doHurtTarget(ServerLevel world, Entity target) {

@@ -46,11 +46,22 @@ final class CampGameTests {
         StarterKitService.onLogin(player);
         h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "Rejoining duplicated the kit");
         // The config switch blocks new kits but does not retract a recorded grant.
+        boolean enabled = Config.CAMP_STARTER_KIT.get();
+        FakePlayer newcomer = survivor(world);
+        newcomer.getInventory().clearContent();
         Config.CAMP_STARTER_KIT.set(false);
         try {
             StarterKitService.onLogin(player);
-        } finally {
+            StarterKitService.onLogin(newcomer);
+            h.assertTrue(newcomer.getInventory().isEmpty(), "A disabled kit was granted to a fresh survivor");
+            h.assertFalse(data.granted(newcomer.getUUID()), "A disabled kit consumed the survivor's future grant");
             Config.CAMP_STARTER_KIT.set(true);
+            StarterKitService.onLogin(newcomer);
+            StarterKitService.onLogin(newcomer);
+            h.assertTrue(count(newcomer, ModContent.FLINT_KNIFE.get()) == 1 && data.granted(newcomer.getUUID()),
+                    "Re-enabling the kit must grant it exactly once");
+        } finally {
+            Config.CAMP_STARTER_KIT.set(enabled);
         }
         h.assertTrue(count(player, ModContent.FLINT_KNIFE.get()) == 1, "A disabled kit was granted");
         h.succeed();

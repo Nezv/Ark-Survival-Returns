@@ -44,13 +44,18 @@ public final class TechFtbBridge {
     }
 
     public static void complete(ServerPlayer player, String node) {
+        complete(TechService.tribeOf(player), player.getUUID(), node);
+    }
+
+    /** Automatic tame/work/trough events may be attributed to an offline owner. */
+    public static void complete(UUID tribe, UUID actor, String node) {
         var tree = TechTree.current();
         if (tree == null || !ready(tree)) return;
         var file = ServerQuestFile.getInstance();
-        var team = file.getOrCreateTeamData(TechService.tribeOf(player));
+        var team = file.getOrCreateTeamData(tribe);
         var quest = file.getQuest(questId(node));
         // FTB's ProgressChange defaults to reset, including operator grants.
-        quest.forceProgress(team, new ProgressChange(quest, player.getUUID()).setReset(false));
+        quest.forceProgress(team, new ProgressChange(quest, actor).setReset(false));
     }
 
     public static void reset(ServerPlayer player) {

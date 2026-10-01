@@ -264,7 +264,8 @@ final class PrimitiveGameTests {
         var food = new ItemStack(ModContent.BERRIES.get("azulberry").get()).get(DataComponents.FOOD);
         h.assertTrue(food != null && food.nutrition() == 1, "The blueberry must satiate one hunger point");
         // Tom's Storage: no ender pearls, comparators or glowstone left in its recipes.
-        if (net.neoforged.fml.ModList.get().isLoaded("toms_storage")) {
+        h.assertTrue(net.neoforged.fml.ModList.get().isLoaded("toms_storage"), "Required Tom's Storage integration is missing");
+        {
             for (String id : List.of("inventory_connector", "storage_terminal", "wireless_terminal", "inventory_interface")) {
                 var holder = recipes.byKey(recipe("toms_storage:" + id));
                 h.assertTrue(holder.isPresent(), "Tom's Storage recipe missing: " + id);

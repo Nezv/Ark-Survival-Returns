@@ -34,8 +34,21 @@ final class WorkstationGameTests {
         inventory.setItem(2, new ItemStack(Items.FEATHER, 3));
         var allArrows = new WorkstationPayload.Craft(menu.station, "minecraft:arrow", -1, "i:wood/arrow", 0, 77);
         ArkLevels.setLevel(player, 0); player.experienceLevel = 0;
-        if (Config.WORKSTATION_LEVEL_GATE.get()) h.assertFalse(WorkstationCrafting.craft(player, allArrows), "Low level must not craft arrows");
-        h.assertTrue(inventory.getItem(0).getCount() == 5, "Rejected craft consumed sharp rocks");
+        boolean levelGate = Config.WORKSTATION_LEVEL_GATE.get();
+        try {
+            Config.WORKSTATION_LEVEL_GATE.set(true);
+            var before = inventory.getNonEquipmentItems().stream().map(ItemStack::copy).toList();
+            h.assertFalse(WorkstationCrafting.craft(player, allArrows), "Low level must not craft arrows with the gate enabled");
+            for (int i = 0; i < before.size(); i++)
+                h.assertTrue(ItemStack.matches(before.get(i), inventory.getItem(i)), "Level rejection changed inventory slot " + i);
+            Config.WORKSTATION_LEVEL_GATE.set(false);
+            h.assertTrue(WorkstationCrafting.craft(player, allArrows) && inventory.countItem(Items.ARROW) == 12,
+                    "Disabling the level gate must allow the same funded low-level craft");
+        } finally { Config.WORKSTATION_LEVEL_GATE.set(levelGate); }
+        inventory.clearContent();
+        inventory.setItem(0, new ItemStack(PrimitiveContent.SHARP_ROCK.get(), 5));
+        inventory.setItem(1, new ItemStack(Items.STICK, 7));
+        inventory.setItem(2, new ItemStack(Items.FEATHER, 3));
         ArkLevels.setLevel(player, 50); player.experienceLevel = 50;
         player.setPos(pos.getX() + 20, pos.getY(), pos.getZ());
         h.assertFalse(WorkstationCrafting.craft(player, allArrows), "A remote packet must not craft");
@@ -89,12 +102,23 @@ final class WorkstationGameTests {
             var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse(cost.getKey()));
             inventory.setItem(slot++, new ItemStack(item, cost.getValue()));
         }
-        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, tonic.variant().item(), 1,
-                "i:tonics/suspicious_stew", tonic.entry().variants().indexOf(tonic.variant()), 80)), "Medicine graph must mix the flower tonic");
+        var tonicPacket = new WorkstationPayload.Craft(menu.station, tonic.variant().item(), 1,
+                "i:tonics/suspicious_stew", tonic.entry().variants().indexOf(tonic.variant()), 80);
+        h.assertTrue(WorkstationCrafting.craft(player, tonicPacket), "Medicine graph must mix the flower tonic");
         ItemStack stew = inventory.getNonEquipmentItems().stream().filter(s -> s.is(Items.SUSPICIOUS_STEW)).findFirst().orElseThrow();
         h.assertTrue(stew.has(net.minecraft.core.component.DataComponents.SUSPICIOUS_STEW_EFFECTS), "The flower's tonic effect was lost");
+        inventory.clearContent(); slot = 0;
+        for (var cost : tonic.variant().cost().entrySet()) {
+            var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse(cost.getKey()));
+            inventory.setItem(slot++, new ItemStack(item, cost.getValue()));
+        }
+        var before = inventory.getNonEquipmentItems().stream().map(ItemStack::copy).toList();
         h.setBlock(rel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
-        h.assertFalse(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "arksurvivalreturns:armoury", 1, "i:camp/stations/armoury", 0, 78)), "A removed bench must invalidate its menu");
+        h.assertFalse(WorkstationCrafting.craft(player, tonicPacket), "A removed bench must invalidate its menu");
+        for (int i = 0; i < before.size(); i++)
+            h.assertTrue(ItemStack.matches(before.get(i), inventory.getItem(i)), "Rejected removed-bench craft changed inventory slot " + i);
+        h.setBlock(rel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
+        h.assertTrue(WorkstationCrafting.craft(player, tonicPacket), "The same funded request must work with the bench restored");
         player.containerMenu = player.inventoryMenu; inventory.clearContent();
     }
     private WorkstationGameTests() {}

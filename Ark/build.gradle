@@ -47,6 +47,7 @@ neoForge {
             type = 'gameTestServer'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             systemProperty 'arksurvivalreturns.benchmarkNighttime', providers.gradleProperty('nighttimeBenchmark').getOrElse('false')
+            systemProperty 'arksurvivalreturns.testPack', project.hasProperty('arkPack').toString()
         }
         data {
             clientData()
@@ -67,7 +68,10 @@ def integratedStandaloneJars = [
 ]
 // -ParkPack runs against the branded pack that ships (python tools/build_pack.py) instead of the
 // upstream downloads, so the exact jars in the Modrinth pack are what the dev run and GameTests load.
-def useArkPack = project.hasProperty('arkPack') && file('pack/out/mods').isDirectory()
+def useArkPack = project.hasProperty('arkPack')
+if (useArkPack && !file('pack/out/mods').isDirectory()) {
+    throw new GradleException('-ParkPack requires pack/out/mods; build the shipped pack with python tools/build_pack.py first.')
+}
 def installedPack = useArkPack
     ? fileTree(dir: 'pack/out/client-mods', include: ['*.jar'])
     : fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)

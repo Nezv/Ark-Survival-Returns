@@ -42,7 +42,7 @@ public final class TechService {
         for (TechNode node : tree.nodes()) {
             changed |= node.trigger().observe(event, progress, node.id() + ":");
         }
-        changed |= evaluate(tree, progress, online, tribe, level);
+        changed |= evaluate(tree, progress, online, tribe, actor, level);
         if (changed) data.store(tribe, progress);
     }
 
@@ -59,10 +59,10 @@ public final class TechService {
         UUID tribe = tribeOf(player);
         TechProgressData data = TechProgressData.get(player.level());
         TechTribeProgress progress = data.progress(tribe);
-        if (evaluate(tree, progress, player, tribe, player.level())) data.store(tribe, progress);
+        if (evaluate(tree, progress, player, tribe, player.getUUID(), player.level())) data.store(tribe, progress);
     }
 
-    private static boolean evaluate(TechTree tree, TechTribeProgress progress, @Nullable ServerPlayer player, UUID tribe,
+    private static boolean evaluate(TechTree tree, TechTribeProgress progress, @Nullable ServerPlayer player, UUID tribe, UUID actor,
             ServerLevel level) {
         boolean any = false;
         boolean changed = true;
@@ -72,8 +72,8 @@ public final class TechService {
                 if (progress.completed(node.id()) || !tree.requirementsMet(node, progress)) continue;
                 if (!node.trigger().satisfied(progress, node.id() + ":", player)) continue;
                 progress.complete(node.id());
+                TechFtbBridge.complete(tribe, actor, node.id());
                 if (player != null) {
-                    TechFtbBridge.complete(player, node.id());
                     ArkLevels.addXp(player, Config.PLAYER_XP_TECH_NODE.get(), ArkLevels.Source.TECH_NODE);
                 }
                 changed = true;
