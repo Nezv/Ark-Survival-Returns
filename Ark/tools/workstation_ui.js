@@ -161,6 +161,14 @@ window.ArkWorkstationUI = (function () {
           for (i = 1; i < course; i++) if (rnd() < 0.6) x.fillRect(px, py - i, 1, 1);
         }
       }
+    } else if (kind === 'swarf') {
+      // Curls of metal cut from the work: short two-unit strokes on the diagonal.
+      for (i = 0; i < w * h / 160; i++) {
+        px = Math.floor(rnd() * w); py = Math.floor(rnd() * h);
+        x.fillRect(px, py, 1, 1); x.fillRect(px + 1, py + (rnd() < 0.5 ? 1 : -1), 1, 1);
+      }
+    } else if (kind === 'sawdust') {
+      for (i = 0; i < w * h / 18; i++) x.fillRect(Math.floor(rnd() * w), Math.floor(rnd() * h), 1, 1);
     } else if (kind === 'plates') {
       for (px = 24; px < w; px += 48) for (py = 0; py < h; py++) if (rnd() < 0.7) x.fillRect(px, py, 1, 1);
       for (py = 30; py < h; py += 36) for (px = 0; px < w; px++) if (rnd() < 0.7) x.fillRect(px, py, 1, 1);
@@ -188,11 +196,11 @@ window.ArkWorkstationUI = (function () {
     font.image.onload = function () { dirty = true; };
     if (world && !world.complete) world.addEventListener('load', function () { backdropKey = ''; dirty = true; });
     var st = { station: 0, level: 8, preset: 'starter', inv: {}, amount: 1, mouse: null, hover: null, widget: null,
-               press: null, dragging: null, flies: [], note: null, frame: 'themed' };
+               press: null, dragging: null, flies: [], note: null };
 
     function station() { return payload.stations[st.station]; }
-    /** The frame the page shows round the panel: the bench's material ('themed'), the shared baroque one, or none. */
-    function frameMeta() { var s = station(); return st.frame === 'baroque' ? s.baroque : st.frame === 'themed' ? s.crest : null; }
+    /** The bench's frame round the panel (its image and how far it reaches past the panel), or null. */
+    function frameMeta() { return station().crest; }
     function meta(id) { return payload.items[id] || { name: id, icon: 0 }; }
     function have(id) { return st.inv[id] || 0; }
     function nodeId(n) {
@@ -408,7 +416,7 @@ window.ArkWorkstationUI = (function () {
     }
 
     /** What the bench does (its design's verb: Craft, Cook, Cut, Grind, Smelt, Mix, Forge, Press) and its past tense. */
-    var PAST = { Cut: 'Cut', Grind: 'Ground' };
+    var PAST = { Cut: 'Cut', Grind: 'Ground', Saw: 'Sawn' };
     function verb() { var d = station().data; return (d && d.verb) || 'Craft'; }
     function done() { var v = verb(); return PAST[v] || v + (/e$/.test(v) ? 'd' : 'ed'); }
 
@@ -747,15 +755,6 @@ window.ArkWorkstationUI = (function () {
       }
     }
 
-    function frameStyle(name) {
-      st.frame = name;
-      try { localStorage.setItem('ws-frame', name); } catch (e) { /* the choice just isn't remembered */ }
-      pressed('frame', name);
-      loadFrame();
-      if (running) layout();
-      dirty = true;
-    }
-
     function pressed(group, value) {
       root.querySelectorAll('[data-control="' + group + '"] button').forEach(function (b) {
         b.setAttribute('aria-pressed', b.dataset.value === value ? 'true' : 'false');
@@ -822,7 +821,6 @@ window.ArkWorkstationUI = (function () {
 
     levelInput.addEventListener('input', function () { level(+levelInput.value); });
     root.querySelectorAll('[data-control="preset"] button').forEach(function (b) { b.addEventListener('click', function () { preset(b.dataset.value); }); });
-    root.querySelectorAll('[data-control="frame"] button').forEach(function (b) { b.addEventListener('click', function () { frameStyle(b.dataset.value); }); });
     root.querySelector('.ws-reset').addEventListener('click', reset);
     fullButton.addEventListener('click', function () {
       if (document.fullscreenElement) document.exitFullscreen();
@@ -841,8 +839,6 @@ window.ArkWorkstationUI = (function () {
     table();
     preset('starter');
     level(8);
-    try { var kept = localStorage.getItem('ws-frame'); if (kept === 'baroque' || kept === 'plain') st.frame = kept; } catch (e) { /* default */ }
-    pressed('frame', st.frame);
     useStation(0);
 
     return {

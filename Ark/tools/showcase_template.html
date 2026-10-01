@@ -521,7 +521,7 @@
 
   <section id="recipes">
     <div><div class="eyebrow">Recipes</div><h2>Workstations you read like a map</h2></div>
-    <p class="lede">The crafting rework (P14, in design): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, set in a frame of its own material with its sigil on top, and a recipe can ask for more than nine items, so no vanilla table can make it. Every recipe is made where it would really be made, so nine benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand (carpentry, textiles, camp gear, accessories, redstone), the Campfire cooks, the Stonecutter cuts stone, the Mortar &amp; Pestle grinds, the Primitive Forge smelts ore and fires clay and glass, the Medicine Bench makes remedies, the Smithing Table hammers metal goods and trims, and the Mechanical Press makes paper and books, packs blocks and stamps sheet metal. The game keeps its current recipes until the whole rework is designed.</p>
+    <p class="lede">The crafting rework (P14, in design): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, set in a carved baroque frame with the bench's sigil in its cartouche, and a recipe can ask for more than nine items, so no vanilla table can make it. Every recipe is made where it would really be made, so eleven benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand (carpentry, textiles, camp gear, accessories, redstone), the Campfire cooks, the Stonecutter cuts stone, the Mortar &amp; Pestle grinds, the Primitive Forge smelts ore and fires clay and glass, the Medicine Bench makes remedies, the Smithing Table hammers metal goods and trims, and the Iron Age machine line works the steel: the Mechanical Press (which also makes paper and books and packs blocks) rolls sheet and wire, the Milling Machine pipes and engines, the Cutting Machine screws and sawn planks. The game keeps its current recipes until the whole rework is designed.</p>
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
       <div class="ws-frame">
@@ -532,10 +532,8 @@
         <label class="ws-level">Player level <input type="range" min="0" max="40" value="8"><output>8</output></label>
         <div class="ws-seg" data-control="preset" role="group" aria-label="Inventory"><span>Inventory</span>
           <button type="button" data-value="empty" aria-pressed="false">Empty</button><button type="button" data-value="starter" aria-pressed="true">Starter</button><button type="button" data-value="stocked" aria-pressed="false">Stocked</button></div>
-        <div class="ws-seg" data-control="frame" role="group" aria-label="Frame"><span>Frame</span>
-          <button type="button" data-value="themed" aria-pressed="true">Themed</button><button type="button" data-value="baroque" aria-pressed="false">Baroque</button><button type="button" data-value="plain" aria-pressed="false">None</button></div>
         <button type="button" class="ws-reset">Reset</button>
-        <span class="muted ws-hint">Level, inventory and the frame choice exist only in this preview.</span>
+        <span class="muted ws-hint">Level and inventory exist only in this preview.</span>
       </div>
       <div class="ws-inv" aria-live="polite"></div>
     </div>

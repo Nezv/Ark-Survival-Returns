@@ -1,0 +1,23 @@
+{
+  "station": "arksurvivalreturns:milling_machine",
+  "title": "Milling Machine",
+  "about": "P14 design data (see armoury.json). The second machine of the Iron Age line (F18, planned): a spindle that bores and mills steel. It rolls Steel Sheet from the Mechanical Press into pipe, and machines the engine from sheet, pipe and the Cutting Machine's screws. Like the rest of the line it runs on heat at its back: heated works, superheated works twice as fast.",
+  "verb": "Mill",
+  "accent": "#7fa8c0",
+  "sigil": "mill",
+  "well": "swarf",
+  "categories": [
+    {
+      "id": "parts", "title": "Machine parts", "icon": "arksurvivalreturns:metal_pipe", "color": "#9fb3c6", "level": 26,
+      "items": [
+        {"item": "arksurvivalreturns:metal_pipe", "title": "Metal Pipe", "count": 2, "planned": true, "cost": {"arksurvivalreturns:metal_sheet": 1}}
+      ]
+    },
+    {
+      "id": "engines", "title": "Engines", "icon": "arksurvivalreturns:engine", "color": "#c8793f", "level": 28, "after": "parts",
+      "items": [
+        {"item": "arksurvivalreturns:engine", "title": "Engine", "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 2, "arksurvivalreturns:metal_sheet": 2, "arksurvivalreturns:metal_pipe": 2, "arksurvivalreturns:metal_screw": 6}}
+      ]
+    }
+  ]
+}

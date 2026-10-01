@@ -1,10 +1,10 @@
 {
   "station": "arksurvivalreturns:mechanical_press",
   "title": "Mechanical Press",
-  "about": "P14 design data (see armoury.json). The Mechanical Press (the machine of F18, planned) presses paper from cane and binds and prints books, maps and banner patterns; packs loose things into blocks and bales and presses them back out; and stamps metal into plates, sheets, pipes, screws and wire. It is proposed for the Bronze Age (bronze screw, log frame), so paper and books come at level 12; its sheet metal waits for steel.",
+  "about": "P14 design data (see armoury.json). The Mechanical Press (the machine of F18, planned) presses paper from cane and binds and prints books, maps and banner patterns; packs loose things into blocks and bales and presses them back out; and rolls metal into plates, sheets and wire. It heads the Iron Age machine line: the Milling Machine takes its Steel Sheet on to pipes and engines, the Cutting Machine cuts the screws. It is proposed for the Bronze Age (bronze screw, log frame), so paper and books come at level 12; its sheet metal waits for steel.",
   "accent": "#c8793f",
   "verb": "Press",
-  "crest": {"frame": "press", "sigil": "press"},
+  "sigil": "press",
   "well": "plates",
   "categories": [
     {"id": "paper", "title": "Paper and books", "icon": "minecraft:paper", "color": "#e3d8b8", "level": 12},
@@ -21,9 +21,7 @@
       "id": "metal", "title": "Sheet metal", "icon": "arksurvivalreturns:metal_sheet", "color": "#9fb3c6", "level": 12, "after": "compress",
       "items": [
         {"item": "arksurvivalreturns:metal_sheet", "title": "Steel Sheet", "level": 25, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 1}},
-        {"item": "arksurvivalreturns:copper_wire", "title": "Copper Wire", "count": 4, "level": 25, "planned": true, "cost": {"minecraft:copper_ingot": 1}},
-        {"item": "arksurvivalreturns:metal_pipe", "title": "Metal Pipe", "count": 2, "level": 26, "planned": true, "cost": {"arksurvivalreturns:metal_sheet": 1}},
-        {"item": "arksurvivalreturns:metal_screw", "title": "Metal Screw", "count": 4, "level": 26, "planned": true, "cost": {"arksurvivalreturns:steel_ingot": 1}}
+        {"item": "arksurvivalreturns:copper_wire", "title": "Copper Wire", "count": 4, "level": 25, "planned": true, "cost": {"minecraft:copper_ingot": 1}}
       ]
     }
   ]

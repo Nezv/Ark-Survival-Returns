@@ -3,7 +3,7 @@
   "title": "Armoury",
   "about": "P14 design data, read by tools/workstation_plan.py (the showcase) and, once shipped, by the mod as data/arksurvivalreturns/workstation/armoury.json. Every weapon, tool and armour piece moves here from the Working Station. A category is a fundamental resource; 'after' links it to the previous one in the graph; 'level' is the permanent player level that unlocks it (an item may ask for more). A cost is an unordered list of item or #tag counts with no 3x3 limit. Recipes the rules place here keep their grid cost (the carrot on a stick); the ones written below are new or changed. 'planned' marks Iron Age items that are not registered yet.",
   "accent": "#e2763f",
-  "crest": {"frame": "steel", "sigil": "helm"},
+  "sigil": "helm",
   "well": "dots",
   "categories": [
     {

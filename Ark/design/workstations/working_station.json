@@ -3,7 +3,7 @@
   "title": "Working Station",
   "about": "P14 design data (see armoury.json). The Working Station keeps what is put together by hand: carpentry, camp gear, accessories, textiles and redstone. Everything made somewhere else moved there: food to the Campfire, stone shapes to the Stonecutter, anything fired or smelted to the Primitive Forge, metal goods to the Smithing Table, paper, books and pressed blocks to the Mechanical Press. The rules in tools/workstation_plan.py place the vanilla recipes, grouped by material, with variants (wood types, colours) folded into one node; the items written below are new or changed.",
   "accent": "#8fb07f",
-  "crest": {"frame": "wood", "sigil": "hammer"},
+  "sigil": "hammer",
   "well": "grain",
   "categories": [
     {
@@ -22,7 +22,10 @@
         {"group": "stations", "title": "Stations", "icon": "arksurvivalreturns:working_station", "items": [
           {"item": "minecraft:stonecutter", "cost": {"arksurvivalreturns:rock": 4, "minecraft:flint": 2, "#minecraft:planks": 2}},
           {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "arksurvivalreturns:rock": 4, "arksurvivalreturns:plant_fiber": 3}},
-          {"item": "arksurvivalreturns:mechanical_press", "planned": true, "level": 12, "cost": {"arksurvivalreturns:bronze_ingot": 4, "#minecraft:logs": 4, "minecraft:smooth_stone": 2, "minecraft:copper_ingot": 2}}
+          {"item": "arksurvivalreturns:mechanical_press", "planned": true, "level": 12, "cost": {"arksurvivalreturns:bronze_ingot": 4, "#minecraft:logs": 4, "minecraft:smooth_stone": 2, "minecraft:copper_ingot": 2}},
+          {"item": "arksurvivalreturns:cutting_machine", "planned": true, "level": 25, "cost": {"arksurvivalreturns:steel_ingot": 3, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "#minecraft:planks": 4}},
+          {"item": "arksurvivalreturns:milling_machine", "planned": true, "level": 26, "cost": {"arksurvivalreturns:steel_ingot": 4, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "minecraft:smooth_stone": 2}},
+          {"item": "arksurvivalreturns:generator", "title": "Generator", "planned": true, "level": 28, "cost": {"arksurvivalreturns:engine": 1, "arksurvivalreturns:copper_wire": 8, "arksurvivalreturns:metal_sheet": 4, "minecraft:redstone": 4}}
         ]},
         {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress"},
         {"group": "tame", "title": "Tame gear", "icon": "arksurvivalreturns:pack_harness"}
@@ -32,7 +35,9 @@
       "id": "accessories", "title": "Accessories", "icon": "arksurvivalreturns:bone_snow_goggles", "color": "#c9a56b", "level": 3, "after": "camp",
       "items": [
         {"group": "head", "title": "Head and neck", "icon": "arksurvivalreturns:pelt_hood"},
-        {"group": "body", "title": "Back and body", "icon": "arksurvivalreturns:pack_frame"},
+        {"group": "body", "title": "Back and body", "icon": "arksurvivalreturns:pack_frame", "items": [
+          {"item": "arksurvivalreturns:backpack", "title": "Backpack", "planned": true, "level": 26, "cost": {"minecraft:leather": 6, "arksurvivalreturns:metal_pipe": 2, "arksurvivalreturns:metal_screw": 4, "minecraft:string": 2}}
+        ]},
         {"group": "hands", "title": "Hands, rings and bracelets", "icon": "arksurvivalreturns:archer_wristguard"},
         {"group": "legs", "title": "Belt, legs and feet", "icon": "arksurvivalreturns:snowshoes"},
         {"group": "charms", "title": "Charms and totems", "icon": "arksurvivalreturns:rex_totem"}

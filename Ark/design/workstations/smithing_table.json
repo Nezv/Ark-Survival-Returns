@@ -4,7 +4,7 @@
   "about": "P14 design data (see armoury.json). The smith hammers metal into goods: copper bars, chains, doors, lanterns and lightning rods (and waxes them), iron buckets, cauldrons, anvils, hoppers, bars, chains, doors, lanterns and the compass, rails and carts, the gold clock. Armour trims too: copy a template you found (a template, diamonds and its base block make two) and apply a trim to an armour piece. Netherite upgrades are gone with netherite; templates only found in closed places are left to decide.",
   "verb": "Forge",
   "accent": "#d8b25a",
-  "crest": {"frame": "iron", "sigil": "anvil"},
+  "sigil": "anvil",
   "well": "sparks",
   "categories": [
     {"id": "copper", "title": "Copper", "icon": "minecraft:lightning_rod", "color": "#c46f45", "level": 10},

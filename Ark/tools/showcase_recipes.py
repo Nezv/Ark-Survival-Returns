@@ -23,6 +23,7 @@ ARK = Path(__file__).resolve().parents[1]
 HERE = Path(__file__).resolve().parent
 DESIGN = ARK / 'design/workstations'
 CRESTS = DESIGN / 'crests'
+TECH_ICONS = ARK / 'src/main/resources/assets/arksurvivalreturns/textures/gui/tech/icons'
 GENERATED = ARK / 'src/generated/resources'
 JAR = ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-sources.jar'
 TAG_NAMES = {'#minecraft:planks': 'Any Planks', '#minecraft:logs': 'Any Log', '#minecraft:wool': 'Any Wool',
@@ -116,6 +117,9 @@ def atlas(ids, icons, source, uri):
     for item_id in ids:
         rep = representative(item_id, source)
         image = icons.icon(rep) if rep else None
+        if image is None and rep and rep.startswith(wp.NS + ':') and (TECH_ICONS / f'{short_path(rep)}.png').is_file():
+            # A planned block with no item sprite yet (the generator): its tech tree icon stands in.
+            image = Image.open(TECH_ICONS / f'{short_path(rep)}.png').convert('RGBA').resize((32, 32), Image.Resampling.NEAREST)
         if image is None:
             cells[item_id] = 0
             continue
@@ -229,7 +233,6 @@ def section(uri, e):
     style = load(DESIGN / 'graph_style.json')
     frames = __import__('build_workstation_crests')
     crest_meta = {'margin': frames.MARGIN, 'top': frames.PANEL_TOP, 'bottom': frames.PANEL_BOTTOM}
-    baroque_meta = {'margin': frames.B_MARGIN, 'top': frames.B_TOP, 'bottom': frames.B_BOTTOM}
     sigils = {bench: Image.open(CRESTS / f'{bench}_sigil.png').convert('RGBA') for bench in wp.BENCHES
               if (CRESTS / f'{bench}_sigil.png').is_file()}
     # A planned bench block has no model yet: its sigil stands in for it. A planned item a design titles is named so.
@@ -254,10 +257,9 @@ def section(uri, e):
     stations = []
     for bench in wp.BENCHES:  # one tab per bench, in the plan's order
         tree = trees[bench]
-        crest, baroque = CRESTS / f'{bench}.png', CRESTS / f'{bench}_baroque.png'
+        crest = CRESTS / f'{bench}.png'
         stations.append({'id': bench, 'title': tree['title'], 'accent': tree.get('accent', '#e6e8e1'), 'well': tree.get('well', 'dots'),
                          'crest': {'image': uri(Image.open(crest), 'PNG'), **crest_meta} if crest.is_file() else None,
-                         'baroque': {'image': uri(Image.open(baroque), 'PNG'), **baroque_meta} if baroque.is_file() else None,
                          'sigil': uri(sigils[bench], 'PNG') if bench in sigils else '', 'data': tree})
     costs = list(dict.fromkeys(i for tree in trees.values() for c in tree['categories'] for entry in c['items']
                                for family in (entry['items'] if 'group' in entry else [entry])

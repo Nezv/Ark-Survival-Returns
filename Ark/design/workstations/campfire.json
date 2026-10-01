@@ -4,7 +4,7 @@
   "about": "P14 design data (see armoury.json). The Stone Fire's screen: everything cooked over the fire. Meat and fish on the spit, vegetables in the embers, bread and pies baked on the stones, stews in a bowl, and charcoal charred from logs. The pot meals need the Cooking Pot sitting on the fire; dried meat and rations are interchangeable in them. Cooking takes the recipe's time and the fire's fuel. The furnace and smoker versions of these recipes go: the fire cooks them.",
   "accent": "#e8893a",
   "verb": "Cook",
-  "crest": {"frame": "hearth", "sigil": "campfire"},
+  "sigil": "campfire",
   "well": "embers",
   "categories": [
     {

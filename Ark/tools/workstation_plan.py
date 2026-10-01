@@ -7,7 +7,9 @@ place where the thing is really made (see the rules). Three layers decide, the l
 
 1. The rules in propose(): proposals from the theme policy, the recipe gates and what each bench is for.
 2. The bench design files, design/workstations/<bench>.json: a recipe a bench writes out with its own cost is a
-   change (a stay when the cost is still the old grid's). Items they list without a recipe anywhere are new.
+   change (a stay when the cost is still the old grid's). Items they list without a recipe anywhere are new, and so is
+   a family a design writes out with its own variants ({"family", "title", "variants": [{"item", "count", "cost"}]}),
+   which only adds recipes: the Cutting Machine's sawn planks leave the Working Station's planks where they are.
 3. design/workstations/vanilla_fates.json: the user's decisions, which the showcase review list saves. A key is a
    recipe id, or "family:<name>" for every recipe of a family.
 
@@ -30,7 +32,7 @@ PRIMITIVE = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/Pr
 NS = 'arksurvivalreturns'
 
 BENCHES = ['armoury', 'working_station', 'campfire', 'stonecutter', 'mortar_and_pestle', 'primitive_forge',
-           'medicine_bench', 'smithing_table', 'mechanical_press']
+           'medicine_bench', 'smithing_table', 'mechanical_press', 'milling_machine', 'cutting_machine']
 TIMED = ('smelting', 'campfire_cooking')  # recipes that take time over the fire; the variant carries it in seconds
 FATES = ('go', 'stay', 'change', 'decide')
 # The Ark blocks that replace vanilla ones; recipes that use a vanilla one take the Ark block (StationEvents).
@@ -725,7 +727,8 @@ def plan(source=None):
     designed = {}  # result item -> (bench, place, entry)
     for bench, data in designs.items():
         for where, entry in design_entries(data):
-            designed.setdefault(entry['item'], (bench, where, entry))
+            if 'item' in entry:   # a family of variants only adds recipes
+                designed.setdefault(entry['item'], (bench, where, entry))
     records = []
     recipes = source.recipes()
     source.cut_results = {r['result'] for r in recipes if r['type'] == 'stonecutting'}
@@ -804,6 +807,11 @@ def entries(bench, where, designed, kept, parent):
     level = parent.get('level', 0)
     result, taken = [], set()
     for entry in designed:
+        if 'variants' in entry:
+            variants = [{'item': v['item'], 'count': v.get('count', 1), 'cost': v['cost']} for v in entry['variants']]
+            result.append({'family': entry['family'], 'level': entry.get('level', level), 'variants': variants,
+                           **({'title': entry['title']} if entry.get('title') else {})})
+            continue
         variant = {'item': entry['item'], 'count': entry.get('count', 1), 'cost': entry['cost']}
         result.append({'family': short(entry['item']), 'level': entry.get('level', level), 'variants': [variant],
                        **({'title': entry['title']} if entry.get('title') else {}),
