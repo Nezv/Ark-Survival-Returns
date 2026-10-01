@@ -46,6 +46,8 @@ neoForge {
         gameTestServer {
             type = 'gameTestServer'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArgument '--tests'
+            programArgument 'arksurvivalreturns:ai_cost_probe'
             systemProperty 'arksurvivalreturns.benchmarkNighttime', providers.gradleProperty('nighttimeBenchmark').getOrElse('false')
             systemProperty 'arksurvivalreturns.testPack', project.hasProperty('arkPack').toString()
         }

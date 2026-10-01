@@ -25,6 +25,7 @@ public final class ArkGameTests {
     public static final DeferredRegister<Consumer<GameTestHelper>> FUNCTIONS = DeferredRegister.create(Registries.TEST_FUNCTION, ArkSurvivalReturns.MOD_ID);
     static {
         FUNCTIONS.register("pack_runtime_contract", () -> RuntimeGameTests::pack);
+        FUNCTIONS.register("ai_cost_probe", () -> AiCostProbe::run);
         FUNCTIONS.register("tech_real_event_flow", () -> ProgressionGameTests::events);
         FUNCTIONS.register("tech_lighting_flow", () -> ProgressionGameTests::lighting);
         FUNCTIONS.register("progression_restart", () -> ProgressionGameTests::reload);
