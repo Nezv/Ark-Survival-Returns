@@ -28,6 +28,10 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue POPULATION_BUDGET;
     public static final ModConfigSpec.IntValue POPULATION_TARGET, POPULATION_RADIUS, POPULATION_GLOBAL_CAP,
             POPULATION_INTERVAL, POPULATION_ATTEMPTS, POPULATION_CULL_MARGIN, POPULATION_MIN_DISTANCE;
+    public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model> POPULATION_MODEL;
+    public static final ModConfigSpec.DoubleValue POPULATION_DENSITY, POPULATION_CULL_FRACTION, LEDGER_CYCLE_DAYS;
+    public static final ModConfigSpec.IntValue POPULATION_GROUPS_PER_PASS, POPULATION_CAP_PER_PLAYER, POPULATION_HARD_CAP, LEDGER_REGION_SIZE;
+    public static final ModConfigSpec.BooleanValue LEDGER_CYCLES;
     public static final ModConfigSpec.IntValue BAND_WIDTH;
     public static final ModConfigSpec.BooleanValue BIOME_MESSAGES;
     public static final ModConfigSpec.BooleanValue THEME_DIMENSIONS, THEME_MONSTERS, THEME_MECHANICS;
@@ -142,6 +146,30 @@ public final class Config {
                 .defineInRange("populationCullMargin", 4, 0, 32);
         POPULATION_MIN_DISTANCE = b.comment("Never spawn natural creatures closer than this to a player.")
                 .defineInRange("populationMinPlayerDistance", 32, 8, 128);
+        POPULATION_MODEL = b.comment("LEDGER keeps wildlife at the density below around each player, scaled by a regional predator-prey",
+                        "ledger that also advances land nobody is near. BUDGET is the previous fixed target per player",
+                        "(populationTargetPerPlayer, populationCullMargin, populationGlobalCap), kept for comparison.")
+                .defineEnum("populationModel", dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model.LEDGER);
+        POPULATION_DENSITY = b.comment("LEDGER: natural animals per chunk kept within populationRadius of each player while the ledger is",
+                        "balanced. 0.4 is about what world generation leaves of vanilla farm animals.")
+                .defineInRange("populationDensityPerChunk", 0.4, 0.02, 2.0);
+        POPULATION_GROUPS_PER_PASS = b.comment("LEDGER: groups the budget may add around one player in one check while below its target.")
+                .defineInRange("populationGroupsPerPass", 4, 1, 16);
+        POPULATION_CULL_FRACTION = b.comment("LEDGER: share above the target tolerated before the farthest natural animals are removed,",
+                        "so groups passing through are not deleted at once.")
+                .defineInRange("populationCullFraction", 0.25, 0.0, 2.0);
+        POPULATION_CAP_PER_PLAYER = b.comment("LEDGER: loaded natural animals allowed per online player in the dimension.")
+                .defineInRange("populationCapPerPlayer", 140, 16, 512);
+        POPULATION_HARD_CAP = b.comment("LEDGER: absolute ceiling of loaded natural animals in the dimension.")
+                .defineInRange("populationHardCap", 600, 32, 4096);
+        b.push("ledger");
+        LEDGER_REGION_SIZE = b.comment("Side of one ledger region in blocks.").defineInRange("regionSize", 256, 64, 2048);
+        LEDGER_CYCLES = b.comment("True: predators and prey cycle in every region, each region at its own phase.",
+                        "False: a region swings back to balance after hunting and stays there.")
+                .define("cycles", true);
+        LEDGER_CYCLE_DAYS = b.comment("In-game days of one predator-prey cycle, or of one swing back to balance.")
+                .defineInRange("cycleDays", 7.0, 1.0, 120.0);
+        b.pop();
         b.pop().push("progression");
         MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame whose origin band is 5 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
         BAND_WIDTH = b.comment("Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);

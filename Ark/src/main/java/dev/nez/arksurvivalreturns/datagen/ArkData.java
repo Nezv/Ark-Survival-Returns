@@ -1080,6 +1080,10 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_instance/spawn_apex", Map.of("type", "minecraft:function",
                 "function", NS + ":spawn_apex", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        for (String name : List.of("spawn_ledger_density", "spawn_ledger_feedback"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
+                    "function", NS + ":" + name, "environment", NS + ":empty",
+                    "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("guardian_heart", "guardian_policy", "guardian_registration",
                 "guardian_persistence", "guardian_rewards", "guardian_hit_and_save", "guardian_orphan"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",

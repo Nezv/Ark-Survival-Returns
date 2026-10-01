@@ -20,8 +20,9 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
  * Operator diagnostic for natural spawning: why apex species do or do not appear around the caller.
  *
  * <p>Read-only and gamemaster-only. It reports the spatial danger band, the biome, the local wild
- * population and, for every regional large species legal at this danger, a sample of placement points
- * classified with the exact {@link SpawnRules.Placement} funnel the spawner uses.
+ * population, the budget's target and, under the ledger model, the region's predator-prey state, and for
+ * every regional large species legal at this danger, a sample of placement points classified with the exact
+ * {@link SpawnRules.Placement} funnel the spawner uses.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class WildlifeCommand {
@@ -48,7 +49,8 @@ public final class WildlifeCommand {
         send(source, "position=" + pos.toShortString() + " danger=" + danger
                 + " bandOrigin=" + data.originX() + "," + data.originZ() + " bandWidth=" + data.bandWidth());
         send(source, "biome=" + biome.unwrapKey().map(key -> key.identifier().toString()).orElse("?")
-                + " naturalSpawns=" + Config.NATURAL_SPAWNS.get() + " budget=" + Config.POPULATION_BUDGET.get());
+                + " naturalSpawns=" + Config.NATURAL_SPAWNS.get() + " budget=" + Config.POPULATION_BUDGET.get()
+                + " model=" + Config.POPULATION_MODEL.get());
         int wildCount = 0;
         var bySpecies = new java.util.TreeMap<String, Integer>();
         var byTier = new EnumMap<dev.nez.arksurvivalreturns.feature.behavior.BehaviorTier, Integer>(
@@ -56,11 +58,23 @@ public final class WildlifeCommand {
         for (var entity : level.getAllEntities())
             if (entity instanceof CreatureEntity creature && creature.isAlive() && creature.isNaturalWildlife()) {
                 byTier.merge(creature.behaviorTier(), 1, Integer::sum);
-                if (creature.distanceToSqr(player) > (double)radius * radius) continue;
+                double dx = creature.getX() - player.getX(), dz = creature.getZ() - player.getZ();
+                if (dx * dx + dz * dz > (double) radius * radius) continue;
                 wildCount++;
                 bySpecies.merge(creature.species().id, 1, Integer::sum);
             }
-        send(source, "wilds within " + radius + "=" + wildCount + "/" + Config.POPULATION_TARGET.get() + " " + bySpecies);
+        int budgetRadius = Config.POPULATION_RADIUS.get();
+        send(source, "wilds within " + radius + " (horizontal)=" + wildCount + " " + bySpecies);
+        send(source, "budget keeps " + NaturalPopulations.targetFor(level, player) + " within " + budgetRadius
+                + ", dimension cap " + NaturalPopulations.globalCap(level.players().size()));
+        if (NaturalPopulations.ledger()) {
+            var state = RegionalLedger.get(level).at(level, pos.getX(), pos.getZ());
+            send(source, String.format(java.util.Locale.ROOT,
+                    "ledger region %d,%d: prey %.2f predators %.2f (1 = balance), abundance around you %.2f, %s every %.1f days",
+                    RegionalLedger.regionOf(pos.getX()), RegionalLedger.regionOf(pos.getZ()), state.prey(), state.predators(),
+                    NaturalPopulations.abundanceAround(level, player, budgetRadius),
+                    Config.LEDGER_CYCLES.get() ? "cycles" : "swings back to balance", Config.LEDGER_CYCLE_DAYS.get()));
+        }
         // Behaviour cost scales with these: full-detail creatures sense and path, ambient ones only wander.
         send(source, "loaded wilds by tier " + byTier + " (tiers " + (Config.BEHAVIOR_TIERS.get() ? "on" : "off")
                 + ", radii " + Config.TIER_FULL_RADIUS.get() + "/" + Config.TIER_AMBIENT_RADIUS.get() + "/"

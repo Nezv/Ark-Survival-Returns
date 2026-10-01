@@ -6,7 +6,9 @@ import java.util.List;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.spawn.LedgerModel;
 import dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations;
+import dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
@@ -103,13 +105,16 @@ public final class SpawnerGameTests {
         player.snapTo(Vec3.atBottomCenterOf(center));
         int radius = Config.POPULATION_RADIUS.get(), target = Config.POPULATION_TARGET.get();
         int minDistance = Config.POPULATION_MIN_DISTANCE.get(), attempts = Config.POPULATION_ATTEMPTS.get();
+        var model = Config.POPULATION_MODEL.get();
         try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.BUDGET);
             Config.POPULATION_RADIUS.set(24);
             Config.POPULATION_TARGET.set(4);
             Config.POPULATION_MIN_DISTANCE.set(8);
             Config.POPULATION_ATTEMPTS.set(4);
             NaturalPopulations.enforce(world, List.of(player));
         } finally {
+            Config.POPULATION_MODEL.set(model);
             Config.POPULATION_RADIUS.set(radius);
             Config.POPULATION_TARGET.set(target);
             Config.POPULATION_MIN_DISTANCE.set(minDistance);
@@ -138,7 +143,9 @@ public final class SpawnerGameTests {
         int radius = Config.POPULATION_RADIUS.get(), target = Config.POPULATION_TARGET.get();
         int minDistance = Config.POPULATION_MIN_DISTANCE.get(), attempts = Config.POPULATION_ATTEMPTS.get();
         world.getRandom().setSeed(0x5EEDBA5EL);
+        var model = Config.POPULATION_MODEL.get();
         try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.BUDGET);
             Config.POPULATION_RADIUS.set(40);
             Config.POPULATION_TARGET.set(3);
             Config.POPULATION_MIN_DISTANCE.set(8);
@@ -154,6 +161,9 @@ public final class SpawnerGameTests {
                 NaturalPopulations.enforce(world, List.of(player));
                 var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
                 if (placed.stream().anyMatch(c -> NaturalPopulations.isRegionalLarge(c.species()))) break;
+                // Keep the small target open: every pass then retries the missing apex first, so the
+                // result does not hang on the first group the random sequence happens to place.
+                placed.forEach(CreatureEntity::discard);
             }
             // Foliage tolerance: an apex may stand under a leaf canopy, never under solid rock.
             for (int x = 8; x < 24; x++) for (int z = 8; z < 24; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
@@ -168,6 +178,7 @@ public final class SpawnerGameTests {
             h.assertFalse(SpawnRules.canSpawn(rex, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
                     "Solid roof accepted a Rex");
         } finally {
+            Config.POPULATION_MODEL.set(model);
             Config.POPULATION_RADIUS.set(radius);
             Config.POPULATION_TARGET.set(target);
             Config.POPULATION_MIN_DISTANCE.set(minDistance);
@@ -179,6 +190,108 @@ public final class SpawnerGameTests {
                 "Danger-5 ground never produced a regional large: "
                         + placed.stream().map(c -> c.species().id).toList());
         for (var creature : placed) creature.discard();
+        h.succeed();
+    }
+
+    /**
+     * The ledger model counts horizontally: a player mining 100 blocks under the floor gets the counted
+     * circle filled once, at its target, instead of an endless spawn-and-cull loop.
+     */
+    public static void ledgerDensity(GameTestHelper h) {
+        for (int x = 0; x < 128; x++) for (int z = 0; z < 128; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var world = h.getLevel();
+        var center = h.absolutePos(new BlockPos(64, 2, 64));
+        var border = new AABB(center).inflate(72, 160, 72);
+        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
+            creature.discard();
+        var player = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        player.snapTo(Vec3.atBottomCenterOf(center.below(100)));
+        var model = Config.POPULATION_MODEL.get();
+        int radius = Config.POPULATION_RADIUS.get(), minDistance = Config.POPULATION_MIN_DISTANCE.get();
+        int attempts = Config.POPULATION_ATTEMPTS.get(), groups = Config.POPULATION_GROUPS_PER_PASS.get();
+        double density = Config.POPULATION_DENSITY.get(), cull = Config.POPULATION_CULL_FRACTION.get();
+        try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.LEDGER);
+            Config.POPULATION_RADIUS.set(48);
+            Config.POPULATION_MIN_DISTANCE.set(8);
+            Config.POPULATION_ATTEMPTS.set(4);
+            Config.POPULATION_GROUPS_PER_PASS.set(4);
+            Config.POPULATION_DENSITY.set(0.4);
+            Config.POPULATION_CULL_FRACTION.set(0.25);
+            int target = NaturalPopulations.targetFor(world, player);
+            for (int pass = 0; pass < 12; pass++) NaturalPopulations.enforce(world, List.of(player));
+            var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            h.assertTrue(!placed.isEmpty(), "The ledger budget placed nothing above a deep player");
+            int ceiling = (int) Math.ceil(target * 1.25) + 6;
+            h.assertTrue(placed.size() <= ceiling, "A deep player made the budget overspawn: " + placed.size() + " > " + ceiling);
+            for (var creature : placed) {
+                double dx = creature.getX() - player.getX(), dz = creature.getZ() - player.getZ();
+                h.assertTrue(dx * dx + dz * dz <= 56 * 56, "Placed outside the counted circle: " + creature.blockPosition());
+            }
+        } finally {
+            Config.POPULATION_MODEL.set(model);
+            Config.POPULATION_RADIUS.set(radius);
+            Config.POPULATION_MIN_DISTANCE.set(minDistance);
+            Config.POPULATION_ATTEMPTS.set(attempts);
+            Config.POPULATION_GROUPS_PER_PASS.set(groups);
+            Config.POPULATION_DENSITY.set(density);
+            Config.POPULATION_CULL_FRACTION.set(cull);
+            for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
+                creature.discard();
+        }
+        h.succeed();
+    }
+
+    /**
+     * Hunting and taming take animals out of their region's ledger, wild predation does not (the model owns
+     * it), and the ledger survives a save.
+     */
+    public static void ledgerFeedback(GameTestHelper h) {
+        var world = h.getLevel();
+        var model = Config.POPULATION_MODEL.get();
+        var spawned = new java.util.ArrayList<CreatureEntity>();
+        try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.LEDGER);
+            var ledger = RegionalLedger.get(world);
+            var pos = h.absolutePos(new BlockPos(16, 2, 16));
+            java.util.function.Function<Species, CreatureEntity> wild = species -> {
+                var creature = ModContent.CREATURES.get(species).get().create(world, EntitySpawnReason.NATURAL);
+                creature.snapTo(Vec3.atBottomCenterOf(pos), 0, 0);
+                creature.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), EntitySpawnReason.NATURAL, null);
+                world.addFreshEntity(creature);
+                spawned.add(creature);
+                return creature;
+            };
+            double preyShare = RegionalLedger.animalShare(false), predatorShare = RegionalLedger.animalShare(true);
+            var before = ledger.at(world, pos.getX(), pos.getZ());
+            var player = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+            var hunted = wild.apply(Species.PARASAUR);
+            h.assertTrue(hunted.isNaturalWildlife(), "Test prey is not natural wildlife");
+            hunted.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
+            h.assertTrue(hunted.isDeadOrDying(), "The hunted Parasaur survived");
+            var afterHunt = ledger.at(world, pos.getX(), pos.getZ());
+            h.assertTrue(Math.abs(Math.max(LedgerModel.FLOOR, before.prey() - preyShare) - afterHunt.prey()) < 1e-6,
+                    "A player kill did not take one prey animal: " + before + " -> " + afterHunt);
+            h.assertTrue(Math.abs(before.predators() - afterHunt.predators()) < 1e-9, "A prey kill changed the predators");
+            var victim = wild.apply(Species.PARASAUR);
+            var rex = wild.apply(Species.TYRANNOSAURUS);
+            victim.hurtServer(world, world.damageSources().mobAttack(rex), Float.MAX_VALUE);
+            h.assertTrue(victim.isDeadOrDying(), "The Rex's prey survived");
+            var afterPredation = ledger.at(world, pos.getX(), pos.getZ());
+            h.assertTrue(Math.abs(afterPredation.prey() - afterHunt.prey()) < 1e-9, "Wild predation was counted twice");
+            rex.onTamed(player.getUUID());
+            var afterTame = ledger.at(world, pos.getX(), pos.getZ());
+            h.assertTrue(Math.abs(Math.max(LedgerModel.FLOOR, afterHunt.predators() - predatorShare) - afterTame.predators()) < 1e-6,
+                    "Taming a wild predator did not take it from the ledger: " + afterHunt + " -> " + afterTame);
+            var saved = RegionalLedger.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, ledger).getOrThrow();
+            var reloaded = RegionalLedger.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, saved).getOrThrow()
+                    .at(world, pos.getX(), pos.getZ());
+            h.assertTrue(Math.abs(reloaded.prey() - afterTame.prey()) < 1e-9 && Math.abs(reloaded.predators() - afterTame.predators()) < 1e-9,
+                    "The ledger changed through a save: " + afterTame + " -> " + reloaded);
+        } finally {
+            Config.POPULATION_MODEL.set(model);
+            spawned.forEach(net.minecraft.world.entity.Entity::discard);
+        }
         h.succeed();
     }
 

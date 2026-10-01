@@ -102,6 +102,8 @@ public final class ArkGameTests {
         FUNCTIONS.register("integration_better_combat", () -> IntegrationGameTests::betterCombat);
         FUNCTIONS.register("spawn_budget", () -> SpawnerGameTests::budget);
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
+        FUNCTIONS.register("spawn_ledger_density", () -> SpawnerGameTests::ledgerDensity);
+        FUNCTIONS.register("spawn_ledger_feedback", () -> SpawnerGameTests::ledgerFeedback);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
         FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);

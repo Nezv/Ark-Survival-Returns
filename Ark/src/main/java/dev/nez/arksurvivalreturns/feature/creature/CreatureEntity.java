@@ -137,6 +137,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     /** Ownership, persistence and leaving the wildlife systems behind. */
     public void onTamed(UUID owner) {
+        // Before persistence ends its natural status: a tame leaves the regional wild population.
+        dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger.record(this);
         setPersistenceRequired();
         setTarget(null);
         if (wildlife != null) wildlife.interruptSleep();

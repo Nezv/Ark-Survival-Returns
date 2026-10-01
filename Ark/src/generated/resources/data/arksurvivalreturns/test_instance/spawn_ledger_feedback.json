@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:spawn_ledger_feedback",
+  "max_ticks": 300,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}
