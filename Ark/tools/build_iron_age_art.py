@@ -2,8 +2,7 @@
 
 Survey (map, radar, target, completionist), Power (wires, generator, electric bat, shock therapy), Steel kit
 (steel armour, backpack, specialized boots, rifle) and Machine parts (engine, metal sheet, pipe, screw).
-The steel armour is plain late-medieval plate: a great helm, a keeled breastplate with lamed pauldrons and
-a plackart, cuisses with knee cops, and articulated sabatons. No creature motifs.
+The steel armour sprites and the Harder icon are drawn from the worn steel models by build_armour_sprites.py.
 
 Same method as build_bronze_age_art.py: hand-pixelled on a 16 px grid (the bat and the rifle on the 32 px
 diagonal like the Bronze Longsword), doubled to the 32 px Ark item size; tech icons are 64 px. The items are
@@ -17,6 +16,7 @@ import math
 
 from PIL import Image
 
+import build_armour_sprites as armour_sprites
 from build_bronze_age_art import (BRASS, ICONS, LEATHER, STEEL, TEX, WOOD, WRITTEN, axis_sprite, cartridges,
                                   glow, icon, ingot, item32, luminance, outline, paint, ramp_fn, retone, rgb,
                                   save, sparkle, vanilla)
@@ -25,94 +25,6 @@ INK = (18, 20, 26, 255)
 COPPER = ['#3a1a0a', '#6e3416', '#a4542a', '#cf7a44', '#eba36c', '#fbd0a2']
 # Steel ramp by digit, 0 (the slits) to 7 (a specular glint above the Bronze Age STEEL ramp).
 PLATE = {str(i): rgb(c) for i, c in enumerate(STEEL)} | {'7': (226, 235, 242)}
-PLATE_BRASS = {'b': rgb(BRASS[3]), 'B': rgb(BRASS[1])}
-LEATHER_KEYS = {'l': LEATHER[1], 'L': LEATHER[2], 'm': LEATHER[3], 'k': LEATHER[0]}
-
-
-def steel(rows, extra=None):
-    return outline(paint(rows, PLATE | PLATE_BRASS | LEATHER_KEYS | (extra or {})), INK)
-
-
-# ------------------------------------------------------------------------------------------ steel armour
-
-def steel_helmet():
-    """A great helm: flat crown, one eye slit crossed by the nasal ridge, breaths on the right cheek."""
-    return steel(["................",
-                  "................",
-                  "....23455432....",
-                  "...2345675432...",
-                  "..234456754432..",
-                  "..2b44567544b2..",
-                  "..000000700000..",
-                  "..234456754432..",
-                  "..234456750432..",
-                  "..234456754432..",
-                  "..234456750432..",
-                  "..234456754432..",
-                  "..123345653321..",
-                  "...1223443221...",
-                  "................",
-                  "................"])
-
-
-def steel_chestplate():
-    """A keeled breastplate with a gorget, two-lame pauldrons, a pointed plackart and a fauld."""
-    return steel(["................",
-                  "................",
-                  ".3455......5543.",
-                  "3b556521125655b3",
-                  "1111456776541111",
-                  "3455456776545543",
-                  "1111456776541111",
-                  ".23b45677654b32.",
-                  "...3456216543...",
-                  "...3452662543...",
-                  "...3425665243...",
-                  "...3245665423...",
-                  "...1111bb1111...",
-                  "....23455432....",
-                  "....11111111....",
-                  "................"])
-
-
-def steel_leggings():
-    """A leather belt, two tassets, cuisses, winged knee cops (poleyns) and greaves."""
-    return steel(["................",
-                  "................",
-                  "...kLLLbbLLLk...",
-                  "...3456556543...",
-                  "...3456116543...",
-                  "...2345..5432...",
-                  "...1111..1111...",
-                  "...3456..6543...",
-                  "...3456..6543...",
-                  "..23677..77632..",
-                  "...2562..2652...",
-                  "...3456..6543...",
-                  "...3456..6543...",
-                  "...2345..5432...",
-                  "................",
-                  "................"])
-
-
-def steel_boots():
-    """Greave cuffs over articulated sabatons with pointed toes."""
-    return steel(["................",
-                  "................",
-                  "................",
-                  "...3455..5543...",
-                  "...2112..2112...",
-                  "...3456..6543...",
-                  "...3456..6543...",
-                  "...3456..6543...",
-                  "..23455..55432..",
-                  "..34566..66543..",
-                  ".211111..111112.",
-                  "3456666..6666543",
-                  ".111111..111111.",
-                  "................",
-                  "................",
-                  "................"])
 
 
 # ------------------------------------------------------------------------------------------ steel kit
@@ -493,13 +405,6 @@ def map_icon():
     return icon(image)
 
 
-def steel_set_icon(pieces):
-    art = Image.new('RGBA', (32, 32))
-    for piece, top in (('leggings', 13), ('boots', 18), ('chestplate', 4), ('helmet', -3)):
-        art.alpha_composite(pieces[piece], (8, top))
-    return icon(art)
-
-
 def bolts(image, points, colour=(150, 220, 255, 255), core=(240, 252, 255, 255)):
     px = image.load()
     for path in points:
@@ -523,8 +428,8 @@ def generator_icon(dynamo):
 
 
 def main():
-    armour = {'helmet': steel_helmet(), 'chestplate': steel_chestplate(), 'leggings': steel_leggings(),
-              'boots': steel_boots()}
+    # The steel armour sprites and the Harder icon are drawn from the worn models (build_armour_sprites).
+    armour = {p: armour_sprites.sprite('steel', p) for p in armour_sprites.PIECES}
     steel_ingot = ingot(STEEL, gamma=1.1)
     px = steel_ingot.load()
     for y in range(16):  # folded-steel waves across the faces, as on the Better Together icon
@@ -559,7 +464,7 @@ def main():
         'generator': generator_icon(generator()),
         'circuit': icon(items['electric_bat']),
         'shock': shock_icon(items['electric_bat']),
-        'steel_set': steel_set_icon(armour),
+        'steel_set': armour_sprites.set_icon('steel'),
         'backpack': icon(items['backpack']),
         'boots': icon(items['specialized_boots']),
         'rifle': icon(items['rifle']),

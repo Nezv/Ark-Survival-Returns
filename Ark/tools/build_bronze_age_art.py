@@ -168,9 +168,9 @@ def bronze_tool(name):
 
 
 def armour_piece(piece):
-    # Keep inventory art aligned with the native early bronze-age worn models.
-    from build_early_armour import item_sprite
-    return item_sprite('bronze', piece)
+    # Inventory art is drawn from the worn bronze model (build_armour_sprites owns the armour sprites).
+    from build_armour_sprites import sprite
+    return sprite('bronze', piece)
 
 
 def armour_layer(layer):
@@ -745,7 +745,7 @@ def glass_icon():
 
 
 def colossus_icon(items):
-    from build_early_armour import set_icon
+    from build_armour_sprites import set_icon
     return set_icon('bronze')
 
 

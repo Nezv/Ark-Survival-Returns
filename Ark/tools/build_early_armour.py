@@ -6,8 +6,9 @@ baldric, segmented shoulders, red undercloth and tall golden greaves.
 
 Run from Ark: python tools/build_early_armour.py [keratin|bronze ...]
 Writes armour/<tier>_<piece>.json, textures/entity/armour/<tier>_<piece>.png,
-matching 32 px item sprites and review renders in design/armour. Like Steel,
-these models are consumed by the Models showcase; game renderer wiring is separate.
+the 32 px item sprites and tech icons drawn from these models (build_armour_sprites.py)
+and review renders in design/armour. Like Steel, these models are consumed by the
+Models showcase; game renderer wiring is separate.
 """
 import json
 import sys
@@ -17,6 +18,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 import accessory_art as A
+import build_armour_sprites as sprites
 import build_steel_armour as S
 from build_bronze_age_art import BRONZE, rgb
 from build_keratin_items import STOPS
@@ -366,29 +368,16 @@ def bronze_boots():
 BUILDERS = {tier: {p: globals()[f'{tier}_{p}'] for p in PIECES} for tier in TIERS}
 
 
-def item_sprite(tier, piece):
-    """Inventory silhouette from the same geometry, rendered at native 32 px with no player skin."""
+def build(tier, piece):
+    """(worn model, texture, item sprite): the sprite is drawn from this geometry (build_armour_sprites)."""
     worn = BUILDERS[tier][piece]()
     worn.pack()
     tex = worn.paint()
-    groups = A.worn_quads(worn, tex, pose={}, arms='wide')
-    points = np.concatenate([v for _, quads, _ in groups for v, _ in quads])
-    lo, hi = points.min(axis=0), points.max(axis=0)
-    centre = (lo + hi) / 2
-    scale = 26 / max(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2])
-    return A.rasterise(groups, (32, 32), -12, 8, scale, centre, None)
+    return worn, tex, sprites.sprite(tier, piece, worn, tex)
 
 
-def build(tier, piece):
-    worn = BUILDERS[tier][piece]()
-    worn.pack()
-    return worn, worn.paint(), item_sprite(tier, piece)
-
-
-def set_icon(tier):
-    built = {p: build(tier, p) for p in PIECES}
-    return S.frame(S.scene(built, PIECES), -12, 8, size=(64, 64), scale=1.7,
-                   centre=(0, 6, 0), background=None)
+def item_sprite(tier, piece):
+    return build(tier, piece)[2]
 
 
 def verify_coverage(built, open_face=False):
@@ -493,22 +482,6 @@ def write(tier, built):
     previews(tier, built)
 
 
-def refresh_icons(tiers):
-    from build_keratin_items import icon
-    tech = ASSETS / 'textures/gui/tech/icons'
-    if 'keratin' in tiers:
-        chest = Image.open(ASSETS / 'textures/item/keratin_chestplate.png').convert('RGBA')
-        icon(chest).save(ARK / 'design/technology-tree/icons/keratin_armour.png')
-        spec = json.loads((ARK / 'design/technology-tree/technology-tree.json').read_text(encoding='utf-8'))
-        for node in spec['nodes']:
-            if node.get('icon') == 'keratin_armour':
-                # Match build_tech_menu_assets.export's source-icon resampling.
-                icon(chest).resize((64, 64), Image.Resampling.LANCZOS).save(tech / f'{node["id"]}.png')
-    if 'bronze' in tiers:
-        Image.open(ASSETS / 'textures/item/bronze_helmet.png').resize((64, 64), Image.Resampling.NEAREST).save(tech / 'tincan.png')
-        set_icon('bronze').save(tech / 'colossus.png')
-
-
 def comparison():
     frames = []
     for tier, title in (('keratin', 'Keratin - Prehistoric'), ('bronze', 'Bronze - Early metal age'), ('steel', 'Steel - Knight reference')):
@@ -526,7 +499,7 @@ def main():
         built = {piece: build(tier, piece) for piece in PIECES}
         verify(built)
         write(tier, built)
-    refresh_icons(tiers)
+    sprites.main()      # every armour sprite and the tech icons drawn from them, from the models just written
     comparison()
     print('Validated wide and slim models, UV bounds, positive geometry and no coplanar face overlaps.')
 

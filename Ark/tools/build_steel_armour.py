@@ -7,7 +7,7 @@ Plain late-medieval plate, the steel tier after keratin and bronze, with no crea
               strapped backplate; rerebraces, winged couters, vambraces and gauntlets on the arms
   leggings    leather belt, two-lame tassets, cuisses strapped at the back, winged poleyns, greaves
   boots       greave cuffs over articulated sabatons with slightly pointed toes
-The look follows the 16 px item sprites of build_iron_age_art.py (which stay untouched).
+The item sprites and the Harder tech icon are drawn from this geometry by build_armour_sprites.py.
 
 The models use the worn-accessory format (accessory_art.py, client/accessory/WornModels.java): cuboids with
 box UVs hung on the vanilla humanoid parts, wide and slim arm bones for the chestplate, and no armour "fit"
@@ -21,9 +21,10 @@ skins).
 Writes (hand-authored assets, committed):
   src/main/resources/assets/arksurvivalreturns/armour/steel_<piece>.json                  worn geometry
   src/main/resources/assets/arksurvivalreturns/textures/entity/armour/steel_<piece>.png   worn texture
-and review renders into design/armour: the set on Steve (front, back, three-quarters, walking), on Alex and
-at a distance; each piece alone next to its item sprite; the four textures. It also reports faces that
-would z-fight (coplanar, overlapping, same direction) across the whole set and the player skin.
+then the sprites (build_armour_sprites.main), and review renders into design/armour: the set on Steve (front,
+back, three-quarters, walking), on Alex and at a distance; each piece alone next to its item sprite; the four
+textures. It also reports faces that would z-fight (coplanar, overlapping, same direction) across the whole
+set and the player skin.
 
 Run from Ark: python tools/build_steel_armour.py
 """
@@ -35,6 +36,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 import accessory_art as A
+import build_armour_sprites as sprites
 from build_bronze_age_art import BRASS, LEATHER, rgb
 from build_iron_age_art import PLATE
 
@@ -42,7 +44,6 @@ ARK = Path(__file__).resolve().parents[1]
 ASSETS = ARK / 'src/main/resources/assets/arksurvivalreturns'
 MODELS = ASSETS / 'armour'                     # not worn/: that folder is the accessory catalogue
 TEXTURES = ASSETS / 'textures/entity/armour'
-ITEMS = ASSETS / 'textures/item'
 DESIGN = ARK / 'design/armour'
 PIECES = ('helmet', 'chestplate', 'leggings', 'boots')
 BREATHS = 'right'                              # the wearer's cheek that carries the great helm's breaths
@@ -357,8 +358,7 @@ def build(piece):
         assert not any(bone.rot), f'{bone.name}: the z-fight check assumes unrotated bones'
     worn.pack()
     tex = worn.paint()
-    icon = Image.open(ITEMS / f'steel_{piece}.png').convert('RGBA')
-    return worn, tex, icon
+    return worn, tex, sprites.sprite('steel', piece, worn, tex)
 
 
 def write(piece, worn, tex):
@@ -513,6 +513,7 @@ def main():
     for arms in ('wide', 'slim'):
         for line in zfight(built, arms):
             print(f'  z-fight ({arms}): {line}')
+    sprites.main()      # the item sprites and tech icons follow the models just written
     DESIGN.mkdir(parents=True, exist_ok=True)
     set_sheet(built).save(DESIGN / 'steel_set.png')
     for piece in PIECES:
