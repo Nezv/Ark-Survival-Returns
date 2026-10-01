@@ -4,5 +4,5 @@
   "function": "arksurvivalreturns:cargo_reach",
   "max_ticks": 100,
   "sky_access": true,
-  "structure": "arksurvivalreturns:test_empty"
+  "structure": "arksurvivalreturns:test_population"
 }

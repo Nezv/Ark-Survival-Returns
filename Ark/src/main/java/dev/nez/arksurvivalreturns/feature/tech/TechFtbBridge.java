@@ -49,7 +49,8 @@ public final class TechFtbBridge {
         var file = ServerQuestFile.getInstance();
         var team = file.getOrCreateTeamData(TechService.tribeOf(player));
         var quest = file.getQuest(questId(node));
-        quest.forceProgress(team, new ProgressChange(quest, player.getUUID()));
+        // FTB's ProgressChange defaults to reset, including operator grants.
+        quest.forceProgress(team, new ProgressChange(quest, player.getUUID()).setReset(false));
     }
 
     public static void reset(ServerPlayer player) {

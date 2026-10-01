@@ -146,23 +146,24 @@ final class CargoGameTests {
      */
     static void reach(GameTestHelper h) {
         FakePlayer owner = hauler(h, "ArkCargoReach");
-        CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(8, 3, 8));
+        // The radius-8 volume must remain inside this test's large plot.
+        owner.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(64, 3, 61))));
+        CreatureEntity trike = create(h, Species.TRICERATOPS, new BlockPos(64, 3, 64));
         TamingService.of(trike).setOwner(owner.getUUID());
         trike.applyTameState();
         trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
         Container cargo = trike.tamingInventory();
 
-        chest(h, new BlockPos(10, 3, 8), new ItemStack(Items.RAW_IRON));
-        chest(h, new BlockPos(8, 3, 10), ItemStack.EMPTY);
-        chest(h, new BlockPos(8, 3, 11), new ItemStack(Items.GOLD_INGOT));
-        for (int z = 4; z <= 12; z++) {
-            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(11, y, z), Blocks.STONE.defaultBlockState());
+        chest(h, new BlockPos(66, 3, 64), new ItemStack(Items.RAW_IRON));
+        chest(h, new BlockPos(64, 3, 66), ItemStack.EMPTY);
+        chest(h, new BlockPos(64, 3, 67), new ItemStack(Items.GOLD_INGOT));
+        for (int z = 60; z <= 68; z++) {
+            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(67, y, z), Blocks.STONE.defaultBlockState());
         }
-        chest(h, new BlockPos(12, 3, 8), new ItemStack(Items.DIAMOND));
+        chest(h, new BlockPos(68, 3, 64), new ItemStack(Items.DIAMOND));
 
-        // Radius 5 keeps the whole area under the 2048-position scan cap, so only the wall decides.
         int radius = Config.CARGO_TRANSFER_RADIUS.get();
-        Config.CARGO_TRANSFER_RADIUS.set(5);
+        Config.CARGO_TRANSFER_RADIUS.set(8);
         try {
             reachChecks(h, owner, trike, cargo);
         } finally {
@@ -179,11 +180,20 @@ final class CargoGameTests {
         h.assertTrue(cargo.countItem(Items.DIAMOND) == 0, "A chest behind a wall must not load");
         h.assertTrue(moved == 2, "Fast Load moved " + moved + " instead of the two visible stacks");
 
-        for (int z = 4; z <= 12; z++) {
-            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(11, y, z), Blocks.AIR.defaultBlockState());
+        for (int z = 60; z <= 68; z++) {
+            for (int y = 3; y <= 6; y++) h.setBlock(new BlockPos(67, y, z), Blocks.AIR.defaultBlockState());
         }
         h.assertTrue(CargoTransferService.load(owner, trike) == 1, "Without the wall the far chest must load");
         h.assertTrue(cargo.countItem(Items.DIAMOND) == 1, "The far chest's diamond must land in the hold");
+
+        // Opposite corners at maximum horizontal and vertical reach catch scan truncation in any chunk alignment.
+        chest(h, new BlockPos(56, 7, 56), new ItemStack(Items.EMERALD));
+        chest(h, new BlockPos(72, 7, 72), new ItemStack(Items.LAPIS_LAZULI));
+        int chunks = h.getLevel().getChunkSource().getLoadedChunksCount();
+        h.assertTrue(CargoTransferService.load(owner, trike) == 2, "The full radius-8 scan must reach both outer corners");
+        h.assertTrue(cargo.countItem(Items.EMERALD) == 1 && cargo.countItem(Items.LAPIS_LAZULI) == 1,
+                "Storage at the edge of the scan volume was skipped");
+        h.assertTrue(h.getLevel().getChunkSource().getLoadedChunksCount() == chunks, "The full scan loaded a chunk");
     }
 
     /**

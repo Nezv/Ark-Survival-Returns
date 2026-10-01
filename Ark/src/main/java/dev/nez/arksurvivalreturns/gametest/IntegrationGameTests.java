@@ -54,7 +54,8 @@ final class IntegrationGameTests {
         }
         ServerLevel level = h.getLevel();
         var cabinetBlock = BuiltInRegistries.BLOCK.getValue(Identifier.parse("toms_storage:filing_cabinet"));
-        BlockPos cabinetRel = new BlockPos(11, 3, 8);
+        // Keep the entire radius-8 scan inside this 128-block plot, away from other tests' storage.
+        BlockPos cabinetRel = new BlockPos(67, 3, 64);
         h.setBlock(cabinetRel, cabinetBlock.defaultBlockState());
         BlockPos cabinetPos = h.absolutePos(cabinetRel);
         var handler = level.getCapability(Capabilities.Item.BLOCK, cabinetPos, null);
@@ -67,17 +68,15 @@ final class IntegrationGameTests {
         }
         var owner = FakePlayerFactory.get(level, new GameProfile(UUID.randomUUID(), "ArkTomsProbe"));
         // Load and Unload only reach storage in the player's sight.
-        owner.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 3, 5))));
+        owner.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(64, 3, 61))));
         CreatureEntity trike = ModContent.CREATURES.get(Species.TRICERATOPS).get().create(level, EntitySpawnReason.COMMAND);
         trike.setNoAi(true);
-        trike.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 3, 8))));
+        trike.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(64, 3, 64))));
         level.addFreshEntity(trike);
         TamingService.of(trike).setOwner(owner.getUUID());
         trike.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
-        // Radius 5 keeps the whole area under the transfer's 2048-position scan cap; at 8, whether the cabinet
-        // was searched depended on how the plot met chunk borders (the old "moved nothing" flake).
         int radius = dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.get();
-        dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.set(5);
+        dev.nez.arksurvivalreturns.Config.CARGO_TRANSFER_RADIUS.set(8);
         int loaded;
         int unloaded;
         try {

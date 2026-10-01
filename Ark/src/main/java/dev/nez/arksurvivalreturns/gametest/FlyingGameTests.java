@@ -65,12 +65,19 @@ final class FlyingGameTests {
         var nest = h.absolutePos(new BlockPos(60, 2, 60));
         world.setBlock(nest, ModContent.NESTS.get(species).get().defaultBlockState(), 3);
         var bird = (FlyingCreatureEntity) ModContent.CREATURES.get(species).get().create(world, EntitySpawnReason.COMMAND);
+        // Flight laps use the UUID; defense orbits use the entity random source. Pin both.
+        bird.setUUID(new UUID(0x41524B464C494748L, species.ordinal() * 2L));
+        bird.getRandom().setSeed(0L);
         bird.setPersistenceRequired(); bird.initializeLevel(1); bird.assignNest(nest);
         bird.setPos(Vec3.atBottomCenterOf(nest));
         bird.wildlife().home();
         bird.setPos(Vec3.atBottomCenterOf(nest).add(0, 8, 0));
         world.addFreshEntity(bird);
-        var player = h.makeMockPlayer(GameType.SURVIVAL); player.setPos(Vec3.atBottomCenterOf(nest.offset(8, 0, 0))); world.addFreshEntity(player);
+        // An elevated, stationary thief gives the full bird hitbox clearance through the bite's wind-up.
+        // Pin position as well as gravity so collision pushes cannot move the fixture out of the dive.
+        final Vec3[] thiefPosition = {Vec3.atBottomCenterOf(nest.offset(8, 4, 0))};
+        var player = h.makeMockPlayer(GameType.SURVIVAL); player.setNoGravity(true); player.setPos(thiefPosition[0]); world.addFreshEntity(player);
+        h.onEachTick(() -> { player.setPos(thiefPosition[0]); player.setDeltaMovement(Vec3.ZERO); });
         var bystander = h.makeMockPlayer(GameType.SURVIVAL); bystander.setPos(Vec3.atBottomCenterOf(nest.offset(-8, 0, 0))); world.addFreshEntity(bystander);
         double food = bird.wildlife().mind().hunger(), water = bird.wildlife().mind().thirst();
         for (int i = 0; i < 100; i++) bird.wildlife().think();
@@ -95,12 +102,14 @@ final class FlyingGameTests {
         h.runAfterDelay(240, () -> {
             h.assertTrue(player.getHealth() < 20, "Swoop never dealt real contact damage: " + species + " phase=" + bird.flightPhase() + " bird=" + bird.position() + " thief=" + player.position());
             h.assertTrue(bystander.getHealth() == 20, "Defense damaged bystander");
-            player.setPos(Vec3.atBottomCenterOf(nest.offset(90, 0, 0)));
+            thiefPosition[0] = Vec3.atBottomCenterOf(nest.offset(90, 0, 0));
+            player.setPos(thiefPosition[0]);
         });
         final float[] shelteredHealth = {20};
         h.runAfterDelay(245, () -> {
             h.assertTrue(bird.eggThief() == null && bird.getTarget() == null, "Leash did not clear defense");
-            player.setPos(Vec3.atBottomCenterOf(nest.offset(8, 0, 0)));
+            thiefPosition[0] = Vec3.atBottomCenterOf(nest.offset(8, 0, 0));
+            player.setPos(thiefPosition[0]);
             var shelter = nest.offset(8, 0, 0);
             for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) for (int y = 0; y <= 3; y++)
                 if (Math.abs(x) == 2 || Math.abs(z) == 2 || y == 3) world.setBlock(shelter.offset(x, y, z), Blocks.STONE.defaultBlockState(), 3);

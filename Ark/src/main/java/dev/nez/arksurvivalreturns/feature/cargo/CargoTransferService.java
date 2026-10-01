@@ -36,7 +36,6 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
  * tame parked against someone else's wall cannot empty the chests behind it.
  */
 public final class CargoTransferService {
-    private static final int MAX_POSITIONS = 2048;
     private static final int MAX_CONTAINERS = 16;
     private static final int VERTICAL_REACH = 4;
 
@@ -184,6 +183,8 @@ public final class CargoTransferService {
             List<Container> containers, List<ResourceHandler<ItemResource>> handlers) {
         int minY = Math.max(level.getMinY(), center.getY() - VERTICAL_REACH);
         int maxY = Math.min(level.getMaxY() - 1, center.getY() + VERTICAL_REACH);
+        // Cover the whole configured volume (2601 positions at radius 8), regardless of chunk alignment.
+        int maxPositions = (2 * radius + 1) * (2 * radius + 1) * (maxY - minY + 1);
         int visited = 0;
         int chunkRadius = (radius >> 4) + 1;
         int centerChunkX = center.getX() >> 4;
@@ -198,7 +199,7 @@ public final class CargoTransferService {
                 for (int x = minX; x <= maxX; x++) {
                     for (int z = minZ; z <= maxZ; z++) {
                         for (int y = minY; y <= maxY; y++) {
-                            if (++visited > MAX_POSITIONS) return;
+                            if (++visited > maxPositions) return;
                             BlockPos pos = new BlockPos(x, y, z);
                             BlockEntity entity = level.getBlockEntity(pos);
                             if (entity == null) continue;

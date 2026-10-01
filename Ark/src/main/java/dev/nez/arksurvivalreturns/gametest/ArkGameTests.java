@@ -335,12 +335,16 @@ public final class ArkGameTests {
         var world = h.getLevel();
         for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
         var raptor = create(h, Species.VELOCIRAPTOR);
+        // Test the hit frame with stationary actors; gravity and overlap can move a target out of reach.
+        raptor.setNoGravity(true);
+        raptor.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 2, 8))));
         world.addFreshEntity(raptor);
         var pig = net.minecraft.world.entity.EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
         pig.setNoAi(true);
+        pig.setNoGravity(true);
         pig.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);
         pig.setHealth(1000);
-        pig.setPos(raptor.position().add(0, 0, 1.0));
+        pig.setPos(raptor.position().add(0, 0, 1.5));
         world.addFreshEntity(pig);
         var clips = CreatureAttackClips.of(Species.VELOCIRAPTOR);
         int hitDelay = (int)Math.round(clips.attackTicks() * Config.COMBAT_HIT_FRACTION.get());
@@ -349,6 +353,7 @@ public final class ArkGameTests {
         float[] baseline = {before};
         h.assertTrue(raptor.strike(pig), "Raptor strike was rejected");
         h.assertTrue(pig.getHealth() == before, "Damage landed before the wind-up");
+        h.runAfterDelay(hitDelay - 1, () -> h.assertTrue(pig.getHealth() == before, "Damage landed before the hit frame"));
         h.runAfterDelay(hitDelay + 2, () -> {
             h.assertTrue(pig.getHealth() < baseline[0], "The bite never landed on its hit frame");
             baseline[0] = pig.getHealth();

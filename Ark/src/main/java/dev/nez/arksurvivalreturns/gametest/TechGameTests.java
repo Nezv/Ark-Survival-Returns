@@ -148,7 +148,7 @@ final class TechGameTests {
         quest.forceProgress(team, new dev.ftb.mods.ftbquests.util.ProgressChange(quest, player.getUUID()).setReset(true));
         dev.nez.arksurvivalreturns.feature.tech.TechFtbBridge.pull(player);
         h.assertFalse(TechProgressData.get(world).progress(tribe).completed("monkeys"), "FTB reset was resurrected by Ark cache");
-        quest.forceProgress(team, new dev.ftb.mods.ftbquests.util.ProgressChange(quest, player.getUUID()));
+        quest.forceProgress(team, new dev.ftb.mods.ftbquests.util.ProgressChange(quest, player.getUUID()).setReset(false));
         dev.nez.arksurvivalreturns.feature.tech.TechFtbBridge.pull(player);
         h.assertTrue(TechProgressData.get(world).progress(tribe).completed("monkeys"), "FTB grant did not reach Ark");
         h.assertFalse(TechProgressData.get(world).progress(UUID.randomUUID()).completed("monkeys"), "Completion leaked to another tribe");

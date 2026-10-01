@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 /** Server handler for the Load/Unload buttons; access and range are validated on every request. */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class CargoSync {
-    /** Each request scans up to 2048 block positions, so one player gets at most one every half second. */
+    /** Each request searches the configured storage volume, at most once per player every half second. */
     private static final int COOLDOWN_TICKS = 10;
     private static final Map<UUID, Integer> LAST_REQUEST = new HashMap<>();
 

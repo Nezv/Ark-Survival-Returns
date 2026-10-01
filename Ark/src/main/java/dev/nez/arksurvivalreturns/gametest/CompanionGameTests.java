@@ -86,6 +86,9 @@ final class CompanionGameTests {
 
         // --- WANDER selects a destination, walks it, pauses and drops stale plans ---
         var wanderer = tamed(h, Species.PTERANODON, owner);
+        // Pin the two random destinations and pause instead of occasionally picking a point beside the arrival.
+        wanderer.getRandom().setSeed(0L);
+        wanderer.setPos(Vec3.atCenterOf(h.absolutePos(new BlockPos(64, 3, 64))));
         CompanionService.setOrder(wanderer, CompanionOrder.WANDER);
         var wanderGoal = new CompanionGoal(wanderer);
         wanderer.tickCount = 0;
