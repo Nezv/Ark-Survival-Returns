@@ -22,6 +22,7 @@ import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -77,6 +78,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private int strikeWindup;
     private int strikeCooldown;
     private boolean applyingStrike;
+    private int nextRoutineSoundTick;
+    private int nextWakeSoundTick;
+    private boolean audioSleeping;
     private BehaviorTier behaviorTier = BehaviorTier.FULL;
     private int engagedTicks;
     private @Nullable BehaviorProfile behaviorProfile;
@@ -335,7 +339,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (petCooldown > 0) return;
         petCooldown = Config.COMPANION_PET_COOLDOWN_TICKS.get();
         TamingFeedback.hearts(this);
-        playSound(getAmbientSound(), 0.8f, 1.1f);
+        playCreatureSound(CreatureSounds.Role.AMBIENT, 0.8f);
         getLookControl().setLookAt(player, 30, 30);
     }
 
@@ -471,10 +475,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         boolean clip = cue == BehaviorAction.Cue.WARN ? !species.warningClip().equals(species.idle) : clips().has(cue.role());
         if (clip) triggerAnim("reaction", cue == BehaviorAction.Cue.WARN ? "warn" : cue.key());
         switch (cue) {
-            case WARN -> playSound(species.predator ? net.minecraft.sounds.SoundEvents.RAVAGER_ROAR
-                    : net.minecraft.sounds.SoundEvents.POLAR_BEAR_WARNING, 1.0f, species.solitary() ? 0.7f : 1.2f);
-            case STARTLE, WAKE -> playSound(net.minecraft.sounds.SoundEvents.SNIFFER_SNIFFING, 0.7f, species.solitary() ? 0.7f : 1.2f);
-            case LOOK, SNIFF -> playSound(net.minecraft.sounds.SoundEvents.SNIFFER_SNIFFING, 0.35f, species.solitary() ? 0.7f : 1.2f);
+            case WARN, STARTLE -> playCreatureSound(CreatureSounds.Role.WARN, 1.0f);
+            case WAKE -> playCreatureSound(CreatureSounds.Role.WAKE, 0.7f);
             default -> {}
         }
     }
@@ -574,7 +576,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (strikeWindup > 0) strikeWindup--;
         if (strikeCooldown > 0) strikeCooldown--;
         super.tick();
-        if (!level().isClientSide()) resolveStrike();
+        if (!level().isClientSide()) {
+            resolveStrike();
+            boolean sleeping = isAlive() && (behavior().sleeping() || torpor().torpid());
+            if (sleeping) playRoutineSound(CreatureSounds.Role.SLEEP);
+            else if (audioSleeping && isAlive()) playCreatureSound(CreatureSounds.Role.WAKE, 0.7f);
+            audioSleeping = sleeping;
+        }
         if (!species.flyer()) {
             if (level().isClientSide()) {
                 previousEyeGlow = eyeGlow;
@@ -681,6 +689,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         var clips = CreatureAttackClips.of(species);
         if (clips == null) return false;
         triggerAnim("attack", "strike");
+        playCreatureSound(CreatureSounds.Role.ATTACK, 1.0f);
         pendingStrike = living;
         strikeWindup = hitDelayTicks(clips);
         strikeCooldown = cooldownTicks(clips);
@@ -721,7 +730,10 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         boolean hit = super.doHurtTarget(level, target);
         if (!hit) return false;
         // A scheduled strike already played its clip; a direct call still needs the swing animation.
-        if (!applyingStrike) triggerAnim("attack", "strike");
+        if (!applyingStrike) {
+            triggerAnim("attack", "strike");
+            playCreatureSound(CreatureSounds.Role.ATTACK, 1.0f);
+        }
         // Any lethal hit feeds the mind, whether it landed via the wind-up or a direct call.
         if (target instanceof LivingEntity living && !living.isAlive() && species.predator
                 && !(living instanceof Player) && wildlife != null) wildlife.onStrikeKill();
@@ -858,15 +870,41 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
     protected String standingClip() { return swimming() ? species.swimIdle() : species.idle; }
     protected String restingClip() { return swimming() ? species.swimIdle() : species.restClip(); }
-    @Override protected net.minecraft.sounds.SoundEvent getAmbientSound() { return net.minecraft.sounds.SoundEvents.SNIFFER_IDLE; }
-    @Override protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) { return net.minecraft.sounds.SoundEvents.SNIFFER_HURT; }
-    @Override protected net.minecraft.sounds.SoundEvent getDeathSound() { return net.minecraft.sounds.SoundEvents.SNIFFER_DEATH; }
+    /** The routine selects the original call for its current state, including unconscious sleep. */
+    public CreatureSounds.Role ambientSoundRole() {
+        if (TorporService.restricted(this) || behavior().sleeping()) return CreatureSounds.Role.SLEEP;
+        return eating(action(), behavior()) ? CreatureSounds.Role.EAT : CreatureSounds.Role.AMBIENT;
+    }
+    @Override protected @Nullable SoundEvent getAmbientSound() {
+        return isAlive() && behaviorTier != BehaviorTier.DORMANT ? CreatureSounds.of(species, ambientSoundRole()) : null;
+    }
+    @Override public void playAmbientSound() {
+        if (getAmbientSound() != null) playRoutineSound(ambientSoundRole());
+    }
+    private void playRoutineSound(CreatureSounds.Role role) {
+        if (!isAlive() || behaviorTier == BehaviorTier.DORMANT || tickCount < nextRoutineSoundTick) return;
+        playCreatureSound(role, role == CreatureSounds.Role.SLEEP ? 0.45f : 0.8f);
+        nextRoutineSoundTick = tickCount + CreatureSounds.durationTicks(species, role) + 20;
+    }
+    /** Emit on the server once, at original pitch; clients receive the normal positional sound packet. */
+    public void playCreatureSound(CreatureSounds.Role role, float volume) {
+        if (level().isClientSide()) return;
+        if (role == CreatureSounds.Role.WAKE) {
+            if (tickCount < nextWakeSoundTick) return;
+            nextWakeSoundTick = tickCount + CreatureSounds.durationTicks(species, role) + 20;
+        }
+        var sound = CreatureSounds.of(species, role);
+        if (sound != null) playSound(sound, volume, 1.0f);
+    }
+    @Override protected @Nullable SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+        return CreatureSounds.of(species, CreatureSounds.Role.HURT);
+    }
+    @Override protected @Nullable SoundEvent getDeathSound() {
+        return CreatureSounds.of(species, CreatureSounds.Role.DEATH);
+    }
     @Override protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState block) {
         boolean heavy = species.height >= 2.5f;
-        playSound(heavy ? net.minecraft.sounds.SoundEvents.RAVAGER_STEP : net.minecraft.sounds.SoundEvents.SNIFFER_STEP,
-                species.solitary() ? 0.7f : 0.25f,
-                heavy ? Math.clamp(1.3f - species.height * 0.05f, 0.55f, 0.9f)
-                        : species.solitary() ? 0.65f : 1.25f);
+        playCreatureSound(CreatureSounds.Role.STEP, species.solitary() ? 0.7f : 0.25f);
         // A heavy body kicks dust where the foot lands; client-only, so the server never fakes particles.
         if (heavy && level().isClientSide() && onGround())
             level().addParticle(net.minecraft.core.particles.ParticleTypes.POOF, getX(), getY() + 0.05, getZ(), 0.0, 0.02, 0.0);

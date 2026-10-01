@@ -1,0 +1,5776 @@
+{
+  "creature.pteranodon.ambient": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_idle_04"
+      }
+    ]
+  },
+  "creature.pteranodon.attack": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_kick_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_kick_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_attack_kick_03"
+      }
+    ]
+  },
+  "creature.pteranodon.hurt": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_hurt_03"
+      }
+    ]
+  },
+  "creature.pteranodon.death": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_death_03"
+      }
+    ]
+  },
+  "creature.pteranodon.sleep": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.pteranodon.wake": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.pteranodon.warn": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_startled_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_startled_02"
+      }
+    ]
+  },
+  "creature.pteranodon.step": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_scrape_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_move_scrape_02"
+      }
+    ]
+  },
+  "creature.pteranodon.eat": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_eat_02"
+      }
+    ]
+  },
+  "creature.pteranodon.flap": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_fly_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_fly_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_fly_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_fly_04"
+      }
+    ]
+  },
+  "creature.pteranodon.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_takeoff_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_takeoff_02"
+      }
+    ]
+  },
+  "creature.pteranodon.land": {
+    "subtitle": "entity.arksurvivalreturns.pteranodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_land_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pteranodon/s_ptera_land_02"
+      }
+    ]
+  },
+  "creature.velociraptor.ambient": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_idle_03"
+      }
+    ]
+  },
+  "creature.velociraptor.attack": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_01_foley"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_02_foley"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_03_foley"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_04_foley"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_attack_05_foley"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_eat_02"
+      }
+    ]
+  },
+  "creature.velociraptor.hurt": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_hurt_03"
+      }
+    ]
+  },
+  "creature.velociraptor.death": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_death_03"
+      }
+    ]
+  },
+  "creature.velociraptor.sleep": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.velociraptor.wake": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.velociraptor.warn": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_call"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_startled"
+      }
+    ]
+  },
+  "creature.velociraptor.step": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/pw_raptor_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/pw_raptor_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/pw_raptor_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/pw_raptor_footstep_04"
+      }
+    ]
+  },
+  "creature.velociraptor.eat": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_raptor_eat_02"
+      }
+    ]
+  },
+  "creature.velociraptor.flap": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": []
+  },
+  "creature.velociraptor.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": []
+  },
+  "creature.velociraptor.land": {
+    "subtitle": "entity.arksurvivalreturns.velociraptor",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_deinon_land_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/velociraptor/s_deinon_land_02"
+      }
+    ]
+  },
+  "creature.argentavis.ambient": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_idle_03"
+      }
+    ]
+  },
+  "creature.argentavis.attack": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_attack_claw_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_attack_claw_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_attack_claw_03"
+      }
+    ]
+  },
+  "creature.argentavis.hurt": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_hurt_03"
+      }
+    ]
+  },
+  "creature.argentavis.death": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_death_03"
+      }
+    ]
+  },
+  "creature.argentavis.sleep": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.argentavis.wake": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.argentavis.warn": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_startled"
+      }
+    ]
+  },
+  "creature.argentavis.step": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_move_02"
+      }
+    ]
+  },
+  "creature.argentavis.eat": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_eat"
+      }
+    ]
+  },
+  "creature.argentavis.flap": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_fly_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_fly_02"
+      }
+    ]
+  },
+  "creature.argentavis.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_takeoff_foley_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_takeoff_foley_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_takeoff_voice_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_takeoff_voice_02"
+      }
+    ]
+  },
+  "creature.argentavis.land": {
+    "subtitle": "entity.arksurvivalreturns.argentavis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_land_foley_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_land_foley_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_land_voice_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/argentavis/s_argentavis_land_voice_02"
+      }
+    ]
+  },
+  "creature.triceratops.ambient": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_idle_03"
+      }
+    ]
+  },
+  "creature.triceratops.attack": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_attack_horn_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_attack_horn_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_attack_horn_03"
+      }
+    ]
+  },
+  "creature.triceratops.hurt": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_hurt_03"
+      }
+    ]
+  },
+  "creature.triceratops.death": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_death_03"
+      }
+    ]
+  },
+  "creature.triceratops.sleep": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.triceratops.wake": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_torpid_out_tamed_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_torpid_out_wild_01"
+      }
+    ]
+  },
+  "creature.triceratops.warn": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_startled_01"
+      }
+    ]
+  },
+  "creature.triceratops.step": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_move_04"
+      }
+    ]
+  },
+  "creature.triceratops.eat": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/triceratops/s_trike_eat_03"
+      }
+    ]
+  },
+  "creature.triceratops.flap": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": []
+  },
+  "creature.triceratops.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": []
+  },
+  "creature.triceratops.land": {
+    "subtitle": "entity.arksurvivalreturns.triceratops",
+    "sounds": []
+  },
+  "creature.therizinosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_idle_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_2_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_2_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_attack_claw_2_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_hurt_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_death_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_torpid_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_torpid_idle_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.therizinosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_startled"
+      }
+    ]
+  },
+  "creature.therizinosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_move_04"
+      }
+    ]
+  },
+  "creature.therizinosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/therizinosaurus/s_therizino_eat_03"
+      }
+    ]
+  },
+  "creature.therizinosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": []
+  },
+  "creature.therizinosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": []
+  },
+  "creature.therizinosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.therizinosaurus",
+    "sounds": []
+  },
+  "creature.brontosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_idle_03"
+      }
+    ]
+  },
+  "creature.brontosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_01_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_01_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_01_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_impact_01_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_impact_01_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_impact_01_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_attack_footstomp_impact_02"
+      }
+    ]
+  },
+  "creature.brontosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_hurt_03"
+      }
+    ]
+  },
+  "creature.brontosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_death_03"
+      }
+    ]
+  },
+  "creature.brontosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.brontosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.brontosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_startled"
+      }
+    ]
+  },
+  "creature.brontosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/pw_bronto_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/pw_bronto_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/pw_bronto_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/pw_bronto_footstep_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/pw_bronto_footstep_05"
+      }
+    ]
+  },
+  "creature.brontosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/brontosaurus/s_bronto_eat_02"
+      }
+    ]
+  },
+  "creature.brontosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": []
+  },
+  "creature.brontosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": []
+  },
+  "creature.brontosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.brontosaurus",
+    "sounds": []
+  },
+  "creature.tyrannosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_idle_03"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_attack_04"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_hurt_03"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_death_03"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_roar_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_roar_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_roar_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_startled"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_move_low"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tyrannosaurus/s_rex_eat_02"
+      }
+    ]
+  },
+  "creature.tyrannosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": []
+  },
+  "creature.tyrannosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": []
+  },
+  "creature.tyrannosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.tyrannosaurus",
+    "sounds": []
+  },
+  "creature.giganotosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_idle_03"
+      }
+    ]
+  },
+  "creature.giganotosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_attack_03"
+      }
+    ]
+  },
+  "creature.giganotosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_hurt_03"
+      }
+    ]
+  },
+  "creature.giganotosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_death"
+      }
+    ]
+  },
+  "creature.giganotosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.giganotosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.giganotosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_roar_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_roar_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_roar_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_startled"
+      }
+    ]
+  },
+  "creature.giganotosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_move_04"
+      }
+    ]
+  },
+  "creature.giganotosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/giganotosaurus/s_giga_eat_02"
+      }
+    ]
+  },
+  "creature.giganotosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": []
+  },
+  "creature.giganotosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": []
+  },
+  "creature.giganotosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.giganotosaurus",
+    "sounds": []
+  },
+  "creature.titanosaur.ambient": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_mumble_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_mumble_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_mumble_3"
+      }
+    ]
+  },
+  "creature.titanosaur.attack": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_attack_footstomp_2"
+      }
+    ]
+  },
+  "creature.titanosaur.hurt": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_hurt_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_hurt_4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_hurt_5"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_hurt_6"
+      }
+    ]
+  },
+  "creature.titanosaur.death": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_death"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_bodyfall"
+      }
+    ]
+  },
+  "creature.titanosaur.sleep": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": []
+  },
+  "creature.titanosaur.wake": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_torpid_out_tamed"
+      }
+    ]
+  },
+  "creature.titanosaur.warn": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_startled_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_startled_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/s_titanosaur_startled_3"
+      }
+    ]
+  },
+  "creature.titanosaur.step": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/dragon_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/dragon_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/dragon_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/dragon_footstep_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanosaur/dragon_footstep_05"
+      }
+    ]
+  },
+  "creature.titanosaur.eat": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": []
+  },
+  "creature.titanosaur.flap": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": []
+  },
+  "creature.titanosaur.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": []
+  },
+  "creature.titanosaur.land": {
+    "subtitle": "entity.arksurvivalreturns.titanosaur",
+    "sounds": []
+  },
+  "creature.spinosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_idle_03"
+      }
+    ]
+  },
+  "creature.spinosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_claw_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_claw_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_claw_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_foley_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_foley_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_attack_foley_03"
+      }
+    ]
+  },
+  "creature.spinosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_hurt_03"
+      }
+    ]
+  },
+  "creature.spinosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_death_03"
+      }
+    ]
+  },
+  "creature.spinosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.spinosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.spinosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_roar"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_startled"
+      }
+    ]
+  },
+  "creature.spinosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_move_04"
+      }
+    ]
+  },
+  "creature.spinosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/spinosaurus/s_spino_eat_02"
+      }
+    ]
+  },
+  "creature.spinosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": []
+  },
+  "creature.spinosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": []
+  },
+  "creature.spinosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.spinosaurus",
+    "sounds": []
+  },
+  "creature.parasaur.ambient": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_idle_03"
+      }
+    ]
+  },
+  "creature.parasaur.attack": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_attack_03"
+      }
+    ]
+  },
+  "creature.parasaur.hurt": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_hurt_03"
+      }
+    ]
+  },
+  "creature.parasaur.death": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_death_03"
+      }
+    ]
+  },
+  "creature.parasaur.sleep": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.parasaur.wake": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.parasaur.warn": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_startled"
+      }
+    ]
+  },
+  "creature.parasaur.step": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_move_04"
+      }
+    ]
+  },
+  "creature.parasaur.eat": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/parasaur/s_parasaur_eat_02"
+      }
+    ]
+  },
+  "creature.parasaur.flap": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": []
+  },
+  "creature.parasaur.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": []
+  },
+  "creature.parasaur.land": {
+    "subtitle": "entity.arksurvivalreturns.parasaur",
+    "sounds": []
+  },
+  "creature.ceratosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_coslong1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_coslong2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_coslong3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_cosshort1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_cosshort2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_cosshort3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_cosshort4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_idle1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_idle2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_idle3"
+      }
+    ]
+  },
+  "creature.ceratosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_attackgrunt1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_attackgrunt2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_attackgrunt3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_attackgrunt4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_attackgrunt5"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bite1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bite2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bite3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bite4"
+      }
+    ]
+  },
+  "creature.ceratosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_breath1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_breath2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_breath3"
+      }
+    ]
+  },
+  "creature.ceratosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bark1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bark2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bark3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_bark4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcalllong_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcalllong_1_004"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcalllong_3_001"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcall_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcall_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcall_4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_strainedcall_1_001"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_startled"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_startled2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_startled3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/cerato_startled4"
+      }
+    ]
+  },
+  "creature.ceratosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_amarga_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_amarga_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_amarga_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_amarga_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_parasaur_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_parasaur_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_parasaur_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ceratosaurus/s_parasaur_move_04"
+      }
+    ]
+  },
+  "creature.ceratosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.ceratosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.ceratosaurus",
+    "sounds": []
+  },
+  "creature.dilophosaur.ambient": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_idle_03"
+      }
+    ]
+  },
+  "creature.dilophosaur.attack": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_attack_spit_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_attack_spit_02"
+      }
+    ]
+  },
+  "creature.dilophosaur.hurt": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_hurt_03"
+      }
+    ]
+  },
+  "creature.dilophosaur.death": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_death_03"
+      }
+    ]
+  },
+  "creature.dilophosaur.sleep": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.dilophosaur.wake": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.dilophosaur.warn": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_startled"
+      }
+    ]
+  },
+  "creature.dilophosaur.step": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_move_04"
+      }
+    ]
+  },
+  "creature.dilophosaur.eat": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dilophosaur/s_dilo_eat_04"
+      }
+    ]
+  },
+  "creature.dilophosaur.flap": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": []
+  },
+  "creature.dilophosaur.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": []
+  },
+  "creature.dilophosaur.land": {
+    "subtitle": "entity.arksurvivalreturns.dilophosaur",
+    "sounds": []
+  },
+  "creature.acrocanthosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_idle1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_idle2"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_adrenalineattack"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_adrenalineattack2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_adrenalineattack3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_spino_attack_foley_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_spino_attack_foley_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_spino_attack_foley_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_attack"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_attack2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_attack3"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_pain1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_pain2"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_death1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_death2"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_idle1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_idle2"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_growl2"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_roar2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_roar3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_growl"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_growl2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_growl3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_growl4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/acro_roar"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_rex_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_rex_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_rex_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_rex_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_rex_move_low"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_spino_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/acrocanthosaurus/s_spino_eat_02"
+      }
+    ]
+  },
+  "creature.acrocanthosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": []
+  },
+  "creature.acrocanthosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": []
+  },
+  "creature.acrocanthosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.acrocanthosaurus",
+    "sounds": []
+  },
+  "creature.allosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_03"
+      }
+    ]
+  },
+  "creature.allosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_attack_bite_03"
+      }
+    ]
+  },
+  "creature.allosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_hurt_04"
+      }
+    ]
+  },
+  "creature.allosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_death_03"
+      }
+    ]
+  },
+  "creature.allosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_idle_03"
+      }
+    ]
+  },
+  "creature.allosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.allosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_roar"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_startled"
+      }
+    ]
+  },
+  "creature.allosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/pw_trex_footsteps_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/pw_trex_footsteps_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/pw_trex_footsteps_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/pw_trex_footsteps_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/pw_trex_footsteps_05"
+      }
+    ]
+  },
+  "creature.allosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_eat_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/allosaurus/s_allosaurus_eat_06"
+      }
+    ]
+  },
+  "creature.allosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": []
+  },
+  "creature.allosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": []
+  },
+  "creature.allosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.allosaurus",
+    "sounds": []
+  },
+  "creature.ankylosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_idle_03"
+      }
+    ]
+  },
+  "creature.ankylosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_attack_tail_pound_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_attack_tail_pound_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_attack_tail_sweep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_attack_tail_sweep_02"
+      }
+    ]
+  },
+  "creature.ankylosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_hurt_03"
+      }
+    ]
+  },
+  "creature.ankylosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_death_03"
+      }
+    ]
+  },
+  "creature.ankylosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.ankylosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.ankylosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_startled"
+      }
+    ]
+  },
+  "creature.ankylosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_megala_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_megala_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_megala_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_megala_move_04"
+      }
+    ]
+  },
+  "creature.ankylosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ankylosaurus/s_anky_eat_02"
+      }
+    ]
+  },
+  "creature.ankylosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": []
+  },
+  "creature.ankylosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": []
+  },
+  "creature.ankylosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.ankylosaurus",
+    "sounds": []
+  },
+  "creature.carnotaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_idle_03"
+      }
+    ]
+  },
+  "creature.carnotaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_attack_bite_03"
+      }
+    ]
+  },
+  "creature.carnotaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_hurt_03"
+      }
+    ]
+  },
+  "creature.carnotaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_death_03"
+      }
+    ]
+  },
+  "creature.carnotaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.carnotaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.carnotaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_startled"
+      }
+    ]
+  },
+  "creature.carnotaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/pw_trex_footsteps_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/pw_trex_footsteps_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/pw_trex_footsteps_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/pw_trex_footsteps_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/pw_trex_footsteps_05"
+      }
+    ]
+  },
+  "creature.carnotaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/carnotaurus/s_carno_eat_02"
+      }
+    ]
+  },
+  "creature.carnotaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": []
+  },
+  "creature.carnotaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": []
+  },
+  "creature.carnotaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.carnotaurus",
+    "sounds": []
+  },
+  "creature.pegomastax.ambient": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_idle_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_idle_2"
+      }
+    ]
+  },
+  "creature.pegomastax.attack": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_attack_bite_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_attack_bite_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_attack_bite_3"
+      }
+    ]
+  },
+  "creature.pegomastax.hurt": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_hurt_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_hurt_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_hurt_3"
+      }
+    ]
+  },
+  "creature.pegomastax.death": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_die_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_die_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_die_3"
+      }
+    ]
+  },
+  "creature.pegomastax.sleep": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_idle_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_idle_2"
+      }
+    ]
+  },
+  "creature.pegomastax.wake": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_tamed_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_tamed_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_tamed_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_wild_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_wild_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_torpid_out_wild_3"
+      }
+    ]
+  },
+  "creature.pegomastax.warn": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_roar_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_startled_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_startled_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_startled_3"
+      }
+    ]
+  },
+  "creature.pegomastax.step": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pw_dilo_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pw_dilo_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pw_dilo_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pw_dilo_footstep_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pw_dilo_footstep_05"
+      }
+    ]
+  },
+  "creature.pegomastax.eat": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/pegomastax/pegomastax_eat_"
+      }
+    ]
+  },
+  "creature.pegomastax.flap": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": []
+  },
+  "creature.pegomastax.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": []
+  },
+  "creature.pegomastax.land": {
+    "subtitle": "entity.arksurvivalreturns.pegomastax",
+    "sounds": []
+  },
+  "creature.lystrosaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_5"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_6"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_mumble_7"
+      }
+    ]
+  },
+  "creature.lystrosaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_attack_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_attack_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_attack_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_attack_4"
+      }
+    ]
+  },
+  "creature.lystrosaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_hurt_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_hurt_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_hurt_3"
+      }
+    ]
+  },
+  "creature.lystrosaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_death_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_death_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_death_3"
+      }
+    ]
+  },
+  "creature.lystrosaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_torpid_idle_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_torpid_idle_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_torpid_idle_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_torpid_idle_4"
+      }
+    ]
+  },
+  "creature.lystrosaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": []
+  },
+  "creature.lystrosaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_startled"
+      }
+    ]
+  },
+  "creature.lystrosaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_move_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_move_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_move_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_move_4"
+      }
+    ]
+  },
+  "creature.lystrosaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_eat_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_eat_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/lystrosaurus/s_lystrosaurus_eat_3"
+      }
+    ]
+  },
+  "creature.lystrosaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": []
+  },
+  "creature.lystrosaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": []
+  },
+  "creature.lystrosaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.lystrosaurus",
+    "sounds": []
+  },
+  "creature.cnidaria.ambient": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_3"
+      }
+    ]
+  },
+  "creature.cnidaria.attack": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_loop"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_start_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_start_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_start_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/s_cnidaria_shock_start_4"
+      }
+    ]
+  },
+  "creature.cnidaria.hurt": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_hurt_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_hurt_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_hurt_3"
+      }
+    ]
+  },
+  "creature.cnidaria.death": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_death_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_death_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_death_3"
+      }
+    ]
+  },
+  "creature.cnidaria.sleep": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.cnidaria.wake": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.cnidaria.warn": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaria_idle_3"
+      }
+    ]
+  },
+  "creature.cnidaria.step": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaris_move_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaris_move_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/cnidaria/cnidaris_move_3"
+      }
+    ]
+  },
+  "creature.cnidaria.eat": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.cnidaria.flap": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.cnidaria.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.cnidaria.land": {
+    "subtitle": "entity.arksurvivalreturns.cnidaria",
+    "sounds": []
+  },
+  "creature.plesiosaur.ambient": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.plesiosaur.attack": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_attack_04"
+      }
+    ]
+  },
+  "creature.plesiosaur.hurt": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_hurt_04"
+      }
+    ]
+  },
+  "creature.plesiosaur.death": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_death_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_death_04"
+      }
+    ]
+  },
+  "creature.plesiosaur.sleep": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.plesiosaur.wake": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.plesiosaur.warn": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_roar_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_roar_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_roar_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_roar_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_trex_vox_roar_05"
+      }
+    ]
+  },
+  "creature.plesiosaur.step": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.plesiosaur.eat": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_carno_voc_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_carno_voc_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_carno_voc_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/plesiosaur/pw_carno_voc_eat_04"
+      }
+    ]
+  },
+  "creature.plesiosaur.flap": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.plesiosaur.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.plesiosaur.land": {
+    "subtitle": "entity.arksurvivalreturns.plesiosaur",
+    "sounds": []
+  },
+  "creature.megalodon.ambient": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.megalodon.attack": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_bite_04"
+      }
+    ]
+  },
+  "creature.megalodon.hurt": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_hurt_04"
+      }
+    ]
+  },
+  "creature.megalodon.death": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_death_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_death_04"
+      }
+    ]
+  },
+  "creature.megalodon.sleep": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.megalodon.wake": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.megalodon.warn": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_startled_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_startled_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_startled_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_voc_startled_04"
+      }
+    ]
+  },
+  "creature.megalodon.step": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalodon/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.megalodon.eat": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalodon/s_megalo_eat"
+      }
+    ]
+  },
+  "creature.megalodon.flap": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.megalodon.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.megalodon.land": {
+    "subtitle": "entity.arksurvivalreturns.megalodon",
+    "sounds": []
+  },
+  "creature.liopleurodon.ambient": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_03"
+      }
+    ]
+  },
+  "creature.liopleurodon.attack": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_attack_bite_03"
+      }
+    ]
+  },
+  "creature.liopleurodon.hurt": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_hurt_03"
+      }
+    ]
+  },
+  "creature.liopleurodon.death": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_death_03"
+      }
+    ]
+  },
+  "creature.liopleurodon.sleep": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": []
+  },
+  "creature.liopleurodon.wake": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.liopleurodon.warn": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/s_lio_idle_03"
+      }
+    ]
+  },
+  "creature.liopleurodon.step": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/liopleurodon/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.liopleurodon.eat": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": []
+  },
+  "creature.liopleurodon.flap": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": []
+  },
+  "creature.liopleurodon.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": []
+  },
+  "creature.liopleurodon.land": {
+    "subtitle": "entity.arksurvivalreturns.liopleurodon",
+    "sounds": []
+  },
+  "creature.mosasaurus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.attack": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/s_basilo_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/s_basilo_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/s_basilo_attack_03"
+      }
+    ]
+  },
+  "creature.mosasaurus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_hurt_04"
+      }
+    ]
+  },
+  "creature.mosasaurus.death": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_death_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_trex_vox_death_04"
+      }
+    ]
+  },
+  "creature.mosasaurus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.wake": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.warn": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.step": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mosasaurus/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.mosasaurus.eat": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.flap": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.mosasaurus.land": {
+    "subtitle": "entity.arksurvivalreturns.mosasaurus",
+    "sounds": []
+  },
+  "creature.tusoteuthis.ambient": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_03"
+      }
+    ]
+  },
+  "creature.tusoteuthis.attack": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_attack_bite"
+      }
+    ]
+  },
+  "creature.tusoteuthis.hurt": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_hurt_03"
+      }
+    ]
+  },
+  "creature.tusoteuthis.death": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_death_03"
+      }
+    ]
+  },
+  "creature.tusoteuthis.sleep": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.tusoteuthis.wake": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.tusoteuthis.warn": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_idle_03"
+      }
+    ]
+  },
+  "creature.tusoteuthis.step": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.tusoteuthis.eat": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/tusoteuthis/s_tuso_eat"
+      }
+    ]
+  },
+  "creature.tusoteuthis.flap": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": []
+  },
+  "creature.tusoteuthis.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": []
+  },
+  "creature.tusoteuthis.land": {
+    "subtitle": "entity.arksurvivalreturns.tusoteuthis",
+    "sounds": []
+  },
+  "creature.kaprosuchus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_04"
+      }
+    ]
+  },
+  "creature.kaprosuchus.attack": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_attack_03"
+      }
+    ]
+  },
+  "creature.kaprosuchus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_hurt_04"
+      }
+    ]
+  },
+  "creature.kaprosuchus.death": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": []
+  },
+  "creature.kaprosuchus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_torpid_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_torpid_idle_03"
+      }
+    ]
+  },
+  "creature.kaprosuchus.wake": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.kaprosuchus.warn": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_idle_04"
+      }
+    ]
+  },
+  "creature.kaprosuchus.step": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_move_04"
+      }
+    ]
+  },
+  "creature.kaprosuchus.eat": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/kaprosuchus/s_kapro_eat_03"
+      }
+    ]
+  },
+  "creature.kaprosuchus.flap": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": []
+  },
+  "creature.kaprosuchus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": []
+  },
+  "creature.kaprosuchus.land": {
+    "subtitle": "entity.arksurvivalreturns.kaprosuchus",
+    "sounds": []
+  },
+  "creature.sarco.ambient": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_03"
+      }
+    ]
+  },
+  "creature.sarco.attack": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_attack_roll_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_attack_roll_02"
+      }
+    ]
+  },
+  "creature.sarco.hurt": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_hurt_03"
+      }
+    ]
+  },
+  "creature.sarco.death": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_death_03"
+      }
+    ]
+  },
+  "creature.sarco.sleep": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.sarco.wake": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.sarco.warn": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_idle_03"
+      }
+    ]
+  },
+  "creature.sarco.step": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_turtle_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_turtle_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_turtle_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_turtle_move_04"
+      }
+    ]
+  },
+  "creature.sarco.eat": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sarco/s_sarco_eat_02"
+      }
+    ]
+  },
+  "creature.sarco.flap": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": []
+  },
+  "creature.sarco.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": []
+  },
+  "creature.sarco.land": {
+    "subtitle": "entity.arksurvivalreturns.sarco",
+    "sounds": []
+  },
+  "creature.deinosuchus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.deinosuchus.attack": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/ark_dimetrodon_lay_egg_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/ark_dimetrodon_lay_egg_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_cavecrab_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_cavecrab_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_cavecrab_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_cavecrab_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_04"
+      }
+    ]
+  },
+  "creature.deinosuchus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_voc_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_voc_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_voc_hurt_03"
+      }
+    ]
+  },
+  "creature.deinosuchus.death": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_voc_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_voc_death_02"
+      }
+    ]
+  },
+  "creature.deinosuchus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.deinosuchus.wake": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.deinosuchus.warn": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/deinosuchus_bellow"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/deinosuchus_bellow2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/deinosuchus_bellow3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_sarco_attack_lunge_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_sarco_attack_lunge_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_trex_vox_mumble_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_trex_vox_mumble_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_trex_vox_mumble_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_trex_vox_mumble_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_trex_vox_mumble_05"
+      }
+    ]
+  },
+  "creature.deinosuchus.step": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_turtle_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_turtle_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_turtle_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/s_turtle_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_stego_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_stego_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_stego_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_stego_footstep_04"
+      }
+    ]
+  },
+  "creature.deinosuchus.eat": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/deinosuchus/pw_sarco_eat_04"
+      }
+    ]
+  },
+  "creature.deinosuchus.flap": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.deinosuchus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.deinosuchus.land": {
+    "subtitle": "entity.arksurvivalreturns.deinosuchus",
+    "sounds": []
+  },
+  "creature.titanoboa.ambient": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_03"
+      }
+    ]
+  },
+  "creature.titanoboa.attack": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_attack_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_attack_04"
+      }
+    ]
+  },
+  "creature.titanoboa.hurt": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_hurt_04"
+      }
+    ]
+  },
+  "creature.titanoboa.death": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_death"
+      }
+    ]
+  },
+  "creature.titanoboa.sleep": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": []
+  },
+  "creature.titanoboa.wake": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": []
+  },
+  "creature.titanoboa.warn": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_voc_mumble_03"
+      }
+    ]
+  },
+  "creature.titanoboa.step": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_move_04"
+      }
+    ]
+  },
+  "creature.titanoboa.eat": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/titanoboa/pw_boa_eat_04"
+      }
+    ]
+  },
+  "creature.titanoboa.flap": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": []
+  },
+  "creature.titanoboa.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": []
+  },
+  "creature.titanoboa.land": {
+    "subtitle": "entity.arksurvivalreturns.titanoboa",
+    "sounds": []
+  },
+  "creature.megalocerus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_mumble"
+      }
+    ]
+  },
+  "creature.megalocerus.attack": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_attack_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_attack_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_attack_3"
+      }
+    ]
+  },
+  "creature.megalocerus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_hurt_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_hurt_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_hurt_3"
+      }
+    ]
+  },
+  "creature.megalocerus.death": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_death"
+      }
+    ]
+  },
+  "creature.megalocerus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": []
+  },
+  "creature.megalocerus.wake": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_torporout_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_torporout_wild"
+      }
+    ]
+  },
+  "creature.megalocerus.warn": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_mumble"
+      }
+    ]
+  },
+  "creature.megalocerus.step": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_4"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_5"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_6"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/megalocer_footstep_7"
+      }
+    ]
+  },
+  "creature.megalocerus.eat": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megalocerus/pw_bronto_chew_06"
+      }
+    ]
+  },
+  "creature.megalocerus.flap": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": []
+  },
+  "creature.megalocerus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": []
+  },
+  "creature.megalocerus.land": {
+    "subtitle": "entity.arksurvivalreturns.megalocerus",
+    "sounds": []
+  },
+  "creature.unicorn.ambient": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_06"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_07"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_idle_08"
+      }
+    ]
+  },
+  "creature.unicorn.attack": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_bite_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_bite_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_push_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_push_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_push_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_attack_push_04"
+      }
+    ]
+  },
+  "creature.unicorn.hurt": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_hurt_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_hurt_04"
+      }
+    ]
+  },
+  "creature.unicorn.death": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_death_02"
+      }
+    ]
+  },
+  "creature.unicorn.sleep": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_idle_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_idle_05"
+      }
+    ]
+  },
+  "creature.unicorn.wake": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.unicorn.warn": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_roar"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_startled_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_startled_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_startled_03"
+      }
+    ]
+  },
+  "creature.unicorn.step": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_10"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_06"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_07"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_08"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_move_09"
+      }
+    ]
+  },
+  "creature.unicorn.eat": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/unicorn/s_equus_eat_02"
+      }
+    ]
+  },
+  "creature.unicorn.flap": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": []
+  },
+  "creature.unicorn.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": []
+  },
+  "creature.unicorn.land": {
+    "subtitle": "entity.arksurvivalreturns.unicorn",
+    "sounds": []
+  },
+  "creature.mammoth.ambient": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_idle_04"
+      }
+    ]
+  },
+  "creature.mammoth.attack": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_footstomp_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_footstomp_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_tusk_jab_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_tusk_jab_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_tusk_jab_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_tusk_sweep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_attack_tusk_sweep_02"
+      }
+    ]
+  },
+  "creature.mammoth.hurt": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_hurt_03"
+      }
+    ]
+  },
+  "creature.mammoth.death": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_death_03"
+      }
+    ]
+  },
+  "creature.mammoth.sleep": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.mammoth.wake": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.mammoth.warn": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_roar"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_startled"
+      }
+    ]
+  },
+  "creature.mammoth.step": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.mammoth.eat": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_graze_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/mammoth/s_mammoth_graze_02"
+      }
+    ]
+  },
+  "creature.mammoth.flap": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": []
+  },
+  "creature.mammoth.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": []
+  },
+  "creature.mammoth.land": {
+    "subtitle": "entity.arksurvivalreturns.mammoth",
+    "sounds": []
+  },
+  "creature.direwolf.ambient": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_idle_03"
+      }
+    ]
+  },
+  "creature.direwolf.attack": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_attack_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_attack_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_attack_03"
+      }
+    ]
+  },
+  "creature.direwolf.hurt": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_hurt_03"
+      }
+    ]
+  },
+  "creature.direwolf.death": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_death_03"
+      }
+    ]
+  },
+  "creature.direwolf.sleep": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.direwolf.wake": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.direwolf.warn": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_howl_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_howl_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_startled"
+      }
+    ]
+  },
+  "creature.direwolf.step": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_move_04"
+      }
+    ]
+  },
+  "creature.direwolf.eat": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/direwolf/s_direwolf_eat_02"
+      }
+    ]
+  },
+  "creature.direwolf.flap": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": []
+  },
+  "creature.direwolf.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": []
+  },
+  "creature.direwolf.land": {
+    "subtitle": "entity.arksurvivalreturns.direwolf",
+    "sounds": []
+  },
+  "creature.sabertooth.ambient": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_idle_03"
+      }
+    ]
+  },
+  "creature.sabertooth.attack": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_attack_claw_02"
+      }
+    ]
+  },
+  "creature.sabertooth.hurt": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_hurt_03"
+      }
+    ]
+  },
+  "creature.sabertooth.death": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_death_03"
+      }
+    ]
+  },
+  "creature.sabertooth.sleep": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.sabertooth.wake": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.sabertooth.warn": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_startled"
+      }
+    ]
+  },
+  "creature.sabertooth.step": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_daeodon_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_daeodon_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_daeodon_move_04"
+      }
+    ]
+  },
+  "creature.sabertooth.eat": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/sabertooth/s_saber_eat_02"
+      }
+    ]
+  },
+  "creature.sabertooth.flap": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": []
+  },
+  "creature.sabertooth.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": []
+  },
+  "creature.sabertooth.land": {
+    "subtitle": "entity.arksurvivalreturns.sabertooth",
+    "sounds": []
+  },
+  "creature.megapithecus.ambient": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_idle_03"
+      }
+    ]
+  },
+  "creature.megapithecus.attack": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_pound_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_pound_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_sweep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_sweep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_throw_impact"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_throw_in_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_throw_in_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_throw_out_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_attack_throw_out_02"
+      }
+    ]
+  },
+  "creature.megapithecus.hurt": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_hurt_03"
+      }
+    ]
+  },
+  "creature.megapithecus.death": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_death"
+      }
+    ]
+  },
+  "creature.megapithecus.sleep": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.megapithecus.wake": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.megapithecus.warn": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_roar"
+      }
+    ]
+  },
+  "creature.megapithecus.step": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/megapithecus/s_gorilla_move_04"
+      }
+    ]
+  },
+  "creature.megapithecus.eat": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.megapithecus.flap": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.megapithecus.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.megapithecus.land": {
+    "subtitle": "entity.arksurvivalreturns.megapithecus",
+    "sounds": []
+  },
+  "creature.paraceratherium.ambient": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_idle_03"
+      }
+    ]
+  },
+  "creature.paraceratherium.attack": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_footstomp_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_footstomp_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_footstomp_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_jab_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_jab_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_attack_jab_03"
+      }
+    ]
+  },
+  "creature.paraceratherium.hurt": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_hurt_03"
+      }
+    ]
+  },
+  "creature.paraceratherium.death": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_death_03"
+      }
+    ]
+  },
+  "creature.paraceratherium.sleep": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.paraceratherium.wake": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.paraceratherium.warn": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_startled"
+      }
+    ]
+  },
+  "creature.paraceratherium.step": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_bronto_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_bronto_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_bronto_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_bronto_footstep_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_bronto_footstep_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_mega_move_water_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_mega_move_water_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_mega_move_water_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_mega_move_water_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/pw_mega_move_water_05"
+      }
+    ]
+  },
+  "creature.paraceratherium.eat": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/paraceratherium/s_paracer_eat_02"
+      }
+    ]
+  },
+  "creature.paraceratherium.flap": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": []
+  },
+  "creature.paraceratherium.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": []
+  },
+  "creature.paraceratherium.land": {
+    "subtitle": "entity.arksurvivalreturns.paraceratherium",
+    "sounds": []
+  },
+  "creature.terrorbird.ambient": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_3"
+      }
+    ]
+  },
+  "creature.terrorbird.attack": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_3"
+      }
+    ]
+  },
+  "creature.terrorbird.hurt": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_hurt_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_hurt_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_hurt_3"
+      }
+    ]
+  },
+  "creature.terrorbird.death": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_die_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_die_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_die_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_3"
+      }
+    ]
+  },
+  "creature.terrorbird.sleep": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": []
+  },
+  "creature.terrorbird.wake": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_tamed_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_tamed_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_tamed_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_torpid_out_wild_3"
+      }
+    ]
+  },
+  "creature.terrorbird.warn": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_startled_3"
+      }
+    ]
+  },
+  "creature.terrorbird.step": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_ptera_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_ptera_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_ptera_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_ptera_footstep_04"
+      }
+    ]
+  },
+  "creature.terrorbird.eat": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_carno_voc_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_carno_voc_eat_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_carno_voc_eat_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/pw_carno_voc_eat_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/ark_terrorbrid_attack_bite_3"
+      }
+    ]
+  },
+  "creature.terrorbird.flap": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/dimo_fly_flap_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/dimo_fly_flap_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/dimo_fly_flap_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/terrorbird/dimo_fly_flap_4"
+      }
+    ]
+  },
+  "creature.terrorbird.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": []
+  },
+  "creature.terrorbird.land": {
+    "subtitle": "entity.arksurvivalreturns.terrorbird",
+    "sounds": []
+  },
+  "creature.ravager.ambient": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_idle_03"
+      }
+    ]
+  },
+  "creature.ravager.attack": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_attack_claw_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_attack_claw_02"
+      }
+    ]
+  },
+  "creature.ravager.hurt": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_hurt_03"
+      }
+    ]
+  },
+  "creature.ravager.death": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_death_03"
+      }
+    ]
+  },
+  "creature.ravager.sleep": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.ravager.wake": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.ravager.warn": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_howl_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_howl_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_howl_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_startled"
+      }
+    ]
+  },
+  "creature.ravager.step": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_06"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_07"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_zipline_move_08"
+      }
+    ]
+  },
+  "creature.ravager.eat": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/ravager/s_cavewolf_eat_02"
+      }
+    ]
+  },
+  "creature.ravager.flap": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": []
+  },
+  "creature.ravager.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": []
+  },
+  "creature.ravager.land": {
+    "subtitle": "entity.arksurvivalreturns.ravager",
+    "sounds": []
+  },
+  "creature.archaeopteryx.ambient": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_idle_03"
+      }
+    ]
+  },
+  "creature.archaeopteryx.attack": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_attack_bite_03"
+      }
+    ]
+  },
+  "creature.archaeopteryx.hurt": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_hurt_03"
+      }
+    ]
+  },
+  "creature.archaeopteryx.death": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_death_03"
+      }
+    ]
+  },
+  "creature.archaeopteryx.sleep": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_torpid_idle"
+      }
+    ]
+  },
+  "creature.archaeopteryx.wake": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_torpid_out_tamed"
+      }
+    ]
+  },
+  "creature.archaeopteryx.warn": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_startled_flying_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_startled_flying_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_startled_ground_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_startled_ground_02"
+      }
+    ]
+  },
+  "creature.archaeopteryx.step": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/pw_dilo_footstep_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/pw_dilo_footstep_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/pw_dilo_footstep_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/pw_dilo_footstep_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/pw_dilo_footstep_05"
+      }
+    ]
+  },
+  "creature.archaeopteryx.eat": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_eat"
+      }
+    ]
+  },
+  "creature.archaeopteryx.flap": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_fly_1"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_fly_2"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_fly_3"
+      },
+      {
+        "name": "arksurvivalreturns:creature/archaeopteryx/s_arch_fly_4"
+      }
+    ]
+  },
+  "creature.archaeopteryx.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": []
+  },
+  "creature.archaeopteryx.land": {
+    "subtitle": "entity.arksurvivalreturns.archaeopteryx",
+    "sounds": []
+  },
+  "creature.quetzal.ambient": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_05"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_idle_06"
+      }
+    ]
+  },
+  "creature.quetzal.attack": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_attack_bite_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_attack_bite_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_attack_bite_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_attack_kick_02"
+      }
+    ]
+  },
+  "creature.quetzal.hurt": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_hurt_03"
+      }
+    ]
+  },
+  "creature.quetzal.death": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_death_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_death_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_death_03"
+      }
+    ]
+  },
+  "creature.quetzal.sleep": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_torpid_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_torpid_idle_02"
+      }
+    ]
+  },
+  "creature.quetzal.wake": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_torpid_out_tamed"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_torpid_out_wild"
+      }
+    ]
+  },
+  "creature.quetzal.warn": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_startled_ground"
+      }
+    ]
+  },
+  "creature.quetzal.step": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_move_04"
+      }
+    ]
+  },
+  "creature.quetzal.eat": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_eat_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_eat_02"
+      }
+    ]
+  },
+  "creature.quetzal.flap": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_03"
+      }
+    ]
+  },
+  "creature.quetzal.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_takeoff_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_takeoff_02"
+      }
+    ]
+  },
+  "creature.quetzal.land": {
+    "subtitle": "entity.arksurvivalreturns.quetzal",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_land_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_land_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_land_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_land_04"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/quetzal/s_quetzal_wingflap_03"
+      }
+    ]
+  },
+  "creature.dragon.ambient": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_idle_02"
+      }
+    ]
+  },
+  "creature.dragon.attack": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_attack_bite_02_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_attack_bite_01_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_attack_bite_01_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_attack_bite_01_03"
+      }
+    ]
+  },
+  "creature.dragon.hurt": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_hurt_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_hurt_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_hurt_03"
+      }
+    ]
+  },
+  "creature.dragon.death": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_death"
+      }
+    ]
+  },
+  "creature.dragon.sleep": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": []
+  },
+  "creature.dragon.wake": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": []
+  },
+  "creature.dragon.warn": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_idle_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_idle_02"
+      }
+    ]
+  },
+  "creature.dragon.step": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_move_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_move_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_move_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_move_04"
+      }
+    ]
+  },
+  "creature.dragon.eat": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": []
+  },
+  "creature.dragon.flap": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_manticore_fly_01"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_manticore_fly_02"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_manticore_fly_03"
+      },
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_manticore_fly_04"
+      }
+    ]
+  },
+  "creature.dragon.takeoff": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_takeoff"
+      }
+    ]
+  },
+  "creature.dragon.land": {
+    "subtitle": "entity.arksurvivalreturns.dragon",
+    "sounds": [
+      {
+        "name": "arksurvivalreturns:creature/dragon/s_dragon_land"
+      }
+    ]
+  }
+}

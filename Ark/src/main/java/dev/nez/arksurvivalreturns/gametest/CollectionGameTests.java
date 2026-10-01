@@ -4,6 +4,7 @@ import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureAttackClips;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.creature.CreatureSounds;
 import dev.nez.arksurvivalreturns.feature.land.LandFamily;
 import dev.nez.arksurvivalreturns.feature.land.LandWildlife;
 import dev.nez.arksurvivalreturns.registry.ModContent;
@@ -21,11 +22,21 @@ final class CollectionGameTests {
             Species.RAVAGER, Species.ARCHAEOPTERYX, Species.QUETZAL, Species.DRAGON};
 
     static void registration(GameTestHelper h) {
+        h.assertTrue(CreatureSounds.of(Species.CERATOSAURUS, CreatureSounds.Role.DEATH) == null,
+                "Missing original Ceratosaurus death recording must stay silent");
+        h.assertTrue(CreatureSounds.of(Species.TYRANNOSAURUS, CreatureSounds.Role.SLEEP) != null,
+                "Rex must use its original torpid breathing recordings");
         // Realm, group, clip and registry invariants for every registered species, not only the collection.
         for (var species : Species.values()) {
             var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);
             h.assertTrue(entity != null && entity.species() == species, "Registration mismatch: " + species);
             h.assertTrue(ModContent.EGGS.get(species).get() != null, "Missing spawn egg: " + species);
+            var attack = CreatureSounds.of(species, CreatureSounds.Role.ATTACK);
+            h.assertTrue(attack != null && net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.getKey(attack)
+                    .getNamespace().equals("arksurvivalreturns"), "Original attack sound missing: " + species);
+            entity.setBehavior(BehaviorState.SLEEP);
+            h.assertTrue(entity.ambientSoundRole() == CreatureSounds.Role.SLEEP, "Sleeping creature uses an idle call: " + species);
+            entity.setBehavior(BehaviorState.ROAM);
             h.assertTrue(Math.abs(entity.getBbHeight() - species.height) < .001, "Hitbox mismatch: " + species);
             h.assertFalse(entity.isLocomoting(), "Fresh creature already reported travel: " + species);
             h.assertTrue(entity.wildlife() != null && entity.wildlife().mind() != null, "Missing routine controller: " + species);

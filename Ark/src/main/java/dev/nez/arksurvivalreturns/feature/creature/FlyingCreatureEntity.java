@@ -77,7 +77,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         });
         setAction(next == Phase.PERCH ? BehaviorAction.REST : BehaviorAction.IDLE);
         if (next == Phase.TAKEOFF || before == Phase.PERCH && next == Phase.DEFENSE_CIRCLE) triggerAnim("transition", "takeoff");
-        if (next == Phase.PERCH) triggerAnim("transition", "land");
+        if (next == Phase.PERCH) {
+            triggerAnim("transition", "land");
+            playCreatureSound(CreatureSounds.Role.LAND, 0.8f);
+        }
+        if (next == Phase.TAKEOFF || before == Phase.PERCH && next == Phase.DEFENSE_CIRCLE)
+            playCreatureSound(CreatureSounds.Role.TAKEOFF, 0.8f);
         if (next == Phase.SWOOP) stopTriggeredAnim("transition", null);
         if (before == Phase.SWOOP && next == Phase.DEFENSE_CIRCLE) triggerAnim("transition", "pullout");
     }
@@ -94,7 +99,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     public void defendEgg(Player thief) {
         if (!validThief(thief)) return;
         engage(thief);
-        playSound(net.minecraft.sounds.SoundEvents.PARROT_AMBIENT, 0.8f, species() == Species.ARGENTAVIS ? 0.7f : 1.2f);
+        playCreatureSound(CreatureSounds.Role.WARN, 0.8f);
     }
     /** Circle-and-swoop engagement shared by egg defense and territorial apex flyers. */
     private void engage(Player target) {

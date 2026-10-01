@@ -19,3 +19,13 @@ The physics defaults deliberately skip events whose IDs begin with `ambient.` to
 ## Provenance and license
 
 The embedded physics source is derived from Sound Physics Remastered at commit `ce6c71b8a5fcffc50e75d0407c9c516b0bfca515` (GPL-3.0). Footstep assets are from Presence Footsteps at commit `975736d208e0fd7edb20b49eb57ef2c4f4cafda4` (MIT). Ambient assets are from AmbientSounds at commit `c9a07218c5581171adf4b0a9575f5a506eb4fd27` (LGPL-3.0). The corresponding license texts are retained under `third_party/`.
+
+## Original creature audio
+
+All 41 registered creatures use species-specific sound events from the installed Steam copy of ARK: Survival Evolved and ARK Additions (workshop 1522327484). The mod includes 1,106 original recordings, about 19.2 MiB, with 492 event definitions covering attacks, hurt, death, sleep, waking, warning calls, footsteps, eating and flight effects. Creature playback uses the original pitch. Sleep and wake playback is paced to avoid overlapping recordings.
+
+Available originals cover attacks for 41 species, hurt for 40, death for 39 and sleep for 29. The installed Ceratosaurus assets have no dedicated hurt or death recording; Kaprosuchus has no dedicated death recording. Missing categories remain silent. Sleep uses the creature's original torpid idle or breathing recordings where available, including idle cues explicitly referenced by original torpid-loop animations. Mosasaurus and Deinosuchus retain the shared cues referenced by their original character and animation packages.
+
+`assets/arksurvivalreturns/sounds.json` maps the events to recordings under `sounds/creature/`. The small `audio/creature_catalog.json` records available categories and maximum clip durations for the common/server runtime. `audio/creature_sources.json` preserves source package paths, dependency references, source and output hashes, sample rates, channels and missing categories.
+
+Reimport with `python Ark/tools/import_creature_audio.py` from the repository root; use `--inspect` to check source coverage without replacing resources. The script requires NumPy and SoundFile and accepts `--content` and `--workshop` for alternate installations. It reads the game files without modifying them, unpacks the workshop's chunked zlib data in memory, extracts complete Ogg streams, and decodes every recording before replacing resources. Mono originals are copied verbatim; stereo originals are downmixed to mono at their original sample rate for positional playback. The recordings retain their ARK/ARK Additions provenance.

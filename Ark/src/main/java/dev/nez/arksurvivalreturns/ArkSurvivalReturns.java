@@ -17,6 +17,7 @@ public final class ArkSurvivalReturns {
 
     public ArkSurvivalReturns(IEventBus bus, ModContainer container) {
         ModContent.ENTITIES.register(bus);
+        dev.nez.arksurvivalreturns.feature.creature.CreatureSounds.register(bus);
         ModContent.ITEMS.register(bus);
         ModContent.BLOCKS.register(bus);
         ModContent.TABS.register(bus);
