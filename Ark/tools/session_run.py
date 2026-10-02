@@ -7,7 +7,8 @@ Copies a saved world (or has the client create a new one), launches the dev clie
 the session recorder armed and a scripted player (client/SessionAutopilot: walk up to the nearest wild
 creature, stand in front of it, back away, pick the next; or only stand), waits until the recording is
 saved and the game has closed itself, and runs session_analyze.py, session_sight.py and
-session_review.py on the result.
+session_review.py and session_validate.py on the result. validation.json maps recorded evidence to
+Dashboard.csv items and identifies checks that were not exercised; it does not close whole features.
 
 The player starts healed and fed; --time moves the clock forward to that time of day when the player
 joins (the recording starts --delay seconds after the loading screen, about 1,300 ticks later with the
@@ -216,6 +217,7 @@ def main() -> int:
         # The played world holds the blocks of every chunk the session saw, so the sight rays are walked through it.
         subprocess.run([sys.executable, str(tools / "session_sight.py"), str(session), "--world", COPY])
         subprocess.run([sys.executable, str(tools / "session_review.py"), str(session)])
+        subprocess.run([sys.executable, str(tools / "session_validate.py"), str(session)])
         return result
     finally:
         if not arguments.keep_world:
