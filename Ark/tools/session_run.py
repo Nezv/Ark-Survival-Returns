@@ -1,7 +1,7 @@
 """Records a creature session in the real client with nobody at the keyboard, then analyses it.
 
-    python tools/session_run.py [--world NAME | --new-world [--seed SEED]] [--time TICKS] [--seconds 300]
-                                [--delay 60] [--mode approach|stand] [--scenario water]
+    python tools/session_run.py [--world NAME | --new-world [--seed SEED] [--flat]] [--time TICKS] [--seconds 300]
+                                [--delay 60] [--mode approach|stand] [--scenario water|encounter]
 
 Copies a saved world (or has the client create a new one), launches the dev client straight into it with
 the session recorder armed and a scripted player (client/SessionAutopilot: walk up to the nearest wild
@@ -25,6 +25,13 @@ six trials finish or at --seconds, whichever comes first.
 Allow --seconds 420 for all six, plus extra time if suitable routes are hard to find. Use --mode stand.
 This is controlled validation, not a natural census. A copied save's experimental-world confirmation
 is accepted on its disposable copy so Minecraft can enter it unattended.
+
+--scenario encounter spawns one wild creature at a time at a set distance from the standing survival
+observer, who is healed every tick: a Giganotosaurus at 30, 60 and 90 blocks and at 30 behind a line of
+oaks, by night; a Parasaur at 16 and a Pegomastax at 10 by day; a thirsty Lystrosaurus 20 blocks out with a
+pond ten blocks beyond it. Natural spawning is off and other mobs near the observer are removed before each
+trial. The recording ends when the seven trials are done (about five and a half minutes). Use it with
+--new-world --flat (open plains: grass on dirt, plains biome, no villages), --mode stand and --delay 0.
 """
 from __future__ import annotations
 
@@ -183,11 +190,12 @@ def main() -> int:
     parser.add_argument("--world", help="folder name under run/saves to copy (default: the one played last)")
     parser.add_argument("--new-world", action="store_true", help="have the client create a new survival world instead of copying one")
     parser.add_argument("--seed", help="seed of the new world (default: random; the recording's header holds it)")
+    parser.add_argument("--flat", action="store_true", help="the new world is flat open plains with no structures")
     parser.add_argument("--time", type=int, help="time of day, 0 to 23999, the clock is moved forward to when the player joins")
     parser.add_argument("--seconds", type=int, default=300, help="length of the recording, unpaused real seconds")
     parser.add_argument("--delay", type=int, default=60, help="seconds between the player gaining control and the recording")
     parser.add_argument("--mode", choices=("approach", "stand"), default="approach", help="what the scripted player does")
-    parser.add_argument("--scenario", choices=("water",), help="controlled test setup, explicitly recorded; requires --mode stand")
+    parser.add_argument("--scenario", choices=("water", "encounter"), help="controlled test setup, explicitly recorded; requires --mode stand")
     parser.add_argument("--shaders", action="store_true", help="leave the shader setting as it is")
     parser.add_argument("--keep-world", action="store_true", help=f"keep the played copy as run/saves/{COPY}")
     parser.add_argument("--timeout", type=int, help="seconds before the client is closed by force (default: delay + seconds + 600)")
@@ -201,6 +209,8 @@ def main() -> int:
         sys.exit("--time is a time of day, 0 to 23999")
     if arguments.scenario and arguments.mode != "stand":
         sys.exit("--scenario requires --mode stand")
+    if arguments.flat and not arguments.new_world:
+        sys.exit("--flat shapes a new world; add --new-world")
     world = None if arguments.new_world else arguments.world or newest_world()
     before = sessions()
     log = DIAGNOSTICS / "session_run.log"
@@ -212,7 +222,8 @@ def main() -> int:
             opening = [f"-ParkWorld={COPY}"]
         else:
             drop_copy()
-            opening = [f"-ParkFreshWorld={COPY}"] + ([f"-ParkSeed={arguments.seed}"] if arguments.seed else [])
+            opening = ([f"-ParkFreshWorld={COPY}"] + ([f"-ParkSeed={arguments.seed}"] if arguments.seed else [])
+                       + (["-ParkWorldType=flat"] if arguments.flat else []))
         lines_set(RUN / "options.txt", ":", {"pauseOnLostFocus": "false", "fullscreen": "false", "soundCategory_master": "0.0"})
         if not arguments.shaders:
             lines_set(RUN / "config" / "iris.properties", "=", {"enableShaders": "false"})
@@ -220,7 +231,8 @@ def main() -> int:
         scenario = "" if arguments.scenario is None else f"scenario={arguments.scenario}\n"
         (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\nheal=true\n{clock}{scenario}",
                                          encoding="utf-8")
-        print((f"world '{world}' copied to saves/{COPY}" if world else f"new world saves/{COPY}, seed {arguments.seed or 'random'}")
+        print((f"world '{world}' copied to saves/{COPY}" if world else
+               f"new {'flat plains ' if arguments.flat else ''}world saves/{COPY}, seed {arguments.seed or 'random'}")
               + f"; recording {arguments.seconds} s after {arguments.delay} s, player: {arguments.mode}, "
               f"time of day {'as saved' if arguments.time is None else arguments.time}, "
               f"scenario {arguments.scenario or 'none'}, "

@@ -155,6 +155,7 @@ public final class SessionRecorder {
         }
         session = new Session(server, player, true, delay * 1_000_000_000L, seconds * 1_000_000_000L, 0, "arm_file");
         if (scenario.equals("water")) session.waterTest = new WaterTestScenario();
+        else if (scenario.equals("encounter")) session.encounterTest = new EncounterScenario();
         else if (!scenario.isEmpty()) ArkSurvivalReturns.LOGGER.warn("Unknown recorder scenario: {}", scenario);
         // Setup of a scripted run (tools/session_run.py), noted in the header: the time of day and a healthy player.
         if (dayTime >= 0 && advanceTo(player.level(), dayTime)) session.dayTimeSet = dayTime;

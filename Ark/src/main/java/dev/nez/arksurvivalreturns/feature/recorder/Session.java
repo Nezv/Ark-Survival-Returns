@@ -121,6 +121,7 @@ final class Session {
     boolean healed;
     /** Explicit arm-file intervention; ordinary recording never instantiates a scenario. */
     WaterTestScenario waterTest;
+    EncounterScenario encounterTest;
     private Row client;
     Phase phase = Phase.WAIT_READY;
 
@@ -195,6 +196,9 @@ final class Session {
             if (waterTest != null) {
                 try { waterTest.tick(this); } catch (Throwable t) { fail("water_test", t); waterTest.close(this, "error"); waterTest = null; }
             }
+            if (encounterTest != null) {
+                try { encounterTest.tick(this); } catch (Throwable t) { fail("encounter_test", t); encounterTest.close(this, "error"); encounterTest = null; }
+            }
         }
     }
 
@@ -253,6 +257,7 @@ final class Session {
         if (phase == Phase.CLOSED) return;
         boolean recorded = phase == Phase.RECORDING;
         if (recorded && waterTest != null) waterTest.close(this, "session_" + reason);
+        if (recorded && encounterTest != null) encounterTest.close(this, "session_" + reason);
         phase = Phase.CLOSED;
         SessionRecorder.recording(false);
         SessionRecorder.closed(this);
@@ -835,6 +840,7 @@ final class Session {
         if (dayTimeSet >= 0) row.put("day_time_set", dayTimeSet);
         if (healed) row.flag("healed", true);
         if (waterTest != null) row.row("scenario", WaterTestScenario.settings());
+        if (encounterTest != null) row.row("scenario", EncounterScenario.settings());
         var rules = new Row("rules");
         overworld.getGameRules().availableRules().sorted(java.util.Comparator.comparing(rule -> rule.id()))
                 .forEach(rule -> rules.put(rule.id(), String.valueOf(overworld.getGameRules().get(rule))));

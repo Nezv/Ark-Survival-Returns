@@ -384,7 +384,7 @@ def runs(rows: list[dict], key):
 
 # A person's mark flags a moment worth reading; the scripted player of an unattended run (tools/session_run.py)
 # marks its own steps with notes that start with auto:, and those are a timeline, not incidents.
-BY_HAND = "coalesce(note, '') NOT LIKE 'auto:%'"
+BY_HAND = "coalesce(note, '') NOT LIKE 'auto:%' AND coalesce(note, '') NOT LIKE 'test:%'"
 
 
 class Incidents:
@@ -699,6 +699,49 @@ class Incidents:
 
 # ---------------------------------------------------------------------------------- summary
 
+def encounters(con) -> list[dict]:
+    """One row per trial of the encounter scenario: what the spawned creature made of the observer, and when."""
+    spawns = query(con, "SELECT e, tick, note FROM events WHERE ev = 'test_encounter' AND r = 'spawn' ORDER BY tick")
+    ends = query(con, "SELECT e, tick, r, note FROM events WHERE ev = 'test_encounter' AND r NOT IN ('spawn', 'setup', 'complete', 'setup_failed') ORDER BY tick")
+    rows = []
+    for spawn in spawns:
+        trial = json.loads(spawn["note"])
+        end = next((row for row in ends if row["e"] == spawn["e"] and row["tick"] >= spawn["tick"]), None)
+        e, t0, t1 = spawn["e"], spawn["tick"], end["tick"] if end else 10 ** 9
+        span = [e, t0, t1]
+        noticed = con.execute("""
+            SELECT min(d.tick), arg_min(d.s_by, d.tick), arg_min(round(d.s_gap, 1), d.tick) FROM decisions d JOIN subject u ON d.sensed = u.e
+            WHERE d.e = ? AND d.tick BETWEEN ? AND ?""", span).fetchone()
+        states = [row[0] for row in con.execute("""
+            SELECT st FROM (SELECT st, tick, lag(st) OVER (ORDER BY tick) AS before FROM decisions WHERE e = ? AND tick BETWEEN ? AND ?)
+            WHERE before IS NULL OR before <> st ORDER BY tick""", span).fetchall()]
+        strikes = dict(con.execute("""
+            SELECT v.r, count(*) FROM events v JOIN subject u ON u.e = v.at_e WHERE v.ev = 'strike' AND v.e = ? AND v.tick BETWEEN ? AND ?
+            GROUP BY 1""", span).fetchall())
+        first_strike = con.execute("""
+            SELECT min(v.tick) FROM events v JOIN subject u ON u.e = v.at_e WHERE v.ev = 'strike' AND v.r = 'start' AND v.e = ? AND v.tick BETWEEN ? AND ?""",
+                                   span).fetchone()[0]
+        gaps = con.execute("SELECT min(player_gap), max(player_gap) FROM status_x WHERE e = ? AND tick BETWEEN ? AND ?", span).fetchone()
+        moved = con.execute("""
+            SELECT sum(step) FROM (SELECT sqrt(power(x - lag(x) OVER w, 2) + power(z - lag(z) OVER w, 2)) AS step
+                                   FROM motion WHERE e = ? AND tick BETWEEN ? AND ? WINDOW w AS (ORDER BY tick))""", span).fetchone()[0]
+        trampled = con.execute("""
+            SELECT sum(try_cast(regexp_extract(to_name, 'logs=(\\d+)', 1) AS INTEGER)), sum(try_cast(regexp_extract(to_name, 'leaves=(\\d+)', 1) AS INTEGER))
+            FROM events WHERE ev = 'trample' AND e = ? AND tick BETWEEN ? AND ?""", span).fetchone()
+        stalls = con.execute("SELECT count(*) FROM events WHERE ev = 'stall' AND e = ? AND tick BETWEEN ? AND ?", span).fetchone()[0]
+        drink = con.execute("SELECT min(tick) FROM decisions WHERE e = ? AND st = 'DRINK' AND tick BETWEEN ? AND ?", span).fetchone()[0]
+        seconds = lambda tick: None if tick is None else round((tick - t0) / 20, 1)
+        rows.append({"trial": trial.get("trial"), "species": trial.get("species"), "distance": trial.get("distance"),
+                     "start_gap": round(trial.get("gap", 0), 1), "day_time": trial.get("day_time"),
+                     "result": end["r"] if end else "unfinished", "seconds": seconds(t1) if end else None,
+                     "noticed_after_s": seconds(noticed[0]), "noticed_by": noticed[1], "noticed_at_gap": noticed[2],
+                     "states": states, "first_strike_after_s": seconds(first_strike), "strikes": strikes,
+                     "closest_gap": None if gaps[0] is None else round(gaps[0], 1), "farthest_gap": None if gaps[1] is None else round(gaps[1], 1),
+                     "moved": None if moved is None else round(moved, 1), "trampled_logs": trampled[0], "trampled_leaves": trampled[1],
+                     "stalls": stalls, "drank_after_s": seconds(drink)})
+    return rows
+
+
 def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
     header, end = meta.get("header") or {}, meta.get("end") or {}
     one = lambda sql: con.execute(sql).fetchone()
@@ -829,6 +872,7 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
         "turn_in_place": turning,
         "flee": flee,
         "pursuit": pursuit,
+        "encounters": encounters(con),
         "incident_counts": dict(kinds),
         "top_incidents": [item for item in incidents if not item["normal"]][:12],
         "recorder_end": {key: end.get(key) for key in ("ticks", "emitted", "dropped", "errors", "terrain", "terrain_suppressed")},
@@ -885,6 +929,13 @@ def show(summary: dict):
     print(f"pursuit: strikes at you {[(row['species'], row['result'], row['n']) for row in pursuit['strikes_at_player']]}; "
           f"trees knocked down {pursuit['trampling']}; a run shown on {pursuit['snapshots_showing_a_run']} snapshots, "
           f"{pursuit['of_them_standing']} of them standing")
+    if summary["encounters"]:
+        print("encounter trials (trial: result after s | noticed after s by sense at gap | states | first strike after s, strikes | "
+              "closest-farthest gap | moved | trampled logs/leaves | stalls | drank after s):")
+        for t in summary["encounters"]:
+            print(f"  {t['trial']:<22} {t['result']:<9} {t['seconds']} | {t['noticed_after_s']} {t['noticed_by']} {t['noticed_at_gap']} | "
+                  f"{'>'.join(t['states'])} | {t['first_strike_after_s']} {t['strikes']} | {t['closest_gap']}-{t['farthest_gap']} | "
+                  f"{t['moved']} | {t['trampled_logs']}/{t['trampled_leaves']} | {t['stalls']} | {t['drank_after_s']}")
     if summary["script"]:
         print("scripted player (game s, step): " + "; ".join(f"{step['t']:g} {step['step']}" for step in summary["script"]))
     print(f"incidents: {summary['incident_counts']}")

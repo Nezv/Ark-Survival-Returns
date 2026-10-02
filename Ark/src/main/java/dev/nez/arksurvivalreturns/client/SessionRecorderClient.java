@@ -83,8 +83,21 @@ public final class SessionRecorderClient {
         var settings = new LevelSettings(FRESH_WORLD, GameType.SURVIVAL, LevelSettings.DifficultySettings.DEFAULT, false,
                 WorldDataConfiguration.DEFAULT);
         ArkSurvivalReturns.LOGGER.info("Session recorder: creating the world {} with seed {}", FRESH_WORLD, seed);
-        mc.createWorldOpenFlows().createFreshLevel(FRESH_WORLD, settings, new WorldOptions(seed, true, false),
-                WorldPresets::createNormalWorldDimensions, mc.screen);
+        boolean flat = "flat".equals(System.getProperty("arksurvivalreturns.record.worldType", ""));
+        mc.createWorldOpenFlows().createFreshLevel(FRESH_WORLD, settings, new WorldOptions(seed, !flat, false),
+                flat ? SessionRecorderClient::flatPlains : WorldPresets::createNormalWorldDimensions, mc.screen);
+    }
+
+    /** Open plains to the horizon for controlled encounters: one grass layer on dirt, the plains biome, no structures. */
+    private static net.minecraft.world.level.levelgen.WorldDimensions flatPlains(net.minecraft.core.HolderLookup.Provider registries) {
+        var biomes = registries.lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        var defaults = net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings.getDefault(biomes,
+                registries.lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE_SET),
+                registries.lookupOrThrow(net.minecraft.core.registries.Registries.PLACED_FEATURE));
+        var plains = defaults.withBiomeAndLayers(defaults.getLayersInfo(), java.util.Optional.of(net.minecraft.core.HolderSet.direct()),
+                biomes.getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS));
+        return WorldPresets.createNormalWorldDimensions(registries)
+                .replaceOverworldGenerator(registries, new net.minecraft.world.level.levelgen.FlatLevelSource(plains));
     }
 
     /** The shader pack Iris is drawing with, read through its public API so Iris stays optional. */

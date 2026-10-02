@@ -58,6 +58,7 @@ neoForge {
             if (project.hasProperty('arkWorld')) programArguments.addAll '--quickPlaySingleplayer', project.property('arkWorld').toString()
             if (project.hasProperty('arkFreshWorld')) systemProperty 'arksurvivalreturns.record.freshWorld', project.property('arkFreshWorld').toString()
             if (project.hasProperty('arkSeed')) systemProperty 'arksurvivalreturns.record.seed', project.property('arkSeed').toString()
+            if (project.hasProperty('arkWorldType')) systemProperty 'arksurvivalreturns.record.worldType', project.property('arkWorldType').toString()
             if (project.hasProperty('arkAutopilot')) systemProperty 'arksurvivalreturns.autopilot', project.property('arkAutopilot').toString()
             if (project.hasProperty('arkQuit')) systemProperty 'arksurvivalreturns.record.quit', 'true'
         }
