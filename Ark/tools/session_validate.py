@@ -26,6 +26,59 @@ def query(con, sql, parameters=None):
     return [dict(zip(names, row)) for row in cursor.fetchall()]
 
 
+def water_trials(con) -> dict:
+    """Cross-check marked interventions against recorded decisions, including unsuccessful trials."""
+    events = query(con, "SELECT e, tick, game_s(tick) AS game_s, r, note FROM events WHERE ev = 'test_water' ORDER BY seq")
+    for event in events:
+        event["details"] = json.loads(event.pop("note"))
+        # The embedded RowJson envelope is metadata, not another simulation record.
+        event["details"].pop("t", None)
+        event["details"].pop("k", None)
+    trials = []
+    for spawn in (event for event in events if event["r"] == "spawn"):
+        outcome = next((event for event in events if event["e"] == spawn["e"] and event["r"] != "spawn"), None)
+        end_tick = outcome["tick"] if outcome else con.execute("SELECT max(tick) FROM ticks").fetchone()[0]
+        samples = query(con, """
+            SELECT count(*) AS decision_passes, count(*) FILTER(st = 'SEEK_WATER') AS seek_passes,
+                count(*) FILTER(st = 'DRINK') AS drink_passes, min(thirst) AS minimum_thirst,
+                min(game_s(tick)) FILTER(water_dest_x IS NOT NULL) AS first_water_destination_s,
+                min(game_s(tick)) FILTER(st = 'DRINK') AS first_drink_s,
+                count(*) FILTER(st IN ('FLEE', 'DEFEND', 'HUNT', 'THREATEN', 'ALERT')) AS threat_passes,
+                count(*) FILTER(st = 'RETURN_HOME') AS home_passes
+            FROM decisions WHERE e = ? AND tick BETWEEN ? AND ?
+        """, [spawn["e"], spawn["tick"], end_tick])[0]
+        tiers = query(con, "SELECT tier, count(*) AS snapshots FROM status WHERE e = ? AND tick BETWEEN ? AND ? GROUP BY tier",
+                      [spawn["e"], spawn["tick"], end_tick])
+        paths = query(con, """
+            SELECT n.o, count(*) AS requests FROM decision_nav n JOIN decisions d ON d.seq = n.seq
+            WHERE d.e = ? AND d.tick BETWEEN ? AND ? GROUP BY n.o ORDER BY requests DESC
+        """, [spawn["e"], spawn["tick"], end_tick])
+        first_drink = query(con, "SELECT game_s(tick) AS game_s, x, y, z, thirst FROM decisions WHERE e = ? AND st = 'DRINK' ORDER BY tick, seq LIMIT 1",
+                            [spawn["e"]])
+        if first_drink:
+            first = first_drink[0]
+            first["after_spawn_s"] = first["game_s"] - spawn["game_s"]
+            start = spawn["details"].get("start")
+            if start:
+                first["horizontal_displacement"] = math.hypot(first["x"] - start[0] - 0.5, first["z"] - start[2] - 0.5)
+        movement = query(con, """
+            WITH steps AS (
+                SELECT x, z, lag(x) OVER w AS previous_x, lag(z) OVER w AS previous_z
+                FROM motion WHERE e = ? AND tick BETWEEN ? AND ? WINDOW w AS (ORDER BY tick, seq))
+            SELECT count(*) AS motion_samples, sum(sqrt(power(x - previous_x, 2) + power(z - previous_z, 2)))
+                AS horizontal_distance_walked FROM steps
+        """, [spawn["e"], spawn["tick"], end_tick])[0]
+        result = "incomplete" if outcome is None else "observed_quenched" if (
+            outcome["r"] == "quenched" and samples["drink_passes"] > 0
+            and samples["minimum_thirst"] is not None and samples["minimum_thirst"] <= 0.2
+        ) else "needs_review"
+        trials.append({"e": spawn["e"], **spawn["details"], "started_s": spawn["game_s"], "result": result,
+                       "outcome": outcome, "decisions": samples, "tiers": tiers, "paths": paths,
+                       "movement": movement,
+                       "first_drink": first_drink[0] if first_drink else None})
+    return {"events": events, "trials": trials, "complete": any(event["r"] == "complete" for event in events)}
+
+
 def validate(folder: Path) -> dict:
     summary = json.loads((folder / "summary.json").read_text(encoding="utf-8"))
     incidents = [json.loads(line) for line in (folder / "incidents.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -132,6 +185,7 @@ def validate(folder: Path) -> dict:
             FROM decisions d JOIN entities c ON c.e = d.e GROUP BY c.species
             HAVING seek_passes > 0 OR drink_passes > 0 ORDER BY seek_passes DESC
         """)
+        controlled_water = water_trials(con)
         flee_stalls = query(con, """
             WITH marked AS (
                 SELECT d.*, lag(st) OVER w AS previous, lag(tick) OVER w AS previous_tick
@@ -189,6 +243,14 @@ def validate(folder: Path) -> dict:
         {"id": "P02", "check": "death and respawn", "result": "observed" if deaths and respawns else "not_exercised",
          "limit": "Downed attachment, HUD, ally revive and bedroll respawn are not directly captured."},
     ]
+    if header.get("scenario", {}).get("name") == "water":
+        trials = controlled_water["trials"]
+        checks.append({"id": "B09", "check": "controlled reachable-bank water trials",
+                       "result": "not_exercised" if not trials else "observed_quenched" if (
+                           len(trials) == 6 and controlled_water["complete"]
+                           and all(trial["result"] == "observed_quenched" for trial in trials)
+                       ) else "needs_review",
+                       "limit": "Command-spawned persistent animals, creative observer, verified natural banks; this does not measure natural water encounter frequency."})
     if not usable:
         for check in checks:
             if check["id"] != "B07":
@@ -197,6 +259,7 @@ def validate(folder: Path) -> dict:
             "recording_started_after_join_s": header.get("waited_ms", 0) / 1000.0,
             "build": summary["setup"]["build"], "seed": header.get("server", {}).get("seed"),
             "integrity": summary["integrity"], "world": summary["world"], "checks": checks,
+            "scenario": header.get("scenario"), "controlled_water": controlled_water,
             "population": {"radius": radius, "density": density,
                 "unscaled_reference": round(density * math.pi * radius * radius / 256) if density is not None else None,
                 "actual_target_recorded": False, "census": census, "species": species, "origins": origins},
