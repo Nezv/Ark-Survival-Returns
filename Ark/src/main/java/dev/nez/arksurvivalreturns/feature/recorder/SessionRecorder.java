@@ -44,6 +44,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * <p>The game code calls the static hooks below. They do nothing but a flag test while no session
  * records, and while one does they only copy what the caller already computed: no sense, path, random
  * number or mind step is ever run for the recording's sake.
+ * An arm file with {@code scenario=water} explicitly opts into a separate experiment controller:
+ * it changes the observer and spawns thirsty animals, noting every intervention in the recording.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class SessionRecorder {
@@ -136,6 +138,7 @@ public final class SessionRecorder {
         if (session != null || server == null || !armed(server)) return;
         int delay = DELAY_SECONDS, seconds = RECORD_SECONDS, dayTime = -1;
         boolean heal = false;
+        String scenario = "";
         try {
             var settings = new Properties();
             try (var in = Files.newInputStream(armFile(server))) { settings.load(in); }
@@ -143,6 +146,7 @@ public final class SessionRecorder {
             seconds = Math.clamp(Integer.parseInt(settings.getProperty("recordSeconds", "" + RECORD_SECONDS).trim()), 1, 3600);
             dayTime = Math.clamp(Integer.parseInt(settings.getProperty("dayTime", "-1").trim()), -1, 23999);
             heal = Boolean.parseBoolean(settings.getProperty("heal", "false").trim());
+            scenario = settings.getProperty("scenario", "").trim();
             // One shot: the next join is an ordinary one again.
             Files.delete(armFile(server));
         } catch (IOException | NumberFormatException e) {
@@ -150,6 +154,8 @@ public final class SessionRecorder {
             try { Files.deleteIfExists(armFile(server)); } catch (IOException ignored) {}
         }
         session = new Session(server, player, true, delay * 1_000_000_000L, seconds * 1_000_000_000L, 0, "arm_file");
+        if (scenario.equals("water")) session.waterTest = new WaterTestScenario();
+        else if (!scenario.isEmpty()) ArkSurvivalReturns.LOGGER.warn("Unknown recorder scenario: {}", scenario);
         // Setup of a scripted run (tools/session_run.py), noted in the header: the time of day and a healthy player.
         if (dayTime >= 0 && advanceTo(player.level(), dayTime)) session.dayTimeSet = dayTime;
         if (heal) {

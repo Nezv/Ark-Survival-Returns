@@ -1,7 +1,7 @@
 """Records a creature session in the real client with nobody at the keyboard, then analyses it.
 
     python tools/session_run.py [--world NAME | --new-world [--seed SEED]] [--time TICKS] [--seconds 300]
-                                [--delay 60] [--mode approach|stand]
+                                [--delay 60] [--mode approach|stand] [--scenario water]
 
 Copies a saved world (or has the client create a new one), launches the dev client straight into it with
 the session recorder armed and a scripted player (client/SessionAutopilot: walk up to the nearest wild
@@ -16,14 +16,25 @@ default). For the run only: shaders off, windowed, muted, no pause when the wind
 options.txt, the Iris setting and an arm file that was already there are put back afterwards, also when
 the run fails or is interrupted, and the played world is deleted; the world it was copied from is never
 opened.
+
+--scenario water runs six explicitly marked thirsty-animal trials at loaded natural shorelines.
+The observer becomes creative and flies above the bank; animals keep their ordinary wild AI. Setup
+checks a reachable path without giving it to the animal. Starts are 12 and 20 blocks from a verified
+bank (other closer water may exist). Each trial has 60 game seconds to drink; recording ends once all
+six trials finish or at --seconds, whichever comes first.
+Allow --seconds 420 for all six, plus extra time if suitable routes are hard to find. Use --mode stand.
+This is controlled validation, not a natural census. A copied save's experimental-world confirmation
+is accepted on its disposable copy so Minecraft can enter it unattended.
 """
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import time
@@ -93,6 +104,15 @@ def copy_world(name: str) -> Path:
     drop_copy()
     shutil.copytree(source, target, ignore=shutil.ignore_patterns("session.lock"))
     (target / MARKER).write_text(f"Copy of '{name}' made by tools/session_run.py for one recording; safe to delete.\n", encoding="utf-8")
+    # Minecraft otherwise leaves quick-play at its experimental-world backup prompt. This world is
+    # already an isolated disposable copy; accept only its existing byte flag, never the original.
+    name_tag = b"confirmedExperimentalSettings"
+    unset = b"\x01" + struct.pack(">H", len(name_tag)) + name_tag + b"\x00"
+    level = target / "level.dat"
+    raw = gzip.decompress(level.read_bytes())
+    if raw.count(unset) == 1:
+        level.write_bytes(gzip.compress(raw.replace(unset, unset[:-1] + b"\x01", 1), mtime=0))
+        print("accepted experimental-world confirmation on the disposable copy", flush=True)
     return target
 
 
@@ -167,6 +187,7 @@ def main() -> int:
     parser.add_argument("--seconds", type=int, default=300, help="length of the recording, unpaused real seconds")
     parser.add_argument("--delay", type=int, default=60, help="seconds between the player gaining control and the recording")
     parser.add_argument("--mode", choices=("approach", "stand"), default="approach", help="what the scripted player does")
+    parser.add_argument("--scenario", choices=("water",), help="controlled test setup, explicitly recorded; requires --mode stand")
     parser.add_argument("--shaders", action="store_true", help="leave the shader setting as it is")
     parser.add_argument("--keep-world", action="store_true", help=f"keep the played copy as run/saves/{COPY}")
     parser.add_argument("--timeout", type=int, help="seconds before the client is closed by force (default: delay + seconds + 600)")
@@ -178,6 +199,8 @@ def main() -> int:
         sys.exit("--world and --new-world exclude each other")
     if arguments.time is not None and not 0 <= arguments.time <= 23999:
         sys.exit("--time is a time of day, 0 to 23999")
+    if arguments.scenario and arguments.mode != "stand":
+        sys.exit("--scenario requires --mode stand")
     world = None if arguments.new_world else arguments.world or newest_world()
     before = sessions()
     log = DIAGNOSTICS / "session_run.log"
@@ -194,11 +217,13 @@ def main() -> int:
         if not arguments.shaders:
             lines_set(RUN / "config" / "iris.properties", "=", {"enableShaders": "false"})
         clock = "" if arguments.time is None else f"dayTime={arguments.time}\n"
-        (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\nheal=true\n{clock}",
+        scenario = "" if arguments.scenario is None else f"scenario={arguments.scenario}\n"
+        (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\nheal=true\n{clock}{scenario}",
                                          encoding="utf-8")
         print((f"world '{world}' copied to saves/{COPY}" if world else f"new world saves/{COPY}, seed {arguments.seed or 'random'}")
               + f"; recording {arguments.seconds} s after {arguments.delay} s, player: {arguments.mode}, "
               f"time of day {'as saved' if arguments.time is None else arguments.time}, "
+              f"scenario {arguments.scenario or 'none'}, "
               f"shaders {'as set' if arguments.shaders else 'off'}; game output in {log}", flush=True)
         code = launch(arguments.mode, arguments.timeout or arguments.delay + arguments.seconds + 600, log, before, opening)
     finally:
