@@ -345,7 +345,10 @@ public final class WildlifeGoal extends WildlifeController {
         boolean needsWater = brain.thirst() >= 0.6 || before == BehaviorState.DRINK;
         boolean needsForage = !mob.species().predator
                 && (brain.hunger() >= 0.4 || before == BehaviorState.FORAGE);
-        boolean water = needsWater && nearbyWater(world);
+        // The body stops within a step of the bank it chose, and the bank is where the reach was checked:
+        // from the neighbouring block the same water can be out of reach or behind the rim.
+        boolean water = needsWater && (nearbyWater(world)
+                || canNavigate() && waterDestination != null && arrived(waterDestination) && waterAt(world, waterDestination));
         boolean forage = needsForage && LandWildlife.forage(world, mob.species(), mob.blockPosition());
         boolean huntable = visible && prey(sensed) && (!guardedPrey || sensed.getHealth() < sensed.getMaxHealth() * 0.35);
         boolean danger = attacked || herdThreat != null || alarmTicks > 0
@@ -715,12 +718,15 @@ public final class WildlifeGoal extends WildlifeController {
             var offset = WATER_OFFSETS.get(waterSearchIndex++);
             var water = dev.nez.arksurvivalreturns.feature.aquatic.Water.surfaceWater(world,
                     waterSearchOrigin.getX() + offset.getX(), waterSearchOrigin.getZ() + offset.getZ());
-            if (water == null || Math.abs(water.getY() + 1 - mob.getY()) > 6) continue;
+            if (water == null) continue;
+            // A valley floor twenty blocks off is easily ten blocks down; whether the way there exists is the path's call.
+            double rise = 6 + 0.5 * Math.hypot(water.getX() + 0.5 - mob.getX(), water.getZ() + 0.5 - mob.getZ());
+            if (Math.abs(water.getY() + 1 - mob.getY()) > rise) continue;
             int reach = Math.min(16, 2 + (int) Math.ceil(mob.getBbWidth() / 2));
             for (int edge = 1; edge <= reach; edge++) for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
                 var column = water.relative(direction, edge);
                 var pos = SpawnRules.surface(world, column.getX(), column.getZ());
-                if (pos == null || Math.abs(pos.getY() - mob.getY()) > 6) continue;
+                if (pos == null || Math.abs(pos.getY() - mob.getY()) > rise) continue;
                 var box = SpawnRules.bounds(mob.species(), pos);
                 if (!SpawnRules.loaded(world, box.inflate(reach + 1)) || !world.getWorldBorder().isWithinBounds(box)
                         || !world.noCollision(mob, box, true)) continue;

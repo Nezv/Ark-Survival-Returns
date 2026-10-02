@@ -313,6 +313,40 @@ final class WildlifeRegressionGameTests {
             h.succeed();
         });
     }
+    /** The recorded failure: water eight blocks below the animal, a walkable slope down to it, and no attempt to go. */
+    static void downhill(GameTestHelper h) {
+        floor(h);
+        for (int x = 60; x <= 69; x++) for (int z = 60; z <= 69; z++) for (int y = 3; y <= 9; y++) h.setBlock(x, y, z, Blocks.DIRT);
+        for (int step = 1; step <= 6; step++) for (int z = 62; z <= 66; z++) for (int y = 3; y <= 9 - step; y++)
+            h.setBlock(69 + step, y, z, Blocks.DIRT);
+        h.setBlock(80, 2, 64, Blocks.WATER);
+        var mob = wild(h, Species.PEGOMASTAX, new Vec3(64.5, 10, 64.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        mob.wildlife().mind().restoreNeeds(0.1, 0.9, 0.1);
+        var noChunkLoads = NavigationGameTests.watchChunkLoads(h);
+        boolean[] drank = {false};
+        h.onEachTick(() -> { if (mob.behavior() == BehaviorState.DRINK) drank[0] = true; });
+        h.runAfterDelay(400, () -> {
+            h.assertTrue(drank[0], "An animal on high ground never went down to the water below: " + mob.position() + " " + mob.behavior());
+            noChunkLoads.run();
+            h.succeed();
+        });
+    }
+    /**
+     * The recorded failure: the body stops a step short of the bank it chose, in the next block, and from there
+     * the water is one block out of reach. The only bank here is three blocks from the water, over planks.
+     */
+    static void arrival(GameTestHelper h) {
+        floor(h);
+        for (int x = 77; x <= 83; x++) for (int z = 61; z <= 67; z++)
+            if (x != 83 || z != 64) h.setBlock(x, 2, z, Blocks.OAK_PLANKS);
+        h.setBlock(80, 2, 64, Blocks.WATER);
+        var mob = wild(h, Species.PEGOMASTAX, new Vec3(84.1, 3, 64.5)); mob.setNoAi(true); mob.setOnGround(true);
+        mob.wildlife().mind().restoreNeeds(0.1, 0.9, 0.1);
+        for (int i = 0; i < 6; i++) mob.wildlife().think();
+        h.assertTrue(mob.behavior() == BehaviorState.DRINK,
+                "An animal a step from its chosen bank kept looking for water: " + mob.behavior() + " thirst=" + mob.wildlife().mind().thirst());
+        h.succeed();
+    }
     /** No water anywhere: a short look around, then the animal makes do instead of searching without end. */
     static void dryRange(GameTestHelper h) {
         floor(h);
