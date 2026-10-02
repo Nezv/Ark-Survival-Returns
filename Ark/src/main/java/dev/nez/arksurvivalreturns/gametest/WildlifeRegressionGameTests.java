@@ -287,5 +287,46 @@ final class WildlifeRegressionGameTests {
             h.succeed();
         });
     }
+    /** The recorded failure: a bank just past the home range, and an animal that turned back at the line every second. */
+    static void farBank(GameTestHelper h) {
+        floor(h);
+        var mob = wild(h, Species.PEGOMASTAX, new Vec3(20.5, 3, 64.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        int leash = dev.nez.arksurvivalreturns.feature.land.LandWildlife.leash(Species.PEGOMASTAX);
+        mob.wildlife().home();
+        h.assertTrue(leash <= 64, "Water fixture needs a home range that fits the test floor: " + leash);
+        // Two blocks inside the range, with the only water eleven blocks farther out.
+        int reach = 20 + leash - 2;
+        Vec3 start = h.absoluteVec(new Vec3(reach + 0.5, 3, 64.5));
+        mob.setPos(start.x, start.y, start.z);
+        h.setBlock(reach + 11, 2, 64, Blocks.WATER);
+        mob.wildlife().mind().restoreNeeds(0.1, 0.9, 0.1);
+        var noChunkLoads = NavigationGameTests.watchChunkLoads(h);
+        boolean[] drank = {false}, returning = {false};
+        h.onEachTick(() -> {
+            if (mob.behavior() == BehaviorState.DRINK) drank[0] = true;
+            if (drank[0] && mob.behavior() == BehaviorState.RETURN_HOME) returning[0] = true;
+        });
+        h.runAfterDelay(460, () -> {
+            h.assertTrue(drank[0], "An animal never reached a bank just past its home range: " + mob.position() + " " + mob.behavior());
+            h.assertTrue(returning[0], "An animal that drank past its home range did not start for home");
+            noChunkLoads.run();
+            h.succeed();
+        });
+    }
+    /** No water anywhere: a short look around, then the animal makes do instead of searching without end. */
+    static void dryRange(GameTestHelper h) {
+        floor(h);
+        var mob = wild(h, Species.PEGOMASTAX, new Vec3(64.5, 3, 64.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        mob.wildlife().mind().restoreNeeds(0.1, 0.9, 0.1);
+        int[] seeking = {0};
+        h.onEachTick(() -> { if (mob.behavior() == BehaviorState.SEEK_WATER) seeking[0]++; });
+        h.runAfterDelay(200, () -> {
+            h.assertTrue(seeking[0] > 0, "Dry range fixture never made the animal look for water");
+            h.assertTrue(seeking[0] <= 100, "A thirsty animal stood looking for water for " + seeking[0] + " ticks");
+            h.assertTrue(mob.wildlife().mind().thirst() < 0.6 && mob.behavior() != BehaviorState.SEEK_WATER,
+                    "With no water in reach the search never ended: thirst=" + mob.wildlife().mind().thirst() + " " + mob.behavior());
+            h.succeed();
+        });
+    }
     private WildlifeRegressionGameTests() {}
 }

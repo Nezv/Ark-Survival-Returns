@@ -336,8 +336,10 @@ public final class WildlifeGoal extends WildlifeController {
         if (cycle && night && !mob.species().predator) intimidating = false;
         if (mob.species().predator && guardedPrey && (mob.distanceTo(sensed) < mob.getBbWidth() + 8
                 || mob.getHealth() < mob.getMaxHealth() * 0.45)) intimidating = true;
-        boolean far = LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
         BehaviorState before = brain.state();
+        // The bank an animal has chosen may lie past its range: it goes, drinks and walks home afterwards.
+        boolean watering = before == BehaviorState.DRINK || before == BehaviorState.SEEK_WATER && waterDestination != null;
+        boolean far = !watering && LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
         if (brain.recovery() > 0 && arrived(Vec3.atBottomCenterOf(home()))) brain.arrivedHome();
         // Terrain probes are only useful when the mind can act on them; other states skip the block sweep.
         boolean needsWater = brain.thirst() >= 0.6 || before == BehaviorState.DRINK;
@@ -543,8 +545,8 @@ public final class WildlifeGoal extends WildlifeController {
         for (int i = 0; i < 8; i++) {
             var pos = SpawnRules.surface(world, (int) Math.floor(center.x) + mob.getRandom().nextInt(radius * 2 + 1) - radius,
                     (int) Math.floor(center.z) + mob.getRandom().nextInt(radius * 2 + 1) - radius);
-            if (!standable(world, pos, 6)) continue;
-            if (move(world, Vec3.atBottomCenterOf(pos), speed)) return true;
+            if (pos == null || !standable(world, pos, 6 + 0.5 * Math.sqrt(pos.distToCenterSqr(mob.position())))) continue;
+            if (move(world, Vec3.atBottomCenterOf(pos), speed, false, 2)) return true;
         }
         return routed("no_destination", center, false);
     }
@@ -698,7 +700,7 @@ public final class WildlifeGoal extends WildlifeController {
     }
     private void seekWater(ServerLevel world) {
         if (waterDestination != null) {
-            if (waterAt(world, waterDestination) && move(world, waterDestination, mob.wanderModifier(), true)) return;
+            if (waterAt(world, waterDestination) && move(world, waterDestination, mob.wanderModifier(), oneLeg(waterDestination))) return;
             waterDestination = null;
         }
         boolean searching = waterSearchOrigin != null && waterSearchIndex < WATER_OFFSETS.size();
@@ -707,8 +709,9 @@ public final class WildlifeGoal extends WildlifeController {
             waterSearchOrigin = mob.blockPosition(); waterSearchIndex = 0;
             mob.getNavigation().stop(); destination = null; approach = null;
         }
-        // Nearest banks first, with exhaustive coverage and bounded work on each half-second pass.
-        for (int i = 0; i < 128 && waterSearchIndex < WATER_OFFSETS.size(); i++) {
+        // Nearest banks first, with exhaustive coverage and bounded work on each half-second pass: the animal
+        // stands while it looks, so the whole sweep takes about three seconds, not twelve.
+        for (int i = 0; i < 512 && waterSearchIndex < WATER_OFFSETS.size(); i++) {
             var offset = WATER_OFFSETS.get(waterSearchIndex++);
             var water = dev.nez.arksurvivalreturns.feature.aquatic.Water.surfaceWater(world,
                     waterSearchOrigin.getX() + offset.getX(), waterSearchOrigin.getZ() + offset.getZ());
@@ -722,10 +725,15 @@ public final class WildlifeGoal extends WildlifeController {
                 if (!SpawnRules.loaded(world, box.inflate(reach + 1)) || !world.getWorldBorder().isWithinBounds(box)
                         || !world.noCollision(mob, box, true)) continue;
                 Vec3 bank = Vec3.atBottomCenterOf(pos);
-                if (waterAt(world, bank) && move(world, bank, mob.wanderModifier(), true)) { waterDestination = bank; return; }
+                if (waterAt(world, bank) && move(world, bank, mob.wanderModifier(), oneLeg(bank))) { waterDestination = bank; return; }
             }
         }
-        if (waterSearchIndex >= WATER_OFFSETS.size()) { nextWaterSearch = world.getGameTime() + 200; roam(world); }
+        // Nothing usable within reach: make do, and look again when thirst has built up.
+        if (waterSearchIndex >= WATER_OFFSETS.size()) { nextWaterSearch = world.getGameTime() + 200; mind().makeDo(); roam(world); }
+    }
+    /** A bank within one path leg must be reachable; a farther one is walked toward and judged again from nearer. */
+    private boolean oneLeg(Vec3 bank) {
+        return bank.subtract(mob.position()).horizontalDistance() <= 20;
     }
     @Override public void record(Row row) {
         SessionRecorder.mind(row, mind);

@@ -76,6 +76,11 @@ public final class WildlifeMind {
     public void ate() { hunger = 0.05; feeding = 100; memory = 0; awareness = 0; provoked = 0; }
     /** Water-bound bodies never thirst: they live in what they would drink. */
     public void quench() { thirst = 0; }
+    /**
+     * No water within reach: the animal makes do with the moisture in its food until thirst builds again,
+     * instead of searching without end and never resting. Real water still quenches it fully.
+     */
+    public void makeDo() { thirst = Math.min(thirst, 0.5); }
     /** Adopts the state a cheaper routine was showing (sleeping, roaming, grazing) when full detail resumes. */
     public void resumeAs(BehaviorState shown) { if (shown != state) { state = shown; age = 0; } }
     public void abandonChase() { recovery = 200; memory = 0; awareness = 0; chase = 0; }

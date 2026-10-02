@@ -66,6 +66,16 @@ class WildlifeMindTest {
         assertTrue(Double.isFinite(mind.hunger()));
         assertEquals(0, mind.thirst()); assertEquals(1, mind.fatigue());
     }
+    @Test void anAnimalWithNoWaterInReachMakesDoAndStopsSearching() {
+        var animal = new WildlifeMind(false, false, false); animal.restoreNeeds(0.1, 0.9, 0.1);
+        var dry = new WildlifeMind.Observation(0, false, false, false, false, false, false, false, false, false, 1);
+        assertEquals(BehaviorState.SEEK_WATER, animal.step(dry, 10));
+        animal.makeDo();
+        assertNotEquals(BehaviorState.SEEK_WATER, animal.step(dry, 10));
+        assertTrue(animal.thirst() >= 0.5 && animal.thirst() < 0.6, "thirst " + animal.thirst());
+        animal.restoreNeeds(0.1, 0.2, 0.1); animal.makeDo();
+        assertEquals(0.2, animal.thirst(), 1.0E-9, "making do never adds thirst");
+    }
     @Test void arrivalEndsRecoveryWithoutWaitingOrRestartingIt() {
         var mind = new WildlifeMind(false, false, false); mind.restoreNeeds(0.1, 0.1, 0.1);
         mind.abandonChase();

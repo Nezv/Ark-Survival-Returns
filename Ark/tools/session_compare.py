@@ -72,6 +72,16 @@ def measures(con, summary: dict) -> list[tuple[str, str]]:
         ("thirsty animals that drank", text(one(con, """
             SELECT count(DISTINCT e) FILTER (st = 'DRINK') || ' of ' || count(DISTINCT e) FILTER (st IN ('SEEK_WATER', 'DRINK'))
             FROM decisions"""))),
+        ("looking for water: passes, standing still", text(one(con, """
+            WITH f AS (SELECT st, sqrt(power(x - lag(x) OVER w, 2) + power(z - lag(z) OVER w, 2)) AS moved
+                       FROM decisions WINDOW w AS (PARTITION BY e ORDER BY tick))
+            SELECT count(*) || ', ' || count(*) FILTER (moved < 0.25) || ' ('
+                   || coalesce(round(100.0 * count(*) FILTER (moved < 0.25) / nullif(count(*), 0))::INT::VARCHAR, '-') || '%)'
+            FROM f WHERE st = 'SEEK_WATER'"""))),
+        ("turned back at the home range on the way to water", text(one(con, """
+            WITH f AS (SELECT st, why, lag(st) OVER w AS previous, lag(water_dest_x) OVER w AS bank
+                       FROM decisions WINDOW w AS (PARTITION BY e ORDER BY tick))
+            SELECT count(*) FROM f WHERE st = 'RETURN_HOME' AND previous = 'SEEK_WATER' AND bank IS NOT NULL"""))),
         ("tick time: average / longest", f"{timing['tick_ms_avg']} / {timing['tick_ms_max']} ms"),
     ]
 
