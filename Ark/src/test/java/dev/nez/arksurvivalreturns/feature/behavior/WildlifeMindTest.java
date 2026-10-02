@@ -66,4 +66,22 @@ class WildlifeMindTest {
         assertTrue(Double.isFinite(mind.hunger()));
         assertEquals(0, mind.thirst()); assertEquals(1, mind.fatigue());
     }
+    @Test void arrivalEndsRecoveryWithoutWaitingOrRestartingIt() {
+        var mind = new WildlifeMind(false, false, false); mind.restoreNeeds(0.1, 0.1, 0.1);
+        mind.abandonChase();
+        assertEquals(BehaviorState.RETURN_HOME, mind.step(sight(false, false, false, 1), 10));
+        mind.arrivedHome();
+        assertEquals(0, mind.recovery());
+        for (int i = 0; i < 30; i++) assertEquals(BehaviorState.ROAM, mind.step(sight(false, false, false, 1), 10));
+    }
+    @Test void homeRecoveryDoesNotSuppressAHitOrAVisibleCloseIntruder() {
+        var hit = new WildlifeMind(false, false, false); hit.abandonChase();
+        var attack = new WildlifeMind.Observation(1, true, false, false, true, false, true, false, false, false, 1);
+        assertEquals(BehaviorState.DEFEND, hit.step(attack, 10));
+        assertEquals(BehaviorState.DEFEND, hit.step(attack, 10), "Being outside home range erased retaliation");
+        var intruder = new WildlifeMind(false, false, false); intruder.abandonChase();
+        var close = new WildlifeMind.Observation(1, true, false, true, false, false, true, false, false, false, 1);
+        for (int i = 0; i < 10; i++) assertNotEquals(BehaviorState.RETURN_HOME, intruder.step(close, 10));
+        assertEquals(BehaviorState.DEFEND, intruder.state());
+    }
 }

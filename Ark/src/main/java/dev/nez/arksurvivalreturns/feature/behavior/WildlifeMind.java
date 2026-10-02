@@ -79,6 +79,8 @@ public final class WildlifeMind {
     /** Adopts the state a cheaper routine was showing (sleeping, roaming, grazing) when full detail resumes. */
     public void resumeAs(BehaviorState shown) { if (shown != state) { state = shown; age = 0; } }
     public void abandonChase() { recovery = 200; memory = 0; awareness = 0; chase = 0; }
+    /** A completed return ends recovery; a path request to the block beneath the body is not a new chase. */
+    public void arrivedHome() { recovery = 0; }
     public void defendHerd() { provoked = 100; memory = 100; awareness = 1; }
     public BehaviorState step(Observation o, int ticks) {
         return step(o, ticks, Routine.LEGACY);
@@ -106,7 +108,7 @@ public final class WildlifeMind {
         boolean canHunt = predator && (!routine.enabled || routine.night);
         warning = o.visible && awareness >= 0.45 && (o.intruding || (canHunt && o.prey && hunger >= 0.4)) ? warning + ticks : 0;
         chase = state.combat() ? chase + ticks : 0;
-        if (chase >= 300 || (o.farFromHome && state.combat())) abandonChase();
+        if (!o.attacked && (chase >= 300 || o.farFromHome && state.combat() && !o.intruding)) abandonChase();
         BehaviorState next;
         Reason why;
         if ((o.health < 0.25 || o.intimidating || timid) && memory > 0 && awareness >= 0.45) { next = BehaviorState.FLEE; why = Reason.ESCAPE; }
@@ -117,7 +119,9 @@ public final class WildlifeMind {
             next = stand ? BehaviorState.DEFEND : BehaviorState.FLEE;
             why = Reason.NIGHT_HERD;
         }
-        else if (recovery > 0 || o.farFromHome) { next = BehaviorState.RETURN_HOME; why = Reason.HOME_RANGE; }
+        else if ((recovery > 0 || o.farFromHome) && !o.attacked && !(o.visible && o.intruding)) {
+            next = BehaviorState.RETURN_HOME; why = Reason.HOME_RANGE;
+        }
         else if (memory > 0 && awareness >= 0.20) {
             if (!o.visible) { next = timid && awareness >= 0.6 ? BehaviorState.FLEE : BehaviorState.INVESTIGATE; why = Reason.LOST_SIGHT; }
             else if (awareness < 0.55) { next = BehaviorState.ALERT; why = Reason.NOTICED; }

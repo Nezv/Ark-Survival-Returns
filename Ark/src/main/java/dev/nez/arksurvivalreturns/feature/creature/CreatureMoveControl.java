@@ -31,19 +31,21 @@ final class CreatureMoveControl extends MoveControl {
         if (dx * dx + dz * dz < 1.0E-4) return;
         boolean running = speedModifier > 0.9;
         float wanted = (float) (Mth.atan2(dz, dx) * (180.0 / Math.PI)) - 90.0f;
-        float turned = Mth.approachDegrees(before, wanted, creature.turnRate(running, true));
+        float turned = Mth.approachDegrees(before, wanted,
+                MovementTuning.navigationTurnRate(creature.turnRate(running, true), creature.getBbWidth()));
         mob.setYRot(turned);
         float remaining = Math.abs(Mth.wrapDegrees(wanted - turned));
-        turnLeft = remaining;
-        if (remaining > (running ? 110f : 50f)) {
+        if (remaining > 90f) {
             // Too far to the side: stand and pivot, the way a large animal lines up before it walks.
-            mob.setYRot(Mth.approachDegrees(before, wanted, creature.turnRate(running, false)));
+            mob.setYRot(Mth.approachDegrees(before, wanted,
+                    MovementTuning.navigationTurnRate(creature.turnRate(running, false), creature.getBbWidth())));
             mob.setSpeed(0);
             mob.setZza(0);
             pivoting = true;
         } else if (remaining > 15f) {
-            mob.setSpeed(mob.getSpeed() * (1 - remaining / 120f));
+            mob.setSpeed(mob.getSpeed() * Math.max(0.5f, 1 - remaining / 180f));
         }
+        turnLeft = Math.abs(Mth.wrapDegrees(wanted - mob.getYRot()));
     }
 
     /** True when the last tick stood and turned toward a path node instead of walking. */

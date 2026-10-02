@@ -89,6 +89,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private float turnBase = -1;
     /** Client: smoothed body yaw change in degrees per tick, positive when turning right. */
     private float bodyTurn;
+    private BehaviorAction requestedAction = BehaviorAction.IDLE;
 
     public CreatureEntity(EntityType<? extends CreatureEntity> type, Level level, Species species) {
         super(type, level);
@@ -405,8 +406,19 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return BehaviorAction.values()[Math.clamp(entityData.get(ACTION), 0, BehaviorAction.values().length - 1)];
     }
     public void setAction(BehaviorAction action) {
+        requestedAction = action;
+        syncMovementAction();
+    }
+    private void syncMovementAction() {
+        BehaviorAction action = isPivoting() && requestedAction.motion().travels() ? BehaviorAction.TURN : requestedAction;
         if (SessionRecorder.on()) SessionRecorder.changed(this, "action", action(), action);
         entityData.set(ACTION, action.ordinal());
+    }
+
+    @Override public boolean hasLineOfSight(Entity target) {
+        if (species != null && species.landHabitat() && level() instanceof ServerLevel && target instanceof LivingEntity living)
+            return WildlifeSenses.hasSightLine(this, living);
+        return super.hasLineOfSight(target);
     }
 
     /** True while the body stands and turns toward its next path node instead of walking. */
@@ -605,6 +617,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (strikeCooldown > 0) strikeCooldown--;
         super.tick();
         if (!level().isClientSide()) {
+            syncMovementAction();
             resolveStrike();
             boolean sleeping = isAlive() && (behavior().sleeping() || torpor().torpid());
             if (sleeping) playRoutineSound(CreatureSounds.Role.SLEEP);

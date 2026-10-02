@@ -39,5 +39,9 @@ public final class MovementTuning {
         double preferred = Double.isNaN(naturalWalk) ? 0.3 * sprintBlocksPerSecond : naturalWalk * 0.85;
         return Math.clamp(preferred, low, high) * individual;
     }
+    /** Path-node steering must finish a reversal promptly, even when a rig has a long idle turn clip. */
+    public static float navigationTurnRate(float authored, double width) {
+        return Math.max(authored, (float) Math.clamp(12 / Math.sqrt(Math.max(1, width)), 6, 12));
+    }
     private MovementTuning() {}
 }

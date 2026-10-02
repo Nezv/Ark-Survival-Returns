@@ -38,7 +38,7 @@ final class NavigationGameTests {
         h.assertFalse(mob.isNoAi(), "Navigation fixture accidentally disables AI");
         return mob;
     }
-    private static Runnable watchChunkLoads(GameTestHelper h) {
+    static Runnable watchChunkLoads(GameTestHelper h) {
         var world = h.getLevel();
         var area = h.getBounds().inflate(16);
         var loads = new java.util.concurrent.ConcurrentLinkedQueue<net.minecraft.world.level.ChunkPos>();

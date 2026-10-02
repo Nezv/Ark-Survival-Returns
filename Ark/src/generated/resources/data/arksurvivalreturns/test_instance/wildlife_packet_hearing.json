@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:wildlife_regression",
+  "function": "arksurvivalreturns:wildlife_packet_hearing",
+  "max_ticks": 500,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

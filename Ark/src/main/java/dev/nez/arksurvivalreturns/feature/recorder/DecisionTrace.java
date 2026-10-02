@@ -176,6 +176,7 @@ public final class DecisionTrace {
         if (d.invalid || d.disguised) return out.flag("invalid", d.invalid).flag("disguised", d.disguised);
         out.put("dist", d.distance).put("sight", d.sight).put("near", d.near).put("fov", d.facing)
                 .flag("in_range", d.distance < d.sight).flag("route_loaded", d.loaded).flag("los", d.clear)
+                .flag("los_eye", d.eyeClear).put("los_rays", d.sightRays)
                 .flag("invisible", d.invisible).flag("seen", d.visible)
                 .put("hear", d.hearing).flag("moving", d.moving).flag("crouch", d.crouching)
                 .put("scent", d.scentRange).put("downwind", d.downwind).flag("smelt", d.smelled).flag("wet", d.wet)

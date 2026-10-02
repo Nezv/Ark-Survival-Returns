@@ -4,8 +4,8 @@
 
 The recording holds every sense check with the positions of both bodies, and the saved world holds the
 blocks. This walks the game's own eye-to-eye ray through the saved blocks (read-only) and names the first
-block with a collision box on it: ground, a trunk or leaves. The first line of the output says how often
-the walk agrees with what the game recorded, which is the check that world and recording belong together.
+block with a collision box on it: ground, a trunk or leaves. The walk is compared with the recorded central
+eye ray; newer recordings also count checks where an alternate physical ray supplied line of sight.
 Use the world the session was played on (session_run.py plays a copy of it; the terrain is the same).
 """
 from __future__ import annotations
@@ -190,15 +190,20 @@ def main() -> int:
     world = World(regions)
 
     con = duckdb.connect(str(database), read_only=True)
-    rows = con.execute("""
-        SELECT c.species, d.x, d.y + c.eye, d.z, p.x, p.y + coalesce(s.eye, 1.62), p.z, n.los
+    columns = {row[0] for row in con.execute("DESCRIBE decision_players").fetchall()}
+    eye = "coalesce(n.los_eye, n.los)" if "los_eye" in columns else "n.los"
+    rows = con.execute(f"""
+        SELECT c.species, d.x, d.y + c.eye, d.z, p.x, p.y + coalesce(s.eye, 1.62), p.z, {eye}, n.los
         FROM decision_players n JOIN subject u ON u.e = n.player JOIN decisions d ON d.seq = n.seq JOIN entities c ON c.e = n.e
         JOIN players p ON p.tick = n.tick AND p.e = n.player
         ASOF LEFT JOIN player_status s ON s.e = n.player AND s.tick <= n.tick
         WHERE n.dist < ? AND n.los IS NOT NULL AND n.route_loaded""", [arguments.within]).fetchall()
     con.close()
     agree, differ, blockers, blocks, species = 0, 0, Counter(), Counter(), {}
-    for name, x, y, z, px, py, pz, clear in rows:
+    alternate_clear, effective_blocked = 0, 0
+    for name, x, y, z, px, py, pz, clear, effective in rows:
+        alternate_clear += bool(effective) and not bool(clear)
+        effective_blocked += not bool(effective)
         hit = world.first_hit((x, y, z), (px, py, pz))
         if hit == "unsaved":
             blockers[kind(hit)] += 1
@@ -213,12 +218,14 @@ def main() -> int:
             species.setdefault(name, Counter())[kind(hit)] += 1
     blocked = sum(count for what, count in blockers.items() if what != "chunk not in the save")
     result = {"world": save.name, "within_blocks": arguments.within, "checks": len(rows), "walk_agrees_with_game": agree,
-              "walk_differs": differ, "no_line_of_sight": blocked, "blocked_by": dict(blockers.most_common()),
+              "walk_differs": differ, "no_line_of_sight": effective_blocked, "eye_ray_blocked": blocked,
+              "alternate_rays_clear": alternate_clear, "blocked_by": dict(blockers.most_common()),
               "blocks": dict(blocks.most_common(12)), "by_species": {name: dict(count.most_common()) for name, count in species.items()}}
     (source.parent / "sight.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
     print(f"world '{save.name}': {len(rows)} sense checks within {arguments.within:g} blocks; the walk through the saved blocks agrees "
           f"with the game on {agree}, differs on {differ}")
-    print(f"no line of sight in {blocked} of them, first block on the ray: {dict(blockers.most_common())}")
+    print(f"central eye ray blocked in {blocked}; alternate rays clear in {alternate_clear}; no line of sight in {effective_blocked}")
+    print(f"first block on the central ray: {dict(blockers.most_common())}")
     print(f"blocks: {dict(blocks.most_common(12))}")
     for name, count in sorted(species.items(), key=lambda item: -sum(item[1].values())):
         print(f"  {name:<16} {dict(count.most_common())}")

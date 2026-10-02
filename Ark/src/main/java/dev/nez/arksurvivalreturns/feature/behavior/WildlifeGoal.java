@@ -36,6 +36,12 @@ public final class WildlifeGoal extends WildlifeController {
     private Choreographer choreo;
     private BlockPos home, transientHome;
     private Vec3 lastKnown, destination, waterDestination, pendingAlarm, facing;
+    private Vec3 approach, lastPathFailure;
+    private double approachSpeed;
+    private long retryPathAt, lastFailureTick = Long.MIN_VALUE;
+    private BlockPos waterSearchOrigin;
+    private int waterSearchIndex;
+    private static final java.util.List<BlockPos> WATER_OFFSETS = waterOffsets();
     private LivingEntity focus;
     private LivingEntity herdThreat;
     private int herdThreatTicks, pendingAlarmTicks, alarmEvents;
@@ -87,6 +93,15 @@ public final class WildlifeGoal extends WildlifeController {
         switch (tier) {
             case FULL -> {
                 if (Math.floorMod(mob.tickCount + mob.getId(), 10) == 0) think();
+                // Ground navigation consumes a wide body's final node early. Finish a clear, short final leg.
+                if (approach != null && !choreo().holding()) {
+                    var target = mob.getTarget();
+                    if (arrived(approach) || target != null && mob.isWithinMeleeAttackRange(target)) {
+                        approach = null; mob.getMoveControl().setWantedPosition(mob.getX(), mob.getY(), mob.getZ(), 0);
+                    } else if (canNavigate() && clearApproach(world(), approach))
+                        mob.getMoveControl().setWantedPosition(approach.x, approach.y, approach.z, approachSpeed);
+                    else approach = null;
+                }
                 // Facing a stimulus turns the whole body in place, at the creature's own rate.
                 if (facing != null && choreo().action().motion() == BehaviorAction.Motion.FACE && mob.getNavigation().isDone())
                     turnToward(yawTo(facing), false);
@@ -95,7 +110,7 @@ public final class WildlifeGoal extends WildlifeController {
             case DORMANT -> dormantTick();
         }
     }
-    @Override public void stop() { mob.getNavigation().stop(); mob.setTarget(null); packCache = null; }
+    @Override public void stop() { mob.getNavigation().stop(); mob.setTarget(null); packCache = null; approach = null; }
     /** An alarm from a pack mate reaches this animal after its own delay, rippling outward from the caller. */
     @Override public void receiveAlarm(Vec3 position) {
         int delay = Desync.reactionDelay(mob.getUUID().getLeastSignificantBits(), ++alarmEvents,
@@ -127,7 +142,7 @@ public final class WildlifeGoal extends WildlifeController {
             mob.setAction(choreo().action());
         } else {
             // Leaving full detail drops pursuit and bridges; needs stay frozen until the creature is near again.
-            mob.setTarget(null); focus = null; lastKnown = null; pendingAlarm = null; destination = null; facing = null;
+            mob.setTarget(null); focus = null; lastKnown = null; pendingAlarm = null; destination = null; facing = null; approach = null;
             mob.getNavigation().stop();
             choreo().reset(mind().state().sleeping() ? mind().state() : BehaviorState.ROAM);
         }
@@ -225,7 +240,7 @@ public final class WildlifeGoal extends WildlifeController {
         var t = trace;
         var brain = mind();
         var dance = choreo();
-        dance.advance(10, !mob.getNavigation().isDone());
+        dance.advance(10, travelling());
         // One pack scan per decision is reused by the herd, alarm and regroup routines.
         packCache = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(64),
                 c -> c != mob && c.isAlive() && c.packId().equals(mob.packId()));
@@ -317,6 +332,7 @@ public final class WildlifeGoal extends WildlifeController {
                 || mob.getHealth() < mob.getMaxHealth() * 0.45)) intimidating = true;
         boolean far = LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
         BehaviorState before = brain.state();
+        if (brain.recovery() > 0 && arrived(Vec3.atBottomCenterOf(home()))) brain.arrivedHome();
         // Terrain probes are only useful when the mind can act on them; other states skip the block sweep.
         boolean needsWater = brain.thirst() >= 0.6 || before == BehaviorState.DRINK;
         boolean needsForage = !mob.species().predator
@@ -354,7 +370,7 @@ public final class WildlifeGoal extends WildlifeController {
         if (!brain.remembers()) { lastKnown = null; focus = null; }
         mob.setBehavior(state);
         if (state != before) {
-            mob.getNavigation().stop(); destination = null; nextRoutine = 0;
+            mob.getNavigation().stop(); destination = null; approach = null; nextRoutine = 0; failedPaths = 0; lastPathFailure = null;
             // Reflexes skip the display: a hit, or a threat already at the body.
             boolean urgent = attacked || sensed != null && WildlifeSenses.bodyDistance(mob, sensed) < 3;
             if (t != null) t.entered(urgent);
@@ -372,16 +388,17 @@ public final class WildlifeGoal extends WildlifeController {
         if (t != null) t.branch(holding ? "hold" : state.combat() ? "no_sight" : state.name().toLowerCase(java.util.Locale.ROOT));
         if (state.combat() && visible && sensed != null) {
             if (mob.isWithinMeleeAttackRange(sensed)) {
-                mob.getNavigation().stop();
+                mob.getNavigation().stop(); approach = null;
                 // The strike schedules its damage on the clip's hit frame; onStrikeKill feeds the mind.
                 mob.strike(sensed);
                 if (t != null) t.branch("strike");
-            } else if (holding) mob.getNavigation().stop();
+            } else if (holding) { mob.getNavigation().stop(); approach = null; }
             else {
                 if (t != null) t.branch("chase");
                 move(world, sensed.position(), dance.action() == BehaviorAction.STALK ? mob.wanderModifier() * 0.6 : chaseModifier());
             }
-        } else if (holding) mob.getNavigation().stop();
+        } else if (holding) { mob.getNavigation().stop(); approach = null; }
+        else if (!canNavigate()) routed("airborne_deferred", destination, true);
         else switch (state) {
             case INVESTIGATE -> { if (lastKnown != null) move(world, lastKnown, mob.wanderModifier()); }
             case FLEE -> {
@@ -399,7 +416,7 @@ public final class WildlifeGoal extends WildlifeController {
             case REGROUP -> { if (regroupDestination != null) move(world, regroupDestination, Math.min(1, mob.wanderModifier() * 1.3)); }
             case SEEK_WATER -> seekWater(world);
             case ROAM, SEARCH -> roam(world);
-            default -> mob.getNavigation().stop();
+            default -> { mob.getNavigation().stop(); approach = null; }
         }
         // Cues and the synced action go out last, so a pause beat chosen above starts its clip this tick.
         var cue = dance.takeCue();
@@ -501,8 +518,8 @@ public final class WildlifeGoal extends WildlifeController {
         }
         if (mob.tickCount < nextRoutine) {
             // A roaming pause is filled with the idle beats the rig can play.
-            if (trace != null) trace.branch(mob.getNavigation().isDone() ? "roam_pause" : "roam_walk");
-            if (mob.getNavigation().isDone()) choreo().pause();
+            if (trace != null) trace.branch(travelling() ? "roam_walk" : "roam_pause");
+            if (!travelling()) choreo().pause();
             return;
         }
         if (trace != null) trace.branch("roam_pick");
@@ -510,6 +527,7 @@ public final class WildlifeGoal extends WildlifeController {
         chooseDestination(world, Vec3.atBottomCenterOf(home()), mob.species().solitary() ? 36 : 24, mob.wanderModifier());
     }
     private boolean chooseDestination(ServerLevel world, Vec3 center, int radius, double speed) {
+        if (!canNavigate()) return routed("airborne_deferred", center, true);
         for (int i = 0; i < 8; i++) {
             var pos = SpawnRules.surface(world, (int) Math.floor(center.x) + mob.getRandom().nextInt(radius * 2 + 1) - radius,
                     (int) Math.floor(center.z) + mob.getRandom().nextInt(radius * 2 + 1) - radius);
@@ -521,8 +539,38 @@ public final class WildlifeGoal extends WildlifeController {
         return routed("no_destination", center, false);
     }
     private boolean move(ServerLevel world, Vec3 point, double speed) {
+        return move(world, point, speed, false);
+    }
+    private boolean canNavigate() { return mob.onGround() || mob.isInLiquid(); }
+    private boolean travelling() { return approach != null || !mob.getNavigation().isDone(); }
+    private ServerLevel world() { return (ServerLevel) mob.level(); }
+    private boolean arrived(Vec3 point) {
+        var delta = point.subtract(mob.position());
+        return delta.horizontalDistanceSqr() <= 0.75 * 0.75 && Math.abs(delta.y) < 1;
+    }
+    private boolean clearApproach(ServerLevel world, Vec3 point) {
+        var delta = point.subtract(mob.position());
+        if (delta.horizontalDistanceSqr() > Math.pow(mob.getBbWidth() + 3, 2) || Math.abs(delta.y) > 0.5) return false;
+        var swept = mob.getBoundingBox().expandTowards(new Vec3(delta.x, 0, delta.z)).deflate(0.01);
+        return SpawnRules.loaded(world, swept.inflate(1)) && world.getWorldBorder().isWithinBounds(swept)
+                && world.noBlockCollision(mob, swept, true);
+    }
+    private boolean move(ServerLevel world, Vec3 point, double speed, boolean requireReach) {
+        if (arrived(point)) {
+            mob.getNavigation().stop(); destination = null; approach = null; failedPaths = 0; lastPathFailure = null;
+            return routed("arrived", point, true);
+        }
+        // Hops and downhill steps are temporary, not refusals. Keep sensing and reacting while in the air.
+        if (!canNavigate()) return routed("airborne_deferred", point, true);
         // Reuse a successful path until the goal moves appreciably. Retry failure at most twice/sec.
         if (destination != null && destination.distanceToSqr(point) < 4 && !mob.getNavigation().isDone()) return routed("reused", point, true);
+        if (tier == BehaviorTier.FULL && mob.getNavigation().isDone() && clearApproach(world, point)) {
+            approach = point; approachSpeed = speed; destination = point; failedPaths = 0; lastPathFailure = null;
+            mob.getMoveControl().setWantedPosition(point.x, point.y, point.z, speed);
+            return routed("approach", point, true);
+        }
+        if (lastPathFailure != null && lastPathFailure.distanceToSqr(point) < 1 && world.getGameTime() < retryPathAt)
+            return routed("retry_deferred", point, false);
         if (!SpawnRules.loaded(world, new net.minecraft.world.phys.AABB(mob.position(), point).inflate(mob.getBbWidth() + 1)))
             return routed("route_unloaded", point, false);
         double range = mob.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
@@ -537,54 +585,91 @@ public final class WildlifeGoal extends WildlifeController {
             routePoint = Vec3.atBottomCenterOf(ground);
         }
         destination = point;
-        boolean found = mob.getNavigation().moveTo(routePoint.x, routePoint.y, routePoint.z, speed);
-        // Reported before the count resets, so the sixth failure shows as one.
+        // A finished path equal to a new one is refused by vanilla. Drop it before creating the next leg.
+        if (mob.getNavigation().isDone()) mob.getNavigation().stop();
+        var path = mob.getNavigation().createPath(BlockPos.containing(routePoint), 0);
+        boolean found = path != null && (!requireReach || path.canReach()) && mob.getNavigation().moveTo(path, speed);
+        if (!found && lastFailureTick != world.getGameTime()) { failedPaths++; lastFailureTick = world.getGameTime(); }
+        // Report before resetting the counter, so the sixth failed decision is visible.
         routed(found ? "path" : "no_path", point, found);
-        if (found) failedPaths = 0;
-        else if (++failedPaths >= 6) {
-            boolean cornered = WildlifeSenses.hasNightCycle(mob) && mind().state() == BehaviorState.FLEE;
-            if (cornered) corneredTicks = 100;
-            else mind().abandonChase();
-            failedPaths = 0; destination = null;
-            routed(cornered ? "cornered" : "abandoned", point, false);
+        if (found) { failedPaths = 0; lastPathFailure = null; }
+        else {
+            lastPathFailure = point; retryPathAt = world.getGameTime() + 20;
+            mob.getNavigation().stop(); destination = null;
+            if (failedPaths >= 6) {
+                boolean cornered = WildlifeSenses.hasNightCycle(mob) && mind().state() == BehaviorState.FLEE;
+                if (cornered) corneredTicks = 100;
+                else if (mind().state().combat() || mind().state() == BehaviorState.INVESTIGATE) mind().abandonChase();
+                // Ordinary roam, bank and home failures must never re-arm chase recovery.
+                failedPaths = 0; destination = null;
+                routed(cornered ? "cornered" : mind().state().combat() || mind().state() == BehaviorState.INVESTIGATE
+                        ? "abandoned" : "route_rejected", point, false);
+            }
         }
         return found;
     }
     /** Tells the session recorder how a path request ended; returns the result unchanged. */
     private boolean routed(String outcome, Vec3 point, boolean result) {
-        if (SessionRecorder.on()) SessionRecorder.navigation(mob, trace, outcome, point, failedPaths + (outcome.equals("no_path") ? 1 : 0));
+        if (SessionRecorder.on()) SessionRecorder.navigation(mob, trace, outcome, point, failedPaths);
         return result;
     }
     private boolean nearbyWater(ServerLevel world) {
-        // Local water use only; does not invent or load remote need zones.
-        BlockPos center = mob.blockPosition();
+        return canNavigate() && waterAt(world, mob.position());
+    }
+    /** The same physical drinking reach is used to recognize water and to choose a bank. */
+    private boolean waterAt(ServerLevel world, Vec3 point) {
+        BlockPos center = BlockPos.containing(point);
         int radius = Math.min(16, 2 + (int) Math.ceil(mob.getBbWidth() / 2));
-        for (int x = -radius; x <= radius; x++) for (int z = -radius; z <= radius; z++) {
-            var pos = center.offset(x, -1, z);
-            if (world.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) != null && world.getFluidState(pos).is(FluidTags.WATER)) return true;
+        Vec3 mouth = point.add(0, 0.8, 0);
+        for (int x = -radius; x <= radius; x++) for (int z = -radius; z <= radius; z++) for (int y = -2; y <= 0; y++) {
+            var pos = center.offset(x, y, z);
+            if (world.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) == null
+                    || !world.getFluidState(pos).is(FluidTags.WATER)) continue;
+            var water = Vec3.atCenterOf(pos).add(0, 0.4, 0);
+            var rayBox = new net.minecraft.world.phys.AABB(mouth, water).inflate(1);
+            if (SpawnRules.loaded(world, rayBox) && world.clip(new net.minecraft.world.level.ClipContext(mouth, water,
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, mob))
+                    .getType() == net.minecraft.world.phys.HitResult.Type.MISS) return true;
         }
         return false;
     }
+    private static java.util.List<BlockPos> waterOffsets() {
+        var offsets = new java.util.ArrayList<BlockPos>();
+        for (int x = -32; x <= 32; x++) for (int z = -32; z <= 32; z++)
+            if (x * x + z * z <= 32 * 32) offsets.add(new BlockPos(x, 0, z));
+        offsets.sort(Comparator.comparingInt(p -> p.getX() * p.getX() + p.getZ() * p.getZ()));
+        return java.util.List.copyOf(offsets);
+    }
     private void seekWater(ServerLevel world) {
-        if (waterDestination != null && move(world, waterDestination, mob.wanderModifier())) return;
-        if (world.getGameTime() < nextWaterSearch) { roam(world); return; }
-        nextWaterSearch = world.getGameTime() + 200;
-        waterDestination = null;
-        for (int i = 0; i < 32; i++) {
-            int x = mob.getBlockX() + mob.getRandom().nextInt(65) - 32, z = mob.getBlockZ() + mob.getRandom().nextInt(65) - 32;
-            var pos = SpawnRules.surface(world, x, z);
-            if (pos == null || Math.abs(pos.getY() - mob.getY()) > 6) continue;
-            var box = SpawnRules.bounds(mob.species(), pos);
-            if (!SpawnRules.loaded(world, box.inflate(2)) || !world.getWorldBorder().isWithinBounds(box) || !world.noCollision(mob, box, true)) continue;
-            int edge = 1 + (int) Math.ceil(mob.getBbWidth() / 2);
-            for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
-                var water = pos.relative(direction, edge).below();
-                if (!world.getFluidState(water).is(FluidTags.WATER)) continue;
-                waterDestination = Vec3.atBottomCenterOf(pos);
-                if (move(world, waterDestination, mob.wanderModifier())) return;
+        if (waterDestination != null) {
+            if (waterAt(world, waterDestination) && move(world, waterDestination, mob.wanderModifier(), true)) return;
+            waterDestination = null;
+        }
+        boolean searching = waterSearchOrigin != null && waterSearchIndex < WATER_OFFSETS.size();
+        if (!searching && world.getGameTime() < nextWaterSearch) { roam(world); return; }
+        if (!searching || LandWildlife.distanceSqr(mob.blockPosition(), waterSearchOrigin) > 64) {
+            waterSearchOrigin = mob.blockPosition(); waterSearchIndex = 0;
+            mob.getNavigation().stop(); destination = null; approach = null;
+        }
+        // Nearest banks first, with exhaustive coverage and bounded work on each half-second pass.
+        for (int i = 0; i < 128 && waterSearchIndex < WATER_OFFSETS.size(); i++) {
+            var offset = WATER_OFFSETS.get(waterSearchIndex++);
+            var water = dev.nez.arksurvivalreturns.feature.aquatic.Water.surfaceWater(world,
+                    waterSearchOrigin.getX() + offset.getX(), waterSearchOrigin.getZ() + offset.getZ());
+            if (water == null || Math.abs(water.getY() + 1 - mob.getY()) > 6) continue;
+            int reach = Math.min(16, 2 + (int) Math.ceil(mob.getBbWidth() / 2));
+            for (int edge = 1; edge <= reach; edge++) for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                var column = water.relative(direction, edge);
+                var pos = SpawnRules.surface(world, column.getX(), column.getZ());
+                if (pos == null || Math.abs(pos.getY() - mob.getY()) > 6) continue;
+                var box = SpawnRules.bounds(mob.species(), pos);
+                if (!SpawnRules.loaded(world, box.inflate(reach + 1)) || !world.getWorldBorder().isWithinBounds(box)
+                        || !world.noCollision(mob, box, true)) continue;
+                Vec3 bank = Vec3.atBottomCenterOf(pos);
+                if (waterAt(world, bank) && move(world, bank, mob.wanderModifier(), true)) { waterDestination = bank; return; }
             }
         }
-        roam(world);
+        if (waterSearchIndex >= WATER_OFFSETS.size()) { nextWaterSearch = world.getGameTime() + 200; roam(world); }
     }
     @Override public void record(Row row) {
         SessionRecorder.mind(row, mind);
@@ -593,6 +678,9 @@ public final class WildlifeGoal extends WildlifeController {
         if (focus != null) row.put("focus", SessionRecorder.sid(focus));
         if (lastKnown != null) row.xyz("known", lastKnown.x, lastKnown.y, lastKnown.z);
         if (destination != null) row.xyz("dest", destination.x, destination.y, destination.z);
+        if (waterDestination != null) row.xyz("water_dest", waterDestination.x, waterDestination.y, waterDestination.z);
+        if (waterSearchOrigin != null) row.put("water_scan", waterSearchIndex);
+        if (approach != null) row.xyz("approach", approach.x, approach.y, approach.z);
         if (herdThreat != null) row.put("herd_threat", SessionRecorder.sid(herdThreat));
         if (failedPaths > 0) row.put("fail", failedPaths);
         if (failedEscapes > 0) row.put("fail_escape", failedEscapes);
@@ -626,6 +714,8 @@ public final class WildlifeGoal extends WildlifeController {
         mind().restoreNeeds(in.getDoubleOr("WildHunger", 0.55), in.getDoubleOr("WildThirst", 0.35), in.getDoubleOr("WildFatigue", 0.15));
         mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
         focus = null; lastKnown = null; destination = null; regrouping = false; packCache = null; pendingAlarm = null; facing = null;
+        approach = null; lastPathFailure = null; waterDestination = null; waterSearchOrigin = null; waterSearchIndex = 0;
+        retryPathAt = 0; nextWaterSearch = 0; failedPaths = 0; lastFailureTick = Long.MIN_VALUE;
         herdThreat = null; herdThreatTicks = 0;
         ambient = null; tier = BehaviorTier.FULL;
         try { preyHerd = java.util.UUID.fromString(in.getStringOr("WildPreyHerd", "")); }

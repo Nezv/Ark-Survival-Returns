@@ -53,6 +53,12 @@ public final class ArkGameTests {
         FUNCTIONS.register("land_movement", () -> LandGameTests::movement);
         FUNCTIONS.register("population", () -> ArkGameTests::population);
         FUNCTIONS.register("behavior", () -> ArkGameTests::behavior);
+        FUNCTIONS.register("wildlife_packet_hearing", () -> WildlifeRegressionGameTests::packets);
+        FUNCTIONS.register("wildlife_partial_cover", () -> WildlifeRegressionGameTests::cover);
+        FUNCTIONS.register("wildlife_home_recovery", () -> WildlifeRegressionGameTests::recovery);
+        FUNCTIONS.register("wildlife_navigation_turn", () -> WildlifeRegressionGameTests::turning);
+        FUNCTIONS.register("wildlife_water_navigation", () -> WildlifeRegressionGameTests::drinking);
+        FUNCTIONS.register("wildlife_wide_pursuit", () -> WildlifeRegressionGameTests::pursuit);
         FUNCTIONS.register("combat_timing", () -> ArkGameTests::combatTiming);
         FUNCTIONS.register("flying_ecology", () -> FlyingGameTests::ecology);
         FUNCTIONS.register("flying_pteranodon", () -> h -> FlyingGameTests.flight(h, Species.PTERANODON));

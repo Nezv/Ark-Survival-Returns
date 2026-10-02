@@ -47,6 +47,7 @@ CREATURE = {
     "chase": I, "rec": I, "feed": I, "calm": I, "flight": I, **xyz("home_", I), **xyz("herd_home_", I),
     "focus": I, **xyz("known_", D), **xyz("dest_", D), "herd_threat": I, "fail": I, "fail_escape": I,
     "cornered_t": I, "alarm_t": I, "alarm_in": I, "regroup": B, "routine_in": I, "mode": S, "hold": B, "beat": I,
+    **xyz("water_dest_", D), **xyz("approach_", D), "water_scan": I,
     "beats": I, "amb": S, "amb_t": I, "phase": S, "phase_t": I, "thief": S, "defend_left": L,
     **xyz("fly_to_", D), **xyz("nest_", I), **xyz("roost_", I), "blocked": I, "lap": S, "hover": I,
 }
@@ -74,7 +75,7 @@ TABLES: dict[str, dict[str, str]] = {
                   "woken": B, "changed": B, "urgent": B, "tg": I, "br": S, "nav_more": I, "nav_n": I, "nav_o": S},
     "decision_players": {"seq": L, "tick": I, "e": I, "player": I, "stage": S, "body": D, "wake": D, "creative": B,
                          "spectator": B, "dead": B, "score": D, "invalid": B, "disguised": B, "dist": D, "sight": D,
-                         "near_range": D, "fov": D, "in_range": B, "route_loaded": B, "los": B, "invisible": B,
+                         "near_range": D, "fov": D, "in_range": B, "route_loaded": B, "los": B, "los_eye": B, "los_rays": I, "invisible": B,
                          "seen": B, "hear": D, "moving": B, "crouch": B, "scent": D, "downwind": D, "smelt": B, "wet": B,
                          "str": D},
     "decision_nav": {"seq": L, "tick": I, "e": I, "i": I, "o": S, **xyz("dest_", D), "fail": I},
@@ -101,6 +102,7 @@ TABLES: dict[str, dict[str, str]] = {
 RENAMES = {"s": "seq", "k": "tick", "from": "from_name", "to": "to_name", "where": "where_", "left": "left_",
            "pivot": "pivoting", "drop": "dropped", "over": "over_ticks", "at": "at_e", "by": "by_e"}
 VECTORS = {"p": "", "v": "v", "known": "known_", "dest": "dest_", "home": "home_", "herd_home": "herd_home_",
+           "water_dest": "water_dest_", "approach": "approach_",
            "fly_to": "fly_to_", "nest": "nest_", "roost": "roost_", "noise": "noise_", "goal": "goal_", "node": "node_",
            "pos": "pos_", "o": "o", "size": "s"}
 TRAVEL_ACTIONS = ("WALK", "RUN", "STALK", "CHASE", "BOLT")
@@ -208,7 +210,7 @@ class Splitter:
                 note = dict(note, player=note.pop("e"), near_range=note.pop("near", None))
                 sensed = "dist" in note
                 flat_note = self.flatten("decision_players", {**note, "s": row["s"], "k": row["k"], "e": row["e"]},
-                                         SENSE_FLAGS if sensed else ())
+                                         SENSE_FLAGS + (("los_eye",) if "los_rays" in note else ()) if sensed else ())
                 self.write("decision_players", {k: v for k, v in flat_note.items() if v is not None})
             for index, route in enumerate(routes):
                 self.write("decision_nav", self.flatten("decision_nav", {**route, "s": row["s"], "k": row["k"], "e": row["e"], "i": index}))

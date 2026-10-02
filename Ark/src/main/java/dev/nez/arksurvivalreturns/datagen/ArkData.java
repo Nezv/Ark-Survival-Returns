@@ -1024,6 +1024,11 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/regression", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_environment/regression_navigation", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_environment/regression_flying", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
+        put("data/" + NS + "/test_environment/wildlife_regression", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
+        for (String name : List.of("wildlife_packet_hearing", "wildlife_partial_cover", "wildlife_home_recovery",
+                "wildlife_navigation_turn", "wildlife_water_navigation", "wildlife_wide_pursuit"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":wildlife_regression", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
         for (String name : List.of("pack_runtime_contract", "tech_real_event_flow", "tech_lighting_flow", "progression_restart", "tribe_party_flow",
                 "flying_ground_pteranodon", "flying_ground_argentavis", "companion_live_navigation", "companion_blocked_route", "work_live_harvest",
                 "cargo_request_guards", "cargo_storage_guards", "cargo_scan_limits", "cargo_unloaded_boundary", "cargo_toms_network"))
