@@ -55,6 +55,15 @@ public final class WildlifeMind {
     public double fatigue() { return fatigue; }
     public double awareness() { return awareness; }
     public boolean remembers() { return memory > 0; }
+    // Timers in ticks, read by the session recorder: stimulus memory, warning build-up, retaliation,
+    // time in combat, give-up recovery, meal and time fleeing.
+    public int memory() { return memory; }
+    public int warning() { return warning; }
+    public int provoked() { return provoked; }
+    public int chase() { return chase; }
+    public int recovery() { return recovery; }
+    public int feeding() { return feeding; }
+    public int flight() { return flight; }
     public int calmTicksRemaining() { return calm; }
     public void restoreCalm(int ticks) { calm = Math.clamp(ticks, 0, 1200); }
     public void interruptSleep(int ticks) {

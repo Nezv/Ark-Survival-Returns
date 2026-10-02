@@ -266,6 +266,11 @@ public final class ArkData implements DataProvider {
         // The tech-tree key (P) has its own Controls category (TechClient).
         en.put("key.category." + NS + ".progression", "Ark Survival Returns: Progression");
         pt.put("key.category." + NS + ".progression", "Ark Survival Returns: Progressão");
+        // The session recorder's marker key (SessionRecorderClient).
+        en.put("key." + NS + ".session_mark", "Mark Recorded Moment");
+        pt.put("key." + NS + ".session_mark", "Marcar momento da gravação");
+        en.put("key.category." + NS + ".debug", "Ark Survival Returns: Debug");
+        pt.put("key.category." + NS + ".debug", "Ark Survival Returns: Depuração");
         // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
         en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
         pt.put("entity." + NS + ".guardian_giganotosaurus", "Giganotossauro Guardião");
@@ -1025,6 +1030,11 @@ public final class ArkData implements DataProvider {
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + (name.startsWith("companion_") || name.equals("work_live_harvest") ? ":regression_navigation"
                             : name.startsWith("flying_ground_") ? ":regression_flying" : ":regression"), "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        // The recorder test follows one scripted encounter for 260 ticks under its own day clock, so it runs alone. Its
+        // real-time deadline check lasts 300 ms, however many ticks the test server fits into that.
+        put("data/" + NS + "/test_environment/session_recorder", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
+        put("data/" + NS + "/test_instance/session_recorder", Map.of("type", "minecraft:function", "function", NS + ":session_recorder",
+                "environment", NS + ":session_recorder", "structure", NS + ":test_population", "max_ticks", 12000, "sky_access", true));
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);

@@ -36,4 +36,9 @@ public abstract class WildlifeController extends Goal {
     public void followPreyHerd(UUID herd) {}
     public void receiveAlarm(Vec3 position) {}
     public void receiveHerdThreat(LivingEntity threat) {}
+    /**
+     * Session recorder view: plain copies of this routine's fields. Reads only; in particular it never
+     * creates the mind or anchors the home, which {@link #mind()} and {@link #home()} do on first use.
+     */
+    public void record(dev.nez.arksurvivalreturns.feature.recorder.Row row) {}
 }

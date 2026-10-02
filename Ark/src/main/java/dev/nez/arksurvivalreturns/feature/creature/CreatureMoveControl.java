@@ -1,5 +1,6 @@
 package dev.nez.arksurvivalreturns.feature.creature;
 
+import dev.nez.arksurvivalreturns.feature.recorder.Row;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.MoveControl;
 
@@ -10,6 +11,8 @@ import net.minecraft.world.entity.ai.control.MoveControl;
  */
 final class CreatureMoveControl extends MoveControl {
     private final CreatureEntity creature;
+    private boolean steering, pivoting;
+    private float turnLeft;
 
     CreatureMoveControl(CreatureEntity creature) {
         super(creature);
@@ -20,6 +23,9 @@ final class CreatureMoveControl extends MoveControl {
         boolean moving = operation == Operation.MOVE_TO;
         float before = mob.getYRot();
         super.tick();
+        steering = moving;
+        pivoting = false;
+        turnLeft = 0;
         if (!moving) return;
         double dx = wantedX - mob.getX(), dz = wantedZ - mob.getZ();
         if (dx * dx + dz * dz < 1.0E-4) return;
@@ -28,13 +34,25 @@ final class CreatureMoveControl extends MoveControl {
         float turned = Mth.approachDegrees(before, wanted, creature.turnRate(running, true));
         mob.setYRot(turned);
         float remaining = Math.abs(Mth.wrapDegrees(wanted - turned));
+        turnLeft = remaining;
         if (remaining > (running ? 110f : 50f)) {
             // Too far to the side: stand and pivot, the way a large animal lines up before it walks.
             mob.setYRot(Mth.approachDegrees(before, wanted, creature.turnRate(running, false)));
             mob.setSpeed(0);
             mob.setZza(0);
+            pivoting = true;
         } else if (remaining > 15f) {
             mob.setSpeed(mob.getSpeed() * (1 - remaining / 120f));
         }
+    }
+
+    /** True when the last tick stood and turned toward a path node instead of walking. */
+    boolean pivoting() { return pivoting; }
+
+    /** Session recorder view of the last tick: whether a node was being steered at, and the turn still owed. */
+    void record(Row row) {
+        row.flag("steer", steering).flag("pivot", pivoting);
+        if (turnLeft > 0) row.put("turn", turnLeft);
+        if (steering) row.put("pace", (float) speedModifier);
     }
 }

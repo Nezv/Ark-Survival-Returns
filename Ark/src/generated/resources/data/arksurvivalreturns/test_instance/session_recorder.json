@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:session_recorder",
+  "function": "arksurvivalreturns:session_recorder",
+  "max_ticks": 12000,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

@@ -25,6 +25,8 @@ public final class WildlifeNoise {
         var sounds = SOUNDS.computeIfAbsent(world, unused -> new ArrayDeque<>());
         while (sounds.size() >= 64) sounds.removeFirst();
         sounds.addLast(new Noise(source.getUUID(), pos, radius, world.getGameTime() + 40));
+        if (dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder.on())
+            dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder.noise(source, pos, radius);
     }
     public static Noise hear(CreatureEntity listener) {
         var world = (ServerLevel) listener.level();

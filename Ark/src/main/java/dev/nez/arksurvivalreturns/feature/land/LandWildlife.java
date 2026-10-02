@@ -5,6 +5,7 @@ import java.util.WeakHashMap;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,8 +30,10 @@ public final class LandWildlife {
     public static boolean allowPath(ServerLevel world, boolean planning) {
         var budget = BUDGETS.computeIfAbsent(world, w -> new Budget());
         if (budget.tick != world.getGameTime()) { budget.tick = world.getGameTime(); budget.paths = 0; budget.plans = 0; }
-        if (budget.paths >= 8 || planning && budget.plans >= 2) return false;
-        budget.paths++; if (planning) budget.plans++; return true;
+        boolean granted = budget.paths < 8 && !(planning && budget.plans >= 2);
+        if (granted) { budget.paths++; if (planning) budget.plans++; }
+        if (SessionRecorder.on()) SessionRecorder.pathBudget(granted);
+        return granted;
     }
     public static boolean navigationLoaded(ServerLevel world, CreatureEntity mob, double range) {
         return SpawnRules.loaded(world, new AABB(mob.blockPosition()).inflate(range + 9));

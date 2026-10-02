@@ -58,6 +58,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("flying_pteranodon", () -> h -> FlyingGameTests.flight(h, Species.PTERANODON));
         FUNCTIONS.register("flying_argentavis", () -> h -> FlyingGameTests.flight(h, Species.ARGENTAVIS));
         FUNCTIONS.register("nighttime", () -> NighttimeGameTests::run);
+        FUNCTIONS.register("session_recorder", () -> SessionRecorderGameTests::run);
         FUNCTIONS.register("creature_expansion", () -> CreatureExpansionGameTests::run);
         FUNCTIONS.register("aquatic_ecology", () -> AquaticGameTests::ecology);
         FUNCTIONS.register("collection_registration", () -> CollectionGameTests::registration);

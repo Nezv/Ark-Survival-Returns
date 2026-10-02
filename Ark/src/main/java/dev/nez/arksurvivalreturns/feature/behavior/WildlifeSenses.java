@@ -4,6 +4,7 @@ import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.accessory.AccessoryAttributes;
 import dev.nez.arksurvivalreturns.feature.accessory.AccessoryEffects;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,21 @@ import net.minecraft.world.phys.Vec3;
 
 public final class WildlifeSenses {
     public record Detection(boolean visible, double strength) {}
+    /** The numbers behind one {@link #detect} call; filled only while the session recorder runs. */
+    public static final class Detail {
+        public double distance, sight, near, facing, hearing, scentRange, downwind, strength;
+        public boolean invalid, disguised, loaded, clear, invisible, visible, moving, crouching, wet, smelled;
+        public Detail copy() {
+            var d = new Detail();
+            d.distance = distance; d.sight = sight; d.near = near; d.facing = facing; d.hearing = hearing;
+            d.scentRange = scentRange; d.downwind = downwind; d.strength = strength;
+            d.invalid = invalid; d.disguised = disguised; d.loaded = loaded; d.clear = clear; d.invisible = invisible;
+            d.visible = visible; d.moving = moving; d.crouching = crouching; d.wet = wet; d.smelled = smelled;
+            return d;
+        }
+    }
+    /** Detail of the last detect call on the server thread. */
+    public static final Detail LAST = new Detail();
     public static double windAngle(ServerLevel world) {
         return (world.getSeed() & 65535) / 65536.0 * Math.PI * 2 + world.getGameTime() / 48000.0;
     }
@@ -38,8 +54,15 @@ public final class WildlifeSenses {
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
     public static Detection detect(CreatureEntity observer, LivingEntity target) {
-        if (!validTarget(target)) return new Detection(false, 0);
-        if (AccessoryEffects.herdDisguise(observer, target)) return new Detection(false, 0);
+        boolean recorded = SessionRecorder.on();
+        if (!validTarget(target)) {
+            if (recorded) { LAST.invalid = true; LAST.disguised = false; LAST.strength = 0; }
+            return new Detection(false, 0);
+        }
+        if (AccessoryEffects.herdDisguise(observer, target)) {
+            if (recorded) { LAST.invalid = false; LAST.disguised = true; LAST.strength = 0; }
+            return new Detection(false, 0);
+        }
         var world = (ServerLevel) observer.level();
         Vec3 offset = target.position().subtract(observer.position());
         // Worn gear scales each sense (visibility, noise, scent attributes; 1.0 for everything else).
@@ -52,9 +75,11 @@ public final class WildlifeSenses {
         if (crouching) sight *= 0.60;
         Vec3 flat = new Vec3(offset.x, 0, offset.z).normalize();
         Vec3 facing = Vec3.directionFromRotation(0, observer.yBodyRot);
-        boolean clear = dev.nez.arksurvivalreturns.feature.spawn.SpawnRules.loaded(world,
-                new net.minecraft.world.phys.AABB(observer.position(), target.position()).inflate(1)) && observer.hasLineOfSight(target);
-        boolean visible = distance < sight && (distance < 4 + observer.getBbWidth() || facing.dot(flat) > -0.15)
+        boolean loaded = dev.nez.arksurvivalreturns.feature.spawn.SpawnRules.loaded(world,
+                new net.minecraft.world.phys.AABB(observer.position(), target.position()).inflate(1));
+        boolean clear = loaded && observer.hasLineOfSight(target);
+        double ahead = facing.dot(flat);
+        boolean visible = distance < sight && (distance < 4 + observer.getBbWidth() || ahead > -0.15)
                 && !target.isInvisible() && clear;
         boolean moving = target.position().distanceToSqr(new Vec3(target.xo, target.yo, target.zo)) > 0.0004;
         double hearing = (moving ? (target.isSprinting() ? 28 : crouching ? 3 : 12) : 0) * heard;
@@ -63,8 +88,17 @@ public final class WildlifeSenses {
         if (!clear) hearing *= 0.4;
         double angle = windAngle(world);
         Vec3 wind = new Vec3(Math.cos(angle), 0, Math.sin(angle));
-        boolean smelled = distance < (wet ? 8 : 24) * smelt && wind.dot(flat.scale(-1)) > 0.65;
-        return new Detection(visible, visible ? 1 : distance < hearing ? 0.65 : smelled ? 0.25 : 0);
+        double downwind = wind.dot(flat.scale(-1));
+        boolean smelled = distance < (wet ? 8 : 24) * smelt && downwind > 0.65;
+        double strength = visible ? 1 : distance < hearing ? 0.65 : smelled ? 0.25 : 0;
+        if (recorded) {
+            LAST.invalid = false; LAST.disguised = false; LAST.distance = distance; LAST.sight = sight;
+            LAST.near = 4 + observer.getBbWidth(); LAST.facing = ahead; LAST.loaded = loaded; LAST.clear = clear;
+            LAST.invisible = target.isInvisible(); LAST.visible = visible; LAST.moving = moving; LAST.crouching = crouching;
+            LAST.hearing = hearing; LAST.wet = wet; LAST.scentRange = (wet ? 8 : 24) * smelt; LAST.downwind = downwind;
+            LAST.smelled = smelled; LAST.strength = strength;
+        }
+        return new Detection(visible, strength);
     }
     private WildlifeSenses() {}
 }

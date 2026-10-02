@@ -13,6 +13,8 @@ import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionGoal;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
 import dev.nez.arksurvivalreturns.feature.mass.MassService;
+import dev.nez.arksurvivalreturns.feature.recorder.Row;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.spawn.DangerTier;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.taming.*;
@@ -380,7 +382,10 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return wildlife;
     }
     public BehaviorState behavior() { return BehaviorState.values()[Math.clamp(entityData.get(BEHAVIOR), 0, BehaviorState.values().length - 1)]; }
-    public void setBehavior(BehaviorState state) { entityData.set(BEHAVIOR, state.ordinal()); }
+    public void setBehavior(BehaviorState state) {
+        if (SessionRecorder.on()) SessionRecorder.changed(this, "state", behavior(), state);
+        entityData.set(BEHAVIOR, state.ordinal());
+    }
     public void setNightActive(boolean value) { if (!species.flyer()) entityData.set(NIGHT_ACTIVE, value); }
     public boolean nightActive() { return entityData.get(NIGHT_ACTIVE); }
     /** Set by the server's mass pass and synced: a ridden mount moves on its rider's client. */
@@ -399,7 +404,28 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public BehaviorAction action() {
         return BehaviorAction.values()[Math.clamp(entityData.get(ACTION), 0, BehaviorAction.values().length - 1)];
     }
-    public void setAction(BehaviorAction action) { entityData.set(ACTION, action.ordinal()); }
+    public void setAction(BehaviorAction action) {
+        if (SessionRecorder.on()) SessionRecorder.changed(this, "action", action(), action);
+        entityData.set(ACTION, action.ordinal());
+    }
+
+    /** True while the body stands and turns toward its next path node instead of walking. */
+    public boolean isPivoting() { return moveControl instanceof CreatureMoveControl control && control.pivoting(); }
+
+    /**
+     * Session recorder view: plain copies of this creature's own state. Reads only; the mind, the home
+     * and the taming attachments are never created by it.
+     */
+    public void record(Row row) {
+        row.put("st", behavior()).put("act", action()).put("tier", behaviorTier)
+                .flag("night", nightActive()).flag("tamed", isTamed()).flag("ridden", isRidden())
+                .flag("torpor", TorporService.restricted(this)).flag("loco", locomotion.moving());
+        if (engagedTicks > 0) row.put("engaged", engagedTicks);
+        if (pendingStrike != null) row.put("strike_in", strikeWindup);
+        if (strikeCooldown > 0) row.put("strike_cd", strikeCooldown);
+        if (moveControl instanceof CreatureMoveControl control) control.record(row);
+        if (wildlife != null) wildlife.record(row);
+    }
 
     /** This species' runtime clips, lengths, authored ground speeds and behaviour roles. */
     public ClipBook clips() { return BehaviorClips.of(species.id); }
@@ -687,15 +713,24 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
      */
     public boolean strike(Entity target) {
         if (!(level() instanceof ServerLevel) || !(target instanceof LivingEntity living)
-                || !living.isAlive() || living.level() != level() || !canStrike() || !hasLineOfSight(living)) return false;
+                || !living.isAlive() || living.level() != level()) return false;
+        if (!canStrike()) return refused(living, pendingStrike != null ? "winding_up" : strikeCooldown > 0 ? "cooldown" : "torpor");
+        if (!hasLineOfSight(living)) return refused(living, "no_sight");
         var clips = CreatureAttackClips.of(species);
-        if (clips == null) return false;
+        if (clips == null) return refused(living, "no_clip");
         triggerAnim("attack", "strike");
         playCreatureSound(CreatureSounds.Role.ATTACK, 1.0f);
         pendingStrike = living;
         strikeWindup = hitDelayTicks(clips);
         strikeCooldown = cooldownTicks(clips);
+        if (SessionRecorder.on()) SessionRecorder.strike(this, living, "start", strikeWindup, strikeCooldown);
         return true;
+    }
+
+    /** A strike that did not start; the reason goes to the session recorder. */
+    private boolean refused(LivingEntity target, String why) {
+        if (SessionRecorder.on()) SessionRecorder.strike(this, target, why, strikeWindup, strikeCooldown);
+        return false;
     }
 
     private static int hitDelayTicks(CreatureAttackClips.Clips clips) {
@@ -713,16 +748,25 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (pendingStrike == null || strikeWindup > 0) return;
         LivingEntity target = pendingStrike;
         pendingStrike = null;
-        if (!(level() instanceof ServerLevel world) || !isAlive() || !target.isAlive()
-                || target.level() != level() || TorporService.restricted(this)
-                || !isWithinMeleeAttackRange(target) || !hasLineOfSight(target)) return;
+        if (!(level() instanceof ServerLevel world)) return;
+        if (!isAlive() || !target.isAlive() || target.level() != level()) { whiffed(target, "gone"); return; }
+        if (TorporService.restricted(this)) { whiffed(target, "torpor"); return; }
+        if (!isWithinMeleeAttackRange(target)) { whiffed(target, "out_of_reach"); return; }
+        if (!hasLineOfSight(target)) { whiffed(target, "no_sight"); return; }
         applyingStrike = true;
         try {
-            if (applyStrikeDamage(world, target)) world.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT,
+            boolean hit = applyStrikeDamage(world, target);
+            if (hit) world.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT,
                     target.getX(), target.getY(0.5), target.getZ(), 6, 0.2, 0.2, 0.2, 0.08);
+            if (SessionRecorder.on()) SessionRecorder.strike(this, target, hit ? "hit" : "no_damage", 0, strikeCooldown);
         } finally {
             applyingStrike = false;
         }
+    }
+
+    /** A wound-up strike that did not land; the reason goes to the session recorder. */
+    private void whiffed(LivingEntity target, String why) {
+        if (SessionRecorder.on()) SessionRecorder.strike(this, target, why, 0, strikeCooldown);
     }
     /** Applies a resolved strike; realm classes with their own damage gates may replace the rule. */
     protected boolean applyStrikeDamage(ServerLevel level, Entity target) {

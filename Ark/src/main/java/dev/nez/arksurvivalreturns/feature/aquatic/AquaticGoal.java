@@ -12,6 +12,8 @@ import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.land.LandWildlife;
+import dev.nez.arksurvivalreturns.feature.recorder.Row;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -110,6 +112,8 @@ public final class AquaticGoal extends WildlifeController {
 
     @Override public void think() {
         if (!(mob.level() instanceof ServerLevel world) || !mob.species().aquatic()) return;
+        // Non-null only while the session recorder runs; it is told what this pass computes, never asked.
+        var t = SessionRecorder.decision(mob);
         var brain = mind();
         boolean cycle = WildlifeSenses.hasNightCycle(mob);
         boolean night = cycle && WildlifeSenses.night(mob);
@@ -133,23 +137,31 @@ public final class AquaticGoal extends WildlifeController {
                         c -> c != mob && c.isAlive() && c.species() == mob.species() && c.packId().equals(mob.packId())))
                     member.wildlife().receiveAlarm(attacker.position());
         }
-        var candidates = world.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(Math.max(32, WildlifeSenses.sightRange(mob))),
+        double scan = Math.max(32, WildlifeSenses.sightRange(mob));
+        var candidates = world.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(scan),
                 c -> c != mob && WildlifeSenses.validTarget(c) && !(peaceful && c instanceof Player)
                         && (c == attacker || c instanceof Player || c instanceof CreatureEntity
                             || (mob.species().predator && (c instanceof Animal || c instanceof WaterAnimal))))
                 .stream().sorted(Comparator.comparingDouble(mob::distanceToSqr)).limit(24).toList();
+        if (t != null) t.candidates(scan, candidates);
         WildlifeSenses.Detection detection = new WildlifeSenses.Detection(false, 0);
         LivingEntity sensed = null;
         double best = 0;
         for (var candidate : candidates) {
             var check = WildlifeSenses.detect(mob, candidate);
             double score = check.strength() / (1 + mob.distanceTo(candidate) / 32.0) + (candidate == focus && check.strength() > 0 ? 0.15 : 0);
+            if (t != null) t.scored(candidate, check, score);
             if (score > best) { best = score; sensed = candidate; detection = check; }
         }
-        if (attacked) { sensed = attacker; detection = WildlifeSenses.detect(mob, attacker); }
-        else if (herdThreat != null && WildlifeSenses.validTarget(herdThreat)) {
+        if (attacked) {
+            sensed = attacker; detection = WildlifeSenses.detect(mob, attacker);
+            if (t != null) t.forced("attacker");
+        } else if (herdThreat != null && WildlifeSenses.validTarget(herdThreat)) {
             var threatSense = WildlifeSenses.detect(mob, herdThreat);
-            if (threatSense.strength() > 0) { sensed = herdThreat; detection = threatSense; }
+            if (threatSense.strength() > 0) {
+                sensed = herdThreat; detection = threatSense;
+                if (t != null) t.forced("herd_threat");
+            }
         }
         if (sensed != null) {
             focus = sensed;
@@ -157,6 +169,7 @@ public final class AquaticGoal extends WildlifeController {
         }
         if (focus != null && !WildlifeSenses.validTarget(focus)) { focus = null; mob.setTarget(null); }
         double signal = Math.max(detection.strength(), alarmTicks > 0 ? 0.65 : 0);
+        if (t != null) t.sensed(sensed, detection, alarmTicks > 0);
         alarmTicks = Math.max(0, alarmTicks - 10);
         boolean visible = sensed != null && detection.visible();
         boolean intruding = visible && sensed instanceof Player && WildlifeSenses.bodyDistance(mob, sensed) < Config.WAKE_DISTANCE.get();
@@ -167,8 +180,10 @@ public final class AquaticGoal extends WildlifeController {
         brain.quench();
         var routine = new WildlifeMind.Routine(true, night, false, true, danger, false,
                 corneredTicks > 0, Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), false);
-        var state = brain.step(new WildlifeMind.Observation(signal, visible, visible && prey(sensed), intruding, attacked,
-                false, far, false, false, night, mob.getHealth() / mob.getMaxHealth()), 10, routine, null);
+        var observation = new WildlifeMind.Observation(signal, visible, visible && prey(sensed), intruding, attacked,
+                false, far, false, false, night, mob.getHealth() / mob.getMaxHealth());
+        var state = brain.step(observation, 10, routine, null);
+        if (t != null) t.step(before, state, brain, observation, routine, false, false);
         if (!brain.remembers()) { lastKnown = null; focus = null; }
         mob.setBehavior(state);
         if (state != before) {
@@ -193,12 +208,18 @@ public final class AquaticGoal extends WildlifeController {
             default -> BehaviorAction.WALK;
         });
         if (lastKnown != null && state.alarm()) mob.getLookControl().setLookAt(lastKnown.x, lastKnown.y + 1, lastKnown.z, 20, 20);
+        // A combat state that reaches the switch below has no visible target and roams.
+        if (t != null) t.branch(state.combat() ? "no_sight" : state.name().toLowerCase(java.util.Locale.ROOT));
         if (state.combat() && visible && sensed != null) {
             if (mob.isWithinMeleeAttackRange(sensed)) {
                 mob.setDeltaMovement(mob.getDeltaMovement().scale(0.6));
                 // The strike schedules its damage on the clip's hit frame; onStrikeKill feeds the mind.
                 mob.strike(sensed);
-            } else swimTo(world, sensed.position(), 1.0);
+                if (t != null) t.branch("strike");
+            } else {
+                if (t != null) t.branch("chase");
+                swimTo(world, sensed.position(), 1.0);
+            }
         } else switch (state) {
             case INVESTIGATE -> { if (lastKnown != null) swimTo(world, lastKnown, 0.7); }
             case FLEE -> {
@@ -218,6 +239,7 @@ public final class AquaticGoal extends WildlifeController {
             case REST -> mob.setDeltaMovement(mob.getDeltaMovement().scale(0.6));
             default -> roam(world);
         }
+        if (t != null) t.commit();
     }
     /** A landed strike that killed the target satisfies the predator exactly like the old instant hit did. */
     @Override public void onStrikeKill() { mind().ate(); focus = null; mob.setTarget(null); }
@@ -272,6 +294,20 @@ public final class AquaticGoal extends WildlifeController {
             return;
         }
         mob.setDeltaMovement(keepInsideColumn(world, mob.getDeltaMovement()));
+    }
+    @Override public void record(Row row) {
+        SessionRecorder.mind(row, mind);
+        if (home != null) row.block("home", home.getX(), home.getY(), home.getZ());
+        if (transientHome != null) row.block("herd_home", transientHome.getX(), transientHome.getY(), transientHome.getZ());
+        if (focus != null) row.put("focus", SessionRecorder.sid(focus));
+        if (lastKnown != null) row.xyz("known", lastKnown.x, lastKnown.y, lastKnown.z);
+        if (destination != null) row.xyz("dest", destination.x, destination.y, destination.z);
+        if (herdThreat != null) row.put("herd_threat", SessionRecorder.sid(herdThreat));
+        if (failedPaths > 0) row.put("fail", failedPaths);
+        if (corneredTicks > 0) row.put("cornered_t", corneredTicks);
+        if (alarmTicks > 0) row.put("alarm_t", alarmTicks);
+        if (hoverTicks > 0) row.put("hover", hoverTicks);
+        if (nextRoutine > mob.tickCount) row.put("routine_in", (int) (nextRoutine - mob.tickCount));
     }
     @Override public void save(ValueOutput out) {
         // The permanent anchor is saved; the prey-herd anchor is transient by design.

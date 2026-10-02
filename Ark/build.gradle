@@ -18,6 +18,18 @@ devRuntimeFile.withInputStream { devRuntime.load(it) }
     def value = devRuntime.getProperty(key).toInteger()
     if (value < 2 || value > 32) throw new GradleException("Invalid ${key} in dev-runtime.properties")
 }
+// Commit and uncommitted-change flag of the mod sources at launch; 'unknown' outside a git checkout.
+def gitText = { List<String> arguments ->
+    try {
+        def run = providers.exec { commandLine(['git'] + arguments); ignoreExitValue = true }
+        return run.result.get().exitValue == 0 ? run.standardOutput.asText.get().trim() : null
+    } catch (Exception ignored) {
+        return null
+    }
+}
+def buildCommit = gitText(['rev-parse', 'HEAD']) ?: 'unknown'
+def buildChanges = gitText(['status', '--porcelain', '--', 'src', 'build.gradle', 'gradle.properties'])
+def buildDirty = buildChanges == null ? 'unknown' : buildChanges.isEmpty() ? 'false' : 'true'
 // Presentation mods belong only to the interactive client, never datagen or a server.
 sourceSets {
     immersiveClient { runtimeClasspath += sourceSets.main.runtimeClasspath }
@@ -53,7 +65,12 @@ neoForge {
             clientData()
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources').absolutePath, '--existing', file('src/main/resources').absolutePath
         }
-        configureEach { logLevel = org.slf4j.event.Level.INFO }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+            // The session recorder stamps each recording with the code it ran on.
+            systemProperty 'arksurvivalreturns.build.commit', buildCommit
+            systemProperty 'arksurvivalreturns.build.dirty', buildDirty
+        }
     }
     mods { "${mod_id}" { sourceSet sourceSets.main } }
 }

@@ -12,6 +12,7 @@ import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.aquatic.Water;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.taming.TamingService;
 import dev.nez.arksurvivalreturns.feature.taming.TorporService;
 import dev.nez.arksurvivalreturns.registry.ModContent;
@@ -181,7 +182,10 @@ public final class NaturalPopulations {
                 .filter(NaturalPopulations::cullable)
                 .sorted(Comparator.comparingDouble(c -> -nearestPlayerDistanceSqr(level, c)))
                 .limit(excess).toList();
-        for (var creature : cullable) creature.discard();
+        for (var creature : cullable) {
+            SessionRecorder.note(creature, "budget_cull");
+            creature.discard();
+        }
     }
 
     /**
@@ -316,6 +320,7 @@ public final class NaturalPopulations {
                 creature.discard();
                 continue;
             }
+            SessionRecorder.note(creature, "budget_spawn");
             level.addFreshEntityWithPassengers(creature);
             placed++;
         }

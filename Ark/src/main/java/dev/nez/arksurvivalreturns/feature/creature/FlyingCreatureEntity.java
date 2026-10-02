@@ -14,6 +14,8 @@ import dev.nez.arksurvivalreturns.feature.behavior.WildlifeController;
 import dev.nez.arksurvivalreturns.feature.flying.*;
 import dev.nez.arksurvivalreturns.feature.mass.MassRules;
 import dev.nez.arksurvivalreturns.feature.mass.MassService;
+import dev.nez.arksurvivalreturns.feature.recorder.Row;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureAnimationBridge;
 import dev.nez.arksurvivalreturns.feature.taming.CreatureRideController;
@@ -69,6 +71,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     private void phase(Phase next) {
         if (flightPhase() == next) return;
         var before = flightPhase(); entityData.set(PHASE, next.ordinal()); phaseTicks = 0; destination = null;
+        if (SessionRecorder.on()) SessionRecorder.changed(this, "phase", before, next);
         setBehavior(switch (next) {
             case DEFENSE_CIRCLE, SWOOP -> BehaviorState.DEFEND;
             case RETURN_HOME -> BehaviorState.RETURN_HOME;
@@ -293,6 +296,17 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         struck = true; return super.doHurtTarget(world, target);
     }
     private void recover(ServerLevel world) { phase(Phase.DEFENSE_CIRCLE); nextSwoop = world.getGameTime() + 80 + random.nextInt(81); }
+    @Override public void record(Row row) {
+        super.record(row);
+        row.put("phase", flightPhase()).put("phase_t", phaseTicks);
+        if (thiefId != null) row.put("thief", thiefId.toString()).put("defend_left", defenseUntil - level().getGameTime());
+        // The ground routine's own destination and home keep their names; a bird's are fly_to and roost.
+        if (destination != null) row.xyz("fly_to", destination.x, destination.y, destination.z);
+        if (nest != null) row.block("nest", nest.getX(), nest.getY(), nest.getZ());
+        if (center != null) row.block("roost", center.getX(), center.getY(), center.getZ());
+        if (blockedTicks > 0) row.put("blocked", blockedTicks);
+        if (lap != null) row.put("lap", lap.kind());
+    }
     public boolean beginPerching(ServerLevel world) {
         if (thiefId != null || isInWater() || isInLava() || !Config.PERCHING.get() || !safePerch(world) || !clearRoute(world, Vec3.atBottomCenterOf(nest))) return false;
         phase(Phase.LAND); return true;
