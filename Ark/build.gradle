@@ -53,6 +53,11 @@ neoForge {
             // Iris 1.11.2 returns a short binding array; dev GL validation assumes 16 slots.
             // Client-only workaround for https://github.com/IrisShaders/Iris/issues/3304.
             systemProperty 'neoforge.disableGlValidation', 'true'
+            // A session recorded with nobody at the keyboard (tools/session_run.py): open this world at launch,
+            // let the scripted player walk, close the game when the recording is saved.
+            if (project.hasProperty('arkWorld')) programArguments.addAll '--quickPlaySingleplayer', project.property('arkWorld').toString()
+            if (project.hasProperty('arkAutopilot')) systemProperty 'arksurvivalreturns.autopilot', project.property('arkAutopilot').toString()
+            if (project.hasProperty('arkQuit')) systemProperty 'arksurvivalreturns.record.quit', 'true'
         }
         server { server(); jvmArgument "-Xmx${devRuntime.serverHeap}"; programArgument '--nogui' }
         gameTestServer {

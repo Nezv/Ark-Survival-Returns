@@ -197,13 +197,19 @@ def followed(con, count: int) -> list[dict]:
 
 
 def marks(con) -> list[dict]:
-    return query(con, "SELECT game_s(tick) AS t, note FROM events WHERE ev = 'mark' ORDER BY tick")
+    """A person's marks, and the steps of the scripted player (notes that start with auto:)."""
+    return query(con, "SELECT game_s(tick) AS t, coalesce(note, '') AS note FROM events WHERE ev = 'mark' ORDER BY tick")
 
 
 def mark_lines(figure: go.Figure, theme: dict, moments: list[dict]):
-    for moment in moments:
-        figure.add_vline(x=moment["t"], line=dict(color=theme["ink"], width=1), annotation_text="mark",
-                         annotation_font=dict(color=theme["ink2"], size=11), annotation_position="top")
+    for index, moment in enumerate(moments):
+        if not moment["note"].startswith("auto:"):
+            figure.add_vline(x=moment["t"], line=dict(color=theme["ink"], width=1), annotation_text="mark",
+                             annotation_font=dict(color=theme["ink2"], size=11), annotation_position="top")
+        elif moment["note"].startswith("auto:hold"):
+            # The scripted player stood in front of a creature from here until its next step.
+            until = moments[index + 1]["t"] if index + 1 < len(moments) else moment["t"] + 15
+            figure.add_vrect(x0=moment["t"], x1=until, fillcolor=theme["muted"], opacity=0.16, line_width=0, layer="below")
 
 
 def distances(con, theme: dict, creatures: list[dict], wake, moments) -> go.Figure | None:
@@ -394,6 +400,10 @@ def page(theme: dict, summary: dict, incidents: list[dict], figures: list[tuple[
     creature_rows = [[c["e"], c["species"], c["snapshots"], c["gap_min"], c["gap_avg"], ", ".join(sorted(s for s in c["states"] if s))]
                      for c in summary["nearest_creatures"]]
     setup = summary["setup"]
+    script_rows = [[f"{step['t']:.1f}", step["step"]] for step in summary.get("script") or []]
+    script = (f"<h2>Scripted player</h2><p class='note'>Nobody was at the keyboard: the player walked up to the nearest wild "
+              f"creature, stood within five blocks of it (the grey bands in the charts), backed away and picked the next.</p>"
+              f"<section>{table(['game s', 'step'], script_rows)}</section>") if script_rows else ""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session {html.escape(str(summary['session']))}</title>
@@ -427,6 +437,7 @@ def page(theme: dict, summary: dict, incidents: list[dict], figures: list[tuple[
 <section>{table(['kind', 'creature', 'game s', 'closest (blocks)', 'evidence'], normal_rows)}</section>
 <h2>Creatures that came closest</h2>
 <section>{table(['id', 'species', 'snapshots', 'closest', 'average', 'states seen'], creature_rows)}</section>
+{script}
 </main></body></html>"""
 
 

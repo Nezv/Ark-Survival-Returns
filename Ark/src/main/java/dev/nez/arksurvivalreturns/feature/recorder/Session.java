@@ -237,6 +237,7 @@ final class Session {
         }
         tell("Session recorder: recording " + durationNanos / 1_000_000_000L + " s. /arkrecord mark or the marker key flags a moment.",
                 ChatFormatting.GREEN);
+        SessionRecorder.status(subject(), true, true, id);
         ArkSurvivalReturns.LOGGER.info("Session recorder started: {}", directory);
     }
 
@@ -277,7 +278,10 @@ final class Session {
                 : "Session saved INCOMPLETE: " + where + " (" + result.rows() + " records, " + result.dropped()
                         + " dropped, " + errors + " capture errors" + (result.failure() == null ? "" : ", " + result.failure()) + ").";
         ArkSurvivalReturns.LOGGER.info("Session recorder: {}", text);
-        if (server.isRunning()) server.execute(() -> tell(text, whole ? ChatFormatting.GREEN : ChatFormatting.RED));
+        if (server.isRunning()) server.execute(() -> {
+            tell(text, whole ? ChatFormatting.GREEN : ChatFormatting.RED);
+            SessionRecorder.status(subject(), false, whole, where);
+        });
     }
 
     void tell(String text, ChatFormatting color) {
@@ -521,7 +525,7 @@ final class Session {
         var row = new Row("ev").put("ev", "mark").put("e", sid(player)).put("note", text);
         if (player != null) row.xyz("p", player.getX(), player.getY(), player.getZ());
         timed(row);
-        tell("Marked at " + (activeNanos - recordStartActive) / 100_000_000L / 10.0 + " s.", ChatFormatting.GRAY);
+        tell("Marked at " + (activeNanos - recordStartActive) / 100_000_000L / 10.0 + " s: " + text, ChatFormatting.GRAY);
     }
 
     // ----------------------------------------------------------------------------- capture

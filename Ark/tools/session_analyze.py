@@ -380,6 +380,11 @@ def runs(rows: list[dict], key):
         yield current, group
 
 
+# A person's mark flags a moment worth reading; the scripted player of an unattended run (tools/session_run.py)
+# marks its own steps with notes that start with auto:, and those are a timeline, not incidents.
+BY_HAND = "coalesce(note, '') NOT LIKE 'auto:%'"
+
+
 class Incidents:
     def __init__(self, con, first: int, marks: list[float]):
         self.con, self.first, self.marks, self.items = con, first, marks, []
@@ -675,7 +680,7 @@ class Incidents:
                          gap_min=math.dist((r["x"], r["y"], r["z"]), (r["px"], r["py"], r["pz"])))
 
     def marked(self):
-        for r in query(self.con, "SELECT tick, seq, note FROM events WHERE ev = 'mark' ORDER BY tick"):
+        for r in query(self.con, f"SELECT tick, seq, note FROM events WHERE ev = 'mark' AND {BY_HAND} ORDER BY tick"):
             near = query(self.con, """
                 SELECT e, species, st, act, round(player_gap, 1) AS gap FROM status_x
                 WHERE species IS NOT NULL AND tick = (SELECT max(tick) FROM status WHERE tick <= ?) ORDER BY player_gap LIMIT 5""",
@@ -751,6 +756,7 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
                                 one("SELECT coalesce(sum(paths), 0), coalesce(sum(deferred), 0), count(*) FILTER (deferred > 0) FROM ticks"))),
         "nearest_creatures": creatures,
         "player_funnel": stages,
+        "script": query(con, f"SELECT round(game_s(tick), 1) AS t, substr(note, 6) AS step FROM events WHERE ev = 'mark' AND NOT {BY_HAND} ORDER BY tick"),
         "incident_counts": dict(kinds),
         "top_incidents": [item for item in incidents if not item["normal"]][:12],
         "recorder_end": {key: end.get(key) for key in ("ticks", "emitted", "dropped", "errors", "terrain", "terrain_suppressed")},
@@ -790,6 +796,8 @@ def show(summary: dict):
     print("player through each creature's candidate funnel (id species stage passes gap_min):")
     for s in summary["player_funnel"][:20]:
         print(f"  {s['e']:>4} {s['species'] or '?':<18} {s['stage']:<14} {s['passes']:>4} {s['gap_min']:>6}")
+    if summary["script"]:
+        print("scripted player (game s, step): " + "; ".join(f"{step['t']:g} {step['step']}" for step in summary["script"]))
     print(f"incidents: {summary['incident_counts']}")
     for item in summary["top_incidents"]:
         rest = {k: v for k, v in item.items() if k not in ("kind", "normal", "score", "e", "who", "t0", "t1", "tick0", "tick1",
@@ -843,7 +851,7 @@ def analyse(source: Path, out: Path) -> tuple[duckdb.DuckDBPyConnection, dict, l
     out.mkdir(parents=True, exist_ok=True)
     con, meta, integrity = ingest(source, out / "session.duckdb")
     first = con.execute("SELECT tick0 FROM origin").fetchone()[0]
-    marks = [row[0] for row in con.execute("SELECT game_s(tick) FROM events WHERE ev = 'mark'").fetchall()]
+    marks = [row[0] for row in con.execute(f"SELECT game_s(tick) FROM events WHERE ev = 'mark' AND {BY_HAND}").fetchall()]
     incidents = Incidents(con, first, marks).all()
     summary = summarise(con, meta, integrity, incidents)
     (out / "summary.json").write_text(json.dumps(summary, indent=1, default=str), encoding="utf-8")

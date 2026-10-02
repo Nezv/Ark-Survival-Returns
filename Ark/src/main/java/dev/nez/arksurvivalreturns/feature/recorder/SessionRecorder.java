@@ -28,6 +28,7 @@ import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * Debug recorder of a real play session: where every loaded creature was, what its AI decided and why,
@@ -159,9 +160,16 @@ public final class SessionRecorder {
                 .put("gui_scale", info.guiScale()).put("window", info.window()));
     }
 
-    static void clientMark(ServerPlayer player) {
+    static void clientMark(ServerPlayer player, String note) {
         var current = session;
-        if (current != null && current.recording() && current.isSubject(player)) current.mark(player, "key");
+        if (current != null && current.recording() && current.isSubject(player)) current.mark(player, note);
+    }
+
+    /** Tells the recorded player's client that the recording started, or that it ended and the file is closed. */
+    static void status(Player player, boolean recording, boolean complete, String detail) {
+        if (player instanceof ServerPlayer online && !online.isFakePlayer() && !online.hasDisconnected()
+                && online.connection.hasChannel(RecorderPayloads.Status.TYPE))
+            PacketDistributor.sendToPlayer(online, new RecorderPayloads.Status(recording, complete, detail));
     }
 
     public static boolean mark(Player player, String text) {

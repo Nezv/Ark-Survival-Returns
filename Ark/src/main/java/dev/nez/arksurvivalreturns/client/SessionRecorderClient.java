@@ -13,30 +13,46 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 /**
  * Client side of the session recorder. The server cannot tell a loading screen from a player who can
  * move, so the client says so once per join; the recorder's clock starts from that moment. Also the
- * marker key, which flags the current moment in a running recording.
+ * marker key, which flags the current moment in a running recording, and for a recording with nobody
+ * at the keyboard ({@code -Darksurvivalreturns.record.quit=true}) closing the game once the file is saved.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class SessionRecorderClient {
     private static final KeyMapping.Category CATEGORY = new KeyMapping.Category(ArkSurvivalReturns.id("debug"));
     private static final KeyMapping MARK = new KeyMapping("key.arksurvivalreturns.session_mark",
             InputConstants.Type.KEYSYM, InputConstants.KEY_F7, CATEGORY);
-    private static boolean reported;
+    private static final boolean QUIT_WHEN_SAVED = Boolean.getBoolean("arksurvivalreturns.record.quit");
+    private static boolean reported, recording;
+    private static int quitIn = -1;
 
     @SubscribeEvent public static void keys(RegisterKeyMappingsEvent event) {
         event.registerCategory(CATEGORY);
         event.register(MARK);
     }
 
+    @SubscribeEvent public static void payloads(RegisterClientPayloadHandlersEvent event) {
+        event.register(RecorderPayloads.Status.TYPE, (payload, context) -> {
+            recording = payload.recording();
+            // The file is closed and checked by now; a moment for the chat line, then the game ends.
+            if (!payload.recording() && QUIT_WHEN_SAVED) quitIn = 60;
+        });
+    }
+
+    /** True from the recording's first tick until its file is saved, as the server reported it. */
+    static boolean recording() { return recording; }
+
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
         var mc = Minecraft.getInstance();
+        if (quitIn >= 0 && quitIn-- == 0) mc.stop();
         var connection = mc.getConnection();
         if (mc.player == null || mc.level == null || connection == null) return;
         while (MARK.consumeClick())
-            if (connection.hasChannel(RecorderPayloads.Mark.TYPE)) ClientPacketDistributor.sendToServer(new RecorderPayloads.Mark());
+            if (connection.hasChannel(RecorderPayloads.Mark.TYPE)) ClientPacketDistributor.sendToServer(new RecorderPayloads.Mark("key"));
         // In control: no loading or menu screen, no resource-reload overlay, not paused.
         if (reported || mc.screen != null || mc.getOverlay() != null || mc.isPaused()) return;
         if (!connection.hasChannel(RecorderPayloads.Ready.TYPE)) return;
@@ -46,8 +62,8 @@ public final class SessionRecorderClient {
                 mc.options.guiScale().get(), mc.getWindow().getWidth() + "x" + mc.getWindow().getHeight()));
     }
 
-    @SubscribeEvent public static void login(ClientPlayerNetworkEvent.LoggingIn event) { reported = false; }
-    @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { reported = false; }
+    @SubscribeEvent public static void login(ClientPlayerNetworkEvent.LoggingIn event) { reported = recording = false; }
+    @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { reported = recording = false; }
 
     /** The shader pack Iris is drawing with, read through its public API so Iris stays optional. */
     private static String shaders() {
