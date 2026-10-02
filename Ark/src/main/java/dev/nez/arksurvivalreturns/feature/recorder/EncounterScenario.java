@@ -44,6 +44,8 @@ final class EncounterScenario {
     private static final int PAUSE_TICKS = 60, CLEAR_RADIUS = 160, AFTER_STRIKE_TICKS = 60, TREE_LINE = 8, POND_BEYOND = 10;
 
     private Vec3 origin;
+    /** Ground a trial changed (its tree line), put back before the next trial so no trial sees another's terrain. */
+    private AABB changed;
     private CreatureEntity creature;
     private Trial current;
     private int index, started, nextTrial, struckAt = -1;
@@ -106,7 +108,11 @@ final class EncounterScenario {
         clock.ifPresent(c -> world.clockManager().setTotalTicks(c, world.getDefaultClockTime() - Math.floorMod(world.getDefaultClockTime(), 24000L) + 24000L + trial.dayTime()));
         int cleared = clear(world, player);
         var ground = new Row("ground").put("kind", trial.ground().name());
-        if (trial.ground() == Ground.TREES) ground.put("trees", treeLine(world, origin.add(heading.scale(TREE_LINE)), heading));
+        if (trial.ground() == Ground.TREES) {
+            Vec3 line = origin.add(heading.scale(TREE_LINE));
+            ground.put("trees", treeLine(world, line, heading));
+            changed = new AABB(line, line).inflate(36, 0, 36).expandTowards(0, 16, 0);
+        }
         Vec3 spot = origin.add(heading.scale(trial.distance()));
         if (trial.ground() == Ground.POND) {
             var pond = BlockPos.containing(origin.add(heading.scale(trial.distance() + POND_BEYOND)));
@@ -150,12 +156,29 @@ final class EncounterScenario {
         if (observer != null) row.put("gap", dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses.bodyDistance(creature, observer));
         if (struckAt >= 0) row.put("struck_after_s", (struckAt - started) / 20.0);
         if (current.ground() == Ground.POND) row.flag("drank", drank).put("thirst", creature.wildlife().mind().thirst());
+        if (changed != null && creature.level() instanceof ServerLevel world) row.put("trees_removed", unplant(world, changed));
+        changed = null;
         log(session, result, creature, row);
         session.mark(observer, "test:encounter " + current.name() + " " + result);
         session.note(creature, "encounter_cleanup");
         creature.discard();
         creature = null;
         nextTrial = session.tick() + PAUSE_TICKS;
+    }
+
+    /** Takes a tree line down again: trunks, crowns and the saplings trampled trunks left. */
+    private static int unplant(ServerLevel world, AABB area) {
+        int removed = 0;
+        for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(area.minX), Mth.floor(area.minY), Mth.floor(area.minZ),
+                Mth.floor(area.maxX), Mth.floor(area.maxY), Mth.floor(area.maxZ))) {
+            var state = world.getBlockState(pos);
+            if (state.is(net.minecraft.tags.BlockTags.LOGS) || state.is(net.minecraft.tags.BlockTags.LEAVES)
+                    || state.is(net.minecraft.tags.BlockTags.SAPLINGS)) {
+                world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                removed++;
+            }
+        }
+        return removed;
     }
 
     void close(Session session, String reason) {

@@ -66,6 +66,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("wildlife_dry_range", () -> WildlifeRegressionGameTests::dryRange);
         FUNCTIONS.register("wildlife_downhill_bank", () -> WildlifeRegressionGameTests::downhill);
         FUNCTIONS.register("wildlife_bank_arrival", () -> WildlifeRegressionGameTests::arrival);
+        FUNCTIONS.register("wildlife_giant_path", () -> WildlifeRegressionGameTests::giantPath);
         FUNCTIONS.register("combat_timing", () -> ArkGameTests::combatTiming);
         FUNCTIONS.register("flying_ecology", () -> FlyingGameTests::ecology);
         FUNCTIONS.register("flying_pteranodon", () -> h -> FlyingGameTests.flight(h, Species.PTERANODON));

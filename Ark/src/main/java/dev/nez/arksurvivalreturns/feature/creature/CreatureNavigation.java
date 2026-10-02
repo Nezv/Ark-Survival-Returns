@@ -8,7 +8,10 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.Target;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -16,7 +19,14 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 /**
  * Ground navigation of a creature. While a large carnivore tramples ({@link CreatureEntity#tramplesTrees()})
  * its paths are planned as if natural trees were not there; {@link TreeTrample} then knocks down what the
- * body meets. A log wall is still a wall, so the path goes round it. Every other path is vanilla.
+ * body meets. A log wall is still a wall, so the path goes round it.
+ *
+ * <p>A body wider than a block is placed on its path by the corner of its footprint: the footprint check, the
+ * node-reached test and the steering target all read a node as that corner. Vanilla starts the path at the block
+ * under the body's centre and ends it at the target block, also read as corners, so every new path first led half
+ * a body to one side and ended half a body past its target; a Giganotosaurus turned away from its prey at the
+ * start of each path, lost sight of it and began its warning again. Start and target are moved to the corner that
+ * puts the centre where the body is and where it is going.
  */
 final class CreatureNavigation extends GroundPathNavigation {
     CreatureNavigation(CreatureEntity creature, Level level) {
@@ -32,6 +42,22 @@ final class CreatureNavigation extends GroundPathNavigation {
         @Override public void prepare(PathNavigationRegion level, Mob mob) {
             super.prepare(level, mob);
             if (mob instanceof CreatureEntity creature && creature.tramplesTrees()) currentContext = new ThroughTrees(level, mob);
+        }
+
+        @Override public Node getStart() {
+            Node start = super.getStart();
+            if (entityWidth < 2) return start;
+            return getStartNode(new BlockPos(corner(mob.getX()), start.y, corner(mob.getZ())));
+        }
+
+        @Override public Target getTarget(double x, double y, double z) {
+            if (entityWidth < 2) return super.getTarget(x, y, z);
+            return super.getTarget(corner(x + 0.5), y, corner(z + 0.5));
+        }
+
+        /** The footprint corner whose node puts the body's centre at this coordinate. */
+        private int corner(double center) {
+            return Mth.floor(center - entityWidth / 2.0 + 0.5);
         }
     }
 

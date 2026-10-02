@@ -313,6 +313,40 @@ final class WildlifeRegressionGameTests {
             h.succeed();
         });
     }
+    /**
+     * The recorded failure on open plains: every path of a Giganotosaurus began half its body to one side, so on a
+     * straight chase it veered off the line to its prey, turned away and lost sight of it.
+     */
+    static void giantPath(GameTestHelper h) {
+        floor(h);
+        var mob = wild(h, Species.GIGANOTOSAURUS, new Vec3(64.5, 3, 88.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        var player = intruder(h, new Vec3(64.5, 3, 64.5));
+        float toward = (float) (Math.atan2(-(player.getX() - mob.getX()), player.getZ() - mob.getZ()) * (180 / Math.PI));
+        mob.setYRot(toward); mob.yBodyRot = toward; mob.yHeadRot = toward;
+        // The structure may be rotated: measure drift across the start-to-prey line, whichever axis it runs along.
+        Vec3 start = mob.position(), along = player.position().subtract(start).multiply(1, 0, 1).normalize();
+        // A sated giant in daylight only warns; a blow from the intruder sends it after them at any hour.
+        h.runAfterDelay(5, () -> mob.hurtServer(h.getLevel(), h.getLevel().damageSources().playerAttack(player), 1));
+        var noChunkLoads = NavigationGameTests.watchChunkLoads(h);
+        double[] drift = {0};
+        int[] lostSight = {0};
+        boolean[] pursuing = {false};
+        h.onEachTick(() -> {
+            if (mob.behavior().combat()) pursuing[0] = true;
+            if (!pursuing[0] || player.getHealth() < 1024) return;
+            if (mob.wildlife().mind().reason() == WildlifeMind.Reason.LOST_SIGHT) lostSight[0]++;
+            Vec3 off = mob.position().subtract(start);
+            drift[0] = Math.max(drift[0], Math.abs(off.x * along.z - off.z * along.x));
+        });
+        h.runAfterDelay(400, () -> {
+            h.assertTrue(pursuing[0], "Giant path fixture never provoked a pursuit");
+            h.assertTrue(player.getHealth() < 1024, "A pursuing giant never reached its intruder: " + mob.position() + " " + mob.behavior());
+            h.assertTrue(drift[0] < 2.5, "A pursuing giant veered " + String.format("%.1f", drift[0]) + " blocks off the straight line to its prey");
+            h.assertTrue(lostSight[0] == 0, "A pursuing giant lost sight of the intruder in the open on " + lostSight[0] + " ticks");
+            noChunkLoads.run();
+            h.succeed();
+        });
+    }
     /** The recorded failure: water eight blocks below the animal, a walkable slope down to it, and no attempt to go. */
     static void downhill(GameTestHelper h) {
         floor(h);
