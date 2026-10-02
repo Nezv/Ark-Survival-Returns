@@ -347,18 +347,25 @@ final class WildlifeRegressionGameTests {
                 "An animal a step from its chosen bank kept looking for water: " + mob.behavior() + " thirst=" + mob.wildlife().mind().thirst());
         h.succeed();
     }
-    /** No water anywhere: a short look around, then the animal makes do instead of searching without end. */
+    /** No water anywhere: three short sweeps with a walk between them, then the animal makes do instead of searching without end. */
     static void dryRange(GameTestHelper h) {
         floor(h);
         var mob = wild(h, Species.PEGOMASTAX, new Vec3(64.5, 3, 64.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
         mob.wildlife().mind().restoreNeeds(0.1, 0.9, 0.1);
+        Vec3 start = mob.position();
         int[] seeking = {0};
-        h.onEachTick(() -> { if (mob.behavior() == BehaviorState.SEEK_WATER) seeking[0]++; });
-        h.runAfterDelay(200, () -> {
+        double[] farthest = {0};
+        h.onEachTick(() -> {
+            if (mob.behavior() != BehaviorState.SEEK_WATER) return;
+            seeking[0]++;
+            farthest[0] = Math.max(farthest[0], mob.position().distanceTo(start));
+        });
+        h.runAfterDelay(900, () -> {
             h.assertTrue(seeking[0] > 0, "Dry range fixture never made the animal look for water");
-            h.assertTrue(seeking[0] <= 100, "A thirsty animal stood looking for water for " + seeking[0] + " ticks");
+            h.assertTrue(farthest[0] > 3, "A thirsty animal never left the spot between its sweeps: " + farthest[0]);
             h.assertTrue(mob.wildlife().mind().thirst() < 0.6 && mob.behavior() != BehaviorState.SEEK_WATER,
-                    "With no water in reach the search never ended: thirst=" + mob.wildlife().mind().thirst() + " " + mob.behavior());
+                    "With no water in reach the search never ended: thirst=" + mob.wildlife().mind().thirst() + " " + mob.behavior()
+                            + " after " + seeking[0] + " ticks");
             h.succeed();
         });
     }

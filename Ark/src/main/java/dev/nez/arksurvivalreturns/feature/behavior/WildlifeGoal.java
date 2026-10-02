@@ -43,7 +43,7 @@ public final class WildlifeGoal extends WildlifeController {
     private double approachSpeed;
     private long retryPathAt, lastFailureTick = Long.MIN_VALUE;
     private BlockPos waterSearchOrigin;
-    private int waterSearchIndex;
+    private int waterSearchIndex, waterAttempts, drySweeps;
     private static final java.util.List<BlockPos> WATER_OFFSETS = waterOffsets();
     private LivingEntity focus;
     private LivingEntity herdThreat;
@@ -548,8 +548,8 @@ public final class WildlifeGoal extends WildlifeController {
         for (int i = 0; i < 8; i++) {
             var pos = SpawnRules.surface(world, (int) Math.floor(center.x) + mob.getRandom().nextInt(radius * 2 + 1) - radius,
                     (int) Math.floor(center.z) + mob.getRandom().nextInt(radius * 2 + 1) - radius);
-            if (pos == null || !standable(world, pos, 6 + 0.5 * Math.sqrt(pos.distToCenterSqr(mob.position())))) continue;
-            if (move(world, Vec3.atBottomCenterOf(pos), speed, false, 2)) return true;
+            if (!standable(world, pos, 6)) continue;
+            if (move(world, Vec3.atBottomCenterOf(pos), speed)) return true;
         }
         return routed("no_destination", center, false);
     }
@@ -703,15 +703,16 @@ public final class WildlifeGoal extends WildlifeController {
     }
     private void seekWater(ServerLevel world) {
         if (waterDestination != null) {
-            if (waterAt(world, waterDestination) && move(world, waterDestination, mob.wanderModifier(), oneLeg(waterDestination))) return;
+            if (waterAt(world, waterDestination) && toBank(world, waterDestination)) return;
             waterDestination = null;
         }
         boolean searching = waterSearchOrigin != null && waterSearchIndex < WATER_OFFSETS.size();
         if (!searching && world.getGameTime() < nextWaterSearch) { roam(world); return; }
         if (!searching || LandWildlife.distanceSqr(mob.blockPosition(), waterSearchOrigin) > 64) {
-            waterSearchOrigin = mob.blockPosition(); waterSearchIndex = 0;
+            waterSearchOrigin = mob.blockPosition(); waterSearchIndex = 0; waterAttempts = 0;
             mob.getNavigation().stop(); destination = null; approach = null;
         }
+        int attempts = 0;
         // Nearest banks first, with exhaustive coverage and bounded work on each half-second pass: the animal
         // stands while it looks, so the whole sweep takes about three seconds, not twelve.
         for (int i = 0; i < 512 && waterSearchIndex < WATER_OFFSETS.size(); i++) {
@@ -723,6 +724,7 @@ public final class WildlifeGoal extends WildlifeController {
             double rise = 6 + 0.5 * Math.hypot(water.getX() + 0.5 - mob.getX(), water.getZ() + 0.5 - mob.getZ());
             if (Math.abs(water.getY() + 1 - mob.getY()) > rise) continue;
             int reach = Math.min(16, 2 + (int) Math.ceil(mob.getBbWidth() / 2));
+            banks:
             for (int edge = 1; edge <= reach; edge++) for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
                 var column = water.relative(direction, edge);
                 var pos = SpawnRules.surface(world, column.getX(), column.getZ());
@@ -731,15 +733,31 @@ public final class WildlifeGoal extends WildlifeController {
                 if (!SpawnRules.loaded(world, box.inflate(reach + 1)) || !world.getWorldBorder().isWithinBounds(box)
                         || !world.noCollision(mob, box, true)) continue;
                 Vec3 bank = Vec3.atBottomCenterOf(pos);
-                if (waterAt(world, bank) && move(world, bank, mob.wanderModifier(), oneLeg(bank))) { waterDestination = bank; return; }
+                if (!waterAt(world, bank)) continue;
+                if (toBank(world, bank)) { waterDestination = bank; drySweeps = 0; return; }
+                // A path search is the costly part: one bank per water column, a few per pass, and a sweep that
+                // has failed sixteen times is over, so a pond nobody can reach does not take the path budget.
+                attempts++;
+                if (++waterAttempts >= 16) waterSearchIndex = WATER_OFFSETS.size();
+                break banks;
             }
+            if (attempts >= 3) break;
         }
-        // Nothing usable within reach: make do, and look again when thirst has built up.
-        if (waterSearchIndex >= WATER_OFFSETS.size()) { nextWaterSearch = world.getGameTime() + 200; mind().makeDo(); roam(world); }
+        // Nothing usable from here: roam and sweep again from the next place. After three empty sweeps the range is
+        // dry: the animal makes do, and looks again when thirst has built up.
+        if (waterSearchIndex >= WATER_OFFSETS.size()) {
+            nextWaterSearch = world.getGameTime() + 200;
+            if (++drySweeps >= 3) { drySweeps = 0; mind().makeDo(); }
+            roam(world);
+        }
     }
-    /** A bank within one path leg must be reachable; a farther one is walked toward and judged again from nearer. */
-    private boolean oneLeg(Vec3 bank) {
-        return bank.subtract(mob.position()).horizontalDistance() <= 20;
+    /**
+     * Sets off for a bank. A bank close by must be reachable, so walled-in water is given up; a farther one only
+     * has to bring the animal at least three blocks nearer, and is judged again from there.
+     */
+    private boolean toBank(ServerLevel world, Vec3 bank) {
+        boolean close = bank.subtract(mob.position()).horizontalDistance() <= 8;
+        return move(world, bank, mob.wanderModifier(), close, close ? 0 : 3);
     }
     @Override public void record(Row row) {
         SessionRecorder.mind(row, mind);
@@ -786,7 +804,7 @@ public final class WildlifeGoal extends WildlifeController {
         mind().restoreCalm(in.getIntOr("WildSleepCalm", 0));
         focus = null; lastKnown = null; destination = null; regrouping = false; packCache = null; pendingAlarm = null; facing = null;
         approach = null; lastPathFailure = null; waterDestination = null; waterSearchOrigin = null; waterSearchIndex = 0;
-        retryPathAt = 0; nextWaterSearch = 0; failedPaths = 0; lastFailureTick = Long.MIN_VALUE;
+        retryPathAt = 0; nextWaterSearch = 0; failedPaths = 0; lastFailureTick = Long.MIN_VALUE; waterAttempts = 0; drySweeps = 0;
         herdThreat = null; herdThreatTicks = 0;
         ambient = null; tier = BehaviorTier.FULL;
         try { preyHerd = java.util.UUID.fromString(in.getStringOr("WildPreyHerd", "")); }

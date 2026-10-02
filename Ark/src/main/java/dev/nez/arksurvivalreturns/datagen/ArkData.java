@@ -1030,7 +1030,8 @@ public final class ArkData implements DataProvider {
                 "wildlife_tree_pursuit", "wildlife_log_wall", "wildlife_slope_escape", "wildlife_far_bank", "wildlife_dry_range",
                 "wildlife_downhill_bank", "wildlife_bank_arrival"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
-                    "environment", NS + ":wildlife_regression", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
+                    "environment", NS + ":wildlife_regression", "structure", NS + ":test_population",
+                    "max_ticks", name.equals("wildlife_dry_range") ? 1000 : 500, "sky_access", true));
         for (String name : List.of("pack_runtime_contract", "tech_real_event_flow", "tech_lighting_flow", "progression_restart", "tribe_party_flow",
                 "flying_ground_pteranodon", "flying_ground_argentavis", "companion_live_navigation", "companion_blocked_route", "work_live_harvest",
                 "cargo_request_guards", "cargo_storage_guards", "cargo_scan_limits", "cargo_unloaded_boundary", "cargo_toms_network"))
