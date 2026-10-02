@@ -10,6 +10,7 @@ import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -133,12 +134,15 @@ public final class SessionRecorder {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.isFakePlayer()) return;
         var server = player.level().getServer();
         if (session != null || server == null || !armed(server)) return;
-        int delay = DELAY_SECONDS, seconds = RECORD_SECONDS;
+        int delay = DELAY_SECONDS, seconds = RECORD_SECONDS, dayTime = -1;
+        boolean heal = false;
         try {
             var settings = new Properties();
             try (var in = Files.newInputStream(armFile(server))) { settings.load(in); }
             delay = Math.clamp(Integer.parseInt(settings.getProperty("delaySeconds", "" + DELAY_SECONDS).trim()), 0, 3600);
             seconds = Math.clamp(Integer.parseInt(settings.getProperty("recordSeconds", "" + RECORD_SECONDS).trim()), 1, 3600);
+            dayTime = Math.clamp(Integer.parseInt(settings.getProperty("dayTime", "-1").trim()), -1, 23999);
+            heal = Boolean.parseBoolean(settings.getProperty("heal", "false").trim());
             // One shot: the next join is an ordinary one again.
             Files.delete(armFile(server));
         } catch (IOException | NumberFormatException e) {
@@ -146,8 +150,26 @@ public final class SessionRecorder {
             try { Files.deleteIfExists(armFile(server)); } catch (IOException ignored) {}
         }
         session = new Session(server, player, true, delay * 1_000_000_000L, seconds * 1_000_000_000L, 0, "arm_file");
+        // Setup of a scripted run (tools/session_run.py), noted in the header: the time of day and a healthy player.
+        if (dayTime >= 0 && advanceTo(player.level(), dayTime)) session.dayTimeSet = dayTime;
+        if (heal) {
+            player.setHealth(player.getMaxHealth());
+            player.getFoodData().setFoodLevel(20);
+            player.getFoodData().setSaturation(5);
+            session.healed = true;
+        }
         ArkSurvivalReturns.LOGGER.info("Session recorder armed for {}: waiting for the client, then {} s, then {} s of recording",
                 player.getGameProfile().name(), delay, seconds);
+    }
+
+    /** Moves the level's clock forward to the next time it shows this time of day. False where the dimension has no clock. */
+    static boolean advanceTo(ServerLevel level, int dayTime) {
+        var clock = level.dimensionType().defaultClock();
+        if (clock.isEmpty()) return false;
+        long now = level.getDefaultClockTime(), target = now - Math.floorMod(now, 24000L) + dayTime;
+        if (target < now) target += 24000L;
+        level.clockManager().setTotalTicks(clock.get(), target);
+        return true;
     }
 
     /** The client reports that the loading screens are gone and the player can move. */

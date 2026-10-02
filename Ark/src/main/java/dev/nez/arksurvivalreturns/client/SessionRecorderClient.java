@@ -5,6 +5,11 @@ import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.recorder.RecorderPayloads;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LevelSettings;
+import net.minecraft.world.level.WorldDataConfiguration;
+import net.minecraft.world.level.levelgen.WorldOptions;
+import net.minecraft.world.level.levelgen.presets.WorldPresets;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -19,7 +24,8 @@ import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlers
  * Client side of the session recorder. The server cannot tell a loading screen from a player who can
  * move, so the client says so once per join; the recorder's clock starts from that moment. Also the
  * marker key, which flags the current moment in a running recording, and for a recording with nobody
- * at the keyboard ({@code -Darksurvivalreturns.record.quit=true}) closing the game once the file is saved.
+ * at the keyboard ({@code -Darksurvivalreturns.record.quit=true}) closing the game once the file is saved,
+ * and ({@code -Darksurvivalreturns.record.freshWorld=<folder>}) creating a new world at the title screen.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class SessionRecorderClient {
@@ -27,7 +33,8 @@ public final class SessionRecorderClient {
     private static final KeyMapping MARK = new KeyMapping("key.arksurvivalreturns.session_mark",
             InputConstants.Type.KEYSYM, InputConstants.KEY_F7, CATEGORY);
     private static final boolean QUIT_WHEN_SAVED = Boolean.getBoolean("arksurvivalreturns.record.quit");
-    private static boolean reported, recording;
+    private static final String FRESH_WORLD = System.getProperty("arksurvivalreturns.record.freshWorld", "");
+    private static boolean reported, recording, created;
     private static int quitIn = -1;
 
     @SubscribeEvent public static void keys(RegisterKeyMappingsEvent event) {
@@ -49,6 +56,11 @@ public final class SessionRecorderClient {
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
         var mc = Minecraft.getInstance();
         if (quitIn >= 0 && quitIn-- == 0) mc.stop();
+        if (!FRESH_WORLD.isEmpty() && !created && mc.level == null && mc.isGameLoadFinished() && mc.getOverlay() == null
+                && mc.screen != null) {
+            created = true;
+            createWorld(mc);
+        }
         var connection = mc.getConnection();
         if (mc.player == null || mc.level == null || connection == null) return;
         while (MARK.consumeClick())
@@ -64,6 +76,16 @@ public final class SessionRecorderClient {
 
     @SubscribeEvent public static void login(ClientPlayerNetworkEvent.LoggingIn event) { reported = recording = false; }
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { reported = recording = false; }
+
+    /** A new survival world with the game's defaults, as the Create New World screen makes it; the seed is optional. */
+    private static void createWorld(Minecraft mc) {
+        long seed = WorldOptions.parseSeed(System.getProperty("arksurvivalreturns.record.seed", "")).orElse(WorldOptions.randomSeed());
+        var settings = new LevelSettings(FRESH_WORLD, GameType.SURVIVAL, LevelSettings.DifficultySettings.DEFAULT, false,
+                WorldDataConfiguration.DEFAULT);
+        ArkSurvivalReturns.LOGGER.info("Session recorder: creating the world {} with seed {}", FRESH_WORLD, seed);
+        mc.createWorldOpenFlows().createFreshLevel(FRESH_WORLD, settings, new WorldOptions(seed, true, false),
+                WorldPresets::createNormalWorldDimensions, mc.screen);
+    }
 
     /** The shader pack Iris is drawing with, read through its public API so Iris stays optional. */
     private static String shaders() {

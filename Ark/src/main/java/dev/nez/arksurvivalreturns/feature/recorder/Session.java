@@ -116,6 +116,9 @@ final class Session {
     final int tickLimit;
     final String armedBy;
     private String readyBy = "pending";
+    /** Setup the arm file asked for before the countdown: the time of day the clock was moved to, a healed player. */
+    int dayTimeSet = -1;
+    boolean healed;
     private Row client;
     Phase phase = Phase.WAIT_READY;
 
@@ -823,6 +826,8 @@ final class Session {
                         .flag("hardcore", server.isHardcore()).put("game_mode", server.getDefaultGameType().getName())
                         .put("seed", Long.toString(overworld.getSeed())).put("players", server.getPlayerList().getPlayerCount()));
         if (client != null) row.row("client", client);
+        if (dayTimeSet >= 0) row.put("day_time_set", dayTimeSet);
+        if (healed) row.flag("healed", true);
         var rules = new Row("rules");
         overworld.getGameRules().availableRules().sorted(java.util.Comparator.comparing(rule -> rule.id()))
                 .forEach(rule -> rules.put(rule.id(), String.valueOf(overworld.getGameRules().get(rule))));

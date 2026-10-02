@@ -1,15 +1,20 @@
 """Records a creature session in the real client with nobody at the keyboard, then analyses it.
 
-    python tools/session_run.py [--world NAME] [--seconds 300] [--delay 60] [--mode approach|stand]
+    python tools/session_run.py [--world NAME | --new-world [--seed SEED]] [--time TICKS] [--seconds 300]
+                                [--delay 60] [--mode approach|stand]
 
-Copies a saved world, launches the dev client straight into the copy with the session recorder armed and
-a scripted player (client/SessionAutopilot: walk up to the nearest wild creature, stand in front of it,
-back away, pick the next), waits until the recording is saved and the game has closed itself, and runs
-session_analyze.py and session_review.py on the result.
+Copies a saved world (or has the client create a new one), launches the dev client straight into it with
+the session recorder armed and a scripted player (client/SessionAutopilot: walk up to the nearest wild
+creature, stand in front of it, back away, pick the next; or only stand), waits until the recording is
+saved and the game has closed itself, and runs session_analyze.py, session_sight.py and
+session_review.py on the result.
 
-For the run only: shaders off, windowed, muted, no pause when the window loses focus. options.txt, the
-Iris setting and an arm file that was already there are put back afterwards, also when the run fails or
-is interrupted, and the world copy is deleted; the world it was copied from is never opened.
+The player starts healed and fed; --time moves the clock forward to that time of day when the player
+joins (the recording starts --delay seconds after the loading screen, about 1,300 ticks later with the
+default). For the run only: shaders off, windowed, muted, no pause when the window loses focus.
+options.txt, the Iris setting and an arm file that was already there are put back afterwards, also when
+the run fails or is interrupted, and the played world is deleted; the world it was copied from is never
+opened.
 """
 from __future__ import annotations
 
@@ -121,14 +126,14 @@ def sessions() -> set[str]:
     return {folder.name for folder in DIAGNOSTICS.iterdir() if folder.is_dir() and SESSION.match(folder.name)} if DIAGNOSTICS.is_dir() else set()
 
 
-def launch(mode: str, timeout: float, log: Path, before: set[str]) -> int | None:
+def launch(mode: str, timeout: float, log: Path, before: set[str], world: list[str]) -> int | None:
     """Runs the client until it closes itself. None when it had to be killed."""
     environment = dict(os.environ)
     jdk = Path.home() / ".jbang" / "cache" / "jdks" / "25"
     if not Path(environment.get("JAVA_HOME", "")).joinpath("bin").is_dir() and jdk.is_dir():
         environment["JAVA_HOME"] = str(jdk)
     gradle = ["cmd", "/c", str(ARK / "gradlew.bat")] if os.name == "nt" else [str(ARK / "gradlew")]
-    command = gradle + ["runClient", f"-ParkWorld={COPY}", f"-ParkAutopilot={mode}", "-ParkQuit", "--console=plain"]
+    command = gradle + ["runClient", *world, f"-ParkAutopilot={mode}", "-ParkQuit", "--console=plain"]
     started = time.monotonic()
     seen = None
     with log.open("wb") as output:
@@ -155,6 +160,9 @@ def launch(mode: str, timeout: float, log: Path, before: set[str]) -> int | None
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--world", help="folder name under run/saves to copy (default: the one played last)")
+    parser.add_argument("--new-world", action="store_true", help="have the client create a new survival world instead of copying one")
+    parser.add_argument("--seed", help="seed of the new world (default: random; the recording's header holds it)")
+    parser.add_argument("--time", type=int, help="time of day, 0 to 23999, the clock is moved forward to when the player joins")
     parser.add_argument("--seconds", type=int, default=300, help="length of the recording, unpaused real seconds")
     parser.add_argument("--delay", type=int, default=60, help="seconds between the player gaining control and the recording")
     parser.add_argument("--mode", choices=("approach", "stand"), default="approach", help="what the scripted player does")
@@ -165,32 +173,53 @@ def main() -> int:
 
     if clients():
         sys.exit("a dev client is already running; close it first")
-    world = arguments.world or newest_world()
+    if arguments.new_world and arguments.world:
+        sys.exit("--world and --new-world exclude each other")
+    if arguments.time is not None and not 0 <= arguments.time <= 23999:
+        sys.exit("--time is a time of day, 0 to 23999")
+    world = None if arguments.new_world else arguments.world or newest_world()
     before = sessions()
     log = DIAGNOSTICS / "session_run.log"
     DIAGNOSTICS.mkdir(parents=True, exist_ok=True)
     borrow()
     try:
-        copy_world(world)
+        if world:
+            copy_world(world)
+            opening = [f"-ParkWorld={COPY}"]
+        else:
+            drop_copy()
+            opening = [f"-ParkFreshWorld={COPY}"] + ([f"-ParkSeed={arguments.seed}"] if arguments.seed else [])
         lines_set(RUN / "options.txt", ":", {"pauseOnLostFocus": "false", "fullscreen": "false", "soundCategory_master": "0.0"})
         if not arguments.shaders:
             lines_set(RUN / "config" / "iris.properties", "=", {"enableShaders": "false"})
-        (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\n", encoding="utf-8")
-        print(f"world '{world}' copied to saves/{COPY}; recording {arguments.seconds} s after {arguments.delay} s, "
-              f"player: {arguments.mode}, shaders {'as set' if arguments.shaders else 'off'}; game output in {log}", flush=True)
-        code = launch(arguments.mode, arguments.timeout or arguments.delay + arguments.seconds + 600, log, before)
+        clock = "" if arguments.time is None else f"dayTime={arguments.time}\n"
+        (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\nheal=true\n{clock}",
+                                         encoding="utf-8")
+        print((f"world '{world}' copied to saves/{COPY}" if world else f"new world saves/{COPY}, seed {arguments.seed or 'random'}")
+              + f"; recording {arguments.seconds} s after {arguments.delay} s, player: {arguments.mode}, "
+              f"time of day {'as saved' if arguments.time is None else arguments.time}, "
+              f"shaders {'as set' if arguments.shaders else 'off'}; game output in {log}", flush=True)
+        code = launch(arguments.mode, arguments.timeout or arguments.delay + arguments.seconds + 600, log, before, opening)
     finally:
         give_back()
+        played = SAVES / COPY
+        if played.is_dir() and not (played / MARKER).is_file():
+            (played / MARKER).write_text("Created by tools/session_run.py for one recording; safe to delete.\n", encoding="utf-8")
+    try:
+        fresh = sorted(sessions() - before)
+        if not fresh:
+            print(f"no recording was made (client exit: {code}); see {log} and {RUN / 'logs' / 'latest.log'}")
+            return 1
+        session = DIAGNOSTICS / fresh[-1]
+        tools = ARK / "tools"
+        result = subprocess.run([sys.executable, str(tools / "session_analyze.py"), str(session)]).returncode
+        # The played world holds the blocks of every chunk the session saw, so the sight rays are walked through it.
+        subprocess.run([sys.executable, str(tools / "session_sight.py"), str(session), "--world", COPY])
+        subprocess.run([sys.executable, str(tools / "session_review.py"), str(session)])
+        return result
+    finally:
         if not arguments.keep_world:
             drop_copy()
-    fresh = sorted(sessions() - before)
-    if not fresh:
-        print(f"no recording was made (client exit: {code}); see {log} and {RUN / 'logs' / 'latest.log'}")
-        return 1
-    session = DIAGNOSTICS / fresh[-1]
-    result = subprocess.run([sys.executable, str(ARK / "tools" / "session_analyze.py"), str(session)]).returncode
-    subprocess.run([sys.executable, str(ARK / "tools" / "session_review.py"), str(session)])
-    return result
 
 
 if __name__ == "__main__":

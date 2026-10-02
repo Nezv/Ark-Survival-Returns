@@ -759,6 +759,7 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
                    "asked_record_s": header.get("record_s"), "delay_s": header.get("delay_s")},
         "setup": {"build": header.get("build"), "server": header.get("server"), "client": header.get("client"),
                   "armed_by": header.get("armed_by"), "ready_by": header.get("ready_by"),
+                  "day_time_set": header.get("day_time_set"), "healed": header.get("healed", False),
                   "wake_distance": config.get("nighttime.playerWakeDistance"),
                   "carnivore_day_sleep": config.get("nighttime.carnivoreDaySleepFraction"),
                   "night": [config.get("nighttime.nightStartTick"), config.get("nighttime.nightEndTick")],
@@ -816,7 +817,9 @@ def show(summary: dict):
           f"{timing['tick_ms_max']} max, capture {timing['capture_us_avg']} us avg {timing['capture_us_max']} max")
     print(f"setup: build {setup['build']}, server {setup['server']}, client {setup['client']}")
     print(f"       wake distance {setup['wake_distance']}, carnivore day sleep {setup['carnivore_day_sleep']}, night {setup['night']}, "
-          f"tiers {setup['tiers']}, population {setup['population_model']} {setup['density_per_chunk']}/chunk")
+          f"tiers {setup['tiers']}, population {setup['population_model']} {setup['density_per_chunk']}/chunk"
+          + (f", clock moved to {setup['day_time_set']} at the join" if setup["day_time_set"] is not None else "")
+          + (", player healed at the join" if setup["healed"] else ""))
     print(f"world: {summary['world']}  player: {summary['player']}")
     print(f"entities: {summary['entities']['total']} {summary['entities']['by_origin']}; ark {summary['entities']['ark_by_species']}")
     print(f"events: {summary['events']}")
