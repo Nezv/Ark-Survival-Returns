@@ -127,7 +127,7 @@ def launch(mode: str, timeout: float, log: Path, before: set[str]) -> int | None
     jdk = Path.home() / ".jbang" / "cache" / "jdks" / "25"
     if not Path(environment.get("JAVA_HOME", "")).joinpath("bin").is_dir() and jdk.is_dir():
         environment["JAVA_HOME"] = str(jdk)
-    gradle = ["cmd", "/c", "gradlew.bat"] if os.name == "nt" else ["./gradlew"]
+    gradle = ["cmd", "/c", str(ARK / "gradlew.bat")] if os.name == "nt" else [str(ARK / "gradlew")]
     command = gradle + ["runClient", f"-ParkWorld={COPY}", f"-ParkAutopilot={mode}", "-ParkQuit", "--console=plain"]
     started = time.monotonic()
     seen = None

@@ -714,6 +714,38 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
         FROM decision_players n JOIN entities c ON c.e = n.e JOIN subject u ON u.e = n.player
         GROUP BY n.e, stage ORDER BY gap_min LIMIT 40""")
     kinds = Counter(item["kind"] for item in incidents)
+    # Every sense check a creature ran on the recorded player, by distance between the body centres: what found
+    # the player and what stopped it. was_moving is the player's real movement that tick, flagged_moving what the
+    # hearing check saw.
+    detection = query(con, """
+        WITH step AS (SELECT p.e, p.tick, sqrt(power(p.x - lag(p.x) OVER w, 2) + power(p.y - lag(p.y) OVER w, 2)
+                                               + power(p.z - lag(p.z) OVER w, 2)) AS moved
+                      FROM players p WINDOW w AS (PARTITION BY p.e ORDER BY p.tick))
+        SELECT CASE WHEN n.dist < 8 THEN 'under 8' WHEN n.dist < 16 THEN '8-16' WHEN n.dist < 32 THEN '16-32' ELSE '32+' END AS blocks,
+               count(*) AS checks, count(*) FILTER (n.str > 0) AS detected, count(*) FILTER (n.seen) AS seen,
+               count(*) FILTER (NOT n.seen AND n.hear > n.dist) AS heard,
+               count(*) FILTER (NOT n.seen AND NOT n.hear > n.dist AND n.smelt) AS smelt,
+               count(*) FILTER (NOT n.route_loaded) AS unloaded, count(*) FILTER (n.route_loaded AND NOT n.los) AS no_line_of_sight,
+               count(*) FILTER (n.los AND NOT n.in_range) AS beyond_sight,
+               count(*) FILTER (n.los AND n.in_range AND NOT n.seen) AS behind_it,
+               count(*) FILTER (s.moved > 0.02) AS was_moving, count(*) FILTER (n.moving) AS flagged_moving
+        FROM decision_players n JOIN subject u ON u.e = n.player LEFT JOIN step s ON s.e = n.player AND s.tick = n.tick
+        WHERE n.dist IS NOT NULL GROUP BY 1 ORDER BY min(n.dist)""")
+    # Bodies that turn on the spot while they hold a path, from the per-tick samples near the player.
+    turning = query(con, """
+        WITH f AS (SELECT m.e, m.tick, (m.flags & 512) > 0 AS turning,
+                          (m.flags & 512) > 0 AND NOT coalesce(lag((m.flags & 512) > 0) OVER w AND lag(m.tick) OVER w = m.tick - 1, false) AS starts
+                   FROM motion m WINDOW w AS (PARTITION BY m.e ORDER BY m.tick)),
+             g AS (SELECT e, sum(starts::INT) OVER (PARTITION BY e ORDER BY tick) AS run FROM f WHERE turning),
+             r AS (SELECT e, run, count(*) AS ticks FROM g GROUP BY e, run),
+             turns AS (SELECT c.species, count(*) AS turns, count(DISTINCT r.e) AS bodies, median(r.ticks) AS median_ticks,
+                              max(r.ticks) AS longest_ticks, count(*) FILTER (r.ticks >= 20) AS a_second_or_more
+                       FROM r JOIN entities c ON c.e = r.e WHERE c.species IS NOT NULL GROUP BY 1),
+             share AS (SELECT c.species, count(*) FILTER ((m.flags & 128) > 0) AS pathing,
+                              count(*) FILTER ((m.flags & 128) > 0 AND (m.flags & 512) > 0) AS both
+                       FROM motion m JOIN entities c ON c.e = m.e WHERE c.species IS NOT NULL GROUP BY 1)
+        SELECT t.*, round(100.0 * s.both / nullif(s.pathing, 0), 1) AS percent_of_path_time
+        FROM turns t JOIN share s USING (species) ORDER BY t.turns DESC""")
     return {
         "session": header.get("session"), "started": header.get("started"), "schema": header.get("schema"),
         "integrity": {key: integrity.get(key) for key in (
@@ -742,7 +774,8 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
                      "ark_by_species": dict(con.execute("SELECT species, count(*) FROM entities WHERE ark GROUP BY species ORDER BY 2 DESC").fetchall()),
                      "other_by_type": dict(con.execute("SELECT type, count(*) FROM entities WHERE NOT ark GROUP BY type ORDER BY 2 DESC LIMIT 12").fetchall())},
         "events": dict(con.execute("SELECT ev, count(*) FROM events GROUP BY ev ORDER BY 2 DESC").fetchall()),
-        "leaves": dict(con.execute("SELECT why || coalesce(' (' || note || ')', ''), count(*) FROM events WHERE ev = 'leave' GROUP BY 1").fetchall()),
+        # No removal reason: the chunk left the area where entities are tracked (the player moved away), it is still in memory.
+        "leaves": dict(con.execute("SELECT CASE why WHEN 'UNKNOWN' THEN 'OUT_OF_RANGE' ELSE why END || coalesce(' (' || note || ')', ''), count(*) FROM events WHERE ev = 'leave' GROUP BY 1").fetchall()),
         # An entity is only known while loaded; these left before the end and are unavailable from then on.
         "unavailable": dict(zip(("entities_that_left", "of_them_ark", "came_back"), one("""
             SELECT count(DISTINCT a.e) FILTER (a.ended_by IS NOT NULL), count(DISTINCT a.e) FILTER (a.ended_by IS NOT NULL AND n.ark),
@@ -757,6 +790,8 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
         "nearest_creatures": creatures,
         "player_funnel": stages,
         "script": query(con, f"SELECT round(game_s(tick), 1) AS t, substr(note, 6) AS step FROM events WHERE ev = 'mark' AND NOT {BY_HAND} ORDER BY tick"),
+        "detection": detection,
+        "turn_in_place": turning,
         "incident_counts": dict(kinds),
         "top_incidents": [item for item in incidents if not item["normal"]][:12],
         "recorder_end": {key: end.get(key) for key in ("ticks", "emitted", "dropped", "errors", "terrain", "terrain_suppressed")},
@@ -796,6 +831,15 @@ def show(summary: dict):
     print("player through each creature's candidate funnel (id species stage passes gap_min):")
     for s in summary["player_funnel"][:20]:
         print(f"  {s['e']:>4} {s['species'] or '?':<18} {s['stage']:<14} {s['passes']:>4} {s['gap_min']:>6}")
+    print("sense checks on you (blocks: checks, detected = seen + heard + smelt | no line of sight, beyond sight, behind it | you moved, hearing saw you move):")
+    for band in summary["detection"]:
+        print(f"  {band['blocks']:>8}: {band['checks']:>6} {band['detected']:>5} = {band['seen']} + {band['heard']} + {band['smelt']} | "
+              f"{band['no_line_of_sight']} {band['beyond_sight']} {band['behind_it']} | {band['was_moving']} {band['flagged_moving']}")
+    if summary["turn_in_place"]:
+        print("turning on the spot with a path (species turns bodies median_ticks longest a_second_or_more percent_of_path_time):")
+        for turn in summary["turn_in_place"]:
+            print(f"  {turn['species']:<16} {turn['turns']:>5} {turn['bodies']:>4} {turn['median_ticks']:>6.0f} {turn['longest_ticks']:>5} "
+                  f"{turn['a_second_or_more']:>5} {turn['percent_of_path_time']}")
     if summary["script"]:
         print("scripted player (game s, step): " + "; ".join(f"{step['t']:g} {step['step']}" for step in summary["script"]))
     print(f"incidents: {summary['incident_counts']}")
