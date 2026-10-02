@@ -90,6 +90,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     /** Client: smoothed body yaw change in degrees per tick, positive when turning right. */
     private float bodyTurn;
     private BehaviorAction requestedAction = BehaviorAction.IDLE;
+    private boolean trampling;
 
     public CreatureEntity(EntityType<? extends CreatureEntity> type, Level level, Species species) {
         super(type, level);
@@ -421,6 +422,20 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return super.hasLineOfSight(target);
     }
 
+    @Override protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(Level level) {
+        return new CreatureNavigation(this, level);
+    }
+
+    /** True while this body goes through natural trees instead of around them ({@link TreeTrample}). */
+    public boolean tramplesTrees() { return trampling; }
+
+    /** The wild routine says whether it pursues something; only a large land carnivore then tramples. */
+    public void setTrampling(boolean pursuing) {
+        trampling = pursuing && species.predator && species.landHabitat() && getBbWidth() >= TreeTrample.MIN_WIDTH
+                && Config.TRAMPLE_TREES.get() && level() instanceof ServerLevel world
+                && net.neoforged.neoforge.event.EventHooks.canEntityGrief(world, this);
+    }
+
     /** True while the body stands and turns toward its next path node instead of walking. */
     public boolean isPivoting() { return moveControl instanceof CreatureMoveControl control && control.pivoting(); }
 
@@ -617,6 +632,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (strikeCooldown > 0) strikeCooldown--;
         super.tick();
         if (!level().isClientSide()) {
+            if (trampling && horizontalCollision && isAlive() && level() instanceof ServerLevel world) TreeTrample.clear(world, this);
             syncMovementAction();
             resolveStrike();
             boolean sleeping = isAlive() && (behavior().sleeping() || torpor().torpid());

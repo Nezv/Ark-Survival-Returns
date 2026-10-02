@@ -273,6 +273,14 @@ public final class BehaviorModels {
         return bridge(profile, List.of(), from, to, urgent, when);
     }
 
+    /** States the showcase shows on the move: their steady action is a gait while the body has somewhere to go. */
+    private static boolean travels(BehaviorState state) {
+        return switch (state) {
+            case ROAM, RETURN_HOME, REGROUP, INVESTIGATE, SEARCH, SEEK_WATER, HUNT, DEFEND, FLEE -> true;
+            default -> false;
+        };
+    }
+
     /** Records the beats of one change; {@code before} replays earlier states so a warning already given counts. */
     private static JsonObject bridge(BehaviorProfile profile, List<BehaviorState> before, BehaviorState from, BehaviorState to,
             boolean urgent, String when) {
@@ -282,6 +290,7 @@ public final class BehaviorModels {
         choreo.reset(path.getFirst());
         for (int i = 1; i < path.size(); i++) choreo.enter(path.get(i - 1), path.get(i), false);
         choreo.enter(from, to, urgent);
+        choreo.settle(travels(to));
         var beats = new JsonArray();
         var first = new JsonObject();
         first.addProperty("action", choreo.action().name());
@@ -295,10 +304,7 @@ public final class BehaviorModels {
         }
         var steady = new Choreographer(profile, SEED);
         steady.reset(to);
-        steady.advance(1, switch (to) {
-            case ROAM, RETURN_HOME, REGROUP, INVESTIGATE, SEARCH, SEEK_WATER -> true;
-            default -> false;
-        });
+        steady.advance(1, travels(to));
         var last = new JsonObject();
         last.addProperty("action", steady.action().name());
         last.addProperty("ticks", 0);

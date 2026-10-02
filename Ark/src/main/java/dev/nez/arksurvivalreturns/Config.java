@@ -47,7 +47,7 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue NIGHTTIME;
     public static final ModConfigSpec.IntValue NIGHT_START, NIGHT_END, NIGHT_TRANSITION, SLEEP_CALM;
     public static final ModConfigSpec.DoubleValue NIGHT_HUNGER, NIGHT_VISION, DAY_SLEEP, WAKE_DISTANCE;
-    public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS;
+    public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS, TRAMPLE_TREES;
     public static final ModConfigSpec.IntValue TIER_FULL_RADIUS, TIER_AMBIENT_RADIUS, TIER_DORMANT_RADIUS, TIER_MARGIN;
     public static final ModConfigSpec.IntValue HEALTH_BAR_RANGE;
     public static final ModConfigSpec.IntValue ARGENT_NEST_Y, NEST_WATER_RADIUS, PTERO_ROAM_RADIUS, ARGENT_ROAM_RADIUS, FLIGHT_LEASH, EGG_DEFENSE_TICKS;
@@ -480,6 +480,10 @@ public final class Config {
                 .defineInRange("dormantRadius", 256, 64, 1024);
         TIER_MARGIN = b.comment("Blocks past a radius before a creature drops to the cheaper tier, so borders do not flicker.")
                 .defineInRange("tierMargin", 8, 0, 32);
+        TRAMPLE_TREES = b.comment("Wild carnivores with a body three blocks wide or more knock down the natural trees in their way "
+                        + "while they pursue prey or an intruder: trunks fall, foliage breaks, nothing drops and a rooted trunk "
+                        + "leaves its sapling. Log walls and planted hedges stand. Also needs the mob griefing game rule.")
+                .define("largeCarnivoresBreakTrees", true);
         b.pop().push("wildlife");
         for (var family : dev.nez.arksurvivalreturns.feature.land.LandFamily.values()) {
             b.push(family.name().toLowerCase(java.util.Locale.ROOT));

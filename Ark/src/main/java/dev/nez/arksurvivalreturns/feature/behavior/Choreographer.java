@@ -130,6 +130,19 @@ public final class Choreographer {
         next(travelling);
     }
 
+    /**
+     * The movement decision of this pass is made: outside a beat, the steady action follows whether the
+     * body now has somewhere to go, so a charge is not shown as a threat and a halt not as a run.
+     */
+    public void settle(boolean travelling) {
+        if (remaining > 0 || !queue.isEmpty()) return;
+        var steady = steady(travelling);
+        if (steady != action) {
+            action = steady;
+            cue = null;
+        }
+    }
+
     /** A roaming pause started: play one idle beat now instead of standing frozen. */
     public void pause() {
         if (!queue.isEmpty() || remaining > 0) return;
@@ -157,11 +170,15 @@ public final class Choreographer {
         beats++;
     }
 
-    /** The action a state settles into once its bridge has played. */
+    /**
+     * The action a state settles into once its bridge has played. A hunter that has stopped (in reach of its
+     * target, or with no way to it) and a cornered animal face the other instead of running on the spot.
+     */
     private BehaviorAction steady(boolean travelling) {
         return switch (mode) {
-            case HUNT, DEFEND -> BehaviorAction.CHASE;
-            case FLEE -> BehaviorAction.BOLT;
+            case HUNT, DEFEND -> travelling ? BehaviorAction.CHASE
+                    : profile.clips().has(ClipRole.THREAT) ? BehaviorAction.THREAT : BehaviorAction.NOTICE;
+            case FLEE -> travelling ? BehaviorAction.BOLT : BehaviorAction.NOTICE;
             case SLEEP -> BehaviorAction.SLEEP;
             case REST -> BehaviorAction.REST;
             case FEED -> BehaviorAction.FEED;

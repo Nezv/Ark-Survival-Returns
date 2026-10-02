@@ -7,6 +7,7 @@ import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.land.*;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.creature.TreeTrample;
 import dev.nez.arksurvivalreturns.feature.recorder.DecisionTrace;
 import dev.nez.arksurvivalreturns.feature.recorder.Row;
 import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
@@ -37,6 +38,8 @@ public final class WildlifeGoal extends WildlifeController {
     private BlockPos home, transientHome;
     private Vec3 lastKnown, destination, waterDestination, pendingAlarm, facing;
     private Vec3 approach, lastPathFailure;
+    /** Outcome of the last path request, as told to the session recorder. */
+    private String lastRoute;
     private double approachSpeed;
     private long retryPathAt, lastFailureTick = Long.MIN_VALUE;
     private BlockPos waterSearchOrigin;
@@ -110,7 +113,9 @@ public final class WildlifeGoal extends WildlifeController {
             case DORMANT -> dormantTick();
         }
     }
-    @Override public void stop() { mob.getNavigation().stop(); mob.setTarget(null); packCache = null; approach = null; }
+    @Override public void stop() {
+        mob.getNavigation().stop(); mob.setTarget(null); mob.setTrampling(false); packCache = null; approach = null;
+    }
     /** An alarm from a pack mate reaches this animal after its own delay, rippling outward from the caller. */
     @Override public void receiveAlarm(Vec3 position) {
         int delay = Desync.reactionDelay(mob.getUUID().getLeastSignificantBits(), ++alarmEvents,
@@ -143,6 +148,7 @@ public final class WildlifeGoal extends WildlifeController {
         } else {
             // Leaving full detail drops pursuit and bridges; needs stay frozen until the creature is near again.
             mob.setTarget(null); focus = null; lastKnown = null; pendingAlarm = null; destination = null; facing = null; approach = null;
+            mob.setTrampling(false);
             mob.getNavigation().stop();
             choreo().reset(mind().state().sleeping() ? mind().state() : BehaviorState.ROAM);
         }
@@ -381,6 +387,9 @@ public final class WildlifeGoal extends WildlifeController {
             }
         }
         mob.setTarget(state.combat() && visible ? sensed : null);
+        boolean trampled = mob.tramplesTrees();
+        mob.setTrampling(state.combat() && visible && sensed != null);
+        if (trampled != mob.tramplesTrees()) { mob.getNavigation().stop(); destination = null; approach = null; }
         facing = lastKnown != null && state.alarm() ? lastKnown : null;
         if (facing != null) mob.getLookControl().setLookAt(facing.x, facing.y + 1, facing.z, 20, 20);
         boolean holding = dance.holding();
@@ -405,7 +414,9 @@ public final class WildlifeGoal extends WildlifeController {
                 if (mob.tickCount >= nextRoutine || !cycle && mob.getNavigation().isDone()) {
                     nextRoutine = mob.tickCount + 40 + (cycle ? Math.floorMod(mob.getId(), 10) : 0);
                     Vec3 away = lastKnown == null ? mob.position().subtract(Vec3.atBottomCenterOf(home())) : mob.position().subtract(lastKnown);
-                    boolean escaped = chooseDestination(world, mob.position().add(scatter(away).scale(20)), 8, chaseModifier());
+                    boolean escaped = escape(world, scatter(away));
+                    // A deferred path is not an escape yet: ask again on the next pass instead of standing for two seconds.
+                    if ("budget_deferred".equals(lastRoute)) nextRoutine = mob.tickCount + 10;
                     if (cycle) {
                         failedEscapes = escaped ? 0 : failedEscapes + 1;
                         if (failedEscapes >= 3) corneredTicks = 100;
@@ -419,6 +430,7 @@ public final class WildlifeGoal extends WildlifeController {
             default -> { mob.getNavigation().stop(); approach = null; }
         }
         // Cues and the synced action go out last, so a pause beat chosen above starts its clip this tick.
+        dance.settle(travelling());
         var cue = dance.takeCue();
         if (cue != null) mob.playCue(cue);
         else if (state != before && before.sleeping() && !state.sleeping()) mob.playCue(BehaviorAction.Cue.WAKE);
@@ -531,15 +543,43 @@ public final class WildlifeGoal extends WildlifeController {
         for (int i = 0; i < 8; i++) {
             var pos = SpawnRules.surface(world, (int) Math.floor(center.x) + mob.getRandom().nextInt(radius * 2 + 1) - radius,
                     (int) Math.floor(center.z) + mob.getRandom().nextInt(radius * 2 + 1) - radius);
-            if (pos == null || Math.abs(pos.getY() - mob.getY()) > 6) continue;
-            var box = SpawnRules.bounds(mob.species(), pos);
-            if (!SpawnRules.loaded(world, box.inflate(1)) || !world.getWorldBorder().isWithinBounds(box) || !world.noCollision(mob, box, true)) continue;
+            if (!standable(world, pos, 6)) continue;
             if (move(world, Vec3.atBottomCenterOf(pos), speed)) return true;
         }
         return routed("no_destination", center, false);
     }
+    /** Loaded natural ground within reach in height where the body fits. */
+    private boolean standable(ServerLevel world, BlockPos pos, double rise) {
+        if (pos == null || Math.abs(pos.getY() - mob.getY()) > rise) return false;
+        var box = SpawnRules.bounds(mob.species(), pos);
+        return SpawnRules.loaded(world, box.inflate(1)) && world.getWorldBorder().isWithinBounds(box) && world.noCollision(mob, box, true);
+    }
+    /** Legs of an escape in the order they are tried: distance, and the turn away from the straight line in degrees. */
+    private static final double[][] ESCAPE_LEGS = {{20, 0}, {20, 0}, {12, 0}, {12, 55}, {12, -55}, {7, 30}, {7, -30}, {7, 100}};
+    /**
+     * Runs from a threat: straight away first, then shorter legs and wider bearings. On a slope the far point is
+     * often much higher or lower than the animal, and a nearer or sideways one still opens the distance. A leg
+     * counts only when its path really leads away from where the animal stands.
+     */
+    private boolean escape(ServerLevel world, Vec3 heading) {
+        Vec3 far = mob.position().add(heading.scale(20));
+        if (!canNavigate()) return routed("airborne_deferred", far, true);
+        int side = mob.getRandom().nextBoolean() ? 1 : -1;
+        for (double[] leg : ESCAPE_LEGS) {
+            Vec3 center = mob.position().add(heading.yRot((float) Math.toRadians(leg[1] * side)).scale(leg[0]));
+            int spread = (int) Math.max(2, leg[0] * 0.4);
+            var pos = SpawnRules.surface(world, Mth.floor(center.x) + mob.getRandom().nextInt(spread * 2 + 1) - spread,
+                    Mth.floor(center.z) + mob.getRandom().nextInt(spread * 2 + 1) - spread);
+            if (!standable(world, pos, 6 + leg[0] * 0.5)) continue;
+            if (move(world, Vec3.atBottomCenterOf(pos), chaseModifier(), false, 3)) return true;
+        }
+        return routed("no_destination", far, false);
+    }
     private boolean move(ServerLevel world, Vec3 point, double speed) {
         return move(world, point, speed, false);
+    }
+    private boolean move(ServerLevel world, Vec3 point, double speed, boolean requireReach) {
+        return move(world, point, speed, requireReach, 0);
     }
     private boolean canNavigate() { return mob.onGround() || mob.isInLiquid(); }
     private boolean travelling() { return approach != null || !mob.getNavigation().isDone(); }
@@ -553,9 +593,22 @@ public final class WildlifeGoal extends WildlifeController {
         if (delta.horizontalDistanceSqr() > Math.pow(mob.getBbWidth() + 3, 2) || Math.abs(delta.y) > 0.5) return false;
         var swept = mob.getBoundingBox().expandTowards(new Vec3(delta.x, 0, delta.z)).deflate(0.01);
         return SpawnRules.loaded(world, swept.inflate(1)) && world.getWorldBorder().isWithinBounds(swept)
-                && world.noBlockCollision(mob, swept, true);
+                && (mob.tramplesTrees() ? clearButTrees(world, swept) : world.noBlockCollision(mob, swept, true));
     }
-    private boolean move(ServerLevel world, Vec3 point, double speed, boolean requireReach) {
+    /** As a block collision test, with the trunks and foliage a trampling body will knock down left out. */
+    private boolean clearButTrees(ServerLevel world, net.minecraft.world.phys.AABB swept) {
+        for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(swept.minX), Mth.floor(swept.minY), Mth.floor(swept.minZ),
+                Mth.floor(swept.maxX), Mth.floor(swept.maxY), Mth.floor(swept.maxZ))) {
+            var state = world.getBlockState(pos);
+            if (state.isAir() || TreeTrample.untended(state)
+                    || state.is(net.minecraft.tags.BlockTags.LOGS) && TreeTrample.naturalTrunk(TreeTrample.loaded(world), pos)) continue;
+            var shape = state.getCollisionShape(world, pos);
+            if (!shape.isEmpty() && shape.bounds().move(pos).intersects(swept)) return false;
+        }
+        return true;
+    }
+    /** A leg must end at least {@code minTravel} blocks from the body to count; zero accepts any path. */
+    private boolean move(ServerLevel world, Vec3 point, double speed, boolean requireReach, double minTravel) {
         if (arrived(point)) {
             mob.getNavigation().stop(); destination = null; approach = null; failedPaths = 0; lastPathFailure = null;
             return routed("arrived", point, true);
@@ -588,7 +641,9 @@ public final class WildlifeGoal extends WildlifeController {
         // A finished path equal to a new one is refused by vanilla. Drop it before creating the next leg.
         if (mob.getNavigation().isDone()) mob.getNavigation().stop();
         var path = mob.getNavigation().createPath(BlockPos.containing(routePoint), 0);
-        boolean found = path != null && (!requireReach || path.canReach()) && mob.getNavigation().moveTo(path, speed);
+        boolean leads = path != null && (minTravel <= 0 || path.getNodeCount() > 0 && path.getEntityPosAtNode(mob, path.getNodeCount() - 1)
+                .subtract(mob.position()).horizontalDistanceSqr() >= minTravel * minTravel);
+        boolean found = leads && (!requireReach || path.canReach()) && mob.getNavigation().moveTo(path, speed);
         if (!found && lastFailureTick != world.getGameTime()) { failedPaths++; lastFailureTick = world.getGameTime(); }
         // Report before resetting the counter, so the sixth failed decision is visible.
         routed(found ? "path" : "no_path", point, found);
@@ -610,6 +665,7 @@ public final class WildlifeGoal extends WildlifeController {
     }
     /** Tells the session recorder how a path request ended; returns the result unchanged. */
     private boolean routed(String outcome, Vec3 point, boolean result) {
+        lastRoute = outcome;
         if (SessionRecorder.on()) SessionRecorder.navigation(mob, trace, outcome, point, failedPaths);
         return result;
     }
@@ -681,6 +737,7 @@ public final class WildlifeGoal extends WildlifeController {
         if (waterDestination != null) row.xyz("water_dest", waterDestination.x, waterDestination.y, waterDestination.z);
         if (waterSearchOrigin != null) row.put("water_scan", waterSearchIndex);
         if (approach != null) row.xyz("approach", approach.x, approach.y, approach.z);
+        row.flag("trample", mob.tramplesTrees());
         if (herdThreat != null) row.put("herd_threat", SessionRecorder.sid(herdThreat));
         if (failedPaths > 0) row.put("fail", failedPaths);
         if (failedEscapes > 0) row.put("fail_escape", failedEscapes);

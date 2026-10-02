@@ -309,8 +309,17 @@
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals flee)"
               ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
+              ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -524,7 +533,6 @@
               ],
               "DEFEND": [
                 "attacked: retaliate",
-                "intruder stayed close through the warning",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
@@ -565,6 +573,7 @@
               ],
               "DEFEND": [
                 "attacked: retaliate",
+                "intruder stayed close through the warning",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
@@ -605,6 +614,7 @@
               ],
               "DEFEND": [
                 "attacked: retaliate",
+                "intruder stayed close through the warning",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
@@ -1021,6 +1031,9 @@
               "DEFEND": [
                 "attacked: retaliate"
               ],
+              "DRINK": [
+                "thirsty with water at hand"
+              ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
               ],
@@ -1035,6 +1048,9 @@
               ],
               "SEARCH": [
                 "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1058,6 +1074,15 @@
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1171,6 +1196,15 @@
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
               ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
+              "SEEK_WATER": [
+                "thirsty, no water in reach"
+              ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
               ]
@@ -1242,8 +1276,7 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate",
-                "intruder stayed close through the warning"
+                "attacked: retaliate"
               ],
               "DRINK": [
                 "thirsty with water at hand"
@@ -1284,13 +1317,17 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals flee)"
@@ -1319,13 +1356,17 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals flee)"
@@ -1354,13 +1395,17 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals flee)"
@@ -3264,6 +3309,12 @@
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
               ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
               ]
@@ -3335,6 +3386,12 @@
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
               ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
+              ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
               ]
@@ -3396,8 +3453,7 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate",
-                "intruder stayed close through the warning"
+                "attacked: retaliate"
               ],
               "FEED": [
                 "a kill or a shared meal"
@@ -3429,7 +3485,8 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
               ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
@@ -3455,10 +3512,14 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning"
               ],
               "FLEE": [
                 "critical health, a bigger predator or a timid animal that is aware"
+              ],
+              "HUNT": [
+                "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals flee)"

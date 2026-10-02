@@ -39,7 +39,7 @@ def xyz(prefix: str, kind: str) -> dict[str, str]:
 
 
 # What a creature and its routine report about themselves; shared by the status and decision tables.
-CREATURE_FLAGS = ("night", "tamed", "ridden", "torpor", "loco", "steer", "pivoting", "regroup", "hold")
+CREATURE_FLAGS = ("night", "tamed", "ridden", "torpor", "loco", "steer", "pivoting", "regroup", "hold", "trample")
 CREATURE = {
     "st": S, "act": S, "tier": S, "night": B, "tamed": B, "ridden": B, "torpor": B, "loco": B, "engaged": I,
     "strike_in": I, "strike_cd": I, "steer": B, "pivoting": B, "turn": D, "pace": D,
@@ -47,7 +47,7 @@ CREATURE = {
     "chase": I, "rec": I, "feed": I, "calm": I, "flight": I, **xyz("home_", I), **xyz("herd_home_", I),
     "focus": I, **xyz("known_", D), **xyz("dest_", D), "herd_threat": I, "fail": I, "fail_escape": I,
     "cornered_t": I, "alarm_t": I, "alarm_in": I, "regroup": B, "routine_in": I, "mode": S, "hold": B, "beat": I,
-    **xyz("water_dest_", D), **xyz("approach_", D), "water_scan": I,
+    **xyz("water_dest_", D), **xyz("approach_", D), "water_scan": I, "trample": B,
     "beats": I, "amb": S, "amb_t": I, "phase": S, "phase_t": I, "thief": S, "defend_left": L,
     **xyz("fly_to_", D), **xyz("nest_", I), **xyz("roost_", I), "blocked": I, "lap": S, "hover": I,
 }
@@ -748,6 +748,38 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
                        FROM motion m JOIN entities c ON c.e = m.e WHERE c.species IS NOT NULL GROUP BY 1)
         SELECT t.*, round(100.0 * s.both / nullif(s.pathing, 0), 1) AS percent_of_path_time
         FROM turns t JOIN share s USING (species) ORDER BY t.turns DESC""")
+    # Escapes: what each attempt to run from a threat came to, and the animals that stood in FLEE without moving.
+    stood_10s, longest = one("""
+        WITH f AS (SELECT d.e, d.tick, lag(d.tick) OVER w AS previous,
+                          d.st = 'FLEE' AND sqrt(power(d.x - lag(d.x) OVER w, 2) + power(d.z - lag(d.z) OVER w, 2)) < 0.25 AS stood
+                   FROM decisions d WINDOW w AS (PARTITION BY d.e ORDER BY d.tick)),
+             g AS (SELECT e, stood, sum(CASE WHEN stood AND tick - previous <= 10 THEN 0 ELSE 1 END)
+                                    OVER (PARTITION BY e ORDER BY tick) AS run FROM f),
+             r AS (SELECT e, run, count(*) FILTER (stood) AS passes FROM g GROUP BY e, run)
+        SELECT count(*) FILTER (passes >= 20), coalesce(max(passes), 0) / 2.0 FROM r""")
+    flee = {
+        "requests": dict(con.execute("""
+            SELECT n.o, count(*) FROM decision_nav n JOIN decisions d ON d.seq = n.seq WHERE d.st = 'FLEE'
+            GROUP BY 1 ORDER BY 2 DESC""").fetchall()),
+        "passes": one("SELECT count(*) FROM decisions WHERE st = 'FLEE'")[0],
+        "bodies": one("SELECT count(DISTINCT e) FROM decisions WHERE st = 'FLEE'")[0],
+        "stood_ten_seconds_or_more": stood_10s, "longest_stand_s": longest,
+    }
+    # Pursuit: strikes at the recorded player, trees knocked down on the way, and bodies that showed a run while standing.
+    run_shown, run_standing = one("""
+        SELECT count(*), count(*) FILTER (NOT coalesce(loco, false) AND NOT coalesce(pivoting, false))
+        FROM status WHERE act IN ('CHASE', 'BOLT')""")
+    pursuit = {
+        "strikes_at_player": query(con, """
+            SELECT c.species, v.r AS result, count(*) AS n FROM events v JOIN entities c ON c.e = v.e JOIN subject u ON u.e = v.at_e
+            WHERE v.ev = 'strike' GROUP BY 1, 2 ORDER BY 1, 3 DESC"""),
+        "trampling": query(con, """
+            SELECT c.species, count(*) AS events, count(DISTINCT v.e) AS bodies,
+                   sum(try_cast(regexp_extract(v.to_name, 'logs=(\\d+)', 1) AS INTEGER)) AS logs,
+                   sum(try_cast(regexp_extract(v.to_name, 'leaves=(\\d+)', 1) AS INTEGER)) AS leaves
+            FROM events v JOIN entities c ON c.e = v.e WHERE v.ev = 'trample' GROUP BY 1 ORDER BY 2 DESC"""),
+        "snapshots_showing_a_run": run_shown, "of_them_standing": run_standing,
+    }
     return {
         "session": header.get("session"), "started": header.get("started"), "schema": header.get("schema"),
         "integrity": {key: integrity.get(key) for key in (
@@ -795,6 +827,8 @@ def summarise(con, meta: dict, integrity: dict, incidents: list[dict]) -> dict:
         "script": query(con, f"SELECT round(game_s(tick), 1) AS t, substr(note, 6) AS step FROM events WHERE ev = 'mark' AND NOT {BY_HAND} ORDER BY tick"),
         "detection": detection,
         "turn_in_place": turning,
+        "flee": flee,
+        "pursuit": pursuit,
         "incident_counts": dict(kinds),
         "top_incidents": [item for item in incidents if not item["normal"]][:12],
         "recorder_end": {key: end.get(key) for key in ("ticks", "emitted", "dropped", "errors", "terrain", "terrain_suppressed")},
@@ -845,6 +879,12 @@ def show(summary: dict):
         for turn in summary["turn_in_place"]:
             print(f"  {turn['species']:<16} {turn['turns']:>5} {turn['bodies']:>4} {turn['median_ticks']:>6.0f} {turn['longest_ticks']:>5} "
                   f"{turn['a_second_or_more']:>5} {turn['percent_of_path_time']}")
+    flee, pursuit = summary["flee"], summary["pursuit"]
+    print(f"escapes: {flee['passes']} passes in FLEE by {flee['bodies']} bodies, requests {flee['requests']}; "
+          f"stood ten seconds or more {flee['stood_ten_seconds_or_more']} times, longest {flee['longest_stand_s']:g} s")
+    print(f"pursuit: strikes at you {[(row['species'], row['result'], row['n']) for row in pursuit['strikes_at_player']]}; "
+          f"trees knocked down {pursuit['trampling']}; a run shown on {pursuit['snapshots_showing_a_run']} snapshots, "
+          f"{pursuit['of_them_standing']} of them standing")
     if summary["script"]:
         print("scripted player (game s, step): " + "; ".join(f"{step['t']:g} {step['step']}" for step in summary["script"]))
     print(f"incidents: {summary['incident_counts']}")

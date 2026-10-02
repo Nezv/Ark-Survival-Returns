@@ -210,5 +210,82 @@ final class WildlifeRegressionGameTests {
             h.succeed();
         });
     }
+    /** Trunk positions two blocks apart around a clearing ten blocks across: nothing three blocks wide walks in. */
+    private static java.util.List<BlockPos> ring() {
+        var trunks = new java.util.ArrayList<BlockPos>();
+        for (int x = 59; x <= 69; x += 2) { trunks.add(new BlockPos(x, 3, 69)); trunks.add(new BlockPos(x, 3, 79)); }
+        for (int z = 71; z <= 77; z += 2) { trunks.add(new BlockPos(59, 3, z)); trunks.add(new BlockPos(69, 3, z)); }
+        return trunks;
+    }
+    private static net.minecraft.world.entity.player.Player intruder(GameTestHelper h, Vec3 relative) {
+        var player = h.makeMockPlayer(GameType.SURVIVAL);
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024); player.setHealth(1024);
+        player.setPos(h.absoluteVec(relative)); h.getLevel().addFreshEntity(player);
+        GameTestCleanup.onFinish(h, player::discard);
+        return player;
+    }
+    /** The recorded failure: a Carnotaurus two and a half blocks from a player it could not reach past a spruce. */
+    static void forest(GameTestHelper h) {
+        floor(h);
+        var trunks = ring();
+        for (var base : trunks) {
+            for (int y = 3; y <= 9; y++) h.setBlock(base.getX(), y, base.getZ(), Blocks.SPRUCE_LOG);
+            for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) for (int y = 8; y <= 10; y++) {
+                var leaf = new BlockPos(base.getX() + dx, y, base.getZ() + dz);
+                if (h.getBlockState(leaf).isAir()) h.setBlock(leaf, Blocks.SPRUCE_LEAVES);
+            }
+        }
+        var mob = wild(h, Species.CARNOTAURUS, new Vec3(64.5, 3, 65.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        var player = intruder(h, new Vec3(64.5, 3, 74.5));
+        var noChunkLoads = NavigationGameTests.watchChunkLoads(h);
+        h.runAfterDelay(400, () -> {
+            long felled = trunks.stream().filter(base -> !h.getBlockState(base).is(net.minecraft.tags.BlockTags.LOGS)).count();
+            long saplings = trunks.stream().filter(base -> h.getBlockState(base).is(Blocks.SPRUCE_SAPLING)).count();
+            h.assertTrue(felled > 0, "A large carnivore in pursuit left every trunk of a natural tree line standing");
+            h.assertTrue(saplings > 0, "A felled rooted trunk left no sapling");
+            h.assertTrue(player.getHealth() < 1024, "A large carnivore never reached the intruder behind the trees: "
+                    + mob.position() + " " + mob.behavior() + " felled=" + felled);
+            noChunkLoads.run();
+            h.succeed();
+        });
+    }
+    /** The same clearing behind stacked logs: no leaves grow on them, so they are a wall and stay one. */
+    static void palisade(GameTestHelper h) {
+        floor(h);
+        var trunks = ring();
+        for (var base : trunks) for (int y = 3; y <= 9; y++) h.setBlock(base.getX(), y, base.getZ(), Blocks.OAK_LOG);
+        var mob = wild(h, Species.CARNOTAURUS, new Vec3(64.5, 3, 65.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        var player = intruder(h, new Vec3(64.5, 3, 74.5));
+        boolean[] pursued = {false};
+        h.onEachTick(() -> { if (mob.behavior().combat()) pursued[0] = true; });
+        h.runAfterDelay(300, () -> {
+            h.assertTrue(pursued[0], "Log wall fixture never provoked a pursuit");
+            for (var base : trunks) for (int y = 3; y <= 9; y++)
+                h.assertTrue(h.getBlockState(base.atY(y)).is(Blocks.OAK_LOG), "A pursuer broke a log wall at " + base.atY(y));
+            h.assertTrue(player.getHealth() == 1024, "A strike landed across a log wall");
+            h.succeed();
+        });
+    }
+    /** The recorded failure: every point twenty blocks away is much higher, and a timid animal stood fleeing for minutes. */
+    static void slope(GameTestHelper h) {
+        floor(h);
+        for (int x = 34; x <= 94; x++) for (int z = 34; z <= 94; z++) {
+            double distance = Math.hypot(x + 0.5 - 64.5, z + 0.5 - 64.5);
+            if (distance > 9.5 && distance <= 30) for (int y = 3; y <= 11; y++) h.setBlock(x, y, z, Blocks.DIRT);
+        }
+        var mob = wild(h, Species.PEGOMASTAX, new Vec3(64.5, 3, 64.5)); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        var player = intruder(h, new Vec3(64.5, 3, 61.5));
+        Vec3 start = mob.position();
+        var noChunkLoads = NavigationGameTests.watchChunkLoads(h);
+        boolean[] fled = {false};
+        h.onEachTick(() -> { if (mob.behavior() == BehaviorState.FLEE) fled[0] = true; });
+        h.runAfterDelay(160, () -> {
+            h.assertTrue(fled[0], "Slope fixture never frightened the animal");
+            h.assertTrue(mob.position().distanceToSqr(start) > 16 && mob.distanceToSqr(player) > 36,
+                    "A frightened animal on a ledge found nowhere to run: " + mob.position() + " " + mob.behavior());
+            noChunkLoads.run();
+            h.succeed();
+        });
+    }
     private WildlifeRegressionGameTests() {}
 }

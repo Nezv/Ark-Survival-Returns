@@ -41,8 +41,30 @@ class ChoreographerTest {
         int roar = rex.remaining();
         assertTrue(roar > 60 && roar < 120, "roar lasts about its 4.4 s clip: " + roar);
         rex.enter(THREATEN, HUNT, false);
+        rex.settle(true);
         assertEquals(CHASE, rex.action(), "no second roar in the same encounter");
         assertFalse(rex.holding());
+    }
+
+    @Test void aStoppedHunterAndACorneredAnimalFaceTheOtherInsteadOfRunningOnTheSpot() {
+        var rex = new Choreographer(REX, 42);
+        rex.reset(HUNT);
+        rex.settle(true);
+        assertEquals(CHASE, rex.action());
+        rex.settle(false);
+        assertEquals(Motion.FACE, rex.action().motion(), "a hunter with no way on stands facing its prey: " + rex.action());
+        assertFalse(rex.holding(), "a stopped hunter is free to strike or to set off again");
+        rex.settle(true);
+        assertEquals(CHASE, rex.action());
+        var para = new Choreographer(PARA, 1);
+        para.reset(FLEE);
+        para.settle(true);
+        assertEquals(BOLT, para.action());
+        para.settle(false);
+        assertEquals(NOTICE, para.action(), "a cornered animal watches the threat");
+        para.enter(FLEE, FLEE, false);
+        para.settle(true);
+        assertEquals(BOLT, para.action());
     }
 
     @Test void aCalmCarnivoreGoingStraightToHuntStillLooksThenRoarsThenRuns() {
