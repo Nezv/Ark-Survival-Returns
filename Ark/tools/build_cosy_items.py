@@ -179,6 +179,24 @@ def nest_eggs():
 
 # ------------------------------------------------------------------------------------- taming and cargo
 
+HARNESS = ["................",
+           ".....rRRRRRr....",
+           "....rRkRRRkRe...",
+           "....rrkrrrkre...",
+           "...LLLLLLLLLLL..",
+           "..LlltlltlltllS.",
+           "..SSSlllllllSSS.",
+           "..ffff.....ffff.",
+           "..fBBF.....fBBF.",
+           "..FuUF.....FuUF.",
+           "..bbbd.....bbbd.",
+           "..dddS.....Sddd.",
+           "....SSl...lSS...",
+           "......SuUS......",
+           "................",
+           "................"]
+
+
 def pack_harness():
     """A girth of stitched tan leather: a saddlebag on each flank, a rolled blanket lashed on top, a brass buckle."""
     return sprite(HARNESS, {'R': (236, 224, 194), 'r': (194, 178, 142), 'e': (168, 148, 110), 'k': (110, 72, 42),
