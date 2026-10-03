@@ -16,12 +16,12 @@
       256
     ],
     "frameSize": [
-      228,
-      233
+      240,
+      252
     ],
     "panelOriginInFrame": [
-      26,
-      33
+      32,
+      50
     ],
     "slotSize": 16,
     "slotPitch": 18,
@@ -53,8 +53,8 @@
     ],
     "labelColor": "#e6e8e1",
     "frameDrawOffset": [
-      -26,
-      -33
+      -32,
+      -50
     ]
   },
   "storage_suite": "design/ui-rework/baroque/storage-assets.json",

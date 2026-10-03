@@ -1,5 +1,5 @@
 {
-  "style": "New coffer and archive compositions; P14 carving primitives and stone palette only.",
+  "style": "Figurative Gorgon/serpent painting frame and classical colonnade; P14 stone palette and lighting.",
   "palette": [
     "#050604",
     "#0b0c0a",
@@ -26,12 +26,12 @@
       256
     ],
     "frameSize": [
-      228,
-      233
+      240,
+      252
     ],
     "frameDrawOffset": [
-      -26,
-      -33
+      -32,
+      -50
     ],
     "symbol": "crate",
     "layout": "Original 27-slot chest coordinates"
@@ -51,11 +51,11 @@
       ],
       "frameSize": [
         282,
-        288
+        302
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "archive"
     },
@@ -73,11 +73,11 @@
       ],
       "frameSize": [
         282,
-        342
+        356
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "archive"
     },
@@ -95,11 +95,11 @@
       ],
       "frameSize": [
         264,
-        252
+        266
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "link"
     },
@@ -117,11 +117,11 @@
       ],
       "frameSize": [
         264,
-        252
+        266
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "archive"
     },
@@ -139,11 +139,11 @@
       ],
       "frameSize": [
         264,
-        252
+        266
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "gauge"
     },
@@ -161,11 +161,11 @@
       ],
       "frameSize": [
         264,
-        252
+        266
       ],
       "frameDrawOffset": [
         -44,
-        -52
+        -64
       ],
       "symbol": "filter"
     }

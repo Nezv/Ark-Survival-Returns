@@ -206,22 +206,25 @@ def preview(crate_image):
     text(40, 765, 'Titlescreen / options / new game / vanilla controls', small, '#8a8f86')
     text(650, 383, '03  STORAGE CRATE')
     # The full frame is shown at 2x, keeping the lower shell visible in the sheet.
-    sheet.alpha_composite(crate_image.resize((crate_image.width*2, crate_image.height*2), Image.Resampling.NEAREST), (762, 425))
-    text(832, 506, 'Storage Crate', small)
-    text(832, 638, 'Inventory', small, '#8a8f86')
-    text(713, 904, '27 slots / engraved tablet / new coffer carving', small, '#8a8f86')
+    from build_storage_ui import CRATE_MARGIN, CRATE_TOP
+    scale = min(2, 440/crate_image.height)
+    sheet.alpha_composite(crate_image.resize((round(crate_image.width*scale), round(crate_image.height*scale)), Image.Resampling.NEAREST), (762, 425))
+    text(762+(CRATE_MARGIN+8)*scale, 425+(CRATE_TOP+6)*scale, 'Storage Crate', small)
+    text(762+(CRATE_MARGIN+8)*scale, 425+(CRATE_TOP+72)*scale, 'Inventory', small, '#8a8f86')
+    text(713, 904, '27 slots / Gorgon mask / carved serpent frame', small, '#8a8f86')
     text(713, 930, 'Dedicated screen asset; runtime hookup pending.', small, '#8a8f86')
     save(sheet, OUT / 'baroque-ui-preview.png')
 
 
 def build():
+    from build_storage_ui import CRATE_MARGIN, CRATE_TOP, CRATE_BOTTOM
     FILES.clear()
     widgets()
     hotbar()
     preview(crate())
     spec = {'scope': 'P16 first asset pass', 'source': 'tools/build_workstation_crests.py',
             'runtime': {'hotbar': 'Ark UI resource pack', 'buttons': 'Ark UI shared vanilla widget sprites', 'storage_crate': 'Asset only; dedicated screen registration pending. Do not replace generic_54.'},
-            'storage_crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': [228, 233], 'panelOriginInFrame': [26, 33], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 84], 'hotbarOrigin': [8, 142], 'labelOrigins': [[8, 6], [8, 72]], 'labelColor': PAL['title'], 'frameDrawOffset': [-26, -33]},
+            'storage_crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': [176+2*CRATE_MARGIN, 166+CRATE_TOP+CRATE_BOTTOM], 'panelOriginInFrame': [CRATE_MARGIN, CRATE_TOP], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 84], 'hotbarOrigin': [8, 142], 'labelOrigins': [[8, 6], [8, 72]], 'labelColor': PAL['title'], 'frameDrawOffset': [-CRATE_MARGIN, -CRATE_TOP]},
             'storage_suite': 'design/ui-rework/baroque/storage-assets.json',
             'files': FILES}
     (OUT / 'assets.json').write_text(json.dumps(spec, indent=2) + '\n', encoding='utf-8')
