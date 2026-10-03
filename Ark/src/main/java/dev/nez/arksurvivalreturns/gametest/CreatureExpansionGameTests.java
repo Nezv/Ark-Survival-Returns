@@ -17,7 +17,7 @@ final class CreatureExpansionGameTests {
             var entity=ModContent.CREATURES.get(s).get().create(h.getLevel(),EntitySpawnReason.COMMAND);
             h.assertTrue(entity!=null && entity.species()==s && !s.flyer(), "Registration mismatch: "+s);
             h.assertTrue(ModContent.EGGS.get(s).get()!=null, "Missing spawn egg: "+s);
-            h.assertTrue(s.minGroup==s.family().minGroup && s.maxGroup==s.family().maxGroup, "Group profile mismatch: "+s);
+            h.assertTrue(s.minGroup>=s.family().minGroup && s.maxGroup<=s.family().maxGroup, "Group outside its family's limits: "+s);
             h.assertTrue(Math.abs(entity.getBbHeight()-s.height)<.001, "Hitbox mismatch: "+s);
             h.assertTrue(s.strideCycleSeconds(false)>0 && s.strideCycleSeconds(true)>0, "Invalid cadence: "+s);
             var mind=entity.wildlife().mind(); mind.restoreNeeds(.8,.1,0);

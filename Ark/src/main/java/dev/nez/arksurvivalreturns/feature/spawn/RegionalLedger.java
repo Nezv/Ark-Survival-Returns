@@ -121,10 +121,10 @@ public final class RegionalLedger extends SavedData {
         return state.prey() * (1 - PREDATOR_SHARE) + state.predators() * PREDATOR_SHARE;
     }
 
-    /** One animal of a side as a share of that side's balance in a region of the configured size and density. */
+    /** One animal of a side as a share of that side's balance in a region of the configured size and group target. */
     public static double animalShare(boolean predator) {
         double chunks = Math.pow(Config.LEDGER_REGION_SIZE.get(), 2) / 256.0;
-        double animals = Config.POPULATION_DENSITY.get() * chunks * (predator ? PREDATOR_SHARE : 1 - PREDATOR_SHARE);
+        double animals = NaturalPopulations.animalsPerChunk() * chunks * (predator ? PREDATOR_SHARE : 1 - PREDATOR_SHARE);
         return 1 / Math.max(1, animals);
     }
 

@@ -35,10 +35,11 @@ Hunger, thirst, reproduction, incubation and automatic egg production are still 
 
 ## Spawning and nesting
 
-Flyers spawn through the vanilla spawner: each is added to its `spawns/<id>` biome tag by a generated
-`neoforge:add_spawns` modifier, and the placement predicate applies the same danger gate every other
-species uses. Since P00 every flyer tag points at `habitat/sky`, every temperate and snowy land biome; the
-nest rules below decide where a bird can actually live.
+Flyers are placed by the population budget like every other species (P21): no vanilla spawn list holds
+them. Each has a range of biome kinds: Pteranodon the warm coasts and rivers, Archaeopteryx forest, jungle
+and taiga, Argentavis mountains, badlands, savanna, shrubland and desert, Quetzal open country and
+mountains, the Dragon volcanic ground, mountains and badlands. At most two flyer groups are kept around a
+player, each of one to three birds; the nest rules below decide where a bird can actually live.
 
 | Setting | Default |
 |---|---|

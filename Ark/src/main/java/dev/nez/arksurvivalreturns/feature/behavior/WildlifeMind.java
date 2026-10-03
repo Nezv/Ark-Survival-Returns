@@ -2,8 +2,20 @@ package dev.nez.arksurvivalreturns.feature.behavior;
 
 /** Deterministic decision model. No world access, target coordinates, navigation or damage calculation. */
 public final class WildlifeMind {
+    /**
+     * @param pressing the stimulus is inside this animal's flight distance, hunting, or coming for it. A timid
+     *                 animal bolts from a pressing threat and only watches one that keeps its distance.
+     */
     public record Observation(double signal, boolean visible, boolean prey, boolean intruding, boolean attacked,
-            boolean intimidating, boolean farFromHome, boolean water, boolean forage, boolean night, double health) {}
+            boolean intimidating, boolean farFromHome, boolean water, boolean forage, boolean night, double health,
+            boolean pressing) {
+        public Observation(double signal, boolean visible, boolean prey, boolean intruding, boolean attacked,
+                boolean intimidating, boolean farFromHome, boolean water, boolean forage, boolean night, double health) {
+            this(signal, visible, prey, intruding, attacked, intimidating, farFromHome, water, forage, night, health, true);
+        }
+    }
+    /** Ticks an animal keeps watching after a flight, and the least an investigation lasts. */
+    public static final int WARY_TICKS = 100, INVESTIGATE_TICKS = 60;
     public record Routine(boolean enabled, boolean night, boolean sleepWanted, boolean safeToSleep,
             boolean danger, boolean defended, boolean cornered, int calmTicks, double hungerMultiplier, boolean regroup) {
         public Routine(boolean enabled, boolean night, boolean sleepWanted, boolean safeToSleep,
@@ -15,10 +27,10 @@ public final class WildlifeMind {
     public record GroupRoutine(double hunger, BehaviorState state) {}
     /** The rule that chose the current state, in priority order; the showcase matrices quote these. */
     public enum Reason {
-        ESCAPE("critical health, a bigger predator or a timid animal that is aware"),
+        ESCAPE("critical health, a bigger predator, or a timid animal with a threat inside its flight distance"),
         NIGHT_HERD("night herd under threat: flee, or stand once defended or cornered"),
         HOME_RANGE("left its home range or gave up a chase"),
-        LOST_SIGHT("stimulus out of sight: investigate (timid animals flee)"),
+        LOST_SIGHT("stimulus out of sight: investigate (timid animals watch, or keep fleeing)"),
         NOTICED("something sensed, awareness still building"),
         PROVOKED("attacked: retaliate"),
         HUNT_READY("hungry predator, prey in sight after the warning"),
@@ -26,6 +38,7 @@ public final class WildlifeMind {
         WARNING("intruder or prey in sight: warn first"),
         MEAL("a kill or a shared meal"),
         REGROUP("separated from the herd after an alarm"),
+        WARY("the alarm is over: watch a while before going back to the routine"),
         SLEEP_TIME("scheduled sleep, safe and calm"),
         DRINK("thirsty with water at hand"),
         SEEK_WATER("thirsty, no water in reach"),
@@ -42,7 +55,7 @@ public final class WildlifeMind {
     private Reason reason = Reason.ROUTINE;
     private double hunger = 0.55, thirst = 0.35, fatigue = 0.15, awareness;
     private int age, memory, warning, provoked, chase, recovery, feeding;
-    private int calm, flight;
+    private int calm, flight, wary;
     public WildlifeMind(boolean predator, boolean timid, boolean nocturnal) {
         this.predator = predator; this.timid = timid; this.nocturnal = nocturnal;
     }
@@ -55,6 +68,8 @@ public final class WildlifeMind {
     public double fatigue() { return fatigue; }
     public double awareness() { return awareness; }
     public boolean remembers() { return memory > 0; }
+    /** Still watching where the last alarm came from. */
+    public boolean wary() { return wary > 0; }
     // Timers in ticks, read by the session recorder: stimulus memory, warning build-up, retaliation,
     // time in combat, give-up recovery, meal and time fleeing.
     public int memory() { return memory; }
@@ -104,6 +119,7 @@ public final class WildlifeMind {
         calm = Math.max(0, calm - ticks);
         if (routine.enabled && (o.signal > 0 || o.attacked || routine.danger || !routine.safeToSleep)) calm = routine.calmTicks;
         flight = state == BehaviorState.FLEE ? flight + ticks : 0;
+        wary = state == BehaviorState.FLEE ? WARY_TICKS : Math.max(0, wary - ticks);
         if (o.attacked) { provoked = 200; awareness = 1; }
         if (o.signal > 0 || o.attacked) {
             memory = 100;
@@ -116,7 +132,9 @@ public final class WildlifeMind {
         if (!o.attacked && (chase >= 300 || o.farFromHome && state.combat() && !o.intruding)) abandonChase();
         BehaviorState next;
         Reason why;
-        if ((o.health < 0.25 || o.intimidating || timid) && memory > 0 && awareness >= 0.45) { next = BehaviorState.FLEE; why = Reason.ESCAPE; }
+        // A timid animal runs from what presses it, and once running keeps going while it remembers why.
+        if ((o.health < 0.25 || o.intimidating || timid && (o.pressing || state == BehaviorState.FLEE))
+                && memory > 0 && awareness >= 0.45) { next = BehaviorState.FLEE; why = Reason.ESCAPE; }
         else if (routine.enabled && !predator && routine.night && memory > 0 && awareness >= 0.45
                 && (routine.danger || state == BehaviorState.FLEE || (state == BehaviorState.DEFEND && provoked > 0))) {
             boolean stand = o.health >= 0.5 && o.visible && (routine.defended && flight >= 60
@@ -128,7 +146,9 @@ public final class WildlifeMind {
             next = BehaviorState.RETURN_HOME; why = Reason.HOME_RANGE;
         }
         else if (memory > 0 && awareness >= 0.20) {
-            if (!o.visible) { next = timid && awareness >= 0.6 ? BehaviorState.FLEE : BehaviorState.INVESTIGATE; why = Reason.LOST_SIGHT; }
+            // Timid animals never walk toward what scared them: they watch where it was.
+            if (!o.visible) { next = !timid ? BehaviorState.INVESTIGATE : awareness >= 0.6 && (o.pressing || state == BehaviorState.FLEE)
+                    ? BehaviorState.FLEE : BehaviorState.ALERT; why = Reason.LOST_SIGHT; }
             else if (awareness < 0.55) { next = BehaviorState.ALERT; why = Reason.NOTICED; }
             else if (provoked > 0) { next = BehaviorState.DEFEND; why = Reason.PROVOKED; }
             else if (canHunt && o.prey && hunger >= 0.4 && warning >= 40) { next = BehaviorState.HUNT; why = Reason.HUNT_READY; }
@@ -139,6 +159,8 @@ public final class WildlifeMind {
             }
         } else if (feeding > 0 || group != null && group.state == BehaviorState.FEED) { next = BehaviorState.FEED; why = Reason.MEAL; }
         else if (routine.enabled && routine.regroup) { next = BehaviorState.REGROUP; why = Reason.REGROUP; }
+        else if (wary > 0) { next = BehaviorState.ALERT; why = Reason.WARY; }
+        else if (state == BehaviorState.INVESTIGATE && age < INVESTIGATE_TICKS) { next = BehaviorState.INVESTIGATE; why = Reason.LOST_SIGHT; }
         else if (routine.enabled && routine.sleepWanted && routine.safeToSleep && calm == 0
                 && thirst < 0.9 && (predator || hunger < 0.9)
                 && !(state == BehaviorState.DRINK && thirst > 0.1)

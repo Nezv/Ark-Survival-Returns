@@ -81,6 +81,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private boolean applyingStrike;
     private int nextRoutineSoundTick;
     private int nextWakeSoundTick;
+    private int nextWarnSoundTick;
+    /** The game tick of each pack's last call and last alarm call: one voice at a time, not a chorus. Server thread only. */
+    private static final java.util.Map<UUID, Long> PACK_CALLS = new java.util.HashMap<>(), PACK_ALARMS = new java.util.HashMap<>();
     private boolean audioSleeping;
     /** Client: whether the movement controller last showed this creature lying down, and until when it blends slowly. */
     private boolean wasLying;
@@ -523,7 +526,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         boolean clip = cue == BehaviorAction.Cue.WARN ? !species.warningClip().equals(species.idle) : !posture && clips().has(cue.role());
         if (clip) triggerAnim("reaction", cue == BehaviorAction.Cue.WARN ? "warn" : cue.key());
         switch (cue) {
-            case WARN, STARTLE -> playCreatureSound(CreatureSounds.Role.WARN, 1.0f);
+            case WARN, STARTLE -> {
+                // The clip always plays; the cry is one animal's, once per alarm, and spreads through a herd in turn.
+                if (tickCount >= nextWarnSoundTick && packTurn(PACK_ALARMS, 12)) {
+                    nextWarnSoundTick = tickCount + 300;
+                    playCreatureSound(CreatureSounds.Role.WARN, 1.0f);
+                }
+            }
             case WAKE -> playCreatureSound(CreatureSounds.Role.WAKE, 0.7f);
             default -> {}
         }
@@ -973,10 +982,24 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     @Override public void playAmbientSound() {
         if (getAmbientSound() != null) playRoutineSound(ambientSoundRole());
     }
+    /** Wild animals call now and then: with the vanilla interval a herd of six is never quiet. */
+    @Override public int getAmbientSoundInterval() { return 500 + Math.floorMod((int) getUUID().getLeastSignificantBits(), 500); }
     private void playRoutineSound(CreatureSounds.Role role) {
-        if (!isAlive() || behaviorTier == BehaviorTier.DORMANT || tickCount < nextRoutineSoundTick) return;
-        playCreatureSound(role, role == CreatureSounds.Role.SLEEP ? 0.45f : 0.8f);
-        nextRoutineSoundTick = tickCount + CreatureSounds.durationTicks(species, role) + 20;
+        if (level().isClientSide() || !isAlive() || behaviorTier == BehaviorTier.DORMANT || tickCount < nextRoutineSoundTick) return;
+        boolean asleep = role == CreatureSounds.Role.SLEEP;
+        // A sleeper breathes at its own slow pace; awake, pack mates leave a pause after one of them has called.
+        if (!asleep && !packTurn(PACK_CALLS, 160)) { nextRoutineSoundTick = tickCount + 40; return; }
+        playCreatureSound(role, asleep ? 0.45f : 0.8f);
+        nextRoutineSoundTick = tickCount + CreatureSounds.durationTicks(species, role) + (asleep ? 80 + random.nextInt(160) : 20);
+    }
+    /** True, and the turn is taken, when no member of this pack has used the channel within the gap. */
+    private boolean packTurn(java.util.Map<UUID, Long> channel, int gap) {
+        long now = level().getGameTime();
+        Long last = channel.get(packId);
+        if (last != null && now >= last && now - last < gap) return false;
+        if (channel.size() > 1024) channel.clear();
+        channel.put(packId, now);
+        return true;
     }
     /** Emit on the server once, at original pitch; clients receive the normal positional sound packet. */
     public void playCreatureSound(CreatureSounds.Role role, float volume) {

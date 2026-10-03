@@ -99,16 +99,17 @@ final class IntegrationGameTests {
         return total == amount;
     }
 
-    /** I08: Terralith biomes inherit Ark habitats through their vanilla analog; danger comes from the area only. */
+    /** I08: Terralith biomes are classified by their own tags and hold the species whose range fits; danger comes from the area only. */
     static void terralith(GameTestHelper h) {
         h.assertTrue(ModList.get().isLoaded("terralith"), "Required Terralith integration is missing");
         var biomes = h.getLevel().registryAccess().lookupOrThrow(Registries.BIOME);
         var rainforest = biomes.get(ResourceKey.create(Registries.BIOME, Identifier.parse("terralith:amethyst_rainforest")));
         h.assertTrue(rainforest.isPresent(), "Terralith's amethyst rainforest must be registered");
-        TagKey<net.minecraft.world.level.biome.Biome> raptors = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:spawns/velociraptor"));
-        h.assertTrue(rainforest.get().is(raptors), "A jungle-like Terralith biome must spawn raptors");
-        TagKey<net.minecraft.world.level.biome.Biome> wetland = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:habitat/wetland"));
-        h.assertTrue(rainforest.get().is(wetland), "A jungle-like Terralith biome must also be crocodilian wetland");
+        TagKey<net.minecraft.world.level.biome.Biome> boas = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:spawns/titanoboa"));
+        h.assertTrue(rainforest.get().is(boas) && dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(
+                dev.nez.arksurvivalreturns.feature.creature.Species.KAPROSUCHUS, rainforest.get()), "A jungle-like Terralith biome must hold jungle animals");
+        h.assertFalse(dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(
+                dev.nez.arksurvivalreturns.feature.creature.Species.VELOCIRAPTOR, rainforest.get()), "Desert runners entered a rainforest");
         h.succeed();
     }
 

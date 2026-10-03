@@ -7,38 +7,38 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
 public enum Species {
-    PTERANODON("pteranodon", "Pteranodon", 24, 3, 0.28, 0.9f, 1.2f, 3, 4, 18, false, "Ptero-Ground-Idle", "Ptero-Ground-Move-Fwd", "Ptero-Ground-Attack",
+    PTERANODON("pteranodon", "Pteranodon", 24, 3, 0.28, 0.9f, 1.2f, 1, 3, 10, false, "Ptero-Ground-Idle", "Ptero-Ground-Move-Fwd", "Ptero-Ground-Attack",
             new FlyerProfile(true, -1, 0, -1, 16, true, 1, "Ptero-Fly-Fwd", "Ptero-Fly-Hover", "Ptero-Land", "Ptero-Take-Off",
                     "Ptero-Fly-Attack-Swoop-Loop", "Ptero-Fly-Attack-Swoop-Out", "Ptero-Fly-Attack-Bite", null)),
-    VELOCIRAPTOR("velociraptor", "Velociraptor", 32, 5, 0.32, 0.85f, 1.5f, 4, 6, 14, true, "Raptor-Idle", "Raptor-Move-Fwd", "Raptor-Attack"),
-    ARGENTAVIS("argentavis", "Argentavis", 46, 6, 0.25, 1.2f, 1.6f, 3, 4, 4, false, "Argentavis-Ground-Idle", "Argentavis-Ground-Move-Fwd", "Argentavis-Ground-Attack",
+    VELOCIRAPTOR("velociraptor", "Velociraptor", 32, 5, 0.32, 0.85f, 1.5f, 2, 3, 8, true, "Raptor-Idle", "Raptor-Move-Fwd", "Raptor-Attack"),
+    ARGENTAVIS("argentavis", "Argentavis", 46, 6, 0.25, 1.2f, 1.6f, 1, 2, 4, false, "Argentavis-Ground-Idle", "Argentavis-Ground-Move-Fwd", "Argentavis-Ground-Attack",
             new FlyerProfile(false, -1, -1, 0, 24, false, 2, "Argentavis-Fly-Fwd", "Argentavis-Fly-Hover",
                     "Argentavis-Land", "Argentavis-Take-Off", null, "Argentavis-Fly-Attack-Swoop-Out", "Argentavis-Fly-Attack-Claw", null)),
     TRICERATOPS("triceratops", "Triceratops", 85, 8, 0.22, 2.5f, 2.5f, 2, 4, 12, false, "Trike-Idle", "Trike-Move-Fwd", "Trike-Attack-Horn"),
-    THERIZINOSAURUS("therizinosaurus", "Therizinosaurus", 100, 10, 0.25, 1.8f, 3.0f, 2, 4, 12, false, "Therizinosaurus-Idle", "Therizinosaurus-Move-Fwd", "Therizinosaurus-Attack-Claw"),
-    BRONTOSAURUS("brontosaurus", "Brontosaurus", 145, 12, 0.18, 4.0f, 5.5f, 2, 4, 10, false, "Sauropod-Idle", "Sauropod-Move-Fwd", "Sauropod-Attack-FootStomp"),
-    TYRANNOSAURUS("tyrannosaurus", "Tyrannosaurus", 130, 14, 0.25, 2.8f, 4.5f, 1, 1, 12, true, "Rex-Idle", "Rex-Move-Fwd", "Rex-Bite2"),
-    GIGANOTOSAURUS("giganotosaurus", "Giganotosaurus", 170, 17, 0.26, 3.5f, 5.0f, 1, 1, 8, true, "Giganotosaurus-Idle", "Giganotosaurus-Move-Fwd", "Giganotosaurus-Attack-Bite"),
-    TITANOSAUR("titanosaur", "Titanosaur", 190, 20, 0.15, 5.0f, 7.0f, 1, 1, 6, false, "Titanosaur-Idle", "Titanosaur-Move-Fwd", "Titanosaur-Attack-Footstomp"),
-    SPINOSAURUS("spinosaurus", "Spinosaurus", 125, 13, .25, 2.8f, 4.5f, 1, 1, 8, true, "Spino-Idle", "Spino-Move-Fwd", "Spino-Attack-Bite",
+    THERIZINOSAURUS("therizinosaurus", "Therizinosaurus", 100, 10, 0.25, 1.8f, 3.0f, 1, 2, 6, false, "Therizinosaurus-Idle", "Therizinosaurus-Move-Fwd", "Therizinosaurus-Attack-Claw"),
+    BRONTOSAURUS("brontosaurus", "Brontosaurus", 145, 12, 0.18, 4.0f, 5.5f, 1, 3, 6, false, "Sauropod-Idle", "Sauropod-Move-Fwd", "Sauropod-Attack-FootStomp"),
+    TYRANNOSAURUS("tyrannosaurus", "Tyrannosaurus", 130, 14, 0.25, 2.8f, 4.5f, 1, 1, 4, true, "Rex-Idle", "Rex-Move-Fwd", "Rex-Bite2"),
+    GIGANOTOSAURUS("giganotosaurus", "Giganotosaurus", 170, 17, 0.26, 3.5f, 5.0f, 1, 1, 2, true, "Giganotosaurus-Idle", "Giganotosaurus-Move-Fwd", "Giganotosaurus-Attack-Bite"),
+    TITANOSAUR("titanosaur", "Titanosaur", 190, 20, 0.15, 5.0f, 7.0f, 1, 1, 2, false, "Titanosaur-Idle", "Titanosaur-Move-Fwd", "Titanosaur-Attack-Footstomp"),
+    SPINOSAURUS("spinosaurus", "Spinosaurus", 125, 13, .25, 2.8f, 4.5f, 1, 1, 3, true, "Spino-Idle", "Spino-Move-Fwd", "Spino-Attack-Bite",
             new LandProfile(LandFamily.BIG_CARNIVORE, false, 4, 1.85, 1.0, .73333334, "Spino-Charge-Fwd", "Spino-Eat", "Spino-Roar")),
-    PARASAUR("parasaur", "Parasaur", 48, 3, .25, 1.3f, 2.0f, 4, 6, 14, false, "Para-Idle", "Para-Move-Fwd", "Para-Attack-Bite",
+    PARASAUR("parasaur", "Parasaur", 48, 3, .25, 1.3f, 2.0f, 3, 5, 14, false, "Para-Idle", "Para-Move-Fwd", "Para-Attack-Bite",
             new LandProfile(LandFamily.SMALL_HERBIVORE, true, 1, 1.55, 1.33333333, .95238097, "Para-Charge-Fwd", "Para-Graze", "Para-Roar-Alert")),
-    CERATOSAURUS("ceratosaurus", "Ceratosaurus", 88, 10, .25, 1.8f, 2.8f, 1, 1, 8, true, "Ceratosaurus_Idle", "Ceratosaurus_MoveFWD", "Cerato_Attack_Bite1",
+    CERATOSAURUS("ceratosaurus", "Ceratosaurus", 88, 10, .25, 1.8f, 2.8f, 1, 1, 4, true, "Ceratosaurus_Idle", "Ceratosaurus_MoveFWD", "Cerato_Attack_Bite1",
             new LandProfile(LandFamily.BIG_CARNIVORE, false, 3, 1.65, 1.7999999, .93333334, "Ceratosaurus_ChargeFWD_NOBOOST", "Ceratosaurus_Eat", "Ceratosaurus_Roar1")),
-    DILOPHOSAUR("dilophosaur", "Dilophosaur", 22, 3, .25, .65f, .95f, 4, 6, 12, true, "Dilo-Idle", "Dilo-Move-Fwd", "Dilo-Attack-Bite",
+    DILOPHOSAUR("dilophosaur", "Dilophosaur", 22, 3, .25, .65f, .95f, 1, 3, 8, true, "Dilo-Idle", "Dilo-Move-Fwd", "Dilo-Attack-Bite",
             new LandProfile(LandFamily.SMALL_CARNIVORE, false, 1, 1.25, .88888889, .55555556, "Dilo-Charge-Fwd", "Dilo-Eat", "Dilo-Startled")),
-    ACROCANTHOSAURUS("acrocanthosaurus", "Acrocanthosaurus", 155, 16, .25, 3.2f, 4.8f, 1, 1, 6, true, "Acro_Idle", "Acro_Move_Walk_FWD", "Acro_Attack_Bite",
+    ACROCANTHOSAURUS("acrocanthosaurus", "Acrocanthosaurus", 155, 16, .25, 3.2f, 4.8f, 1, 1, 2, true, "Acro_Idle", "Acro_Move_Walk_FWD", "Acro_Attack_Bite",
             new LandProfile(LandFamily.BIG_CARNIVORE, false, 5, 1.7, 2.08333321, 1.38888878, "Acro_Move_Charge_FWD", "Acro_Eat", "Acro_Attack_Roar")),
-    ALLOSAURUS("allosaurus", "Allosaurus", 78, 9, .25, 1.8f, 3.0f, 4, 6, 9, true, "Allosaurus-Idle", "Allosaurus-Move-Fwd", "Allosaurus-Attack-Bite",
+    ALLOSAURUS("allosaurus", "Allosaurus", 78, 9, .25, 1.8f, 3.0f, 1, 3, 5, true, "Allosaurus-Idle", "Allosaurus-Move-Fwd", "Allosaurus-Attack-Bite",
             new LandProfile(LandFamily.SMALL_CARNIVORE, false, 3, 1.9, 1.24999994, .74074069, "Allosaurus-Charge-Fwd", "Allosaurus-Eat-Additive", "Allosaurus-Roar_Anim")),
-    ANKYLOSAURUS("ankylosaurus", "Ankylosaurus", 95, 9, .2, 2.1f, 2.0f, 2, 4, 10, false, "Ankylo-Idle", "Ankylo-Move-Fwd", "Ankylo-Attack-Tail-Sweep",
+    ANKYLOSAURUS("ankylosaurus", "Ankylosaurus", 95, 9, .2, 2.1f, 2.0f, 1, 3, 8, false, "Ankylo-Idle", "Ankylo-Move-Fwd", "Ankylo-Attack-Tail-Sweep",
             new LandProfile(LandFamily.BIG_HERBIVORE, false, 2, .95, 1.11111107, .60606063, "Ankylo-Charge-Fwd", "Ankylo-Graze", "Ankylo-Startled")),
-    CARNOTAURUS("carnotaurus", "Carnotaurus", 82, 10, .25, 1.8f, 3.0f, 1, 1, 10, true, "Carno-Idle", "Carno-Move-Fwd", "Carno-Attack-Bite",
+    CARNOTAURUS("carnotaurus", "Carnotaurus", 82, 10, .25, 1.8f, 3.0f, 1, 1, 5, true, "Carno-Idle", "Carno-Move-Fwd", "Carno-Attack-Bite",
             new LandProfile(LandFamily.BIG_CARNIVORE, false, 3, 1.8, 1.17647057, .71428575, "Carno-Charge-Fwd", "Carno-Eat", "Carno-Startled")),
-    PEGOMASTAX("pegomastax", "Pegomastax", 18, 2, .25, .5f, .65f, 4, 6, 10, false, "Pegomastax-Idle", "Pegomastax-Move-Fwd", "Pegomastax-Attack-Bite",
+    PEGOMASTAX("pegomastax", "Pegomastax", 18, 2, .25, .5f, .65f, 2, 4, 12, false, "Pegomastax-Idle", "Pegomastax-Move-Fwd", "Pegomastax-Attack-Bite",
             new LandProfile(LandFamily.SMALL_HERBIVORE, true, 1, 1.55, 1.0, .46153849, "Pegomastax-Biped-Charge-Fwd", "Pegomastax-Eat", "Pegomastax-Roar")),
-    LYSTROSAURUS("lystrosaurus", "Lystrosaurus", 20, 2, .2, .6f, .5f, 4, 6, 14, false, "Lystrosaurus-Idle", "Lystrosaurus-Move-Fwd", "Lystrosaurus-Attack-Bite",
+    LYSTROSAURUS("lystrosaurus", "Lystrosaurus", 20, 2, .2, .6f, .5f, 2, 4, 12, false, "Lystrosaurus-Idle", "Lystrosaurus-Move-Fwd", "Lystrosaurus-Attack-Bite",
             new LandProfile(LandFamily.SMALL_HERBIVORE, true, 1, .85, 1.0, .55555556, "Lystrosaurus-Charge-Fwd", "Lystrosaurus-Eat", "Lystrosaurus-Startled")),
 
     // --------------------------------------------------------------- aquatic
@@ -56,42 +56,42 @@ public enum Species {
             new LandProfile(LandFamily.AQUATIC, false, 4, 1.0, 2.0, 1.3, "Tusoteuthis-Swim-Fwd", "Tusoteuthis-Eat", "Tusoteuthis-Attack-Crush-Loop")),
 
     // ----------------------------------------------------------- semi-aquatic
-    KAPROSUCHUS("kaprosuchus", "Kaprosuchus", 55, 8, 1.35, .95f, 2.0f, 1, 1, 7, true, "Kaprosuchus-Idle", "Kaprosuchus-Move-Fwd", "Kaprosuchus-Attack-Bite",
+    KAPROSUCHUS("kaprosuchus", "Kaprosuchus", 55, 8, 1.35, .95f, 2.0f, 1, 1, 5, true, "Kaprosuchus-Idle", "Kaprosuchus-Move-Fwd", "Kaprosuchus-Attack-Bite",
             new LandProfile(LandFamily.AMPHIBIOUS, false, 2, 1.35, 1.4, .9, "Kaprosuchus-Charge-Fwd", "Kaprosuchus-Eat", "Kaprosuchus-Startle",
                     new SwimProfile("Kaprosuchus-Swim-Idle", "Kaprosuchus-Swim-Fwd", "Kaprosuchus-Swim-Fwd"))),
-    SARCO("sarco", "Sarco", 70, 10, 1.3, 1.2f, 2.5f, 2, 3, 8, true, "Sarco-Ground-Idle", "Sarco-Ground-Move-Fwd", "Sarco-Ground-Attack-Bite",
+    SARCO("sarco", "Sarco", 70, 10, 1.3, 1.2f, 2.5f, 1, 2, 6, true, "Sarco-Ground-Idle", "Sarco-Ground-Move-Fwd", "Sarco-Ground-Attack-Bite",
             new LandProfile(LandFamily.SWAMP_PACK, false, 2, 1.3, 1.7, 1.1, "Sarco-Ground-Charge-Fwd", "Sarco-Ground-Eat-Additive", "Sarco-Ground-Attack-Lunge",
                     new SwimProfile("Sarco-Swim-Idle", "Sarco-Swim-Fwd", "Sarco-Swim-Charge-Fwd"))),
-    DEINOSUCHUS("deinosuchus", "Deinosuchus", 120, 14, 1.2, 1.8f, 3.5f, 1, 1, 4, true, "Deinosuchus_Idle", "Deinosuchus_Move_FWD", "Deinosuchus_Attack_Bite",
+    DEINOSUCHUS("deinosuchus", "Deinosuchus", 120, 14, 1.2, 1.8f, 3.5f, 1, 1, 3, true, "Deinosuchus_Idle", "Deinosuchus_Move_FWD", "Deinosuchus_Attack_Bite",
             new LandProfile(LandFamily.AMPHIBIOUS, false, 3, 1.2, 2.0, 1.3, "Deinosuchus_Charge_FWD", "Deinosuchus_Eat", "Deinosuchus_Attack_Hiss",
                     new SwimProfile("Deinosuchus_Swim_Idle", "Deinosuchus_Swim_Move_FWD", "Deinosuchus_Swim_Charge_FWD"))),
-    TITANOBOA("titanoboa", "Titanoboa", 45, 9, 1.4, .8f, 1.2f, 1, 1, 6, true, "BoaFrill-Idle", "BoaFrill-Move-Fwd", "BoaFrill-Attack-Lunge",
+    TITANOBOA("titanoboa", "Titanoboa", 45, 9, 1.4, .8f, 1.2f, 1, 1, 4, true, "BoaFrill-Idle", "BoaFrill-Move-Fwd", "BoaFrill-Attack-Lunge",
             new LandProfile(LandFamily.AMPHIBIOUS, false, 3, 1.4, 1.6, 1.0, "BoaFrill-Charge-Fwd", "BoaFrill-Eat-Additive", "BoaFrill-Startled")),
 
     // ------------------------------------------------------------------- cold
-    MEGALOCERUS("megalocerus", "Megalocerus", 60, 6, 1.5, 1.0f, 2.2f, 4, 6, 10, false, "Stag-Idle", "Stag-Move-Fwd", "Stag-Attack-Gore",
+    MEGALOCERUS("megalocerus", "Megalocerus", 60, 6, 1.5, 1.0f, 2.2f, 3, 5, 12, false, "Stag-Idle", "Stag-Move-Fwd", "Stag-Attack-Gore",
             new LandProfile(LandFamily.COLD_GRAZER, true, 1, 1.5, 1.1, .75, "Stag-Charge-Fwd", "Stag-Graze", "Stag-Startled")),
     UNICORN("unicorn", "Unicorn", 65, 7, 1.7, .95f, 2.0f, 1, 1, 3, false, "Equus-Idle2", "Equus-Move-Fwd", "Equus-Attack-Buck",
             new LandProfile(LandFamily.RARE_GRAZER, true, 1, 1.7, 1.05, .7, "Equus-Charge-Fwd", "Equus-Eat", "Equus-Roar")),
     MAMMOTH("mammoth", "Mammoth", 140, 12, 1.0, 1.9f, 4.0f, 2, 4, 7, false, "Mammoth-Idle", "Mammoth-Move-Fwd", "Mammoth-Attack-Tusk-Jab",
             new LandProfile(LandFamily.COLD_BROWSER, false, 2, 1.0, 2.4, 1.5, "Mammoth-Charge-Fwd", "Mammoth-Graze", "Mammoth_new_Call")),
-    DIREWOLF("direwolf", "Direwolf", 50, 8, 2.0, .8f, 1.6f, 4, 6, 9, true, "Direwolf-Idle", "Direwolf-Move-Fwd", "Direwolf-Attack-Bite",
+    DIREWOLF("direwolf", "Direwolf", 50, 8, 2.0, .8f, 1.6f, 3, 4, 6, true, "Direwolf-Idle", "Direwolf-Move-Fwd", "Direwolf-Attack-Bite",
             new LandProfile(LandFamily.COLD_PREDATOR, false, 2, 2.0, .9, .6, "Direwolf-Charge-Fwd", "Direwolf-Eat", "Direwolf-Howl")),
-    SABERTOOTH("sabertooth", "Sabertooth", 60, 11, 1.9, .8f, 1.6f, 1, 2, 6, true, "Saber-Idle", "Saber-Move-Fwd", "Saber-Attack-Bite",
+    SABERTOOTH("sabertooth", "Sabertooth", 60, 11, 1.9, .8f, 1.6f, 1, 2, 4, true, "Saber-Idle", "Saber-Move-Fwd", "Saber-Attack-Bite",
             new LandProfile(LandFamily.COLD_STALKER, false, 3, 1.9, .95, .65, "Saber-Charge-Fwd", "Saber-Eat", "Saber-Startled")),
     MEGAPITHECUS("megapithecus", "Megapithecus", 180, 18, 1.4, 1.7f, 3.5f, 1, 1, 1, true, "Gorilla-Idle", "Gorilla-Move-Fwd", "Gorilla-Attack-Pound",
             new LandProfile(LandFamily.GUARDIAN, false, 5, 1.4, 1.6, 1.05, "Gorilla-Charge-Fwd", null, "Gorilla_Chest_Pounding")),
 
     // ------------------------------------------- warm land from the collection
-    PARACERATHERIUM("paraceratherium", "Paraceratherium", 155, 13, 1.0, 2.0f, 4.5f, 2, 4, 6, false, "Paraceratherium-Idle", "Paraceratherium-Move-Fwd", "Paraceratherium-Attack-Footstomp",
+    PARACERATHERIUM("paraceratherium", "Paraceratherium", 155, 13, 1.0, 2.0f, 4.5f, 1, 3, 5, false, "Paraceratherium-Idle", "Paraceratherium-Move-Fwd", "Paraceratherium-Attack-Footstomp",
             new LandProfile(LandFamily.BIG_HERBIVORE, false, 3, 1.0, 2.6, 1.6, "Paraceratherium-Charge-Fwd", "Paraceratherium-Eat", "Paraceratherium-Startled")),
-    TERRORBIRD("terrorbird", "Terrorbird", 45, 9, 2.1, .9f, 2.0f, 4, 6, 8, true, "TerrorBird-Idle", "TerrorBird-Move-Fwd", "TerrorBird-Attack-Bite",
+    TERRORBIRD("terrorbird", "Terrorbird", 45, 9, 2.1, .9f, 2.0f, 1, 2, 5, true, "TerrorBird-Idle", "TerrorBird-Move-Fwd", "TerrorBird-Attack-Bite",
             new LandProfile(LandFamily.SMALL_CARNIVORE, false, 2, 2.1, .85, .58, "TerrorBird-Charge-Fwd", "TerrorBird-Eat", "TerrorBird-Startled")),
-    RAVAGER("ravager", "Ravager", 65, 11, 1.9, .9f, 1.8f, 4, 6, 5, true, "CaveWolf-Idle", "CaveWolf-Walk-Fwd", "CaveWolf-Attack-Bite",
+    RAVAGER("ravager", "Ravager", 65, 11, 1.9, .9f, 1.8f, 2, 3, 4, true, "CaveWolf-Idle", "CaveWolf-Walk-Fwd", "CaveWolf-Attack-Bite",
             new LandProfile(LandFamily.SMALL_CARNIVORE, false, 3, 1.9, .9, .62, "CaveWolf-Charge-Fwd", "CaveWolf-Eat", "CaveWolf-Howl")),
 
     // ----------------------------------------------------------------- flying
-    ARCHAEOPTERYX("archaeopteryx", "Archaeopteryx", 10, 2, 1.2, .4f, .5f, 3, 4, 8, false, "Archaeopteryx-Idle", "Archaeopteryx-Move-Fwd", "Archaeopteryx-Attack-Bite",
+    ARCHAEOPTERYX("archaeopteryx", "Archaeopteryx", 10, 2, 1.2, .4f, .5f, 2, 3, 8, false, "Archaeopteryx-Idle", "Archaeopteryx-Move-Fwd", "Archaeopteryx-Attack-Bite",
             new FlyerProfile(false, 24, 62, 0, 12, true, 1, "Archaeopteryx-Fly", "Archaeopteryx-Glide", "Archaeopteryx-StartPerch",
                     "Archaeopteryx-Fly-Startle", null, null, "Archaeopteryx-Attack-Bite", "Archaeopteryx-Perched")),
     QUETZAL("quetzal", "Quetzal", 130, 10, .9, 2.4f, 5.0f, 1, 1, 2, false, "Quetzalcoatlus-Ground-Idle", "Quetzalcoatlus-Ground-Platform-Move-Fwd", "Quetzalcoatlus-Fly-Attack-Bite",
@@ -106,9 +106,8 @@ public enum Species {
     public enum Realm { LAND, AMPHIBIOUS, WATER, AIR }
 
     /**
-     * Broad spawn habitat, generated as the biome tag {@code habitat/<id>}. Danger and level come from the
-     * area alone; a habitat only keeps cold species in the snow, crocodilians in wetlands and swimmers in
-     * the sea, while warm land species share every temperate biome and flyers every land biome.
+     * Broad community, used to group species on the showcase. Where a species lives is its range
+     * ({@code SpeciesRange}); danger and level come from the area alone.
      */
     public enum Habitat {
         TEMPERATE, WETLAND, COLD, SEA, SKY;

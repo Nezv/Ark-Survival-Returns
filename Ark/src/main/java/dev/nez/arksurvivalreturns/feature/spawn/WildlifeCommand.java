@@ -99,8 +99,22 @@ public final class WildlifeCommand {
             }
         int budgetRadius = Config.POPULATION_RADIUS.get();
         send(source, "wilds within " + radius + " (horizontal)=" + wildCount + " " + bySpecies);
-        send(source, "budget keeps " + NaturalPopulations.targetFor(level, player) + " within " + budgetRadius
+        var wildlife = new java.util.ArrayList<CreatureEntity>();
+        for (var entity : level.getAllEntities())
+            if (entity instanceof CreatureEntity creature && creature.isAlive() && creature.isNaturalWildlife()) wildlife.add(creature);
+        long groups = NaturalPopulations.groups(wildlife).stream().filter(group -> {
+            double dx = group.x() - player.getX(), dz = group.z() - player.getZ();
+            return dx * dx + dz * dz <= (double) budgetRadius * budgetRadius;
+        }).count();
+        send(source, "budget keeps " + NaturalPopulations.targetFor(level, player)
+                + (NaturalPopulations.ledger() ? " groups (" + groups + " now)" : " animals") + " within " + budgetRadius
                 + ", dimension cap " + NaturalPopulations.globalCap(level.players().size()));
+        var profile = SurfaceBiomes.profile(biome);
+        var residents = new java.util.ArrayList<String>();
+        for (var species : Species.values())
+            if (species.weight > 0 && SpeciesRange.lives(species, biome))
+                residents.add(species.id + (danger < species.minimumDanger() ? "(danger " + species.minimumDanger() + ")" : ""));
+        send(source, "range: " + profile.type().id() + (profile.snowy() ? " snowy" : "") + " holds " + residents);
         if (NaturalPopulations.ledger()) {
             var state = RegionalLedger.get(level).at(level, pos.getX(), pos.getZ());
             send(source, String.format(java.util.Locale.ROOT,
@@ -116,7 +130,7 @@ public final class WildlifeCommand {
         for (var species : Species.values()) {
             if (!NaturalPopulations.isRegionalLarge(species) || danger < species.minimumDanger()) continue;
             send(source, species.id + " minDanger=" + species.minimumDanger()
-                    + (biome.is(species.biomes) ? " habitat" : " outside its habitat")
+                    + (SpeciesRange.lives(species, biome) ? " in range" : " outside its range")
                     + " weight=" + species.weight + " " + probe(level, player, species, radius));
         }
         return 1;

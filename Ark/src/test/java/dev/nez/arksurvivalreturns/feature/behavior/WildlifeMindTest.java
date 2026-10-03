@@ -107,4 +107,42 @@ class WildlifeMindTest {
         for (int i = 0; i < 10; i++) assertNotEquals(BehaviorState.RETURN_HOME, intruder.step(close, 10));
         assertEquals(BehaviorState.DEFEND, intruder.state());
     }
+    @Test void timidAnimalWatchesADistantThreatAndBoltsOnlyFromAPressingOne() {
+        var mind = new WildlifeMind(false, true, false);
+        var distant = new WildlifeMind.Observation(1, true, false, false, false, false, false, false, false, false, 1, false);
+        for (int i = 0; i < 40; i++) assertNotEquals(BehaviorState.FLEE, mind.step(distant, 10), "Fled from a threat that keeps its distance");
+        assertEquals(BehaviorState.ALERT, mind.state());
+        var pressing = new WildlifeMind.Observation(1, true, false, false, false, false, false, false, false, false, 1, true);
+        assertEquals(BehaviorState.FLEE, mind.step(pressing, 10));
+        // Once running it keeps running while it remembers why, even if the threat has fallen back.
+        assertEquals(BehaviorState.FLEE, mind.step(distant, 10));
+    }
+    @Test void aFlightEndsInAWatchfulPauseInsteadOfAWalkBackToTheThreat() {
+        var mind = new WildlifeMind(false, true, false);
+        var threat = new WildlifeMind.Observation(1, true, false, false, false, false, false, false, false, false, 1, true);
+        for (int i = 0; i < 4; i++) mind.step(threat, 10);
+        assertEquals(BehaviorState.FLEE, mind.state());
+        var quiet = sight(false, false, false, 1);
+        int watching = 0, changes = 0;
+        var last = mind.state();
+        for (int i = 0; i < 40; i++) {
+            var state = mind.step(quiet, 10);
+            assertNotEquals(BehaviorState.INVESTIGATE, state, "A timid animal walked toward what scared it");
+            if (state == BehaviorState.ALERT) watching += 10;
+            if (state != last) { changes++; last = state; }
+        }
+        assertTrue(watching >= WildlifeMind.WARY_TICKS, "The animal resumed its routine after " + watching + " ticks of watching");
+        assertEquals(BehaviorState.ROAM, mind.state());
+        assertEquals(2, changes, "Flee, watch, roam: no flicker between states");
+    }
+    @Test void anInvestigationLastsLongEnoughToBeOne() {
+        var mind = new WildlifeMind(true, false, false);
+        var sound = new WildlifeMind.Observation(0.65, false, false, false, false, false, false, false, false, false, 1);
+        mind.step(sound, 10); mind.step(sound, 10);
+        assertEquals(BehaviorState.INVESTIGATE, mind.state());
+        var quiet = sight(false, false, false, 1);
+        int ticks = 0;
+        while (mind.step(quiet, 10) == BehaviorState.INVESTIGATE && ticks < 400) ticks += 10;
+        assertTrue(ticks + 20 >= WildlifeMind.INVESTIGATE_TICKS, "Investigated for " + (ticks + 20) + " ticks");
+    }
 }

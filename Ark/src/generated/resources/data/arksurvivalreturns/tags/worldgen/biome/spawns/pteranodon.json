@@ -1,6 +1,15 @@
 {
   "replace": false,
   "values": [
-    "#arksurvivalreturns:habitat/sky"
+    "minecraft:beach",
+    "minecraft:river",
+    {
+      "id": "terralith:gravel_beach",
+      "required": false
+    },
+    {
+      "id": "terralith:warm_river",
+      "required": false
+    }
   ]
 }

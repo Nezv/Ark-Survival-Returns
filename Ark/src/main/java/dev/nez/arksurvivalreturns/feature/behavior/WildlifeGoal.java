@@ -384,10 +384,16 @@ public final class WildlifeGoal extends WildlifeController {
                 : mob.distanceTo(sensed) < Math.max(6, mob.getBbWidth() + 3));
         if (visible && mob.species().herd() && sensed instanceof CreatureEntity c && c.species().predator
                 && mob.distanceTo(sensed) < mob.getBbWidth() + 10) intruding = true;
+        // Inside the flight distance, hunting, or coming for this animal: a threat that must be answered.
+        // Beyond it the same threat is only watched.
+        double gap = sensed == null ? Double.MAX_VALUE : WildlifeSenses.bodyDistance(mob, sensed);
+        boolean pressing = attacked || herdThreat != null || alarmTicks > 0 || sensed != null && (gap < flightDistance(sensed)
+                || sensed instanceof net.minecraft.world.entity.Mob hunter && hunter.getTarget() == mob
+                || sensed instanceof CreatureEntity c && c.behavior().combat() && gap < flightDistance(sensed) * 2);
         boolean guardedPrey = visible && sensed instanceof CreatureEntity prey && prey.species().defensiveHerd()
                 && world.getEntitiesOfClass(CreatureEntity.class, prey.getBoundingBox().inflate(32),
                     c -> c.isAlive() && c.packId().equals(prey.packId()) && c.getHealth() >= c.getMaxHealth() * 0.5).size() >= 2;
-        boolean intimidating = visible && sensed instanceof CreatureEntity c && c.species().predator
+        boolean intimidating = visible && pressing && sensed instanceof CreatureEntity c && c.species().predator
                 && c.getBbWidth() > mob.getBbWidth() * 1.4;
         if (mob.species().herd() && sensed instanceof CreatureEntity) intimidating = false;
         if (visible && dev.nez.arksurvivalreturns.feature.accessory.AccessoryEffects.tyrant(mob, sensed)) intimidating = true;
@@ -419,7 +425,7 @@ public final class WildlifeGoal extends WildlifeController {
         boolean danger = attacked || herdThreat != null || alarmTicks > 0
                 || cycle && night && !mob.species().predator && intruding
                 || visible && sensed instanceof net.minecraft.world.entity.Mob enemy && enemy.getTarget() == mob
-                || visible && sensed instanceof CreatureEntity c && c.species().predator && c.getBbWidth() * 1.3 >= mob.getBbWidth();
+                || visible && pressing && sensed instanceof CreatureEntity c && c.species().predator && c.getBbWidth() * 1.3 >= mob.getBbWidth();
         boolean defended = cycle && night && mob.species().defensiveHerd() && danger
                 && 1 + packWithin(32).stream().filter(c -> c.getHealth() >= c.getMaxHealth() * 0.5).count() >= 2;
         boolean safeSleep = mob.onGround() && !mob.isInWater() && !mob.isInLava() && !mob.isOnFire()
@@ -441,11 +447,12 @@ public final class WildlifeGoal extends WildlifeController {
                 Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : new WildlifeMind.Routine(false, false, false,
                         sheltered, false, false, false, 0, 1);
         var observation = new WildlifeMind.Observation(signal, visible, huntable, intruding, attacked,
-                intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth());
+                intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth(), pressing);
         var state = brain.step(observation, 10, routine, null);
         if (t != null) t.step(before, state, brain, observation, routine, guardedPrey, interrupted);
         interrupted = false;
-        if (!brain.remembers()) { lastKnown = null; focus = null; }
+        // The point is kept while the animal still watches it or walks to it.
+        if (!brain.remembers() && !brain.wary() && state != BehaviorState.INVESTIGATE) { lastKnown = null; focus = null; }
         mob.setBehavior(state);
         if (state != before) {
             mob.getNavigation().stop(); destination = null; approach = null; nextRoutine = 0; failedPaths = 0; lastPathFailure = null;
@@ -567,11 +574,29 @@ public final class WildlifeGoal extends WildlifeController {
         return !mob.species().predator || candidate instanceof CreatureEntity c && c.species().predator;
     }
     private boolean relevant(LivingEntity other) {
-        if (other instanceof Player) return true;
+        // A hunter sizes up a player from as far as it sees; a grazer minds one only inside its watching distance.
+        if (other instanceof Player) return mob.species().predator || WildlifeSenses.bodyDistance(mob, other) < flightDistance(other) * 2;
         if (other instanceof CreatureEntity c && c.packId().equals(mob.packId())) return false;
-        return prey(other) || (other instanceof CreatureEntity c && c.species().predator
+        return prey(other) || (other instanceof CreatureEntity c && c.species().predator && noticeable(c)
                 && (mob.species().herd() || c.getBbWidth() > mob.getBbWidth() * 1.4
                     || WildlifeSenses.night(mob) && !mob.species().predator && (c.getBbWidth() * 1.3 >= mob.getBbWidth() || c.getTarget() == mob)));
+    }
+    /**
+     * How near a threat may come before this animal must act: farther for a big threat and for a timid animal.
+     * Half again as far it is watched; beyond that it is part of the landscape.
+     */
+    private double flightDistance(LivingEntity threat) {
+        return Math.clamp(8 + threat.getBbWidth() * 3 + (mob.species().timid() ? 6 : 0), 12, 40);
+    }
+    /**
+     * Prey graze in sight of a resting hunter. One that sleeps is noticed only at its side, one that roams only
+     * inside the watching distance, and one that hunts from much farther.
+     */
+    private boolean noticeable(CreatureEntity hunter) {
+        if (hunter.getTarget() == mob) return true;
+        double gap = WildlifeSenses.bodyDistance(mob, hunter);
+        if (hunter.behavior().sleeping()) return gap < 4 + mob.getBbWidth();
+        return gap < flightDistance(hunter) * (hunter.behavior().combat() ? 2.5 : 1.5);
     }
     private boolean prey(LivingEntity other) {
         if (other == null || !mob.species().predator) return false;

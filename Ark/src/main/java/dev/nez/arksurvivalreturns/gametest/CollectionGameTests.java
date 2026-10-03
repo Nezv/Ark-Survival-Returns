@@ -66,8 +66,8 @@ final class CollectionGameTests {
                 case LAND -> h.assertFalse(species.swimmer(), "Land species has no water clip set: " + species);
             }
             if (species.landHabitat()) {
-                h.assertTrue(species.minGroup == species.family().minGroup && species.maxGroup == species.family().maxGroup,
-                        "Group profile mismatch: " + species);
+                h.assertTrue(species.minGroup >= species.family().minGroup && species.maxGroup <= species.family().maxGroup,
+                        "Group outside its family's limits: " + species);
                 // Rex and Triceratops ship their own sleeping clips; every other land species has the
                 // authored standing pose, so a sleep state always has a real clip to play.
                 h.assertTrue(species.sleepClip().equals("Ark-Sleep")
@@ -114,7 +114,7 @@ final class CollectionGameTests {
         h.assertTrue(Species.DEINOSUCHUS.solitary() && Species.KAPROSUCHUS.solitary() && Species.TITANOBOA.solitary(),
                 "Swamp solo rule changed");
         h.assertTrue(Species.UNICORN.solitary() && Species.MEGAPITHECUS.solitary(), "Rare solo rule changed");
-        h.assertTrue(Species.DIREWOLF.family() == LandFamily.COLD_PREDATOR && Species.DIREWOLF.minGroup == 4,
+        h.assertTrue(Species.DIREWOLF.family() == LandFamily.COLD_PREDATOR && Species.DIREWOLF.minGroup == 3,
                 "Cold pack profile changed");
         h.assertTrue(Species.SABERTOOTH.family() == LandFamily.COLD_STALKER && Species.SABERTOOTH.maxGroup == 2,
                 "Cold stalking pair profile changed");

@@ -55,6 +55,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("progression", () -> ArkGameTests::progression);
         FUNCTIONS.register("land_ecology", () -> LandGameTests::ecology);
         FUNCTIONS.register("land_movement", () -> LandGameTests::movement);
+        FUNCTIONS.register("land_vigilance", () -> LandGameTests::vigilance);
         FUNCTIONS.register("population", () -> ArkGameTests::population);
         FUNCTIONS.register("behavior", () -> ArkGameTests::behavior);
         FUNCTIONS.register("wildlife_packet_hearing", () -> WildlifeRegressionGameTests::packets);
@@ -123,6 +124,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("spawn_apex", () -> SpawnerGameTests::apex);
         FUNCTIONS.register("spawn_ledger_density", () -> SpawnerGameTests::ledgerDensity);
         FUNCTIONS.register("spawn_ledger_feedback", () -> SpawnerGameTests::ledgerFeedback);
+        FUNCTIONS.register("spawn_ranges", () -> SpawnerGameTests::ranges);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
         FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);
@@ -222,18 +224,23 @@ public final class ArkGameTests {
         h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, pos, world.getRandom()), "Valid plains spawn rejected");
         h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(pos), 1), "Rex allowed in danger 1");
         h.assertTrue(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(pos), 5), "Legacy plains tag blocked high-danger Rex");
-        // Habitats instead of biome difficulty: warm species share the temperate land, while the snow,
-        // the wetlands and the sea keep their own communities.
+        // Ranges instead of one shared habitat: each species lives where its kind of animal would, the snow,
+        // the banks and the sea keep their own communities, and danger still comes from the area alone.
         var biomes = world.registryAccess().lookupOrThrow(Registries.BIOME);
-        h.assertTrue(biomes.getOrThrow(Biomes.PLAINS).is(Species.TYRANNOSAURUS.biomes), "Rex habitat excludes plains");
-        h.assertTrue(biomes.getOrThrow(Biomes.DESERT).is(Species.PARASAUR.biomes), "Parasaur habitat excludes deserts");
-        h.assertFalse(biomes.getOrThrow(Biomes.SNOWY_PLAINS).is(Species.PARASAUR.biomes), "Parasaur entered the snow");
-        h.assertTrue(biomes.getOrThrow(Biomes.SNOWY_PLAINS).is(Species.MAMMOTH.biomes), "Mammoth habitat excludes snowy plains");
-        h.assertFalse(biomes.getOrThrow(Biomes.PLAINS).is(Species.MAMMOTH.biomes), "Mammoth left the snow");
-        h.assertTrue(biomes.getOrThrow(Biomes.SWAMP).is(Species.SARCO.biomes), "Sarco habitat excludes swamps");
-        h.assertFalse(biomes.getOrThrow(Biomes.DESERT).is(Species.SARCO.biomes), "Sarco left the wetlands");
-        h.assertTrue(biomes.getOrThrow(Biomes.OCEAN).is(Species.MEGALODON.biomes), "Megalodon habitat excludes the ocean");
-        h.assertTrue(biomes.getOrThrow(Biomes.GROVE).is(Species.ARGENTAVIS.biomes), "Flyers must reach snowy land too");
+        java.util.function.BiPredicate<net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>, Species> lives =
+                (biome, species) -> dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(species, biomes.getOrThrow(biome));
+        h.assertTrue(lives.test(Biomes.PLAINS, Species.TRICERATOPS) && lives.test(Biomes.PLAINS, Species.TYRANNOSAURUS), "Plains lost their grazers or the Rex");
+        h.assertFalse(lives.test(Biomes.PLAINS, Species.VELOCIRAPTOR) || lives.test(Biomes.FOREST, Species.VELOCIRAPTOR), "Raptors left the dry scrub");
+        h.assertTrue(lives.test(Biomes.DESERT, Species.VELOCIRAPTOR) && lives.test(Biomes.DESERT, Species.LYSTROSAURUS), "The desert lost its runners");
+        h.assertFalse(lives.test(Biomes.PLAINS, Species.PTERANODON) || lives.test(Biomes.FOREST, Species.PTERANODON), "Pteranodons fly inland");
+        h.assertTrue(lives.test(Biomes.BEACH, Species.PTERANODON), "Pteranodons left the shore");
+        h.assertFalse(lives.test(Biomes.SNOWY_PLAINS, Species.PARASAUR) || lives.test(Biomes.SNOWY_PLAINS, Species.TRICERATOPS), "A warm grazer entered the snow");
+        h.assertTrue(lives.test(Biomes.SNOWY_PLAINS, Species.MAMMOTH), "Mammoth range excludes snowy plains");
+        h.assertFalse(lives.test(Biomes.PLAINS, Species.MAMMOTH), "Mammoth left the snow");
+        h.assertTrue(lives.test(Biomes.SWAMP, Species.SARCO), "Sarco range excludes swamps");
+        h.assertFalse(lives.test(Biomes.DESERT, Species.SARCO), "Sarco left the banks");
+        h.assertTrue(lives.test(Biomes.OCEAN, Species.MEGALODON) && lives.test(Biomes.FROZEN_OCEAN, Species.MEGALODON), "Megalodon range excludes an ocean");
+        h.assertFalse(lives.test(Biomes.MUSHROOM_FIELDS, Species.PARASAUR) || lives.test(Biomes.LUSH_CAVES, Species.PARASAUR), "Wildlife entered a refuge or a cave");
         h.setBlock(8, 2, 8, Blocks.WATER);
         h.assertFalse(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, pos, world.getRandom()), "Underwater spawn accepted");
         h.setBlock(8, 2, 8, Blocks.AIR);

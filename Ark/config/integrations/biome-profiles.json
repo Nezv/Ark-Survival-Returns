@@ -1,0 +1,2607 @@
+{
+  "about": "Written by the spawn_ranges GameTest (run/diagnostics/biome-profiles.json); copy to config/integrations and run runData.",
+  "biomes": {
+    "minecraft:badlands": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "minecraft:bamboo_jungle": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:basalt_deltas": {
+      "type": "unknown",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:beach": {
+      "type": "coast",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "pteranodon",
+        "spinosaurus",
+        "parasaur",
+        "lystrosaurus",
+        "sarco",
+        "deinosuchus"
+      ]
+    },
+    "minecraft:birch_forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:cherry_grove": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:cold_ocean": {
+      "type": "ocean",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:crimson_forest": {
+      "type": "unknown",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:dark_forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:deep_cold_ocean": {
+      "type": "ocean",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:deep_dark": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:deep_frozen_ocean": {
+      "type": "ocean",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:deep_lukewarm_ocean": {
+      "type": "ocean",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:deep_ocean": {
+      "type": "ocean",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:desert": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "minecraft:dripstone_caves": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:end_barrens": {
+      "type": "unknown",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:end_highlands": {
+      "type": "unknown",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:end_midlands": {
+      "type": "unknown",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:eroded_badlands": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "minecraft:flower_forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:frozen_ocean": {
+      "type": "ocean",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:frozen_peaks": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "minecraft:frozen_river": {
+      "type": "river",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus"
+      ]
+    },
+    "minecraft:grove": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "direwolf"
+      ]
+    },
+    "minecraft:ice_spikes": {
+      "type": "tundra",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "mammoth",
+        "direwolf",
+        "sabertooth"
+      ]
+    },
+    "minecraft:jagged_peaks": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "minecraft:jungle": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:lukewarm_ocean": {
+      "type": "ocean",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:lush_caves": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:mangrove_swamp": {
+      "type": "wetland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "kaprosuchus",
+        "sarco",
+        "deinosuchus",
+        "titanoboa"
+      ]
+    },
+    "minecraft:meadow": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:mushroom_fields": {
+      "type": "mushroom",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:nether_wastes": {
+      "type": "unknown",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:ocean": {
+      "type": "ocean",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:old_growth_birch_forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:old_growth_pine_taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:old_growth_spruce_taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:pale_garden": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:plains": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:river": {
+      "type": "river",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "pteranodon",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "kaprosuchus",
+        "sarco",
+        "deinosuchus"
+      ]
+    },
+    "minecraft:savanna": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:savanna_plateau": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:small_end_islands": {
+      "type": "unknown",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:snowy_beach": {
+      "type": "coast",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "mammoth"
+      ]
+    },
+    "minecraft:snowy_plains": {
+      "type": "tundra",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "mammoth",
+        "direwolf",
+        "sabertooth"
+      ]
+    },
+    "minecraft:snowy_slopes": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "minecraft:snowy_taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "minecraft:soul_sand_valley": {
+      "type": "unknown",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:sparse_jungle": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:stony_peaks": {
+      "type": "mountain",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "minecraft:stony_shore": {
+      "type": "coast",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "parasaur",
+        "lystrosaurus"
+      ]
+    },
+    "minecraft:sunflower_plains": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:swamp": {
+      "type": "wetland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "kaprosuchus",
+        "sarco",
+        "deinosuchus",
+        "titanoboa"
+      ]
+    },
+    "minecraft:taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:the_end": {
+      "type": "unknown",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:the_void": {
+      "type": "unknown",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:warm_ocean": {
+      "type": "ocean",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "minecraft:warped_forest": {
+      "type": "unknown",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "minecraft:windswept_forest": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "megalocerus",
+        "unicorn",
+        "direwolf",
+        "archaeopteryx"
+      ]
+    },
+    "minecraft:windswept_gravelly_hills": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "minecraft:windswept_hills": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "minecraft:windswept_savanna": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "minecraft:wooded_badlands": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:alpha_islands": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:alpha_islands_winter": {
+      "type": "tundra",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "mammoth",
+        "direwolf",
+        "sabertooth"
+      ]
+    },
+    "terralith:alpine_grove": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:alpine_highlands": {
+      "type": "grassland",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "megalocerus",
+        "unicorn",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:amethyst_canyon": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:amethyst_rainforest": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:ancient_sands": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:arid_highlands": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:ashen_savanna": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:basalt_cliffs": {
+      "type": "mountain",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:birch_taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:blooming_plateau": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:blooming_valley": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:brushland": {
+      "type": "grassland",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:bryce_canyon": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:caldera": {
+      "type": "mountain",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:cave/andesite_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/deep_caves": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/diorite_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/frostfire_caves": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/fungal_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/granite_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/infested_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/mantle_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/thermal_caves": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/tuff_caves": {
+      "type": "cave",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cave/underground_jungle": {
+      "type": "cave",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:cloud_forest": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "megalocerus",
+        "unicorn",
+        "direwolf",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:cold_shrubland": {
+      "type": "shrubland",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf"
+      ]
+    },
+    "terralith:deep_warm_ocean": {
+      "type": "ocean",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "cnidaria",
+        "plesiosaur",
+        "megalodon",
+        "liopleurodon",
+        "mosasaurus",
+        "tusoteuthis"
+      ]
+    },
+    "terralith:desert_canyon": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:desert_oasis": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:desert_spires": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:emerald_peaks": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:forested_highlands": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:fractured_savanna": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:frozen_cliffs": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:glacial_chasm": {
+      "type": "tundra",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "mammoth",
+        "direwolf",
+        "sabertooth"
+      ]
+    },
+    "terralith:granite_cliffs": {
+      "type": "mountain",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:gravel_beach": {
+      "type": "coast",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "pteranodon",
+        "spinosaurus",
+        "parasaur",
+        "lystrosaurus",
+        "sarco",
+        "deinosuchus"
+      ]
+    },
+    "terralith:gravel_desert": {
+      "type": "tundra",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "mammoth",
+        "direwolf",
+        "sabertooth"
+      ]
+    },
+    "terralith:haze_mountain": {
+      "type": "mountain",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:highlands": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:hot_shrubland": {
+      "type": "shrubland",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "giganotosaurus",
+        "titanosaur",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "pegomastax",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird"
+      ]
+    },
+    "terralith:ice_marsh": {
+      "type": "wetland",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "scattered",
+      "species": [
+        "megalocerus",
+        "mammoth"
+      ]
+    },
+    "terralith:jungle_mountains": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:lavender_forest": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:lavender_valley": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:lush_desert": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:lush_valley": {
+      "type": "grassland",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "megalocerus",
+        "unicorn",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:mirage_isles": {
+      "type": "mushroom",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:moonlight_grove": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "megalocerus",
+        "unicorn",
+        "direwolf",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:moonlight_valley": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "megalocerus",
+        "unicorn",
+        "direwolf",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:orchid_swamp": {
+      "type": "wetland",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "kaprosuchus",
+        "sarco",
+        "deinosuchus",
+        "titanoboa"
+      ]
+    },
+    "terralith:painted_mountains": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:red_oasis": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:rocky_jungle": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:rocky_mountains": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:rocky_shrubland": {
+      "type": "shrubland",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf"
+      ]
+    },
+    "terralith:sakura_grove": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:sakura_valley": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:sandstone_valley": {
+      "type": "desert",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "quetzal"
+      ]
+    },
+    "terralith:savanna_badlands": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:savanna_slopes": {
+      "type": "savanna",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "scattered",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:scarlet_mountains": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:shield": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "tyrannosaurus",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:shield_clearing": {
+      "type": "grassland",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "megalocerus",
+        "unicorn",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:shrubland": {
+      "type": "shrubland",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "triceratops",
+        "giganotosaurus",
+        "titanosaur",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "pegomastax",
+        "lystrosaurus",
+        "paraceratherium",
+        "terrorbird"
+      ]
+    },
+    "terralith:siberian_grove": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:siberian_taiga": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:skylands_autumn": {
+      "type": "sky_island",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:skylands_spring": {
+      "type": "sky_island",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:skylands_summer": {
+      "type": "sky_island",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:skylands_winter": {
+      "type": "sky_island",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": []
+    },
+    "terralith:snowy_badlands": {
+      "type": "badlands",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "open",
+      "species": [
+        "megalocerus",
+        "direwolf"
+      ]
+    },
+    "terralith:snowy_cherry_grove": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "unicorn",
+        "direwolf"
+      ]
+    },
+    "terralith:snowy_maple_forest": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "dry",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:snowy_shield": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:steppe": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:stony_spires": {
+      "type": "mountain",
+      "climate": "temperate",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:temperate_highlands": {
+      "type": "forest",
+      "climate": "temperate",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:tropical_jungle": {
+      "type": "jungle",
+      "climate": "hot",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "therizinosaurus",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "pegomastax",
+        "kaprosuchus",
+        "titanoboa",
+        "archaeopteryx"
+      ]
+    },
+    "terralith:valley_clearing": {
+      "type": "grassland",
+      "climate": "temperate",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "triceratops",
+        "brontosaurus",
+        "tyrannosaurus",
+        "giganotosaurus",
+        "titanosaur",
+        "parasaur",
+        "ankylosaurus",
+        "carnotaurus",
+        "paraceratherium",
+        "terrorbird",
+        "quetzal"
+      ]
+    },
+    "terralith:volcanic_crater": {
+      "type": "volcanic",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:volcanic_peaks": {
+      "type": "volcanic",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:warm_river": {
+      "type": "river",
+      "climate": "hot",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "pteranodon",
+        "spinosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "kaprosuchus",
+        "sarco",
+        "deinosuchus"
+      ]
+    },
+    "terralith:warped_mesa": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:white_cliffs": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:white_mesa": {
+      "type": "badlands",
+      "climate": "hot",
+      "moisture": "dry",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "velociraptor",
+        "argentavis",
+        "giganotosaurus",
+        "allosaurus",
+        "ankylosaurus",
+        "carnotaurus",
+        "lystrosaurus",
+        "ravager",
+        "dragon"
+      ]
+    },
+    "terralith:windswept_spires": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:wintry_forest": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:wintry_lowlands": {
+      "type": "taiga",
+      "climate": "cold",
+      "moisture": "moderate",
+      "mountainous": false,
+      "snowy": true,
+      "trees": "wooded",
+      "species": [
+        "megalocerus",
+        "mammoth",
+        "direwolf",
+        "sabertooth",
+        "megapithecus"
+      ]
+    },
+    "terralith:yellowstone": {
+      "type": "geothermal",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "lystrosaurus",
+        "ravager"
+      ]
+    },
+    "terralith:yosemite_cliffs": {
+      "type": "mountain",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": true,
+      "snowy": false,
+      "trees": "open",
+      "species": [
+        "argentavis",
+        "ankylosaurus",
+        "pegomastax",
+        "megalocerus",
+        "direwolf",
+        "ravager",
+        "quetzal",
+        "dragon"
+      ]
+    },
+    "terralith:yosemite_lowlands": {
+      "type": "forest",
+      "climate": "cold",
+      "moisture": "wet",
+      "mountainous": false,
+      "snowy": false,
+      "trees": "wooded",
+      "species": [
+        "triceratops",
+        "therizinosaurus",
+        "brontosaurus",
+        "tyrannosaurus",
+        "parasaur",
+        "ceratosaurus",
+        "dilophosaur",
+        "acrocanthosaurus",
+        "allosaurus",
+        "pegomastax",
+        "megalocerus",
+        "unicorn",
+        "direwolf",
+        "archaeopteryx"
+      ]
+    }
+  }
+}

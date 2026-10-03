@@ -29,8 +29,9 @@ final class LandGameTests {
         int chunks = world.getChunkSource().getLoadedChunksCount();
         try {
             world.getDataStorage().set(ProgressionData.TYPE, new ProgressionData(origin.getX() - 512, origin.getZ(), 256, true));
-            h.assertTrue(SpawnRules.canSpawn(ModContent.CREATURES.get(Species.VELOCIRAPTOR).get(), world,
-                    EntitySpawnReason.NATURAL, origin, RandomSource.create(2)), "Valid forest raptor spawn rejected");
+            // A grazer: a hunter's placement also depends on the hour (it needs canopy while its kind sleeps).
+            h.assertTrue(SpawnRules.canSpawn(ModContent.CREATURES.get(Species.PARASAUR).get(), world,
+                    EntitySpawnReason.NATURAL, origin, RandomSource.create(2)), "Valid bank spawn rejected");
             h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(origin), 1), "Apex allowed at danger 1");
             // Snow browsing is a cold-adapted abstraction, never a warm-species one.
             h.setBlock(64, 1, 64, Blocks.SNOW_BLOCK);
@@ -44,6 +45,69 @@ final class LandGameTests {
             h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks, "Land ecology forced chunk loads");
         } finally {
             world.getDataStorage().set(ProgressionData.TYPE, oldProgression);
+        }
+        h.succeed();
+    }
+    /**
+     * A timid grazer beside a hunter: it ignores one that sleeps or keeps far off, watches one that roams
+     * nearer, and bolts only from one inside its flight distance. A real session had grazers fleeing, walking
+     * back and fleeing again every three seconds beside a sleeping pack.
+     */
+    static void vigilance(GameTestHelper h) {
+        terrain(h);
+        var world = h.getLevel();
+        var clock = world.dimensionType().defaultClock().orElseThrow();
+        long originalTime = world.getDefaultClockTime();
+        world.clockManager().setTotalTicks(clock, 6000);
+        var hunter = ModContent.CREATURES.get(Species.DILOPHOSAUR).get().create(world, EntitySpawnReason.COMMAND);
+        hunter.setNoAi(true);
+        world.addFreshEntity(hunter);
+        var spawned = new ArrayList<Entity>(List.of(hunter));
+        // A fresh grazer per case, facing the hunter down the z axis, fed and rested so only the hunter moves it.
+        java.util.function.BiFunction<Integer, dev.nez.arksurvivalreturns.feature.behavior.BehaviorState, CreatureEntity> grazer = (gap, hunting) -> {
+            hunter.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(64, 2, 54 + gap))));
+            hunter.setBehavior(hunting);
+            var mob = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.COMMAND);
+            mob.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(64, 2, 54))));
+            mob.setYRot(0); mob.yBodyRot = 0; mob.yHeadRot = 0; mob.setOnGround(true);
+            mob.wildlife().mind().restoreNeeds(.05, .05, .05);
+            world.addFreshEntity(mob);
+            spawned.add(mob);
+            return mob;
+        };
+        var roam = dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.ROAM;
+        var flee = dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.FLEE;
+        try {
+            var beside = grazer.apply(12, dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.SLEEP);
+            for (int i = 0; i < 20; i++) {
+                beside.wildlife().think();
+                h.assertFalse(beside.behavior().alarm(), "A grazer was alarmed by a sleeping hunter 12 blocks off: " + beside.behavior());
+            }
+            beside.discard();
+            var far = grazer.apply(32, roam);
+            for (int i = 0; i < 20; i++) {
+                far.wildlife().think();
+                h.assertFalse(far.behavior().alarm(), "A grazer was alarmed by a hunter 32 blocks off: " + far.behavior());
+            }
+            far.discard();
+            var watching = grazer.apply(22, roam);
+            int changes = 0;
+            var last = watching.behavior();
+            for (int i = 0; i < 40; i++) {
+                watching.wildlife().think();
+                h.assertTrue(watching.behavior() != flee, "A grazer fled from a hunter that kept its distance");
+                if (watching.behavior() != last) { changes++; last = watching.behavior(); }
+            }
+            h.assertTrue(watching.behavior() == dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.ALERT,
+                    "A grazer did not watch a hunter roaming 22 blocks off: " + watching.behavior());
+            h.assertTrue(changes <= 2, "The watching grazer changed state " + changes + " times in 20 seconds");
+            watching.discard();
+            var pressed = grazer.apply(10, roam);
+            for (int i = 0; i < 6; i++) pressed.wildlife().think();
+            h.assertTrue(pressed.behavior() == flee, "A grazer did not bolt from a hunter 10 blocks off: " + pressed.behavior());
+        } finally {
+            world.clockManager().setTotalTicks(clock, originalTime);
+            spawned.forEach(Entity::discard);
         }
         h.succeed();
     }

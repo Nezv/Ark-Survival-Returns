@@ -1,17 +1,33 @@
 package dev.nez.arksurvivalreturns.feature.spawn;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 /** Server adapter: on-demand surveys only, no ticking, chunk tickets or saved population changes. */
+@EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class SurfaceBiomes {
-    public static BiomeProfile profile(Holder<Biome> biome) {
+    /** One profile per biome until its tags change: spawning and shelter checks ask for it constantly. */
+    private static final Map<Holder<Biome>, BiomeProfile> PROFILES = new ConcurrentHashMap<>();
+
+    public static BiomeProfile profile(Holder<Biome> biome) { return PROFILES.computeIfAbsent(biome, SurfaceBiomes::classify); }
+
+    @SubscribeEvent public static void reloaded(TagsUpdatedEvent event) { PROFILES.clear(); }
+    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { PROFILES.clear(); }
+
+    private static BiomeProfile classify(Holder<Biome> biome) {
         String id = biome.unwrapKey().map(key -> key.identifier().toString()).orElse("unregistered");
         return BiomeProfile.classify(id, biome.tags().map(tag -> tag.location().toString()).collect(Collectors.toSet()),
                 biome.value().getBaseTemperature(), biome.value().getModifiedClimateSettings().downfall());

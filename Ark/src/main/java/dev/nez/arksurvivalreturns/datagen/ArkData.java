@@ -22,7 +22,7 @@ public final class ArkData implements DataProvider {
     @Override public String getName() { return "Ark wildlife, berries and biome progression"; }
     @Override public CompletableFuture<?> run(CachedOutput cache) {
         files.clear();
-        terralith = loadTerralith();
+        profiles = loadProfiles();
         tags(); models(); berries(); taming(); journal(); camp(); cargo(); farm(); medicine(); kitchen(); downed(); flying(); spawns(); theme(); tests();
         PrimitiveData.generate(this::put);
         BronzeData.generate(this::put);
@@ -40,65 +40,50 @@ public final class ArkData implements DataProvider {
     }
     private void put(String path, Object value) { files.put(path + ".json", new Gson().toJsonTree(value)); }
     private void json(String path, String value) { files.put(path + ".json", JsonParser.parseString(value)); }
-    /** Terralith biome -> closest vanilla analog (config/integrations/terralith-biomes.json, tools/build_biome_compat.py). */
-    private Map<String, String> terralith = Map.of();
+    /**
+     * The profile of every biome the pack ships, as the running game classifies it
+     * (config/integrations/biome-profiles.json, written by the spawn_ranges GameTest). Datagen has no biome
+     * tags to classify with, so the species range tags are generated from this copy and the test keeps the two
+     * in step.
+     */
+    private Map<String, dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile> profiles = Map.of();
 
-    private Map<String, String> loadTerralith() {
-        var path = output.getOutputFolder().getParent().getParent().getParent().resolve("config/integrations/terralith-biomes.json");
+    private Map<String, dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile> loadProfiles() {
+        var path = output.getOutputFolder().getParent().getParent().getParent().resolve("config/integrations/biome-profiles.json");
         try {
-            var root = JsonParser.parseString(java.nio.file.Files.readString(path)).getAsJsonObject().getAsJsonObject("terralith");
-            var out = new TreeMap<String, String>();
-            root.entrySet().forEach(e -> out.put(e.getKey(), e.getValue().getAsJsonObject().get("analog").getAsString()));
+            var root = JsonParser.parseString(java.nio.file.Files.readString(path)).getAsJsonObject().getAsJsonObject("biomes");
+            var out = new TreeMap<String, dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile>();
+            root.entrySet().forEach(e -> {
+                var o = e.getValue().getAsJsonObject();
+                out.put(e.getKey(), new dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile(e.getKey(),
+                        dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile.Type.valueOf(o.get("type").getAsString().toUpperCase(java.util.Locale.ROOT)),
+                        dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile.Climate.valueOf(o.get("climate").getAsString().toUpperCase(java.util.Locale.ROOT)),
+                        dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile.Moisture.valueOf(o.get("moisture").getAsString().toUpperCase(java.util.Locale.ROOT)),
+                        o.get("mountainous").getAsBoolean(), o.get("snowy").getAsBoolean(),
+                        dev.nez.arksurvivalreturns.feature.spawn.BiomeProfile.TreeCover.valueOf(o.get("trees").getAsString().toUpperCase(java.util.Locale.ROOT))));
+            });
             return out;
         } catch (java.io.IOException | RuntimeException missing) {
             return Map.of();
         }
     }
 
-    /**
-     * Biome tags list vanilla biomes, plus every Terralith biome whose analog is listed. Terralith entries
-     * are optional, so the tag still loads without Terralith installed.
-     */
-    private void biomeTag(String name, String... values) {
-        var entries = new ArrayList<Object>();
-        var vanilla = new HashSet<String>();
-        for (String value : values) {
-            String id = value.contains(":") ? value : "minecraft:" + value;
-            entries.add(id);
-            vanilla.add(id);
-        }
-        terralith.forEach((biome, analog) -> { if (vanilla.contains(analog)) entries.add(Map.of("id", biome, "required", false)); });
-        put("data/" + NS + "/tags/worldgen/biome/" + name, Map.of("replace", false, "values", entries));
-    }
     private void tag(String name, String... values) {
         put("data/" + NS + "/tags/" + name, Map.of("replace", false, "values",
                 Arrays.stream(values).map(v -> v.contains(":") ? v : "minecraft:" + v).toList()));
     }
-    /** Snow-covered land: the only home of the cold species, and closed to the warm ones. */
-    private static final String[] COLD_BIOMES = {"snowy_plains", "ice_spikes", "snowy_taiga", "snowy_beach", "grove",
-            "snowy_slopes", "frozen_peaks", "jagged_peaks", "frozen_river"};
-    /** Every other surface biome with natural ground; mushroom fields stay a wildlife-free refuge. */
-    private static final String[] TEMPERATE_BIOMES = {"plains", "sunflower_plains", "meadow", "cherry_grove", "forest",
-            "flower_forest", "birch_forest", "old_growth_birch_forest", "dark_forest", "taiga", "old_growth_pine_taiga",
-            "old_growth_spruce_taiga", "savanna", "savanna_plateau", "windswept_savanna", "windswept_hills",
-            "windswept_gravelly_hills", "windswept_forest", "stony_peaks", "jungle", "sparse_jungle", "bamboo_jungle",
-            "swamp", "mangrove_swamp", "river", "beach", "stony_shore", "desert", "badlands", "wooded_badlands",
-            "eroded_badlands"};
-
     private void tags() {
-        // Habitats replace the old per-species biome lists and the biome difficulty tiers: danger and levels
-        // come from the area alone, so a species appears wherever its habitat and the local danger allow.
-        biomeTag("habitat/" + Species.Habitat.TEMPERATE.id, TEMPERATE_BIOMES);
-        biomeTag("habitat/" + Species.Habitat.WETLAND.id, "swamp", "mangrove_swamp", "river", "jungle", "sparse_jungle", "bamboo_jungle");
-        biomeTag("habitat/" + Species.Habitat.COLD.id, COLD_BIOMES);
-        biomeTag("habitat/" + Species.Habitat.SEA.id, "warm_ocean", "lukewarm_ocean", "deep_lukewarm_ocean", "ocean", "deep_ocean",
-                "cold_ocean", "deep_cold_ocean", "frozen_ocean", "deep_frozen_ocean");
-        var land = new ArrayList<>(List.of(TEMPERATE_BIOMES));
-        land.addAll(List.of(COLD_BIOMES));
-        biomeTag("habitat/" + Species.Habitat.SKY.id, land.toArray(String[]::new));
-        // Each species keeps its own tag so a data pack can still narrow or widen one species.
-        for (var species : Species.values())
-            tag("worldgen/biome/spawns/" + species.id, "#" + NS + ":habitat/" + species.habitat().id);
+        // One range tag per species, from its range over the shipped biomes (SpeciesRange). The game itself
+        // asks the range, so a biome this list has not seen yet still gets its animals; the tag is the readable
+        // copy for the showcase and the place where a data pack adds a biome.
+        for (var species : Species.values()) {
+            var entries = new ArrayList<Object>();
+            profiles.forEach((id, profile) -> {
+                if (dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(species, profile))
+                    entries.add(id.startsWith("minecraft:") ? id : Map.of("id", id, "required", false));
+            });
+            put("data/" + NS + "/tags/worldgen/biome/spawns/" + species.id, Map.of("replace", false, "values", entries));
+        }
         tag("block/spawn_surfaces", "#minecraft:dirt", "#minecraft:sand", "#minecraft:terracotta",
                 "grass_block", "podzol", "mycelium",
                 "stone", "granite", "diorite", "andesite", "gravel", "snow", "snow_block", "ice", "packed_ice", "blue_ice",
@@ -984,36 +969,10 @@ public final class ArkData implements DataProvider {
     }
 
     /**
-     * Summed vanilla spawn-list weight a habitat adds to each of its biomes. A habitat spans dozens of
-     * biomes, so a species' list weight is its share of this budget: a biome's Ark entries weigh about
-     * what they did under the old per-species biome lists, and vanilla animals keep their share of
-     * chunk-generation spawns. The population budget still picks by the species' own weight.
+     * Ark creatures are in no vanilla spawn list: the population budget is the only thing that places them, so
+     * its spacing, ranges and group caps hold everywhere, chunk generation included.
      */
-    private static final Map<Species.Habitat, Integer> HABITAT_LIST_WEIGHT = Map.of(
-            Species.Habitat.TEMPERATE, 30, Species.Habitat.SKY, 8, Species.Habitat.WETLAND, 20,
-            Species.Habitat.COLD, 20, Species.Habitat.SEA, 18);
-
-    /** Oversized bodies break vanilla's single-chunk spawn clamp; the population budget spawns them. */
-    private static boolean vanillaListed(Species species) { return species.weight > 0 && species.chunkSpawnSafe(); }
-
-    private void spawns() {
-        var habitatWeight = new EnumMap<Species.Habitat, Integer>(Species.Habitat.class);
-        for (var species : Species.values())
-            if (vanillaListed(species)) habitatWeight.merge(species.habitat(), species.weight, Integer::sum);
-        for (var species : Species.values()) {
-            if (!vanillaListed(species)) continue;
-            int weight = Math.max(1, (int) Math.round(species.weight
-                    * (double) HABITAT_LIST_WEIGHT.get(species.habitat()) / habitatWeight.get(species.habitat())));
-            put("data/" + NS + "/neoforge/biome_modifier/spawn_" + species.id, Map.of(
-                    "type", "neoforge:add_spawns",
-                    "biomes", "#" + NS + ":spawns/" + species.id,
-                    "spawners", Map.of(
-                            "type", NS + ":" + species.id,
-                            "weight", weight,
-                            "minCount", species.minGroup,
-                            "maxCount", species.maxGroup)));
-        }
-    }
+    private void spawns() {}
     private void tests() {
         put("data/" + NS + "/test_environment/regression", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_environment/regression_navigation", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
@@ -1059,7 +1018,7 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/tech", spawningRules);
         put("data/" + NS + "/test_instance/population", Map.of("type", "minecraft:function", "function", NS + ":population",
                 "environment", NS + ":population", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
-        for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis", "land_ecology", "land_movement"))
+        for (String name : List.of("flying_ecology", "flying_pteranodon", "flying_argentavis", "land_ecology", "land_movement", "land_vigilance"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                 "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 500, "sky_access", true));
         // The collection tests own their own batch: they share the per-dimension terrain budgets with
@@ -1095,7 +1054,7 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_instance/spawn_apex", Map.of("type", "minecraft:function",
                 "function", NS + ":spawn_apex", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
-        for (String name : List.of("spawn_ledger_density", "spawn_ledger_feedback"))
+        for (String name : List.of("spawn_ledger_density", "spawn_ledger_feedback", "spawn_ranges"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));

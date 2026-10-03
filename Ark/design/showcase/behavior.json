@@ -280,14 +280,17 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
+              ],
+              "REGROUP": [
+                "separated from the herd after an alarm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -307,14 +310,11 @@
                 "something sensed, awareness still building"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
-              ],
-              "REGROUP": [
-                "separated from the herd after an alarm"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -331,21 +331,22 @@
             },
             "DRINK": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -371,7 +372,8 @@
             },
             "FLEE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -379,7 +381,7 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -390,21 +392,18 @@
             },
             "FORAGE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
-                "attacked: retaliate",
-                "night herd under threat: flee, or stand once defended or cornered"
-              ],
-              "DRINK": [
-                "thirsty with water at hand"
+                "attacked: retaliate"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -430,7 +429,8 @@
             },
             "INVESTIGATE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -440,7 +440,7 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
@@ -464,23 +464,22 @@
             },
             "REGROUP": {
               "ALERT": [
-                "something sensed, awareness still building"
-              ],
-              "DEFEND": [
-                "night herd under threat: flee, or stand once defended or cornered"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -496,24 +495,28 @@
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
+              ],
+              "THREATEN": [
+                "intruder or prey in sight: warn first"
               ]
             },
             "REST": {
               "ALERT": [
                 "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -533,7 +536,9 @@
             },
             "RETURN_HOME": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -543,14 +548,14 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -573,7 +578,8 @@
             },
             "ROAM": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -584,14 +590,14 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -614,7 +620,8 @@
             },
             "SEEK_WATER": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -625,14 +632,14 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -656,19 +663,20 @@
             "SLEEP": {
               "ALERT": [
                 "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "FORAGE": [
                 "hungry herbivore on grazing ground"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -696,11 +704,11 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware",
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1043,10 +1051,10 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1072,13 +1080,13 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1104,10 +1112,10 @@
                 "attacked: retaliate"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1142,10 +1150,10 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1175,7 +1183,7 @@
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1196,10 +1204,10 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1219,7 +1227,8 @@
             },
             "INVESTIGATE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate"
@@ -1231,7 +1240,7 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1258,10 +1267,10 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1281,7 +1290,8 @@
             },
             "RETURN_HOME": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate"
@@ -1293,13 +1303,13 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1332,13 +1342,13 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1371,13 +1381,13 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1410,13 +1420,13 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1446,10 +1456,10 @@
                 "thirsty with water at hand"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -1476,13 +1486,13 @@
                 "intruder stayed close through the warning"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3286,13 +3296,19 @@
                 "attacked: retaliate"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
+              ],
+              "ROAM": [
+                "nothing pressing"
+              ],
+              "SEARCH": [
+                "hungry carnivore at night"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -3306,13 +3322,13 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3335,10 +3351,10 @@
                 "attacked: retaliate"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3355,7 +3371,8 @@
             },
             "FLEE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -3365,7 +3382,7 @@
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3386,10 +3403,10 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3406,7 +3423,8 @@
             },
             "INVESTIGATE": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate"
@@ -3415,7 +3433,7 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3432,16 +3450,17 @@
             },
             "REST": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3458,7 +3477,9 @@
             },
             "RETURN_HOME": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate"
@@ -3467,13 +3488,13 @@
                 "a kill or a shared meal"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -3490,17 +3511,18 @@
             },
             "ROAM": {
               "ALERT": [
-                "something sensed, awareness still building"
+                "something sensed, awareness still building",
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
                 "intruder stayed close through the warning"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -3524,13 +3546,13 @@
                 "intruder stayed close through the warning"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
                 "fatigue while calm"
@@ -3554,13 +3576,13 @@
                 "intruder stayed close through the warning"
               ],
               "FLEE": [
-                "critical health, a bigger predator or a timid animal that is aware"
+                "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "HUNT": [
                 "hungry predator, prey in sight after the warning"
               ],
               "INVESTIGATE": [
-                "stimulus out of sight: investigate (timid animals flee)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"

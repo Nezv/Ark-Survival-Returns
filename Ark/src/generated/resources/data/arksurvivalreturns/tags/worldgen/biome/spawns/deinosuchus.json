@@ -1,6 +1,21 @@
 {
   "replace": false,
   "values": [
-    "#arksurvivalreturns:habitat/wetland"
+    "minecraft:beach",
+    "minecraft:mangrove_swamp",
+    "minecraft:river",
+    "minecraft:swamp",
+    {
+      "id": "terralith:gravel_beach",
+      "required": false
+    },
+    {
+      "id": "terralith:orchid_swamp",
+      "required": false
+    },
+    {
+      "id": "terralith:warm_river",
+      "required": false
+    }
   ]
 }

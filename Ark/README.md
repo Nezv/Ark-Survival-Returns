@@ -49,47 +49,63 @@ Wildlife survival is the game; Minecraft's fantasy and alternate-dimension conte
 
 ## Spawn rules
 
-Every **Overworld biome**, including modded biomes, can host land wildlife on suitable dry surface terrain. Flying colonies additionally require shoreline sand for Pteranodon or a nest floor at Y≥96 for Argentavis; Quetzal roosts at Y≥110, Archaeopteryx nests on forest ground and Dragon roosts on high peaks. Water species need a loaded pool of connected deep water, semi-aquatic species a bank next to exposed water, and cold species accept snow cover or ice over water as their drink source. Habitat tags are preferences: matching habitats receive three times the selection weight. Spawns require a supported footprint, collision-free space, the world border, and at least 24 blocks from players. Forest canopies are allowed; underground rooms and underwater locations are excluded for land species. There is no natural spawning in the Nether or End.
+Ark wildlife is placed by one population budget and is in no vanilla spawn list, so the same rules hold in freshly generated and in long-visited land. Every **5 seconds** it looks at each player and keeps about **7 wild groups within 128 blocks** (a herd, a pack, a pair or a lone animal; `spawning.wildGroupsPerPlayer`), about 16 animals, scaled between half and one and a half by the regional predator-prey ledger. Groups are placed in loaded chunks only, in the outer part of that circle or ahead of a travelling player, never closer than 32 blocks. Searches have a fixed attempt budget and never request chunks. The `minecraft:spawn_mobs` game rule and the mod's spawning toggle disable it.
 
-The population director checks every **5 seconds**, targeting **3 distinct wild groups within 96 blocks** of each active player. It adds at most **2 groups per dimension per check**, samples positions 32–80 blocks away in already loaded, entity-ticking chunks, and serves multiplayer players in rotation. Nearby players share wildlife counts. Searches have a fixed attempt budget and never request chunks. Insufficient land or a population cap can delay the target; later checks retry.
+Wildlife comes as encounters:
 
-Minecraft's animal spawn cycle no longer controls Ark encounter frequency. The `minecraft:spawn_mobs` game rule and the mod's spawning toggle still disable replenishment. Population limits apply to Ark creatures independently of the vanilla animal count.
+- A group is **1 to 5 animals** (see the table); predators are fewer than what they eat.
+- Groups are placed **40 blocks** apart, and a hunter never within **64 blocks** of another group, so nothing is born into a chase.
+- A species does not repeat within **96 blocks** of itself.
+- At most **30 percent of the groups** around a player are hunters, at most **two** are flyers and **one** is an apex animal. Where the danger rank allows a giant the budget tries for one, never for the whole list.
+- Spare groups are removed whole, at most two per check and only beyond 56 blocks from every player.
 
-| Species | Group | Base weight | Base HP | Base damage | Preferred habitats |
-|---|---:|---:|---:|---:|---|
-| Pteranodon | 3–4 | 18 | 24 | 3 | Beaches, rivers, plains, savanna |
-| Velociraptor | 4–6 | 14 | 32 | 5 | Forests, savanna, jungle |
-| Argentavis | 3–4 | 4 | 46 | 6 | Taiga and windy mountains |
-| Triceratops | 2–4 | 12 | 85 | 8 | Plains, savanna, meadows |
-| Therizinosaurus | 2–4 | 12 | 100 | 10 | Jungle, dark forest, swamp, old spruce taiga |
-| Brontosaurus | 2–4 | 10 | 145 | 12 | Savanna and sparse jungle |
-| Tyrannosaurus | 1 | 12 | 130 | 14 | Badlands, desert, sparse jungle, windswept forest |
-| Giganotosaurus | 1 | 8 | 170 | 17 | Windy hills and rocky peaks |
-| Titanosaur | 1 | 6 | 190 | 20 | Stony peaks and gravelly hills |
-| Cnidaria | 1 | 8 | 12 | 2 | Warm and temperate oceans |
-| Plesiosaur | 1 | 8 | 60 | 6 | Oceans and rivers |
-| Megalodon | 1 | 7 | 90 | 12 | Oceans and deep oceans |
-| Liopleurodon | 1 | 5 | 80 | 11 | Deep oceans |
-| Mosasaurus | 1 | 3 | 160 | 18 | Deep oceans |
-| Tusoteuthis | 1 | 3 | 150 | 16 | Deep cold and frozen oceans |
-| Kaprosuchus | 1 | 7 | 55 | 8 | Swamps, rivers, jungle |
-| Sarco | 2–3 | 8 | 70 | 10 | Swamps and rivers |
-| Deinosuchus | 1 | 4 | 120 | 14 | Swamps and rivers |
-| Titanoboa | 1 | 6 | 45 | 9 | Swamps and jungle |
-| Megalocerus | 4–6 | 10 | 60 | 6 | Snowy taiga and plains |
-| Unicorn | 1 | 3 | 65 | 7 | Snowy plains and groves |
-| Mammoth | 2–4 | 7 | 140 | 12 | Snowy plains, taiga, frozen rivers |
-| Direwolf | 4–6 | 9 | 50 | 8 | Snowy taiga and plains |
-| Sabertooth | 1–2 | 6 | 60 | 11 | Groves, snowy slopes and peaks |
-| Megapithecus | 1 | 1 | 180 | 18 | Frozen and jagged peaks |
-| Paraceratherium | 2–4 | 6 | 155 | 13 | Plains, savanna, meadows |
-| Terrorbird | 4–6 | 8 | 45 | 9 | Savanna, plains, jungle |
-| Ravager | 4–6 | 5 | 65 | 11 | Dark forests and taiga |
-| Archaeopteryx | 3–4 | 8 | 10 | 2 | Forests and jungle |
-| Quetzal | 1 | 2 | 130 | 10 | Windswept hills and peaks |
-| Dragon | 1 | 1 | 190 | 22 | Jagged and frozen peaks |
+**Where a species lives** is its range: the kinds of surface biome that suit it, each biome classified from its own tags, so modded biomes are covered. Grazers keep to open ground, browsers and ambushers to the trees, crocodilians to the banks, runners to dry scrub, fishers to the coast. Warm species keep out of the snow, the basking reptiles and Pteranodons also out of cold climates, and the cold species need snow or a cold climate. Caves, mushroom fields, sky islands and biomes of unknown type hold no Ark wildlife. The danger rank of the area still decides which residents may appear. A data pack adds a biome to a species with the tag `arksurvivalreturns:spawns/<species>`, or reclassifies a biome with `arksurvivalreturns:ecology/<type>`. `/arkwildlife` prints the biome's kind and who its range holds.
 
-Natural spawns allow at most **24 Ark creatures within 96 blocks** and require **24 blocks between solitary creatures of the same species**. All living Ark creatures count toward the cap; only natural, unnamed wildlife counts toward the group target. New groups start at least 18 blocks from existing wildlife. Small packs are placed completely or the attempt is abandoned; a cap or obstacle cannot create a lone pack animal. Brontosaurus, Triceratops, Therizinosaurus and Ankylosaurus form herds of 2–4; other large species spawn alone. High-danger replenishment seeks one varied large-creature encounter if none is present, rather than filling a roster of every species. Saved land habitats, water pools and nest colonies are repaired first, so a depleted group refills its own home before a new site is planned. Existing animals are not culled; lower density takes effect through new spawns and normal despawning. There is no day/night spawn filter. Ark's native biome spawn entries are disabled so chunk generation cannot bypass these rules.
+Placement requires a supported footprint, collision-free space (foliage may cross a large body) and the world border. Land carnivores placed during their sleeping hours need tree canopy. Flyers additionally need their nest site: shoreline sand for Pteranodon, a floor at Y≥96 for Argentavis, Y≥110 for Quetzal, forest ground for Archaeopteryx and high peaks for the Dragon. Water species need a loaded pool of connected deep water, semi-aquatic species a bank next to exposed water, and cold species accept snow cover or ice over water as their drink source. There is no natural spawning in the Nether or the End.
+
+| Species | Group | Weight | First danger rank | Base HP | Base damage | Hunter | Range |
+|---|---:|---:|---:|---:|---:|---|---|
+| Pteranodon | 1–3 | 10 | 1 | 24 | 3 |  | River, coast |
+| Velociraptor | 2–3 | 8 | 2 | 32 | 5 | yes | Savanna, shrubland, desert, badlands |
+| Argentavis | 1–2 | 4 | 2 | 46 | 6 |  | Savanna, shrubland, desert, badlands, mountain |
+| Triceratops | 2–4 | 12 | 1 | 85 | 8 |  | Grassland, savanna, shrubland, forest |
+| Therizinosaurus | 1–2 | 6 | 3 | 100 | 10 |  | Forest, taiga, jungle |
+| Brontosaurus | 1–3 | 6 | 4 | 145 | 12 |  | Grassland, savanna, forest |
+| Tyrannosaurus | 1 | 4 | 4 | 130 | 14 | yes | Grassland, savanna, forest, taiga |
+| Giganotosaurus | 1 | 2 | 5 | 170 | 17 | yes | Grassland, savanna, shrubland, desert, badlands |
+| Titanosaur | 1 | 2 | 5 | 190 | 20 |  | Grassland, savanna, shrubland |
+| Spinosaurus | 1 | 3 | 4 | 125 | 13 | yes | Jungle, wetland, river, coast |
+| Parasaur | 3–5 | 14 | 1 | 48 | 3 |  | Grassland, savanna, forest, jungle, wetland, river, coast |
+| Ceratosaurus | 1 | 4 | 3 | 88 | 10 | yes | Forest, jungle, wetland, river |
+| Dilophosaur | 1–3 | 8 | 1 | 22 | 3 | yes | Forest, jungle, wetland |
+| Acrocanthosaurus | 1 | 2 | 5 | 155 | 16 | yes | Savanna, forest, wetland |
+| Allosaurus | 1–3 | 5 | 3 | 78 | 9 | yes | Savanna, shrubland, forest, badlands |
+| Ankylosaurus | 1–3 | 8 | 2 | 95 | 9 |  | Grassland, shrubland, taiga, badlands, mountain |
+| Carnotaurus | 1 | 5 | 3 | 82 | 10 | yes | Grassland, savanna, shrubland, desert, badlands |
+| Pegomastax | 2–4 | 12 | 1 | 18 | 2 |  | Shrubland, forest, taiga, jungle, mountain |
+| Lystrosaurus | 2–4 | 12 | 1 | 20 | 2 |  | Savanna, shrubland, coast, desert, badlands, volcanic, geothermal |
+| Cnidaria | 1 | 8 | 1 | 12 | 2 |  | Ocean |
+| Plesiosaur | 1 | 8 | 2 | 60 | 6 | yes | Ocean |
+| Megalodon | 1 | 7 | 3 | 90 | 12 | yes | Ocean |
+| Liopleurodon | 1 | 5 | 3 | 80 | 11 | yes | Ocean |
+| Mosasaurus | 1 | 3 | 4 | 160 | 18 | yes | Ocean |
+| Tusoteuthis | 1 | 3 | 4 | 150 | 16 | yes | Ocean |
+| Kaprosuchus | 1 | 5 | 2 | 55 | 8 | yes | Jungle, wetland, river |
+| Sarco | 1–2 | 6 | 2 | 70 | 10 | yes | Wetland, river, coast |
+| Deinosuchus | 1 | 3 | 3 | 120 | 14 | yes | Wetland, river, coast |
+| Titanoboa | 1 | 4 | 3 | 45 | 9 | yes | Jungle, wetland |
+| Megalocerus | 3–5 | 12 | 1 | 60 | 6 |  | Grassland, shrubland, forest, taiga, wetland, river, badlands, mountain, tundra |
+| Unicorn | 1 | 3 | 1 | 65 | 7 |  | Grassland, forest, tundra |
+| Mammoth | 2–4 | 7 | 2 | 140 | 12 |  | Shrubland, taiga, wetland, coast, tundra (snow only) |
+| Direwolf | 3–4 | 6 | 2 | 50 | 8 | yes | Shrubland, forest, taiga, badlands, mountain, tundra |
+| Sabertooth | 1–2 | 4 | 3 | 60 | 11 | yes | Taiga, mountain, tundra (snow only) |
+| Megapithecus | 1 | 1 | 5 | 180 | 18 | yes | Taiga, mountain (snow only) |
+| Paraceratherium | 1–3 | 5 | 3 | 155 | 13 |  | Grassland, savanna, shrubland |
+| Terrorbird | 1–2 | 5 | 2 | 45 | 9 | yes | Grassland, savanna, shrubland |
+| Ravager | 2–3 | 4 | 3 | 65 | 11 | yes | Taiga, badlands, mountain, volcanic, geothermal |
+| Archaeopteryx | 2–3 | 8 | 1 | 10 | 2 |  | Forest, taiga, jungle |
+| Quetzal | 1 | 2 | 4 | 130 | 10 |  | Grassland, savanna, desert, mountain |
+| Dragon | 1 | 1 | 5 | 190 | 22 | yes | Badlands, mountain, volcanic |
 
 Members of a small group share a saved pack identity. Land followers seek their pack's leading member when separated; combat takes precedence. Flyers share a habitat but use independent flight paths and perches. Separate packs do not merge. Raptors, Rex and Giga hunt non-creative players with line of sight outside Peaceful; land herbivores defend themselves. Flyers attack players only after an egg is taken or an egg-bearing nest is broken. Natural wildlife may despawn at vanilla distances. Named and spawn-egg creatures persist.
 
@@ -150,7 +166,7 @@ Sight uses facing, range and occlusion. Sneaking, darkness and rain reduce visib
 
 Hungry predators hunt suitable wildlife as well as Survival players. They warn before unprovoked aggression, become satiated after a wildlife kill, and abandon excessive or repeatedly failed chases. Most large herbivores warn/defend when crowded. Critical health and larger predators can cause retreat. Creative/spectator players are excluded; Peaceful prevents player-directed aggression.
 
-New Bronto herds spawn with a nearby Rex that tracks their home. Healthy Bronto/Trike packs defend attacked members; predators avoid charging defended herds and flee at low health. Flying colonies contain 3–4 birds and several persistent nests. Pteranodon circles shoreline sand within 32 blocks; Argentavis circles high-ground nests within 48 blocks. Both occasionally land, perch and take off independently.
+New Bronto herds spawn with a nearby Rex that tracks their home. Healthy Bronto/Trike packs defend attacked members; predators avoid charging defended herds and flee at low health. Flyers come alone or in twos and threes, each with its own nest. Pteranodon circles shoreline sand within 32 blocks; Argentavis circles high-ground nests within 48 blocks. Both occasionally land, perch and take off independently.
 
 The HP bar now includes a behavior label. Calls, startles, feeding and charge clips make transitions visible, with sleeping poses for Rex/Trike. Current audio uses temporary Minecraft cues. Birds now use extracted aerial animations and body pitch. Species audio and terrain IK remain separate work.
 

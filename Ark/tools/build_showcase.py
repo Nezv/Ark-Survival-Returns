@@ -2,7 +2,7 @@
 
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
-(design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
+(design/showcase/behavior.json), both exported by runData, the biome profile table, the tech tree (tree.json), the
 biome pictures with their spawns (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
 screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
@@ -166,22 +166,32 @@ HABITATS = [('temperate', 'Temperate land', '#6f9a4f'), ('wetland', 'Wetlands', 
             ('cold', 'Snow and ice', '#86b3d3'), ('sea', 'Sea', '#3f6fa3'), ('sky', 'Sky', '#c49a45')]
 
 
+# The kinds of surface biome a species' range is made of (BiomeProfile.Type), in page order.
+RANGE_KINDS = [('grassland', 'Grassland', '#8fae4f'), ('savanna', 'Savanna', '#b9a24a'), ('shrubland', 'Shrubland', '#9a9a55'),
+               ('forest', 'Forest', '#4f8a4a'), ('taiga', 'Taiga', '#3f7566'), ('jungle', 'Jungle', '#2f8f4f'),
+               ('wetland', 'Wetland', '#3f8f80'), ('river', 'River', '#4f8fb3'), ('coast', 'Coast', '#c9b77a'),
+               ('desert', 'Desert', '#d6b56a'), ('badlands', 'Badlands', '#b8693f'), ('mountain', 'Mountain', '#8a8f86'),
+               ('tundra', 'Tundra', '#a9c7dc'), ('volcanic', 'Volcanic', '#6b5248'), ('geothermal', 'Geothermal', '#a8894f'),
+               ('ocean', 'Ocean', '#3f6fa3')]
+
+
 def habitats_section(species):
-    """The five habitat tags (generated from Species.habitat) with their biomes and residents."""
-    lists, blocks = {}, []
-    for key, title, color in HABITATS:
-        values = load_json(GENERATED / f'data/arksurvivalreturns/tags/worldgen/biome/habitat/{key}.json')['values']
-        lists[key] = [v.split(':')[1].replace('_', ' ') for v in values if isinstance(v, str)]
-        extra = sum(1 for v in values if isinstance(v, dict))  # optional Terralith biomes (I08)
-        if key == 'sky' and set(lists[key]) == set(lists['temperate']) | set(lists['cold']):
-            biomes = '<p class="plain">Every temperate and snowy land biome.</p>'
-        else:
-            biomes = f'<p>{e(", ".join(lists[key]))}</p>'
-        residents = ''.join(f'<span class="chip">{e(s["name"])}</span>'
-                            for s in sorted(species, key=lambda s: s['name']) if s.get('habitat') == key)
-        more = f'<span class="chip">+{extra} Terralith</span>' if extra else ''
-        blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}</h4>{biomes}'
-                      f'<div class="chips">{residents}{more}</div></div>')
+    """Who lives in each kind of biome (SpeciesRange), from the profile table the range tags are generated from."""
+    table = load_json(ARK / 'config/integrations/biome-profiles.json')['biomes']
+    by_id = {s['id']: s for s in species}
+    blocks = []
+    for key, title, color in RANGE_KINDS:
+        for snowy in (False, True):
+            biomes = [b for b in table.values() if b['type'] == key and b['snowy'] == snowy]
+            residents = sorted({i for b in biomes for i in b['species'] if i in by_id},
+                               key=lambda i: (by_id[i]['predator'], by_id[i]['danger'], by_id[i]['name']))
+            if not residents:
+                continue
+            chips = ''.join(f'<span class="chip">{e(by_id[i]["name"])}{" (hunter)" if by_id[i]["predator"] else ""}</span>'
+                            for i in residents)
+            blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}{" under snow" if snowy else ""}</h4>'
+                          f'<p class="plain">{len(biomes)} biome{"s" if len(biomes) != 1 else ""}</p>'
+                          f'<div class="chips">{chips}</div></div>')
     return '\n'.join(blocks)
 
 

@@ -44,7 +44,8 @@ public record BiomeProfile(String biomeId, Type type, Climate climate, Moisture 
 
     public static BiomeProfile classify(String id, Set<String> tags, float temperature, float downfall) {
         Type type = type(id, tags);
-        boolean snowy = has(tags, "is_snowy");
+        // Below 0.15 precipitation falls as snow at any height: frozen rivers and oceans carry no snowy tag.
+        boolean snowy = has(tags, "is_snowy") || temperature < 0.15f;
         Climate climate = has(tags, "is_cold") || snowy || temperature < 0.3f ? Climate.COLD
                 : has(tags, "is_hot") || temperature >= 1.0f ? Climate.HOT : Climate.TEMPERATE;
         Moisture moisture = has(tags, "is_dry") || downfall < 0.3f ? Moisture.DRY

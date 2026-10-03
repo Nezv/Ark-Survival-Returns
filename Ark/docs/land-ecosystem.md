@@ -4,13 +4,13 @@ Implemented 2026-09-14. The original proposal (in git history) described the ori
 
 ## Families and water-associated homes
 
-| Family | Fresh group | Preferred water distance | Excluded at | Ordinary roam | Return radius |
+| Family | Group limits | Preferred water distance | Excluded at | Ordinary roam | Return radius |
 |---|---:|---:|---:|---:|---:|
 | Big carnivore | 1 | 32 | 96 | 96 | 160 |
-| Small carnivore | 4–6 | 24 | 80 | 80 | 128 |
+| Small carnivore | 1–3 | 24 | 80 | 80 | 128 |
 | Titanosaur | 1 | 24 | 64 | 64 | 112 |
-| Big herbivore | 2–4 | 16 | 48 | 48 | 96 |
-| Small herbivore | 4–6 | 12 | 32 | 32 | 64 |
+| Big herbivore | 1–4 | 16 | 48 | 48 | 96 |
+| Small herbivore | 2–5 | 12 | 32 | 32 | 64 |
 
 Distances are horizontal blocks. Full spawn acceptance applies inside the preferred water distance, then declines linearly to zero at the exclusion distance. This is an additional acceptance probability after the existing species/danger/biome selection, rather than a change to that selection's weights. Fresh groups register only after complete collision-safe placement and a reachable dry drinking approach. Existing population caps, mob-spawning rules, danger eligibility and Bronto/Rex encounter pairing still apply.
 

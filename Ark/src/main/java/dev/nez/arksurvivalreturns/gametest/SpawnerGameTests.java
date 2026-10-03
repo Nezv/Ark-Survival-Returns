@@ -17,8 +17,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
@@ -26,33 +24,26 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Regression coverage for natural spawning: realm categories, world-generation accessors,
- * the vanilla chunk-generation spawner path, animal-like persistence and the population budget.
+ * Regression coverage for natural spawning: realm categories, world-generation accessors, the species
+ * ranges, animal-like persistence and the population budget, the only thing that places Ark wildlife.
  */
 public final class SpawnerGameTests {
-    /** Vanilla spawn categories, the worldgen accessor contract and the chunk-generation spawner. */
+    /** Vanilla spawn categories, the worldgen accessor contract, and no Ark creature in a vanilla spawn list. */
     public static void pipeline(GameTestHelper h) {
         for (var species : Species.values()) {
             var expected = species.aquatic() ? MobCategory.WATER_CREATURE : MobCategory.CREATURE;
             var actual = ModContent.CREATURES.get(species).get().getCategory();
             h.assertTrue(actual == expected, "Wrong spawn category for " + species + ": " + actual);
         }
-        // No loaded biome spawn list may contain a mod creature wider than vanilla's single-chunk clamp.
+        // The budget alone places Ark wildlife: a vanilla spawn list would ignore its spacing, ranges and caps.
         var registered = new java.util.IdentityHashMap<net.minecraft.world.entity.EntityType<?>, Species>();
         ModContent.CREATURES.forEach((species, holder) -> registered.put(holder.get(), species));
         var biomes = h.getLevel().registryAccess()
                 .lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).listElements().toList();
-        int listed = 0;
-        for (var biome : biomes) {
-            for (var weighted : biome.value().getMobSettings().getMobs(MobCategory.CREATURE).unwrap()) {
-                var species = registered.get(weighted.value().type());
-                if (species == null) continue;
-                listed++;
-                h.assertTrue(species.chunkSpawnSafe(), "Oversized chunk-generation spawn: " + species
-                        + " in " + biome.unwrapKey().map(key -> key.identifier().toString()).orElse("?"));
-            }
-        }
-        h.assertTrue(listed > 0, "No mod creature reached any biome spawn list");
+        for (var biome : biomes) for (var category : MobCategory.values())
+            for (var weighted : biome.value().getMobSettings().getMobs(category).unwrap())
+                h.assertTrue(registered.get(weighted.value().type()) == null, "Ark creature in a vanilla spawn list: "
+                        + weighted.value().type() + " in " + biome.unwrapKey().map(key -> key.identifier().toString()).orElse("?"));
         h.setBiome(Biomes.PLAINS);
         for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
         // A stepped natural bank: the western half stays one block lower than the rest.
@@ -68,28 +59,13 @@ public final class SpawnerGameTests {
                 "World-generation accessor rejected a valid bank spawn");
         h.assertFalse(SpawnPlacements.checkSpawnRules(trike, facade, EntitySpawnReason.CHUNK_GENERATION, pad.above(4), world.getRandom()),
                 "World-generation accessor accepted a covered spawn");
-        // The real vanilla chunk-generation spawner must produce mod creatures from the biome list.
-        var biome = world.getBiome(pad);
-        var spawns = biome.value().getMobSettings().getMobs(MobCategory.CREATURE);
-        boolean hasMod = spawns.unwrap().stream().anyMatch(weighted -> ModContent.CREATURES.values().stream()
-                .anyMatch(holder -> holder.isBound() && holder.get() == weighted.value().type()));
-        var border = new AABB(pad).inflate(24);
-        h.assertTrue(hasMod, "Plains spawn list has no mod creatures: " + spawns.unwrap().size() + " entries");
-        int spawned = 0;
-        // A fixed random source keeps the weighted pick reproducible across test runs. Habitats spread
-        // one list budget over many species, so fewer rolls land on a species legal at this danger.
-        var random = net.minecraft.util.RandomSource.create(0x5EEDL);
-        for (int i = 0; i < 1000 && spawned == 0; i++) {
-            NaturalSpawner.spawnMobsForChunkGeneration(facade, biome,
-                    new ChunkPos(pad.getX() >> 4, pad.getZ() >> 4), random);
-            spawned = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife).size();
-        }
-        h.assertTrue(spawned > 0, "Vanilla chunk-generation spawner produced no mod creatures (mobs="
-                + world.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, border, c -> true).size() + ")");
-        var wild = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife).getFirst();
+        var wild = trike.create(world, EntitySpawnReason.NATURAL);
+        wild.snapTo(Vec3.atBottomCenterOf(pad), 0, 0);
+        wild.finalizeSpawn(world, world.getCurrentDifficultyAt(pad), EntitySpawnReason.NATURAL, null);
+        h.assertTrue(wild.isNaturalWildlife(), "A natural spawn is not natural wildlife");
         h.assertFalse(wild.isPersistenceRequired(), "Natural spawn must not require persistence");
         h.assertFalse(wild.removeWhenFarAway(1024), "Natural spawn still despawns when far away");
-        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, c -> true)) creature.discard();
+        wild.discard();
         h.succeed();
     }
 
@@ -168,15 +144,17 @@ public final class SpawnerGameTests {
             // Foliage tolerance: an apex may stand under a leaf canopy, never under solid rock.
             for (int x = 8; x < 24; x++) for (int z = 8; z < 24; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
             var pad = h.absolutePos(new BlockPos(16, 2, 16));
-            var rex = ModContent.CREATURES.get(Species.TYRANNOSAURUS).get();
-            h.assertTrue(SpawnRules.canSpawn(rex, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
-                    "Open pad rejected a Rex: " + SpawnRules.placement(rex, world, pad));
+            // A Brontosaurus has the bulk of a Rex without its need for canopy while its kind sleeps, so
+            // this holds at any hour.
+            var giant = ModContent.CREATURES.get(Species.BRONTOSAURUS).get();
+            h.assertTrue(SpawnRules.canSpawn(giant, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
+                    "Open pad rejected a giant: " + SpawnRules.placement(giant, world, pad));
             for (int x = 8; x < 24; x++) for (int z = 8; z < 24; z++) h.setBlock(x, 6, z, Blocks.OAK_LEAVES);
-            h.assertTrue(SpawnRules.canSpawn(rex, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
-                    "Leaf canopy vetoed a Rex: " + SpawnRules.placement(rex, world, pad));
+            h.assertTrue(SpawnRules.canSpawn(giant, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
+                    "Leaf canopy vetoed a giant: " + SpawnRules.placement(giant, world, pad));
             for (int x = 8; x < 24; x++) for (int z = 8; z < 24; z++) h.setBlock(x, 6, z, Blocks.STONE);
-            h.assertFalse(SpawnRules.canSpawn(rex, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
-                    "Solid roof accepted a Rex");
+            h.assertFalse(SpawnRules.canSpawn(giant, world, EntitySpawnReason.NATURAL, pad, world.getRandom()),
+                    "Solid roof accepted a giant");
         } finally {
             Config.POPULATION_MODEL.set(model);
             Config.POPULATION_RADIUS.set(radius);
@@ -194,8 +172,9 @@ public final class SpawnerGameTests {
     }
 
     /**
-     * The ledger model counts horizontally: a player mining 100 blocks under the floor gets the counted
-     * circle filled once, at its target, instead of an endless spawn-and-cull loop.
+     * The ledger model counts groups horizontally: a player mining 100 blocks under the floor gets the counted
+     * circle filled once, to its target at most, instead of an endless spawn-and-cull loop. The groups are
+     * encounters: apart from one another, no species twice, hunters the minority.
      */
     public static void ledgerDensity(GameTestHelper h) {
         for (int x = 0; x < 128; x++) for (int z = 0; z < 128; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
@@ -209,24 +188,43 @@ public final class SpawnerGameTests {
         var model = Config.POPULATION_MODEL.get();
         int radius = Config.POPULATION_RADIUS.get(), minDistance = Config.POPULATION_MIN_DISTANCE.get();
         int attempts = Config.POPULATION_ATTEMPTS.get(), groups = Config.POPULATION_GROUPS_PER_PASS.get();
-        double density = Config.POPULATION_DENSITY.get(), cull = Config.POPULATION_CULL_FRACTION.get();
+        int wanted = Config.POPULATION_GROUPS.get();
+        double cull = Config.POPULATION_CULL_FRACTION.get();
         try {
             Config.POPULATION_MODEL.set(NaturalPopulations.Model.LEDGER);
-            Config.POPULATION_RADIUS.set(48);
+            Config.POPULATION_RADIUS.set(60);
             Config.POPULATION_MIN_DISTANCE.set(8);
             Config.POPULATION_ATTEMPTS.set(4);
             Config.POPULATION_GROUPS_PER_PASS.set(4);
-            Config.POPULATION_DENSITY.set(0.4);
+            Config.POPULATION_GROUPS.set(5);
             Config.POPULATION_CULL_FRACTION.set(0.25);
             int target = NaturalPopulations.targetFor(world, player);
-            for (int pass = 0; pass < 12; pass++) NaturalPopulations.enforce(world, List.of(player));
+            for (int pass = 0; pass < 20; pass++) NaturalPopulations.enforce(world, List.of(player));
             var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
             h.assertTrue(!placed.isEmpty(), "The ledger budget placed nothing above a deep player");
-            int ceiling = (int) Math.ceil(target * 1.25) + 6;
-            h.assertTrue(placed.size() <= ceiling, "A deep player made the budget overspawn: " + placed.size() + " > " + ceiling);
+            var herds = NaturalPopulations.groups(placed);
+            // The budget counts a group where the middle of its members is; one anchored on the rim can fall outside.
+            long counted = herds.stream().filter(group -> Math.hypot(group.x() - player.getX(), group.z() - player.getZ()) <= 60).count();
+            h.assertTrue(counted <= target, "A deep player made the budget overspawn: " + counted + " groups > " + target);
+            long hunters = herds.stream().filter(group -> group.species().predator).count();
+            h.assertTrue(hunters <= Math.max(1, Math.round(target * NaturalPopulations.PREDATOR_GROUPS)),
+                    "Hunters are not the minority: " + hunters + " of " + herds.size() + " groups");
+            for (var group : herds) {
+                h.assertTrue(group.members().size() <= group.species().maxGroup, "Oversized group: " + group.species());
+                for (var other : herds) {
+                    if (other == group) continue;
+                    // A member may stand a few blocks from where its group was anchored.
+                    double gap = Math.hypot(group.x() - other.x(), group.z() - other.z());
+                    h.assertTrue(gap >= NaturalPopulations.GROUP_SPACING - 12, "Groups placed on top of each other: " + gap);
+                    h.assertTrue(group.species() != other.species() || gap >= NaturalPopulations.SPECIES_SPACING - 12,
+                            "A species repeats within sight of itself: " + group.species() + " at " + gap);
+                }
+            }
             for (var creature : placed) {
                 double dx = creature.getX() - player.getX(), dz = creature.getZ() - player.getZ();
-                h.assertTrue(dx * dx + dz * dz <= 56 * 56, "Placed outside the counted circle: " + creature.blockPosition());
+                h.assertTrue(dx * dx + dz * dz <= 68 * 68, "Placed outside the counted circle: " + creature.blockPosition());
+                h.assertTrue(dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(creature.species(), world.getBiome(creature.blockPosition())),
+                        "Placed outside its range: " + creature.species());
             }
         } finally {
             Config.POPULATION_MODEL.set(model);
@@ -234,7 +232,7 @@ public final class SpawnerGameTests {
             Config.POPULATION_MIN_DISTANCE.set(minDistance);
             Config.POPULATION_ATTEMPTS.set(attempts);
             Config.POPULATION_GROUPS_PER_PASS.set(groups);
-            Config.POPULATION_DENSITY.set(density);
+            Config.POPULATION_GROUPS.set(wanted);
             Config.POPULATION_CULL_FRACTION.set(cull);
             for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
                 creature.discard();
@@ -292,6 +290,50 @@ public final class SpawnerGameTests {
             Config.POPULATION_MODEL.set(model);
             spawned.forEach(net.minecraft.world.entity.Entity::discard);
         }
+        h.succeed();
+    }
+
+    /**
+     * The generated range tags are a copy of the species ranges over the shipped biomes, made from the profile
+     * table in config/integrations. This writes the table as the running game classifies the biomes, and fails
+     * when the copy no longer matches, saying how to refresh it.
+     */
+    public static void ranges(GameTestHelper h) {
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.complete(), "A species has no range and would never spawn");
+        var registry = h.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+        var table = new com.google.gson.JsonObject();
+        var stale = new java.util.ArrayList<String>();
+        registry.listElements().sorted(java.util.Comparator.comparing(holder -> holder.key().identifier().toString())).forEach(holder -> {
+            var profile = dev.nez.arksurvivalreturns.feature.spawn.SurfaceBiomes.profile(holder);
+            var entry = new com.google.gson.JsonObject();
+            entry.addProperty("type", profile.type().id());
+            entry.addProperty("climate", profile.climate().name().toLowerCase(java.util.Locale.ROOT));
+            entry.addProperty("moisture", profile.moisture().name().toLowerCase(java.util.Locale.ROOT));
+            entry.addProperty("mountainous", profile.mountainous());
+            entry.addProperty("snowy", profile.snowy());
+            entry.addProperty("trees", profile.treeCover().name().toLowerCase(java.util.Locale.ROOT));
+            var residents = new com.google.gson.JsonArray();
+            for (var species : Species.values()) {
+                boolean lives = dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(species, profile);
+                if (lives) residents.add(species.id);
+                if (lives != holder.is(species.biomes)) stale.add(species.id + " in " + profile.biomeId());
+            }
+            // Read by people and the showcase, not by datagen: who the range puts here.
+            entry.add("species", residents);
+            table.add(profile.biomeId(), entry);
+        });
+        var root = new com.google.gson.JsonObject();
+        root.addProperty("about", "Written by the spawn_ranges GameTest (run/diagnostics/biome-profiles.json); copy to config/integrations and run runData.");
+        root.add("biomes", table);
+        try {
+            var out = java.nio.file.Path.of("diagnostics", "biome-profiles.json");
+            java.nio.file.Files.createDirectories(out.getParent());
+            java.nio.file.Files.writeString(out, new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(root) + "\n");
+        } catch (java.io.IOException failed) {
+            h.fail("Cannot write the biome profile table: " + failed);
+        }
+        h.assertTrue(stale.isEmpty(), "Range tags out of step with the game for " + stale.size() + " pairs (" + stale.stream().limit(4).toList()
+                + "): copy run/diagnostics/biome-profiles.json to config/integrations/ and run runData");
         h.succeed();
     }
 
