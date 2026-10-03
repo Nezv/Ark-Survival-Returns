@@ -161,7 +161,7 @@
           "beats": [
             {
               "action": "WAKE",
-              "ticks": 24
+              "ticks": 40
             },
             {
               "action": "STARTLE",
@@ -232,6 +232,10 @@
               "ticks": 42
             },
             {
+              "action": "SETTLE",
+              "ticks": 40
+            },
+            {
               "action": "SLEEP",
               "ticks": 0
             }
@@ -246,7 +250,7 @@
           "beats": [
             {
               "action": "WAKE",
-              "ticks": 24
+              "ticks": 40
             },
             {
               "action": "WALK",
@@ -992,6 +996,10 @@
               "ticks": 32
             },
             {
+              "action": "SETTLE",
+              "ticks": 40
+            },
+            {
               "action": "SLEEP",
               "ticks": 0
             }
@@ -1006,7 +1014,7 @@
           "beats": [
             {
               "action": "WAKE",
-              "ticks": 24
+              "ticks": 40
             },
             {
               "action": "WALK",

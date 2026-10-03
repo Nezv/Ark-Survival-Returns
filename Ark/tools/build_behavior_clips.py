@@ -3,7 +3,8 @@
 Reads the runtime GeckoLib models and animations (after tools/import_creatures.py) and writes
 src/main/java/dev/nez/arksurvivalreturns/feature/behavior/BehaviorClips.java: per species, the
 length of every clip in ticks, the ground speed each locomotion clip was authored for, and the
-behaviour roles (turn in place, look around, sniff, poop, startle, threat, flinch, flight banking).
+behaviour roles (turn in place, look around, sniff, poop, startle, threat, flinch, flight banking, and
+lying down to sleep).
 
 Natural ground speed
 --------------------
@@ -44,9 +45,7 @@ SHARED_ROLES = [
     ('THREAT', [r'-Idle-Aggressive$', r'_Aggro$']),
     ('HURT', [r'-Hurt-Big-Rit$', r'-Hurt-Big-Lft$', r'-Hurt-Big$', r'-Hurt-Lft$', r'-Hurt-Small-Rit$',
               r'-Hurt-Small-Lft$', r'-Hurt-Small$', r'-Ground-Hurt-Rit$', r'-Hurt$']),
-    ('SETTLE', [r'_Basking_Start$']),
     ('REST', [r'_Basking_Idle$']),
-    ('WAKE', [r'_Basking_End$']),
     ('TROT', [r'-Trot-Fwd$']),
     ('FLAP', [r'-Fly-Flap$', r'-Fly-Flap-Fwd$', r'^Archaeopteryx-Fly$']),
     ('FLY_LEFT', [r'-Fly-Lft$']),
@@ -58,7 +57,17 @@ WATER_ROLES = [
     ('SWIM_LEFT', [r'-Swim-Lft$', r'-Idle-Lft$', r'-Move-Lft$']),
     ('SWIM_RIGHT', [r'-Swim-Rit$', r'-Idle-Rit$', r'-Move-Rit$']),
 ]
-LOOPING_ROLES = {'TURN_LEFT', 'TURN_RIGHT', 'THREAT', 'REST', 'TROT', 'FLAP', 'FLY_LEFT', 'FLY_RIGHT', 'FLY_IDLE',
+# Lying down to sleep. A rig's own lying sleep clip comes first (Rex-Sleeping is a standing doze and is not
+# one), then crocodilian basking, then the knock-out sequence, which is the only lie-down, lying loop and
+# get-up most ARK libraries have. Settling and waking are taken only from the family the loop came from, so
+# the pose one clip ends on is the pose the next one starts from.
+SLEEP_FAMILIES = [
+    {'SLEEP': [r'^Trike-Sleeping$']},
+    {'SETTLE': [r'_Basking_Start$'], 'SLEEP': [r'_Basking_Idle$'], 'WAKE': [r'_Basking_End$']},
+    {'SETTLE': [r'-Torpid-In$', r'_Torp_In$'], 'SLEEP': [r'-Torpid-Idle$', r'-Torpid$', r'_Torp_Loop$'],
+     'WAKE': [r'-Torpid-Out-Wild$', r'_Torp_Out$']},
+]
+LOOPING_ROLES = {'TURN_LEFT', 'TURN_RIGHT', 'THREAT', 'REST', 'SLEEP', 'TROT', 'FLAP', 'FLY_LEFT', 'FLY_RIGHT', 'FLY_IDLE',
                  'GLIDE', 'SWIM_LEFT', 'SWIM_RIGHT'}
 LOCOMOTION = re.compile(r'(Move|Walk|Charge|Trot)', re.I)
 NOT_GROUND = re.compile(r'(Fly|Glide|Swim|Torp|Attack|Hover|Idle|Land|Take-Off|Startle|Turn)', re.I)
@@ -71,12 +80,20 @@ def role_table(aquatic):
 def behavior_extras(names, aquatic):
     """Role -> clip name for every behaviour role a rig can play, chosen from its own clip names."""
     found = {}
+    every = list(names)
     names = [name for name in names if not EXCLUDED.search(name)]
     for role, patterns in role_table(aquatic):
         for pattern in patterns:
             match = next((name for name in names if re.search(pattern, name)), None)
             if match:
                 found[role] = match
+                break
+    if not aquatic:
+        def first(patterns):
+            return next((name for pattern in patterns for name in every if re.search(pattern, name)), None)
+        for family in SLEEP_FAMILIES:
+            if first(family['SLEEP']):
+                found.update({role: first(patterns) for role, patterns in family.items() if first(patterns)})
                 break
     return found
 

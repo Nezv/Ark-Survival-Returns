@@ -317,6 +317,10 @@ public enum Species {
         return this == TYRANNOSAURUS ? "Rex-Sleeping" : this == TRICERATOPS ? "Trike-Sleeping" : idle;
     }
     public boolean additiveFood() { return foodClip().contains("Additive"); }
+    /**
+     * The standing sleep clip, for a rig without a lying one ({@code ClipRole.SLEEP}), for swimmers and for a
+     * knocked-out animal whose library has no torpor sequence.
+     */
     public String sleepClip() {
         if (this == TYRANNOSAURUS || this == TRICERATOPS || flyer()) return restClip();
         return sleeps() ? "Ark-Sleep" : restClip();

@@ -77,8 +77,10 @@ pack hunters share a home.
   alertness, investigation, warnings, hunting, defense, fleeing, returning home and feeding.
 - Night is the same clock the original nineteen use. Aquatic predators hunt at night with the
   configured `nighttime.carnivoreHungerMultiplier`; by day they patrol, investigate and rest.
-- Nocturnal species never enter `SLEEP`. Water species have no authored sleep pose, and the
-  amphibious ones share the authored standing pose (`Ark-Sleep`) on the bank.
+- Nocturnal species never enter `SLEEP`. Water species have no authored sleep pose. On land a
+  sleeping or resting animal lies down with its rig's own clips (`ClipRole.SETTLE`, `SLEEP`,
+  `WAKE`: the Triceratops sleeping clip, crocodilian basking, else the knock-out sequence); the
+  standing pose (`Ark-Sleep`) is only for rigs without one (Ceratosaurus, Titanoboa, Megapithecus).
 - Cold routines stay gradual: Direwolf and Sabertooth favour dusk and night, Mammoth and
   Megalocerus favour daytime feeding, and every individual is staggered by its own transition
   delay.

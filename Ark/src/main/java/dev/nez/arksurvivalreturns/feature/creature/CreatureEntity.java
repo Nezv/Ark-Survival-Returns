@@ -82,6 +82,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private int nextRoutineSoundTick;
     private int nextWakeSoundTick;
     private boolean audioSleeping;
+    /** Client: whether the movement controller last showed this creature lying down, and until when it blends slowly. */
+    private boolean wasLying;
+    private int slowBlendUntil;
     private BehaviorTier behaviorTier = BehaviorTier.FULL;
     private int engagedTicks;
     private @Nullable BehaviorProfile behaviorProfile;
@@ -515,7 +518,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     /** Plays a one-shot reaction clip (when the rig has one) and its call. */
     public void playCue(BehaviorAction.Cue cue) {
-        boolean clip = cue == BehaviorAction.Cue.WARN ? !species.warningClip().equals(species.idle) : clips().has(cue.role());
+        // Lying down and getting up are played by the movement controller, from the synced action.
+        boolean posture = cue == BehaviorAction.Cue.SETTLE || cue == BehaviorAction.Cue.WAKE;
+        boolean clip = cue == BehaviorAction.Cue.WARN ? !species.warningClip().equals(species.idle) : !posture && clips().has(cue.role());
         if (clip) triggerAnim("reaction", cue == BehaviorAction.Cue.WARN ? "warn" : cue.key());
         switch (cue) {
             case WARN, STARTLE -> playCreatureSound(CreatureSounds.Role.WARN, 1.0f);
@@ -840,6 +845,18 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             }
             var behavior = behavior();
             var action = action();
+            // Lying down and getting up are this controller's, so the pose one clip ends on is the pose the next starts from.
+            String posture = !liesDown() ? null : action == BehaviorAction.SETTLE ? clips().name(ClipRole.SETTLE)
+                    : action == BehaviorAction.WAKE ? clips().name(ClipRole.WAKE) : null;
+            boolean lying = posture != null || liesDown() && (action == BehaviorAction.SLEEP || action == BehaviorAction.REST);
+            // Without a clip for it (a far animal on its cheap routine, a rig with only the loop) the change is a slower blend.
+            if (lying != wasLying && posture == null) slowBlendUntil = tickCount + 14;
+            wasLying = lying;
+            state.controller().setTransitionTicks(tickCount < slowBlendUntil ? 12 : 5);
+            if (posture != null) {
+                state.setControllerSpeed(1f);
+                return state.setAndContinue(RawAnimation.begin().thenPlayAndHold(posture));
+            }
             if (isLocomoting()) {
                 boolean running = running(action, behavior);
                 String clip = movingClip(running);
@@ -847,7 +864,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
             }
             // Turning in place steps with the rig's own turn clip instead of sliding round on the spot.
-            String turn = !swimming() && Math.abs(bodyTurn) > 0.8f ? turnClip(bodyTurn > 0) : null;
+            String turn = !swimming() && !lying && Math.abs(bodyTurn) > 0.8f ? turnClip(bodyTurn > 0) : null;
             if (turn != null) {
                 var authored = clips().clip(turn);
                 float perTick = authored == null ? 3f : 75f / authored.ticks();
@@ -864,7 +881,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 .triggerableAnim("warn", oneShot(species.warningClip()));
         var book = clips();
         for (var cue : BehaviorAction.Cue.values())
-            if (cue.role() != null && book.has(cue.role())) reaction.triggerableAnim(cue.key(), oneShot(book.name(cue.role())));
+            if (cue.role() != null && cue != BehaviorAction.Cue.SETTLE && cue != BehaviorAction.Cue.WAKE && book.has(cue.role()))
+                reaction.triggerableAnim(cue.key(), oneShot(book.name(cue.role())));
         if (book.has(ClipRole.HURT)) reaction.triggerableAnim("hurt", oneShot(book.name(ClipRole.HURT)));
         registrar.add(reaction);
         registrar.add(new AnimationController<CreatureEntity>("attack", 3, state -> com.geckolib.animation.object.PlayState.STOP)
@@ -884,8 +902,19 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
                 || behavior == BehaviorState.FEED || behavior == BehaviorState.FORAGE || behavior == BehaviorState.DRINK;
     }
 
-    /** The clip a creature holds while it stands: sleeping, resting, eating, threatening or idle. */
+    /**
+     * Whether this creature sleeps and rests lying down: a land sleeper whose rig has a lying loop, out of the
+     * water. Perched flyers and swimmers keep their own clips.
+     */
+    protected boolean liesDown() { return species.sleeps() && !swimming() && clips().has(ClipRole.SLEEP); }
+
+    /** The clip a creature holds while it is not travelling: sleeping, resting, eating, threatening or idle. */
     protected String idleClip(BehaviorAction action, BehaviorState behavior) {
+        if (liesDown()) {
+            // Down only once the bridge is over: while it looks around before sleep it is still on its feet.
+            if (action == BehaviorAction.SLEEP || action == BehaviorAction.REST) return clips().name(ClipRole.SLEEP);
+            if (behavior.sleeping()) return standingClip();
+        }
         if (behavior == BehaviorState.SLEEP || action == BehaviorAction.SLEEP) return species.sleepClip();
         if (behavior == BehaviorState.REST || action == BehaviorAction.REST) {
             String bask = clips().name(ClipRole.REST);

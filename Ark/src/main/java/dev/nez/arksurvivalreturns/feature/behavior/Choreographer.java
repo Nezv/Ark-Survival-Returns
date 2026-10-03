@@ -66,7 +66,9 @@ public final class Choreographer {
         cue = null;
         boolean calm = !from.alarm() && from != BehaviorState.INVESTIGATE;
         if (from.sleeping() && !to.sleeping()) {
-            queue.add(beat(BehaviorAction.WAKE, urgent ? 8 : profile.ticks(Cue.WAKE, 24), urgent ? 0.2 : 0.35));
+            // A rig that gets up with a clip takes that clip's time; cut short it would jump to its feet.
+            queue.add(beat(BehaviorAction.WAKE, urgent ? 8 : profile.ticks(Cue.WAKE, 24),
+                    urgent ? 0.2 : profile.has(Cue.WAKE) ? 0.05 : 0.35));
             calm = true;
         }
         switch (to) {
@@ -98,10 +100,15 @@ public final class Choreographer {
             case SLEEP -> {
                 if (!from.sleeping()) {
                     queue.add(beat(BehaviorAction.LOOK, profile.ticks(Cue.LOOK, 30), 0.3));
-                    if (profile.has(Cue.SETTLE)) queue.add(beat(BehaviorAction.SETTLE, profile.ticks(Cue.SETTLE, 40), 0.1));
+                    if (profile.has(Cue.SETTLE)) queue.add(beat(BehaviorAction.SETTLE, profile.ticks(Cue.SETTLE, 40), 0.05));
                 }
             }
-            case REST -> { if (!from.sleeping()) queue.add(beat(BehaviorAction.IDLE, 30, 0.5)); }
+            case REST -> {
+                if (!from.sleeping()) {
+                    queue.add(beat(BehaviorAction.IDLE, 30, 0.5));
+                    if (profile.has(Cue.SETTLE)) queue.add(beat(BehaviorAction.SETTLE, profile.ticks(Cue.SETTLE, 40), 0.05));
+                }
+            }
             case RETURN_HOME, REGROUP, ROAM -> {
                 if (from.alarm()) queue.add(beat(BehaviorAction.LOOK, profile.ticks(Cue.LOOK, 24), 0.4));
             }

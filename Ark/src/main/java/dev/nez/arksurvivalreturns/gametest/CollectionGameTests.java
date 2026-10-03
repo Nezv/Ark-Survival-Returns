@@ -1,6 +1,9 @@
 package dev.nez.arksurvivalreturns.gametest;
 
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
+import dev.nez.arksurvivalreturns.feature.behavior.Choreographer;
+import dev.nez.arksurvivalreturns.feature.behavior.ClipRole;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureAttackClips;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
@@ -65,11 +68,33 @@ final class CollectionGameTests {
             if (species.landHabitat()) {
                 h.assertTrue(species.minGroup == species.family().minGroup && species.maxGroup == species.family().maxGroup,
                         "Group profile mismatch: " + species);
-                // Rex and Triceratops ship their own sleeping clips; every other land species uses the
-                // authored standing pose so a sleep state always has a real clip to play.
+                // Rex and Triceratops ship their own sleeping clips; every other land species has the
+                // authored standing pose, so a sleep state always has a real clip to play.
                 h.assertTrue(species.sleepClip().equals("Ark-Sleep")
                                 || species == Species.TYRANNOSAURUS || species == Species.TRICERATOPS,
                         "Missing sleep pose: " + species);
+                // A rig with a knock-out sequence sleeps lying down with it instead of standing: the loop, and
+                // the clips that take it down and up again unless the loop is the rig's own sleeping clip.
+                var book = entity.clips();
+                var torpor = dev.nez.arksurvivalreturns.feature.taming.CreatureTorporClips.of(species);
+                if (torpor != null && torpor.loop() != null) {
+                    h.assertTrue(book.has(ClipRole.SLEEP), "Sleeps standing although its rig can lie down: " + species);
+                    h.assertTrue(species == Species.TRICERATOPS || book.has(ClipRole.SETTLE) && book.has(ClipRole.WAKE),
+                            "No clip to lie down or get up with: " + species);
+                }
+                if (book.has(ClipRole.SLEEP)) {
+                    h.assertTrue(book.role(ClipRole.SLEEP).loop(), "The lying sleep clip does not loop: " + species);
+                    var dance = new Choreographer(entity.behaviorProfile(), 7);
+                    dance.enter(BehaviorState.ROAM, BehaviorState.SLEEP, false);
+                    boolean settles = dance.action() == BehaviorAction.SETTLE
+                            || dance.queued().stream().anyMatch(beat -> beat.action() == BehaviorAction.SETTLE);
+                    h.assertTrue(settles == book.has(ClipRole.SETTLE), "Lie-down beat and clip disagree: " + species);
+                    dance.enter(BehaviorState.SLEEP, BehaviorState.ROAM, false);
+                    h.assertTrue(dance.action() == BehaviorAction.WAKE, "Did not wake before roaming: " + species);
+                    if (book.has(ClipRole.WAKE))
+                        h.assertTrue(Math.abs(dance.remaining() - book.roleTicks(ClipRole.WAKE, 0)) <= Math.max(3, book.roleTicks(ClipRole.WAKE, 0) * 0.06),
+                                "The get-up beat is not the length of its clip: " + species + " " + dance.remaining());
+                }
             }
             if (species.swimmer())
                 h.assertTrue(species.swimIdle() != null && species.swimWalk() != null && species.swimRun() != null,
