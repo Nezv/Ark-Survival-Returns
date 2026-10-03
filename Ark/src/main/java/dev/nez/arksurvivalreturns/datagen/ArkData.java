@@ -138,10 +138,12 @@ public final class ArkData implements DataProvider {
             en.put("debug." + NS + "." + debugKeys[i], debugEn[i]);
             pt.put("debug." + NS + "." + debugKeys[i], debugPt[i]);
         }
-        // Preserve the vanilla scope's separate inventory and held models.
+        // The inventory icon is the Ark sprite (tools/build_cosy_items.py); in hand it stays the vanilla scope.
+        put("assets/" + NS + "/models/item/debug_spyglass", Map.of("parent", "minecraft:item/generated",
+                "textures", Map.of("layer0", NS + ":item/debug_spyglass")));
         put("assets/" + NS + "/items/debug_spyglass", Map.of("model", Map.of("type", "minecraft:select",
                 "property", "minecraft:display_context", "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
-                        "model", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass"))),
+                        "model", Map.of("type", "minecraft:model", "model", NS + ":item/debug_spyglass"))),
                 "fallback", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass_in_hand"))));
         en.put("itemGroup." + NS, "Ark Survival Returns"); pt.put("itemGroup." + NS, "Ark Survival Returns");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
@@ -204,16 +206,16 @@ public final class ArkData implements DataProvider {
         for (int i = 0; i < ids.length; i++) {
             model(ids[i]); en.put("item." + NS + "." + ids[i], names[i]); pt.put("item." + NS + "." + ids[i], portuguese[i]);
         }
-        // Tranquilizer arrow: reuses the vanilla arrow art, so no new texture is required.
+        // Tranquilizer arrow: the vanilla arrow with a narcotic head (tools/build_cosy_items.py).
         put("assets/" + NS + "/models/item/tranquilizer_arrow", Map.of("parent", "minecraft:item/generated",
-                "textures", Map.of("layer0", "minecraft:item/arrow")));
+                "textures", Map.of("layer0", NS + ":item/tranquilizer_arrow")));
         put("assets/" + NS + "/items/tranquilizer_arrow", Map.of("model", Map.of("type", "minecraft:model",
                 "model", NS + ":item/tranquilizer_arrow")));
         en.put("item." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
         pt.put("item." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
-        // Companion whistle: reuses the vanilla goat horn art, so no new texture is required.
+        // Companion whistle: a carved whistle on a loop of cord (tools/build_cosy_items.py).
         put("assets/" + NS + "/models/item/companion_whistle", Map.of("parent", "minecraft:item/generated",
-                "textures", Map.of("layer0", "minecraft:item/goat_horn")));
+                "textures", Map.of("layer0", NS + ":item/companion_whistle")));
         put("assets/" + NS + "/items/companion_whistle", Map.of("model", Map.of("type", "minecraft:model",
                 "model", NS + ":item/companion_whistle")));
         en.put("item." + NS + ".companion_whistle", "Companion Whistle");
@@ -224,9 +226,9 @@ public final class ArkData implements DataProvider {
         pt.put("companion." + NS + ".order.stay", "Seu companheiro fica aqui");
         en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
         pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
-        // Field Journal: reuses the vanilla book art, so no new texture is required.
+        // Field Journal: a leather journal with a track pressed into the cover (tools/build_cosy_items.py).
         put("assets/" + NS + "/models/item/field_journal", Map.of("parent", "minecraft:item/generated",
-                "textures", Map.of("layer0", "minecraft:item/book")));
+                "textures", Map.of("layer0", NS + ":item/field_journal")));
         put("assets/" + NS + "/items/field_journal", Map.of("model", Map.of("type", "minecraft:model",
                 "model", NS + ":item/field_journal")));
         en.put("item." + NS + ".field_journal", "Field Journal");
@@ -525,9 +527,9 @@ public final class ArkData implements DataProvider {
 
     /** Camp gear: bedroll, field medicine, primitive tools and the plant fiber route. */
     private void camp() {
-        // No new PNGs: each model reuses a vanilla texture that reads as the primitive equivalent.
-        vanillaModel("plant_fiber", "minecraft:item/wheat");
-        vanillaModel("fiber_bandage", "minecraft:item/paper");
+        // Hand-drawn sprites (tools/build_cosy_items.py): a tied sheaf of fibre and a plain woven roll.
+        vanillaModel("plant_fiber", NS + ":item/plant_fiber");
+        vanillaModel("fiber_bandage", NS + ":item/fiber_bandage");
         // Knapped flint blade bound to a haft (tools/build_prehistoric_icons.py), held like a tool.
         vanillaModel("flint_knife", NS + ":item/flint_knife");
         put("assets/" + NS + "/models/item/flint_knife", Map.of("parent", "minecraft:item/handheld",
@@ -594,10 +596,10 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS, NS, NS));
     }
 
-    /** Cargo rigs: the two harness tiers and their primitive recipes. Vanilla textures stand in. */
+    /** Cargo rigs: the two harness tiers and their primitive recipes (sprites: tools/build_cosy_items.py). */
     private void cargo() {
-        vanillaModel("pack_harness", "minecraft:item/saddle");
-        vanillaModel("reinforced_harness", "minecraft:item/iron_horse_armor");
+        vanillaModel("pack_harness", NS + ":item/pack_harness");
+        vanillaModel("reinforced_harness", NS + ":item/reinforced_harness");
         json("data/" + NS + "/recipe/pack_harness", """
                 {"type":"minecraft:crafting_shapeless","category":"equipment","group":"pack_harness",
                  "ingredients":["minecraft:leather","minecraft:leather","minecraft:leather","%s:plant_fiber","%s:plant_fiber"],
@@ -614,7 +616,7 @@ public final class ArkData implements DataProvider {
     private void farm() {
         CampAssetsData.farm(this::put);
         put("data/" + NS + "/loot_table/blocks/drying_rack", PrimitiveData.lowerHalfLoot("drying_rack"));
-        vanillaModel("dried_ration", "minecraft:item/bread");
+        vanillaModel("dried_ration", NS + ":item/dried_ration");
         json("data/" + NS + "/recipe/drying_rack", """
                 {"type":"minecraft:crafting_shapeless","category":"misc","group":"drying_rack",
                  "ingredients":["minecraft:stick","minecraft:stick","minecraft:stick","minecraft:stick","%s:plant_fiber"],
@@ -668,8 +670,8 @@ public final class ArkData implements DataProvider {
                                 "minecraft:cobblestone","%s:plant_fiber","%s:plant_fiber"],
                  "result":{"count":1,"id":"%s:cooking_pot"}}
                 """.formatted(NS, NS, NS));
-        vanillaModel("hearty_stew", "minecraft:item/rabbit_stew");
-        vanillaModel("trail_mix", "minecraft:item/cookie");
+        vanillaModel("hearty_stew", NS + ":item/hearty_stew");
+        vanillaModel("trail_mix", NS + ":item/trail_mix");
     }
 
     /**
@@ -678,8 +680,8 @@ public final class ArkData implements DataProvider {
      */
     private void medicine() {
         model("narcotics");
-        vanillaModel("concentrated_sedative", "minecraft:item/gunpowder");
-        vanillaModel("improved_tranquilizer_arrow", "minecraft:item/spectral_arrow");
+        vanillaModel("concentrated_sedative", NS + ":item/concentrated_sedative");
+        vanillaModel("improved_tranquilizer_arrow", NS + ":item/improved_tranquilizer_arrow");
         // The recipe gates rename the vanilla Stick: the leaves drop it, and it is the twig of the spec.
         put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig"));
         put("assets/minecraft/lang/pt_br", Map.of("item.minecraft.stick", "Graveto"));
@@ -866,7 +868,7 @@ public final class ArkData implements DataProvider {
             full.add(nestBox(6,1,6,10,4,10,"egg"));full.add(nestBox(7,4,7,9,5,9,"egg"));
             put("assets/"+NS+"/models/block/"+id, Map.of("textures",textures,"elements",full));
             put("assets/"+NS+"/blockstates/"+id, Map.of("variants",Map.of("egg=true",Map.of("model",NS+":block/"+id),"egg=false",Map.of("model",NS+":block/"+id+"_empty"))));
-            put("assets/"+NS+"/models/item/"+species.id+"_egg",Map.of("parent","minecraft:item/generated","textures",Map.of("layer0","minecraft:item/turtle_egg")));
+            put("assets/"+NS+"/models/item/"+species.id+"_egg",Map.of("parent","minecraft:item/generated","textures",Map.of("layer0",NS+":item/"+species.id+"_egg")));
             put("assets/"+NS+"/items/"+species.id+"_egg",Map.of("model",Map.of("type","minecraft:model","model",NS+":item/"+species.id+"_egg")));
             json("data/"+NS+"/loot_table/blocks/"+id, """
                 {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[

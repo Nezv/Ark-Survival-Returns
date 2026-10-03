@@ -152,7 +152,7 @@ final class StationData {
     }
 
     static void itemModels(BiConsumer<String, Object> put) {
-        for (var entry : Map.of("herbal_bandage", NS + ":item/herbal_bandage", "healing_mixture", "minecraft:item/honey_bottle",
+        for (var entry : Map.of("herbal_bandage", NS + ":item/herbal_bandage", "healing_mixture", NS + ":item/healing_mixture",
                 "vitamins", NS + ":item/vitamins").entrySet()) {
             put.accept(ASSETS + "models/item/" + entry.getKey(), Map.of("parent", "minecraft:item/generated",
                     "textures", Map.of("layer0", entry.getValue())));
