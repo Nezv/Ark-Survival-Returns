@@ -489,7 +489,7 @@ ITEM_GROUPS = [
     ('Keratin tier', ['keratin', 'keratin_spear', 'keratin_helmet', 'keratin_chestplate', 'keratin_leggings', 'keratin_boots']),
     ('Food and meat', ['dried_meat', 'dried_ration', 'hearty_stew', 'trail_mix', 'tintoberry', 'amarberry', 'azulberry', 'narcoberry']),
     ('Mortar & Pestle', ['narcotics', 'herbal_bandage', 'healing_mixture', 'fiber_bandage']),
-    ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow', 'companion_whistle',
+    ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow',
                           'field_journal', 'pack_harness', 'reinforced_harness']),
     ('Guardian', ['allosaur_heart', 'workshop_schematic', 'guardian_trophy']),
 ]

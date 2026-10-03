@@ -1,8 +1,8 @@
-"""Cosy item sprites: the nineteen items that still borrowed a vanilla sprite.
+"""Cosy item sprites: the seventeen items that still borrowed a vanilla sprite.
 
-Plant Fiber, the five nest eggs, the Companion Whistle, the Field Journal, the Fiber Bandage, both cargo
-harnesses, the Healing Mixture, the Hearty Stew, the Trail Mix, the Dried Ration, both tranquilizer arrows, the
-Concentrated Sedative and the Debug Spyglass. Hand-pixelled on a 16 px grid and doubled to the 32 px Ark item
+Plant Fiber, the five nest eggs, the Field Journal, the Fiber Bandage, both cargo
+harnesses, the Healing Mixture, the Hearty Stew, the Trail Mix, the Dried Ration, both tranquilizer arrows and
+the Debug Spyglass. Hand-pixelled on a 16 px grid and doubled to the 32 px Ark item
 size, like the other hand-drawn items (build_bronze_age_art.py). The look is warm and soft: rounded shapes, straw,
 twine and stitched leather, and an outline that is a darker shade of whatever it borders instead of one black line.
 The arrows and the spyglass start from the vanilla sprites, so they stay in their families.
@@ -179,46 +179,6 @@ def nest_eggs():
 
 # ------------------------------------------------------------------------------------- taming and cargo
 
-def companion_whistle():
-    """A carved wooden whistle on a loop of red cord."""
-    return sprite(["................",
-                   "........cccc....",
-                   ".......c....C...",
-                   "......c......C..",
-                   "......c......C..",
-                   ".......c....C...",
-                   "........cuuC....",
-                   "........WWWW....",
-                   ".......WWwwwv...",
-                   ".WWWWWWWwkkwv...",
-                   ".WwwwwwwwkwwvV..",
-                   "..vvvvvwwwwwvV..",
-                   ".......vwwwvV...",
-                   "........vvVV....",
-                   "................",
-                   "................"],
-                  {'W': (222, 180, 120), 'w': (190, 144, 88), 'v': (150, 108, 62), 'V': (114, 80, 44), 'k': (70, 46, 26),
-                   'c': (184, 70, 56), 'C': (136, 44, 40), 'u': (222, 180, 84)})
-
-
-HARNESS = ["................",
-           ".....rRRRRRr....",
-           "....rRkRRRkRe...",
-           "....rrkrrrkre...",
-           "...LLLLLLLLLLL..",
-           "..LlltlltlltllS.",
-           "..SSSlllllllSSS.",
-           "..ffff.....ffff.",
-           "..fBBF.....fBBF.",
-           "..FuUF.....FuUF.",
-           "..bbbd.....bbbd.",
-           "..dddS.....Sddd.",
-           "....SSl...lSS...",
-           "......SuUS......",
-           "................",
-           "................"]
-
-
 def pack_harness():
     """A girth of stitched tan leather: a saddlebag on each flank, a rolled blanket lashed on top, a brass buckle."""
     return sprite(HARNESS, {'R': (236, 224, 194), 'r': (194, 178, 142), 'e': (168, 148, 110), 'k': (110, 72, 42),
@@ -362,31 +322,10 @@ def healing_mixture():
                    't': (160, 120, 68), **GLASS, **LEAF})
 
 
-def concentrated_sedative():
-    """A small jar of dark narcotic concentrate under a tied cloth cover."""
-    return sprite(["................",
-                   "................",
-                   "................",
-                   ".....cCCCCc.....",
-                   "....cCCCCCCc....",
-                   "....tTttTttt....",
-                   ".....c.cc.c.....",
-                   "....gwppppxg....",
-                   "...gwpPpppppg...",
-                   "...gwpppPpppg...",
-                   "...gwppppppPg...",
-                   "...gwpPppppxg...",
-                   "....gppppppg....",
-                   ".....gggggg.....",
-                   "................",
-                   "................"],
-                  {'c': (214, 196, 160), 'C': (240, 228, 200), 'p': (116, 58, 140), 'P': (70, 34, 92), **TWINE, **GLASS})
-
-
 # --------------------------------------------------------------------------------------------- arrows
 
 def tranquilizer_arrow(improved=False):
-    """The vanilla arrow with a narcotic head: dark purple, or the concentrated dose, bright, with gold bindings."""
+    """The vanilla arrow with a narcotic head: dark purple, or the improved dose, bright, with gold bindings."""
     image = vanilla('item/arrow')
     px = image.load()
     dark, mid, light, glint = (70, 34, 92), (116, 58, 140), (160, 96, 184), (214, 170, 232)
@@ -423,7 +362,6 @@ def sprites():
         'plant_fiber': plant_fiber(),
         'fiber_bandage': fiber_bandage(),
         **nest_eggs(),
-        'companion_whistle': companion_whistle(),
         'field_journal': field_journal(),
         'pack_harness': pack_harness(),
         'reinforced_harness': reinforced_harness(),
@@ -431,7 +369,6 @@ def sprites():
         'trail_mix': trail_mix(),
         'dried_ration': dried_ration(),
         'healing_mixture': healing_mixture(),
-        'concentrated_sedative': concentrated_sedative(),
         'tranquilizer_arrow': tranquilizer_arrow(),
         'improved_tranquilizer_arrow': tranquilizer_arrow(improved=True),
         'debug_spyglass': debug_spyglass(),

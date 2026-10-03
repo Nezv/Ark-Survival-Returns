@@ -15,6 +15,7 @@
         {"item": "minecraft:shield", "level": 4, "cost": {"#minecraft:planks": 6, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 2}},
         {"item": "minecraft:arrow", "count": 4, "level": 3, "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 1, "minecraft:feather": 1}},
         {"item": "arksurvivalreturns:tranquilizer_arrow", "count": 4, "level": 8, "cost": {"minecraft:arrow": 4, "arksurvivalreturns:narcotics": 1, "minecraft:bone": 1}},
+        {"item": "arksurvivalreturns:improved_tranquilizer_arrow", "level": 12, "cost": {"minecraft:arrow": 1, "arksurvivalreturns:narcotics": 3, "minecraft:bone": 1}},
         {"item": "arksurvivalreturns:explosive_arrow", "count": 4, "level": 16, "cost": {"minecraft:arrow": 4, "minecraft:gunpowder": 1}},
         {"item": "minecraft:fishing_rod", "level": 2, "cost": {"minecraft:stick": 3, "minecraft:string": 2, "minecraft:bone": 1}},
         {"item": "arksurvivalreturns:fire_starter", "cost": {"minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 2}}

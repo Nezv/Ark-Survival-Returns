@@ -168,17 +168,17 @@ final class FarmGameTests {
         }
     }
 
-    /** Medicine without a station: the concentrated dose outranks the berry and the improved arrow. */
+    /** Sedative doses: Narcotics outrank the berry, and each arrow uses its own configured dose. */
     static void medicine(GameTestHelper h) {
         var berry = (dev.nez.arksurvivalreturns.feature.taming.SedativeItem) ModContent.BERRIES.get("narcoberry").get();
-        var concentrated = ModContent.CONCENTRATED_SEDATIVE.get();
+        var narcotics = ModContent.NARCOTICS.get();
         var basicArrow = ModContent.TRANQUILIZER_ARROW_ITEM.get();
         var improvedArrow = ModContent.IMPROVED_TRANQUILIZER_ARROW_ITEM.get();
-        h.assertTrue(concentrated.potency() > berry.potency(), "The concentrated sedative must be stronger");
+        h.assertTrue(narcotics.potency() > berry.potency(), "Narcotics must be stronger than the berry");
         h.assertTrue(basicArrow.potency() == Config.TRANQUILIZER_ARROW_POTENCY.get(),
                 "The baseline arrow must use the configured arrow dose");
-        h.assertTrue(improvedArrow.potency() == Config.CONCENTRATED_SEDATIVE_POTENCY.get(),
-                "The improved arrow must use the concentrated dose");
+        h.assertTrue(improvedArrow.potency() == Config.IMPROVED_TRANQUILIZER_ARROW_POTENCY.get(),
+                "The improved arrow must use its configured dose");
         h.succeed();
     }
 

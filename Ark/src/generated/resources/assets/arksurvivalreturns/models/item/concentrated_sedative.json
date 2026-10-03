@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "arksurvivalreturns:item/concentrated_sedative"
-  }
-}

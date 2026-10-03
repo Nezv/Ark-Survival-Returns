@@ -105,7 +105,6 @@ ITEMS = {
     'leather': ('Leather', 'mc:item/leather', None, None),
     'tranq_arrow': ('Tranq Arrow', 'mc:item/arrow', 'standin', None),
     'improved_tranq': ('Improved Tranq Arrow', 'mc:item/spectral_arrow', 'standin', None),
-    'conc_sedative': ('Concentrated Sedative', 'mc:item/gunpowder', 'standin', None),
     'lead': ('Lead', 'mc:item/lead', None, None),
     'pack_harness': ('Pack Harness', 'mc:item/saddle', 'standin', None),
     'reinforced_harness': ('Reinforced Harness', 'mc:item/iron_horse_armor', 'standin', None),
@@ -307,8 +306,8 @@ SPINE = [
             'The vanilla arrow recipe now takes a Sharp Rock; flint no longer tips arrows.'),
         row('', 'now', [i('arrow', 4), i('narcotics'), i('bone')], [i('tranq_arrow', 4)], 'shapeless',
             'Narcotics tip the tranquilizer arrow (Q7).'),
-        row('', 'cut', [i('tranq_arrow', 4), i('conc_sedative')], [i('improved_tranq', 4)], 'shapeless',
-            'Waits for the Bronze Age with the Concentrated Sedative (Q7).'),
+        row('', 'now', [i('arrow'), i('narcotics', 3), i('bone')], [i('improved_tranq')], 'shapeless',
+            'Three Narcotics and a bone on one arrow.'),
         row('', 'now', [i('fiber', 5)], [i('lead')], 'shaped'),
         row('', 'now', [i('leather', 3), i('fiber', 2)], [i('pack_harness')], 'shapeless'),
         row('', 'now', [i('pack_harness'), i('leather'), i('flint'), i('fiber', 2)], [i('reinforced_harness')], 'shapeless'),
@@ -380,8 +379,6 @@ SPINE = [
         row('', 'now', [i('dried_food', 2), i('berry', 2)], [i('trail_mix', val='speed')], '4 slots'),
     ], item='cooking_pot'),
     node('medbench', 'station', 'Medicine Bench', 'Iron Age · medicine to be designed', 'cube', [
-        row('', 'cut', [i('blackberry', 4), i('fiber')], [i('conc_sedative')], 'shapeless',
-            'The Concentrated Sedative waits for the Bronze Age (Q7); nothing makes it now.'),
     ], item='medicine_bench'),
     node('mortar', 'station', 'Mortar & Pestle', 'grinds herbs · makes nothing else', 'cube', [
         row('1.2.1', 'now', [i('blackberry', 4)], [i('narcotics', 4)], 'grind', 'Blackberries grind straight into Narcotics (Q7).'),
@@ -589,7 +586,6 @@ CUTS = [
         'Crusher <b>ore doubling</b> and <b>flint → gunpowder</b>',
     ]),
     ('Moved to a later age', [
-        '<b>Concentrated Sedative</b> and the <b>Improved Tranquilizer Arrow</b>: Bronze Age',
         '<b>Gunpowder</b>: Bronze Age, from sulphur and cinnabar crystals in caves (F15)',
         '<b>Medicine Bench</b>: Iron Age, medicine to be designed',
     ]),
@@ -631,7 +627,7 @@ DECISIONS = [
     ('Q7', 'Decided', 'Sedative chain',
      'Blackberry, Narcotics and the tranquilizer arrows.',
      'Done: Blackberries grind into Narcotics in the Mortar & Pestle, and Narcotics tip the Tranquilizer Arrow. '
-     'The Concentrated Sedative and the Improved Tranquilizer Arrow wait for the Bronze Age.'),
+     'The Improved Tranquilizer Arrow takes three Narcotics, a bone and an arrow.'),
     ('Q8', 'Decided', 'Twig',
      'Twig and Stick overlapped.',
      'Done: the vanilla Stick is renamed Twig. Still open: the Drying Rack recipe (2 logs + 4 twigs proposed).'),

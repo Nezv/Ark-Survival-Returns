@@ -109,7 +109,7 @@ public final class ArkData implements DataProvider {
         // Carried-mass categories. NeoForge common groups cover whole material families; block items
         // without a category default to one unit and everything else scales with its stack size.
         tag("item/mass/light", "string", "feather", "torch", "stick", "flint", "bone",
-                NS + ":plant_fiber", NS + ":fiber_bandage", NS + ":companion_whistle");
+                NS + ":plant_fiber", NS + ":fiber_bandage");
         tag("item/mass/bulk", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry",
                 NS + ":field_journal", "sweet_berries", "glow_berries", "egg", "snowball", "paper",
                 "wheat_seeds", "beetroot_seeds", "melon_seeds", "pumpkin_seeds", "torchflower_seeds", "pitcher_pod");
@@ -213,13 +213,6 @@ public final class ArkData implements DataProvider {
                 "model", NS + ":item/tranquilizer_arrow")));
         en.put("item." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
         pt.put("item." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
-        // Companion whistle: a carved whistle on a loop of cord (tools/build_cosy_items.py).
-        put("assets/" + NS + "/models/item/companion_whistle", Map.of("parent", "minecraft:item/generated",
-                "textures", Map.of("layer0", NS + ":item/companion_whistle")));
-        put("assets/" + NS + "/items/companion_whistle", Map.of("model", Map.of("type", "minecraft:model",
-                "model", NS + ":item/companion_whistle")));
-        en.put("item." + NS + ".companion_whistle", "Companion Whistle");
-        pt.put("item." + NS + ".companion_whistle", "Apito de companheiro");
         en.put("companion." + NS + ".order.follow", "Your companion follows you");
         pt.put("companion." + NS + ".order.follow", "Seu companheiro segue voc\u00ea");
         en.put("companion." + NS + ".order.stay", "Your companion stays here");
@@ -350,7 +343,8 @@ public final class ArkData implements DataProvider {
         }
         tag("item/taming/raw_meat", rawMeat.toArray(String[]::new));
         tag("item/taming/fish", "cod", "salmon", NS + ":" + dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.MARINE.rawId());
-        tag("item/taming/sedative", NS + ":narcoberry", NS + ":narcotics", NS + ":tranquilizer_arrow");
+        tag("item/taming/sedative", NS + ":narcoberry", NS + ":narcotics", NS + ":tranquilizer_arrow",
+                NS + ":improved_tranquilizer_arrow");
         tag("item/taming/knockout_food", "#" + NS + ":taming/plant_food", "#" + NS + ":taming/raw_meat",
                 "#" + NS + ":taming/fish");
         json("data/" + NS + "/recipe/tranquilizer_arrow", """
@@ -676,13 +670,9 @@ public final class ArkData implements DataProvider {
         vanillaModel("trail_mix", NS + ":item/trail_mix");
     }
 
-    /**
-     * Narcotics come from the Mortar & Pestle (StationData). The Concentrated Sedative and the Improved
-     * Tranquilizer Arrow wait for the Bronze Age: the items stay registered, but nothing makes them yet.
-     */
+    /** Narcotics come from the Mortar & Pestle (StationData); the Armoury makes both tranquilizer arrows. */
     private void medicine() {
         model("narcotics");
-        vanillaModel("concentrated_sedative", NS + ":item/concentrated_sedative");
         vanillaModel("improved_tranquilizer_arrow", NS + ":item/improved_tranquilizer_arrow");
         // The recipe gates rename the vanilla Stick: the leaves drop it, and it is the twig of the spec.
         put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig"));
@@ -815,8 +805,6 @@ public final class ArkData implements DataProvider {
         pt.put("block." + NS + ".narcoberry_bush", "Arbusto de baga preta");
         en.put("item." + NS + ".narcotics", "Narcotics");
         pt.put("item." + NS + ".narcotics", "Narcóticos");
-        en.put("item." + NS + ".concentrated_sedative", "Concentrated Sedative");
-        pt.put("item." + NS + ".concentrated_sedative", "Sedativo concentrado");
         en.put("item." + NS + ".improved_tranquilizer_arrow", "Improved Tranquilizer Arrow");
         pt.put("item." + NS + ".improved_tranquilizer_arrow", "Flecha tranquilizante melhorada");
     }

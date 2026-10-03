@@ -1,6 +1,6 @@
 package dev.nez.arksurvivalreturns.feature.companion;
 
-/** Standing orders for a tamed creature. Whistle use cycles them in this order. */
+/** Standing orders for a tamed creature. An order command cycles them in this order. */
 public enum CompanionOrder {
     FOLLOW, STAY, WANDER, WORK;
 

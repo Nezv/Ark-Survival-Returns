@@ -8,7 +8,6 @@
     "minecraft:flint",
     "minecraft:bone",
     "arksurvivalreturns:plant_fiber",
-    "arksurvivalreturns:fiber_bandage",
-    "arksurvivalreturns:companion_whistle"
+    "arksurvivalreturns:fiber_bandage"
   ]
 }

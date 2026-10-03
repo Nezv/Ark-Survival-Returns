@@ -11,7 +11,6 @@ import com.geckolib.util.GeckoLibUtil;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.cargo.CargoProfiles;
 import dev.nez.arksurvivalreturns.feature.companion.CompanionGoal;
-import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
 import dev.nez.arksurvivalreturns.feature.mass.MassService;
 import dev.nez.arksurvivalreturns.feature.recorder.Row;
 import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
@@ -277,17 +276,6 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             held.consume(1, player);
             return InteractionResult.SUCCESS;
         }
-        // The whistle owns orders and petting; everything else keeps the mount and inventory contract.
-        if (player.getItemInHand(hand).is(ModContent.COMPANION_WHISTLE.get())) {
-            if (!owner && !TribeService.canCommand(this, player)) {
-                denied(player, "taming.arksurvivalreturns.denied.command");
-                return InteractionResult.PASS;
-            }
-            if (client) return InteractionResult.SUCCESS;
-            if (player.isSecondaryUseActive()) pet(player);
-            else CompanionService.orderCommand(this, player);
-            return InteractionResult.SUCCESS;
-        }
         if (player.isSecondaryUseActive()) {
             if (!owner && !TribeService.canAccessCargo(this, player)) {
                 denied(player, "taming.arksurvivalreturns.denied.cargo");
@@ -317,11 +305,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return InteractionResult.SUCCESS;
     }
 
-    /** Client guess for a non-owner: the berry heal, the whistle, the cargo sneak-click and mounting a saddled tame. */
+    /** Client guess for a non-owner: the berry heal, the cargo sneak-click and mounting a saddled tame. */
     private boolean strangerMayInteract(Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
         if (held.is(ModContent.BERRIES.get("azulberry").get()) && !player.isSecondaryUseActive() && getHealth() < getMaxHealth()) return true;
-        return held.is(ModContent.COMPANION_WHISTLE.get()) || player.isSecondaryUseActive()
+        return player.isSecondaryUseActive()
                 || isSaddled() && getPassengers().isEmpty() && player.getVehicle() == null;
     }
 
@@ -340,7 +328,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
-    /** A short affectionate response: hearts, a call and attention, on a cooldown to avoid spam. */
+    /** Waits for the command wheel (Dashboard F22). A short affectionate response: hearts, a call and attention, on a cooldown to avoid spam. */
     private void pet(Player player) {
         if (petCooldown > 0) return;
         petCooldown = Config.COMPANION_PET_COOLDOWN_TICKS.get();

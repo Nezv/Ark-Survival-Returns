@@ -244,10 +244,10 @@ final class PrimitiveGameTests {
                 && c.variant().cost().getOrDefault("arksurvivalreturns:plant_fiber", 0) == 9), "The Working Station must make the nine-fiber mattress");
         h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:bedroll")), "The Working Station must make the bedroll");
         h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:mattress")).isEmpty(), "A grid must not make the mattress");
-        // Retired vanilla recipes and the Bronze Age items.
+        // Retired vanilla recipes; the improved arrow is an Armoury craft, never a grid recipe.
         for (String id : List.of("minecraft:stone_pickaxe", "minecraft:stone_sword", "minecraft:stone_spear", "minecraft:wooden_spear",
                 "minecraft:campfire", "arksurvivalreturns:cobblestone_from_rocks", "arksurvivalreturns:stone_knife",
-                "arksurvivalreturns:concentrated_sedative", "arksurvivalreturns:improved_tranquilizer_arrow")) {
+                "arksurvivalreturns:improved_tranquilizer_arrow")) {
             h.assertTrue(recipes.byKey(recipe(id)).isEmpty(), "Recipe should be gone: " + id);
         }
         // Blackberries grind into Narcotics at the Mortar & Pestle only; Narcotics tip the tranquilizer arrows.

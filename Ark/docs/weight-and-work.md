@@ -70,8 +70,9 @@ movement curve, the HUD denominator and the automation stop:
 
 ## Work orders
 
-Sneak-use the companion whistle cycles FOLLOW → STAY → WANDER → **WORK**; WORK is offered only to
-species with a work profile.
+The standing orders are FOLLOW → STAY → WANDER → **WORK**; WORK is offered only to species with a work
+profile. The whistle item is gone: orders will be given from the item-less command wheel (Dashboard F22),
+and until it ships no survival input issues them.
 
 - **Triceratops (forage):** grazes grass in place, cuts tufts and ferns (destroyed, no vanilla drops)
   and resets ripe sweet-berry bushes. Yields plant fiber every action and a chance at a mod berry,

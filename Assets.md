@@ -52,7 +52,6 @@ No new PNG is shipped for these; the model or definition points at a vanilla tex
 
 | Ark asset | Vanilla source | What it is | A dedicated asset could |
 |---|---|---|---|
-| Companion Whistle | `item/goat_horn` | Tames and cycles orders | Carved bone whistle model |
 | Field Journal | `item/book` | Opens the FTB journal | Bound journal with strap |
 | Tranquilizer Arrow | vanilla arrow / tipped-arrow renderer | Sedative projectile | Dart-and-vial model |
 | Plant Fiber | `item/wheat` | Grass gather material | Bundled fiber sprite |

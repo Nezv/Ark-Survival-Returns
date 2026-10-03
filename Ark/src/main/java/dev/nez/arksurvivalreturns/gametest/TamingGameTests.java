@@ -142,6 +142,10 @@ final class TamingGameTests {
                 && c.variant().count() == 4 && c.variant().cost().equals(java.util.Map.of("minecraft:arrow", 4,
                         "arksurvivalreturns:narcotics", 1, "minecraft:bone", 1))),
                 "The Armoury must tip four arrows with Narcotics and bone");
+        h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:improved_tranquilizer_arrow")
+                && c.variant().count() == 1 && c.variant().cost().equals(java.util.Map.of("minecraft:arrow", 1,
+                        "arksurvivalreturns:narcotics", 3, "minecraft:bone", 1))),
+                "The Armoury must make the improved arrow from three Narcotics, a bone and an arrow");
     }
 
     /** The generated Java tables must still agree with the on-disk audit reports. */

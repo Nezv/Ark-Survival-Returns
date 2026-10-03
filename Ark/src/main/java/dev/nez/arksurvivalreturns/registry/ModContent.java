@@ -83,22 +83,14 @@ public final class ModContent {
     public static final DeferredItem<SedativeArrowItem> TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "tranquilizer_arrow", SedativeArrowItem::new, p -> p.stacksTo(64));
     /** Narcotics: Blackberries ground in the Mortar & Pestle; the stronger dose that tips tranquilizer arrows. */
-    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem> NARCOTICS =
-            ITEMS.registerItem("narcotics", dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem::new,
+    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.NarcoticsItem> NARCOTICS =
+            ITEMS.registerItem("narcotics", dev.nez.arksurvivalreturns.feature.taming.NarcoticsItem::new,
                     p -> p.stacksTo(64));
-    /** Concentrated sedative: kept for the Bronze Age redesign; nothing makes it in the Prehistoric age. */
-    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem> CONCENTRATED_SEDATIVE =
-            ITEMS.registerItem("concentrated_sedative",
-                    dev.nez.arksurvivalreturns.feature.taming.ConcentratedSedativeItem::new, p -> p.stacksTo(16));
-    /** Improved tranquilizer arrow: the concentrated dose in arrow form. */
+    /** Improved tranquilizer arrow: three Narcotics and a bone on one arrow, made at the Armoury. */
     public static final DeferredItem<SedativeArrowItem> IMPROVED_TRANQUILIZER_ARROW_ITEM = ITEMS.registerItem(
             "improved_tranquilizer_arrow",
-            p -> new SedativeArrowItem(p, dev.nez.arksurvivalreturns.Config.CONCENTRATED_SEDATIVE_POTENCY::get),
+            p -> new SedativeArrowItem(p, dev.nez.arksurvivalreturns.Config.IMPROVED_TRANQUILIZER_ARROW_POTENCY::get),
             p -> p.stacksTo(64));
-    /** Companion order whistle: cycles FOLLOW/STAY/WANDER on a tamed creature, sneak-use pets it. */
-    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem> COMPANION_WHISTLE =
-            ITEMS.registerItem("companion_whistle",
-                    dev.nez.arksurvivalreturns.feature.companion.CompanionWhistleItem::new, p -> p.stacksTo(1));
     /** Field Journal: opens the tribe's survival journal (the FTB Quests book). */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem> FIELD_JOURNAL =
             ITEMS.registerItem("field_journal",
@@ -259,9 +251,7 @@ public final class ModContent {
                     BERRIES.values().forEach(i -> output.accept(i.get()));
                     output.accept(NARCOTICS.get());
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
-                    output.accept(CONCENTRATED_SEDATIVE.get());
                     output.accept(IMPROVED_TRANQUILIZER_ARROW_ITEM.get());
-                    output.accept(COMPANION_WHISTLE.get());
                     output.accept(FIELD_JOURNAL.get());
                     output.accept(PLANT_FIBER.get());
                     dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.displayItems(output);

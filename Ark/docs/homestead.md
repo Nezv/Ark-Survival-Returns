@@ -63,10 +63,10 @@ to worker jobs. Batch counts are per station and configurable.
 ## Field medicine
 
 The **Mortar & Pestle** (a rock over three cobblestone) grinds four Blackberries into four **Narcotics**
-(`concentratedSedativePotency`, default 100), which can be eaten or swung like the berry and tip the
+(`narcoticsPotency`, default 100), which can be eaten or swung like the berry and tip the
 **tranquilizer arrow** (four arrows, Narcotics and a bone). It also mixes the herbal remedies: the Herbal
-Bandage and the Healing Mixture. The **concentrated sedative** and the **improved tranquilizer arrow** stay
-registered for the Bronze Age, but nothing makes them yet; the Medicine Bench waits for the Iron Age.
+Bandage and the Healing Mixture. The Armoury also makes the **improved tranquilizer arrow** (three Narcotics,
+a bone and one arrow; `improvedTranquilizerArrowPotency`, default 100).
 
 ## Smelting and storage
 

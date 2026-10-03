@@ -93,7 +93,7 @@ What they add that interacts with Ark's design (decisions for P03/P04):
 ## Acceptance checklist
 
 1. Integrated server starts with no missing dependency, mixin or registry error.
-2. Horse: bond grows, command wheel, roster, cart; Ark's companion whistle ignores horses.
+2. Horse: bond grows, command wheel, roster, cart; Ark's tame orders ignore horses.
 3. Horse ride + tamed Ark creature follow + dismount: no AI errors.
 4. Monolith: structure generates, research step completes, blessing applies; Ark HUD, downed state
    still behave.

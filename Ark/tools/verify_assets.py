@@ -105,8 +105,7 @@ def main():
                 check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
-    # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion
-    # whistle, the field journal, four camp items, two cargo harnesses,
+    # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrows, the field journal, four camp items, two cargo harnesses,
     # three homestead items (trough, drying rack, dried ration), two medicine items, three kitchen
     # items (cooking pot, hearty stew, trail mix) and nine additional wood variants of the feeding trough.
     definitions = list((generated/'assets/arksurvivalreturns/items').glob('*.json'))

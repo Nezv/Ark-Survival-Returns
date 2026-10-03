@@ -44,10 +44,10 @@ final class CompanionGameTests {
         h.assertTrue(CompanionService.of(creature).order() == CompanionOrder.STAY, "STAY was not stored");
         h.assertTrue(creature.blockPosition().equals(CompanionService.of(creature).anchor()), "STAY did not anchor");
         CompanionService.orderCommand(creature, owner);
-        h.assertTrue(CompanionService.of(creature).order() == CompanionOrder.WANDER, "Whistle did not cycle to WANDER");
+        h.assertTrue(CompanionService.of(creature).order() == CompanionOrder.WANDER, "The order command did not cycle to WANDER");
         CompanionService.orderCommand(creature, owner);
         h.assertTrue(CompanionService.of(creature).order() == CompanionOrder.FOLLOW
-                && CompanionService.of(creature).anchor() == null, "Whistle did not cycle back to FOLLOW");
+                && CompanionService.of(creature).anchor() == null, "The order command did not cycle back to FOLLOW");
         CompanionService.setOrder(creature, CompanionOrder.WANDER);
         BlockPos anchor = CompanionService.of(creature).anchor();
         h.assertTrue(anchor != null, "WANDER did not anchor");
