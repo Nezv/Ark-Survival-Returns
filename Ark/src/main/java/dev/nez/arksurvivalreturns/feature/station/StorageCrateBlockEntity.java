@@ -7,14 +7,13 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-/** 27 slots, the vanilla chest menu, loot-table support; one inventory per crate, never merged. */
+/** 27 slots, a dedicated menu with vanilla chest behavior, loot-table support; one inventory per crate, never merged. */
 public final class StorageCrateBlockEntity extends RandomizableContainerBlockEntity {
     public static final int SIZE = 27;
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
@@ -34,7 +33,7 @@ public final class StorageCrateBlockEntity extends RandomizableContainerBlockEnt
     }
 
     @Override protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
-        return ChestMenu.threeRows(containerId, inventory, this);
+        return new StorageCrateMenu(containerId, inventory, this);
     }
 
     @Override protected void saveAdditional(ValueOutput output) {

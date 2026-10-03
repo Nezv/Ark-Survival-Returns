@@ -25,7 +25,7 @@ public final class ArkUiPack {
                 Component.literal("Ark UI"), PackSource.BUILT_IN, true, Pack.Position.TOP);
     }
 
-    private static boolean enabled() {
+    public static boolean enabled() {
         try {
             return NighttimeClientConfig.ARK_UI.get();
         } catch (IllegalStateException notLoaded) {

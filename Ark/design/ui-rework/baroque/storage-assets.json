@@ -15,11 +15,11 @@
     "#8a8f86"
   ],
   "generator": "tools/build_storage_ui.py",
-  "runtime": "Staged artwork. No Tom resource-pack override or new screen code in this design pass. Dedicated crate screen and Tom overlay/label hooks pending.",
+  "runtime": "Dedicated StorageCrateMenu/Screen; Tom atlas overrides in the built-in Ark UI pack with adaptive StorageFrames and light-label client hooks.",
   "crate": {
     "panelSize": [
       176,
-      166
+      168
     ],
     "textureSize": [
       256,
@@ -27,7 +27,7 @@
     ],
     "frameSize": [
       240,
-      252
+      254
     ],
     "frameDrawOffset": [
       -32,
@@ -171,5 +171,5 @@
     }
   ],
   "labelColor": "#e6e8e1",
-  "integration": "Tom terminals have variable row counts and side controls. Use an adaptive frame renderer for the new border, preserve the source atlas slices, and apply light labels. The supplied full frames preview the standard five storage rows; they are not a drop-in replacement for dynamic-height UI."
+  "integration": "StorageFrames stretches side rails to native panel height and contracts exterior crest/footer to available screen space. Frames render before native panels, floating slots and widgets. Tall terminals reserve ornament space. Native atlas slices and slot hitboxes remain unchanged. In-client visual review pending."
 }

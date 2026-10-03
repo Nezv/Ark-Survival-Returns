@@ -120,8 +120,31 @@ final class StationGameTests {
         int elsewhere = 0;
         for (int i = 0; neighbour != null && i < neighbour.size(); i++) elsewhere += neighbour.getAmountAsInt(i);
         h.assertTrue(neighbour != null && elsewhere == 0, "A joined crate must not show its neighbour's items");
+        // The distinct menu must preserve native chest transfers and the authored panel coordinates.
+        var crate = (StorageCrateBlockEntity) level.getBlockEntity(pos);
+        var cratePlayer = FakePlayerFactory.get(level, new GameProfile(
+                java.util.UUID.fromString("5a60190f-7c15-413d-8585-5c3508790b03"), "CrateUiTest"));
+        cratePlayer.getInventory().clearContent();
+        var crateMenu = crate.createMenu(23, cratePlayer.getInventory(), cratePlayer);
+        h.assertTrue(crateMenu.getType() == ModContent.STORAGE_CRATE_MENU.get(), "Crate must open its dedicated screen type");
+        var clientMenu = new dev.nez.arksurvivalreturns.feature.station.StorageCrateMenu(23, cratePlayer.getInventory());
+        h.assertTrue(crateMenu.slots.size() == 63 && clientMenu.slots.size() == 63, "Crate menu must synchronize all 63 slots");
+        for (int i = 0; i < 63; i++) {
+            var actual = crateMenu.slots.get(i);
+            var remote = clientMenu.slots.get(i);
+            h.assertTrue(actual.x == remote.x && actual.y == remote.y, "Crate client/server slot layouts diverged");
+        }
+        h.assertTrue(crateMenu.slots.get(27).y == 85 && crateMenu.slots.get(54).y == 143,
+                "Player slots must align with the crate texture");
+        h.assertTrue(crateMenu.quickMoveStack(cratePlayer, 0).getCount() == 64 && crate.isEmpty(),
+                "Shift-click must transfer the stack out of the crate");
+        h.assertTrue(crateMenu.quickMoveStack(cratePlayer, 62).getCount() == 64 && crate.getItem(0).getCount() == 64,
+                "Shift-click must transfer the stack back into the crate");
+        crateMenu.removed(cratePlayer);
+        clientMenu.removed(cratePlayer);
+        cratePlayer.getInventory().clearContent();
         // Leave nothing behind: cargo tests nearby pull from any storage in range.
-        if (level.getBlockEntity(pos) instanceof StorageCrateBlockEntity crate) crate.clearContent();
+        crate.clearContent();
         h.setBlock(rel, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         h.setBlock(rel.east(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
 

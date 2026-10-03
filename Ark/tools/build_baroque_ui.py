@@ -2,7 +2,7 @@
 
 Uses P14's original height-field carving, lighting and palette. No generated art.
 Run from Ark: python tools/build_baroque_ui.py. Also called by build_ui_pack.py.
-The crate assets are staged for a dedicated screen; generic_54 is not replaced.
+The crate uses its dedicated screen; generic_54 is not replaced.
 """
 import json
 from pathlib import Path
@@ -212,7 +212,7 @@ def preview(crate_image):
     text(762+(CRATE_MARGIN+8)*scale, 425+(CRATE_TOP+6)*scale, 'Storage Crate', small)
     text(762+(CRATE_MARGIN+8)*scale, 425+(CRATE_TOP+72)*scale, 'Inventory', small, '#8a8f86')
     text(713, 904, '27 slots / Gorgon mask / carved serpent frame', small, '#8a8f86')
-    text(713, 930, 'Dedicated screen asset; runtime hookup pending.', small, '#8a8f86')
+    text(713, 930, 'Dedicated Storage Crate screen / native slot layout.', small, '#8a8f86')
     save(sheet, OUT / 'baroque-ui-preview.png')
 
 
@@ -223,14 +223,14 @@ def build():
     hotbar()
     preview(crate())
     spec = {'scope': 'P16 first asset pass', 'source': 'tools/build_workstation_crests.py',
-            'runtime': {'hotbar': 'Ark UI resource pack', 'buttons': 'Ark UI shared vanilla widget sprites', 'storage_crate': 'Asset only; dedicated screen registration pending. Do not replace generic_54.'},
-            'storage_crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': [176+2*CRATE_MARGIN, 166+CRATE_TOP+CRATE_BOTTOM], 'panelOriginInFrame': [CRATE_MARGIN, CRATE_TOP], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 84], 'hotbarOrigin': [8, 142], 'labelOrigins': [[8, 6], [8, 72]], 'labelColor': PAL['title'], 'frameDrawOffset': [-CRATE_MARGIN, -CRATE_TOP]},
+            'runtime': {'hotbar': 'Ark UI resource pack', 'buttons': 'Ark UI shared vanilla widget sprites', 'storage_crate': 'Dedicated StorageCrateMenu and StorageCrateScreen.'},
+            'storage_crate': {'panelSize': [176, 168], 'textureSize': [256, 256], 'frameSize': [176+2*CRATE_MARGIN, 168+CRATE_TOP+CRATE_BOTTOM], 'panelOriginInFrame': [CRATE_MARGIN, CRATE_TOP], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 85], 'hotbarOrigin': [8, 143], 'labelOrigins': [[8, 6], [8, 74]], 'labelColor': PAL['title'], 'frameDrawOffset': [-CRATE_MARGIN, -CRATE_TOP]},
             'storage_suite': 'design/ui-rework/baroque/storage-assets.json',
             'files': FILES}
     (OUT / 'assets.json').write_text(json.dumps(spec, indent=2) + '\n', encoding='utf-8')
     from build_storage_ui import build as build_storage
     build_storage(refresh_overview=False)
-    print(f'P16: wrote {len(FILES)} assets; Storage Crate screen hookup remains pending.')
+    print(f'P16: wrote {len(FILES)} assets; Storage Crate screen and Tom frames integrated.')
 
 
 if __name__ == '__main__':

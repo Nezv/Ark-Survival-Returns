@@ -1,9 +1,9 @@
 """P16 storage artwork: Gorgon masks, scaled serpents, painting frames and pillars.
 
 Reuses only P14's carving primitives, discrete palette and light, never ornament().
-Tom's source atlases retain their alpha and UV layout. Candidates and outer frames
-ship under Ark's namespace for a future screen hook, not as unreadable dark overrides
-of screens whose label colours/variable-height slicing have not yet been adapted.
+Tom's source atlases retain their alpha and UV layout. The built-in Ark UI pack
+supplies the atlases; StorageFrames draws the adaptive exterior and client mixins
+provide light labels and room for the terminal's tall-mode frame.
 Run: python tools/build_storage_ui.py (also called by build_baroque_ui.py).
 """
 import io
@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui'
 OUT = ROOT / 'design/ui-rework/baroque'
 TOMS = ART / 'storage/toms_storage'
+TOM_PACK = ROOT / 'src/main/resources/resourcepacks/ark_ui/assets/toms_storage/textures/gui'
 CRATE_MARGIN, CRATE_TOP, CRATE_BOTTOM = 32, 50, 36
 ARCHIVE_MARGIN, ARCHIVE_TOP, ARCHIVE_BOTTOM = 44, 64, 36
 FACE, WELL, EDGE = stone.TONES[4], stone.TONES[2], stone.TONES[7]
@@ -52,7 +53,7 @@ def badge(surface, r, cx, cy, symbol):
 
 def coffer_frame():
     from stone_figures import picture_frame, snake, gorgon, face_details
-    w, h = 176, 166
+    w, h = 176, 168
     f = Surface(w, h, CRATE_MARGIN, CRATE_TOP, CRATE_BOTTOM)
     r = stone.Relief()
     picture_frame(r, w, h, width=20)
@@ -107,19 +108,19 @@ def slot(d, x, y):
 def crate_art():
     panel = Image.new('RGBA', (256, 256))
     d = ImageDraw.Draw(panel)
-    d.rectangle((0, 0, 175, 165), fill=FACE, outline=stone.TONES[0])
+    d.rectangle((0, 0, 175, 167), fill=FACE, outline=stone.TONES[0])
     # Stone crosshatching on the narrow label/divider rail, with a clear text inset.
-    for y in (15, 71, 81, 139, 161):
+    for y in (15, 71, 82, 140, 163):
         d.line((4, y, 171, y), fill=stone.TONES[5])
         for x in range(6, 172, 6):
             d.point((x, y), fill=EDGE)
-    for origin, rows in (((8, 18), 3), ((8, 84), 3), ((8, 142), 1)):
+    for origin, rows in (((8, 18), 3), ((8, 85), 3), ((8, 143), 1)):
         for row in range(rows):
             for col in range(9):
                 slot(d, origin[0]+18*col, origin[1]+18*row)
     frame = coffer_frame()
     composite = Image.new('RGBA', frame.size)
-    composite.alpha_composite(panel.crop((0, 0, 176, 166)), (CRATE_MARGIN, CRATE_TOP))
+    composite.alpha_composite(panel.crop((0, 0, 176, 168)), (CRATE_MARGIN, CRATE_TOP))
     composite.alpha_composite(frame)
     return panel, frame, composite
 
@@ -248,7 +249,7 @@ def build(refresh_overview=True):
     save(panel, ART / 'container/storage_crate.png')
     save(frame, ART / 'container/storage_crate_frame.png')
     save(composite, OUT / 'storage-crate-asset.png')
-    crate_preview = panel_preview(panel, frame, (176, 166), (CRATE_MARGIN, CRATE_TOP), 'Storage Crate', 72)
+    crate_preview = panel_preview(panel, frame, (176, 168), (CRATE_MARGIN, CRATE_TOP), 'Storage Crate', 74)
     files, screens = [], {}
     with zipfile.ZipFile(source_jar()) as jar:
         for name, (size, symbol, title, inventory_y) in SPECS.items():
@@ -256,6 +257,7 @@ def build(refresh_overview=True):
             atlas = stone_atlas(source)
             border = archive_frame(*size, symbol)
             save(atlas, TOMS / f'{name}.png')
+            save(atlas, TOM_PACK / f'{name}.png')
             save(border, TOMS / f'{name}_frame.png')
             blank = Image.new('RGBA', border.size)
             blank.alpha_composite(atlas.crop((0, 0, *size)), (ARCHIVE_MARGIN, ARCHIVE_TOP))
@@ -268,22 +270,29 @@ def build(refresh_overview=True):
                           'frameDrawOffset': [-ARCHIVE_MARGIN, -ARCHIVE_TOP], 'symbol': symbol})
         source = Image.open(io.BytesIO(jar.read('assets/toms_storage/textures/gui/side_scrollbar.png'))).convert('RGBA')
         save(stone_atlas(source), TOMS / 'side_scrollbar.png')
+        save(stone_atlas(source), TOM_PACK / 'side_scrollbar.png')
+        # The mod's custom button sprites share the same stone surfaces. Keep icons intact.
+        for name in jar.namelist():
+            prefix = 'assets/toms_storage/textures/gui/sprites/widget/'
+            if name.startswith(prefix) and name.endswith('.png'):
+                source = Image.open(io.BytesIO(jar.read(name))).convert('RGBA')
+                save(stone_atlas(source), TOM_PACK / 'sprites/widget' / Path(name).name)
     previews(crate_preview, screens)
     motif_preview()
     spec = {'style': 'Figurative Gorgon/serpent painting frame and classical colonnade; P14 stone palette and lighting.',
             'palette': stone.TONES, 'generator': 'tools/build_storage_ui.py',
-            'runtime': 'Staged artwork. No Tom resource-pack override or new screen code in this design pass. Dedicated crate screen and Tom overlay/label hooks pending.',
-            'crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': list(frame.size),
+            'runtime': 'Dedicated StorageCrateMenu/Screen; Tom atlas overrides in the built-in Ark UI pack with adaptive StorageFrames and light-label client hooks.',
+            'crate': {'panelSize': [176, 168], 'textureSize': [256, 256], 'frameSize': list(frame.size),
                       'frameDrawOffset': [-CRATE_MARGIN, -CRATE_TOP], 'symbol': 'crate', 'layout': 'Original 27-slot chest coordinates'},
             'toms': files, 'labelColor': '#e6e8e1',
-            'integration': 'Tom terminals have variable row counts and side controls. Use an adaptive frame renderer for the new border, preserve the source atlas slices, and apply light labels. The supplied full frames preview the standard five storage rows; they are not a drop-in replacement for dynamic-height UI.'}
+            'integration': 'StorageFrames stretches side rails to native panel height and contracts exterior crest/footer to available screen space. Frames render before native panels, floating slots and widgets. Tall terminals reserve ornament space. Native atlas slices and slot hitboxes remain unchanged. In-client visual review pending.'}
     (OUT / 'storage-assets.json').write_text(json.dumps(spec, indent=2)+'\n', encoding='utf-8')
     # Refresh the prior three-part overview so it no longer advertises the reused frame.
     if refresh_overview:
         from build_baroque_ui import preview
         preview(composite)
     stone.preview_symbols()
-    print('Gorgon and serpent frames, six Tom panels and reusable stone motifs written; screen integration pending.')
+    print('Gorgon and serpent frames, six active Tom panels, stone widgets and reusable motifs written.')
 
 
 if __name__ == '__main__':

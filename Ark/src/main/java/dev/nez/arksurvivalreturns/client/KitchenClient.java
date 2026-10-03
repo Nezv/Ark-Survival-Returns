@@ -12,6 +12,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 public final class KitchenClient {
     @SubscribeEvent public static void screens(RegisterMenuScreensEvent event) {
         event.register(ModContent.COOKING_POT_MENU.get(), CookingPotScreen::new);
+        event.register(ModContent.STORAGE_CRATE_MENU.get(), StorageCrateScreen::new);
     }
 
     private KitchenClient() {}

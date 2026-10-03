@@ -31,6 +31,9 @@ public final class ModContent {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, ArkSurvivalReturns.MOD_ID);
+    public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.station.StorageCrateMenu>> STORAGE_CRATE_MENU =
+            MENUS.register("storage_crate", () -> IMenuTypeExtension.create((id, inventory, data) ->
+                    new dev.nez.arksurvivalreturns.feature.station.StorageCrateMenu(id, inventory)));
     public static final DeferredHolder<MenuType<?>, MenuType<dev.nez.arksurvivalreturns.feature.station.WorkstationMenu>> WORKSTATION_MENU = MENUS.register(
             "workstation", () -> IMenuTypeExtension.create((id, inventory, data) ->
                     new dev.nez.arksurvivalreturns.feature.station.WorkstationMenu(id, inventory, data.readBlockPos(), data.readUtf(128))));
