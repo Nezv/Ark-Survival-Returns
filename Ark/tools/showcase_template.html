@@ -133,6 +133,41 @@
   .tier p.plain { text-transform: none; }
   .tier .range { font: 600 13px var(--mono); color: var(--ink); }
 
+  /* biomes */
+  .biome-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .biome-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .biome-filters button, .biome-names { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px;
+                                        padding: 6px 14px; font: 600 14px var(--body); cursor: pointer; }
+  .biome-filters button small { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .biome-filters button[aria-pressed="true"], .biome-names[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .biome-filters button[aria-pressed="true"] small { color: inherit; opacity: .7; }
+  .biome-pick { font-size: 14px; color: var(--muted); }
+  .biome-pick select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 10px;
+                       font: 600 14px var(--body); cursor: pointer; }
+  .biomes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  @media (max-width: 1080px) { .biomes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .biomes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .biome { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .biome[hidden] { display: none; }
+  .biome-shot { margin: 0; aspect-ratio: 16 / 9; background: #161814; display: grid; place-items: center; }
+  .biome-shot a { display: block; width: 100%; height: 100%; }
+  .biome-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .biome-shot span { color: #a8b3a0; font-size: 13px; }
+  .biome-body { padding: 10px 12px 12px; display: grid; gap: 6px; }
+  .biome-body h3 { font-size: 16px; line-height: 1.2; overflow-wrap: anywhere; }
+  .biome-source { font: 600 11px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .biome-body > p { font-size: 13px; }
+  .spawns { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: 13px; }
+  .spawns span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .spawns i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+  .biome details { font-size: 13px; }
+  .biome summary { cursor: pointer; font-weight: 600; }
+  .res-list { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 6px; }
+  .res { display: inline-flex; align-items: center; gap: 4px; font: 600 11px/1 var(--body); padding: 3px 7px; border-radius: 999px;
+         background: var(--chip); color: var(--ink); white-space: nowrap; }
+  .res i { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .res.on { box-shadow: 0 0 0 2px var(--ember); }
+
   /* behaviour */
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
   .tabs button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px;
@@ -384,7 +419,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">ARK <span>·</span> SR</a>
     <nav class="nav-links" aria-label="Sections">
-      <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
+      <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#biomes">Biomes</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
       <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#recipes">Recipes</a><a href="#accessories">Accessories</a>
       <a href="#models">Models</a><a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
@@ -405,6 +440,7 @@
   <div class="index" id="index">
     <a href="#creatures"><span class="eyebrow">Wildlife</span><b>Creatures</b><span>Forty-one ARK creatures, their stats, taming and first danger rank.</span></a>
     <a href="#world"><span class="eyebrow">World</span><b>Danger map and habitats</b><span>The hidden danger zones and which community lives in each biome.</span></a>
+    <a href="#biomes"><span class="eyebrow">Biomes</span><b>Biomes and spawns</b><span>A picture of each of the %%BIOMES_COUNT%% biomes and what spawns in it.</span></a>
     <a href="#behavior"><span class="eyebrow">Behaviour</span><b>State machines</b><span>Distance tiers, the daily schedule and every transition by model.</span></a>
     <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle over three ages, and the Field Journal.</span></a>
     <a href="#survival"><span class="eyebrow">Survival systems</span><b>Tribe survival</b><span>Taming, cargo, working tames, the downed state and the Guardian.</span></a>
@@ -451,13 +487,27 @@
       </div>
     </div>
     <h3>Habitats</h3>
-    <p class="lede">Danger and wild levels come only from the zone. The biome decides which community lives there: warm species share every temperate biome, the snow, the wetlands and the sea keep their own residents, and flyers nest over any land. Spawn-list weights are split across each habitat, so wider habitats bring variety, not more animals.</p>
+    <p class="lede">Danger and wild levels come only from the zone. The biome decides which community lives there: warm species share every temperate biome, the snow, the wetlands and the sea keep their own residents, and flyers nest over any land. Spawn-list weights are split across each habitat, so wider habitats bring variety, not more animals. The <a href="#biomes">Biomes</a> page shows every biome with its residents.</p>
     <div class="tiers">%%HABITATS%%</div>
     <div class="grid-3">
       <div class="card"><h4>Land habitats</h4><p class="muted">Herds keep home ranges near water and predators patrol and hunt. Each 256-block region keeps its own balance of predators and prey, which keeps cycling while nobody is near; hunting thins a region and it recovers over the following days. No chunk is ever forced to load.</p></div>
       <div class="card"><h4>Flyers and nests</h4><p class="muted">Each flyer keeps one local nest on cliffs or shores. It perches, forages and returns home, and its eggs can be collected.</p></div>
       <div class="card"><h4>Sea and swamp</h4><p class="muted">Sea creatures keep saved home pools. Crocodilians and Titanoboa hunt shorelines, and cold species drink from snow and ice.</p></div>
     </div>
+  </section>
+
+  <section id="biomes">
+    <div><div class="eyebrow">Biomes</div><h2>Every biome and what spawns in it</h2></div>
+    <p class="lede">The pack's Overworld generates %%BIOMES_COUNT%% biomes: Minecraft's own and the ones Terralith adds. Under each picture is what spawns there, counted by community; open a card for the names. A creature still only appears where the danger zone has reached its rank, the dot beside its name.%%BIOMES_EMPTY%% The Nether and the End are closed in this pack.</p>
+    <div class="biome-tools">
+      <div class="biome-filters" role="group" aria-label="Filter biomes">%%BIOMES_FILTERS%%</div>
+      <label class="biome-pick">Where does <select id="biome-species"><option value="">any creature</option>%%BIOMES_SPECIES%%</select> spawn?</label>
+      <button type="button" class="biome-names" id="biome-names" aria-pressed="false">Show names</button>
+      <span class="muted" id="biome-count" aria-live="polite"></span>
+    </div>
+    <div class="legend"><span class="muted">First danger rank</span>%%BIOMES_RANKS%%</div>
+    <div class="biomes">%%BIOMES%%</div>
+    %%BIOMES_NOTE%%
   </section>
 
   <section id="behavior">
@@ -643,7 +693,7 @@
   <nav class="pager" id="pager" aria-label="Previous and next section"></nav>
 </main>
 
-<footer>Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots. Private project; ARK assets belong to their owners.</footer>
+<footer>Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots; biome pictures come from the wikis credited on their page. Private project; ARK assets belong to their owners.</footer>
 
 <script type="text/csv" id="dashboard-csv">%%DASHBOARD%%</script>
 <script>
@@ -883,6 +933,37 @@ window.arkModels = (function () {
         card.hidden = f !== 'all' && card.dataset.tags.split(' ').indexOf(f) < 0;
       });
     });
+  });
+
+  // Biomes: one filter and one creature at a time; a card shows when it passes both. Names open per card or all at once.
+  var biomeCards = Array.prototype.slice.call(document.querySelectorAll('.biome'));
+  var biomeButtons = document.querySelectorAll('.biome-filters button'), biomeSpecies = document.getElementById('biome-species');
+  var biomeNames = document.getElementById('biome-names'), biomeFilter = 'all';
+  function filterBiomes() {
+    var picked = biomeSpecies.value, shown = 0;
+    biomeCards.forEach(function (card) {
+      var ok = (biomeFilter === 'all' || card.dataset.tags.split(' ').indexOf(biomeFilter) >= 0)
+        && (!picked || card.dataset.species.split(' ').indexOf(picked) >= 0);
+      card.hidden = !ok;
+      if (ok) shown++;
+    });
+    document.querySelectorAll('.res.on').forEach(function (chip) { chip.classList.remove('on'); });
+    if (picked) document.querySelectorAll('.res[data-s="' + picked + '"]').forEach(function (chip) { chip.classList.add('on'); });
+    document.getElementById('biome-count').textContent = shown === biomeCards.length ? '' : shown + ' of ' + biomeCards.length + ' biomes';
+  }
+  biomeButtons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      biomeButtons.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      biomeFilter = b.dataset.biome;
+      filterBiomes();
+    });
+  });
+  biomeSpecies.addEventListener('change', filterBiomes);
+  biomeNames.addEventListener('click', function () {
+    var open = biomeNames.getAttribute('aria-pressed') !== 'true';
+    biomeNames.setAttribute('aria-pressed', open ? 'true' : 'false');
+    biomeNames.textContent = open ? 'Hide names' : 'Show names';
+    document.querySelectorAll('.biome details').forEach(function (d) { d.open = open; });
   });
 
   // Danger map: the same arithmetic as DangerBands.level.

@@ -3,6 +3,7 @@
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
 (design/showcase/behavior.json), both exported by runData, the habitat tags, the tech tree (tree.json), the
+biome pictures with their spawns (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
 screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
 (showcase_models.py, drawn by three.js) and the Ark UI previews.
@@ -606,6 +607,7 @@ def build():
         'STATS': ''.join(f'<div class="stat"><b>{n}</b><span>{e(label)}</span></div>' for n, label in stats),
         'CREATURES': creatures_section(species),
         'HABITATS': habitats_section(species),
+        **__import__('showcase_biomes').section(species, e, RANK_COLORS, RANK_NAMES, HABITATS),
         **behavior_section(names, species),
         'TREE': tree_section(),
         **__import__('showcase_recipes').section(uri, e),

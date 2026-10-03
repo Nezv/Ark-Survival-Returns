@@ -1,0 +1,1649 @@
+{
+ "about": "Written by tools/biome_pictures.py; do not edit. Pictures belong to their wikis' contributors under the licence given.",
+ "fetched": "2026-10-03",
+ "pack": {
+  "tectonic": "3.0.28",
+  "terralith": "2.6.2"
+ },
+ "biomes": [
+  {
+   "biome": "minecraft:badlands",
+   "name": "Badlands",
+   "picture": "minecraft.badlands.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Badlands.png",
+    "url": "https://minecraft.wiki/w/File%3ABadlands.png"
+   }
+  },
+  {
+   "biome": "minecraft:bamboo_jungle",
+   "name": "Bamboo Jungle",
+   "picture": "minecraft.bamboo_jungle.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Bamboo Jungle.png",
+    "url": "https://minecraft.wiki/w/File%3ABamboo_Jungle.png"
+   }
+  },
+  {
+   "biome": "minecraft:beach",
+   "name": "Beach",
+   "picture": "minecraft.beach.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Beach.png",
+    "url": "https://minecraft.wiki/w/File%3ABeach.png"
+   }
+  },
+  {
+   "biome": "minecraft:birch_forest",
+   "name": "Birch Forest",
+   "picture": "minecraft.birch_forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Birch Forest.png",
+    "url": "https://minecraft.wiki/w/File%3ABirch_Forest.png"
+   }
+  },
+  {
+   "biome": "minecraft:cherry_grove",
+   "name": "Cherry Grove",
+   "picture": "minecraft.cherry_grove.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Cherry Grove.png",
+    "url": "https://minecraft.wiki/w/File%3ACherry_Grove.png"
+   }
+  },
+  {
+   "biome": "minecraft:cold_ocean",
+   "name": "Cold Ocean",
+   "picture": "minecraft.cold_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Cold Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ACold_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:dark_forest",
+   "name": "Dark Forest",
+   "picture": "minecraft.dark_forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Dark Forest.png",
+    "url": "https://minecraft.wiki/w/File%3ADark_Forest.png"
+   }
+  },
+  {
+   "biome": "minecraft:deep_cold_ocean",
+   "name": "Deep Cold Ocean",
+   "picture": "minecraft.deep_cold_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Cold Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Cold_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:deep_dark",
+   "name": "Deep Dark",
+   "picture": "minecraft.deep_dark.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Dark Light.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Dark_Light.png"
+   }
+  },
+  {
+   "biome": "minecraft:deep_frozen_ocean",
+   "name": "Deep Frozen Ocean",
+   "picture": "minecraft.deep_frozen_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Frozen Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Frozen_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:deep_lukewarm_ocean",
+   "name": "Deep Lukewarm Ocean",
+   "picture": "minecraft.deep_lukewarm_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Lukewarm Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Lukewarm_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:deep_ocean",
+   "name": "Deep Ocean",
+   "picture": "minecraft.deep_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:desert",
+   "name": "Desert",
+   "picture": "minecraft.desert.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Desert.png",
+    "url": "https://minecraft.wiki/w/File%3ADesert.png"
+   }
+  },
+  {
+   "biome": "minecraft:dripstone_caves",
+   "name": "Dripstone Caves",
+   "picture": "minecraft.dripstone_caves.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Dripstone Caves Light.png",
+    "url": "https://minecraft.wiki/w/File%3ADripstone_Caves_Light.png"
+   }
+  },
+  {
+   "biome": "minecraft:eroded_badlands",
+   "name": "Eroded Badlands",
+   "picture": "minecraft.eroded_badlands.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Eroded Badlands.png",
+    "url": "https://minecraft.wiki/w/File%3AEroded_Badlands.png"
+   }
+  },
+  {
+   "biome": "minecraft:flower_forest",
+   "name": "Flower Forest",
+   "picture": "minecraft.flower_forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Flower Forest.png",
+    "url": "https://minecraft.wiki/w/File%3AFlower_Forest.png"
+   }
+  },
+  {
+   "biome": "minecraft:forest",
+   "name": "Forest",
+   "picture": "minecraft.forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Forest.png",
+    "url": "https://minecraft.wiki/w/File%3AForest.png"
+   }
+  },
+  {
+   "biome": "minecraft:frozen_ocean",
+   "name": "Frozen Ocean",
+   "picture": "minecraft.frozen_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Frozen Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3AFrozen_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:frozen_peaks",
+   "name": "Frozen Peaks",
+   "picture": "minecraft.frozen_peaks.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Frozen Peaks.png",
+    "url": "https://minecraft.wiki/w/File%3AFrozen_Peaks.png"
+   }
+  },
+  {
+   "biome": "minecraft:frozen_river",
+   "name": "Frozen River",
+   "picture": "minecraft.frozen_river.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Frozen River.png",
+    "url": "https://minecraft.wiki/w/File%3AFrozen_River.png"
+   }
+  },
+  {
+   "biome": "minecraft:grove",
+   "name": "Grove",
+   "picture": "minecraft.grove.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Grove.png",
+    "url": "https://minecraft.wiki/w/File%3AGrove.png"
+   }
+  },
+  {
+   "biome": "minecraft:ice_spikes",
+   "name": "Ice Spikes",
+   "picture": "minecraft.ice_spikes.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Ice Spikes.png",
+    "url": "https://minecraft.wiki/w/File%3AIce_Spikes.png"
+   }
+  },
+  {
+   "biome": "minecraft:jagged_peaks",
+   "name": "Jagged Peaks",
+   "picture": "minecraft.jagged_peaks.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Jagged Peaks.png",
+    "url": "https://minecraft.wiki/w/File%3AJagged_Peaks.png"
+   }
+  },
+  {
+   "biome": "minecraft:jungle",
+   "name": "Jungle",
+   "picture": "minecraft.jungle.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Jungle.png",
+    "url": "https://minecraft.wiki/w/File%3AJungle.png"
+   }
+  },
+  {
+   "biome": "minecraft:lukewarm_ocean",
+   "name": "Lukewarm Ocean",
+   "picture": "minecraft.lukewarm_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Lukewarm Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ALukewarm_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:lush_caves",
+   "name": "Lush Caves",
+   "picture": "minecraft.lush_caves.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Lush Caves.png",
+    "url": "https://minecraft.wiki/w/File%3ALush_Caves.png"
+   }
+  },
+  {
+   "biome": "minecraft:mangrove_swamp",
+   "name": "Mangrove Swamp",
+   "picture": "minecraft.mangrove_swamp.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Mangrove Swamp.png",
+    "url": "https://minecraft.wiki/w/File%3AMangrove_Swamp.png"
+   }
+  },
+  {
+   "biome": "minecraft:meadow",
+   "name": "Meadow",
+   "picture": "minecraft.meadow.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Meadow.png",
+    "url": "https://minecraft.wiki/w/File%3AMeadow.png"
+   }
+  },
+  {
+   "biome": "minecraft:mushroom_fields",
+   "name": "Mushroom Fields",
+   "picture": "minecraft.mushroom_fields.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Mushroom Fields.png",
+    "url": "https://minecraft.wiki/w/File%3AMushroom_Fields.png"
+   }
+  },
+  {
+   "biome": "minecraft:ocean",
+   "name": "Ocean",
+   "picture": "minecraft.ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3AOcean.png"
+   }
+  },
+  {
+   "biome": "minecraft:old_growth_birch_forest",
+   "name": "Old Growth Birch Forest",
+   "picture": "minecraft.old_growth_birch_forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Old Growth Birch Forest.png",
+    "url": "https://minecraft.wiki/w/File%3AOld_Growth_Birch_Forest.png"
+   }
+  },
+  {
+   "biome": "minecraft:old_growth_pine_taiga",
+   "name": "Old Growth Pine Taiga",
+   "picture": "minecraft.old_growth_pine_taiga.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Old Growth Pine Taiga.png",
+    "url": "https://minecraft.wiki/w/File%3AOld_Growth_Pine_Taiga.png"
+   }
+  },
+  {
+   "biome": "minecraft:old_growth_spruce_taiga",
+   "name": "Old Growth Spruce Taiga",
+   "picture": "minecraft.old_growth_spruce_taiga.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Old Growth Spruce Taiga.png",
+    "url": "https://minecraft.wiki/w/File%3AOld_Growth_Spruce_Taiga.png"
+   }
+  },
+  {
+   "biome": "minecraft:pale_garden",
+   "name": "Pale Garden",
+   "picture": "minecraft.pale_garden.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Pale Garden.png",
+    "url": "https://minecraft.wiki/w/File%3APale_Garden.png"
+   }
+  },
+  {
+   "biome": "minecraft:plains",
+   "name": "Plains",
+   "picture": "minecraft.plains.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Plains.png",
+    "url": "https://minecraft.wiki/w/File%3APlains.png"
+   }
+  },
+  {
+   "biome": "minecraft:river",
+   "name": "River",
+   "picture": "minecraft.river.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:River.png",
+    "url": "https://minecraft.wiki/w/File%3ARiver.png"
+   }
+  },
+  {
+   "biome": "minecraft:savanna",
+   "name": "Savanna",
+   "picture": "minecraft.savanna.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Savanna.png",
+    "url": "https://minecraft.wiki/w/File%3ASavanna.png"
+   }
+  },
+  {
+   "biome": "minecraft:savanna_plateau",
+   "name": "Savanna Plateau",
+   "picture": "minecraft.savanna_plateau.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Savanna Plateau.png",
+    "url": "https://minecraft.wiki/w/File%3ASavanna_Plateau.png"
+   }
+  },
+  {
+   "biome": "minecraft:snowy_beach",
+   "name": "Snowy Beach",
+   "picture": "minecraft.snowy_beach.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Snowy Beach.png",
+    "url": "https://minecraft.wiki/w/File%3ASnowy_Beach.png"
+   }
+  },
+  {
+   "biome": "minecraft:snowy_plains",
+   "name": "Snowy Plains",
+   "picture": "minecraft.snowy_plains.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Snowy Plains.png",
+    "url": "https://minecraft.wiki/w/File%3ASnowy_Plains.png"
+   }
+  },
+  {
+   "biome": "minecraft:snowy_slopes",
+   "name": "Snowy Slopes",
+   "picture": "minecraft.snowy_slopes.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Snowy Slopes 1.18.png",
+    "url": "https://minecraft.wiki/w/File%3ASnowy_Slopes_1.18.png"
+   }
+  },
+  {
+   "biome": "minecraft:snowy_taiga",
+   "name": "Snowy Taiga",
+   "picture": "minecraft.snowy_taiga.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Snowy Taiga.png",
+    "url": "https://minecraft.wiki/w/File%3ASnowy_Taiga.png"
+   }
+  },
+  {
+   "biome": "minecraft:sparse_jungle",
+   "name": "Sparse Jungle",
+   "picture": "minecraft.sparse_jungle.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Sparse Jungle.png",
+    "url": "https://minecraft.wiki/w/File%3ASparse_Jungle.png"
+   }
+  },
+  {
+   "biome": "minecraft:stony_peaks",
+   "name": "Stony Peaks",
+   "picture": "minecraft.stony_peaks.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Stony Peaks.png",
+    "url": "https://minecraft.wiki/w/File%3AStony_Peaks.png"
+   }
+  },
+  {
+   "biome": "minecraft:stony_shore",
+   "name": "Stony Shore",
+   "picture": "minecraft.stony_shore.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Stony Shore.png",
+    "url": "https://minecraft.wiki/w/File%3AStony_Shore.png"
+   }
+  },
+  {
+   "biome": "minecraft:sunflower_plains",
+   "name": "Sunflower Plains",
+   "picture": "minecraft.sunflower_plains.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Sunflower Plains.png",
+    "url": "https://minecraft.wiki/w/File%3ASunflower_Plains.png"
+   }
+  },
+  {
+   "biome": "minecraft:swamp",
+   "name": "Swamp",
+   "picture": "minecraft.swamp.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Swamp.png",
+    "url": "https://minecraft.wiki/w/File%3ASwamp.png"
+   }
+  },
+  {
+   "biome": "minecraft:taiga",
+   "name": "Taiga",
+   "picture": "minecraft.taiga.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Taiga.png",
+    "url": "https://minecraft.wiki/w/File%3ATaiga.png"
+   }
+  },
+  {
+   "biome": "minecraft:warm_ocean",
+   "name": "Warm Ocean",
+   "picture": "minecraft.warm_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Warm Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3AWarm_Ocean.png"
+   }
+  },
+  {
+   "biome": "minecraft:windswept_forest",
+   "name": "Windswept Forest",
+   "picture": "minecraft.windswept_forest.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Windswept Forest.png",
+    "url": "https://minecraft.wiki/w/File%3AWindswept_Forest.png"
+   }
+  },
+  {
+   "biome": "minecraft:windswept_gravelly_hills",
+   "name": "Windswept Gravelly Hills",
+   "picture": "minecraft.windswept_gravelly_hills.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Windswept Gravelly Hills.png",
+    "url": "https://minecraft.wiki/w/File%3AWindswept_Gravelly_Hills.png"
+   }
+  },
+  {
+   "biome": "minecraft:windswept_hills",
+   "name": "Windswept Hills",
+   "picture": "minecraft.windswept_hills.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Windswept Hills.png",
+    "url": "https://minecraft.wiki/w/File%3AWindswept_Hills.png"
+   }
+  },
+  {
+   "biome": "minecraft:windswept_savanna",
+   "name": "Windswept Savanna",
+   "picture": "minecraft.windswept_savanna.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Windswept Savanna.png",
+    "url": "https://minecraft.wiki/w/File%3AWindswept_Savanna.png"
+   }
+  },
+  {
+   "biome": "minecraft:wooded_badlands",
+   "name": "Wooded Badlands",
+   "picture": "minecraft.wooded_badlands.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Wooded Badlands Plateau.png",
+    "url": "https://minecraft.wiki/w/File%3AWooded_Badlands_Plateau.png"
+   }
+  },
+  {
+   "biome": "terralith:alpha_islands",
+   "name": "Alpha Islands",
+   "picture": "terralith.alpha_islands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2021-09-03 01.04.14.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2021-09-03_01.04.14.png"
+   }
+  },
+  {
+   "biome": "terralith:alpha_islands_winter",
+   "name": "Alpha Islands (Winter)",
+   "picture": "terralith.alpha_islands_winter.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2021-12-19 17.12.59.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2021-12-19_17.12.59.png"
+   }
+  },
+  {
+   "biome": "terralith:alpine_grove",
+   "name": "Alpine Grove",
+   "picture": "terralith.alpine_grove.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Grove 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGrove_3.png"
+   }
+  },
+  {
+   "biome": "terralith:alpine_highlands",
+   "name": "Alpine Highlands",
+   "picture": "terralith.alpine_highlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Alpine highlands.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AAlpine_highlands.png"
+   }
+  },
+  {
+   "biome": "terralith:amethyst_canyon",
+   "name": "Amethyst Canyon",
+   "picture": "terralith.amethyst_canyon.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Amethyst canyon 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AAmethyst_canyon_2.png"
+   }
+  },
+  {
+   "biome": "terralith:amethyst_rainforest",
+   "name": "Amethyst Rainforest",
+   "picture": "terralith.amethyst_rainforest.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2021-12-19 19.02.28.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2021-12-19_19.02.28.png"
+   }
+  },
+  {
+   "biome": "terralith:ancient_sands",
+   "name": "Ancient Sands",
+   "picture": "terralith.ancient_sands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Ancient sands.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AAncient_sands.png"
+   }
+  },
+  {
+   "biome": "terralith:arid_highlands",
+   "name": "Arid Highlands",
+   "picture": "terralith.arid_highlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Arid highlands 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AArid_highlands_3.png"
+   }
+  },
+  {
+   "biome": "terralith:ashen_savanna",
+   "name": "Ashen Savanna",
+   "picture": "terralith.ashen_savanna.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Ashen Savannah.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AAshen_Savannah.png"
+   }
+  },
+  {
+   "biome": "terralith:basalt_cliffs",
+   "name": "Basalt Cliffs",
+   "picture": "terralith.basalt_cliffs.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Basalt cliffs.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABasalt_cliffs.png"
+   }
+  },
+  {
+   "biome": "terralith:birch_taiga",
+   "name": "Birch Taiga",
+   "picture": "terralith.birch_taiga.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Birch taiga.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABirch_taiga.png"
+   }
+  },
+  {
+   "biome": "terralith:blooming_plateau",
+   "name": "Blooming Plateau",
+   "picture": "terralith.blooming_plateau.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Blooming plateau (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABlooming_plateau_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:blooming_valley",
+   "name": "Blooming Valley",
+   "picture": "terralith.blooming_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Blooming valley 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABlooming_valley_3.png"
+   }
+  },
+  {
+   "biome": "terralith:brushland",
+   "name": "Brushland",
+   "picture": "terralith.brushland.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Brushland 4.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABrushland_4.png"
+   }
+  },
+  {
+   "biome": "terralith:bryce_canyon",
+   "name": "Bryce Canyon",
+   "picture": "terralith.bryce_canyon.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Bryce canyon (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ABryce_canyon_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:caldera",
+   "name": "Caldera",
+   "picture": "terralith.caldera.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Caldera(2) TL2.1.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ACaldera%282%29_TL2.1.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/andesite_caves",
+   "name": "Andesite Caves",
+   "picture": "terralith.cave.andesite_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Andesite cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AAndesite_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/deep_caves",
+   "name": "Deep Caves",
+   "picture": "terralith.cave.deep_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Deep caves terralith v2.3.6(1.19.3).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ADeep_caves_terralith_v2.3.6%281.19.3%29.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/diorite_caves",
+   "name": "Diorite Caves",
+   "picture": "terralith.cave.diorite_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Diorite cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ADiorite_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/frostfire_caves",
+   "name": "Frostfire Caves",
+   "picture": "terralith.cave.frostfire_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Frostfire cave 458.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AFrostfire_cave_458.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/fungal_caves",
+   "name": "Fungal Caves",
+   "picture": "terralith.cave.fungal_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Exposed fungal cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AExposed_fungal_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/granite_caves",
+   "name": "Granite Caves",
+   "picture": "terralith.cave.granite_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Granite cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGranite_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/infested_caves",
+   "name": "Infested Caves",
+   "picture": "terralith.cave.infested_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Open infested cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AOpen_infested_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/mantle_caves",
+   "name": "Mantle Caves",
+   "picture": "terralith.cave.mantle_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Mantle cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AMantle_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/thermal_caves",
+   "name": "Thermal Caves",
+   "picture": "terralith.cave.thermal_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Thermal cave.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AThermal_cave.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/tuff_caves",
+   "name": "Tuff Caves",
+   "picture": "terralith.cave.tuff_caves.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Tuff caves 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ATuff_caves_3.png"
+   }
+  },
+  {
+   "biome": "terralith:cave/underground_jungle",
+   "name": "Underground Jungle",
+   "picture": "terralith.cave.underground_jungle.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Underground jungle biome1.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AUnderground_jungle_biome1.png"
+   }
+  },
+  {
+   "biome": "terralith:cloud_forest",
+   "name": "Cloud Forest",
+   "picture": "terralith.cloud_forest.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Cloud forest.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ACloud_forest.png"
+   }
+  },
+  {
+   "biome": "terralith:cold_shrubland",
+   "name": "Cold Shrubland",
+   "picture": "terralith.cold_shrubland.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Cold shrubland pic1.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ACold_shrubland_pic1.png"
+   }
+  },
+  {
+   "biome": "terralith:deep_warm_ocean",
+   "name": "Deep Warm Ocean",
+   "picture": "terralith.deep_warm_ocean.webp",
+   "credit": {
+    "site": "Minecraft Wiki",
+    "licence": "CC BY-NC-SA 3.0",
+    "file": "File:Deep Warm Ocean.png",
+    "url": "https://minecraft.wiki/w/File%3ADeep_Warm_Ocean.png"
+   }
+  },
+  {
+   "biome": "terralith:desert_canyon",
+   "name": "Desert Canyon",
+   "picture": "terralith.desert_canyon.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Desert canyon Tera (1).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ADesert_canyon_Tera_%281%29.png"
+   }
+  },
+  {
+   "biome": "terralith:desert_oasis",
+   "name": "Desert Oasis",
+   "picture": "terralith.desert_oasis.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Desert oasis.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ADesert_oasis.png"
+   }
+  },
+  {
+   "biome": "terralith:desert_spires",
+   "name": "Desert Spires",
+   "picture": "terralith.desert_spires.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Desert spires tall.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ADesert_spires_tall.png"
+   }
+  },
+  {
+   "biome": "terralith:emerald_peaks",
+   "name": "Emerald Peaks",
+   "picture": "terralith.emerald_peaks.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2023-06-06 12.58.23.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2023-06-06_12.58.23.png"
+   }
+  },
+  {
+   "biome": "terralith:forested_highlands",
+   "name": "Forested Highlands",
+   "picture": "terralith.forested_highlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Forested highlands.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AForested_highlands.png"
+   }
+  },
+  {
+   "biome": "terralith:fractured_savanna",
+   "name": "Fractured Savanna",
+   "picture": "terralith.fractured_savanna.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Fractured savanna 459.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AFractured_savanna_459.png"
+   }
+  },
+  {
+   "biome": "terralith:frozen_cliffs",
+   "name": "Frozen Cliffs",
+   "picture": "terralith.frozen_cliffs.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Frozen cliff.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AFrozen_cliff.png"
+   }
+  },
+  {
+   "biome": "terralith:glacial_chasm",
+   "name": "Glacial Chasm",
+   "picture": "terralith.glacial_chasm.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Glacial chasm 458.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGlacial_chasm_458.png"
+   }
+  },
+  {
+   "biome": "terralith:granite_cliffs",
+   "name": "Granite Cliffs",
+   "picture": "terralith.granite_cliffs.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Granite cliffs.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGranite_cliffs.png"
+   }
+  },
+  {
+   "biome": "terralith:gravel_beach",
+   "name": "Gravel Beach",
+   "picture": "terralith.gravel_beach.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Gravel beach 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGravel_beach_2.png"
+   }
+  },
+  {
+   "biome": "terralith:gravel_desert",
+   "name": "Gravel Desert",
+   "picture": "terralith.gravel_desert.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Gravel desert (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AGravel_desert_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:haze_mountain",
+   "name": "Haze Mountain",
+   "picture": "terralith.haze_mountain.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Haze mountains aerial.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AHaze_mountains_aerial.png"
+   }
+  },
+  {
+   "biome": "terralith:highlands",
+   "name": "Highlands",
+   "picture": "terralith.highlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2021-12-06 10.22.01.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2021-12-06_10.22.01.png"
+   }
+  },
+  {
+   "biome": "terralith:hot_shrubland",
+   "name": "Hot Shrubland",
+   "picture": "terralith.hot_shrubland.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Hot shrublands2 with shader.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AHot_shrublands2_with_shader.png"
+   }
+  },
+  {
+   "biome": "terralith:ice_marsh",
+   "name": "Ice Marsh",
+   "picture": "terralith.ice_marsh.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Ice marsh.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AIce_marsh.png"
+   }
+  },
+  {
+   "biome": "terralith:jungle_mountains",
+   "name": "Jungle Mountains",
+   "picture": "terralith.jungle_mountains.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Jungle mountains.jpg",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AJungle_mountains.jpg"
+   }
+  },
+  {
+   "biome": "terralith:lavender_forest",
+   "name": "Lavender Forest",
+   "picture": "terralith.lavender_forest.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2022-02-21 13.56.58.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2022-02-21_13.56.58.png"
+   }
+  },
+  {
+   "biome": "terralith:lavender_valley",
+   "name": "Lavender Valley",
+   "picture": "terralith.lavender_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Lavendervalleysplatus.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ALavendervalleysplatus.png"
+   }
+  },
+  {
+   "biome": "terralith:lush_desert",
+   "name": "Lush Desert",
+   "picture": "terralith.lush_desert.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Lush desert.jpg",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ALush_desert.jpg"
+   }
+  },
+  {
+   "biome": "terralith:lush_valley",
+   "name": "Lush Valley",
+   "picture": "terralith.lush_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Lush valley and river.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ALush_valley_and_river.png"
+   }
+  },
+  {
+   "biome": "terralith:mirage_isles",
+   "name": "Mirage Isles",
+   "picture": "terralith.mirage_isles.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:MI1 terralith v2.0.12 seed-2354615489539600950 cords- 625 -2175.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AMI1_terralith_v2.0.12_seed-2354615489539600950_cords-_625_-2175.png"
+   }
+  },
+  {
+   "biome": "terralith:moonlight_grove",
+   "name": "Moonlight Grove",
+   "picture": "terralith.moonlight_grove.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Moonlight grove Tera (1).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AMoonlight_grove_Tera_%281%29.png"
+   }
+  },
+  {
+   "biome": "terralith:moonlight_valley",
+   "name": "Moonlight Valley",
+   "picture": "terralith.moonlight_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Moonlight valley waterfalls.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AMoonlight_valley_waterfalls.png"
+   }
+  },
+  {
+   "biome": "terralith:orchid_swamp",
+   "name": "Orchid Swamp",
+   "picture": "terralith.orchid_swamp.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Orchid swamp.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AOrchid_swamp.png"
+   }
+  },
+  {
+   "biome": "terralith:painted_mountains",
+   "name": "Painted Mountains",
+   "picture": "terralith.painted_mountains.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Painted Mountains forgorcredit.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3APainted_Mountains_forgorcredit.png"
+   }
+  },
+  {
+   "biome": "terralith:red_oasis",
+   "name": "Red Oasis",
+   "picture": "terralith.red_oasis.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Red oasis 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ARed_oasis_3.png"
+   }
+  },
+  {
+   "biome": "terralith:rocky_jungle",
+   "name": "Rocky Jungle",
+   "picture": "terralith.rocky_jungle.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Rocky jungle Tera (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ARocky_jungle_Tera_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:rocky_mountains",
+   "name": "Rocky Mountains",
+   "picture": "terralith.rocky_mountains.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Rocky mountains.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ARocky_mountains.png"
+   }
+  },
+  {
+   "biome": "terralith:rocky_shrubland",
+   "name": "Rocky Shrubland",
+   "picture": "terralith.rocky_shrubland.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Rocky shrubland Tera (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ARocky_shrubland_Tera_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:sakura_grove",
+   "name": "Sakura Grove",
+   "picture": "terralith.sakura_grove.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Sakura grove.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASakura_grove.png"
+   }
+  },
+  {
+   "biome": "terralith:sakura_valley",
+   "name": "Sakura Valley",
+   "picture": "terralith.sakura_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2022-02-21 17.30.13.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2022-02-21_17.30.13.png"
+   }
+  },
+  {
+   "biome": "terralith:sandstone_valley",
+   "name": "Sandstone Valley",
+   "picture": "terralith.sandstone_valley.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Sandstone Valley (Terralith + Continents).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASandstone_Valley_%28Terralith_%2B_Continents%29.png"
+   }
+  },
+  {
+   "biome": "terralith:savanna_badlands",
+   "name": "Savanna Badlands",
+   "picture": "terralith.savanna_badlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Savana badlands 458.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASavana_badlands_458.png"
+   }
+  },
+  {
+   "biome": "terralith:savanna_slopes",
+   "name": "Savanna Slopes",
+   "picture": "terralith.savanna_slopes.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Savanna slopes1.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASavanna_slopes1.png"
+   }
+  },
+  {
+   "biome": "terralith:scarlet_mountains",
+   "name": "Scarlet Mountains",
+   "picture": "terralith.scarlet_mountains.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2023-06-06 12.33.01.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2023-06-06_12.33.01.png"
+   }
+  },
+  {
+   "biome": "terralith:shield",
+   "name": "Shield",
+   "picture": "terralith.shield.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Shield 458.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AShield_458.png"
+   }
+  },
+  {
+   "biome": "terralith:shield_clearing",
+   "name": "Shield Clearing",
+   "picture": "terralith.shield_clearing.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Shield clearing (2).png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AShield_clearing_%282%29.png"
+   }
+  },
+  {
+   "biome": "terralith:shrubland",
+   "name": "Shrubland",
+   "picture": "terralith.shrubland.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Shrubland river.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AShrubland_river.png"
+   }
+  },
+  {
+   "biome": "terralith:siberian_grove",
+   "name": "Siberian Grove",
+   "picture": "terralith.siberian_grove.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Siberian grove 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASiberian_grove_2.png"
+   }
+  },
+  {
+   "biome": "terralith:siberian_taiga",
+   "name": "Siberian Taiga",
+   "picture": "terralith.siberian_taiga.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Siberian taiga 4.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASiberian_taiga_4.png"
+   }
+  },
+  {
+   "biome": "terralith:skylands_autumn",
+   "name": "Skylands (Autumn)",
+   "picture": "terralith.skylands_autumn.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2023-04-30 15.06.11.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2023-04-30_15.06.11.png"
+   }
+  },
+  {
+   "biome": "terralith:skylands_spring",
+   "name": "Skylands (Spring)",
+   "picture": "terralith.skylands_spring.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Skyland spring underside.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASkyland_spring_underside.png"
+   }
+  },
+  {
+   "biome": "terralith:skylands_summer",
+   "name": "Skylands (Summer)",
+   "picture": "terralith.skylands_summer.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Skyland summer.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASkyland_summer.png"
+   }
+  },
+  {
+   "biome": "terralith:skylands_winter",
+   "name": "Skylands (Winter)",
+   "picture": "terralith.skylands_winter.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Skylands winter inside.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASkylands_winter_inside.png"
+   }
+  },
+  {
+   "biome": "terralith:snowy_badlands",
+   "name": "Snowy Badlands",
+   "picture": "terralith.snowy_badlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Snowy badlands hill.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASnowy_badlands_hill.png"
+   }
+  },
+  {
+   "biome": "terralith:snowy_cherry_grove",
+   "name": "Snowy Cherry Grove",
+   "picture": "terralith.snowy_cherry_grove.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2023-06-06 12.35.04.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2023-06-06_12.35.04.png"
+   }
+  },
+  {
+   "biome": "terralith:snowy_maple_forest",
+   "name": "Snowy Maple Forest",
+   "picture": "terralith.snowy_maple_forest.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Snowy maple forest.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASnowy_maple_forest.png"
+   }
+  },
+  {
+   "biome": "terralith:snowy_shield",
+   "name": "Snowy Shield",
+   "picture": "terralith.snowy_shield.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Shield 459.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AShield_459.png"
+   }
+  },
+  {
+   "biome": "terralith:steppe",
+   "name": "Steppe",
+   "picture": "terralith.steppe.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Steppe 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ASteppe_3.png"
+   }
+  },
+  {
+   "biome": "terralith:stony_spires",
+   "name": "Stony Spires",
+   "picture": "terralith.stony_spires.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Stony spires evening 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AStony_spires_evening_2.png"
+   }
+  },
+  {
+   "biome": "terralith:temperate_highlands",
+   "name": "Temperate Highlands",
+   "picture": "terralith.temperate_highlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Temperate highlands.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ATemperate_highlands.png"
+   }
+  },
+  {
+   "biome": "terralith:tropical_jungle",
+   "name": "Tropical Jungle",
+   "picture": "terralith.tropical_jungle.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Tropical jungle aerial.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3ATropical_jungle_aerial.png"
+   }
+  },
+  {
+   "biome": "terralith:valley_clearing",
+   "name": "Valley Clearing",
+   "picture": "terralith.valley_clearing.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Valley clearing 3.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AValley_clearing_3.png"
+   }
+  },
+  {
+   "biome": "terralith:volcanic_crater",
+   "name": "Volcanic Crater",
+   "picture": "terralith.volcanic_crater.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Volcanic crater(3) TL2.1.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AVolcanic_crater%283%29_TL2.1.png"
+   }
+  },
+  {
+   "biome": "terralith:volcanic_peaks",
+   "name": "Volcanic Peaks",
+   "picture": "terralith.volcanic_peaks.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Volcanic peaks savanna2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AVolcanic_peaks_savanna2.png"
+   }
+  },
+  {
+   "biome": "terralith:warm_river",
+   "name": "Warm River",
+   "picture": "terralith.warm_river.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Warm river Tera.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AWarm_river_Tera.png"
+   }
+  },
+  {
+   "biome": "terralith:warped_mesa",
+   "name": "Warped Mesa",
+   "picture": "terralith.warped_mesa.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Warped mesa 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AWarped_mesa_2.png"
+   }
+  },
+  {
+   "biome": "terralith:white_cliffs",
+   "name": "White Cliffs",
+   "picture": "terralith.white_cliffs.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:White cliffs.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AWhite_cliffs.png"
+   }
+  },
+  {
+   "biome": "terralith:white_mesa",
+   "name": "White Mesa",
+   "picture": "terralith.white_mesa.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2023-04-30 00.40.29.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2023-04-30_00.40.29.png"
+   }
+  },
+  {
+   "biome": "terralith:windswept_spires",
+   "name": "Windswept Spires",
+   "picture": "terralith.windswept_spires.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Stony spires higher.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AStony_spires_higher.png"
+   }
+  },
+  {
+   "biome": "terralith:wintry_forest",
+   "name": "Wintry Forest",
+   "picture": "terralith.wintry_forest.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Wintry forest.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AWintry_forest.png"
+   }
+  },
+  {
+   "biome": "terralith:wintry_lowlands",
+   "name": "Wintry Lowlands",
+   "picture": "terralith.wintry_lowlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:2022-03-04 18.53.31.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3A2022-03-04_18.53.31.png"
+   }
+  },
+  {
+   "biome": "terralith:yellowstone",
+   "name": "Yellowstone",
+   "picture": "terralith.yellowstone.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Yellowstone aerial.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AYellowstone_aerial.png"
+   }
+  },
+  {
+   "biome": "terralith:yosemite_cliffs",
+   "name": "Yosemite Cliffs",
+   "picture": "terralith.yosemite_cliffs.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Yosemite cliff face.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AYosemite_cliff_face.png"
+   }
+  },
+  {
+   "biome": "terralith:yosemite_lowlands",
+   "name": "Yosemite Lowlands",
+   "picture": "terralith.yosemite_lowlands.webp",
+   "credit": {
+    "site": "Stardust Labs wiki",
+    "licence": "CC BY-SA 4.0",
+    "file": "File:Yosemite cliffs 2.png",
+    "url": "https://stardustlabs.miraheze.org/wiki/File%3AYosemite_cliffs_2.png"
+   }
+  }
+ ]
+}
