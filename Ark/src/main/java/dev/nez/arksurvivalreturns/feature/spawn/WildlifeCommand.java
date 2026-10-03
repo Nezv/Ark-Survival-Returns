@@ -30,9 +30,43 @@ public final class WildlifeCommand {
         event.getDispatcher().register(Commands.literal("arkwildlife")
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(context -> report(context.getSource(), 64))
+                .then(Commands.literal("biome")
+                        .executes(context -> biomeReport(context.getSource(), 256))
+                        .then(Commands.argument("radius", IntegerArgumentType.integer(16, BiomePatchSurvey.MAX_RADIUS))
+                                .executes(context -> biomeReport(context.getSource(),
+                                        IntegerArgumentType.getInteger(context, "radius")))))
                 .then(Commands.argument("radius", IntegerArgumentType.integer(16, 256))
                         .executes(context -> report(context.getSource(),
                                 IntegerArgumentType.getInteger(context, "radius")))));
+    }
+
+    private static int biomeReport(CommandSourceStack source, int radius) {
+        Player player = source.getPlayer();
+        if (player == null) {
+            source.sendFailure(Component.literal("Run this as a player: the survey is anchored to your position."));
+            return 0;
+        }
+        var result = SurfaceBiomes.survey(source.getLevel(), player.getBlockX(), player.getBlockZ(), radius);
+        if (result.isEmpty()) {
+            source.sendFailure(Component.literal("No loaded surface available here."));
+            return 0;
+        }
+        var patch = result.get();
+        var profile = patch.profile();
+        send(source, "surface biome=" + profile.biomeId() + " type=" + profile.type().id()
+                + " climate=" + profile.climate() + " moisture=" + profile.moisture()
+                + " mountainous=" + profile.mountainous() + " snowy=" + profile.snowy());
+        send(source, String.format(java.util.Locale.ROOT,
+                "connected patch: observed ~%d blocks squared (%d sampled cells), span ~%dx%d, equivalent diameter ~%.0f blocks",
+                patch.areaBlocks(), patch.cells(), patch.spanX(), patch.spanZ(), patch.equivalentDiameter()));
+        send(source, "surface altitude Y=" + patch.minY() + ".." + patch.maxY()
+                + "; " + (patch.enclosed() ? "enclosed at sampling resolution" : "INCOMPLETE; full size unknown")
+                + "; unavailable columns=" + patch.unavailableColumns() + " range limit=" + patch.rangeLimited()
+                + " sample limit=" + patch.budgetLimited());
+        send(source, "Grid=" + BiomePatchSurvey.STEP + " blocks, square search radius=" + radius
+                + ", sampled=" + patch.sampledColumns() + "/" + BiomePatchSurvey.MAX_SAMPLES
+                + ". Thin boundaries can fall between samples. Population rules are not changed by this survey.");
+        return 1;
     }
 
     private static int report(CommandSourceStack source, int radius) {
