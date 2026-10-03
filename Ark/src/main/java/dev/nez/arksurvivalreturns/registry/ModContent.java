@@ -56,6 +56,12 @@ public final class ModContent {
                             MobCategory.MONSTER)
                     .sized(10.5f, 15.0f).eyeHeight(12.75f).clientTrackingRange(12)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("guardian_giganotosaurus"))));
+    public static final DeferredHolder<EntityType<?>, EntityType<dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity>>
+            GUARDIAN_DRAGON = ENTITIES.register("guardian_dragon", () -> EntityType.Builder
+                    .<dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity>of(
+                            dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity::new, MobCategory.CREATURE)
+                    .sized(2.2f, 4.5f).eyeHeight(3.8f).clientTrackingRange(16)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("guardian_dragon"))));
     /** Allosaur Heart: the ritual key, one guaranteed drop from a player kill on a wild Allosaurus. */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> ALLOSAUR_HEART =
             ITEMS.registerItem("allosaur_heart",
@@ -296,6 +302,7 @@ public final class ModContent {
     }
     public static void attributes(EntityAttributeCreationEvent event) {
         CREATURES.forEach((species, type) -> event.put(type.get(), CreatureEntity.attributes(species).build()));
+        event.put(GUARDIAN_DRAGON.get(), dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity.attributes().build());
         event.put(GUARDIAN_GIGANOTOSAURUS.get(),
                 dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity.attributes().build());
     }

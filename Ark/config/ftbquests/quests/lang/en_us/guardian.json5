@@ -1,34 +1,30 @@
 {
   "chapter.0000000000000500.title": "The First Guardian",
   "chapter.0000000000000500.chapter_subtitle": [
-    "Something older than the tribes guards the monoliths."
+    "Dragons defend the floating beacons."
   ],
-
-  "quest.0000000000000501.title": "The Allosaur Heart",
-  "quest.0000000000000501.quest_subtitle": "The key is inside a predator.",
+  "quest.0000000000000501.title": "Prepare for the Sky",
+  "quest.0000000000000501.quest_subtitle": "Bring a flying mount and supplies.",
   "quest.0000000000000501.quest_desc": [
-    "Hunt a wild Allosaurus and land the killing blow yourself or with a tribe tame.",
-    "One heart is guaranteed. Looting never adds more, and tamed or spawned Allosaurs never drop one.",
-    "The heart is the ritual key: it is consumed only when the Guardian actually answers."
+    "Look for a tall floating monolith with a dragon circling its open centre.",
+    "Prepare a flying mount, ranged weapons and medicine. No heart or ritual is needed."
   ],
-  "task.00000000000005A1.title": "Obtain an Allosaur Heart",
-
-  "quest.0000000000000502.title": "The Sleeping Monolith",
-  "quest.0000000000000502.quest_subtitle": "Find the guardian's shrine.",
+  "task.00000000000005A1.title": "Ready to approach a beacon",
+  "quest.0000000000000502.title": "The Floating Beacon",
+  "quest.0000000000000502.quest_subtitle": "Reach the landing terrace.",
   "quest.0000000000000502.quest_desc": [
-    "This step requires the Ancient Remnants mod. Its Sentinel Monolith structures hold a floating monolith above a stone altar.",
-    "Bring the Allosaur Heart and use it on a block beneath the monolith.",
-    "If the summon fails, you keep the heart: read the message and try again."
+    "Beacons appear in new Overworld terrain roughly 500 blocks apart.",
+    "Red, white and black dragons defend matching beacons. The dragon attacks intruders near its centre.",
+    "The terrace beneath the opening offers a place to land. Retreat beyond its territory to disengage."
   ],
-  "task.00000000000005A2.title": "Visit a Sentinel Monolith",
-
+  "task.00000000000005A2.title": "Visit a floating beacon",
   "quest.0000000000000503.title": "First Guardian",
-  "quest.0000000000000503.quest_subtitle": "Prove the tribe can stand together.",
+  "quest.0000000000000503.quest_subtitle": "Defeat a beacon dragon.",
   "quest.0000000000000503.quest_desc": [
-    "Fight the Guardian Giganotosaurus with tribe members and their registered combat tames.",
-    "Up to four nearby tribe tames are registered when the rite starts and fight at full strength.",
-    "Retreat is allowed: when everyone leaves, the Guardian resets and the tribe may resume without another heart.",
-    "Victory grants the tribe the Workshop Schematic and completes this chapter."
+    "Fight the dragon with your tribe. Its aerial breath cannot pass through solid cover.",
+    "It remains at its beacon when you retreat, keeping its wounds through saves and reloads.",
+    "Victory grants your tribe the Workshop Schematic. The trophy and schematic fall onto the central terrace.",
+    "Any beacon colour counts; the variants share the same combat balance."
   ],
-  "task.00000000000005A3.title": "Defeat the Guardian Giganotosaurus"
+  "task.00000000000005A3.title": "Defeat a Beacon Guardian"
 }

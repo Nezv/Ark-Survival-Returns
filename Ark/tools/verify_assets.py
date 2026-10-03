@@ -98,7 +98,11 @@ def main():
     report = json.loads((ROOT/'docs/creature-import.json').read_text())
     for folder, identifier, height, *clips in SPECIES:
         try:
-            check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
+            if identifier == 'dragon':
+                from import_dragon_runtime import verify
+                verify()
+            else:
+                check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrow, the companion

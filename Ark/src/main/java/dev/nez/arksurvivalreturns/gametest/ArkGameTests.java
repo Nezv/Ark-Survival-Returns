@@ -24,6 +24,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ArkGameTests {
     public static final DeferredRegister<Consumer<GameTestHelper>> FUNCTIONS = DeferredRegister.create(Registries.TEST_FUNCTION, ArkSurvivalReturns.MOD_ID);
     static {
+        FUNCTIONS.register("sky_beacon_placement", () -> SkyBeaconGameTests::placement);
+        FUNCTIONS.register("sky_beacon_assets", () -> SkyBeaconGameTests::assets);
+        FUNCTIONS.register("sky_beacon_persistence", () -> SkyBeaconGameTests::persistence);
+        FUNCTIONS.register("sky_beacon_rewards", () -> SkyBeaconGameTests::rewards);
         FUNCTIONS.register("pack_runtime_contract", () -> RuntimeGameTests::pack);
         FUNCTIONS.register("tech_real_event_flow", () -> ProgressionGameTests::events);
         FUNCTIONS.register("tech_lighting_flow", () -> ProgressionGameTests::lighting);

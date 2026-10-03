@@ -1,0 +1,7 @@
+{
+  "type": "arksurvivalreturns:sky_beacon",
+  "biomes": "#arksurvivalreturns:has_structure/sky_beacon",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none"
+}

@@ -29,6 +29,13 @@ The launcher also loads the pinned gameplay stack — FTB Quests, FTB Teams, FTB
 - Ten additional land creatures share existing behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
 - Twenty-two collection creatures add water, swamp, cold and flying realms: saved home pools for six water species, semi-aquatic shorelines that switch to swim clips, snow-supported hydration for the cold six, three more nest colonies and a solo apex flyer that guards its roost. See [the collection ecosystem](docs/collection-ecosystem.md).
 
+## Floating beacon guardian
+
+New Overworld terrain can generate floating beacons roughly 500 blocks apart. A red, white or black
+dragon flies around the open centre and defends it automatically; no Allosaur Heart is needed.
+Defeat it to earn the Workshop Schematic. Use /locate structure arksurvivalreturns:sky_beacon to
+find one. See [beacon rules, variants and verification limits](docs/first-guardian.md).
+
 ## Theme alignment
 
 Wildlife survival is the game; Minecraft's fantasy and alternate-dimension content is not. The patch removes that content and keeps the mundane materials a survivor still needs.

@@ -23,7 +23,8 @@ public final class LevelEvents {
         ServerPlayer player = credit(event.getSource().getEntity());
         if (player == null) player = credit(event.getEntity().getKillCredit());
         if (player == null) return;
-        if (event.getEntity() instanceof GuardianGiganotosaurusEntity
+        if (event.getEntity() instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity
+                || event.getEntity() instanceof GuardianGiganotosaurusEntity
                 || event.getEntity() instanceof EnderDragon || event.getEntity() instanceof WitherBoss) {
             ArkLevels.addXp(player, Config.PLAYER_XP_BOSS.get(), ArkLevels.Source.BOSS);
         } else if (event.getEntity() instanceof CreatureEntity creature) {

@@ -164,6 +164,10 @@ def with_behavior_clips(folder, identifier, clips):
 def main():
     report = []
     for folder, identifier, height, *clips in SPECIES:
+        if identifier == 'dragon':
+            from import_dragon_runtime import import_dragon
+            import_dragon()
+            continue
         geo_path, anim_path, sources = source_files(folder)
         texture_paths = {variant: sources[f'texture_{variant.lower()}'] for variant in TEXTURE_VARIANTS}
         missing = [name for name, path in sources.items() if not path.is_file()]
@@ -234,4 +238,10 @@ def main():
     write(ROOT / 'docs/creature-import.json', report)
     print(f'Imported {len(report)} creatures, {sum(len(row["clips"]) for row in report)} clips, and five procedural texture variants.')
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    import sys
+    if '--dragon-only' in sys.argv:
+        from import_dragon_runtime import import_dragon
+        import_dragon()
+    else:
+        main()

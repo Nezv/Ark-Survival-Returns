@@ -15,10 +15,22 @@ final class CreatureModel extends GeoModel<CreatureEntity> {
     private static final String[] VARIANTS = {"ivory", "darken", "emerald", "midnight", "burgundy"};
     private final Species species;
     CreatureModel(Species species) { this.species = species; }
-    @Override public Identifier getModelResource(GeoRenderState state) { return ArkSurvivalReturns.id("entity/" + species.id); }
+    private static final String[] DRAGONS = {"red", "white", "black"};
+    private String modelId(int variant) {
+        return species == Species.DRAGON ? "dragon_" + DRAGONS[Math.floorMod(variant, 3)] : species.id;
+    }
+    @Override public Identifier getModelResource(GeoRenderState state) {
+        return ArkSurvivalReturns.id("entity/" + modelId(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0)));
+    }
     @Override public Identifier getTextureResource(GeoRenderState state) {
+        if (species == Species.DRAGON)
+            return ArkSurvivalReturns.id("textures/entity/" + modelId(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0)) + ".png");
         int index = Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), VARIANTS.length);
         return ArkSurvivalReturns.id("textures/entity/" + species.id + "_" + VARIANTS[index] + ".png");
     }
-    @Override public Identifier getAnimationResource(CreatureEntity creature) { return ArkSurvivalReturns.id("entity/" + species.id); }
+    @Override public Identifier getAnimationResource(CreatureEntity creature) {
+        int variant = creature instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity dragon
+                ? dragon.beaconVariant() : Math.floorMod(creature.getUUID().hashCode(), 3);
+        return ArkSurvivalReturns.id("entity/" + modelId(variant));
+    }
 }

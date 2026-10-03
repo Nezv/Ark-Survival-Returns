@@ -511,8 +511,8 @@ public final class Config {
         HEALTH_BAR_RANGE = b.defineInRange("targetRange", 32, 8, 64);
         MASS_GAUGE = b.comment("Show the carried-load gauge in the top-left of the HUD.").define("massGauge", true);
         b.pop().push("guardian");
-        GUARDIAN_ENABLED = b.comment("Enable the First Guardian ritual encounter at Ancient Remnants monoliths. "
-                        + "When the mod is absent, the journal explains that the encounter is unavailable.")
+        GUARDIAN_ENABLED = b.comment("Enable floating beacon guardians and the legacy Ancient Remnants ritual. "
+                        + "Native beacon guardians do not require the Ancient Remnants mod.")
                 .define("enabled", true);
         GUARDIAN_ANNOUNCE = b.comment("Tell the tribe when the Guardian awakens, resets or falls.")
                 .define("announce", true);
@@ -546,7 +546,7 @@ public final class Config {
                 .defineInRange("healthPerExtraPlayer", 200.0, 0.0, 5000.0);
         GUARDIAN_HEALTH_PER_TAME = b.comment("Additional health for each registered combat tame, up to the contribution cap.")
                 .defineInRange("healthPerTame", 60.0, 0.0, 2000.0);
-        GUARDIAN_DAMAGE_MULTIPLIER = b.comment("Guardian attack damage as a multiple of the ordinary Giganotosaurus.")
+        GUARDIAN_DAMAGE_MULTIPLIER = b.comment("Guardian attack damage as a multiple of its base species damage.")
                 .defineInRange("damageMultiplier", 1.0, 0.1, 5.0);
         GUARDIAN_ARMOR = b.comment("Guardian armor points.")
                 .defineInRange("armor", 8.0, 0.0, 30.0);

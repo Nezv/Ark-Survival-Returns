@@ -4,7 +4,7 @@
   "group": "",
   "order_index": 4,
   "icon": {
-    "id": "arksurvivalreturns:allosaur_heart"
+    "id": "arksurvivalreturns:guardian_trophy"
   },
   "quests": [
     {
@@ -14,10 +14,7 @@
       "tasks": [
         {
           "id": "00000000000005A1",
-          "type": "item",
-          "item": {
-            "id": "arksurvivalreturns:allosaur_heart"
-          }
+          "type": "checkmark"
         }
       ],
       "rewards": [
@@ -42,7 +39,7 @@
         {
           "id": "00000000000005A2",
           "type": "structure",
-          "structure": "ancient_remnants:sentinel_monolith"
+          "structure": "arksurvivalreturns:sky_beacon"
         }
       ],
       "rewards": [
@@ -60,9 +57,7 @@
       "id": "0000000000000503",
       "x": 4.0,
       "y": 0.0,
-      "dependencies": [
-        "0000000000000502"
-      ],
+      "dependencies": [],
       "tasks": [
         {
           "id": "00000000000005A3",

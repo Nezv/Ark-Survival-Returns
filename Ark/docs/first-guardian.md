@@ -1,175 +1,80 @@
-# First Guardian
+# First Guardian: floating beacons
 
-A complete ritual boss encounter built around the existing Giganotosaurus and one Ancient Remnants
-structure (P05). The whole pipeline is server-authoritative, persists one record per ritual anchor and
-issues its rewards exactly once. Settings live under `[guardian]`.
+P05 now uses Ark's own floating beacon and the authored dragon from I10. No Ancient Remnants
+installation, Allosaurus hunt, heart, altar or activation interaction is required. A dragon appears
+with each generated beacon, flies through and around its central opening, and defends that territory.
 
-## The ritual and the structure
+![Three beacon palettes](sky-beacons.png)
 
-Ancient Remnants registers no altar block: each monolith is a jigsaw structure whose floating centre
-is the invulnerable `ancient_remnants:elderheart` entity. Ark therefore does not edit, copy or extend
-the third-party structure. It anchors on an existing block and verifies everything at the moment of
-interaction:
+## Find a beacon
 
-- the clicked block must be inside a configured structure start, resolved through
-  `StructureManager.getStructureWithPieceAt`;
-- an `ancient_remnants:elderheart` must stand within `guardian.activationRadius` of that block;
-- the arena chunks around the anchor must already be loaded, and a full Giga-sized volume must be
-  clear and standing on solid ground (only loaded columns are searched).
+Explore **new Overworld chunks**, or use /locate structure arksurvivalreturns:sky_beacon.
+The native structure set uses 32-chunk spacing and 30-chunk separation: neighbouring candidate
+centres along either grid axis differ by 496–528 blocks (normally about 512). All three variants
+share this set, so adding colours does not multiply beacon density. Terrain can reject a candidate.
 
-The encounter record is keyed by dimension, structure instance (structure-start chunk) and structure
-id, so two monoliths never share an attempt, and a structure that generates twice produces two
-independent arenas. Default structure: `ancient_remnants:sentinel_monolith`.
+Each original block template is 49 × 97 × 49, with a split taper, an open ring, detached plates,
+a luminous diamond and a landing terrace. It starts at Y144 or at least 32 blocks above the highest
+sampled terrain in its footprint, whichever is higher. Peaks that leave insufficient headroom are
+skipped. Terrain adaptation is disabled. Existing chunks and player builds are not retrofitted.
 
-The integration is optional at load time: without Ancient Remnants the encounter code never runs and
-the journal explains that the mod is required. The manual test instance needs both
-`ancient_remnants-neoforge-26.1-1.3.1.jar` and its `fragmentum` dependency (26.1-4.0.5 or newer).
+The dragon is placed once by the structure template. Generation honours guardian.enabled,
+the natural-spawn config switch and minecraft:spawn_mobs; when disabled at generation time the
+beacon remains empty. The guardian is deliberately excluded from ordinary wildlife population
+counts and never despawns.
 
-## The Allosaur Heart
+For an operator preview, /place structure arksurvivalreturns:sky_beacon chooses a palette and
+resolves altitude above the local terrain. /place template arksurvivalreturns:sky_beacon/red ~ ~ ~
+places the red template at the command position; use sufficient open space and height.
+The same template command accepts white and black.
 
-- Drops exactly once from a **natural wild** Allosaurus whose killing blow came from a player or that
-  player's tame. Looting cannot multiply it, and tamed, spawn-egg or command-spawned Allosaurs never
-  drop one, so no tame or farm becomes an infinite key source.
-- It is the ritual key. It is consumed **after** the Guardian exists and the encounter record is
-  saved; any failure (no room, unloaded arena, downed player, active encounter) leaves it untouched.
-- The heart is also a JEI-visible item with English and Portuguese names, a tooltip and a journal
-  objective.
+## Dragon and variants
 
-## Lifecycle
+- Red beacon / red wyvern; pale blue beacon / white wyvern; violet beacon / black wyvern.
+- Each uses its authored geometry, exact original atlas, and seven supplied animation clips.
+  The original files under Creatures/Dragon/Dragon/out remain unchanged.
+- The imported wyverns are also used by ordinary dragon creatures. Their existing behaviour
+  role names alias the closest supplied clips; there are no newly authored bite, landing or death clips.
+- Variants have the same combat rules and health; they are visual variants, not difficulty tiers.
+- The beacon guardian is a separate entity (arksurvivalreturns:guardian_dragon), untamable,
+  immune to sedation, persistent and independent of the legacy Guardian Giganotosaurus.
+- It patrols the opening, attacks visible Survival players within 40 blocks of its saved home in
+  three dimensions, and returns when they leave. Creative, spectator, downed and sedated players
+  are excluded. Peaceful disables its aggression.
+- The flying attack has a wind-up and rechecks range, sight and eligibility at impact. It damages
+  an intruder without setting terrain on fire. It never deliberately follows a player below the
+  beacon or across the map.
+- Movement checks loaded chunks, world-border bounds and body collision. There are no chunk tickets.
+- Home, palette, health and kill credit survive saves. Retreat does not regenerate health,
+  remove the dragon or start a new ritual. A defeated beacon stays defeated.
 
-```text
-LOCKED -> READY -> ACTIVE -> RESETTING -> READY
-                  |  ^                    |
-                  v  |                    v
-                (retry, no heart)      (rematch needs a new heart)
-                     \-> DEFEATED -----/
-```
+Guardian config: baseHealth (400), damageMultiplier (1), armor (8), and barRange (64).
+Health is fixed at spawn; extra players and tames do not change it. The nearby boss bar uses
+the palette's colour.
 
-- **LOCKED** — no record yet; offering a heart starts the attempt.
-- **READY** — the attempt is unlocked but the boss is not spawned. Activating the anchor again is
-  free: no heart is consumed.
-- **ACTIVE** — exactly one Guardian owns the encounter UUID. A second activation at the same anchor
-  is refused.
-- **RESETTING** — the tribe retreated; the boss was removed and a short cooldown runs before the free
-  retry window reopens.
-- **DEFEATED** — victory was persisted before rewards were issued. A deliberate rematch starts a new
-  ACTIVE record with `rewardsIssued` already set, so payouts cannot repeat.
+## Victory
 
-The record stores the anchor, structure id, tribe, state, boss UUID, participants, registered tames,
-scaled health, reward status and timers. A server restart, chunk unload or reconnect can therefore
-never duplicate the boss, consume a second heart or issue rewards twice.
+The killing player (or a tame's owner) receives tribe credit. A remembered attacker can receive
+credit for a later environmental finish. Victory is saved per beacon before rewards are issued.
+The trophy and the tribe's first Workshop Schematic drop at the central landing terrace, rather
+than falling from the aerial kill location. The schematic flag remains authoritative if the
+physical item is lost. Nearby members of the credited tribe receive journal/first_guardian,
+which completes the journal's boss objective without any earlier quest or heart requirement.
+The kill counts as boss XP.
 
-## Activation rules
+The old optional Ancient Remnants ritual, its entity id, saved encounter records and operator
+commands remain for existing saves; they are not used by newly generated beacons. I12 is no
+longer a prerequisite for P05 and remains separate work for other bosses.
 
-Activation succeeds only when all of these hold:
+## Build and verification
 
-- the player holds an Allosaur Heart (or the attempt is already READY);
-- the clicked block is inside the designated structure and close to its monolith;
-- the arena chunks are loaded and the spawn volume is clear, safe and on solid ground;
-- no encounter is ACTIVE or RESETTING at this anchor;
-- the player is not downed and not under player sedation.
+- python tools/build_sky_beacons.py creates the three native NBT templates and worldgen JSON.
+- python tools/import_creatures.py --dragon-only imports only the authored dragon variants.
+- python tools/preview_sky_beacons.py renders the geometry preview above; it is not a game screenshot.
+- runData generates names and test instances. build and runGameTestServer check gameplay.
+- sky_beacon_assets, sky_beacon_placement, sky_beacon_persistence and sky_beacon_rewards
+  cover structure registration/spacing, actual template entity placement, saved home/palette/wounds,
+  attack exclusions, and one-time accessible progression rewards.
 
-The encounter belongs to the player's FTB Teams tribe. Nearby tribe members inside
-`guardian.joinRadius` become participants automatically — joining a fight never costs another heart.
-
-## Guardian Giganotosaurus
-
-A dedicated entity type outside the normal creature roster, so ordinary wild Gigas are unchanged:
-
-- named **Guardian Giganotosaurus**, untamable and immune to sedation;
-- excluded from population accounting and culling, never despawns;
-- uses the ordinary Giga model, animations and authored hit-frame damage;
-- targets only registered participants and their registered tames, and only inside the arena;
-- returns to its lair when leashed out of `guardian.arenaRadius` and resets aggro instead of being
-  dragged across the map;
-- drops no loot-table entries; the victory trophy and schematic are placed by the encounter service.
-
-Health is snapshotted at activation from configurable values: a base pool for the first player, a
-larger share for the second, and a smaller share per registered tame, capped at
-`guardian.maxTameContribution`. Disconnects during the fight never re-scale or heal the boss.
-
-## Combat tames
-
-At activation, up to four alive tribe-owned tames within `guardian.tameRegistrationRadius` are
-registered. Registered tames may be targeted and deal full damage; riding stays allowed, tame deaths
-stay real and no tame is ever teleported. Tames that were not registered deal a strongly reduced
-configurable share of their damage, so an unregistered army cannot carry the fight. A tame alone
-never grants rewards to a player.
-
-## Boss bar
-
-A purple server-controlled boss bar shows the Guardian's name and current health to participants and
-to any player within `guardian.barRange`. It is removed when the encounter resets, the boss dies, the
-player disconnects or leaves range, and it returns after reconnecting to an active fight. The
-ordinary look-at creature bar skips the Guardian so only one bar describes the encounter.
-
-## Retreat and reset
-
-Retreating is a valid strategy, not a trap. When no living, connected participant remains within
-`guardian.joinRadius` of the anchor for `guardian.graceTicks`, the Guardian is removed without
-drops, the attempt enters RESETTING, and after `guardian.resetDelayTicks` the tribe may summon it
-again for free. A death while the partner keeps fighting never triggers a reset. The failed attempt
-costs food, medicine and ammunition, never another heart.
-
-## Victory and rewards
-
-On legitimate death the encounter is marked DEFEATED before anything is paid:
-
-- the tribe receives the **Workshop Schematic** progression flag (`tribe_progress` SavedData), which
-  is authoritative for future workshop research;
-- the physical **Workshop Schematic** item and one **Guardian Trophy** drop at the kill;
-- each participant receives the hidden `journal/first_guardian` discovery advancement, which
-  completes the shared FTB chapter and pays the individual quest rewards;
-- the tribe is notified and the boss bar and boss record are cleared.
-
-Losing the physical schematic never blocks the campaign: `/arkguardian grant <player>` re-issues it
-and re-grants the flag. `/arkguardian status` reports the caller's tribe encounters, state, location
-and boss health; `/arkguardian reset` returns the nearest encounter to READY, and
-`/arkguardian clear` removes the nearest record and its boss.
-
-## Failure and recovery
-
-The encounter composes with P02: downed players can be revived normally, and a fatal death drops
-items at the arena as usual. Leaving to re-equip and reclaim gear is a legitimate retreat.
-
-## Performance boundaries
-
-- No chunk is ever force-loaded: every structure, arena, spawn and tame check requires the relevant
-  chunk to be loaded already.
-- Only ACTIVE and RESETTING records are visited, once per second; idle anchors cost nothing.
-- The world is never scanned for structures; the encounter is resolved from a player interaction.
-- Boss-bar updates follow damage and participant changes, plus a bounded per-second viewer sync.
-- At most one Guardian exists per anchor, enforced by the record state.
-
-## Config quick reference
-
-| Key | Default | Meaning |
-|---|---|---|
-| `guardian.enabled` | true | Master switch |
-| `guardian.announce` | true | Tribe chat for awaken/reset/victory |
-| `guardian.structures` | `["ancient_remnants:sentinel_monolith"]` | Accepted structure ids |
-| `guardian.activationRadius` | 16 | Heart must be offered this close to the monolith |
-| `guardian.arenaRadius` | 40 | Leash around the lair |
-| `guardian.joinRadius` | 48 | Tribe members joining the encounter |
-| `guardian.graceTicks` | 600 | Empty-arena grace before reset |
-| `guardian.resetDelayTicks` | 200 | Cooldown before the free retry |
-| `guardian.maxTameContribution` | 4 | Registered tames that add health |
-| `guardian.tameRegistrationRadius` | 24 | Tame registration reach |
-| `guardian.barRange` | 64 | Who sees the encounter bar |
-| `guardian.spawnRadius` | 16 | Ground search radius for the spawn |
-| `guardian.baseHealth` | 400 | Pool for one participant |
-| `guardian.healthPerExtraPlayer` | 200 | Additional player share |
-| `guardian.healthPerTame` | 60 | Additional tame share |
-| `guardian.damageMultiplier` | 1.0 | Attack damage vs. an ordinary Giga |
-| `guardian.armor` | 8 | Armor points |
-| `guardian.unregisteredTameDamageFactor` | 0.1 | Damage share of unregistered tames (0 disables) |
-
-## Automated coverage
-
-`guardian_heart` covers the wild/player-tame kill drop and the tamed and spawned exclusions;
-`guardian_policy` covers the health scaling, tame cap, tame damage and reset/retry math;
-`guardian_registration` covers untamability, sedation immunity, persistence and the armor default;
-`guardian_persistence` round-trips the encounter codec and the world store; `guardian_rewards` proves
-the defeat-before-payout order and exactly-once rewards. The guardian suite runs in its own
-`arksurvivalreturns:guardian` test environment so its oversized boss cannot disturb the shared
-timing-sensitive batches. Visual checks are tracked in Dashboard.csv.
+In-client visual review is still required for scale, wing clearance, flight animation, lighting,
+and combat feel. The automated preview does not validate those artistic details.

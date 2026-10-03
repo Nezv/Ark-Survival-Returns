@@ -274,6 +274,8 @@ public final class ArkData implements DataProvider {
         en.put("key.category." + NS + ".debug", "Ark Survival Returns: Debug");
         pt.put("key.category." + NS + ".debug", "Ark Survival Returns: Depuração");
         // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
+        en.put("entity." + NS + ".guardian_dragon", "Beacon Guardian");
+        pt.put("entity." + NS + ".guardian_dragon", "Guardião do Farol");
         en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
         pt.put("entity." + NS + ".guardian_giganotosaurus", "Giganotossauro Guardião");
         en.put("entity." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
@@ -898,8 +900,8 @@ public final class ArkData implements DataProvider {
                 "Proof of the First Guardian's defeat. The tribe's workshop research is already recorded; this is a memento.");
         pt.put("tooltip." + NS + ".workshop_schematic",
                 "Prova da derrota do Primeiro Guardi\u00e3o. A pesquisa da tribo j\u00e1 est\u00e1 registrada; isto \u00e9 uma lembran\u00e7a.");
-        en.put("tooltip." + NS + ".guardian_trophy", "Trophy taken from the Guardian Giganotosaurus.");
-        pt.put("tooltip." + NS + ".guardian_trophy", "Trofeu tomado do Giganotossauro Guardi\u00e3o.");
+        en.put("tooltip." + NS + ".guardian_trophy", "Trophy taken from a Beacon Guardian.");
+        pt.put("tooltip." + NS + ".guardian_trophy", "Trofeu tomado de um Guardi\u00e3o do Farol.");
         en.put("guardian." + NS + ".name", "Guardian Giganotosaurus");
         pt.put("guardian." + NS + ".name", "Giganotossauro Guardi\u00e3o");
         en.put("guardian." + NS + ".bar", "%s | %s/%s");
@@ -1045,6 +1047,9 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/session_recorder", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_instance/session_recorder", Map.of("type", "minecraft:function", "function", NS + ":session_recorder",
                 "environment", NS + ":session_recorder", "structure", NS + ":test_population", "max_ticks", 12000, "sky_access", true));
+        for (String name : List.of("sky_beacon_assets", "sky_beacon_placement", "sky_beacon_persistence", "sky_beacon_rewards"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 100, "sky_access", true));
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);

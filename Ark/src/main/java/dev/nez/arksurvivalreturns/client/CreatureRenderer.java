@@ -24,7 +24,8 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
     public void captureDefaultRenderState(CreatureEntity creature, Void unused, EntityRenderState state, float partialTick) {
         super.captureDefaultRenderState(creature, unused, state, partialTick);
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
-                CreatureModel.TEXTURE_VARIANT, Math.floorMod(creature.getUUID().hashCode(), 5));
+                CreatureModel.TEXTURE_VARIANT, creature instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity dragon
+                        ? dragon.beaconVariant() : Math.floorMod(creature.getUUID().hashCode(), species == Species.DRAGON ? 3 : 5));
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
                 CreatureModel.EYE_ALERT, creature.behavior().alarm() || creature.isAggressive());
     }
@@ -47,6 +48,7 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
         // Correct the model space once, keeping movement, aiming and animation timing intact.
         if (species.flyer() && pass.renderState() instanceof net.minecraft.client.renderer.entity.state.LivingEntityRenderState living)
             pose.mulPose(Axis.XP.rotationDegrees(living.xRot));
-        pose.mulPose(Axis.YP.rotationDegrees(180f));
+        // The authored wyverns already face -Z; the older imported rigs face +Z.
+        if (species != Species.DRAGON) pose.mulPose(Axis.YP.rotationDegrees(180f));
     }
 }

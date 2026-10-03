@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:sky_beacon_rewards",
+  "max_ticks": 100,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_population"
+}

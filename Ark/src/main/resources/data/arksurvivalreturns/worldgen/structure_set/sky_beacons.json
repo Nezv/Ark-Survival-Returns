@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "arksurvivalreturns:sky_beacon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 30,
+    "salt": 50312010
+  }
+}
