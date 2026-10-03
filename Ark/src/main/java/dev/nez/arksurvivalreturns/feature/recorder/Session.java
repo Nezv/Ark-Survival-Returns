@@ -905,6 +905,7 @@ final class Session {
         try {
             for (String name : List.of("feature/behavior/WildlifeGoal", "feature/behavior/WildlifeMind", "feature/behavior/WildlifeSenses",
                     "feature/behavior/Choreographer", "feature/creature/CreatureEntity", "feature/creature/CreatureMoveControl",
+                    "feature/creature/CreatureNavigation", "feature/creature/TreeTrample",
                     "feature/land/LandWildlife", "feature/spawn/NaturalPopulations", "feature/recorder/Session")) {
                 try (var in = Session.class.getResourceAsStream("/dev/nez/arksurvivalreturns/" + name + ".class")) {
                     if (in == null) throw new java.io.FileNotFoundException(name);
