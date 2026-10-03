@@ -127,7 +127,7 @@ def workstationBuild = layout.buildDirectory.dir('workstations')
 tasks.register('generateWorkstationData', Exec) {
     dependsOn 'createMinecraftArtifacts'
     inputs.dir 'design/workstations'
-    inputs.files 'tools/workstation_plan.py', 'tools/build_workstation_data.py', 'tools/build_workstation_crests.py', 'tools/showcase_recipes.py',
+    inputs.files 'tools/workstation_plan.py', 'tools/build_workstation_data.py', 'tools/build_workstation_crests.py', 'tools/stone_symbols.py', 'tools/showcase_recipes.py',
             'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePolicy.java',
             'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/PrimitiveEvents.java'
     inputs.dir 'src/generated/resources/data/arksurvivalreturns'

@@ -5,7 +5,6 @@ Run from Ark: python tools/build_baroque_ui.py. Also called by build_ui_pack.py.
 The crate assets are staged for a dedicated screen; generic_54 is not replaced.
 """
 import json
-import math
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -146,19 +145,7 @@ def hotbar():
 
 
 def crate_sigil():
-    im = Image.new('RGBA', (16, 16))
-    d = ImageDraw.Draw(im)
-    d.rectangle((1, 3, 14, 13), fill='#66462d', outline='#231c13')
-    for y in (4, 7, 10):
-        d.line((2, y, 13, y), fill='#b58a53')
-        d.line((2, y+1, 13, y+1), fill='#865c37')
-    for x in (3, 11):
-        d.rectangle((x, 3, x+1, 13), fill='#8a8f86')
-        for y in (4, 12):
-            d.point((x, y), fill='#e6e8e1')
-    d.rectangle((7, 6, 8, 9), fill='#d0a86b')
-    d.point((8, 8), fill='#35271a')
-    return crest.outline(im)
+    return crest.sigil('crate')
 
 
 def crate():
@@ -189,11 +176,7 @@ def crate():
         # Omit the workstation craft rail from the inventory label's safe region.
         relief.h = {p: v for p, v in relief.h.items() if not (3 <= p[0] < 173 and 70 <= p[1] <= 81)}
         relief.paint(f)
-        for y in range(-16, 6):
-            for x in range(77, 100):
-                if math.hypot(x+.5-88, y+.5+5) <= 10.2:
-                    f.put(x, y, crest.DISC)
-        f.image.alpha_composite(crate_sigil(), (106, 20))
+        crest.seal(f, 'crate')
         frame = save(f.finish(), CRATE / 'storage_crate_frame.png')
     finally:
         for k, v in old.items():

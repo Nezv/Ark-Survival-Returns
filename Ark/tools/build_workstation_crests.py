@@ -5,8 +5,8 @@ The frame is the panel's edge, not an ornament above it: a carved moulding round
 panel's vanilla outline and bevel, scrolls, shells and acanthus at the corners and sides, a beaded rail between the
 graph well and the craft bar, a beaded cartouche round the bench's sigil and a scallop shell under the bottom. It is
 carved in the panel's own dark tones (the graph_style palette and steps between them), shaded from a height field with
-the light from the top left, like the GUI; only the sigil carries colour. Each bench names its sigil in its design
-file ({"sigil": "helm"}); sigils are 16x16 pixel art, like an item.
+the light from the top left, like the GUI. Each bench names its symbol in its design
+file ({"sigil": "helm"}); symbols are incised into a stone medallion in the same palette.
 
 The panel size comes from design/workstations/graph_style.json. Writes design/workstations/crests/<bench>.png (the
 frame, FRAME_W x FRAME_H; the panel's top-left corner sits at (MARGIN, PANEL_TOP) of the image, PANEL_BOTTOM units of
@@ -19,7 +19,7 @@ import json
 import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 ARK = Path(__file__).resolve().parents[1]
 DESIGN = ARK / 'design/workstations'
@@ -51,262 +51,9 @@ def outline(image, colour=OUTLINE):
 
 # ------------------------------------------------------------------------------------------------ sigils
 
-def paint(rows, palette):
-    image = Image.new('RGBA', (16, 16))
-    px = image.load()
-    for y, row in enumerate(rows):
-        for x, ch in enumerate(row):
-            if ch != '.':
-                px[x, y] = rgb(palette[ch])
-    return image
-
-
-SIGILS = {
-    # A great helm with a T visor and two short horns (the user's sketch).
-    'helm': (["H..............H",
-              "Hh............hH",
-              ".Hh..........hH.",
-              ".HhhLLLLLLLLhhH.",
-              "..hLWWLLLLLLLMh.",
-              "..LWLLMMMMMMMMD.",
-              "..LWLMMMMMMMMMD.",
-              "..LLMMEMMMMEMMD.",
-              "..VVVVVVVVVVVVV.",
-              "..LMMMMMVVMMMMD.",
-              "..LMMMMMVVMMMMD.",
-              "..LMMMEMVVMEMMD.",
-              "..LMMMMMVVMMMMD.",
-              "..DMMMMMMMMMMMD.",
-              "...DDDDDDDDDDD..",
-              "................"],
-             {'H': '#e8dfc4', 'h': '#b1a47f', 'W': '#eef3f6', 'L': '#c3ccd2', 'M': '#8b959c', 'D': '#555e65',
-              'V': '#15191b', 'E': '#e2763f'}),
-    # A stone mortar with its pestle and two blackberries.
-    'mortar': ([".............PP.",
-                "............PpP.",
-                "...........PpP..",
-                "..........PpP...",
-                ".........PpP....",
-                "..NN....PpP.....",
-                ".NnNN..PpP......",
-                ".NNn.RRPPRRRR...",
-                "..RRrrrrrrrrrRR.",
-                ".RGGrrrrrrrrrGGR",
-                ".RGGGGGGGGGGGGGR",
-                ".RGgGGGGGGGGGgGR",
-                "..RGgGGGGGGGgGR.",
-                "...RgggggggggR..",
-                ".....RRRRRRR....",
-                "....RRRRRRRRR..."],
-               {'P': '#e2d8bd', 'p': '#aa9f82', 'N': '#6b3f9e', 'n': '#a77ad8', 'R': '#5d615a', 'r': '#2c2f2b',
-                'G': '#a3a69c', 'g': '#7c8076'}),
-    # A round flask of green tonic with a leaf.
-    'flask': (["......CC........",
-               "......cC....LL..",
-               ".....GGGG..LlL..",
-               "......GG..LlL...",
-               "......GG.LlL....",
-               "......GG.lL.....",
-               ".....GWGG.......",
-               "....GW...G......",
-               "...GW.....G.....",
-               "...GAAAAAAAG....",
-               "...GAaAAAAAG....",
-               "...GAAAAaAAG....",
-               "....GAAAAAG.....",
-               ".....GGGGG......",
-               "................",
-               "................"],
-              {'C': '#9c6b3f', 'c': '#6e4a28', 'G': '#cfe6ea', 'W': '#ffffff', 'A': '#5fbf5a', 'a': '#9ae07f',
-               'L': '#6fb04a', 'l': '#3f7a2c'}),
-    # An anvil with three sparks.
-    'anvil': (["......Y.........",
-               "..Y......O......",
-               "........Y...Y...",
-               "....O...........",
-               "................",
-               ".LLLLLLLLLLLLLL.",
-               "LWWLLLLLLLLLLLMD",
-               ".LMMMMMMMMMMMMD.",
-               "....DMMMMMMD....",
-               ".....DMMMMD.....",
-               ".....DMMMMD.....",
-               "....DMMMMMMD....",
-               "...LLMMMMMMMMD..",
-               "..LMMMMMMMMMMMD.",
-               "..DDDDDDDDDDDDD.",
-               "................"],
-              {'L': '#8f979d', 'W': '#c9d0d4', 'M': '#5a6268', 'D': '#30363a', 'Y': '#ffd35a', 'O': '#ff8a3a'}),
-
-    # Three logs in a tipi, a flame rising out of them, a ring of stones.
-    'campfire': (["................",
-                  "........Y.......",
-                  ".......YO.......",
-                  "......YOY...Y...",
-                  "......OWYO..O...",
-                  ".....OYWWYOOY...",
-                  ".....OYWWYYO....",
-                  "....ROYYWYYOR...",
-                  "....RLOYYYOLR...",
-                  "...LLlLOOOLlLL..",
-                  "..LllLlLLLlLllL.",
-                  "..BLllLlllLllB..",
-                  ".SSBBLLllLLBBSS.",
-                  ".SsSSBBBBBBSSsS.",
-                  "..SSs.SSSS.sSS..",
-                  "................"],
-                 {'Y': '#ffd35a', 'O': '#ff8a3a', 'W': '#fff4c8', 'R': '#c8402a', 'L': '#8a5a34', 'l': '#5a3a20',
-                  'B': '#3a2618', 'S': '#8f8f86', 's': '#5d5d56'}),
-    # A clay bloomery with its glowing mouth and a curl of smoke.
-    'bloomery': (["..........ss....",
-                  ".........s..s...",
-                  "..........ss....",
-                  "......CCCC......",
-                  "......CccC......",
-                  ".....CCccCC.....",
-                  ".....CcCCcC.....",
-                  "....CCcCCccC....",
-                  "....CcCCCCcC....",
-                  "...CCCOYYOCCC...",
-                  "...CcCYWWYCcC...",
-                  "..CCcCOYYOCcCC..",
-                  "..CcCCROORCCcC..",
-                  ".KKKKKKKKKKKKKK.",
-                  ".KkkKkkkKkkkKkK.",
-                  "................"],
-                 {'C': '#b8714a', 'c': '#7a3f27', 'O': '#ff8a3a', 'Y': '#ffd35a', 'W': '#fff4c8', 'R': '#c8402a',
-                  'K': '#6c6e67', 'k': '#3c3e3c', 's': '#8a8f86'}),
-    # A screw press: posts, a beam with the screw and its bar, the platen on a stack of paper.
-    'press': (["................",
-               "..HHHHHHHHHHHH..",
-               ".......SS.......",
-               ".PPWWWWSSWWWWPP.",
-               ".PwwwwwSSwwwwwP.",
-               ".Pp....ss....pP.",
-               ".Pp....SS....pP.",
-               ".Pp..LLLLLL..pP.",
-               ".Pp..llllll..pP.",
-               ".Pp..QQQQQQ..pP.",
-               ".Pp..qqqqqq..pP.",
-               ".Pp..QQQQQQ..pP.",
-               ".PBBBBBBBBBBBBP.",
-               ".PbbbbbbbbbbbbP.",
-               ".PP..........PP.",
-               "................"],
-              {'H': '#cf7a44', 'S': '#c3ccd2', 's': '#8b959c', 'P': '#8f5037', 'p': '#5c3022', 'W': '#a0643f',
-               'w': '#5c3022', 'L': '#9aa3a9', 'l': '#5a6268', 'Q': '#f2ecd6', 'q': '#c9bf9e', 'B': '#474c50',
-               'b': '#24272a'}),
-}
-
-
-def hammer():
-    """A claw hammer on the diagonal: the handle from the bottom left, the head across it at the top right."""
-    image = Image.new('RGBA', (16, 16))
-    px = image.load()
-    for i in range(10):
-        px[1 + i, 14 - i] = rgb('#b07a45')
-        px[2 + i, 14 - i] = rgb('#6e4a28')
-    for d, shade in ((5, '#d0d8de'), (6, '#8b959c'), (7, '#555e65')):
-        for s in range(12, 21):
-            if (s + d) % 2 == 0 and 11 <= s <= 20:
-                x, y = (s + d) // 2, (s - d) // 2
-                px[x, y] = rgb(shade)
-    for x, y in ((8, 2), (7, 2), (8, 1)):
-        px[x, y] = rgb('#8b959c')
-    px[13, 7] = rgb('#eef3f6')
-    return image
-
-
-def saw():
-    """A circular saw blade with eight teeth, sunk into a block of cut stone."""
-    image = Image.new('RGBA', (16, 16))
-    px = image.load()
-    cx, cy = 8, 7
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
-            d = math.hypot(dx, dy)
-            a = (math.atan2(dy, dx) / (2 * math.pi) * 8) % 1
-            if d <= 1.2:
-                px[x, y] = rgb('#2a2d30')
-            elif d <= 4.6 or (d <= 6.4 and a < 0.42 - (d - 4.6) * 0.2):
-                fc = facing(dx, dy)
-                px[x, y] = rgb('#eef3f6' if fc > 0.55 and d > 2 else '#c3ccd2' if fc > -0.1 else
-                               '#9aa3a9' if fc > -0.6 else '#6f787e')
-    for y in range(10, 15):
-        for x in range(1, 15):
-            edge = y == 10 or x == 1
-            px[x, y] = rgb('#b4b7af' if edge else '#4a4d48' if y == 14 or x == 14 else '#8e918a')
-    for x in range(5, 11):   # the kerf the blade has cut
-        px[x, 10] = rgb('#2a2d30')
-    for x, y in ((4, 12), (9, 12), (11, 13), (6, 13)):
-        px[x, y] = rgb('#6c6f68')
-    return image
-
-
-def mill():
-    """A drill press: a column, a head with its copper motor drum, the spindle and bit over a workpiece on the table."""
-    rows = ["................",
-            ".......OOOO.....",
-            "......OooooO....",
-            "..KK..OOOOOO....",
-            "..KkGGGGGGGGG...",
-            "..KkGgggggggG...",
-            "..KkGGGGGGGGG...",
-            "..Kk....SS......",
-            "..Kk....Ss......",
-            "..Kk....Ss......",
-            "..Kk....BB......",
-            "..Kk.....B......",
-            "..Kk..WWWWWW....",
-            ".TTTTTTTTTTTTTT.",
-            ".tttttttttttttt.",
-            "................"]
-    return paint(rows, {'O': '#cf7a44', 'o': '#8a3e1c', 'K': '#8b959c', 'k': '#555e65', 'G': '#c3ccd2', 'g': '#7c868d',
-                        'S': '#eef3f6', 's': '#9aa3a9', 'B': '#2a2d30', 'W': '#d2a650', 'T': '#9aa3a9', 't': '#4a4d50'})
-
-
-def chopsaw():
-    """A chop saw: a copper motor drum on its tower, the arm swung down, the blade biting into a plank."""
-    image = Image.new('RGBA', (16, 16))
-    px = image.load()
-    for y in range(2, 14):            # the tower
-        px[1, y] = rgb('#8b959c')
-        px[2, y] = rgb('#555e65')
-    for x, y in ((3, 4), (4, 5), (5, 5), (6, 6), (7, 6), (8, 7)):   # the arm, down from the pivot
-        px[x, y] = rgb('#c3ccd2')
-        px[x, y + 1] = rgb('#7c868d')
-    cx, cy = 10, 8
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
-            d = math.hypot(dx, dy)
-            a = (math.atan2(dy, dx) / (2 * math.pi) * 8) % 1
-            if d <= 1.1:
-                px[x, y] = rgb('#2a2d30')
-            elif d <= 3.4 or (d <= 4.9 and a < 0.42 - (d - 3.4) * 0.22):
-                fc = facing(dx, dy)
-                px[x, y] = rgb('#eef3f6' if fc > 0.55 and d > 1.6 else '#c3ccd2' if fc > -0.1 else
-                               '#9aa3a9' if fc > -0.6 else '#6f787e')
-    for x in range(0, 5):             # the motor drum on top of the tower
-        for y in range(1, 4):
-            px[x, y] = rgb('#eba36c' if y == 1 else '#cf7a44' if y == 2 else '#8a3e1c')
-    for y in range(11, 14):           # the plank, cut where the blade went in
-        for x in range(4, 16):
-            px[x, y] = rgb('#c29c66' if y == 11 else '#80603a' if y == 12 else '#5a4128')
-    for y in (11, 12):
-        px[10, y] = rgb('#2a1a10')
-    for x in range(1, 16):            # the bed
-        px[x, 14] = rgb('#4a4d50')
-    return image
-
-
 def sigil(name):
-    drawn = {'hammer': hammer, 'saw': saw, 'mill': mill, 'chopsaw': chopsaw}
-    if name in drawn:
-        return outline(drawn[name]())
-    rows, palette = SIGILS[name]
-    return outline(paint(rows, palette))
+    from stone_symbols import engraved
+    return engraved(name, TONES, LIGHT)
 
 
 # ------------------------------------------------------------------------------------------------ frames
@@ -324,7 +71,7 @@ SHADOW = (0, 0, 0, 90)
 # muted) with steps between them, dark to light.
 TONES = ['#050604', '#0b0c0a', '#0f110e', '#151813', '#1a1d18', '#242820', '#30352b', '#3a4034', '#4c5445', '#5d6258',
          '#747970', '#8a8f86']
-DISC = '#0b0c0a'  # behind the sigil
+DISC = '#30352b'  # stone face under the incised symbol (TONES[6])
 LIGHT = tuple(v / math.sqrt(1 + 1 + 1.8 ** 2) for v in (-1, -1, 1.8))
 
 
@@ -381,7 +128,7 @@ def facing(dx, dy):
 
 
 def seal(f, sigil_name, hole=10.2, cy=SEAL_Y):
-    """The sigil in the cartouche: a dark disc behind it, the sigil centred on it."""
+    """Stone cartouche with an incised symbol, lit from the same top-left as the frame."""
     for y in range(cy - 11, cy + 12):
         for x in range(CX - 11, CX + 12):
             if math.hypot(x + 0.5 - CX, y + 0.5 - cy) <= hole:
@@ -618,6 +365,43 @@ def build():
         frame(name).save(OUT / f'{file.stem}.png')
         sigil(name).resize((32, 32), Image.Resampling.NEAREST).save(OUT / f'{file.stem}_sigil.png')
         print('frame', file.stem, name)
+    preview_symbols()
+
+
+def preview_symbols():
+    """Show the twelve stone seals with their actual surrounding frame carving."""
+    entries = [(json.loads(p.read_text(encoding='utf-8')).get('sigil'), p.stem.replace('_', ' ').title())
+               for p in sorted(DESIGN.glob('*.json'))]
+    entries = [(name, label) for name, label in entries if name] + [('crate', 'Storage Crate')]
+    sheet = Image.new('RGBA', (1120, 830), '#10130f')
+    d = ImageDraw.Draw(sheet)
+    def font(size):
+        for face in ('C:/Windows/Fonts/consola.ttf', 'DejaVuSansMono.ttf'):
+            try:
+                return ImageFont.truetype(face, size)
+            except OSError:
+                pass
+        return ImageFont.load_default(size=size)
+    d.text((32, 20), 'ARK / ENGRAVED STONE SYMBOLS', font=font(28), fill='#e6e8e1')
+    d.text((32, 62), 'Shared frame palette / recessed cuts / top-left light', font=font(17), fill='#8a8f86')
+    # One original relief is enough; only the centre of the seal changes.
+    base = Frame()
+    ornament().paint(base)
+    for i, (name, label) in enumerate(entries):
+        f = Frame()
+        f.image = base.image.copy()
+        f.px = f.image.load()
+        seal(f, name)
+        cx, cy = CX+MARGIN, SEAL_Y+PANEL_TOP
+        detail = f.finish().crop((cx-27, max(0, cy-28), cx+27, cy+24))
+        x, y = 20+(i % 4)*280, 102+(i // 4)*240
+        sheet.alpha_composite(detail.resize((216, 208), Image.Resampling.NEAREST), (x+22, y))
+        label_font = font(17)
+        width = d.textbbox((0, 0), label, font=label_font)[2]
+        d.text((x+130-width/2, y+207), label, font=label_font, fill='#c1c7b9')
+    target = ARK / 'design/ui-rework/baroque/engraved-symbols-preview.png'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    sheet.save(target)
 
 
 if __name__ == '__main__':
