@@ -1,0 +1,88 @@
+{
+  "scope": "P16 first asset pass",
+  "source": "tools/build_workstation_crests.py",
+  "runtime": {
+    "hotbar": "Ark UI resource pack",
+    "buttons": "Ark UI shared vanilla widget sprites",
+    "storage_crate": "Asset only; dedicated screen registration pending. Do not replace generic_54."
+  },
+  "storage_crate": {
+    "panelSize": [
+      176,
+      166
+    ],
+    "textureSize": [
+      256,
+      256
+    ],
+    "frameSize": [
+      228,
+      229
+    ],
+    "panelOriginInFrame": [
+      26,
+      33
+    ],
+    "slotSize": 16,
+    "slotPitch": 18,
+    "containerOrigin": [
+      8,
+      18
+    ],
+    "containerGrid": [
+      9,
+      3
+    ],
+    "inventoryOrigin": [
+      8,
+      84
+    ],
+    "hotbarOrigin": [
+      8,
+      142
+    ],
+    "labelOrigins": [
+      [
+        8,
+        6
+      ],
+      [
+        8,
+        72
+      ]
+    ],
+    "labelColor": "#e6e8e1",
+    "frameDrawOffset": [
+      -26,
+      -33
+    ]
+  },
+  "files": [
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button_disabled.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/slider.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/slider_handle.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/scroller.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/scroller_background.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/tab.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/tab_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/tab_selected.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/tab_selected_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/checkbox.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/checkbox_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/checkbox_selected.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/checkbox_selected_highlighted.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/hud/hotbar.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/hud/hotbar_selection.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/hud/hotbar_offhand_left.png",
+    "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/hud/hotbar_offhand_right.png",
+    "src/main/resources/assets/arksurvivalreturns/textures/gui/container/storage_crate.png",
+    "src/main/resources/assets/arksurvivalreturns/textures/gui/container/storage_crate_frame.png",
+    "src/main/resources/assets/arksurvivalreturns/textures/gui/container/storage_crate_sigil.png",
+    "design/ui-rework/baroque/storage-crate-asset.png",
+    "design/ui-rework/baroque/baroque-ui-preview.png"
+  ]
+}

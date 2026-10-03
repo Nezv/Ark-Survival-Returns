@@ -9,6 +9,9 @@ widget keeps its exact position (the game draws them at fixed coordinates). Neut
 * Buttons, tabs, sliders, the hotbar and tooltips become dark basalt with moss and ember accents, the
   same palette as the project showcase (Ark-Survival-Returns.html).
 
+P16 overrides the hotbar and shared controls with the workstation's baroque carving
+at the end of the build; the remaining F08 panels keep their current treatment.
+
 Run from Ark: python tools/build_ui_pack.py
 """
 import io
@@ -400,6 +403,9 @@ def main():
     legs_icon()
     count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + cooking_pot() + mod_models()
     preview()
+    # P16's first approved scope overrides only HUD/controls; other panels remain F08.
+    from build_baroque_ui import build as build_baroque
+    build_baroque()
     print(f'Wrote {count} textures to {PACK}')
 
 
