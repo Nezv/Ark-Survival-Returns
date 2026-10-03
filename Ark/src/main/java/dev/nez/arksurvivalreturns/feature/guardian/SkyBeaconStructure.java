@@ -4,21 +4,28 @@ import com.mojang.serialization.MapCodec;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** One template and its saved guardian per start; terrain sampling never requests live chunks. */
 public final class SkyBeaconStructure extends Structure {
     public static final Identifier ID = ArkSurvivalReturns.id("sky_beacon");
     public static final String[] VARIANTS = {"red", "white", "black"};
+    /** Template bounds, the nest in the monolith's eye and the crate beside it, as tools/build_sky_beacons.py writes them. */
+    public static final Vec3i SIZE = new Vec3i(33, 100, 33);
+    public static final BlockPos NEST = new BlockPos(16, 63, 16), CRATE = new BlockPos(12, 63, 15);
+    public static final ResourceKey<LootTable> LOOT = ResourceKey.create(Registries.LOOT_TABLE, ArkSurvivalReturns.id("chests/sky_beacon"));
     public static final MapCodec<SkyBeaconStructure> CODEC = simpleCodec(SkyBeaconStructure::new);
     public static final DeferredRegister<StructureType<?>> TYPES =
             DeferredRegister.create(Registries.STRUCTURE_TYPE, ArkSurvivalReturns.MOD_ID);
@@ -33,17 +40,18 @@ public final class SkyBeaconStructure extends Structure {
 
     @Override public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         int x = context.chunkPos().getMiddleBlockX(), z = context.chunkPos().getMiddleBlockZ();
-        int terrain = context.chunkGenerator().getSeaLevel();
-        // Sample the whole 49-block footprint, including the high corners under the floating wings.
-        for (int dx = -24; dx <= 24; dx += 8) for (int dz = -24; dz <= 24; dz += 8)
-            terrain = Math.max(terrain, context.chunkGenerator().getFirstOccupiedHeight(x + dx, z + dz,
-                    Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()));
-        int bottom = Math.max(144, terrain + 32);
-        // Never bury the tip in a peak or truncate the crown at build height.
-        if (bottom + 97 >= context.heightAccessor().getMaxY()) return Optional.empty();
-        BlockPos origin = new BlockPos(x - 24, bottom, z - 24);
+        int ground = context.chunkGenerator().getSeaLevel();
+        // The monolith hangs just above the ground or the sea. It widens by a block for every three it rises,
+        // so the ground away from its axis may stand that much higher than the ground under the tip.
+        for (int dx = -16; dx <= 16; dx += 4) for (int dz = -16; dz <= 16; dz += 4)
+            ground = Math.max(ground, context.chunkGenerator().getFirstOccupiedHeight(x + dx, z + dz,
+                    Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState())
+                    - Math.max(0, Math.max(Math.abs(dx), Math.abs(dz)) - 4) * 3);
+        // The template's lowest rows hold only trailing vines; never truncate the crown at build height.
+        if (ground + SIZE.getY() >= context.heightAccessor().getMaxY()) return Optional.empty();
+        BlockPos origin = new BlockPos(x - NEST.getX(), ground + 1, z - NEST.getZ());
         String variant = VARIANTS[context.random().nextInt(VARIANTS.length)];
-        return Optional.of(new GenerationStub(origin.offset(24, 50, 24), builder ->
+        return Optional.of(new GenerationStub(origin.offset(NEST), builder ->
                 builder.addPiece(new Piece(context.structureTemplateManager(), origin, variant))));
     }
 
@@ -58,7 +66,9 @@ public final class SkyBeaconStructure extends Structure {
             super(PIECE.get(), tag, manager, ignored -> settings());
         }
         private static StructurePlaceSettings settings() {
-            return new StructurePlaceSettings().setIgnoreEntities(false)
+            // Known shape: the vines are authored with their faces, and a chunk-by-chunk shape update would drop
+            // the ones whose wall lies in a chunk that is not placed yet.
+            return new StructurePlaceSettings().setIgnoreEntities(false).setKnownShape(true)
                     .setFinalizeEntities(true).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
         }
         @Override public void postProcess(net.minecraft.world.level.WorldGenLevel level,

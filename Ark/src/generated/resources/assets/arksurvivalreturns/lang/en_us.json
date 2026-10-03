@@ -186,6 +186,7 @@
   "companion.arksurvivalreturns.order.stay": "Your companion stays here",
   "companion.arksurvivalreturns.order.wander": "Your companion wanders nearby",
   "companion.arksurvivalreturns.order.work": "Your companion starts working here",
+  "container.arksurvivalreturns.loot_crate": "Loot Crate",
   "curios.identifier.legs": "Legs",
   "debug.arksurvivalreturns.aim": "Aim at a dinosaur to read its state.",
   "debug.arksurvivalreturns.page": "PAGE %s/%s | Mouse wheel to browse",

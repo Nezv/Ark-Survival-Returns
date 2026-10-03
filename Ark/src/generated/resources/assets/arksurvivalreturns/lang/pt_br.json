@@ -186,6 +186,7 @@
   "companion.arksurvivalreturns.order.stay": "Seu companheiro fica aqui",
   "companion.arksurvivalreturns.order.wander": "Seu companheiro vaga por perto",
   "companion.arksurvivalreturns.order.work": "Seu companheiro começa a trabalhar aqui",
+  "container.arksurvivalreturns.loot_crate": "Caixa de Saque",
   "curios.identifier.legs": "Pernas",
   "debug.arksurvivalreturns.aim": "Mire em um dinossauro para ler seu estado.",
   "debug.arksurvivalreturns.page": "PÁGINA %s/%s | Role para navegar",

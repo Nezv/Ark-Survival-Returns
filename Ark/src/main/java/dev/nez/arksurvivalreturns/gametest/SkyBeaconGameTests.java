@@ -29,8 +29,10 @@ final class SkyBeaconGameTests {
         h.assertTrue(placement.spacing() == 32 && placement.separation() == 30, "Beacon spacing changed");
         for (String variant : SkyBeaconStructure.VARIANTS) {
             var template = world.getStructureManager().getOrCreate(ArkSurvivalReturns.id("sky_beacon/" + variant));
-            h.assertTrue(template.getSize().equals(new net.minecraft.core.Vec3i(49, 97, 49)), "Missing beacon " + variant);
+            h.assertTrue(template.getSize().equals(SkyBeaconStructure.SIZE), "Missing beacon " + variant);
         }
+        h.assertTrue(world.getServer().reloadableRegistries().getLootTable(SkyBeaconStructure.LOOT)
+                != net.minecraft.world.level.storage.loot.LootTable.EMPTY, "The loot crate has no loot table");
         h.succeed();
     }
 
@@ -42,17 +44,27 @@ final class SkyBeaconGameTests {
                 .setIgnoreEntities(false).setFinalizeEntities(true);
         // Place in the dedicated empty test arena; this exercises the native NBT entity placement path.
         h.assertTrue(template.placeInWorld(world, origin, origin, settings, world.getRandom(), 2), "Template placement failed");
-        var area = new AABB(net.minecraft.world.phys.Vec3.atLowerCornerOf(origin), net.minecraft.world.phys.Vec3.atLowerCornerOf(origin.offset(49, 97, 49)));
+        var area = new AABB(net.minecraft.world.phys.Vec3.atLowerCornerOf(origin), net.minecraft.world.phys.Vec3.atLowerCornerOf(origin.offset(SkyBeaconStructure.SIZE)));
         var dragons = world.getEntitiesOfClass(GuardianDragonEntity.class, area);
         h.assertTrue(dragons.size() == 1 && dragons.getFirst().beaconVariant() == 1, "Template must contain exactly one white guardian");
         var dragon = dragons.getFirst();
+        BlockPos nest = origin.offset(SkyBeaconStructure.NEST);
+        h.assertTrue(world.getBlockState(nest).is(ModContent.NESTS.get(dev.nez.arksurvivalreturns.feature.creature.Species.DRAGON).get()),
+                "The monolith's eye holds no dragon nest");
+        h.assertTrue(world.getBlockEntity(origin.offset(SkyBeaconStructure.CRATE))
+                instanceof dev.nez.arksurvivalreturns.feature.station.StorageCrateBlockEntity crate
+                && SkyBeaconStructure.LOOT.equals(crate.getLootTable()), "The monolith's eye holds no loot crate");
+        h.assertTrue(world.getBlockState(nest.above(3)).isAir() && world.getBlockState(nest.below()).isSolidRender()
+                && world.getBlockState(nest.above(10)).isSolidRender(), "The nest does not sit on the floor of an open eye");
         h.runAfterDelay(5, () -> {
-            h.assertTrue(dragon.beaconHome().equals(origin.offset(24, 50, 24)), "Template entity home used local coordinates");
-            h.assertTrue(dragon.getDeltaMovement().lengthSqr() > 0, "Dragon did not start patrolling");
+            h.assertTrue(dragon.beaconHome().equals(nest), "Template entity home used local coordinates");
+            h.assertTrue(dragon.getDeltaMovement().lengthSqr() > 0, "Dragon did not leave the nest");
             dragon.discard();
-            // Remove only blocks placed by this test, inside its known template bounds.
-            for (BlockPos pos : BlockPos.betweenClosed(origin, origin.offset(48, 96, 48)))
-                if (!world.isEmptyBlock(pos)) world.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+            // Remove only blocks placed by this test, inside its known template bounds; nothing breaks, drops or spills.
+            int quiet = net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE
+                    | net.minecraft.world.level.block.Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS;
+            for (BlockPos pos : BlockPos.betweenClosed(origin, origin.offset(SkyBeaconStructure.SIZE).offset(-1, -1, -1)))
+                if (!world.isEmptyBlock(pos)) world.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), quiet);
             h.succeed();
         });
     }
@@ -78,7 +90,10 @@ final class SkyBeaconGameTests {
             h.assertTrue(restored.isPersistenceRequired() && restored.isNoGravity(), "Guardian fell or despawned");
             var player = h.makeMockPlayer(GameType.SURVIVAL);
             player.snapTo(home.getX(),home.getY()-80,home.getZ());
-            h.assertFalse(restored.defendsAgainst(player), "Guardian targets players far below the floating beacon");
+            h.assertFalse(restored.defendsAgainst(player), "Guardian targets players on the ground far below its nest");
+            // More than the wound above, or the hit falls inside its invulnerable ticks.
+            boss.hurtServer(world, player.damageSources().playerAttack(player), 16);
+            h.assertTrue(boss.defendsAgainst(player), "A wounded guardian ignores its attacker below the nest");
             player.snapTo(home.getX()+100,home.getY(),home.getZ());
             h.assertFalse(restored.defendsAgainst(player), "Guardian targets beyond its leash");
             boss.discard(); restored.discard(); player.discard(); h.succeed();
@@ -98,10 +113,10 @@ final class SkyBeaconGameTests {
         boss.hurtServer(world, player.damageSources().playerAttack(player), 10000);
         h.assertTrue(TribeProgressData.get(world).has(player.getUUID(), TribeProgressData.WORKSHOP_SCHEMATIC),
                 "Dragon victory did not unlock the workshop");
-        AABB landing = new AABB(home.below(16)).inflate(3);
+        AABB landing = new AABB(home).inflate(3);
         var drops = world.getEntitiesOfClass(ItemEntity.class, landing, e ->
                 e.getItem().is(ModContent.GUARDIAN_TROPHY.get()) || e.getItem().is(ModContent.WORKSHOP_SCHEMATIC.get()));
-        h.assertTrue(drops.size() == 2, "Victory rewards did not land on the terrace");
+        h.assertTrue(drops.size() == 2, "Victory rewards did not land in the nest");
         boss.die(player.damageSources().playerAttack(player));
         h.assertTrue(world.getEntitiesOfClass(ItemEntity.class, landing, e ->
                 e.getItem().is(ModContent.GUARDIAN_TROPHY.get()) || e.getItem().is(ModContent.WORKSHOP_SCHEMATIC.get())).size() == 2,

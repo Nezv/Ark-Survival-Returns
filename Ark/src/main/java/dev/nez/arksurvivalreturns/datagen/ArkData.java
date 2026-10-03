@@ -269,6 +269,8 @@ public final class ArkData implements DataProvider {
         // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
         en.put("entity." + NS + ".guardian_dragon", "Beacon Guardian");
         pt.put("entity." + NS + ".guardian_dragon", "Guardião do Farol");
+        en.put("container." + NS + ".loot_crate", "Loot Crate");
+        pt.put("container." + NS + ".loot_crate", "Caixa de Saque");
         en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
         pt.put("entity." + NS + ".guardian_giganotosaurus", "Giganotossauro Guardião");
         en.put("entity." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");

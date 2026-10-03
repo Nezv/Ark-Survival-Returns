@@ -40,7 +40,10 @@ public final class GuardianDragonEntity extends CreatureEntity {
     private UUID creditedPlayer;
     private int breathCooldown, breathWindup;
     private Player breathTarget;
-    public static final int DEFENSE_RADIUS = 40;
+    private UUID provoker;
+    private int provokedUntil;
+    /** It guards the nest; whoever wounds it is hunted farther out, so the ground below is no safe firing line. */
+    public static final int DEFENSE_RADIUS = 40, PROVOKED_RADIUS = 96, PROVOKED_TICKS = 600;
 
     public GuardianDragonEntity(EntityType<? extends CreatureEntity> type, Level level) {
         super(type, level, Species.DRAGON);
@@ -76,7 +79,10 @@ public final class GuardianDragonEntity extends CreatureEntity {
                 && !player.isCreative() && !player.isSpectator() && level().getDifficulty() != Difficulty.PEACEFUL
                 && !dev.nez.arksurvivalreturns.feature.taming.TorporService.restricted(player)
                 && !player.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED).downed()
-                && player.position().distanceToSqr(Vec3.atCenterOf(beaconHome())) <= DEFENSE_RADIUS * DEFENSE_RADIUS;
+                && player.position().distanceToSqr(Vec3.atCenterOf(beaconHome())) <= Mth.square(reach(player));
+    }
+    private int reach(Player player) {
+        return player.getUUID().equals(provoker) && tickCount < provokedUntil ? PROVOKED_RADIUS : DEFENSE_RADIUS;
     }
 
     @Override protected void customServerAiStep(ServerLevel world) {
@@ -102,8 +108,8 @@ public final class GuardianDragonEntity extends CreatureEntity {
         setBehavior(target == null ? BehaviorState.ROAM : BehaviorState.DEFEND);
         Vec3 home = Vec3.atBottomCenterOf(beaconHome());
         double angle = tickCount * 0.022 + (getUUID().hashCode() & 255) * 0.024;
-        // Orbit through the open centre and in front of/behind the monolith; never seek a ground nest.
-        Vec3 destination = home.add(Math.cos(angle) * 2, Math.sin(angle * 2) * 3, Math.sin(angle) * 16);
+        // Home is the nest in the monolith's eye: circle the head outside the stone, rising and dipping past the opening.
+        Vec3 destination = home.add(Math.cos(angle) * 20, 6 + Math.sin(angle * 2) * 4, Math.sin(angle) * 20);
         if (target != null) {
             Vec3 approach = target.position().add(0, 4, 0);
             destination = distanceToSqr(target) < 100 ? position().add(position().subtract(approach).normalize().scale(3)) : approach;
@@ -125,7 +131,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
                 victim.hurtServer(world, damageSources().mobAttack(this), (float)getAttributeValue(Attributes.ATTACK_DAMAGE));
             }
         }
-        if (position().distanceToSqr(home) > 48 * 48) destination = home;
+        if (position().distanceToSqr(home) > Mth.square(target == null ? 48 : reach(target) + 8)) destination = home;
         steer(world, destination, target == null ? .45 : .65);
         if (tickCount % 20 == 0) {
             bar.setProgress(Math.clamp(getHealth() / getMaxHealth(), 0, 1));
@@ -167,13 +173,16 @@ public final class GuardianDragonEntity extends CreatureEntity {
         boolean hit = super.hurtServer(world, source, amount);
         if (hit) {
             UUID credit = credit(source.getEntity());
-            if (credit != null) creditedPlayer = credit;
+            if (credit != null) {
+                creditedPlayer = provoker = credit;
+                provokedUntil = tickCount + PROVOKED_TICKS;
+            }
             bar.setProgress(Math.clamp(getHealth() / getMaxHealth(), 0, 1));
         }
         return hit;
     }
     private static UUID credit(Entity entity) {
-        if (entity instanceof ServerPlayer p) return p.getUUID();
+        if (entity instanceof Player p) return p.getUUID();
         if (entity instanceof CreatureEntity tame && tame.isTamed()) return tame.taming().owner();
         return null;
     }
@@ -198,8 +207,8 @@ public final class GuardianDragonEntity extends CreatureEntity {
                 participants.add(p.getUUID());
         data.put(new GuardianEncounter(key, world.dimension(), beaconHome(), SkyBeaconStructure.ID, tribe,
                 GuardianState.DEFEATED, Optional.empty(), participants, Set.of(), getMaxHealth(), true, 0, 0));
-        // The terrace is 18 blocks below the guardian's initial position; aerial kills retain reachable rewards.
-        Vec3 landing = Vec3.atBottomCenterOf(beaconHome().below(16));
+        // The rewards land in the nest, beside the loot crate, wherever the guardian fell.
+        Vec3 landing = Vec3.atBottomCenterOf(beaconHome());
         drop(world, landing, ModContent.GUARDIAN_TROPHY.get().getDefaultInstance());
         if (!TribeProgressData.get(world).has(tribe, TribeProgressData.WORKSHOP_SCHEMATIC)) {
             TribeProgressData.get(world).grant(tribe, TribeProgressData.WORKSHOP_SCHEMATIC);
