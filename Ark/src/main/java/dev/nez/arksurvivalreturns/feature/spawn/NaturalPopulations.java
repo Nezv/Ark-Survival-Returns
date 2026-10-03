@@ -268,10 +268,12 @@ public final class NaturalPopulations {
         var eligible = new ArrayList<Species>();
         var weights = new ArrayList<Double>();
         double total = 0;
+        boolean openDuringSleep = TreeShelter.sleepWindow(level) && !TreeShelter.treeBiome(level, pos);
         for (var species : Species.values()) {
             if (species.weight <= 0 || danger < species.minimumDanger() || species.aquatic() != water) continue;
             if (only != null && !only.contains(species)) continue;
             if (!biome.is(species.biomes)) continue;
+            if (openDuringSleep && TreeShelter.required(species)) continue;
             double weight = species.weight * (region == null ? 1 : species.predator ? region.predators() : region.prey());
             eligible.add(species);
             weights.add(weight);

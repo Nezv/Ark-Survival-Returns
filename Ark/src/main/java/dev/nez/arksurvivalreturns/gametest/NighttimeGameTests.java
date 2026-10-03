@@ -6,6 +6,8 @@ import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.behavior.*;
 import dev.nez.arksurvivalreturns.feature.creature.*;
 import dev.nez.arksurvivalreturns.registry.ModContent;
+import dev.nez.arksurvivalreturns.feature.spawn.TreeShelter;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.util.ProblemReporter;
@@ -27,6 +29,9 @@ final class NighttimeGameTests {
             for (int x = 16; x < 112; x++) for (int z = 16; z < 112; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
             int chunks = world.getChunkSource().getLoadedChunksCount();
             world.clockManager().setTotalTicks(clock, 6000);
+            shelterRules(h, entities);
+            biome(h, Biomes.FOREST);
+            canopy(h, 40, 40, Blocks.OAK_LEAVES);
             var rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
             var pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
             pig.setNoAi(true); pig.setPos(rex.position().add(0, 0, 20)); world.addFreshEntity(pig); entities.add(pig);
@@ -127,6 +132,85 @@ final class NighttimeGameTests {
         }
         h.succeed();
     }
+    /** The same canopy rule must survive spawn selection, full AI and both cheaper tiers. */
+    private static void shelterRules(GameTestHelper h, ArrayList<Entity> entities) {
+        var world = h.getLevel();
+        var feet = h.absolutePos(new BlockPos(40, 2, 40));
+        var clock = world.dimensionType().defaultClock().orElseThrow();
+        boolean tiers = Config.BEHAVIOR_TIERS.get();
+        try {
+            biome(h, Biomes.PLAINS);
+            h.assertFalse(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Morning Rex spawned in plains");
+            canopy(h, 40, 40, Blocks.OAK_LEAVES);
+            h.assertFalse(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "An isolated plains tree bypassed biome policy");
+            biome(h, Biomes.FOREST);
+            h.assertTrue(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Covered forest spawn refused");
+            canopy(h, 40, 40, Blocks.STONE);
+            h.assertFalse(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "Stone roof counted as trees");
+            canopy(h, 40, 40, Blocks.AIR);
+            h.assertFalse(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Forest clearing accepted as shelter");
+            world.clockManager().setTotalTicks(clock, 18000);
+            biome(h, Biomes.PLAINS);
+            h.assertTrue(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Active-night plains spawn was blocked");
+            world.clockManager().setTotalTicks(clock, 6000);
+            biome(h, Biomes.FOREST);
+            var rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
+            rex.wildlife().mind().restoreNeeds(.1, .1, .95);
+            rex.wildlife().think();
+            h.assertFalse(rex.behavior().sleeping(), "Fatigued Rex lay in a forest clearing");
+            // A new controller has no search cooldown: first candidate is eight blocks east with UUID offset zero.
+            rex.discard();
+            canopy(h, 48, 40, Blocks.OAK_LEAVES);
+            rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
+            rex.wildlife().think();
+            h.assertFalse(rex.behavior().sleeping(), "Rex slept before reaching canopy");
+            rex.wildlife().tick();
+            h.assertTrue(!rex.getNavigation().isDone() || rex.getMoveControl().hasWanted(), "Rex did not seek nearby tree cover");
+            canopy(h, 48, 40, Blocks.AIR);
+            canopy(h, 40, 40, Blocks.OAK_LEAVES);
+            for (int i = 0; i <= Config.SLEEP_CALM.get() / 10 + 2; i++) rex.wildlife().think();
+            h.assertTrue(rex.behavior().sleeping(), "Covered Rex failed to sleep after settling");
+            canopy(h, 40, 40, Blocks.AIR);
+            rex.wildlife().think();
+            h.assertFalse(rex.behavior().sleeping(), "Canopy loss left full-detail Rex asleep");
+            rex.discard();
+            Config.BEHAVIOR_TIERS.set(true);
+            for (var tier : new BehaviorTier[]{BehaviorTier.AMBIENT, BehaviorTier.DORMANT}) {
+                rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
+                double distance = tier == BehaviorTier.AMBIENT
+                        ? (Config.TIER_FULL_RADIUS.get() + Config.TIER_AMBIENT_RADIUS.get()) / 2.0
+                        : (Config.TIER_AMBIENT_RADIUS.get() + Config.TIER_DORMANT_RADIUS.get()) / 2.0;
+                BehaviorLod.useTestObservers(java.util.List.of(rex.position().add(distance, 0, 0)));
+                rex.refreshBehaviorTier();
+                h.assertTrue(rex.behaviorTier() == tier, "Failed to enter shelter-test tier " + tier);
+                rex.tickCount = 100 - Math.floorMod(rex.getId(), 100);
+                canopy(h, 40, 40, Blocks.OAK_LEAVES);
+                rex.wildlife().tick();
+                h.assertTrue(rex.behavior().sleeping(), tier + " refused valid canopy");
+                canopy(h, 40, 40, Blocks.AIR);
+                rex.tickCount += 100;
+                rex.wildlife().tick();
+                h.assertFalse(rex.behavior().sleeping(), tier + " retained sleep after canopy removal");
+                rex.discard();
+            }
+        } finally {
+            BehaviorLod.useTestObservers(null);
+            Config.BEHAVIOR_TIERS.set(tiers);
+        }
+    }
+
+    private static void biome(GameTestHelper h, net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome> biome) {
+        var result = net.minecraft.server.commands.FillBiomeCommand.fill(h.getLevel(),
+                h.absolutePos(new BlockPos(24, 0, 24)), h.absolutePos(new BlockPos(64, 10, 64)),
+                h.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).getOrThrow(biome));
+        h.assertTrue(result.right().isEmpty(), "Local shelter biome fixture failed: " + result.right());
+    }
+
+    private static void canopy(GameTestHelper h, int centerX, int centerZ, net.minecraft.world.level.block.Block block) {
+        for (int x = centerX - 5; x <= centerX + 5; x++)
+            for (int z = centerZ - 5; z <= centerZ + 5; z++) h.setBlock(x, 18, z, block);
+    }
+
     private static CreatureEntity create(GameTestHelper h, Species species, int x, int z) {
         var entity = ModContent.CREATURES.get(species).get().create(h.getLevel(), EntitySpawnReason.COMMAND);
         entity.setUUID(new UUID(UUID.randomUUID().getMostSignificantBits(), 0));

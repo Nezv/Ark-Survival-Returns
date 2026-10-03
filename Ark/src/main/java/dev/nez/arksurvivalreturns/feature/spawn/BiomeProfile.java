@@ -6,13 +6,16 @@ import java.util.Set;
 
 /** Surface habitat identity, independent of danger, species weights and player population targets. */
 public record BiomeProfile(String biomeId, Type type, Climate climate, Moisture moisture,
-                           boolean mountainous, boolean snowy) {
+                           boolean mountainous, boolean snowy, TreeCover treeCover) {
     public enum Type {
         OCEAN, RIVER, COAST, WETLAND, MUSHROOM, JUNGLE, TAIGA, FOREST, BADLANDS,
         SAVANNA, DESERT, SHRUBLAND, GRASSLAND, MOUNTAIN, TUNDRA, VOLCANIC,
         GEOTHERMAL, SKY_ISLAND, CAVE, UNKNOWN;
         public String id() { return name().toLowerCase(Locale.ROOT); }
     }
+    public enum TreeCover { WOODED, SCATTERED, OPEN }
+    public boolean treeBiome() { return treeCover != TreeCover.OPEN; }
+
     public enum Climate { COLD, TEMPERATE, HOT }
     public enum Moisture { DRY, MODERATE, WET }
 
@@ -48,7 +51,19 @@ public record BiomeProfile(String biomeId, Type type, Climate climate, Moisture 
                 : has(tags, "is_wet") || downfall >= 0.8f ? Moisture.WET : Moisture.MODERATE;
         boolean mountains = has(tags, "is_mountain") || has(tags, "is_hill")
                 || tags.contains("terralith:cliffs") || type == Type.MOUNTAIN || type == Type.VOLCANIC;
-        return new BiomeProfile(id, type, climate, moisture, mountains, snowy);
+        return new BiomeProfile(id, type, climate, moisture, mountains, snowy, trees(id, type, tags));
+    }
+
+    private static TreeCover trees(String id, Type type, Set<String> tags) {
+        // A biome may support trees without every point providing shelter. Actual canopy is checked separately.
+        if (tags.contains("arksurvivalreturns:ecology/trees/open")) return TreeCover.OPEN;
+        if (tags.contains("arksurvivalreturns:ecology/trees/wooded")) return TreeCover.WOODED;
+        if (tags.contains("arksurvivalreturns:ecology/trees/scattered")) return TreeCover.SCATTERED;
+        if (type == Type.FOREST || type == Type.TAIGA || type == Type.JUNGLE
+                || id.equals("minecraft:mangrove_swamp")) return TreeCover.WOODED;
+        if (type == Type.SAVANNA || type == Type.WETLAND || id.equals("minecraft:wooded_badlands"))
+            return TreeCover.SCATTERED;
+        return TreeCover.OPEN;
     }
 
     private static Type type(String id, Set<String> tags) {

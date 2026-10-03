@@ -22,6 +22,19 @@ public final class DailySchedule {
         return dayProgress(shifted, nightStart, nightEnd) < Math.clamp(carnivoreDaySleep, 0, 1) ? Phase.SLEEP : Phase.ROAM;
     }
 
+    /** Spawn sites have no UUID yet: cover the sleep window of every possible individual offset. */
+    public static boolean carnivoreSleepWindow(long clock, int nightStart, int nightEnd, int transition,
+                                               double sleepShare) {
+        double share = Math.clamp(sleepShare, 0, 1);
+        if (share == 0) return false;
+        int daylight = Math.floorMod(nightStart - nightEnd, NighttimeCycle.DAY_TICKS);
+        // phase() treats equal endpoints as all day with dayProgress == 0.
+        if (daylight == 0) return true;
+        long sleepTicks = (long) Math.ceil(daylight * share);
+        return Math.floorMod(clock - nightEnd, NighttimeCycle.DAY_TICKS)
+                < Math.min(NighttimeCycle.DAY_TICKS, sleepTicks + Math.max(0, transition));
+    }
+
     /** Share of the daylight window elapsed since dawn (night end), in [0, 1). */
     public static double dayProgress(long clock, int nightStart, int nightEnd) {
         int day = Math.floorMod(nightStart - nightEnd, NighttimeCycle.DAY_TICKS);

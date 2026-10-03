@@ -8,6 +8,16 @@ class DailyScheduleTest {
     private static DailySchedule.Phase carnivore(long clock) { return DailySchedule.phase(clock, 0, true, 13000, 23000, 0, 0.5); }
     private static DailySchedule.Phase herbivore(long clock) { return DailySchedule.phase(clock, 0, false, 13000, 23000, 0, 0.5); }
 
+    @Test void spawnSleepWindowCoversAllIndividualOffsetsIncludingShortAndWrappingWindows() {
+        for (int[] window : new int[][]{{13000, 23000}, {3000, 18000}, {1000, 1000}})
+            for (double share : new double[]{0, 0.0001, 0.5, 1})
+                for (int clock = -500; clock < 24500; clock += 37) {
+                    boolean any = false;
+                    for (int offset = 0; offset <= 600; offset++)
+                        any |= DailySchedule.phase(clock, offset, true, window[0], window[1], 600, share) == SLEEP;
+                    assertEquals(any, DailySchedule.carnivoreSleepWindow(clock, window[0], window[1], 600, share));
+                }
+    }
     @Test void carnivoresHuntAtNightSleepInTheMorningAndRoamInTheAfternoon() {
         assertEquals(HUNT, carnivore(18000));
         assertEquals(HUNT, carnivore(22999));

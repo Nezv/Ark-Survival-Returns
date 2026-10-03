@@ -5,6 +5,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BiomeProfileTest {
+    @Test void treeBiomesDistinguishWoodlandSparseTreesAndOpenGround() {
+        var forest = BiomeProfile.classify("minecraft:forest", Set.of("c:is_forest"), .5f, .5f);
+        assertEquals(BiomeProfile.TreeCover.WOODED, forest.treeCover());
+        assertTrue(forest.treeBiome());
+        assertEquals(BiomeProfile.TreeCover.SCATTERED, BiomeProfile.classify("minecraft:savanna",
+                Set.of("c:is_savanna"), 1.2f, 0).treeCover());
+        assertFalse(BiomeProfile.classify("minecraft:plains", Set.of("c:is_plains"), .5f, .5f).treeBiome());
+        assertFalse(BiomeProfile.classify("minecraft:forest",
+                Set.of("c:is_forest", "arksurvivalreturns:ecology/trees/open"), .5f, .5f).treeBiome());
+        assertTrue(BiomeProfile.classify("other:grove",
+                Set.of("arksurvivalreturns:ecology/trees/wooded"), .5f, .5f).treeBiome());
+    }
     @Test void forestClimateAndMountainTerrainAreIndependent() {
         var profile = BiomeProfile.classify("terralith:alpine_grove",
                 Set.of("minecraft:is_taiga", "c:is_mountain", "c:is_snowy"), 0.2f, 0.9f);

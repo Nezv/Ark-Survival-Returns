@@ -7,6 +7,19 @@ class WildlifeMindTest {
     private static WildlifeMind.Observation sight(boolean visible, boolean prey, boolean intruding, double health) {
         return new WildlifeMind.Observation(visible ? 1 : 0, visible, prey, intruding, false, false, false, false, false, false, health);
     }
+    @Test void unsafeShelterPreventsScheduledSleepAndLegacyFatigueRest() {
+        for (boolean cycle : new boolean[]{false, true}) {
+            var mind = new WildlifeMind(true, false, false);
+            mind.restoreNeeds(.1, .1, .95);
+            var quiet = sight(false, false, false, 1);
+            var exposed = new WildlifeMind.Routine(cycle, false, true, false, false, false, false, 100, 1);
+            for (int i = 0; i < 30; i++) assertFalse(mind.step(quiet, 10, exposed, null).sleeping());
+            var sheltered = new WildlifeMind.Routine(cycle, false, true, true, false, false, false, 100, 1);
+            for (int i = 0; i < 12; i++) mind.step(quiet, 10, sheltered, null);
+            assertTrue(mind.state().sleeping());
+            assertFalse(mind.step(quiet, 10, exposed, null).sleeping(), "Canopy loss must end existing sleep/rest");
+        }
+    }
     @Test void hungryPredatorWarnsBeforeHuntingThenStopsAnEndlessChase() {
         var mind = new WildlifeMind(true, false, false);
         var prey = sight(true, true, false, 1);

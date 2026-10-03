@@ -145,7 +145,7 @@ public final class WildlifeMind {
                 && !(state == BehaviorState.FORAGE && hunger > 0.1)) { next = BehaviorState.SLEEP; why = Reason.SLEEP_TIME; }
         else if ((thirst >= 0.6 || (state == BehaviorState.DRINK && thirst > 0.1)) && o.water) { next = BehaviorState.DRINK; why = Reason.DRINK; }
         else if (thirst >= 0.6) { next = BehaviorState.SEEK_WATER; why = Reason.SEEK_WATER; }
-        else if ((!routine.enabled || routine.safeToSleep && calm == 0) && (group != null ? group.state == BehaviorState.REST || fatigue >= 0.95 : fatigue >= 0.7
+        else if ((routine.safeToSleep && (!routine.enabled || calm == 0)) && (group != null ? group.state == BehaviorState.REST || fatigue >= 0.95 : fatigue >= 0.7
                 || (!routine.enabled && o.night != nocturnal && fatigue >= 0.2)
                 || (state == BehaviorState.REST && fatigue > 0.05))) { next = BehaviorState.REST; why = Reason.TIRED; }
         else if (!predator && (group != null ? group.state == BehaviorState.FORAGE : hunger >= 0.4 || (state == BehaviorState.FORAGE && hunger > 0.1)) && o.forage) { next = BehaviorState.FORAGE; why = Reason.GRAZE; }

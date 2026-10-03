@@ -12,6 +12,7 @@ import dev.nez.arksurvivalreturns.feature.recorder.DecisionTrace;
 import dev.nez.arksurvivalreturns.feature.recorder.Row;
 import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
+import dev.nez.arksurvivalreturns.feature.spawn.TreeShelter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
@@ -35,7 +36,10 @@ import net.minecraft.world.phys.Vec3;
 public final class WildlifeGoal extends WildlifeController {
     private WildlifeMind mind;
     private Choreographer choreo;
-    private BlockPos home, transientHome;
+    private BlockPos home, transientHome, shelterDestination;
+    private long nextShelterSearch;
+    private int shelterSearchIndex;
+    private static final int[] SHELTER_RADII = {8, 16, 24, 32, 48, 64, 96};
     private Vec3 lastKnown, destination, waterDestination, pendingAlarm, facing;
     private Vec3 approach, lastPathFailure;
     /** Outcome of the last path request, as told to the session recorder. */
@@ -167,6 +171,9 @@ public final class WildlifeGoal extends WildlifeController {
     private void ambientTick() {
         if (!(mob.level() instanceof ServerLevel world)) return;
         if (ambientRandom == null) ambientRandom = new SplittableRandom(mob.getUUID().getMostSignificantBits());
+        if (ambient != null && ambient.step() == AmbientRoutine.Step.SLEEP
+                && Math.floorMod(mob.tickCount + mob.getId(), 20) == 0
+                && (schedule(world) != DailySchedule.Phase.SLEEP || !canSleepHere(world))) ambient = null;
         if (ambient == null || --ambientTicks <= 0) { nextAmbient(world); return; }
         switch (ambient.step()) {
             case TURN -> { if (turnToward(ambientYaw, false)) ambientTicks = Math.min(ambientTicks, 10); }
@@ -177,6 +184,16 @@ public final class WildlifeGoal extends WildlifeController {
 
     private void nextAmbient(ServerLevel world) {
         var phase = schedule(world);
+        if (phase == DailySchedule.Phase.SLEEP && !canSleepHere(world)) {
+            boolean moving = TreeShelter.required(mob.species()) && seekShelter(world);
+            ambient = new AmbientRoutine.Plan(moving ? AmbientRoutine.Step.WALK : AmbientRoutine.Step.STAND, 40, 0, 0);
+            ambientTicks = 40;
+            mob.setBehavior(BehaviorState.ROAM);
+            mob.setAction(moving ? BehaviorAction.WALK : BehaviorAction.IDLE);
+            mob.setNightActive(false);
+            return;
+        }
+        if (phase == DailySchedule.Phase.SLEEP && TreeShelter.required(mob.species())) adoptShelter();
         double leash = LandWildlife.roam(mob.species()) * 0.8;
         boolean homeward = LandWildlife.distanceSqr(mob.blockPosition(), home()) > leash * leash;
         ambient = AmbientRoutine.next(phase, mob.behaviorProfile(), ambientRandom, homeward);
@@ -214,9 +231,51 @@ public final class WildlifeGoal extends WildlifeController {
         if (Math.floorMod(mob.tickCount + mob.getId(), 100) != 0) return;
         if (!mob.getNavigation().isDone()) mob.getNavigation().stop();
         if (!(mob.level() instanceof ServerLevel world) || !mob.posedWhenDormant()) return;
-        boolean asleep = schedule(world) == DailySchedule.Phase.SLEEP;
+        boolean asleep = schedule(world) == DailySchedule.Phase.SLEEP && canSleepHere(world);
         mob.setBehavior(asleep ? BehaviorState.SLEEP : BehaviorState.ROAM);
         mob.setAction(asleep ? BehaviorAction.SLEEP : BehaviorAction.IDLE);
+    }
+
+    private boolean canSleepHere(ServerLevel world) {
+        return mob.onGround() && !mob.isInWater() && !mob.isInLava() && !mob.isOnFire()
+                && TreeShelter.sheltered(world, mob.species(), mob.blockPosition());
+    }
+
+    private void adoptShelter() {
+        home = mob.blockPosition();
+        transientHome = null;
+        shelterDestination = null;
+    }
+
+    /** Twelve loaded terrain candidates per five seconds; paths retain the existing global navigation budget. */
+    private boolean seekShelter(ServerLevel world) {
+        mob.setTrampling(false);
+        if (!canNavigate()) return false;
+        if (shelterDestination != null) {
+            if (TreeShelter.sheltered(world, mob.species(), shelterDestination)
+                    && move(world, Vec3.atBottomCenterOf(shelterDestination), mob.wanderModifier(), true)) return true;
+            shelterDestination = null;
+        }
+        mob.getNavigation().stop();
+        approach = null;
+        if (world.getGameTime() < nextShelterSearch) return false;
+        nextShelterSearch = world.getGameTime() + 100;
+        for (int attempt = 0; attempt < 12; attempt++) {
+            int index = shelterSearchIndex++;
+            int ring = Math.floorMod(index / 12, SHELTER_RADII.length);
+            double angle = (index % 12) * Math.PI / 6
+                    + Math.floorMod(mob.getUUID().getLeastSignificantBits(), 360) * Math.PI / 180
+                    + (index / (12 * SHELTER_RADII.length)) * 0.37;
+            int x = mob.getBlockX() + (int) Math.round(Math.cos(angle) * SHELTER_RADII[ring]);
+            int z = mob.getBlockZ() + (int) Math.round(Math.sin(angle) * SHELTER_RADII[ring]);
+            var ground = SpawnRules.surface(world, x, z);
+            if (ground == null || !TreeShelter.sheltered(world, mob.species(), ground)) continue;
+            if (move(world, Vec3.atBottomCenterOf(ground), mob.wanderModifier(), true)) {
+                shelterDestination = ground;
+                return true;
+            }
+        }
+        return false; // Stay awake if no reachable canopy exists; never teleport or sleep in the open.
     }
 
     /** Rotates the facing toward a yaw at the creature's turn rate; true once aligned. */
@@ -337,9 +396,15 @@ public final class WildlifeGoal extends WildlifeController {
         if (mob.species().predator && guardedPrey && (mob.distanceTo(sensed) < mob.getBbWidth() + 8
                 || mob.getHealth() < mob.getMaxHealth() * 0.45)) intimidating = true;
         BehaviorState before = brain.state();
+        boolean shelterRequired = TreeShelter.required(mob.species());
+        boolean sheltered = !shelterRequired || TreeShelter.sheltered(world, mob.species(), mob.blockPosition());
+        boolean shelterWanted = shelterRequired && (schedule(world) == DailySchedule.Phase.SLEEP
+                || brain.fatigue() >= 0.7 || before.sleeping());
+        boolean seekingShelter = shelterWanted && !sheltered;
+        if (shelterWanted && sheltered) adoptShelter();
         // The bank an animal has chosen may lie past its range: it goes, drinks and walks home afterwards.
         boolean watering = before == BehaviorState.DRINK || before == BehaviorState.SEEK_WATER && waterDestination != null;
-        boolean far = !watering && LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
+        boolean far = !seekingShelter && !watering && LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
         if (brain.recovery() > 0 && arrived(Vec3.atBottomCenterOf(home()))) brain.arrivedHome();
         // Terrain probes are only useful when the mind can act on them; other states skip the block sweep.
         boolean needsWater = brain.thirst() >= 0.6 || before == BehaviorState.DRINK;
@@ -357,7 +422,8 @@ public final class WildlifeGoal extends WildlifeController {
                 || visible && sensed instanceof CreatureEntity c && c.species().predator && c.getBbWidth() * 1.3 >= mob.getBbWidth();
         boolean defended = cycle && night && mob.species().defensiveHerd() && danger
                 && 1 + packWithin(32).stream().filter(c -> c.getHealth() >= c.getMaxHealth() * 0.5).count() >= 2;
-        boolean safeSleep = mob.onGround() && !mob.isInWater() && !mob.isInLava() && !mob.isOnFire() && !interrupted;
+        boolean safeSleep = mob.onGround() && !mob.isInWater() && !mob.isInLava() && !mob.isOnFire()
+                && !interrupted && sheltered;
         Vec3 regroupDestination = null;
         // Investigation may briefly interrupt fleeing while threat memory fades. Keep the return intent.
         if (!cycle || !night || mob.species().predator) regrouping = false;
@@ -372,7 +438,8 @@ public final class WildlifeGoal extends WildlifeController {
         var routine = cycle ? new WildlifeMind.Routine(true, night, schedule(world) == DailySchedule.Phase.SLEEP, safeSleep,
                 danger, defended,
                 corneredTicks > 0 || attacked && (mob.species() == Species.THERIZINOSAURUS || mob.species() == Species.TITANOSAUR),
-                Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : WildlifeMind.Routine.LEGACY;
+                Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : new WildlifeMind.Routine(false, false, false,
+                        sheltered, false, false, false, 0, 1);
         var observation = new WildlifeMind.Observation(signal, visible, huntable, intruding, attacked,
                 intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth());
         var state = brain.step(observation, 10, routine, null);
@@ -428,10 +495,16 @@ public final class WildlifeGoal extends WildlifeController {
                     }
                 }
             }
-            case RETURN_HOME -> move(world, Vec3.atBottomCenterOf(home()), mob.wanderModifier());
+            case RETURN_HOME -> {
+                if (seekingShelter) seekShelter(world);
+                else move(world, Vec3.atBottomCenterOf(home()), mob.wanderModifier());
+            }
             case REGROUP -> { if (regroupDestination != null) move(world, regroupDestination, Math.min(1, mob.wanderModifier() * 1.3)); }
             case SEEK_WATER -> seekWater(world);
-            case ROAM, SEARCH -> roam(world);
+            case ROAM, SEARCH -> {
+                if (seekingShelter) seekShelter(world);
+                else roam(world);
+            }
             default -> { mob.getNavigation().stop(); approach = null; }
         }
         // Cues and the synced action go out last, so a pause beat chosen above starts its clip this tick.

@@ -54,7 +54,7 @@ public final class WildlifeCommand {
         var patch = result.get();
         var profile = patch.profile();
         send(source, "surface biome=" + profile.biomeId() + " type=" + profile.type().id()
-                + " climate=" + profile.climate() + " moisture=" + profile.moisture()
+                + " trees=" + profile.treeCover() + " climate=" + profile.climate() + " moisture=" + profile.moisture()
                 + " mountainous=" + profile.mountainous() + " snowy=" + profile.snowy());
         send(source, String.format(java.util.Locale.ROOT,
                 "connected patch: observed ~%d blocks squared (%d sampled cells), span ~%dx%d, equivalent diameter ~%.0f blocks",
