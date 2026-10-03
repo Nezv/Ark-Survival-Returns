@@ -17,7 +17,7 @@
     ],
     "frameSize": [
       228,
-      229
+      233
     ],
     "panelOriginInFrame": [
       26,
@@ -57,6 +57,7 @@
       -33
     ]
   },
+  "storage_suite": "design/ui-rework/baroque/storage-assets.json",
   "files": [
     "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button.png",
     "src/main/resources/resourcepacks/ark_ui/assets/minecraft/textures/gui/sprites/widget/button_highlighted.png",

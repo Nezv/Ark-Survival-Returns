@@ -394,6 +394,9 @@ def preview_symbols():
         seal(f, name)
         cx, cy = CX+MARGIN, SEAL_Y+PANEL_TOP
         detail = f.finish().crop((cx-27, max(0, cy-28), cx+27, cy+24))
+        if name == 'crate':
+            from build_storage_ui import coffer_frame
+            detail = coffer_frame().crop((87, 0, 141, 52))
         x, y = 20+(i % 4)*280, 102+(i // 4)*240
         sheet.alpha_composite(detail.resize((216, 208), Image.Resampling.NEAREST), (x+22, y))
         label_font = font(17)

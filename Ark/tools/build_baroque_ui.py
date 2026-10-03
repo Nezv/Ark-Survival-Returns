@@ -149,42 +149,11 @@ def crate_sigil():
 
 
 def crate():
-    # Same original 27-slot chest coordinates: slot contents remain vanilla-sized.
-    panel = Image.new('RGBA', (256, 256))
-    d = ImageDraw.Draw(panel)
-    d.rectangle((0, 0, 175, 165), fill=PAL['face'], outline=PAL['outline'])
-    d.rectangle((4, 15, 171, 70), fill='#24241b')
-    for x in range(5, 171, 14):
-        d.line((x, 16, x, 69), fill='#303025')
-        d.line((x+1, 16, x+1, 69), fill='#171a13')
-    slots = [(8+x*18, 18+y*18) for y in range(3) for x in range(9)]
-    slots += [(8+x*18, 84+y*18) for y in range(3) for x in range(9)]
-    slots += [(8+x*18, 142) for x in range(9)]
-    for x, y in slots:
-        d.rectangle((x-1, y-1, x+16, y+16), fill=PAL['slotFace'], outline=PAL['bevelDark'])
-        d.line((x-1, y+16, x+16, y+16), fill=PAL['bevelLight'])
-        d.line((x+16, y-1, x+16, y+16), fill=PAL['bevelLight'])
+    from build_storage_ui import crate_art
+    panel, frame, composed = crate_art()
     save(panel, CRATE / 'storage_crate.png')
-    # Temporarily parameterize the original carver; restore its globals for other builders.
-    values = {'PANEL_W': 176, 'PANEL_H': 166, 'RAIL': 74, 'CX': 88, 'FRAME_W': 228, 'FRAME_H': 229}
-    old = {k: getattr(crest, k) for k in values}
-    try:
-        for k, v in values.items():
-            setattr(crest, k, v)
-        f = crest.Frame()
-        relief = crest.ornament()
-        # Omit the workstation craft rail from the inventory label's safe region.
-        relief.h = {p: v for p, v in relief.h.items() if not (3 <= p[0] < 173 and 70 <= p[1] <= 81)}
-        relief.paint(f)
-        crest.seal(f, 'crate')
-        frame = save(f.finish(), CRATE / 'storage_crate_frame.png')
-    finally:
-        for k, v in old.items():
-            setattr(crest, k, v)
+    save(frame, CRATE / 'storage_crate_frame.png')
     save(crate_sigil().resize((32, 32), Image.Resampling.NEAREST), CRATE / 'storage_crate_sigil.png')
-    composed = Image.new('RGBA', frame.size)
-    composed.alpha_composite(panel.crop((0, 0, 176, 166)), (26, 33))
-    composed.alpha_composite(frame)
     save(composed, OUT / 'storage-crate-asset.png')
     return composed
 
@@ -237,10 +206,10 @@ def preview(crate_image):
     text(40, 765, 'Titlescreen / options / new game / vanilla controls', small, '#8a8f86')
     text(650, 383, '03  STORAGE CRATE')
     # The full frame is shown at 2x, keeping the lower shell visible in the sheet.
-    sheet.alpha_composite(crate_image.resize((456, 458), Image.Resampling.NEAREST), (762, 425))
+    sheet.alpha_composite(crate_image.resize((crate_image.width*2, crate_image.height*2), Image.Resampling.NEAREST), (762, 425))
     text(832, 506, 'Storage Crate', small)
     text(832, 638, 'Inventory', small, '#8a8f86')
-    text(713, 904, '27 slots / crate sigil / original workstation relief', small, '#8a8f86')
+    text(713, 904, '27 slots / engraved tablet / new coffer carving', small, '#8a8f86')
     text(713, 930, 'Dedicated screen asset; runtime hookup pending.', small, '#8a8f86')
     save(sheet, OUT / 'baroque-ui-preview.png')
 
@@ -252,9 +221,12 @@ def build():
     preview(crate())
     spec = {'scope': 'P16 first asset pass', 'source': 'tools/build_workstation_crests.py',
             'runtime': {'hotbar': 'Ark UI resource pack', 'buttons': 'Ark UI shared vanilla widget sprites', 'storage_crate': 'Asset only; dedicated screen registration pending. Do not replace generic_54.'},
-            'storage_crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': [228, 229], 'panelOriginInFrame': [26, 33], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 84], 'hotbarOrigin': [8, 142], 'labelOrigins': [[8, 6], [8, 72]], 'labelColor': PAL['title'], 'frameDrawOffset': [-26, -33]},
+            'storage_crate': {'panelSize': [176, 166], 'textureSize': [256, 256], 'frameSize': [228, 233], 'panelOriginInFrame': [26, 33], 'slotSize': 16, 'slotPitch': 18, 'containerOrigin': [8, 18], 'containerGrid': [9, 3], 'inventoryOrigin': [8, 84], 'hotbarOrigin': [8, 142], 'labelOrigins': [[8, 6], [8, 72]], 'labelColor': PAL['title'], 'frameDrawOffset': [-26, -33]},
+            'storage_suite': 'design/ui-rework/baroque/storage-assets.json',
             'files': FILES}
     (OUT / 'assets.json').write_text(json.dumps(spec, indent=2) + '\n', encoding='utf-8')
+    from build_storage_ui import build as build_storage
+    build_storage(refresh_overview=False)
     print(f'P16: wrote {len(FILES)} assets; Storage Crate screen hookup remains pending.')
 
 
