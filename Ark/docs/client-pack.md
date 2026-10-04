@@ -12,6 +12,7 @@ Installed and checked on 20 September 2026 for Minecraft 26.1.2 / NeoForge 26.1.
 | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/version/111gsk0f) | r5.9 | Shader pack, available in Video Settings → Shader Packs |
 | [Photon](https://modrinth.com/shader/photon-shader/version/gUv7fBPN) | 1.3b | On trial with stock settings; select it in Video Settings → Shader Packs |
 | [Grassier Grass](https://modrinth.com/mod/grassier-grass/version/eE7P5jGx) | 1.4.5, NeoForge 26.1.2 | On trial: wind-blown 3D grass blades on grass blocks, Iris-aware; settings in Sodium's video options |
+| [Physics Mod](https://modrinth.com/mod/physicsmod/version/gpADgn7f) | 3.1.43, NeoForge 26.1.x | Ragdolls for vanilla-model mobs and players, physics for dropped items; everything else off (`config/client-defaults/config/physicsmod/physics_client_config.json`, seeded once like the shader preset) |
 
 New instances enable **Bliss 2.1.2** with the authored prehistoric survival preset. Existing instances retain their shader choice unless explicitly reset. Complementary Reimagined remains available as a fallback in Video Settings → Shader Packs. Existing sound and unrelated graphics settings are preserved. Environmental ambience, material-aware footsteps and sound physics are built into Ark Survival Returns; do not install their standalone source mods alongside it. Ark's server-side hearing decisions remain governed by its own behavior model.
 

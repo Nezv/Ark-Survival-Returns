@@ -1,7 +1,7 @@
 {
   "minecraft": "26.1.2",
   "loader": "neoforge",
-  "verified": "2026-10-03",
+  "verified": "2026-10-04",
   "entries": [
     {
       "project": "xaeros-world-map",
@@ -134,6 +134,17 @@
       "size": 2325468,
       "kind": "mod",
       "source": "https://modrinth.com/mod/grassier-grass"
+    },
+    {
+      "project": "physicsmod",
+      "version": "3.1.43",
+      "versionId": "gpADgn7f",
+      "filename": "physics-mod-3.1.43-mc-26.1.x-neoforge.jar",
+      "url": "https://cdn.modrinth.com/data/Xy8aRQKS/versions/gpADgn7f/physics-mod-3.1.43-mc-26.1.x-neoforge.jar",
+      "sha512": "f91724344621e336edd017e45fc753696dee6b5dde65aa62dc3a8cd2ff9d7ee176d5b186a10120c4e3b06e15320027e9d9b778ec658e2f5c247dca127dc47c0b",
+      "size": 59139197,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/physicsmod"
     }
   ]
 }

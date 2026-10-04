@@ -320,6 +320,24 @@
       "uses": "Directional swings, combos and two-handed poses for melee weapons. Ark supplies the movesets: the Keratin Spear stabs two-handed with a block of extra reach, the stone and flint knives slash as daggers, the stone hatchet swings as an axe; vanilla swords, mace and trident use Better Combat's own.",
       "changed": "Official 26.1.2 releases, rebranded only. Ark ships its movesets as data (data/arksurvivalreturns/weapon_attributes), so nothing loads when the mod is absent. The keratin spear keeps its vanilla charge on use. GameTest integration_better_combat checks the three movesets.",
       "next": "In-client check: spear stabs and reach on dinosaurs, knife combos, the two-handed pose while riding. Movesets for the Bronze and Iron weapons as they arrive (P13)."
+    },
+    {
+      "id": "I13",
+      "title": "Ragdolls and dropped items",
+      "status": "configured",
+      "side": "client",
+      "mods": [
+        {
+          "project": "physicsmod",
+          "arkName": "Ark - Physics Mod",
+          "license": "All Rights Reserved",
+          "source": "closed",
+          "build": "release"
+        }
+      ],
+      "uses": "Two effects only: a mob with a vanilla-style model (and a player) falls as a ragdoll when it dies, and dropped items tumble and come to rest on the ground. Client only; nothing changes on the server.",
+      "changed": "No code changes (closed source); the jar is only rebranded. Ark ships the preset (config/client-defaults/config/physicsmod/physics_client_config.json): mob physics on ragdoll, dropped item physics on, and block, particle, projectile, item-break, cloth, vine, liquid, snow, smoke, wind, weather and ocean physics off, with vanilla block-break particles kept and the update notice off.",
+      "next": "In-client check: start-up beside Sodium, Iris and FancyMenu, a vanilla mob's ragdoll, dropped items, FPS. Ark's GeckoLib creatures do not ragdoll: the mod only maps vanilla model parts, so they keep their own death animation until Ark feeds it their bones."
     }
   ]
 }

@@ -1,0 +1,41 @@
+{
+  "itemPhysics": true,
+  "mobSettings": {
+    "Physics Type": 0,
+    "Lifetime": 4.0,
+    "Lifetime Variance": 3.0,
+    "Animation": 0
+  },
+  "blockSettings": {
+    "Physics Type": 3,
+    "Lifetime": 4.0,
+    "Lifetime Variance": 3.0,
+    "Scale": 1.0,
+    "Animation": 0
+  },
+  "minecraftBlockBreakParticles": true,
+  "crackPhysicsParticles": false,
+  "sprintingPhysicsParticles": false,
+  "eatingPhysicsParticles": false,
+  "serverBlockPhysicsParticles": false,
+  "itemBreakPhysics": false,
+  "snowballModel": 2,
+  "enderpearlModel": 2,
+  "eggModel": 2,
+  "vinePhysics": false,
+  "capePhysics": false,
+  "fishingRodPhysics": false,
+  "leashPhysics": false,
+  "bannerPhysics": false,
+  "liquidPhysics": false,
+  "snowPhysics": false,
+  "snowTracks": false,
+  "grassSnowy": false,
+  "smokePhysics": false,
+  "smokeVolumetricPhysics": false,
+  "windPhysics": false,
+  "weatherParticles": false,
+  "oceanPhysics": false,
+  "oceanPuddles": false,
+  "showUpdateNotifications": false
+}
