@@ -51,6 +51,10 @@ final class StationGameTests {
         for (String id : List.of("working_station")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing field craft " + id);
         }
+        // Planks stay in the hand grid as well as on the bench: the Working Station itself costs planks.
+        for (String wood : List.of("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "bamboo")) {
+            h.assertTrue(recipes.byKey(recipe("minecraft:" + wood + "_planks")).isPresent(), "Planks must stay craftable by hand: " + wood);
+        }
         for (String id : List.of("medicine_bench", "storage_crate", "smithing_table", "crusher", "mortar_and_pestle",
                 "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Phase A grid recipe survived: " + id);

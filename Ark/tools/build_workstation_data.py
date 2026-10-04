@@ -15,6 +15,8 @@ from PIL import Image
 PHASE_A = ('armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table')
 FIELD = {f'{wp.NS}:{name}' for name in
          ('stone_hatchet', 'flint_knife', 'sharp_rock', 'fiber_bandage', 'working_station')}
+# Recipe families that stay in the hand grid as well as on their bench: the Working Station itself costs planks.
+FIELD_FAMILIES = {'planks'}
 
 
 def build(output):
@@ -61,7 +63,8 @@ def build(output):
         (rules_dir / f'{bench}.json').write_text(json.dumps(extras), encoding='utf-8')
     # Remove every original recipe assigned to phase A, including changed/deleted and special grid
     # recipes (banner copying etc.). Phase B recipes keep their existing implementation this phase.
-    removed = sorted({r['id'] for r in records if r.get('bench') in PHASE_A and r['result'] not in FIELD})
+    removed = sorted({r['id'] for r in records if r.get('bench') in PHASE_A and r['result'] not in FIELD
+                      and r.get('family') not in FIELD_FAMILIES})
     (data / 'workstation_grid_removals.json').write_text(json.dumps(removed, indent=2) + '\n', encoding='utf-8')
     # Exact raster mask of workstation_ui.js shape(). White texels take the runtime palette tint.
     shapes = output / 'resources/assets' / wp.NS / 'textures/gui/workstation/shapes'
