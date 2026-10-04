@@ -35,6 +35,8 @@ public abstract class WildlifeController extends Goal {
     public UUID preyHerd() { return null; }
     public void followPreyHerd(UUID herd) {}
     public void receiveAlarm(Vec3 position) {}
+    /** @param flight the caller runs or fights; false when it has only noticed something */
+    public void receiveAlarm(Vec3 position, boolean flight) { receiveAlarm(position); }
     public void receiveHerdThreat(LivingEntity threat) {}
     /**
      * Session recorder view: plain copies of this routine's fields. Reads only; in particular it never

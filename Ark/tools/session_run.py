@@ -1,7 +1,7 @@
 """Records a creature session in the real client with nobody at the keyboard, then analyses it.
 
     python tools/session_run.py [--world NAME | --new-world [--seed SEED] [--flat]] [--time TICKS] [--seconds 300]
-                                [--delay 60] [--mode approach|stand] [--scenario water|encounter]
+                                [--delay 60] [--mode approach|stand] [--scenario water|encounter|behavior]
 
 Copies a saved world (or has the client create a new one), launches the dev client straight into it with
 the session recorder armed and a scripted player (client/SessionAutopilot: walk up to the nearest wild
@@ -32,6 +32,14 @@ oaks, by night; a Parasaur at 16 and a Pegomastax at 10 by day; a thirsty Lystro
 pond ten blocks beyond it. Natural spawning is off and other mobs near the observer are removed before each
 trial. The recording ends when the seven trials are done (about five and a half minutes). Use it with
 --new-world --flat (open plains: grass on dirt, plains biome, no villages), --mode stand and --delay 0.
+
+--scenario behavior puts the behaviour model through its cases, each with what is expected of it: grazers of
+different hunger, thirst and fatigue side by side by day and by night, a hunter with and without an appetite,
+blows from a survival and from a creative observer on the timid, the herd that stands together, the apex and
+the wounded, a herd mobbing an apex, a hunter beside a bigger one. Every trial ends in a verdict; the table is
+printed after the run and written to trials.json beside the recording. Use it like the encounter scenario, with
+--seconds 780 (a trial ends as soon as what it expects was seen, so the eighteen take six to ten minutes).
+--trials name,name runs only those.
 """
 from __future__ import annotations
 
@@ -195,7 +203,8 @@ def main() -> int:
     parser.add_argument("--seconds", type=int, default=300, help="length of the recording, unpaused real seconds")
     parser.add_argument("--delay", type=int, default=60, help="seconds between the player gaining control and the recording")
     parser.add_argument("--mode", choices=("approach", "stand"), default="approach", help="what the scripted player does")
-    parser.add_argument("--scenario", choices=("water", "encounter"), help="controlled test setup, explicitly recorded; requires --mode stand")
+    parser.add_argument("--scenario", choices=("water", "encounter", "behavior"), help="controlled test setup, explicitly recorded; requires --mode stand")
+    parser.add_argument("--trials", help="with --scenario behavior: only these trials, comma-separated")
     parser.add_argument("--shaders", action="store_true", help="leave the shader setting as it is")
     parser.add_argument("--keep-world", action="store_true", help=f"keep the played copy as run/saves/{COPY}")
     parser.add_argument("--timeout", type=int, help="seconds before the client is closed by force (default: delay + seconds + 600)")
@@ -229,6 +238,8 @@ def main() -> int:
             lines_set(RUN / "config" / "iris.properties", "=", {"enableShaders": "false"})
         clock = "" if arguments.time is None else f"dayTime={arguments.time}\n"
         scenario = "" if arguments.scenario is None else f"scenario={arguments.scenario}\n"
+        if arguments.trials:
+            scenario += f"trials={arguments.trials}\n"
         (DIAGNOSTICS / "arm").write_text(f"delaySeconds={arguments.delay}\nrecordSeconds={arguments.seconds}\nheal=true\n{clock}{scenario}",
                                          encoding="utf-8")
         print((f"world '{world}' copied to saves/{COPY}" if world else
@@ -255,6 +266,8 @@ def main() -> int:
         subprocess.run([sys.executable, str(tools / "session_sight.py"), str(session), "--world", COPY])
         subprocess.run([sys.executable, str(tools / "session_review.py"), str(session)])
         subprocess.run([sys.executable, str(tools / "session_validate.py"), str(session)])
+        if arguments.scenario == "behavior":
+            subprocess.run([sys.executable, str(tools / "session_trials.py"), str(session)])
         return result
     finally:
         if not arguments.keep_world:

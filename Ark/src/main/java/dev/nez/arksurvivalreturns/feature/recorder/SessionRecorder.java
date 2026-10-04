@@ -138,7 +138,7 @@ public final class SessionRecorder {
         if (session != null || server == null || !armed(server)) return;
         int delay = DELAY_SECONDS, seconds = RECORD_SECONDS, dayTime = -1;
         boolean heal = false;
-        String scenario = "";
+        String scenario = "", trials = "";
         try {
             var settings = new Properties();
             try (var in = Files.newInputStream(armFile(server))) { settings.load(in); }
@@ -147,6 +147,7 @@ public final class SessionRecorder {
             dayTime = Math.clamp(Integer.parseInt(settings.getProperty("dayTime", "-1").trim()), -1, 23999);
             heal = Boolean.parseBoolean(settings.getProperty("heal", "false").trim());
             scenario = settings.getProperty("scenario", "").trim();
+            trials = settings.getProperty("trials", "").trim();
             // One shot: the next join is an ordinary one again.
             Files.delete(armFile(server));
         } catch (IOException | NumberFormatException e) {
@@ -156,6 +157,7 @@ public final class SessionRecorder {
         session = new Session(server, player, true, delay * 1_000_000_000L, seconds * 1_000_000_000L, 0, "arm_file");
         if (scenario.equals("water")) session.waterTest = new WaterTestScenario();
         else if (scenario.equals("encounter")) session.encounterTest = new EncounterScenario();
+        else if (scenario.equals("behavior")) session.behaviorTest = new BehaviorScenario(trials);
         else if (!scenario.isEmpty()) ArkSurvivalReturns.LOGGER.warn("Unknown recorder scenario: {}", scenario);
         // Setup of a scripted run (tools/session_run.py), noted in the header: the time of day and a healthy player.
         if (dayTime >= 0 && advanceTo(player.level(), dayTime)) session.dayTimeSet = dayTime;

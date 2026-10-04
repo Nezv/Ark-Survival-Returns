@@ -58,6 +58,10 @@ public final class ArkGameTests {
         FUNCTIONS.register("land_vigilance", () -> LandGameTests::vigilance);
         FUNCTIONS.register("population", () -> ArkGameTests::population);
         FUNCTIONS.register("behavior", () -> ArkGameTests::behavior);
+        FUNCTIONS.register("reaction_mind_rules", () -> ReactionGameTests::rules);
+        FUNCTIONS.register("reaction_creative_hit", () -> ReactionGameTests::creativeHit);
+        FUNCTIONS.register("reaction_apex_mobbed", () -> ReactionGameTests::mobbed);
+        FUNCTIONS.register("reaction_herd_glance", () -> ReactionGameTests::glance);
         FUNCTIONS.register("wildlife_packet_hearing", () -> WildlifeRegressionGameTests::packets);
         FUNCTIONS.register("wildlife_partial_cover", () -> WildlifeRegressionGameTests::cover);
         FUNCTIONS.register("wildlife_home_recovery", () -> WildlifeRegressionGameTests::recovery);

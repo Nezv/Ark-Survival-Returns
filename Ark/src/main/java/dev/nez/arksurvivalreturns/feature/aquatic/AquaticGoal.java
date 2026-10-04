@@ -41,6 +41,8 @@ public final class AquaticGoal extends WildlifeController {
     private BlockPos home, transientHome;
     private Vec3 lastKnown, destination;
     private LivingEntity focus, herdThreat;
+    /** What struck this animal, for as long as the blow is on its mind; answered whatever its game mode. */
+    private LivingEntity provoker;
     private UUID preyHerd;
     private int herdThreatTicks, alarmTicks, corneredTicks, failedPaths, damageStamp = -1;
     private long nextRoutine, nextAlarm;
@@ -127,9 +129,11 @@ public final class AquaticGoal extends WildlifeController {
         }
         if ((herdThreatTicks -= 10) <= 0) herdThreat = null;
         boolean peaceful = world.getDifficulty() == Difficulty.PEACEFUL;
-        var attacker = mob.getLastHurtByMob();
-        boolean attacked = attacker != null && mob.getLastHurtByMobTimestamp() != damageStamp
-                && WildlifeSenses.validTarget(attacker) && !(peaceful && attacker instanceof Player);
+        var hurtBy = mob.getLastHurtByMob();
+        boolean attacked = hurtBy != null && mob.getLastHurtByMobTimestamp() != damageStamp && WildlifeSenses.answerable(hurtBy);
+        if (attacked) provoker = hurtBy;
+        else if (provoker != null && (brain.provoked() == 0 || !WildlifeSenses.answerable(provoker))) provoker = null;
+        var attacker = provoker;
         if (attacked) {
             damageStamp = mob.getLastHurtByMobTimestamp(); focus = attacker; lastKnown = attacker.position();
             if (mob.species().maxGroup > 1)
@@ -139,7 +143,7 @@ public final class AquaticGoal extends WildlifeController {
         }
         double scan = Math.max(32, WildlifeSenses.sightRange(mob));
         var candidates = world.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(scan),
-                c -> c != mob && WildlifeSenses.validTarget(c) && !(peaceful && c instanceof Player)
+                c -> c != mob && (c == provoker || WildlifeSenses.validTarget(c) && !(peaceful && c instanceof Player))
                         && (c == attacker || c instanceof Player || c instanceof CreatureEntity
                             || (mob.species().predator && (c instanceof Animal || c instanceof WaterAnimal))))
                 .stream().sorted(Comparator.comparingDouble(mob::distanceToSqr)).limit(24).toList();
@@ -148,13 +152,13 @@ public final class AquaticGoal extends WildlifeController {
         LivingEntity sensed = null;
         double best = 0;
         for (var candidate : candidates) {
-            var check = WildlifeSenses.detect(mob, candidate);
+            var check = WildlifeSenses.detect(mob, candidate, candidate == provoker);
             double score = check.strength() / (1 + mob.distanceTo(candidate) / 32.0) + (candidate == focus && check.strength() > 0 ? 0.15 : 0);
             if (t != null) t.scored(candidate, check, score);
             if (score > best) { best = score; sensed = candidate; detection = check; }
         }
         if (attacked) {
-            sensed = attacker; detection = WildlifeSenses.detect(mob, attacker);
+            sensed = attacker; detection = WildlifeSenses.detect(mob, attacker, true);
             if (t != null) t.forced("attacker");
         } else if (herdThreat != null && WildlifeSenses.validTarget(herdThreat)) {
             var threatSense = WildlifeSenses.detect(mob, herdThreat);
@@ -167,7 +171,7 @@ public final class AquaticGoal extends WildlifeController {
             focus = sensed;
             lastKnown = detection.visible() ? sensed.position() : sensed.position().add(2, 0, -2);
         }
-        if (focus != null && !WildlifeSenses.validTarget(focus)) { focus = null; mob.setTarget(null); }
+        if (focus != null && focus != provoker && !WildlifeSenses.validTarget(focus)) { focus = null; mob.setTarget(null); }
         double signal = Math.max(detection.strength(), alarmTicks > 0 ? 0.65 : 0);
         if (t != null) t.sensed(sensed, detection, alarmTicks > 0);
         alarmTicks = Math.max(0, alarmTicks - 10);
@@ -180,8 +184,9 @@ public final class AquaticGoal extends WildlifeController {
         brain.quench();
         var routine = new WildlifeMind.Routine(true, night, false, true, danger, false,
                 corneredTicks > 0, Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), false);
+        // Nothing can be done to a player on a peaceful world: an animal one of them strikes swims off.
         var observation = new WildlifeMind.Observation(signal, visible, visible && prey(sensed), intruding, attacked,
-                false, far, false, false, night, mob.getHealth() / mob.getMaxHealth());
+                peaceful && sensed instanceof Player, far, false, false, night, mob.getHealth() / mob.getMaxHealth());
         var state = brain.step(observation, 10, routine, null);
         if (t != null) t.step(before, state, brain, observation, routine, false, false);
         if (!brain.remembers()) { lastKnown = null; focus = null; }

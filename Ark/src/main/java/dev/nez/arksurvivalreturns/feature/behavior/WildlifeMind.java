@@ -37,6 +37,7 @@ public final class WildlifeMind {
     public record GroupRoutine(double hunger, BehaviorState state) {}
     /** The rule that chose the current state, in priority order; the showcase matrices quote these. */
     public enum Reason {
+        CORNERED("nowhere to run, or the attacker keeps up: turn and fight"),
         ESCAPE("critical health, a bigger predator, or a timid animal with a threat inside its flight distance"),
         NIGHT_HERD("night herd under threat: flee, or stand once defended or cornered"),
         HOME_RANGE("left its home range or gave up a chase"),
@@ -117,6 +118,8 @@ public final class WildlifeMind {
     /** Adopts the state a cheaper routine was showing (sleeping, roaming, grazing) when full detail resumes. */
     public void resumeAs(BehaviorState shown) { if (shown != state) { state = shown; age = 0; } }
     public void abandonChase() { recovery = 200; memory = 0; awareness = 0; chase = 0; }
+    /** The target is in reach: a fight at the body is not a chase that has gone on too long. */
+    public void closedIn() { chase = 0; }
     /** It has watched long enough: what keeps its distance is let be, with nothing left to investigate. */
     public void loseInterest() { memory = 0; awareness = 0; warning = 0; }
     /** A completed return ends recovery; a path request to the block beneath the body is not a new chase. */
@@ -151,12 +154,22 @@ public final class WildlifeMind {
         boolean canHunt = predator && (!routine.enabled || routine.night);
         warning = o.visible && awareness >= 0.45 && (o.intruding || (canHunt && o.prey && hunger >= 0.4)) ? warning + ticks : 0;
         chase = state.combat() ? chase + ticks : 0;
-        if (!o.attacked && (chase >= 300 || o.farFromHome && state.combat() && !o.intruding)) abandonChase();
+        // An animal that is being hit answers first: it neither gives up nor walks home under the blows.
+        if (provoked == 0 && (chase >= 300 || o.farFromHome && state.combat() && !o.intruding)) abandonChase();
         BehaviorState next;
         Reason why;
-        // A timid animal runs from what presses it, and once running keeps going while it remembers why.
-        if ((o.health < 0.25 || o.intimidating || timid && (o.pressing || state == BehaviorState.FLEE))
-                && memory > 0 && awareness >= 0.45) { next = BehaviorState.FLEE; why = Reason.ESCAPE; }
+        boolean aware = memory > 0 && awareness >= 0.45;
+        boolean nightHerd = routine.enabled && !predator && routine.night;
+        boolean overmatched = o.health < 0.25 || o.intimidating;
+        // Whatever can bite turns on what it cannot get away from. A night herd has its own rule below.
+        if (aware && routine.cornered && !timid && !nightHerd && o.visible && (overmatched || state == BehaviorState.FLEE)) {
+            next = BehaviorState.DEFEND; why = Reason.CORNERED;
+        }
+        // An animal runs from what presses it, and once running keeps going while it remembers why: it has its
+        // back to the threat, so losing sight of it is no reason to stop and look.
+        else if (aware && (overmatched || timid && o.pressing || state == BehaviorState.FLEE && (timid || !nightHerd))) {
+            next = BehaviorState.FLEE; why = Reason.ESCAPE;
+        }
         else if (routine.enabled && !predator && routine.night && memory > 0 && awareness >= 0.45
                 && (routine.danger || state == BehaviorState.FLEE || (state == BehaviorState.DEFEND && provoked > 0))) {
             boolean stand = o.health >= 0.5 && o.visible && (routine.defended && flight >= 60
@@ -164,12 +177,13 @@ public final class WildlifeMind {
             next = stand ? BehaviorState.DEFEND : BehaviorState.FLEE;
             why = Reason.NIGHT_HERD;
         }
-        else if ((recovery > 0 || o.farFromHome) && !o.attacked && !(o.visible && o.intruding)) {
+        else if ((recovery > 0 || o.farFromHome) && provoked == 0 && !(o.visible && o.intruding)) {
             next = BehaviorState.RETURN_HOME; why = Reason.HOME_RANGE;
         }
         else if (memory > 0 && awareness >= 0.20) {
-            // Timid animals never walk toward what scared them: they watch where it was.
-            if (!o.visible) { next = !timid ? BehaviorState.INVESTIGATE : awareness >= 0.6 && (o.pressing || state == BehaviorState.FLEE)
+            // Timid animals never walk toward what scared them, and nobody walks back to what it has just run
+            // from: they watch where it was.
+            if (!o.visible) { next = !timid && wary == 0 ? BehaviorState.INVESTIGATE : awareness >= 0.6 && (o.pressing || state == BehaviorState.FLEE)
                     ? BehaviorState.FLEE : BehaviorState.ALERT; why = Reason.LOST_SIGHT; }
             else if (awareness < 0.55) { next = BehaviorState.ALERT; why = Reason.NOTICED; }
             else if (provoked > 0) { next = BehaviorState.DEFEND; why = Reason.PROVOKED; }

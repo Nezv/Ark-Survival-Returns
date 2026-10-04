@@ -370,6 +370,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
     public int creatureLevel() { return entityData.get(LEVEL); }
     public UUID packId() { return packId; }
+    /** Puts this creature in a pack by hand, for trials and tests; a natural spawn gets its pack in finalizeSpawn. */
+    public void joinPack(UUID pack) { packId = pack; }
     public boolean isNaturalWildlife() { return naturalWildlife && !isPersistenceRequired(); }
     /**
      * The wild routine. Types whose registerGoals replaces the realm goals (the Guardian) get an unregistered

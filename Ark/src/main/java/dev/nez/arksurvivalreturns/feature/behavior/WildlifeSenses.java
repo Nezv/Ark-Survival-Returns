@@ -38,6 +38,13 @@ public final class WildlifeSenses {
     public static boolean validTarget(LivingEntity target) {
         return target.isAlive() && !target.isSpectator() && !(target instanceof Player p && p.isCreative());
     }
+    /**
+     * Whatever struck an animal is answered, a creative player included: the blow landed, so the animal runs or
+     * turns on it like on anything else, although nothing it does can hurt that player.
+     */
+    public static boolean answerable(LivingEntity attacker) {
+        return attacker.isAlive() && !attacker.isSpectator();
+    }
     public static boolean hasNightCycle(CreatureEntity creature) {
         var type = creature.level().dimensionType();
         return !creature.species().flyer() && Config.NIGHTTIME.get() && type.hasSkyLight()
@@ -94,8 +101,15 @@ public final class WildlifeSenses {
         return new Sight(false, false, rays);
     }
     public static Detection detect(CreatureEntity observer, LivingEntity target) {
+        return detect(observer, target, false);
+    }
+    /**
+     * @param provoker the target struck this animal a moment ago: it is answered whatever its game mode, and the
+     *                 animal knows where the blow came from without having to face it
+     */
+    public static Detection detect(CreatureEntity observer, LivingEntity target, boolean provoker) {
         boolean recorded = SessionRecorder.on();
-        if (!validTarget(target)) {
+        if (provoker ? !answerable(target) : !validTarget(target)) {
             if (recorded) { LAST.invalid = true; LAST.disguised = false; LAST.strength = 0; }
             return new Detection(false, 0);
         }
@@ -118,7 +132,7 @@ public final class WildlifeSenses {
         boolean loaded = dev.nez.arksurvivalreturns.feature.spawn.SpawnRules.loaded(world,
                 observer.getBoundingBox().minmax(target.getBoundingBox()).inflate(1));
         double ahead = facing.dot(flat);
-        boolean inView = distance < sight && (distance < 4 + observer.getBbWidth() || ahead > -0.15) && !target.isInvisible();
+        boolean inView = distance < sight && (provoker || distance < 4 + observer.getBbWidth() || ahead > -0.15) && !target.isInvisible();
         Sight lines = loaded ? sight(world, observer, target, inView) : new Sight(false, false, 0);
         boolean clear = lines.clear(), visible = inView && clear;
         // Movement packets absSnapTo real players, overwriting xo/yo/zo. The packet listener retains this delta.
