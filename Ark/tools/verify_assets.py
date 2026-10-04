@@ -19,6 +19,10 @@ PALETTE_SIZE = (64, 8)
 # Generated eyes (build_creature_eyes.py), mirroring Species.eyeBones(): two eyeballs per set, calm and
 # alert, under their own groups. Rigs without an eye anchor get none.
 NO_EYE_GEOMETRY = set(NO_EYES)
+# Item sprite contract: 32 px (a 16 px grid doubled, build_bronze_age_art.py), except the accessory icons and
+# the creature-part trophies, which build_accessories.py authors at 16 px.
+ITEM_SPRITE_SIZE = 32
+ITEM_SPRITE_SIZES = {'item/accessory': 16, 'item/trophy': 16}
 FLYERS = ['pteranodon', 'argentavis'] + [entry['id'] for entry in COLLECTION if entry['realm'] == 'AIR']
 
 
@@ -112,12 +116,12 @@ def main():
                 check_creature(folder, identifier, height, with_behavior_clips(folder, identifier, clips)[0], report, check, fail)
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
-    # Spawn eggs, nest eggs, the four berries, the debug tool, the tranquilizer arrows, the field journal, four camp items, two cargo harnesses,
-    # three homestead items (trough, drying rack, dried ration), two medicine items, three kitchen
-    # items (cooking pot, hearty stew, trail mix) and nine additional wood variants of the feeding trough.
-    definitions = list((generated/'assets/arksurvivalreturns/items').glob('*.json'))
-    expected_items = len(SPECIES) + len(FLYERS) + 62  # 34 camp/farm/taming items + 28 prehistoric (rocks, tools, fire, forge, meats, keratin tier)
-    check(len(definitions) == expected_items, f'{len(definitions)} item definitions, expected {expected_items}')
+    # Item definitions are checked against what names them, not against a count: a spawn egg per species here,
+    # the nest eggs with the nests, and every definition against the item and block names of both locales below.
+    definitions = sorted((generated/'assets/arksurvivalreturns/items').glob('*.json'))
+    defined = {definition.stem for definition in definitions}
+    for _, identifier, *_ in SPECIES:
+        check(f'{identifier}_spawn_egg' in defined, f'Missing spawn egg definition: {identifier}')
     for definition in definitions:
         try:
             body = json.loads(definition.read_text())['model']
@@ -131,8 +135,9 @@ def main():
             if texture.startswith('minecraft:'):
                 continue
             tex = texture.split(':')[1]
+            side = ITEM_SPRITE_SIZES.get(tex.rpartition('/')[0], ITEM_SPRITE_SIZE)
             with Image.open(ASSETS/f'textures/{tex}.png') as image:
-                check(image.mode == 'RGBA' and image.size == (32, 32), f'{tex}: {image.mode} {image.size}, expected RGBA 32x32')
+                check(image.mode == 'RGBA' and image.size == (side, side), f'{tex}: {image.mode} {image.size}, expected RGBA {side}x{side}')
                 check(image.getextrema()[3] == (0, 255), f'{tex}: alpha range {image.getextrema()[3]}')
         except Exception as error:
             fail(f'{definition.name}: unexpected {error!r}')
@@ -184,6 +189,13 @@ def main():
             check(f'block.arksurvivalreturns.{identifier}_nest' in lang, f'Missing nest name: {locale}/{identifier}')
         check('block.arksurvivalreturns.bedroll' in lang and 'block.arksurvivalreturns.mattress' in lang, f'{locale}: missing bedroll/mattress name')
         check('item.arksurvivalreturns.keratin_spear' in lang, f'{locale}: missing keratin spear name')
+        # A definition without a name shows its raw key; an item name without a definition is an item with no model.
+        # Blocks may go without an item (bushes, nests, the loose rock), so only item names must be defined.
+        named = {kind: {key.split('.')[2] for key in lang if key.startswith(f'{kind}.arksurvivalreturns.') and key.count('.') == 2}
+                 for kind in ('item', 'block')}
+        check(defined <= named['item'] | named['block'],
+              f'{locale}: item definitions without a name: {sorted(defined - named["item"] - named["block"])}')
+        check(named['item'] <= defined, f'{locale}: item names without a definition: {sorted(named["item"] - defined)}')
     try:
         verify_camp_assets()
     except Exception as error:
