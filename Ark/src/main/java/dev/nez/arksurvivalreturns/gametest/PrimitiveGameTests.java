@@ -32,6 +32,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -63,29 +64,79 @@ final class PrimitiveGameTests {
         return new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
     }
 
-    /** Loose rocks: generation follows the ground, water refuses, and right-click picks the rock up. */
+    private static boolean placeRock(GameTestHelper h, BlockPos from) {
+        ServerLevel level = h.getLevel();
+        return PrimitiveContent.LOOSE_ROCK_FEATURE.get().place(new FeaturePlaceContext<>(Optional.empty(), level,
+                level.getChunkSource().getGenerator(), level.getRandom(), h.absolutePos(from), NoneFeatureConfiguration.INSTANCE));
+    }
+
+    /**
+     * Loose rocks: generation follows the ground, takes grass, reaches the forest floor and the bed of a pool, every
+     * Overworld biome carries both placements, and right-click picks the rock up.
+     */
     static void rocks(GameTestHelper h) {
         ServerLevel level = h.getLevel();
-        var feature = PrimitiveContent.LOOSE_ROCK_FEATURE.get();
-        BlockPos sandRel = new BlockPos(4, 2, 4);
-        h.setBlock(sandRel, Blocks.SAND.defaultBlockState());
-        h.setBlock(sandRel.above(), Blocks.AIR.defaultBlockState());
-        BlockPos rockPos = h.absolutePos(sandRel.above());
-        h.assertTrue(feature.place(new FeaturePlaceContext<>(Optional.empty(), level, level.getChunkSource().getGenerator(),
-                level.getRandom(), rockPos, NoneFeatureConfiguration.INSTANCE)), "A loose rock must generate on sand");
+        BlockPos sand = new BlockPos(4, 2, 4);
+        h.setBlock(sand, Blocks.SAND);
+        h.setBlock(sand.above(), Blocks.AIR);
+        h.assertTrue(placeRock(h, sand.above()), "A loose rock must generate on sand");
+        BlockPos rockPos = h.absolutePos(sand.above());
         h.assertTrue(level.getBlockState(rockPos).getValue(LooseRockBlock.VARIANT) == LooseRockBlock.Variant.SANDSTONE,
                 "The rock must take the look of its ground");
 
-        BlockPos poolRel = new BlockPos(6, 2, 4);
-        h.setBlock(poolRel, Blocks.STONE.defaultBlockState());
-        h.setBlock(poolRel.above(), Blocks.WATER.defaultBlockState());
-        h.assertFalse(feature.place(new FeaturePlaceContext<>(Optional.empty(), level, level.getChunkSource().getGenerator(),
-                level.getRandom(), h.absolutePos(poolRel.above()), NoneFeatureConfiguration.INSTANCE)), "Rocks must never generate under water");
+        // Grass with a tuft on it is the ground of most of the world: 26.1 moved it out of #minecraft:dirt.
+        BlockPos grass = new BlockPos(6, 2, 4);
+        h.setBlock(grass, Blocks.GRASS_BLOCK);
+        h.setBlock(grass.above(), Blocks.SHORT_GRASS);
+        h.assertTrue(placeRock(h, grass.above()), "A loose rock must generate on grass, in the place of a tuft");
+        h.assertTrue(h.getBlockState(grass.above()).is(PrimitiveContent.LOOSE_ROCK.get()), "The rock must lie on the grass block");
+
+        // Under a tree the surface the placement finds is the canopy; the rock belongs on the floor beneath it.
+        BlockPos floor = new BlockPos(8, 2, 4);
+        h.setBlock(floor, Blocks.PODZOL);
+        h.setBlock(floor.above(), Blocks.AIR);
+        h.setBlock(floor.above(2), Blocks.AIR);
+        h.setBlock(floor.above(3), Blocks.OAK_LEAVES);
+        h.assertTrue(placeRock(h, floor.above(4)), "A loose rock must reach the forest floor through the canopy");
+        h.assertTrue(h.getBlockState(floor.above()).is(PrimitiveContent.LOOSE_ROCK.get()), "The rock must lie under the leaves");
+        h.assertTrue(h.getBlockState(floor.above(3)).is(Blocks.OAK_LEAVES), "The canopy must stay");
+
+        BlockPos trunk = new BlockPos(10, 2, 4);
+        h.setBlock(trunk, Blocks.DIRT);
+        h.setBlock(trunk.above(), Blocks.OAK_LOG);
+        h.setBlock(trunk.above(2), Blocks.AIR);
+        h.assertFalse(placeRock(h, trunk.above(2)), "A rock must never take the place of a trunk");
+        h.assertTrue(h.getBlockState(trunk.above()).is(Blocks.OAK_LOG), "The trunk must stay");
+
+        // Sea, river and lake beds: the rock lies in the water, and picking it up leaves the water.
+        BlockPos bed = new BlockPos(4, 2, 7);
+        h.setBlock(bed, Blocks.GRAVEL);
+        h.setBlock(bed.above(), Blocks.WATER);
+        h.assertTrue(placeRock(h, bed.above()), "A loose rock must generate on the bed of a pool");
+        BlockPos wetPos = h.absolutePos(bed.above());
+        h.assertTrue(level.getBlockState(wetPos).getValue(LooseRockBlock.WATERLOGGED), "A rock under water must be waterlogged");
+
+        var placements = List.of(ResourceKey.create(Registries.PLACED_FEATURE, Identifier.parse("arksurvivalreturns:loose_rock")),
+                ResourceKey.create(Registries.PLACED_FEATURE, Identifier.parse("arksurvivalreturns:loose_rock_cave")));
+        int biomes = 0;
+        for (var biome : level.registryAccess().lookupOrThrow(Registries.BIOME).listElements().toList()) {
+            if (biome.is(BiomeTags.IS_NETHER) || biome.is(BiomeTags.IS_END)) continue;
+            biomes++;
+            for (var placement : placements) {
+                h.assertTrue(biome.value().getGenerationSettings().features().stream()
+                        .anyMatch(step -> step.stream().anyMatch(feature -> feature.is(placement))),
+                        biome.key().identifier() + " has no " + placement.identifier());
+            }
+        }
+        h.assertTrue(biomes >= 54, "Expected every Overworld biome in the registry, found " + biomes);
 
         FakePlayer player = player(level, "ArkRockPicker");
         level.getBlockState(rockPos).useWithoutItem(level, player, hit(rockPos));
         h.assertTrue(level.getBlockState(rockPos).isAir(), "Picking the rock must remove it");
-        h.assertTrue(player.getInventory().countItem(PrimitiveContent.ROCK.get()) == 1, "Picking the rock must give one rock");
+        level.getBlockState(wetPos).useWithoutItem(level, player, hit(wetPos));
+        h.assertTrue(level.getBlockState(wetPos).is(Blocks.WATER), "Picking a rock under water must leave the water");
+        h.assertTrue(player.getInventory().countItem(PrimitiveContent.ROCK.get()) == 2, "Each rock picked must give one rock");
+        h.setBlock(bed.above(), Blocks.AIR);
         h.succeed();
     }
 

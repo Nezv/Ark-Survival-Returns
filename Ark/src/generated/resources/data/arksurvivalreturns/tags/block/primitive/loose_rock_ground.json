@@ -1,22 +1,25 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:dirt",
+    "#minecraft:substrate_overworld",
+    "#minecraft:base_stone_overworld",
     "#minecraft:sand",
     "#minecraft:terracotta",
+    "#minecraft:ice",
     "minecraft:gravel",
-    "minecraft:stone",
-    "minecraft:granite",
-    "minecraft:diorite",
-    "minecraft:andesite",
+    "minecraft:clay",
     "minecraft:sandstone",
     "minecraft:red_sandstone",
     "minecraft:calcite",
-    "minecraft:tuff",
-    "minecraft:mud",
     "minecraft:packed_mud",
     "minecraft:snow_block",
     "minecraft:cobblestone",
-    "minecraft:mossy_cobblestone"
+    "minecraft:mossy_cobblestone",
+    "minecraft:cobbled_deepslate",
+    "minecraft:basalt",
+    "minecraft:smooth_basalt",
+    "minecraft:blackstone",
+    "minecraft:dripstone_block",
+    "minecraft:amethyst_block"
   ]
 }

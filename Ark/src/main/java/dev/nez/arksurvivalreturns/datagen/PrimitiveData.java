@@ -56,7 +56,11 @@ final class PrimitiveData {
         return Map.of("from", List.of(x, 0, z), "to", List.of(xx, y, zz), "faces", faces);
     }
 
-    /** One loose rock feature added to every Overworld biome; the feature itself refuses water and leaves. */
+    /**
+     * One loose rock feature added to every Overworld biome, placed twice: from the surface, where the feature goes
+     * down through the canopy or lands on the sea bed, and from points underground, which reach only where they fall
+     * in the open air of a cave, so the cave biomes have their rocks too.
+     */
     private void worldgen() {
         put.accept(DATA + "worldgen/configured_feature/loose_rock", Map.of("type", NS + ":loose_rock", "config", Map.of()));
         put.accept(DATA + "worldgen/placed_feature/loose_rock", Map.of("feature", NS + ":loose_rock", "placement", List.of(
@@ -64,8 +68,18 @@ final class PrimitiveData {
                 Map.of("type", "minecraft:in_square"),
                 Map.of("type", "minecraft:heightmap", "heightmap", "OCEAN_FLOOR_WG"),
                 Map.of("type", "minecraft:biome"))));
+        put.accept(DATA + "worldgen/placed_feature/loose_rock_cave", Map.of("feature", NS + ":loose_rock", "placement", List.of(
+                Map.of("type", "minecraft:count", "count", 24),
+                Map.of("type", "minecraft:in_square"),
+                Map.of("type", "minecraft:height_range", "height", Map.of("type", "minecraft:uniform",
+                        "min_inclusive", Map.of("above_bottom", 8), "max_inclusive", Map.of("absolute", 56))),
+                Map.of("type", "minecraft:biome"))));
+        // Every biome outside the Nether and the End: #minecraft:is_overworld misses biomes a mod forgot to tag
+        // (Terralith's Deep Warm Ocean and its Skylands).
         put.accept(DATA + "neoforge/biome_modifier/loose_rocks", Map.of("type", "neoforge:add_features",
-                "biomes", "#minecraft:is_overworld", "features", NS + ":loose_rock", "step", "vegetal_decoration"));
+                "biomes", Map.of("type", "neoforge:not", "value", Map.of("type", "neoforge:or",
+                        "values", List.of("#minecraft:is_nether", "#minecraft:is_end"))),
+                "features", List.of(NS + ":loose_rock", NS + ":loose_rock_cave"), "step", "vegetal_decoration"));
     }
 
     // --------------------------------------------------------------------------------------- tools
@@ -273,10 +287,14 @@ final class PrimitiveData {
 
     private void tags() {
         tag(NS, "item/primitive/rock_materials", NS + ":rock");
-        tag(NS, "block/primitive/loose_rock_ground", "#minecraft:dirt", "#minecraft:sand", "#minecraft:terracotta",
-                "minecraft:gravel", "minecraft:stone", "minecraft:granite", "minecraft:diorite", "minecraft:andesite",
-                "minecraft:sandstone", "minecraft:red_sandstone", "minecraft:calcite", "minecraft:tuff", "minecraft:mud",
-                "minecraft:packed_mud", "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone");
+        // Every block a biome of the pack has as its ground. Grass, podzol, mycelium, moss and mud left #minecraft:dirt
+        // in 26.1 and are reached through #minecraft:substrate_overworld.
+        tag(NS, "block/primitive/loose_rock_ground", "#minecraft:substrate_overworld", "#minecraft:base_stone_overworld",
+                "#minecraft:sand", "#minecraft:terracotta", "#minecraft:ice", "minecraft:gravel", "minecraft:clay",
+                "minecraft:sandstone", "minecraft:red_sandstone", "minecraft:calcite", "minecraft:packed_mud",
+                "minecraft:snow_block", "minecraft:cobblestone", "minecraft:mossy_cobblestone", "minecraft:cobbled_deepslate",
+                "minecraft:basalt", "minecraft:smooth_basalt", "minecraft:blackstone", "minecraft:dripstone_block",
+                "minecraft:amethyst_block");
         // Each vanilla tool/armour tag is written once for the whole mod: rock, keratin and bronze together.
         tag("minecraft", "item/axes", NS + ":stone_hatchet", NS + ":bronze_axe");
         tag("minecraft", "item/swords", NS + ":rock_sword", NS + ":bronze_longsword", NS + ":bronze_hammer");

@@ -17,9 +17,14 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -27,11 +32,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A loose rock lying on the ground: the first resource of the Prehistoric age. It needs no tool,
  * right-click picks it up and breaking it drops the same rock. The variant only changes its look and
- * follows the ground it was generated on.
+ * follows the ground it was generated on. On a sea, river or lake bed it lies waterlogged.
  */
-public final class LooseRockBlock extends Block {
+public final class LooseRockBlock extends Block implements SimpleWaterloggedBlock {
     public static final MapCodec<LooseRockBlock> CODEC = simpleCodec(LooseRockBlock::new);
     public static final EnumProperty<Variant> VARIANT = EnumProperty.create("variant", Variant.class);
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 3, 13);
 
     public enum Variant implements StringRepresentable {
@@ -53,18 +59,18 @@ public final class LooseRockBlock extends Block {
 
     public LooseRockBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(VARIANT, Variant.STONE));
+        registerDefaultState(stateDefinition.any().setValue(VARIANT, Variant.STONE).setValue(WATERLOGGED, false));
     }
 
     @Override protected MapCodec<? extends Block> codec() { return CODEC; }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(VARIANT);
+        builder.add(VARIANT, WATERLOGGED);
     }
 
     @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return defaultBlockState().setValue(VARIANT,
-                Variant.of(context.getLevel().getBlockState(context.getClickedPos().below())));
+        return defaultBlockState().setValue(VARIANT, Variant.of(context.getLevel().getBlockState(context.getClickedPos().below())))
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).is(Fluids.WATER));
     }
 
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -78,7 +84,13 @@ public final class LooseRockBlock extends Block {
 
     @Override protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
             Direction direction, BlockPos neighbor, BlockState neighborState, RandomSource random) {
-        return direction == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;
+        if (state.getValue(WATERLOGGED)) ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        if (direction != Direction.DOWN || canSurvive(state, level, pos)) return state;
+        return state.getFluidState().createLegacyBlock();
+    }
+
+    @Override protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     /** Pick-block gives the rock: the loose rock has no item form. */
