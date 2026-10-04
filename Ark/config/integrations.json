@@ -23,7 +23,7 @@
           "build": "release"
         }
       ],
-      "uses": "Xaero's fullscreen map, drawn with Ark's colour-coded danger zones through the bridge hook. Map access can be locked until the tribe tames a creature from a rank-5 zone (progression.mapRequiresUnlock).",
+      "uses": "Xaero's fullscreen map, drawn with Ark's colour-coded danger zones through the bridge hook. Map access can be locked until the tribe tames a creature from the deadly zone, rank 3 (progression.mapRequiresUnlock).",
       "changed": "No code changes to Xaero (closed source). All Ark behaviour lives in Ark's own overlay (client/XaeroDangerOverlay.java). The jar is only rebranded.",
       "next": "Telemetry technology (F17, was P10): two items, not blocks, a map for self-location and a radar for creature geolocation."
     },
@@ -101,7 +101,7 @@
           "build": "release"
         }
       ],
-      "uses": "An FTB Teams party is the tribe: it shares tame permissions, the Field Journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the 40 tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
+      "uses": "An FTB Teams party is the tribe: it shares tame permissions, the Field Journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
       "changed": "No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
       "next": "In-client check of the journal, tribe permissions and tech-tree mirror."
     },
@@ -123,7 +123,7 @@
       ],
       "uses": "Terminals, connectors and crafting terminals that link chests into one network. Tames' Load and Unload buttons reach the network through NeoForge's item capability, like any other modded storage.",
       "changed": "Built from source (branch 26.1) and branded. Ark's cargo transfer now reads the item capability as well as vanilla containers (GameTest integration_toms_storage). The Ark UI pack re-skins its terminal screens and widgets. No gameplay code removed: every block is cheap, and its common config caps scan sizes.",
-      "next": "Replaces the removed P04 storage crate. In-client check: terminal screens under the Ark UI pack."
+      "next": "In-client check: terminal screens under the Ark UI pack, and a terminal on a group of Storage Crates."
     },
     {
       "id": "I05",

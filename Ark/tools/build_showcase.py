@@ -2,8 +2,8 @@
 
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
-(design/showcase/behavior.json), both exported by runData, the biome profile table, the tech tree (tree.json), the
-biome pictures with their spawns (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
+(design/showcase/behavior.json), both exported by runData, the tech tree (tree.json, one strip over the three ages), the
+biome pictures with their spawns beside the danger map (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
 screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
 (showcase_models.py, drawn by three.js) and the Ark UI previews.
@@ -46,6 +46,7 @@ PREVIEW_BG = (19, 30, 39)
 RANK_COLORS = ['#4bae66', '#e4c653', '#994eb3']
 RANK_NAMES = ['Easy', 'Dangerous', 'Deadly']
 MAP_HEIGHT = 344  # TechScreen.MAP_HEIGHT: four lanes around the gate row
+TREE_TOP = 46     # header row of the tree strip, above the map: age title and lanes
 FOLDERS = {'pteranodon': 'Piterodon', 'therizinosaurus': 'Therezinosaur', 'brontosaurus': 'Brontosaur',
            'tyrannosaurus': 'Tyranosaur', 'giganotosaurus': 'Giganotosaur', 'acrocanthosaurus': 'Acrochantosaur'}
 e = html.escape
@@ -177,35 +178,6 @@ def creatures_section(species):
 
 HABITATS = [('temperate', 'Temperate land', '#6f9a4f'), ('wetland', 'Wetlands', '#3f8f80'),
             ('cold', 'Snow and ice', '#86b3d3'), ('sea', 'Sea', '#3f6fa3'), ('sky', 'Sky', '#c49a45')]
-
-
-# The kinds of surface biome a species' range is made of (BiomeProfile.Type), in page order.
-RANGE_KINDS = [('grassland', 'Grassland', '#8fae4f'), ('savanna', 'Savanna', '#b9a24a'), ('shrubland', 'Shrubland', '#9a9a55'),
-               ('forest', 'Forest', '#4f8a4a'), ('taiga', 'Taiga', '#3f7566'), ('jungle', 'Jungle', '#2f8f4f'),
-               ('wetland', 'Wetland', '#3f8f80'), ('river', 'River', '#4f8fb3'), ('coast', 'Coast', '#c9b77a'),
-               ('desert', 'Desert', '#d6b56a'), ('badlands', 'Badlands', '#b8693f'), ('mountain', 'Mountain', '#8a8f86'),
-               ('tundra', 'Tundra', '#a9c7dc'), ('volcanic', 'Volcanic', '#6b5248'), ('geothermal', 'Geothermal', '#a8894f'),
-               ('ocean', 'Ocean', '#3f6fa3')]
-
-
-def habitats_section(species):
-    """Who lives in each kind of biome (SpeciesRange), from the profile table the range tags are generated from."""
-    table = load_json(ARK / 'config/integrations/biome-profiles.json')['biomes']
-    by_id = {s['id']: s for s in species}
-    blocks = []
-    for key, title, color in RANGE_KINDS:
-        for snowy in (False, True):
-            biomes = [b for b in table.values() if b['type'] == key and b['snowy'] == snowy]
-            residents = sorted({i for b in biomes for i in b['species'] if i in by_id},
-                               key=lambda i: (by_id[i]['predator'], by_id[i]['danger'], by_id[i]['name']))
-            if not residents:
-                continue
-            chips = ''.join(f'<span class="chip">{e(by_id[i]["name"])}{" (hunter)" if by_id[i]["predator"] else ""}</span>'
-                            for i in residents)
-            blocks.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}{" under snow" if snowy else ""}</h4>'
-                          f'<p class="plain">{len(biomes)} biome{"s" if len(biomes) != 1 else ""}</p>'
-                          f'<div class="chips">{chips}</div></div>')
-    return '\n'.join(blocks)
 
 
 # ---------------------------------------------------------------------------------------- behaviour
@@ -458,6 +430,7 @@ def trigger_text(trigger):
 
 
 def tree_section():
+    """The three ages as one strip, left to right as the Chronicle draws them; a finale leads into the next gate."""
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     icons = {}
     for n in tree['nodes']:
@@ -465,46 +438,48 @@ def tree_section():
         if icon.is_file():
             icons[n['id']] = uri(Image.open(icon), 'PNG')
     by_id = {n['id']: n for n in tree['nodes']}
-    parts = []
+    width, height = max(n['box'][0] for n in tree['nodes']) + 60, MAP_HEIGHT + TREE_TOP
+    svg = [f'<svg viewBox="0 0 {width} {height}" style="aspect-ratio:{width}/{height}" role="img" '
+           f'aria-label="Technology tree: {len(tree["ages"])} ages, left to right">']
+    jumps = []
     for age in tree['ages']:
         nodes = [n for n in tree['nodes'] if n['age'] == age['id']]
         xs = [n['box'][0] for n in nodes]
         left, right = min(xs) - 60, max(xs) + 60
-        width = right - left
         wired = sum(n['trigger']['type'] != 'future' for n in nodes)
-        svg = [f'<svg viewBox="0 0 {width} {MAP_HEIGHT}" role="img" aria-label="{e(age["title"])} technology tree">',
-               f'<rect x="0" y="0" width="{width}" height="{MAP_HEIGHT}" rx="10" fill="{age["color"]}" opacity=".32"/>']
-        for n in nodes:
-            if n['kind'] == 'side':
+        svg.append(f'<rect x="{left}" y="0" width="{right - left}" height="{height}" rx="10" fill="{age["color"]}" opacity=".32"/>'
+                   f'<text x="{left + 16}" y="22" class="age-title">{e(age["title"])}</text>'
+                   f'<text x="{left + 16}" y="36" class="lane">{e(" · ".join(lane["title"] for lane in age["lanes"]))}</text>')
+        jumps.append(f'<button type="button" data-x="{left / width:.4f}">{e(age["title"])} '
+                     f'<small class="{"ok" if wired == len(nodes) else "todo"}">{wired} of {len(nodes)} wired</small></button>')
+    for n in tree['nodes']:
+        if n['kind'] == 'side':
+            continue
+        nx, ny = n['box'][0], n['box'][1] + TREE_TOP
+        for dep in n['requires']:
+            a = by_id.get(dep)
+            if not a:
                 continue
-            for dep in n['requires']:
-                a = by_id.get(dep)
-                if not a or a['age'] != n['age']:
-                    continue
-                ax, ay = a['box'][0] - left, a['box'][1]
-                nx, ny = n['box'][0] - left, n['box'][1]
-                mid = nx - 44 if len(n['requires']) >= 3 else ax + 55
-                svg.append(f'<path class="edge" d="M{ax + 23},{ay} H{mid} V{ny} H{nx - 23}"/>')
-        for n in nodes:
-            x, y = n['box'][0] - left, n['box'][1]
-            state = 'secret' if n['kind'] == 'side' else ('wired' if n['trigger']['type'] != 'future' else 'planned')
-            title = '???' if state == 'secret' else n['title']
-            task = 'Secret bonus food. Revealed when a tribe completes it.' if state == 'secret' else n['task']
-            how = '' if state == 'secret' else trigger_text(n['trigger'])
-            svg.append(f'<g class="node {state}" tabindex="0" data-title="{e(title)}" data-task="{e(task)}" data-how="{e(how)}" '
-                       f'data-kind="{e(n["kind"])}"><path d="{starfish_path(x, y, 27)}"/>')
-            if state != 'secret' and n['id'] in icons:
-                svg.append(f'<image href="{icons[n["id"]]}" x="{x - 17}" y="{y - 17}" width="34" height="34"/>')
-            elif state == 'secret':
-                svg.append(f'<text x="{x}" y="{y + 5}" class="secret-mark">???</text>')
-            svg.append(f'<text x="{x}" y="{y + 42}" class="node-label">{e(title)}</text></g>')
-        svg.append('</svg>')
-        parts.append(f'''<div class="age">
-  <div class="age-head"><h3>{e(age["title"])}</h3><span class="chip {'ok' if wired == len(nodes) else 'todo'}">{wired} of {len(nodes)} nodes wired</span>
-    <span class="lanes">{' · '.join(e(lane['title']) for lane in age['lanes'])}</span></div>
-  <div class="tree-scroll">{''.join(svg)}</div>
-</div>''')
-    return '\n'.join(parts)
+            ax, ay = a['box'][0], a['box'][1] + TREE_TOP
+            mid = nx - 44 if len(n['requires']) >= 3 else ax + 55
+            svg.append(f'<path class="edge" d="M{ax + 23},{ay} H{mid} V{ny} H{nx - 23}"/>')
+    for n in tree['nodes']:
+        x, y = n['box'][0], n['box'][1] + TREE_TOP
+        state = 'secret' if n['kind'] == 'side' else ('wired' if n['trigger']['type'] != 'future' else 'planned')
+        title = '???' if state == 'secret' else n['title']
+        task = 'Secret bonus food. Revealed when a tribe completes it.' if state == 'secret' else n['task']
+        how = '' if state == 'secret' else trigger_text(n['trigger'])
+        svg.append(f'<g class="node {state}" tabindex="0" data-title="{e(title)}" data-task="{e(task)}" data-how="{e(how)}" '
+                   f'data-kind="{e(n["kind"])}"><path d="{starfish_path(x, y, 27)}"/>')
+        if state != 'secret' and n['id'] in icons:
+            svg.append(f'<image href="{icons[n["id"]]}" x="{x - 17}" y="{y - 17}" width="34" height="34"/>')
+        elif state == 'secret':
+            svg.append(f'<text x="{x}" y="{y + 5}" class="secret-mark">???</text>')
+        svg.append(f'<text x="{x}" y="{y + 42}" class="node-label">{e(title)}</text></g>')
+    svg.append('</svg>')
+    lanes = {len(age['lanes']) for age in tree['ages']}
+    return {'TREE': ''.join(svg), 'TREE_JUMPS': ''.join(jumps), 'TREE_COUNT': len(tree['nodes']),
+            'TREE_LANES': ' or '.join(str(n) for n in sorted(lanes))}
 
 
 def journal_section():
@@ -524,7 +499,10 @@ ITEM_GROUPS = [
                      'fire_starter', 'plant_fiber', 'flint_knife']),
     ('Keratin tier', ['keratin', 'keratin_spear', 'keratin_helmet', 'keratin_chestplate', 'keratin_leggings', 'keratin_boots']),
     ('Food and meat', ['dried_meat', 'dried_ration', 'hearty_stew', 'trail_mix', 'tintoberry', 'amarberry', 'azulberry', 'narcoberry']),
-    ('Mortar & Pestle', ['narcotics', 'herbal_bandage', 'healing_mixture', 'fiber_bandage']),
+    ('Medicine', ['narcotics', 'healing_mixture', 'fiber_bandage', 'herbal_bandage', 'vitamins']),
+    ('Bronze Age', ['raw_tin', 'tin_ingot', 'bronze_blend', 'bronze_ingot', 'bronze_pickaxe', 'bronze_axe', 'bronze_shovel',
+                    'bronze_hoe', 'bronze_longsword', 'bronze_hammer', 'bronze_helmet', 'bronze_chestplate', 'bronze_leggings',
+                    'bronze_boots', 'sulphur', 'explosive_arrow']),
     ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow',
                           'field_journal', 'pack_harness', 'reinforced_harness']),
     ('Guardian', ['allosaur_heart', 'workshop_schematic', 'guardian_trophy']),
@@ -582,7 +560,7 @@ def blocks_section():
     <dl><div><dt>Size</dt><dd>{e(size)}</dd></div><div><dt>Made from</dt><dd>{e(recipe)}</dd></div></dl>
   </div>
 </article>''')
-    return '\n'.join(cards)
+    return '\n'.join(cards), len(cards)
 
 
 def ui_section():
@@ -651,20 +629,20 @@ def build():
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     item_count = len([p for p in (GENERATED / 'assets/arksurvivalreturns/items').glob('*.json') if not p.stem.endswith('spawn_egg')])
     integrations, integrated = integrations_section()
+    blocks, block_count = blocks_section()
     stats = [(len(species), 'creatures'), (len(RANK_COLORS), 'danger zones'), (len(tree['nodes']), 'tech nodes'), (integrated, 'integrated mods'),
              (item_count, 'items and blocks')]
     page = TEMPLATE
     replacements = {
         'HERO': hero, 'LOGO': logo,
         'STATS': ''.join(f'<div class="stat"><b>{n}</b><span>{e(label)}</span></div>' for n, label in stats),
-        'CREATURES': creatures_section(species),
-        'HABITATS': habitats_section(species),
+        'CREATURES': creatures_section(species), 'SPECIES_COUNT': len(species),
         **__import__('showcase_biomes').section(species, e, RANK_COLORS, RANK_NAMES, HABITATS),
         **behavior_section(names, species),
-        'TREE': tree_section(),
+        **tree_section(),
         **__import__('showcase_recipes').section(uri, e),
         'JOURNAL': journal_section(),
-        'BLOCKS': blocks_section(),
+        'BLOCKS': blocks, 'BLOCKS_COUNT': block_count,
         'ITEMS': items_section(names),
         **__import__('showcase_accessories').section(names, uri, e),
         **__import__('showcase_models').section(uri, e),
