@@ -222,14 +222,18 @@ def state_name(state):
 
 
 def tier_cards(data):
-    cards, inner = [], 0
+    """The distance tiers as one ruler from the player outwards, with what runs in each stretch under it."""
+    scale, cards, inner = [], [], 0
     for tier in data['tiers']:
         title, color = TIER_STYLE[tier['id']]
         span = f'Within {tier["radius"]} blocks' if inner == 0 else f'{inner} to {tier["radius"]} blocks'
-        cards.append(f'<div class="tier"><h4><i style="background:{color}"></i>{e(title)}</h4>'
-                     f'<b class="range">{span}</b><p class="plain">{e(tier["summary"])}</p></div>')
+        scale.append(f'<span style="flex:{tier["radius"] - inner};background:{color}"><b>{e(title)}</b>'
+                     f'<small>{tier["radius"]}</small></span>')
+        cards.append(f'<div class="lod-col"><h4><i style="background:{color}"></i>{e(title)}</h4>'
+                     f'<b class="range">{span}</b><p>{e(tier["summary"])}</p></div>')
         inner = tier['radius']
-    return '\n'.join(cards)
+    return (f'<div class="lod-scale" aria-hidden="true"><em>Player</em>{"".join(scale)}<em>blocks</em></div>'
+            f'<div class="lod-cols">{"".join(cards)}</div>')
 
 
 def day_schedule(schedule):
@@ -257,7 +261,10 @@ def day_schedule(schedule):
     body = ''.join(f'<div class="day-row"><b>{name}</b><div class="day-bar">{bar(segments)}</div>'
                    f'<small class="muted">{e(text)}</small></div>' for name, segments, text in rows)
     axis = ''.join(f'<span>{h:02d}:00</span>' for h in range(0, 25, 6))
-    return f'<div class="day">{body}<div class="day-axis"><span></span><div>{axis}</div></div></div>'
+    used = {phase for _, segments, _ in rows for _, _, phase in segments}
+    key = ''.join(f'<span><i class="{css}"></i>{label}</span>' for phase, (label, css) in PHASE_STYLE.items() if phase in used)
+    return (f'<div class="day">{body}<div class="day-axis"><span></span><div>{axis}</div></div>'
+            f'<div class="day-key">{key}</div></div>')
 
 
 def matrix_table(tier):
@@ -276,7 +283,7 @@ def matrix_table(tier):
                            f'data-why="{e(" | ".join(why))}" title="{e("; ".join(why))}">{mark}</td>')
             else:
                 tds.append(f'<td class="{css}"></td>' if css else '<td></td>')
-        rows.append(f'<tr><th scope="row">{e(state_name(a))}</th>{"".join(tds)}</tr>')
+        rows.append(f'<tr><th scope="row" tabindex="0">{e(state_name(a))}</th>{"".join(tds)}</tr>')
     return (f'<table class="matrix"><thead><tr><th class="corner" scope="col">from / to</th>{head}</tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table>')
 
@@ -339,7 +346,8 @@ def bridges_list(model, actions, names, species_names):
         who = species_names.get(bridge['species'], bridge['species'].title())
         reflex = ' &middot; reflex, no display' if bridge['urgent'] else ''
         rows.append(f'<li><div class="bridge-head"><b>{e(state_name(bridge["from"]))} &rarr; {e(state_name(bridge["to"]))}</b>'
-                    f'<span class="muted">{e(bridge["when"])} &middot; {e(who)}{reflex}</span></div>'
+                    f'<span>{e(bridge["when"][:1].upper() + bridge["when"][1:])}</span>'
+                    f'<small class="muted">Timed on the {e(who)}{reflex}</small></div>'
                     f'<div class="beats">{"<i>&rarr;</i>".join(beats)}</div></li>')
     return f'<ol class="bridges">{"".join(rows)}</ol>'
 
@@ -370,32 +378,33 @@ def model_panel(model, actions, names, species_names):
                          f'Tier {index + 1}: {e(title)}</button>')
         count = sum(len(row) for row in tier['matrix'].values())
         diagram = state_diagram(tier)
-        legend = ('<p class="muted diagram-note">In the diagram, the dashed "Any state" stands for a rule that fires from '
-                  'most states; the matrix lists every source.</p>' if 'any_state' in diagram else '')
+        legend = ('<p class="muted diagram-note">The dashed "Any state" stands for a rule that fires from most states; '
+                  'the matrix lists every source.</p>' if 'any_state' in diagram else '')
         tier_panels.append(
             f'<div class="tier-panel" data-tier="{tier["tier"]}" role="tabpanel">'
-            f'<p class="muted">{e(tier["note"])} <span class="chip">{len(tier["states"])} states, {count} transitions</span></p>'
+            f'<p class="muted tier-note">{e(tier["note"])} <span class="chip">{len(tier["states"])} states, {count} transitions</span></p>'
             f'<div class="machine"><div class="matrix-wrap">{matrix_table(tier)}</div>'
-            f'<div class="diagram"><div class="diagram-svg"></div><pre class="diagram-src">{e(diagram)}</pre></div></div>'
-            f'{legend}</div>')
+            f'<div class="cell-info" aria-live="polite"></div></div>'
+            f'<details class="fold"><summary>The same transitions as a diagram</summary>{legend}'
+            f'<div class="diagram"><div class="diagram-svg"></div><pre class="diagram-src">{e(diagram)}</pre></div></details>'
+            f'</div>')
     chips = ''.join(f'<span class="chip">{e(r)}</span>' for r in model['realms'].split())
     chips += '<span class="chip">predator</span>' if model['predator'] else ''
     extra = ''
     if model['bridges']:
-        extra += ('<h4>Level 2: the actions inside a change of state</h4><p class="muted">Every change of state first plays a '
-                  'short bridge timed to the rig\'s own clips (lengths below are the named species\'). A hit or a threat at the '
-                  'body is a reflex and skips the display.</p>' + bridges_list(model, actions, names, species_names))
+        extra += ('<div class="model-part"><h4>Bridges: the actions inside a change of state</h4><p class="muted">Every change '
+                  'of state first plays a short bridge timed to the rig\'s own clips (lengths are the named species\'). A hit '
+                  'or a threat at the body is a reflex and skips the display.</p>'
+                  + bridges_list(model, actions, names, species_names) + '</div>')
     if model.get('curves'):
-        extra += ('<h4>Flight curves</h4><p class="muted">One sample lap of each shape from the flight code. Each lap may '
-                  'pick a new shape, and the bird follows a point that slides along it, so it banks and climbs smoothly.</p>'
-                  + lap_figures(model))
-    return (f'<div class="model" data-model="{model["id"]}" role="tabpanel">'
-            f'<div class="model-head"><h3>{e(model["title"])}</h3>{chips}</div>'
-            f'<p class="lede">{e(model["summary"])}</p>'
+        extra += ('<div class="model-part"><h4>Flight curves</h4><p class="muted">One sample lap of each shape from the flight '
+                  'code. Each lap may pick a new shape, and the bird follows a point that slides along it, so it banks and '
+                  'climbs smoothly.</p>' + lap_figures(model) + '</div>')
+    return (f'<div class="model panel" data-model="{model["id"]}" role="tabpanel">'
+            f'<div class="model-head"><h4>{e(model["title"])}</h4>{chips}</div>'
+            f'<p>{e(model["summary"])}</p>'
             f'<div class="tabs tier-tabs" role="tablist" aria-label="Distance tier">{"".join(tier_tabs)}</div>'
             f'{"".join(tier_panels)}'
-            f'<div class="node-info cell-info" aria-live="polite"><b>Pick a filled cell</b>'
-            f'<span class="muted">The rules behind that transition appear here.</span></div>'
             f'{extra}</div>')
 
 
@@ -410,7 +419,8 @@ def behavior_section(names, species):
         label = names.get(f'action.arksurvivalreturns.{action["id"].lower()}', state_name(action['id']))
         cue = '<small>+ clip</small>' if action['cue'] else ''
         motions.setdefault(action['motion'].lower(), []).append(f'<span class="beat m-{action["motion"].lower()}">{e(label)}{cue}</span>')
-    legend = ''.join(f'<div class="motion"><b>{e(motion.title())}</b>{"".join(chips)}</div>' for motion, chips in motions.items())
+    legend = ''.join(f'<div class="motion"><b>{e(motion.title())}</b><div class="beats">{"".join(chips)}</div></div>'
+                     for motion, chips in motions.items())
     margin = data['margin']
     return {
         'BEHAVIORTIERS': tier_cards(data),
@@ -585,32 +595,49 @@ def ui_section():
     return uri(title, width=1160, quality=80), uri(ARK / 'design/ui-rework/ui-preview.png', 'PNG'), uri(parchment, 'PNG')
 
 
-STATUS_LABEL = {'integrated': ('ok', 'Integrated'), 'pinned': ('check', 'Pinned, tuning later'),
+STATUS_LABEL = {'integrated': ('ok', 'Integrated'), 'configured': ('check', 'Configured'), 'pinned': ('check', 'Pinned, tuning later'),
                 'planned-layout': ('check', 'Fork built, layout in test'), 'blocked': ('todo', 'Blocked')}
 BUILD_LABEL = {'release': 'Official release, Ark-branded', 'source': 'Built from source, Ark fork',
                'embedded': 'Embedded in the Ark jar', 'shader': 'Shader pack, unmodified', 'blocked': 'No 26.1 build yet'}
+SIDE_LABEL = {'client': 'Client only', 'server': 'Server only', 'both': 'Client and server'}
 
 
 def integrations_section():
+    """One full-width card per integration (its mods beside what Ark uses, changes and does next) under a count strip."""
     manifest = load_json(ARK / 'config/integrations.json')
-    cards = []
+    cards, statuses, builds = [], {}, {}
     for integ in manifest['integrations']:
-        css, label = STATUS_LABEL.get(integ['status'], ('idea', integ['status']))
+        css, label = STATUS_LABEL.get(integ['status'], ('idea', integ['status'].capitalize()))
+        statuses[label] = (css, statuses.get(label, (css, 0))[1] + 1)
         mods = []
         for mod in integ['mods']:
+            build = mod.get('build', 'release')
+            builds[build] = builds.get(build, 0) + 1
             source = mod.get('source', '')
             link = f'<a href="{e(source)}" rel="noopener" target="_blank">source</a>' if source.startswith('http') else 'closed source'
-            mods.append(f'<li><b>{e(mod["arkName"])}</b><span class="muted">{e(BUILD_LABEL.get(mod.get("build", "release"), ""))}'
-                        f' · {e(mod.get("license", ""))} · {link}</span></li>')
-        cards.append(f'''<article class="integration">
-  <div class="integration-head"><code>{e(integ["id"])}</code><h3>{e(integ["title"])}</h3>
-    <span class="chip {css}">{e(label)}</span><span class="chip">{e(integ["side"])}</span></div>
-  <ul class="mods">{''.join(mods)}</ul>
-  <dl class="spec"><dt>Uses</dt><dd>{e(integ["uses"])}</dd><dt>Changed</dt><dd>{e(integ["changed"])}</dd>
-  <dt>Next</dt><dd>{e(integ["next"])}</dd></dl>
+            # An embedded mod has no jar of its own to brand, so it goes by its project name.
+            name = mod['project'].replace('-', ' ').title() if build == 'embedded' else mod['arkName']
+            mods.append(f'<li><b>{e(name)}</b><span>{e(BUILD_LABEL.get(build, ""))}</span>'
+                        f'<span class="muted">{e(mod.get("license", ""))} &middot; {link}</span></li>')
+        count = len(integ['mods'])
+        cards.append(f'''<article class="integration panel">
+  <header class="integration-head"><code>{e(integ["id"])}</code><h3>{e(integ["title"])}</h3>
+    <span class="chip {css}">{e(label)}</span><span class="chip">{e(SIDE_LABEL.get(integ["side"], integ["side"]))}</span></header>
+  <div class="integration-body">
+    <div><div class="label">{count} mod{"s" if count != 1 else ""}</div><ul class="mods">{''.join(mods)}</ul></div>
+    <dl class="facts"><div><dt class="label">Ark uses it for</dt><dd>{e(integ["uses"])}</dd></div>
+    <div><dt class="label">What Ark changes</dt><dd>{e(integ["changed"])}</dd></div>
+    <div class="next"><dt class="label">Next</dt><dd>{e(integ["next"])}</dd></div></dl>
+  </div>
 </article>''')
+    tiles = [(len(manifest['integrations']), 'integrations', ''), (sum(builds.values()), 'mods and shader packs', '')]
+    tiles += [(n, label.lower(), css) for label, (css, n) in statuses.items()]
+    strip = ''.join(f'<div class="count {css}"><b>{n}</b><span>{e(label)}</span></div>' for n, label, css in tiles)
+    delivery = ''.join(f'<span class="chip">{n} &times; {e(BUILD_LABEL[build].lower())}</span>'
+                       for build, n in sorted(builds.items(), key=lambda item: -item[1]) if build in BUILD_LABEL)
+    summary = f'<div class="counts">{strip}</div><div class="chips">{delivery}</div>'
     count = sum(1 for i in manifest['integrations'] for m in i['mods'] if m.get('build') in ('release', 'source'))
-    return '\n'.join(cards), count
+    return summary + '\n' + '\n'.join(cards), count
 
 
 # -------------------------------------------------------------------------------------------- page

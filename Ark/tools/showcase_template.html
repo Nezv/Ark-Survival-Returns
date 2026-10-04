@@ -45,7 +45,7 @@
     --blue: #7ea8ff; --red: #ff7163;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   img { max-width: 100%; }
@@ -55,17 +55,30 @@
   /* navigation */
   .nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
          backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .nav-inner { max-width: 1180px; margin: 0 auto; padding-inline: 24px; height: 56px; display: flex; align-items: center; gap: 22px; }
+  .nav-inner { position: relative; max-width: 1180px; margin: 0 auto; padding-inline: 24px; height: 56px; display: flex; align-items: center; gap: 18px; }
   .brand { font: 800 18px/1 var(--display); letter-spacing: .04em; color: var(--ink); text-decoration: none; white-space: nowrap; }
   .brand span { color: var(--ember); }
-  .nav-links { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+  .nav-links { display: flex; justify-content: space-between; gap: 12px; flex: 1; min-width: 0; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; white-space: nowrap; padding-block: 4px; border-bottom: 2px solid transparent; }
   .nav-links a:hover, .nav-links a.active { color: var(--ink); border-bottom-color: var(--ember); }
-  .theme { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 12px;
-           font: 13px var(--body); cursor: pointer; white-space: nowrap; }
+  .theme, .menu { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 12px;
+                  font: 13px var(--body); cursor: pointer; white-space: nowrap; }
+  .menu { display: none; font-weight: 600; font-size: 14px; padding: 6px 14px; }
+  .menu::after { content: "▾"; margin-left: 6px; color: var(--muted); }
+  /* below the width that fits every link, the links become a panel under the bar, opened by the menu button */
+  @media (max-width: 1179px) {
+    .menu { display: inline-block; margin-left: auto; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--bg); border-bottom: 1px solid var(--line);
+                 padding: 10px 16px 16px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 8px;
+                 max-height: calc(100vh - 56px); overflow-y: auto; box-shadow: 0 12px 24px rgba(0, 0, 0, .18); }
+    .nav.open .nav-links { display: grid; }
+    .nav-links a { font-size: 15px; padding: 10px 12px; border: 0; border-radius: 8px; color: var(--ink); }
+    .nav-links a:hover, .nav-links a.active { background: var(--chip); }
+  }
+  @media (max-width: 480px) { .theme span { display: none; } .theme { text-transform: capitalize; } }
 
   /* hero */
-  .hero { position: relative; min-height: 520px; display: grid; place-items: center; overflow: hidden; background: #161814; color: #e6e8e1; }
+  .hero { position: relative; min-height: min(520px, 80vh); display: grid; place-items: center; overflow: hidden; background: #161814; color: #e6e8e1; }
   .hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 70%; }
   .hero-inner { position: relative; text-align: center; padding: 56px 24px 64px; display: grid; gap: 22px; justify-items: center; max-width: 900px; }
   .hero-inner img.logo { width: min(520px, 86vw); }
@@ -76,18 +89,39 @@
   .stat span { font-size: 13px; color: #a8b3a0; letter-spacing: .04em; }
 
   /* layout */
-  main { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 24px 80px; display: grid; gap: 72px; }
+  main { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 40px 80px; display: grid; gap: 72px; }
   section { display: grid; gap: 22px; }
   .eyebrow { font: 600 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
   h2 { font: 700 clamp(28px, 3.4vw, 38px)/1.12 var(--display); margin: 6px 0 0; text-wrap: balance; }
-  h3 { font: 700 20px/1.25 var(--display); margin: 0; }
+  h3 { font: 700 22px/1.25 var(--display); margin: 0; }
   h4 { font: 600 16px/1.3 var(--display); margin: 0; display: flex; align-items: center; gap: 8px; }
   p { margin: 0; }
+  /* a page is a run of parts: each h3 opens one under a rule, and the "on this page" row jumps between them */
+  main > section > h3 { margin-top: 16px; padding-top: 28px; border-top: 1px solid var(--line); }
   .lede { color: var(--muted); font-size: 17px; max-width: 72ch; }
+  .lede + .lede { margin-top: -10px; }
   .muted { color: var(--muted); }
+  .label { font: 600 11px/1.3 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 8px; align-content: start; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 20px; }
+  .toc { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; }
+  .toc button { border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 12px;
+                font: 600 13px var(--body); cursor: pointer; }
+  .toc button:hover { border-color: var(--ember); color: var(--ember); }
+  details.fold { border: 1px solid var(--line); border-radius: 10px; background: var(--raised); }
+  details.fold > summary { cursor: pointer; padding: 10px 14px; font: 600 14px var(--body); }
+  details.fold[open] > summary { border-bottom: 1px solid var(--line); }
+  details.fold > :not(summary) { margin: 12px 14px; }
+  @media (max-width: 640px) {
+    .nav-inner { padding-inline: 16px; gap: 10px; }
+    main { padding-inline: 16px; padding-block: 28px 56px; gap: 48px; }
+    section { gap: 18px; }
+    .lede { font-size: 16px; }
+    .panel, .card { padding: 14px; }
+    h3 { font-size: 20px; }
+  }
   code { font: 13px var(--mono); background: var(--chip); padding: 1px 6px; border-radius: 4px; }
   .chip { display: inline-flex; align-items: center; gap: 4px; font: 600 12px/1 var(--body); padding: 4px 8px; border-radius: 999px;
           background: var(--chip); color: var(--muted); white-space: nowrap; }
@@ -123,10 +157,11 @@
   .map-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 14px; }
   .legend { display: flex; flex-wrap: wrap; gap: 12px; }
   .legend span, .tier h4 { display: inline-flex; align-items: center; gap: 6px; }
-  .legend i, .tier h4 i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  .legend i, .tier h4 i, .lod-col h4 i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
   .map-controls { display: flex; gap: 8px; align-items: center; }
   .map-controls button, .map-controls select { border: 1px solid var(--line); background: var(--raised); color: var(--ink); border-radius: 8px; padding: 5px 10px; font: 14px var(--body); cursor: pointer; }
   #readout { font: 13px var(--mono); color: var(--muted); min-width: 240px; }
+  @media (max-width: 640px) { #danger { height: 320px; } #readout { min-width: 0; width: 100%; } }
   .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
   .tier { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 6px; font-size: 14px; align-content: start; }
   .tier p { color: var(--muted); text-transform: capitalize; }
@@ -169,61 +204,108 @@
   .res.on { box-shadow: 0 0 0 2px var(--ember); }
 
   /* behaviour */
+  .lod-scale { display: flex; align-items: stretch; gap: 2px; font: 600 12px var(--body); }
+  .lod-scale em { font-style: normal; color: var(--muted); align-self: center; padding-right: 8px; }
+  .lod-scale em:last-child { padding: 0 0 0 8px; }
+  .lod-scale span { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 7px 10px; color: #161814; min-width: 0; }
+  .lod-scale span:first-of-type { border-radius: 6px 0 0 6px; }
+  .lod-scale span:last-of-type { border-radius: 0 6px 6px 0; }
+  .lod-scale b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lod-scale small { font: 600 12px var(--mono); }
+  .lod-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px 28px; }
+  .lod-col { display: grid; gap: 4px; align-content: start; font-size: 15px; }
+  .lod-col .range { font: 600 13px var(--mono); }
+  .lod-col p { color: var(--muted); }
+  .lod-note { border-top: 1px solid var(--line); padding-top: 14px; font-size: 14px; color: var(--muted); }
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
   .tabs button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px;
                  font: 600 14px var(--body); cursor: pointer; }
   .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .tier-tabs button { font-size: 13px; padding: 5px 12px; }
-  .model { display: grid; gap: 14px; }
+  .tier-tabs button { font-size: 13px; padding: 5px 12px; background: var(--raised); }
   .model[hidden], .tier-panel[hidden] { display: none; }
   .model-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .model-head h3 { margin-right: 6px; }
+  .model-head h4 { font-size: 20px; font-weight: 700; margin-right: 6px; }
+  .model > p { max-width: 72ch; }
+  .model-part { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
   .tier-panel { display: grid; gap: 12px; }
-  .machine { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-  @media (max-width: 980px) { .machine { grid-template-columns: 1fr; } }
-  .matrix-wrap { overflow: auto; max-height: 560px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .tier-note { font-size: 14px; }
+  .machine { display: grid; grid-template-columns: auto minmax(260px, 1fr); gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .machine { grid-template-columns: minmax(0, 1fr); } }
+  .matrix-wrap { overflow: auto; max-height: 560px; max-width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
   table.matrix { width: auto; border-collapse: separate; border-spacing: 0; font-size: 12px; }
   table.matrix th, table.matrix td { padding: 0; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-align: center; }
   table.matrix th { font: 600 12px var(--body); letter-spacing: 0; text-transform: none; color: var(--ink); background: var(--chip); }
   table.matrix thead th { position: sticky; top: 0; z-index: 2; height: 118px; vertical-align: bottom; }
   table.matrix thead th span { writing-mode: vertical-rl; transform: rotate(180deg); padding: 8px 0; display: inline-block; white-space: nowrap; }
   table.matrix th.corner { left: 0; z-index: 3; color: var(--muted); font-weight: 400; padding: 6px 8px; vertical-align: bottom; text-align: right; }
-  table.matrix tbody th { position: sticky; left: 0; z-index: 1; text-align: right; padding: 4px 10px; white-space: nowrap; }
+  table.matrix tbody th { position: sticky; left: 0; z-index: 1; text-align: right; padding: 4px 10px; white-space: nowrap; cursor: pointer; }
+  table.matrix tbody th:hover, table.matrix tbody th:focus, table.matrix tbody th.active { color: var(--ember); outline: none; }
+  table.matrix tbody th.active { box-shadow: inset 3px 0 0 var(--ember); }
   table.matrix td { width: 28px; min-width: 28px; height: 28px; color: var(--ember); }
   table.matrix td.diag { background: var(--raised); }
   table.matrix td.hit { background: color-mix(in srgb, var(--ember) 16%, var(--surface)); cursor: pointer; font-size: 13px; }
   table.matrix td.hit sup { font-size: 9px; }
   table.matrix td.hit:hover, table.matrix td.hit:focus, table.matrix td.hit.active { background: var(--ember); color: #fff; outline: none; }
-  .diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; overflow: auto; max-height: 560px; }
+  @media (max-width: 640px) {
+    table.matrix td { width: 24px; min-width: 24px; height: 26px; }
+    table.matrix tbody th { padding: 4px 6px; }
+    table.matrix thead th { height: 104px; }
+  }
+  .cell-info { display: grid; gap: 10px; align-content: start; max-height: 560px; overflow: auto; background: var(--raised); border: 1px solid var(--line);
+               border-left: 3px solid var(--ember); border-radius: 10px; padding: 14px 16px; font-size: 14px; }
+  .cell-info > b { font: 700 17px/1.25 var(--display); }
+  .cell-info .hint { color: var(--muted); font-size: 13px; }
+  .cell-info dl { margin: 0; display: grid; gap: 10px; }
+  .cell-info dt { font-weight: 600; }
+  .cell-info dd, .cell-info ul { margin: 0; color: var(--muted); }
+  .cell-info ul { padding-left: 18px; display: grid; gap: 4px; }
+  .diagram { overflow: auto; max-height: 640px; }
   .diagram svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
   .diagram pre { margin: 0; font: 11px var(--mono); color: var(--muted); white-space: pre-wrap; }
-  .cell-info { min-height: 60px; }
-  .day { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .diagram-note { font-size: 13px; }
+  .day { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
   .day-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; align-items: center; font-size: 14px; }
   .day-row small { grid-column: 2; font-size: 13px; }
-  .day-bar { position: relative; height: 28px; border-radius: 6px; overflow: hidden; background: var(--chip); }
+  .day-bar { position: relative; height: 30px; border-radius: 6px; overflow: hidden; background: var(--chip); }
   .day-bar span { position: absolute; top: 0; bottom: 0; display: grid; place-items: center; font: 600 12px var(--body); color: #fff; white-space: nowrap; overflow: hidden; }
   .p-hunt { background: #b8481b; } .p-sleep { background: #4f5d86; } .p-roam { background: #4b8a55; }
   .p-feed { background: #6f9a3f; } .p-drink { background: #3f7fa6; } .p-rest { background: #8a7a55; }
   .day-axis { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; font: 12px var(--mono); color: var(--muted); }
   .day-axis div { display: flex; justify-content: space-between; }
-  .bridges { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .bridges li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 8px; }
-  .bridge-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; }
-  .beats, .motion { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .day-key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
+  .day-key span { display: inline-flex; align-items: center; gap: 6px; }
+  .day-key i { width: 12px; height: 12px; border-radius: 3px; }
+  @media (max-width: 640px) {
+    .lod-scale b { display: none; }
+    .lod-scale span { justify-content: flex-end; padding-inline: 6px; }
+    .day { padding: 14px; }
+    .day-row, .day-axis { grid-template-columns: minmax(0, 1fr); }
+    .day-row small { grid-column: 1; }
+    .day-axis > span { display: none; }
+    .day-bar span { font-size: 11px; }
+  }
+  .bridges { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; }
+  .bridges li { background: var(--raised); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 10px; align-content: start; }
+  .bridge-head { display: grid; gap: 2px; font-size: 14px; }
+  .bridge-head b { font: 700 15px/1.3 var(--display); }
+  .bridge-head small { font-size: 12px; }
+  .beats { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .beats i { color: var(--muted); font-style: normal; }
-  .motion b { min-width: 64px; font: 600 13px var(--body); color: var(--muted); }
-  .actions { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .actions { gap: 0; padding-block: 8px; }
+  .motion { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 6px 12px; align-items: start; padding-block: 10px; border-top: 1px solid var(--line); }
+  .motion:first-child { border-top: 0; }
+  .motion b { font: 600 13px var(--body); color: var(--muted); padding-top: 5px; }
+  @media (max-width: 640px) { .motion { grid-template-columns: minmax(0, 1fr); } .motion b { padding-top: 0; } }
   .beat { display: inline-flex; gap: 6px; align-items: baseline; padding: 4px 10px; border-radius: 999px; font: 600 13px var(--body);
           background: var(--chip); border-left: 4px solid var(--muted); }
   .beat small { font-weight: 400; color: var(--muted); }
   .beat.m-face { border-left-color: #e4c653; } .beat.m-run { border-left-color: #e98646; } .beat.m-walk { border-left-color: #4bae66; }
   .beat.m-creep { border-left-color: #a8ca53; } .beat.m-turn { border-left-color: #a9abd6; } .beat.m-hold { border-left-color: #8a8f86; }
   .laps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-  .lap { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 6px; }
+  .lap { margin: 0; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 6px; }
   .lap svg { width: 100%; height: auto; display: block; }
   .lap .route, .lap .profile polyline { fill: none; stroke: var(--ember); stroke-width: 1.2; stroke-linejoin: round; }
-  .lap .profile { background: var(--raised); border-radius: 4px; }
+  .lap .profile { background: var(--chip); border-radius: 4px; }
   .lap .nest { fill: var(--moss); }
   .lap figcaption { font-size: 14px; display: grid; }
   .lap figcaption small { color: var(--muted); font-size: 12px; }
@@ -246,6 +328,8 @@
   .secret-mark { font: 700 12px var(--display); fill: var(--muted); text-anchor: middle; }
   .node-info { min-height: 76px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--ember); border-radius: 10px; padding: 12px 16px; display: grid; gap: 4px; }
   .node-info b { font: 700 17px var(--display); }
+  /* the tree's detail box follows the reader: it stays at the foot of the screen while the ages above it are in view */
+  #node-info { position: sticky; bottom: 12px; z-index: 2; box-shadow: 0 6px 20px rgba(0, 0, 0, .22); }
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
 
@@ -373,22 +457,36 @@
   .item { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 8px; display: grid; justify-items: center; gap: 8px; text-align: center; }
   .item img { width: 48px; height: 48px; image-rendering: pixelated; }
   .item figcaption { font-size: 13px; line-height: 1.25; }
-  .ui-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: start; }
-  .ui-grid img.pixel { image-rendering: pixelated; }
-  .spec { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; font-size: 15px; }
-  .spec dt { color: var(--muted); }
-  .spec dd { margin: 0; }
+  .wide-shot img.pixel { image-rendering: pixelated; }
+  .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .shots > div { display: grid; gap: 20px; }
+  .changes { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .changes > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+  .changes dd { margin: 0; font-size: 15px; }
+  @media (max-width: 900px) { .shots { grid-template-columns: minmax(0, 1fr); } .changes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .changes { grid-template-columns: minmax(0, 1fr); } }
 
   /* integrations */
-  .integrations { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 16px; }
-  .integration { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 12px; align-content: start; }
-  .integration-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
-  .integration-head h3 { font-size: 18px; margin-right: auto; }
-  .mods { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; }
+  .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+  .count { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; }
+  .count b { font: 700 24px/1.15 var(--display); font-variant-numeric: tabular-nums; }
+  .count span { font-size: 13px; color: var(--muted); }
+  .count.ok b { color: var(--ok); } .count.check b { color: var(--check); } .count.idea b { color: var(--idea); } .count.todo b { color: var(--todo); }
+  .integrations { display: grid; gap: 16px; }
+  .integration-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .integration-head h3 { font-size: 19px; margin-right: auto; }
+  .integration-body { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 18px 32px; align-items: start; }
+  .integration-body > div { display: grid; gap: 10px; align-content: start; }
+  .mods { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 14px; }
   .mods li { display: grid; gap: 1px; padding-left: 12px; border-left: 2px solid var(--line); }
-  .mods .muted { font-size: 13px; }
-  .integration .spec { font-size: 14px; }
-  @media (max-width: 760px) { .integrations { grid-template-columns: 1fr; } }
+  .mods li span { font-size: 13px; overflow-wrap: anywhere; }
+  .facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 28px; font-size: 15px; }
+  .facts > div { display: grid; gap: 5px; align-content: start; }
+  .facts dd { margin: 0; overflow-wrap: anywhere; }
+  .facts .next { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .facts .next dd { color: var(--muted); max-width: 90ch; }
+  @media (max-width: 900px) { .integration-body { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 640px) { .facts { grid-template-columns: minmax(0, 1fr); } .counts { grid-template-columns: repeat(6, minmax(0, 1fr)); } .count { grid-column: span 2; padding: 10px 12px; } .count:nth-child(-n+2) { grid-column: span 3; } }
 
   /* roadmap */
   .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
@@ -396,6 +494,19 @@
   th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { font: 600 12px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--chip); }
   tr:last-child td { border-bottom: 0; }
+  /* on a phone each roadmap row is a block: ID and item, then type, executor and status under them */
+  @media (max-width: 640px) {
+    #roadmap thead { display: none; }
+    #roadmap table, #roadmap tbody { display: block; }
+    #roadmap tr { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 4px 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    #roadmap tr:last-child { border-bottom: 0; }
+    #roadmap td { display: block; padding: 0; border: 0; grid-column: 2 / -1; }
+    #roadmap td:nth-child(2) { grid-column: 1; grid-row: 1; }
+    #roadmap td:nth-child(3) { grid-row: 1; font-weight: 600; }
+    #roadmap td:nth-child(1) { grid-column: 2; grid-row: 2; }
+    #roadmap td:nth-child(4) { grid-column: 3; grid-row: 2; }
+    #roadmap td:nth-child(1), #roadmap td:nth-child(4) { font-size: 13px; color: var(--muted); }
+  }
   /* pages: one section at a time, the hero and the index on the home page */
   main > section[hidden], .hero[hidden], #index[hidden], .pager[hidden] { display: none; }
   .index { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
@@ -406,25 +517,25 @@
   .index span:last-child { color: var(--muted); font-size: 14px; }
   .pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
   .pager a { display: grid; gap: 2px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface);
-             border-radius: 10px; padding: 10px 16px; min-width: 180px; }
+             border-radius: 10px; padding: 10px 16px; min-width: min(180px, 45%); }
   .pager a:hover, .pager a:focus-visible { border-color: var(--ember); }
   .pager a small { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
   .pager a.next { text-align: right; margin-left: auto; }
   @media (prefers-reduced-motion: reduce) { .index a { transition: none; } }
   footer { max-width: 1180px; margin: 0 auto; padding: 24px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
-  @media (max-width: 760px) { .ui-grid { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">ARK <span>·</span> SR</a>
-    <nav class="nav-links" aria-label="Sections">
+    <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="nav-links">Sections</button>
+    <nav class="nav-links" id="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#biomes">Biomes</a><a href="#behavior">Behaviour</a><a href="#progression">Progression</a>
-      <a href="#survival">Survival</a><a href="#blocks">Camp and blocks</a><a href="#recipes">Recipes</a><a href="#accessories">Accessories</a>
+      <a href="#survival">Survival</a><a href="#blocks">Blocks</a><a href="#recipes">Recipes</a><a href="#accessories">Accessories</a>
       <a href="#models">Models</a><a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
-    <button class="theme" id="theme" type="button">Theme: system</button>
+    <button class="theme" id="theme" type="button" aria-label="Colour theme"><span>Theme: </span><b>system</b></button>
   </div>
 </header>
 
@@ -488,7 +599,8 @@
       </div>
     </div>
     <h3>Habitats</h3>
-    <p class="lede">Danger and wild levels come only from the zone. The biome decides who lives there: each species has a range of biome kinds that suits it, grazers on open ground, browsers and ambushers under trees, crocodilians on the banks, runners on dry scrub, fishers on the coast, and the snow keeps its own residents. Wildlife is met the way livestock is in the vanilla game, which has no farm animals here: about ten groups within 128 blocks of a player, a herd, a pack or a lone animal every 70 blocks or so, each at its full size, kept apart from one another, hunters about a quarter of the groups by day and by night, and no species twice beside itself. The land ahead of a walking player fills first. The <a href="#biomes">Biomes</a> page shows every biome with its residents.</p>
+    <p class="lede">Danger and wild levels come only from the zone. The biome decides who lives there: each species has a range of biome kinds that suits it, grazers on open ground, browsers and ambushers under trees, crocodilians on the banks, runners on dry scrub, fishers on the coast, and the snow keeps its own residents.</p>
+    <p class="lede">Wildlife is met the way livestock is in the vanilla game, which has no farm animals here: about ten groups within 128 blocks of a player, a herd, a pack or a lone animal every 70 blocks or so, each at its full size, kept apart from one another, hunters about a quarter of the groups by day and by night, and no species twice beside itself. The land ahead of a walking player fills first. The <a href="#biomes">Biomes</a> page shows every biome with its residents.</p>
     <div class="tiers">%%HABITATS%%</div>
     <div class="grid-3">
       <div class="card"><h4>Land habitats</h4><p class="muted">Herds keep home ranges near water and predators patrol and hunt. Each 256-block region keeps its own balance of predators and prey, which keeps cycling while nobody is near; hunting thins a region and it recovers over the following days. No chunk is ever forced to load.</p></div>
@@ -514,21 +626,26 @@
   <section id="behavior">
     <div><div class="eyebrow">Behaviour</div><h2>Animals that pace themselves</h2></div>
     <p class="lede">Every creature runs a two-level state machine: an intent (roam, hunt, flee, sleep, drink...) and the animation-timed action that carries it out (notice, roar, chase, look around...). How much of it runs depends on the distance to the nearest player, so a valley of herds costs little until you walk into it, and herd mates react with their own delays instead of moving like one machine.</p>
-    <div class="tiers">%%BEHAVIORTIERS%%</div>
-    <p class="muted">Each tier border has a margin of %%BEHAVIORMARGIN%%, so a creature on the line does not flicker between tiers. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
+
+    <h3>Detail by distance</h3>
+    <p class="lede">The nearer the player, the more of the machine runs.</p>
+    <div class="panel">
+      %%BEHAVIORTIERS%%
+      <p class="lod-note">Each tier border has a margin of %%BEHAVIORMARGIN%%, so a creature on the line does not flicker between tiers. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
+    </div>
 
     <h3>The day of a land animal</h3>
     <p class="lede">Each animal shifts its own clock by up to half a minute, so a herd dozes off and wakes one by one.</p>
     %%SCHEDULE%%
 
     <h3>State machines by model</h3>
-    <p class="lede">Rows are the current state and columns the next one. A filled cell is a transition the real decision code produced in seeded encounters; hover or tap it for the rules behind it. The diagram beside it shows the same edges.</p>
+    <p class="lede">Pick a model, then a distance tier. In the matrix, rows are the current state and columns the next one; a filled cell is a transition the real decision code produced in seeded encounters. Pick a state's name for everything it can lead to, or a cell for the rules behind that one change.</p>
     <div class="tabs model-tabs" role="tablist" aria-label="Behaviour model">%%MODELTABS%%</div>
     %%MODELS%%
 
-    <h3>Actions</h3>
+    <h3>Action vocabulary</h3>
     <p class="lede">The second level: what the body is doing inside a state, grouped by how it may move. Actions marked "+ clip" start with a one-shot reaction clip when the rig has one; turning in place steps with the rig's own turn clip.</p>
-    <div class="actions">%%ACTIONS%%</div>
+    <div class="actions panel">%%ACTIONS%%</div>
   </section>
 
   <section id="progression">
@@ -572,7 +689,8 @@
 
   <section id="recipes">
     <div><div class="eyebrow">Recipes</div><h2>Workstations you read like a map</h2></div>
-    <p class="lede">The crafting rework (P14, in design): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, set in a carved baroque frame with the bench's sigil in its cartouche, and a recipe can ask for more than nine items, so no vanilla table can make it. Every recipe is made where it would really be made, so eleven benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand (carpentry, textiles, camp gear, accessories, redstone), the Campfire cooks, the Stonecutter cuts stone, the Mortar &amp; Pestle grinds, the Primitive Forge smelts ore and fires clay and glass, the Medicine Bench makes remedies, the Smithing Table hammers metal goods and trims, and the Iron Age machine line works the steel: the Mechanical Press (which also makes paper and books and packs blocks) rolls sheet and wire, the Milling Machine pipes and engines, the Cutting Machine screws and sawn planks. The game keeps its current recipes until the whole rework is designed.</p>
+    <p class="lede">The crafting rework (P14, in design): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, set in a carved baroque frame with the bench's sigil in its cartouche, and a recipe can ask for more than nine items, so no vanilla table can make it. The game keeps its current recipes until the whole rework is designed.</p>
+    <p class="lede">Every recipe is made where it would really be made, so eleven benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand (carpentry, textiles, camp gear, accessories, redstone), the Campfire cooks, the Stonecutter cuts stone, the Mortar &amp; Pestle grinds, the Primitive Forge smelts ore and fires clay and glass, the Medicine Bench makes remedies, the Smithing Table hammers metal goods and trims, and the Iron Age machine line works the steel: the Mechanical Press (which also makes paper and books and packs blocks) rolls sheet and wire, the Milling Machine pipes and engines, the Cutting Machine screws and sawn planks.</p>
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
       <div class="ws-frame">
@@ -653,32 +771,36 @@
   <section id="interface">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
     <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page, so shaders and the menus share one look. Containers become light limestone, so vanilla's dark titles stay readable. Buttons, the hotbar and tooltips become dark basalt with moss and ember accents. Every slot stays exactly where vanilla puts it, so other mods' screens still line up.</p>
-    <figure class="wide-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>Title screen (FancyMenu layout): a rainy night at a primitive camp, two log barracks around a campfire, drawn live by two GLSL layers, with the T-Rex model idling and looking around between them. Lightning flashes the sky, the ferns and the creature together, and thunder follows; the buttons stand in a column on the left.</figcaption></figure>
-    <div class="ui-grid">
-      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons (normal, hover, disabled) and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
-      <div class="card">
-        <h4>What changes</h4>
-        <dl class="spec">
-          <dt>Containers</dt><dd>All 26 vanilla container screens, the recipe book and container sprites</dd>
-          <dt>Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd>
-          <dt>HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd>
-          <dt>Tooltips</dt><dd>Basalt panel with a moss frame</dd>
-          <dt>Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd>
-          <dt>Menus</dt><dd>FancyMenu title screen: night-rain shader scene, the live T-Rex (Ark Creature element) and the Ark logo</dd>
-          <dt>Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd>
-          <dt>Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd>
-          <dt>Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd>
-        </dl>
-        <img class="pixel" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover">
-        <p class="muted">Tech tree nodes: locked, ready, complete and hover.</p>
+
+    <h3>Title screen</h3>
+    <figure class="wide-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, two log barracks around a campfire, drawn live by two GLSL layers, with the T-Rex model idling and looking around between them. Lightning flashes the sky, the ferns and the creature together, and thunder follows; the buttons stand in a column on the left.</figcaption></figure>
+
+    <h3>Screens and widgets</h3>
+    <div class="shots">
+      <div>
+        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons (normal, hover, disabled) and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
+        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
       </div>
+      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player. Left: crown and hat, necklace and shirt, belt and pants, socks and shoes beside the armour column. Right: back and gloves, two bracelets, two rings, then shield, charm and the universal curio slot; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
     </div>
+
+    <h3>What changes</h3>
+    <dl class="changes">
+      <div><dt class="label">Containers</dt><dd>All 26 vanilla container screens, the recipe book and container sprites</dd></div>
+      <div><dt class="label">Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd></div>
+      <div><dt class="label">HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd></div>
+      <div><dt class="label">Tooltips</dt><dd>Basalt panel with a moss frame</dd></div>
+      <div><dt class="label">Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd></div>
+      <div><dt class="label">Menus</dt><dd>FancyMenu title screen: night-rain shader scene, the live T-Rex (Ark Creature element) and the Ark logo</dd></div>
+      <div><dt class="label">Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd></div>
+      <div><dt class="label">Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd></div>
+      <div><dt class="label">Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd></div>
+    </dl>
   </section>
 
   <section id="integrations">
     <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
-    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name" with the Ark icon and a credit line; the original license and mod id stay intact. Where Ark needs code changes, the mod is built from its own source with Ark patches (<code>Ark/pack/patches</code>). <code>python Ark/tools/build_pack.py</code> assembles everything into a Modrinth pack.</p>
-    <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player. Left: crown and hat, necklace and shirt, belt and pants, socks and shoes beside the armour column. Right: back and gloves, two bracelets, two rings, then shield, charm and the universal curio slot; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
+    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name" with the Ark icon and a credit line; the original license and mod id stay intact. Where Ark needs code changes, the mod is built from its own source with Ark patches (<code>Ark/pack/patches</code>). <code>python Ark/tools/build_pack.py</code> assembles everything into a Modrinth pack. The Ark inventory the Curios fork draws is on the <a href="#interface">Interface</a> page.</p>
     <div class="integrations">%%INTEGRATIONS%%</div>
   </section>
 
@@ -918,7 +1040,7 @@ window.arkModels = (function () {
   function stored() { try { return localStorage.getItem('ark-theme') || 'system'; } catch (err) { return 'system'; } }
   function apply(mode) {
     if (mode === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', mode);
-    button.textContent = 'Theme: ' + mode;
+    button.querySelector('b').textContent = mode;
     try { localStorage.setItem('ark-theme', mode); } catch (err) {}
     window.dispatchEvent(new Event('ark-theme'));
   }
@@ -1034,7 +1156,7 @@ window.arkModels = (function () {
       var h = document.createElement('span'); h.className = 'muted'; h.textContent = n.dataset.how;
       info.appendChild(b); info.appendChild(t); if (n.dataset.how) info.appendChild(h);
     }
-    n.addEventListener('mouseenter', show); n.addEventListener('focus', show);
+    n.addEventListener('mouseenter', show); n.addEventListener('focus', show); n.addEventListener('click', show);
   });
 
   // Recipes: the workstation screen preview (tools/workstation_ui.js), running only while its page is open.
@@ -1064,20 +1186,45 @@ window.arkModels = (function () {
     m.querySelectorAll('.tier-tabs button').forEach(function (b) {
       b.addEventListener('click', function () { showTier(m, b.dataset.tier); });
     });
-    var cellInfo = m.querySelector('.cell-info');
-    m.querySelectorAll('td.hit').forEach(function (cell) {
-      function explain() {
-        m.querySelectorAll('td.hit.active').forEach(function (c) { c.classList.remove('active'); });
-        cell.classList.add('active');
-        cellInfo.innerHTML = '';
-        var b = document.createElement('b'); b.textContent = cell.dataset.from + ' → ' + cell.dataset.to;
-        cellInfo.appendChild(b);
-        cell.dataset.why.split(' | ').forEach(function (why) {
-          var s = document.createElement('span'); s.className = 'muted'; s.textContent = why; cellInfo.appendChild(s);
-        });
+    // The box beside each matrix reads it out: a state's name lists everything that state leads to, a cell its rules.
+    m.querySelectorAll('.tier-panel').forEach(function (panel) {
+      var cellInfo = panel.querySelector('.cell-info');
+      function add(parent, tag, text, cls) {
+        var el = document.createElement(tag); el.textContent = text; if (cls) el.className = cls;
+        parent.appendChild(el); return el;
       }
-      cell.addEventListener('mouseenter', explain); cell.addEventListener('focus', explain); cell.addEventListener('click', explain);
+      function mark(el) {
+        panel.querySelectorAll('.active').forEach(function (c) { c.classList.remove('active'); });
+        el.classList.add('active');
+        cellInfo.innerHTML = '';
+      }
+      function rules(parent, cell) {
+        var list = add(parent, 'ul', '');
+        cell.dataset.why.split(' | ').forEach(function (why) { add(list, 'li', why); });
+      }
+      panel.querySelectorAll('tbody tr').forEach(function (row) {
+        var head = row.querySelector('th'), hits = row.querySelectorAll('td.hit');
+        function exits() {
+          mark(head);
+          add(cellInfo, 'b', 'From ' + head.textContent);
+          if (!hits.length) { add(cellInfo, 'span', 'No way out of this state was recorded.', 'hint'); return; }
+          var dl = add(cellInfo, 'dl', '');
+          hits.forEach(function (cell) { add(dl, 'dt', '→ ' + cell.dataset.to); rules(add(dl, 'dd', ''), cell); });
+        }
+        head.addEventListener('click', exits);
+        head.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); exits(); } });
+        hits.forEach(function (cell) {
+          function explain() {
+            mark(cell);
+            add(cellInfo, 'b', cell.dataset.from + ' → ' + cell.dataset.to);
+            rules(cellInfo, cell);
+          }
+          cell.addEventListener('mouseenter', explain); cell.addEventListener('focus', explain); cell.addEventListener('click', explain);
+        });
+        if (!cellInfo.firstChild && hits.length) exits();
+      });
     });
+    m.querySelectorAll('details.fold').forEach(function (fold) { fold.addEventListener('toggle', function () { renderDiagrams(); }); });
     showTier(m, m.querySelector('.tier-panel').dataset.tier);
   });
   if (models.length) showModel(models[0].dataset.model);
@@ -1101,7 +1248,7 @@ window.arkModels = (function () {
       themeVariables: { fontFamily: 'Source Sans 3, Segoe UI, sans-serif', fontSize: '14px', lineColor: d ? '#8f958a' : '#6d7268',
         primaryTextColor: '#22251f', textColor: d ? '#e6e8e1' : '#22251f', edgeLabelBackground: d ? '#1f221d' : '#ffffff', background: 'transparent' } });
     document.querySelectorAll('#behavior .diagram').forEach(function (box) {
-      if (box.closest('section').hidden || box.closest('.tier-panel').hidden || box.closest('.model').hidden) return;
+      if (box.closest('section').hidden || box.closest('.tier-panel').hidden || box.closest('.model').hidden || !box.closest('details').open) return;
       var target = box.querySelector('.diagram-svg');
       if (target.dataset.theme === key) return;
       target.dataset.theme = key;
@@ -1119,6 +1266,27 @@ window.arkModels = (function () {
   var sections = Array.prototype.slice.call(document.querySelectorAll('main > section'));
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
   var hero = document.getElementById('top'), index = document.getElementById('index'), pager = document.getElementById('pager');
+  var nav = document.querySelector('.nav'), menu = document.getElementById('menu');
+  function openMenu(open) { nav.classList.toggle('open', open); menu.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  menu.addEventListener('click', function () { openMenu(!nav.classList.contains('open')); });
+  links.forEach(function (a) { a.addEventListener('click', function () { openMenu(false); }); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') openMenu(false); });
+  document.addEventListener('click', function (ev) { if (!nav.contains(ev.target)) openMenu(false); });
+  // A page with several parts gets a row of jumps to them under its introduction (the hash belongs to the pages).
+  sections.forEach(function (section) {
+    var parts = Array.prototype.filter.call(section.children, function (el) { return el.tagName === 'H3'; });
+    if (parts.length < 2) return;
+    var toc = document.createElement('nav'); toc.className = 'toc'; toc.setAttribute('aria-label', 'On this page');
+    var label = document.createElement('span'); label.className = 'label'; label.textContent = 'On this page'; toc.appendChild(label);
+    parts.forEach(function (h) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = h.textContent;
+      b.addEventListener('click', function () { h.scrollIntoView({ block: 'start' }); });
+      toc.appendChild(b);
+    });
+    var anchor = section.querySelector(':scope > .lede') || section.firstElementChild;
+    while (anchor.nextElementSibling && anchor.nextElementSibling.classList.contains('lede')) anchor = anchor.nextElementSibling;
+    anchor.insertAdjacentElement('afterend', toc);
+  });
   function titleOf(section) { return section.querySelector('.eyebrow').textContent; }
   function pagerLink(section, cls, label) {
     var a = document.createElement('a'); a.className = cls; a.href = section ? '#' + section.id : '#top';
@@ -1132,7 +1300,13 @@ window.arkModels = (function () {
     var current = at >= 0 ? sections[at] : null;
     hero.hidden = !!current; index.hidden = !!current; pager.hidden = !current;
     sections.forEach(function (s) { s.hidden = s !== current; });
-    links.forEach(function (a) { a.classList.toggle('active', !!current && a.getAttribute('href') === '#' + current.id); });
+    links.forEach(function (a) {
+      var on = !!current && a.getAttribute('href') === '#' + current.id;
+      a.classList.toggle('active', on);
+      if (on) menu.textContent = a.textContent;
+    });
+    if (!current) menu.textContent = 'Sections';
+    openMenu(false);
     pager.innerHTML = '';
     if (current) {
       pager.appendChild(pagerLink(sections[at - 1] || null, 'prev', 'Previous'));

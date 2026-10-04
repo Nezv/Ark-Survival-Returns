@@ -45,7 +45,7 @@
     --blue: #7ea8ff; --red: #ff7163;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   img { max-width: 100%; }
@@ -89,7 +89,7 @@
   .stat span { font-size: 13px; color: #a8b3a0; letter-spacing: .04em; }
 
   /* layout */
-  main { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 24px 80px; display: grid; gap: 72px; }
+  main { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 40px 80px; display: grid; gap: 72px; }
   section { display: grid; gap: 22px; }
   .eyebrow { font: 600 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
   h2 { font: 700 clamp(28px, 3.4vw, 38px)/1.12 var(--display); margin: 6px 0 0; text-wrap: balance; }
@@ -116,7 +116,7 @@
   details.fold > :not(summary) { margin: 12px 14px; }
   @media (max-width: 640px) {
     .nav-inner { padding-inline: 16px; gap: 10px; }
-    main { padding-inline: 16px; padding-block: 16px 56px; gap: 48px; }
+    main { padding-inline: 16px; padding-block: 28px 56px; gap: 48px; }
     section { gap: 18px; }
     .lede { font-size: 16px; }
     .panel, .card { padding: 14px; }
@@ -486,7 +486,7 @@
   .facts .next { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 14px; }
   .facts .next dd { color: var(--muted); max-width: 90ch; }
   @media (max-width: 900px) { .integration-body { grid-template-columns: minmax(0, 1fr); } }
-  @media (max-width: 640px) { .facts { grid-template-columns: minmax(0, 1fr); } .counts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .facts { grid-template-columns: minmax(0, 1fr); } .counts { grid-template-columns: repeat(6, minmax(0, 1fr)); } .count { grid-column: span 2; padding: 10px 12px; } .count:nth-child(-n+2) { grid-column: span 3; } }
 
   /* roadmap */
   .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
@@ -498,11 +498,13 @@
   @media (max-width: 640px) {
     #roadmap thead { display: none; }
     #roadmap table, #roadmap tbody { display: block; }
-    #roadmap tr { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    #roadmap tr { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 4px 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
     #roadmap tr:last-child { border-bottom: 0; }
-    #roadmap td { display: block; padding: 0; border: 0; grid-column: 2; }
+    #roadmap td { display: block; padding: 0; border: 0; grid-column: 2 / -1; }
     #roadmap td:nth-child(2) { grid-column: 1; grid-row: 1; }
     #roadmap td:nth-child(3) { grid-row: 1; font-weight: 600; }
+    #roadmap td:nth-child(1) { grid-column: 2; grid-row: 2; }
+    #roadmap td:nth-child(4) { grid-column: 3; grid-row: 2; }
     #roadmap td:nth-child(1), #roadmap td:nth-child(4) { font-size: 13px; color: var(--muted); }
   }
   /* pages: one section at a time, the hero and the index on the home page */
@@ -3224,7 +3226,7 @@ Backlog,B03,Recipe viewer for Stone Fire and Forge,Not started,Deprecated: no JE
 Backlog,B04,Prehistoric art gaps,Claude Opus 5.5,Implemented; unverified in client.
 Backlog,B05,tech_flow GameTest failing,Codex,Verified 2026-10-01 by three consecutive full GameTest runs.
 Backlog,B06,GameTest validity and coverage gaps,Codex,Verified 2026-10-01 by three consecutive full runs with the shipped pack.
-Feature,F07,Project showcase page,Claude Opus 5.5,Implemented; checked in a headless browser.
+Feature,F07,Project showcase page,Claude Opus 5.5,Implemented; checked in a headless browser at 1320 px and 390 px.
 Feature,F08,Ark UI rework (resource pack),Claude Opus 5.5,Implemented; unverified in client. To be replaced by P16.
 Feature,F09,Title screen,Claude Opus 5.5; night-rain scene and creature element by Claude Code,"Implemented; unverified in client (shaders on real drivers, the creature between the layers, thunder timing)."
 Integration,I05,FancyMenu,Claude Opus 5.5,Implemented; unverified in client.
