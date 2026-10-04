@@ -101,7 +101,7 @@ public final class SessionRecorderClient {
     }
 
     /** The shader pack Iris is drawing with, read through its public API so Iris stays optional. */
-    private static String shaders() {
+    static String shaders() {
         if (!ModList.get().isLoaded("iris")) return "none";
         try {
             Class<?> api = Class.forName("net.irisshaders.iris.api.v0.IrisApi");

@@ -49,7 +49,7 @@ neoForge {
     version = project.neo_version
     runs {
         client {
-            client(); sourceSet = sourceSets.immersiveClient; jvmArgument "-Xmx${devRuntime.clientHeap}"
+            client(); sourceSet = sourceSets.immersiveClient; jvmArgument "-Xmx${project.findProperty('arkHeap') ?: devRuntime.clientHeap}"
             // Iris 1.11.2 returns a short binding array; dev GL validation assumes 16 slots.
             // Client-only workaround for https://github.com/IrisShaders/Iris/issues/3304.
             systemProperty 'neoforge.disableGlValidation', 'true'
@@ -61,6 +61,12 @@ neoForge {
             if (project.hasProperty('arkWorldType')) systemProperty 'arksurvivalreturns.record.worldType', project.property('arkWorldType').toString()
             if (project.hasProperty('arkAutopilot')) systemProperty 'arksurvivalreturns.autopilot', project.property('arkAutopilot').toString()
             if (project.hasProperty('arkQuit')) systemProperty 'arksurvivalreturns.record.quit', 'true'
+            // A frame-time benchmark (tools/session_bench.py): the folder its measurements go to, and the setup's name.
+            if (project.hasProperty('arkBenchmark')) systemProperty 'arksurvivalreturns.benchmark', project.property('arkBenchmark').toString()
+            if (project.hasProperty('arkVariant')) systemProperty 'arksurvivalreturns.benchmark.variant', project.property('arkVariant').toString()
+            if (project.hasProperty('arkSettle')) systemProperty 'arksurvivalreturns.benchmark.settle', project.property('arkSettle').toString()
+            if (project.hasProperty('arkMobs')) systemProperty 'arksurvivalreturns.benchmark.mobs', project.property('arkMobs').toString()
+            if (project.hasProperty('arkJfr')) jvmArgument "-XX:StartFlightRecording=filename=${project.property('arkJfr')},settings=profile"
         }
         server { server(); jvmArgument "-Xmx${devRuntime.serverHeap}"; programArgument '--nogui' }
         gameTestServer {

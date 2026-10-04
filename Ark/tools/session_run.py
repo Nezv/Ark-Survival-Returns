@@ -79,13 +79,13 @@ def lines_set(path: Path, separator: str, values: dict[str, str]):
     path.write_bytes((ending.join(lines) + ending).encode("utf-8"))
 
 
-def borrow():
+def borrow(names=BORROWED):
     """Sets the user's files aside. A folder left by a run that died is given back first."""
     if HOLD.exists():
         give_back()
     HOLD.mkdir(parents=True)
     present = {}
-    for name in BORROWED:
+    for name in names:
         source = RUN / name
         present[name] = source.is_file()
         if present[name]:
