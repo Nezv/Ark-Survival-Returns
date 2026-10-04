@@ -133,9 +133,9 @@ public final class ArkData implements DataProvider {
         en.put("itemGroup." + NS, "Ark Survival Returns"); pt.put("itemGroup." + NS, "Ark Survival Returns");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
         pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
-        String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3", "rank_4", "rank_5"};
-        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-5 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/5", "1 - Easy", "2 - Moderate", "3 - Hard", "4 - Severe", "5 - Extreme"};
-        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regi\u00e3o de perigo 5.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "Dimens\u00e3o sem classifica\u00e7\u00e3o", "No cursor: %s/5", "1 - F\u00e1cil", "2 - Moderada", "3 - Dif\u00edcil", "4 - Severa", "5 - Extrema"};
+        String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};
+        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-3 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/3", "1 - Easy", "2 - Dangerous", "3 - Deadly"};
+        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regi\u00e3o de perigo 3.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "Dimens\u00e3o sem classifica\u00e7\u00e3o", "No cursor: %s/3", "1 - F\u00e1cil", "2 - Perigosa", "3 - Mortal"};
         for (int i = 0; i < mapKeys.length; i++) {
             en.put("map." + NS + "." + mapKeys[i], mapEn[i]); pt.put("map." + NS + "." + mapKeys[i], mapPt[i]);
         }
@@ -143,8 +143,8 @@ public final class ArkData implements DataProvider {
         en.put("screen." + NS + ".taming", "Taming %s"); pt.put("screen." + NS + ".taming", "Domestica\u00e7\u00e3o %s");
         en.put("screen." + NS + ".hunger", "Hunger %s"); pt.put("screen." + NS + ".hunger", "Fome %s");
         en.put("screen." + NS + ".torpor", "Torpor %s/%s"); pt.put("screen." + NS + ".torpor", "Torpor %s/%s");
-        en.put("chat." + NS + ".biome", "[ARK] %s | Danger %s/5 | Wild levels %s-%s");
-        pt.put("chat." + NS + ".biome", "[ARK] %s | Perigo %s/5 | N\u00edveis selvagens %s-%s");
+        en.put("chat." + NS + ".biome", "[ARK] %s | Danger %s/3 | Wild levels %s-%s");
+        pt.put("chat." + NS + ".biome", "[ARK] %s | Perigo %s/3 | N\u00edveis selvagens %s-%s");
         en.put("chat." + NS + ".biome_unrated", "[ARK] %s | Outside Overworld danger zones");
         String[] states = {"roam", "forage", "drink", "rest", "alert", "investigate", "threaten", "hunt", "defend", "flee", "return_home", "feed"};
         String[] stateEn = {"Roaming", "Foraging", "Drinking", "Resting", "Alert", "Investigating", "Warning", "Hunting", "Defending", "Fleeing", "Returning home", "Feeding"};
@@ -355,7 +355,7 @@ public final class ArkData implements DataProvider {
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);
-        json("data/" + NS + "/advancement/journal/rank5_tame", """
+        json("data/" + NS + "/advancement/journal/top_zone_tame", """
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);

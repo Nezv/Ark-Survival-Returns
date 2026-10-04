@@ -151,8 +151,9 @@ public final class Config {
                         "(populationTargetPerPlayer, populationCullMargin, populationGlobalCap), kept for comparison.")
                 .defineEnum("populationModel", dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model.LEDGER);
         POPULATION_GROUPS = b.comment("LEDGER: wild groups (a herd, a pack, a pair or a lone animal) kept within populationRadius of each",
-                        "player while the ledger is balanced. 7 within 128 blocks is a group every 90 blocks or so, about 16 animals.")
-                .defineInRange("wildGroupsPerPlayer", 7, 1, 48);
+                        "player while the ledger is balanced; the ledger swings it a quarter either way. 10 within 128 blocks is a",
+                        "group every 70 blocks or so, about 23 animals: what vanilla livestock amounts to on open ground.")
+                .defineInRange("wildGroupsPerPlayer", 10, 1, 48);
         POPULATION_GROUPS_PER_PASS = b.comment("LEDGER: groups the budget may add around one player in one check while below its target.")
                 .defineInRange("populationGroupsPerPass", 4, 1, 16);
         POPULATION_CULL_FRACTION = b.comment("LEDGER: share above the target tolerated before the farthest spare groups are removed,",
@@ -171,8 +172,8 @@ public final class Config {
                 .defineInRange("cycleDays", 7.0, 1.0, 120.0);
         b.pop();
         b.pop().push("progression");
-        MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame whose origin band is 5 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
-        BAND_WIDTH = b.comment("Scale of repeating equal-area danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
+        MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame from danger zone 3 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
+        BAND_WIDTH = b.comment("Scale of the repeating danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
         b.pop().push("primitive");
         PRIMITIVE_LOGS_NEED_AXE = b.comment("Logs drop nothing and break slowly without an axe; the stone hatchet is the first one.")
                 .define("logsNeedAxe", true);

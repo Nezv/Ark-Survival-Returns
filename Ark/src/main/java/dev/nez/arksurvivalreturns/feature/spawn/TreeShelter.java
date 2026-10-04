@@ -1,36 +1,24 @@
 package dev.nez.arksurvivalreturns.feature.spawn;
 
-import dev.nez.arksurvivalreturns.Config;
-import dev.nez.arksurvivalreturns.feature.behavior.DailySchedule;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 
-/** Shared natural-spawn and sleeping-site rule. Trees in a biome are necessary but not sufficient. */
+/**
+ * Sleeping-site rule of the land hunters. Trees in a biome are necessary but not sufficient. It no longer
+ * gates spawning: hunters are placed by day as well and walk to cover, or stay awake where there is none.
+ */
 public final class TreeShelter {
     public static boolean required(Species species) {
         return species.predator && species.landHabitat() && species.sleeps();
-    }
-
-    public static boolean sleepWindow(Level world) {
-        var type = world.dimensionType();
-        return Config.NIGHTTIME.get() && type.hasSkyLight() && !type.hasCeiling()
-                && !type.hasFixedTime() && type.defaultClock().isPresent()
-                && DailySchedule.carnivoreSleepWindow(world.getDefaultClockTime(), Config.NIGHT_START.get(),
-                        Config.NIGHT_END.get(), Config.NIGHT_TRANSITION.get(), Config.DAY_SLEEP.get());
     }
 
     public static boolean treeBiome(ServerLevelAccessor world, BlockPos pos) {
         // BiomeManager can sample across a quart boundary; check its neighboring columns as well.
         return SpawnRules.loaded(world, new AABB(pos).inflate(4))
                 && SurfaceBiomes.profile(world.getBiome(pos)).treeBiome();
-    }
-
-    public static boolean spawnAllowed(ServerLevelAccessor world, Species species, BlockPos pos) {
-        return !required(species) || !sleepWindow(world.getLevel()) || sheltered(world, species, pos);
     }
 
     public static boolean sheltered(ServerLevelAccessor world, Species species, BlockPos feet) {

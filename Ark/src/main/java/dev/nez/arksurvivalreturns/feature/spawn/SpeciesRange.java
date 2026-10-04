@@ -41,10 +41,11 @@ public final class SpeciesRange {
 
     static {
         // Grazers and browsers.
-        warm(Species.PARASAUR, GRASSLAND, FOREST, WETLAND, RIVER, COAST, SAVANNA, JUNGLE);
-        warm(Species.TRICERATOPS, GRASSLAND, SAVANNA, SHRUBLAND, FOREST);
-        warm(Species.LYSTROSAURUS, DESERT, BADLANDS, SHRUBLAND, SAVANNA, COAST, VOLCANIC, GEOTHERMAL);
-        warm(Species.PEGOMASTAX, FOREST, JUNGLE, TAIGA, SHRUBLAND, MOUNTAIN);
+        // Every kind of land holds two plant eaters of the first zone, so no starting country is empty.
+        warm(Species.PARASAUR, GRASSLAND, FOREST, WETLAND, RIVER, COAST, SAVANNA, JUNGLE, TAIGA);
+        warm(Species.TRICERATOPS, GRASSLAND, SAVANNA, SHRUBLAND, FOREST, WETLAND);
+        warm(Species.LYSTROSAURUS, DESERT, BADLANDS, SHRUBLAND, SAVANNA, COAST, VOLCANIC, GEOTHERMAL, MOUNTAIN);
+        warm(Species.PEGOMASTAX, FOREST, JUNGLE, TAIGA, SHRUBLAND, MOUNTAIN, BADLANDS, DESERT);
         warm(Species.ANKYLOSAURUS, MOUNTAIN, SHRUBLAND, BADLANDS, TAIGA, GRASSLAND);
         warm(Species.THERIZINOSAURUS, FOREST, TAIGA, JUNGLE);
         warm(Species.BRONTOSAURUS, GRASSLAND, SAVANNA, FOREST);

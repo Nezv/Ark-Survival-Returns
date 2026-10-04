@@ -6,43 +6,11 @@
       "terms": [
         {
           "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/cow"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/mooshroom"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/pig"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/sheep"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/chicken"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:entities/rabbit"
         },
         {
           "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:entities/goat"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/horse"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/donkey"
-        },
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:entities/mule"
         },
         {
           "condition": "neoforge:loot_table_id",

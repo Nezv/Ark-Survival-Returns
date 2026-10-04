@@ -57,7 +57,7 @@ final class JournalGameTests {
         }
     }
 
-    /** A tame that came from the rank-5 band grants the map entitlement; other origins do not. */
+    /** A tame that came from the last danger zone grants the map entitlement; other origins do not. */
     static void tamingUnlock(GameTestHelper h) {
         var world = h.getLevel();
         var owner = h.makeMockPlayer(GameType.SURVIVAL);
@@ -65,11 +65,11 @@ final class JournalGameTests {
         var outsider = h.makeMockPlayer(GameType.SURVIVAL);
 
         var rare = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.COMMAND);
-        rare.recordOrigin(5);
+        rare.recordOrigin(dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES);
         var unlocks = dev.nez.arksurvivalreturns.feature.map.MapUnlockData.get(world);
         h.assertFalse(unlocks.isUnlocked(owner.getUUID()), "Entitlement should start locked");
         dev.nez.arksurvivalreturns.feature.taming.TamingService.applyTameEffects(rare, owner.getUUID());
-        h.assertTrue(unlocks.isUnlocked(owner.getUUID()), "A rank-5-origin tame did not unlock the map");
+        h.assertTrue(unlocks.isUnlocked(owner.getUUID()), "A tame from the last zone did not unlock the map");
         rare.discard();
 
         var ordinary = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.COMMAND);

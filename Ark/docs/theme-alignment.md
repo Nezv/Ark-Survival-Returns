@@ -51,8 +51,11 @@ Removed creature families, including every variant present in this game version:
   experience, its venomous dungeon variant does not
 - **Constructed servants:** iron, snow and copper golems
 - **The Wither** and the **Ender Dragon**
+- **Farm animals** (2026-10-04): cows, mooshrooms, pigs, sheep, chickens, horses, donkeys and
+  mules. Dinosaurs are the animals of this world, and their carcasses supply the meat, hide and
+  feathers; the carnivores' favourite taming foods became dinosaur meats
 
-Kept on purpose: ordinary spiders, every ordinary animal, villagers, wandering traders,
+Kept on purpose: ordinary spiders, goats, rabbits, llamas and every wild animal, villagers, wandering traders,
 allays, nautilus, mannequin, and every mod creature — including the ones that can attack.
 
 Every creation route is closed: natural spawning, structure spawning, block and structure
@@ -65,11 +68,13 @@ are removed as their chunks load.
 
 | Material | Source kept |
 |---|---|
-| Bone | Animal carcasses: 1–2 bones at 75% from 23 vanilla animals, added as a loot modifier |
+| Bone | Animal carcasses: 1–2 bones at 75% from 15 vanilla animals, added as a loot modifier; dinosaur carcasses drop bone as well |
 | String | Spiders, and the existing trader offers |
 | Bone meal, wolf taming, bone blocks | Unchanged, fed by the new bone source |
 | Gunpowder, slime balls | Wandering trader's uncommon offers, kept as the existing grounded source |
-| Leather, feathers, wool, meat, ink | Animals and fishing, unchanged |
+| Leather, feathers, meat | Dinosaur carcasses (farm animals are removed: cow, mooshroom, pig, sheep, chicken, horse, donkey, mule) |
+| Wool, ink | String (four to a block) and squid, unchanged |
+| Eggs | No source left; cake and pumpkin pie cannot be crafted |
 | Glowstone, quartz | Cleric and mason trades, kept for lighting and redstone |
 | Copper bulbs | Grounded replacement recipes: the blaze rod in the centre becomes a torch, so all eight copper and redstone bulb variants stay craftable |
 
@@ -169,7 +174,7 @@ Refresh the data pack and check the mod headlessly:
 ```
 
 The `theme_alignment` game test checks, against loaded registries: every removed id resolves
-in this game version, a control animal still joins a level while ten removed families are
+in this game version, a control animal still joins a level while ten removed families and five farm animals are
 refused, no biome in either dimension keeps a removed spawner or feature, the eleven disabled
 structure sets are empty while ordinary sets still place, removed recipes are absent and
 unrelated recipes remain, four chest and fishing tables keep mundane loot with no enchantment

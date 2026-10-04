@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 
 /** Optional integration. The bridge itself is loaded only on clients that installed it. */
 public final class XaeroDangerOverlay {
-    private static final int[] COLORS = {0xFF4BAE66, 0xFFA8CA53, 0xFFE4C653, 0xFFE98646, 0xFF994EB3};
+    private static final int[] COLORS = {0xFF4BAE66, 0xFFE4C653, 0xFF994EB3};
     private record View(int width, int height, double x, double z, double scale, DangerMapPayload profile) {}
     private static View cachedView;
     private static List<DangerMapView.Cell> cachedCells = List.of();
@@ -63,10 +63,10 @@ public final class XaeroDangerOverlay {
         var graphics = event.getGuiGraphics();
         var font = Minecraft.getInstance().font;
         int x = 8, y = 48;
-        graphics.fill(x - 4, y - 4, x + 154, y + (overworld ? 82 : 24), 0xD0182028);
+        graphics.fill(x - 4, y - 4, x + 154, y + (overworld ? 60 : 24), 0xD0182028);
         graphics.text(font, Component.translatable("map.arksurvivalreturns." + (overworld ? "legend" : "unrated")), x, y, 0xFFFFFFFF);
         if (!overworld) return;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < COLORS.length; i++) {
             graphics.fill(x, y + 14 + i * 11, x + 8, y + 22 + i * 11, COLORS[i]);
             graphics.text(font, Component.translatable("map.arksurvivalreturns.rank_" + (i + 1)), x + 12, y + 14 + i * 11, 0xFFFFFFFF);
         }
@@ -76,7 +76,7 @@ public final class XaeroDangerOverlay {
         if (Double.isFinite(wx) && Double.isFinite(wz) && Math.abs(wx) <= 30_000_000 && Math.abs(wz) <= 30_000_000
                 && exploration.contains((int)Math.floor(wx), (int)Math.floor(wz), (int)Math.floor(wx), (int)Math.floor(wz))) {
             int rank = DangerBands.level((int)Math.floor(wx), (int)Math.floor(wz), view.profile.originX(), view.profile.originZ(), view.profile.bandWidth());
-            graphics.text(font, Component.translatable("map.arksurvivalreturns.cursor", rank), x, y + 71, 0xFFFFFFFF);
+            graphics.text(font, Component.translatable("map.arksurvivalreturns.cursor", rank), x, y + 49, 0xFFFFFFFF);
         }
     }
     private XaeroDangerOverlay() {}

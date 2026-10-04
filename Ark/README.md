@@ -23,7 +23,7 @@ The launcher also loads the pinned gameplay stack — FTB Quests, FTB Teams, FTB
 
 - Forty-one species using the supplied models, original palette textures and 298 movement, attack, water and behavioral clips. Runtime copies are normalized to entity height; original projects remain in `../Creatures`. A renderer correction aligns the imported +Z-facing skeletons with forward entity movement.
 - Replenished natural groups across Overworld biomes, solitary large creatures, terrain checks, population limits and spacing.
-- Five recurring danger ranks, persistent random creature levels, independently scaled HP/damage and biome-entry chat messages.
+- Three recurring danger zones, persistent random creature levels, independently scaled HP/damage and biome-entry chat messages.
 - Look at a creature within 32 blocks for its name, level and current/max HP in a boss-style bar. Walls block targeting. Players have independent bars; predators are red and other creatures green.
 - Four complete berry items, textures, inventory models, English/Portuguese names and grass loot integration; forty-one matching spawn eggs in the Ark creative tab.
 - Ten additional land creatures share existing behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
@@ -45,89 +45,89 @@ Wildlife survival is the game; Minecraft's fantasy and alternate-dimension conte
 - Fantasy hostiles are gone, including every variant of this version: zombies, drowned, husks, zombie villagers and zombies' aquatic, camel and horse forms; skeletons, strays, bogged, parched and wither skeletons; creepers; endermen, endermites, shulkers and the Ender Dragon; witches and all illagers with their vexes and ravagers; phantoms; slimes, magma cubes and sulfur cubes; guardians; blazes, breezes and ghasts; piglins, hoglins and zoglins; wardens and the creaking; silverfish; cave spiders; iron, snow and copper golems; and the Wither. Ordinary spiders, all ordinary animals, villagers and every mod creature stay.
 - Enchanting, brewing and potions, teleportation items, totems, soul items, beacons, conduits, respawn anchors, ender chests, elytra, sculk gameplay and fantasy progression tiers such as netherite are removed, including from existing inventories and worlds.
 - Monster rooms, trial chambers, ancient cities, woodland mansions, pillager outposts, witch huts and ocean monuments no longer generate, and raids, patrols, sieges and phantom flybys cannot start. Villages, mineshafts, ocean ruins, shipwrecks, temples and trail ruins keep generating.
-- Bones now come from animal carcasses (23 vanilla animals, 1–2 at 75%), so bone meal and wolf taming survive the skeletons. Gunpowder and slime balls keep the wandering trader as their grounded source; string, leather, feathers and wool were never at risk. See [the removal decisions, retained sources and limitations](docs/theme-alignment.md).
+- Farm animals are gone too: cows, mooshrooms, pigs, sheep, chickens, horses, donkeys and mules do not spawn, are not placed in villages and are removed from loaded chunks. Dinosaur carcasses supply the meat, leather, feathers and bone, and the favourite taming foods are dinosaur meats. Goats, rabbits, llamas and the wild animals stay. Eggs have no source left.
+- Bones now come from animal carcasses (15 vanilla animals, 1–2 at 75%), so bone meal and wolf taming survive the skeletons. Gunpowder and slime balls keep the wandering trader as their grounded source; string, leather, feathers and wool were never at risk. See [the removal decisions, retained sources and limitations](docs/theme-alignment.md).
 
 ## Spawn rules
 
-Ark wildlife is placed by one population budget and is in no vanilla spawn list, so the same rules hold in freshly generated and in long-visited land. Every **5 seconds** it looks at each player and keeps about **7 wild groups within 128 blocks** (a herd, a pack, a pair or a lone animal; `spawning.wildGroupsPerPlayer`), about 16 animals, scaled between half and one and a half by the regional predator-prey ledger. Groups are placed in loaded chunks only, in the outer part of that circle or ahead of a travelling player, never closer than 32 blocks. Searches have a fixed attempt budget and never request chunks. The `minecraft:spawn_mobs` game rule and the mod's spawning toggle disable it.
+Ark wildlife is placed by one population budget and is in no vanilla spawn list, so the same rules hold in freshly generated and in long-visited land. Every **5 seconds** it looks at each player and keeps about **10 wild groups within 128 blocks** (a herd, a pack, a pair or a lone animal; `spawning.wildGroupsPerPlayer`), about 23 animals and a group every 70 blocks or so, which is what vanilla livestock amounts to on open ground. The regional predator-prey ledger swings that a quarter either way (8 to 13 groups). Groups are placed in loaded chunks only, anywhere in that circle past its inner third (38 blocks) around a player at rest, and half of them ahead of a player who is walking or faster, never closer than 32 blocks. Searches have a fixed attempt budget and never request chunks. The `minecraft:spawn_mobs` game rule and the mod's spawning toggle disable it.
 
-Wildlife comes as encounters:
+Wildlife is met the way livestock is in the vanilla game:
 
-- A group is **1 to 5 animals** (see the table); predators are fewer than what they eat.
-- Groups are placed **40 blocks** apart, and a hunter never within **64 blocks** of another group, so nothing is born into a chase.
-- A species does not repeat within **96 blocks** of itself.
-- At most **30 percent of the groups** around a player are hunters, at most **two** are flyers and **one** is an apex animal. Where the danger rank allows a giant the budget tries for one, never for the whole list.
+- A group is **1 to 5 animals** (see the table) and is placed at the size it rolled: each member gets eight tries around the anchor, so trees and slopes do not thin a herd to one animal. Predators are fewer than what they eat.
+- Groups are placed **40 blocks** apart, and a hunter never within **48 blocks** of another group, so nothing is born into a chase. A species that does not fit where the site fell (a Triceratops among trees) looks for open ground within 12 blocks before the site is given up.
+- A species does not repeat within **64 blocks** of itself.
+- **About a quarter of the groups** around a player are land hunters, by day and by night, wherever a hunter of the zone lives: the second, sixth and tenth group are theirs and the others go to the plant eaters. At most **two** groups are flyers and **one** is an apex animal. Where the danger zone allows a giant the budget tries for one, never for the whole list.
+- Every kind of land holds at least two plant eaters of zone 1, so no starting country is empty.
 - Spare groups are removed whole, at most two per check and only beyond 56 blocks from every player.
 
-**Where a species lives** is its range: the kinds of surface biome that suit it, each biome classified from its own tags, so modded biomes are covered. Grazers keep to open ground, browsers and ambushers to the trees, crocodilians to the banks, runners to dry scrub, fishers to the coast. Warm species keep out of the snow, the basking reptiles and Pteranodons also out of cold climates, and the cold species need snow or a cold climate. Caves, mushroom fields, sky islands and biomes of unknown type hold no Ark wildlife. The danger rank of the area still decides which residents may appear. A data pack adds a biome to a species with the tag `arksurvivalreturns:spawns/<species>`, or reclassifies a biome with `arksurvivalreturns:ecology/<type>`. `/arkwildlife` prints the biome's kind and who its range holds.
+**Where a species lives** is its range: the kinds of surface biome that suit it, each biome classified from its own tags, so modded biomes are covered. Grazers keep to open ground, browsers and ambushers to the trees, crocodilians to the banks, runners to dry scrub, fishers to the coast. Warm species keep out of the snow, the basking reptiles and Pteranodons also out of cold climates, and the cold species need snow or a cold climate. Caves, mushroom fields, sky islands and biomes of unknown type hold no Ark wildlife. The danger zone of the area still decides which residents may appear. A data pack adds a biome to a species with the tag `arksurvivalreturns:spawns/<species>`, or reclassifies a biome with `arksurvivalreturns:ecology/<type>`. `/arkwildlife` prints the biome's kind and who its range holds.
 
-Placement requires a supported footprint, collision-free space (foliage may cross a large body) and the world border. Land carnivores placed during their sleeping hours need tree canopy. Flyers additionally need their nest site: shoreline sand for Pteranodon, a floor at Y≥96 for Argentavis, Y≥110 for Quetzal, forest ground for Archaeopteryx and high peaks for the Dragon. Water species need a loaded pool of connected deep water, semi-aquatic species a bank next to exposed water, and cold species accept snow cover or ice over water as their drink source. There is no natural spawning in the Nether or the End.
+Placement requires a supported footprint, collision-free space (foliage may cross a large body) and the world border. Land carnivores are placed by day as well; they walk to tree canopy to sleep and stay awake where there is none. Flyers additionally need their nest site: shoreline sand for Pteranodon, a floor at Y≥96 for Argentavis, Y≥110 for Quetzal, forest ground for Archaeopteryx and high peaks for the Dragon. Water species need a loaded pool of connected deep water, semi-aquatic species a bank next to exposed water, and cold species accept snow cover or ice over water as their drink source. There is no natural spawning in the Nether or the End.
 
-| Species | Group | Weight | First danger rank | Base HP | Base damage | Hunter | Range |
+| Species | Group | Weight | First danger zone | Base HP | Base damage | Hunter | Range |
 |---|---:|---:|---:|---:|---:|---|---|
 | Pteranodon | 1–3 | 10 | 1 | 24 | 3 |  | River, coast |
 | Velociraptor | 2–3 | 8 | 2 | 32 | 5 | yes | Savanna, shrubland, desert, badlands |
 | Argentavis | 1–2 | 4 | 2 | 46 | 6 |  | Savanna, shrubland, desert, badlands, mountain |
-| Triceratops | 2–4 | 12 | 1 | 85 | 8 |  | Grassland, savanna, shrubland, forest |
-| Therizinosaurus | 1–2 | 6 | 3 | 100 | 10 |  | Forest, taiga, jungle |
-| Brontosaurus | 1–3 | 6 | 4 | 145 | 12 |  | Grassland, savanna, forest |
-| Tyrannosaurus | 1 | 4 | 4 | 130 | 14 | yes | Grassland, savanna, forest, taiga |
-| Giganotosaurus | 1 | 2 | 5 | 170 | 17 | yes | Grassland, savanna, shrubland, desert, badlands |
-| Titanosaur | 1 | 2 | 5 | 190 | 20 |  | Grassland, savanna, shrubland |
-| Spinosaurus | 1 | 3 | 4 | 125 | 13 | yes | Jungle, wetland, river, coast |
-| Parasaur | 3–5 | 14 | 1 | 48 | 3 |  | Grassland, savanna, forest, jungle, wetland, river, coast |
-| Ceratosaurus | 1 | 4 | 3 | 88 | 10 | yes | Forest, jungle, wetland, river |
+| Triceratops | 2–4 | 12 | 1 | 85 | 8 |  | Grassland, savanna, shrubland, forest, wetland |
+| Therizinosaurus | 1–2 | 6 | 2 | 100 | 10 |  | Forest, taiga, jungle |
+| Brontosaurus | 1–3 | 6 | 3 | 145 | 12 |  | Grassland, savanna, forest |
+| Tyrannosaurus | 1 | 4 | 3 | 130 | 14 | yes | Grassland, savanna, forest, taiga |
+| Giganotosaurus | 1 | 2 | 3 | 170 | 17 | yes | Grassland, savanna, shrubland, desert, badlands |
+| Titanosaur | 1 | 2 | 3 | 190 | 20 |  | Grassland, savanna, shrubland |
+| Spinosaurus | 1 | 3 | 3 | 125 | 13 | yes | Jungle, wetland, river, coast |
+| Parasaur | 3–5 | 14 | 1 | 48 | 3 |  | Grassland, savanna, forest, taiga, jungle, wetland, river, coast |
+| Ceratosaurus | 1 | 4 | 2 | 88 | 10 | yes | Forest, jungle, wetland, river |
 | Dilophosaur | 1–3 | 8 | 1 | 22 | 3 | yes | Forest, jungle, wetland |
-| Acrocanthosaurus | 1 | 2 | 5 | 155 | 16 | yes | Savanna, forest, wetland |
-| Allosaurus | 1–3 | 5 | 3 | 78 | 9 | yes | Savanna, shrubland, forest, badlands |
+| Acrocanthosaurus | 1 | 2 | 3 | 155 | 16 | yes | Savanna, forest, wetland |
+| Allosaurus | 1–3 | 5 | 2 | 78 | 9 | yes | Savanna, shrubland, forest, badlands |
 | Ankylosaurus | 1–3 | 8 | 2 | 95 | 9 |  | Grassland, shrubland, taiga, badlands, mountain |
-| Carnotaurus | 1 | 5 | 3 | 82 | 10 | yes | Grassland, savanna, shrubland, desert, badlands |
-| Pegomastax | 2–4 | 12 | 1 | 18 | 2 |  | Shrubland, forest, taiga, jungle, mountain |
-| Lystrosaurus | 2–4 | 12 | 1 | 20 | 2 |  | Savanna, shrubland, coast, desert, badlands, volcanic, geothermal |
+| Carnotaurus | 1 | 5 | 2 | 82 | 10 | yes | Grassland, savanna, shrubland, desert, badlands |
+| Pegomastax | 2–4 | 12 | 1 | 18 | 2 |  | Shrubland, forest, taiga, jungle, mountain, desert, badlands |
+| Lystrosaurus | 2–4 | 12 | 1 | 20 | 2 |  | Savanna, shrubland, coast, desert, badlands, mountain, volcanic, geothermal |
 | Cnidaria | 1 | 8 | 1 | 12 | 2 |  | Ocean |
 | Plesiosaur | 1 | 8 | 2 | 60 | 6 | yes | Ocean |
-| Megalodon | 1 | 7 | 3 | 90 | 12 | yes | Ocean |
-| Liopleurodon | 1 | 5 | 3 | 80 | 11 | yes | Ocean |
-| Mosasaurus | 1 | 3 | 4 | 160 | 18 | yes | Ocean |
-| Tusoteuthis | 1 | 3 | 4 | 150 | 16 | yes | Ocean |
+| Megalodon | 1 | 7 | 2 | 90 | 12 | yes | Ocean |
+| Liopleurodon | 1 | 5 | 2 | 80 | 11 | yes | Ocean |
+| Mosasaurus | 1 | 3 | 3 | 160 | 18 | yes | Ocean |
+| Tusoteuthis | 1 | 3 | 3 | 150 | 16 | yes | Ocean |
 | Kaprosuchus | 1 | 5 | 2 | 55 | 8 | yes | Jungle, wetland, river |
 | Sarco | 1–2 | 6 | 2 | 70 | 10 | yes | Wetland, river, coast |
-| Deinosuchus | 1 | 3 | 3 | 120 | 14 | yes | Wetland, river, coast |
-| Titanoboa | 1 | 4 | 3 | 45 | 9 | yes | Jungle, wetland |
+| Deinosuchus | 1 | 3 | 2 | 120 | 14 | yes | Wetland, river, coast |
+| Titanoboa | 1 | 4 | 2 | 45 | 9 | yes | Jungle, wetland |
 | Megalocerus | 3–5 | 12 | 1 | 60 | 6 |  | Grassland, shrubland, forest, taiga, wetland, river, badlands, mountain, tundra |
 | Unicorn | 1 | 3 | 1 | 65 | 7 |  | Grassland, forest, tundra |
 | Mammoth | 2–4 | 7 | 2 | 140 | 12 |  | Shrubland, taiga, wetland, coast, tundra (snow only) |
 | Direwolf | 3–4 | 6 | 2 | 50 | 8 | yes | Shrubland, forest, taiga, badlands, mountain, tundra |
-| Sabertooth | 1–2 | 4 | 3 | 60 | 11 | yes | Taiga, mountain, tundra (snow only) |
-| Megapithecus | 1 | 1 | 5 | 180 | 18 | yes | Taiga, mountain (snow only) |
-| Paraceratherium | 1–3 | 5 | 3 | 155 | 13 |  | Grassland, savanna, shrubland |
+| Sabertooth | 1–2 | 4 | 2 | 60 | 11 | yes | Taiga, mountain, tundra (snow only) |
+| Megapithecus | 1 | 1 | 3 | 180 | 18 | yes | Taiga, mountain (snow only) |
+| Paraceratherium | 1–3 | 5 | 2 | 155 | 13 |  | Grassland, savanna, shrubland |
 | Terrorbird | 1–2 | 5 | 2 | 45 | 9 | yes | Grassland, savanna, shrubland |
-| Ravager | 2–3 | 4 | 3 | 65 | 11 | yes | Taiga, badlands, mountain, volcanic, geothermal |
+| Ravager | 2–3 | 4 | 2 | 65 | 11 | yes | Taiga, badlands, mountain, volcanic, geothermal |
 | Archaeopteryx | 2–3 | 8 | 1 | 10 | 2 |  | Forest, taiga, jungle |
-| Quetzal | 1 | 2 | 4 | 130 | 10 |  | Grassland, savanna, desert, mountain |
-| Dragon | 1 | 1 | 5 | 190 | 22 | yes | Badlands, mountain, volcanic |
+| Quetzal | 1 | 2 | 3 | 130 | 10 |  | Grassland, savanna, desert, mountain |
+| Dragon | 1 | 1 | 3 | 190 | 22 | yes | Badlands, mountain, volcanic |
 
 Members of a small group share a saved pack identity. Land followers seek their pack's leading member when separated; combat takes precedence. Flyers share a habitat but use independent flight paths and perches. Separate packs do not merge. Raptors, Rex and Giga hunt non-creative players with line of sight outside Peaceful; land herbivores defend themselves. Flyers attack players only after an egg is taken or an egg-bearing nest is broken. Natural wildlife may despawn at vanilla distances. Named and spawn-egg creatures persist.
 
 ## Difficulty and levels
 
-Difficulty is an overlay on existing Minecraft terrain. All five ranks recur in curved regions; no permanent level-5 exterior remains. At the default scale, the pattern repeats every 1,024 blocks in X and Z, with approximately **20% of the area per rank**. The measured complete-tile shares are 19.92% / 20.00% / 20.05% / 19.87% / 20.16%; block-grid rounding causes the small difference from exact fifths.
+Difficulty is an overlay on existing Minecraft terrain. Three zones recur in curved regions; no permanent deadly exterior remains. At the default scale, the pattern repeats every 1,024 blocks in X and Z: zone 1 holds about **20% of the area**, zones 2 and 3 about **40% each** (the former ranks 2-3 and 4-5, merged). The measured complete-tile shares are 19.92% / 40.05% / 40.03%; block-grid rounding causes the small difference from exact fifths.
 
-Neighboring and diagonal blocks cannot skip ranks, including at tile seams. The initial world-spawn region remains level 1. The same biome type can have different ranks in different places.
+Neighboring and diagonal blocks cannot skip zones, including at tile seams. The initial world-spawn region remains zone 1. The same biome type can lie in different zones in different places.
 
 ![Recurring danger regions](docs/difficulty-map.png)
 
-| Rank | Wild levels | Newly eligible species |
+| Zone | Wild levels | Newly eligible species |
 |---|---:|---|
 | 1 — Easy | 1–12 | Pteranodon, Triceratops |
-| 2 — Moderate | 8–28 | Velociraptor, Argentavis |
-| 3 — Hard | 20–50 | Therizinosaurus |
-| 4 — Severe | 32–64 | Tyrannosaurus, Brontosaurus |
-| 5 — Extreme | 40–80 | Giganotosaurus, Titanosaur |
+| 2 — Dangerous | 8–50 | Velociraptor, Argentavis, Therizinosaurus |
+| 3 — Deadly | 32–80 | Tyrannosaurus, Brontosaurus, Giganotosaurus, Titanosaur |
 
-Earlier species remain eligible in later ranks. **The displayed rank is authoritative:** level-5 plains can spawn an apex. The old hidden easy-biome tag prohibition was removed. Rex requires 4+, Giga/Titano require 5, so level 1 remains protected. Existing or manually placed creatures can wander across borders.
+Earlier species remain eligible in later zones. **The displayed zone is authoritative:** zone-3 plains can spawn an apex. The old hidden easy-biome tag prohibition was removed. Rex, Giga and Titanosaur require zone 3, so zone 1 remains protected. Existing or manually placed creatures can wander across borders.
 
-Chat announces biome name, rank and wild level range when entering a different biome or rank. Checks occur once per second with two stable readings after a crossing. Other dimensions display an unrated message.
+Chat announces biome name, zone and wild level range when entering a different biome or zone. Checks occur once per second with two stable readings after a crossing. Other dimensions display an unrated message.
 
 Existing worlds adopt the new pattern immediately using their saved origin and scale; no terrain regeneration is needed. Creature levels are not rerolled. The legacy config key `progression.bandWidth` now controls region scale: tile period = four times that value. The scale is saved per world. Beds, commands and later `/setworldspawn` changes do not move the saved pattern or override chosen respawn locations.
 

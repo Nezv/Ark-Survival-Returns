@@ -60,12 +60,12 @@ final class CargoRegressionGameTests {
         var outsider = player(h, "ArkCargoIntruder", pos.north(3));
         var mob = cargo(h, owner, pos);
         var source = crate(h, pos.east(3), new ItemStack(Items.COPPER_INGOT, 4));
-        var pig = EntityType.PIG.create(h.getLevel(), EntitySpawnReason.COMMAND); pig.setNoAi(true); pig.setPos(mob.position()); h.getLevel().addFreshEntity(pig);
+        var llama = EntityType.LLAMA.create(h.getLevel(), EntitySpawnReason.COMMAND); llama.setNoAi(true); llama.setPos(mob.position()); h.getLevel().addFreshEntity(llama);
         GameTestCleanup.onFinish(h, () -> {
-            pig.discard(); CargoSync.loggedOut(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent(owner));
+            llama.discard(); CargoSync.loggedOut(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent(owner));
             CargoSync.loggedOut(new net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent(outsider));
         });
-        request(outsider, mob.getId(), true); request(owner, -1, true); request(owner, pig.getId(), true);
+        request(outsider, mob.getId(), true); request(owner, -1, true); request(owner, llama.getId(), true);
         owner.setPos(mob.position().add(20, 0, 0)); request(owner, mob.getId(), true);
         h.assertTrue(source.countItem(Items.COPPER_INGOT) == 4 && mob.tamingInventory().isEmpty(), "Invalid cargo requests moved inventory");
         owner.setPos(Vec3.atBottomCenterOf(pos.north(3))); request(owner, mob.getId(), true);

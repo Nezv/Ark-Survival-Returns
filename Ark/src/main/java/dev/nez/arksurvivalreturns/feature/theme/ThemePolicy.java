@@ -50,7 +50,10 @@ public final class ThemePolicy {
             "cave_spider",
             // Constructed living servants.
             "iron_golem", "snow_golem", "copper_golem",
-            "wither");
+            "wither",
+            // The farmyard: livestock and its mounts have no place beside dinosaurs, whose carcasses supply
+            // the meat, hide and feathers. Goats, rabbits, llamas and the wild animals stay.
+            "cow", "mooshroom", "pig", "sheep", "chicken", "horse", "donkey", "mule");
 
     /**
      * Items whose acquisition routes are removed. Used to strip recipes, loot, trades and
@@ -205,8 +208,7 @@ public final class ThemePolicy {
      * their mundane role: bone meal, wolf taming and bone blocks.
      */
     public static final List<String> BONE_ANIMALS = List.of(
-            "cow", "mooshroom", "pig", "sheep", "chicken", "rabbit", "goat", "horse", "donkey", "mule",
-            "llama", "trader_llama", "camel", "wolf", "fox", "ocelot", "cat", "polar_bear", "panda",
+            "rabbit", "goat", "llama", "trader_llama", "camel", "wolf", "fox", "ocelot", "cat", "polar_bear", "panda",
             "armadillo", "sniffer", "turtle", "dolphin");
 
     private static Set<EntityType<?>> removedTypes;

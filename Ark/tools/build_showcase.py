@@ -41,8 +41,8 @@ JAR = ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-sources.jar'
 ASSETS = ARK / 'src/main/resources/assets/arksurvivalreturns'
 GENERATED = ARK / 'src/generated/resources'
 PREVIEW_BG = (19, 30, 39)
-RANK_COLORS = ['#4bae66', '#a8ca53', '#e4c653', '#e98646', '#994eb3']
-RANK_NAMES = ['Easy', 'Moderate', 'Hard', 'Severe', 'Extreme']
+RANK_COLORS = ['#4bae66', '#e4c653', '#994eb3']
+RANK_NAMES = ['Easy', 'Dangerous', 'Deadly']
 MAP_HEIGHT = 344  # TechScreen.MAP_HEIGHT: four lanes around the gate row
 FOLDERS = {'pteranodon': 'Piterodon', 'therizinosaurus': 'Therezinosaur', 'brontosaurus': 'Brontosaur',
            'tyrannosaurus': 'Tyranosaur', 'giganotosaurus': 'Giganotosaur', 'acrocanthosaurus': 'Acrochantosaur'}
@@ -146,7 +146,7 @@ def creatures_section(species):
     cards = []
     for s in sorted(species, key=lambda s: (s['danger'], s['name'])):
         image, kind = creature_image(s['id'])
-        pips = ''.join(f'<i style="background:{RANK_COLORS[i] if i < s["danger"] else "var(--line)"}"></i>' for i in range(5))
+        pips = ''.join(f'<i style="background:{RANK_COLORS[i] if i < s["danger"] else "var(--line)"}"></i>' for i in range(len(RANK_COLORS)))
         group = f'{s["groupMin"]}' if s['groupMin'] == s['groupMax'] else f'{s["groupMin"]}-{s["groupMax"]}'
         tags = [s['realm']] + (['predator'] if s['predator'] else ['herbivore']) + (['apex'] if s['apex'] else []) + (['cold'] if s['cold'] else [])
         filters = ' '.join(tags)
@@ -611,7 +611,7 @@ def build():
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     item_count = len([p for p in (GENERATED / 'assets/arksurvivalreturns/items').glob('*.json') if not p.stem.endswith('spawn_egg')])
     integrations, integrated = integrations_section()
-    stats = [(len(species), 'creatures'), (5, 'danger ranks'), (len(tree['nodes']), 'tech nodes'), (integrated, 'integrated mods'),
+    stats = [(len(species), 'creatures'), (len(RANK_COLORS), 'danger zones'), (len(tree['nodes']), 'tech nodes'), (integrated, 'integrated mods'),
              (item_count, 'items and blocks')]
     page = TEMPLATE
     replacements = {

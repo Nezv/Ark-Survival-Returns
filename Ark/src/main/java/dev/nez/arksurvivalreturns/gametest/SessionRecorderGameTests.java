@@ -31,7 +31,7 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
  * Records a scripted encounter with the real AI, navigation and world ticks, then reads the file back.
  *
  * <p>An afternoon Carnotaurus first has a survival player well outside the eight-block wake distance, then
- * inside it; a pig is held in place while its navigation wants to walk. The recording has to explain both:
+ * inside it; a llama is held in place while its navigation wants to walk. The recording has to explain both:
  * the player filtered by the day routine, then sensed, warned and attacked, and a stall with the blocks
  * around the body. The file must be complete, in sequence and loaded without any extra chunk. A water
  * creature leaves and comes back under the same identity. Two short recordings follow: one that waits and
@@ -74,14 +74,14 @@ final class SessionRecorderGameTests {
         player.setPos(carno.position().add(0, 0, 16));
         world.addFreshEntity(player);
 
-        // A trunk and a canopy block beside the pig, so the stall's terrain capture has a tree to show.
+        // A trunk and a canopy block beside the llama, so the stall's terrain capture has a tree to show.
         h.setBlock(41, 2, 40, Blocks.OAK_LOG);
         // Persistent, or the lone leaf block decays before the recording ends.
         h.setBlock(41, 3, 40, Blocks.OAK_LEAVES.defaultBlockState().setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT, true));
-        var pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
+        var llama = EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND);
         Vec3 pen = Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(40, 2, 40)));
-        pig.setPos(pen);
-        world.addFreshEntity(pig);
+        llama.setPos(pen);
+        world.addFreshEntity(llama);
 
         // The other realms: a flying Pteranodon and a water-bound Plesiosaur (kept still, there is no pool here).
         var ptero = ModContent.CREATURES.get(Species.PTERANODON).get().create(world, EntitySpawnReason.COMMAND);
@@ -106,7 +106,7 @@ final class SessionRecorderGameTests {
         GameTestCleanup.onFinish(h, () -> {
             NeoForge.EVENT_BUS.unregister(listener);
             SessionRecorder.stop("test_cleanup");
-            carno.discard(); player.discard(); pig.discard(); ptero.discard(); plesio.discard();
+            carno.discard(); player.discard(); llama.discard(); ptero.discard(); plesio.discard();
             world.clockManager().setTotalTicks(clock, oldTime);
             Config.DAY_SLEEP.set(sleepShare);
             Config.NIGHT_TRANSITION.set(transition);
@@ -129,10 +129,10 @@ final class SessionRecorderGameTests {
                     player.setPos(carno.position().add(Vec3.directionFromRotation(0, carno.yBodyRot).scale(7)));
                 }
             }
-            // The pig wants to walk east and is put back every tick.
-            if (pig.isAlive()) {
-                if (pig.getNavigation().isDone()) pig.getNavigation().moveTo(pen.x + 10, pen.y, pen.z, 1.0);
-                pig.setPos(pen);
+            // The llama wants to walk east and is put back every tick.
+            if (llama.isAlive()) {
+                if (llama.getNavigation().isDone()) llama.getNavigation().moveTo(pen.x + 10, pen.y, pen.z, 1.0);
+                llama.setPos(pen);
             }
             // The swimmer goes away and the same animal, a new object under its old UUID, comes back.
             if (tick == LEAVE_TICK) plesio.discard();
@@ -151,7 +151,7 @@ final class SessionRecorderGameTests {
                     case 0 -> {
                         if (tick <= RECORDED_TICKS || result == null) return;
                         var rows = read(h, result, "tick_limit");
-                        check(h, rows, carno.getUUID().toString(), player.getUUID().toString(), pig.getUUID().toString(),
+                        check(h, rows, carno.getUUID().toString(), player.getUUID().toString(), llama.getUUID().toString(),
                                 ptero.getUUID().toString(), swimmerId.toString());
                         h.assertTrue(loads.isEmpty(), "Recording loaded chunks around its plot: " + loads);
                         // Kept as the fixture the Python analyzer is checked against.
@@ -232,10 +232,10 @@ final class SessionRecorderGameTests {
         return rows;
     }
 
-    private static void check(GameTestHelper h, List<JsonObject> rows, String carnoId, String playerId, String pigId, String pteroId,
+    private static void check(GameTestHelper h, List<JsonObject> rows, String carnoId, String playerId, String llamaId, String pteroId,
             String plesioId) {
         h.assertTrue(rows.size() > 500, "Suspiciously few records: " + rows.size());
-        int carno = -1, player = -1, pig = -1, ptero = -1, plesio = -1, ticks = 0, statuses = 0, motions = 0, playerRows = 0;
+        int carno = -1, player = -1, llama = -1, ptero = -1, plesio = -1, ticks = 0, statuses = 0, motions = 0, playerRows = 0;
         int swimmerRecords = 0, left = -1, returned = -1, lastSwim = -1;
         boolean flight = false, swimmer = false;
         var stages = new ArrayList<String>();
@@ -253,7 +253,7 @@ final class SessionRecorderGameTests {
                         h.assertTrue(row.get("species").getAsString().equals("carnotaurus") && row.get("origin").getAsString().equals("present")
                                 && row.get("w").getAsDouble() > 3, "Carnotaurus entity record wrong: " + row);
                     } else if (uuid.equals(playerId)) player = sid;
-                    else if (uuid.equals(pigId)) pig = sid;
+                    else if (uuid.equals(llamaId)) llama = sid;
                     else if (uuid.equals(pteroId)) { ptero = sid; h.assertTrue(row.get("realm").getAsString().equals("AIR"), "Pteranodon realm: " + row); }
                     else if (uuid.equals(plesioId)) {
                         plesio = sid;
@@ -295,13 +295,13 @@ final class SessionRecorderGameTests {
                 case "ev" -> {
                     String event = row.get("ev").getAsString();
                     if (event.equals("target") && row.get("e").getAsInt() == carno && row.get("tg").getAsInt() == player) targeted = true;
-                    if (event.equals("stall") && row.get("e").getAsInt() == pig) stalled = true;
+                    if (event.equals("stall") && row.get("e").getAsInt() == llama) stalled = true;
                     if (event.equals("leave") && row.get("e").getAsInt() == plesio && row.get("why").getAsString().equals("DISCARDED"))
                         left = row.get("k").getAsInt();
                     if (event.equals("return") && row.get("e").getAsInt() == plesio) returned = row.get("k").getAsInt();
                 }
                 case "terrain" -> {
-                    if (row.get("e").getAsInt() != pig) break;
+                    if (row.get("e").getAsInt() != llama) break;
                     String palette = row.getAsJsonArray("pal").toString();
                     tree |= palette.contains("minecraft:oak_log") && palette.contains("minecraft:oak_leaves")
                             && palette.contains("minecraft:grass_block") && row.getAsJsonArray("b").size() % 5 == 0;
@@ -309,7 +309,7 @@ final class SessionRecorderGameTests {
                 default -> {}
             }
         }
-        h.assertTrue(carno >= 0 && player >= 0 && pig >= 0 && ptero >= 0 && plesio >= 0, "An actor has no entity record");
+        h.assertTrue(carno >= 0 && player >= 0 && llama >= 0 && ptero >= 0 && plesio >= 0, "An actor has no entity record");
         h.assertTrue(flight && swimmer, "The flying or the water-bound creature has no status with its own fields");
         h.assertTrue(ticks == RECORDED_TICKS, "Tick records: " + ticks);
         h.assertTrue(playerRows == RECORDED_TICKS, "Player records: " + playerRows);
@@ -323,7 +323,7 @@ final class SessionRecorderGameTests {
                 "Decision reasons recorded: " + reasons);
         h.assertTrue(branches.contains("chase") || branches.contains("strike"), "The attack was not recorded: " + branches);
         h.assertTrue(targeted, "The target change to the player has no event");
-        h.assertTrue(stalled, "The held pig produced no stall event");
+        h.assertTrue(stalled, "The held llama produced no stall event");
         h.assertTrue(swimmerRecords == 1 && left >= 0 && returned > left && lastSwim > returned,
                 "Leaving and returning under one identity: entity records " + swimmerRecords + ", left " + left + ", returned " + returned
                         + ", last status " + lastSwim);

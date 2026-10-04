@@ -197,12 +197,17 @@ public final class TamingService {
         TorporService.log("tamed", creature, "owner " + owner);
     }
 
+    /** A creature that first appeared in the last danger zone. */
+    private static boolean topZone(CreatureEntity creature) {
+        return creature.originDanger() >= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES;
+    }
+
     /**
      * Completion side effects that do not depend on who fed the final meal: the origin-band map
      * entitlement and the per-player discovery records.
      */
     public static void applyTameEffects(CreatureEntity creature, UUID owner) {
-        if (creature.originDanger() == 5 && creature.level() instanceof ServerLevel level) {
+        if (topZone(creature) && creature.level() instanceof ServerLevel level) {
             // The entitlement follows the region the creature came from, not its individual level.
             dev.nez.arksurvivalreturns.feature.map.MapUnlockData.get(level).setUnlocked(owner, true);
         }
@@ -210,8 +215,8 @@ public final class TamingService {
             TamingFeedback.completed(player, creature);
             if (player instanceof net.minecraft.server.level.ServerPlayer server) {
                 discovery(server, "journal/first_tame");
-                if (creature.originDanger() == 5) {
-                    discovery(server, "journal/rank5_tame");
+                if (topZone(creature)) {
+                    discovery(server, "journal/top_zone_tame");
                     dev.nez.arksurvivalreturns.feature.map.DangerMapSync.send(server);
                 }
             }

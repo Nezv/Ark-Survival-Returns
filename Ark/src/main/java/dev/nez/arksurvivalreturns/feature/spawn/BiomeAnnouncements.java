@@ -19,8 +19,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class BiomeAnnouncements {
     private static final Map<UUID, Visit> VISITS = new HashMap<>();
-    private static final ChatFormatting[] COLORS = { ChatFormatting.GREEN, ChatFormatting.YELLOW,
-            ChatFormatting.GOLD, ChatFormatting.RED, ChatFormatting.DARK_RED };
+    private static final ChatFormatting[] COLORS = { ChatFormatting.GREEN, ChatFormatting.GOLD, ChatFormatting.DARK_RED };
     public record Region(Identifier dimension, Identifier biome, int danger) {}
     /** Require a stable crossing for two checks; suppress boundary jitter without suppressing a return visit. */
     public static final class Visit {

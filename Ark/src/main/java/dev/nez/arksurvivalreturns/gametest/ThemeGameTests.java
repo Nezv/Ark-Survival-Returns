@@ -26,7 +26,6 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -88,14 +87,15 @@ final class ThemeGameTests {
         }
 
         // A control animal joins, every removed family is refused at the level boundary.
-        var control = EntityType.COW.create(world, EntitySpawnReason.COMMAND);
+        var control = EntityType.GOAT.create(world, EntitySpawnReason.COMMAND);
         control.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(6, 3, 6))));
         h.assertTrue(world.addFreshEntity(control), "Control animal could not join the level");
         control.discard();
         for (EntityType<? extends Mob> type : List.<EntityType<? extends Mob>>of(
                 EntityType.ZOMBIE, EntityType.SKELETON, EntityType.CREEPER, EntityType.ENDERMAN,
                 EntityType.CAVE_SPIDER, EntityType.PHANTOM, EntityType.SHULKER, EntityType.WARDEN,
-                EntityType.CREAKING, EntityType.IRON_GOLEM)) {
+                EntityType.CREAKING, EntityType.IRON_GOLEM,
+                EntityType.COW, EntityType.PIG, EntityType.SHEEP, EntityType.CHICKEN, EntityType.HORSE)) {
             var mob = type.create(world, EntitySpawnReason.COMMAND);
             h.assertTrue(mob != null, "Removed creature could not be constructed: " + type);
             mob.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(6, 3, 6))));
@@ -281,12 +281,12 @@ final class ThemeGameTests {
         var pos = h.absolutePos(new BlockPos(8, 3, 8));
         int spawned = 0;
         for (int i = 0; i < 10; i++) {
-            Cow cow = EntityType.COW.create(world, EntitySpawnReason.COMMAND);
-            h.assertTrue(cow != null, "Cow could not be created");
-            cow.setNoAi(true);
-            cow.setPos(Vec3.atBottomCenterOf(pos));
-            h.assertTrue(world.addFreshEntity(cow), "Cow could not join the level");
-            cow.hurtServer(world, world.damageSources().generic(), 1000.0F);
+            var goat = EntityType.GOAT.create(world, EntitySpawnReason.COMMAND);
+            h.assertTrue(goat != null, "Goat could not be created");
+            goat.setNoAi(true);
+            goat.setPos(Vec3.atBottomCenterOf(pos));
+            h.assertTrue(world.addFreshEntity(goat), "Goat could not join the level");
+            goat.hurtServer(world, world.damageSources().generic(), 1000.0F);
             spawned++;
         }
         var bones = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(24),

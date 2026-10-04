@@ -44,9 +44,10 @@ import org.jspecify.annotations.Nullable;
  * model keeps a number of groups around each player, scaled by the {@link RegionalLedger}; BUDGET is the
  * previous fixed number of animals per player.
  *
- * <p>Wildlife is laid out as encounters: few, small groups, each of a species whose range holds the biome
- * ({@link SpeciesRange}), apart from one another, with hunters the minority and no species repeated in
- * sight of itself.
+ * <p>Wildlife is laid out the way livestock is met in the vanilla game: a herd, a pack or a lone animal every
+ * few dozen blocks, each of a species whose range holds the biome ({@link SpeciesRange}) and at its full
+ * size, apart from one another, with hunters the minority by day and by night and no species repeated
+ * beside itself. A walking player has the land ahead filled first.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
@@ -55,20 +56,28 @@ public final class NaturalPopulations {
 
     /**
      * Regional large species the budget wants at least one of near a player, mirroring the deleted
-     * director's missing-large priority, so a level-4/5 area always has a chance at an apex encounter.
+     * director's missing-large priority, so a zone-3 area always has a chance at an apex encounter.
      */
     private static final java.util.EnumSet<Species> REGIONAL_LARGE = java.util.EnumSet.of(
             Species.GIGANOTOSAURUS, Species.TITANOSAUR, Species.TYRANNOSAURUS, Species.BRONTOSAURUS,
             Species.THERIZINOSAURUS, Species.SPINOSAURUS, Species.ACROCANTHOSAURUS);
     /** Blocks between any two groups when one is placed, and around a hunter, so nothing is born into a chase. */
-    public static final int GROUP_SPACING = 40, PREDATOR_SPACING = 64;
+    public static final int GROUP_SPACING = 40, PREDATOR_SPACING = 48;
     /** Blocks between two groups of one species: a second herd of the same animal is a different place. */
-    public static final int SPECIES_SPACING = 96;
+    public static final int SPECIES_SPACING = 64;
     /** Share of the groups around a player that may be hunters, and the groups that may be flyers. */
-    public static final double PREDATOR_GROUPS = 0.3;
+    public static final double PREDATOR_GROUPS = 0.25;
     public static final int FLYER_GROUPS = 2;
     /** Mean group size of the species table: turns the group target into animals for the ledger. */
     public static final double MEAN_GROUP = 2.3;
+    /** The regional ledger swings the group target a quarter either way; a bust never empties the land. */
+    public static final double LEAN = 0.75, RICH = 1.25;
+    /** Tries for each member of a group around its anchor, so trees and slopes do not thin a herd to one animal. */
+    private static final int MEMBER_TRIES = 8;
+    /** Probes and reach of the search for open ground when the picked species does not fit where the site fell. */
+    private static final int ROOM_TRIES = 12, ROOM_REACH = 12;
+    /** Blocks a tick (2.4 a second, a slow walk) from which a player counts as travelling. */
+    private static final double TRAVEL_PACE = 0.12;
     /** A group is only removed this far from every player, a couple per check, so nothing vanishes in view. */
     private static final int CULL_DISTANCE = 56, CULLED_PER_PASS = 2;
     /** Each player's position at the previous check, for the direction of travel. */
@@ -177,7 +186,7 @@ public final class NaturalPopulations {
         int half = (int) (radius / 2);
         for (int[] offset : new int[][]{{0, 0}, {half, 0}, {-half, 0}, {0, half}, {0, -half}})
             sum += ledger.abundance(level, player.getBlockX() + offset[0], player.getBlockZ() + offset[1]);
-        return Math.clamp(sum / 5, 0.5, 1.5);
+        return Math.clamp(sum / 5, LEAN, RICH);
     }
 
     /** Loaded natural wildlife allowed in the dimension before the farthest is removed. */
@@ -187,15 +196,15 @@ public final class NaturalPopulations {
     }
 
     /**
-     * Horizontal direction of travel since the previous check, when the player covered more than six
-     * blocks a second (faster than running), else null.
+     * Horizontal direction of travel since the previous check, when the player kept at least a walking
+     * pace, else null.
      */
     private static @Nullable Vec3 travel(Player player) {
         var now = player.position();
         var before = LAST_SEEN.put(player.getUUID(), now);
         if (before == null) return null;
         var moved = new Vec3(now.x - before.x, 0, now.z - before.z);
-        double threshold = 0.3 * Config.POPULATION_INTERVAL.get();
+        double threshold = TRAVEL_PACE * Config.POPULATION_INTERVAL.get();
         return moved.lengthSqr() > threshold * threshold ? moved.normalize() : null;
     }
 
@@ -281,9 +290,9 @@ public final class NaturalPopulations {
         for (int attempt = 0; attempt < 16; attempt++) {
             int x, z;
             if (heading == null && ledger) {
-                // Around a player at rest: anywhere in the outer part of the counted circle, evenly by area,
-                // so a group appears in the distance and walks into view instead of popping up beside the camp.
-                double near = Math.max(minDistance, radius * 0.4);
+                // Around a player at rest: anywhere in the counted circle past its inner third, evenly by area,
+                // so a group appears at a distance instead of popping up beside the camp.
+                double near = Math.max(minDistance, radius * 0.3);
                 double angle = random.nextDouble() * Math.PI * 2;
                 double distance = Math.sqrt(near * near + random.nextDouble() * (radius * radius - near * near));
                 x = Mth.floor(player.getX() + Math.cos(angle) * distance);
@@ -316,10 +325,29 @@ public final class NaturalPopulations {
                 return spawnGroup(level, species, site, true);
             }
             var type = ModContent.CREATURES.get(species).get();
-            if (!SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, site, random)) continue;
+            if (!SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, site, random)) {
+                site = roomNear(level, species, site);
+                if (site == null) continue;
+            }
             return spawnGroup(level, species, site, false);
         }
         return 0;
+    }
+
+    /**
+     * Open ground for this species near a site where it did not fit, or null. Without it the large animals
+     * lose every wooded site to the small ones, and a forest holds nothing but its smallest resident.
+     */
+    private static @Nullable BlockPos roomNear(ServerLevel level, Species species, BlockPos site) {
+        var type = ModContent.CREATURES.get(species).get();
+        var random = level.getRandom();
+        for (int probe = 0; probe < ROOM_TRIES; probe++) {
+            var spot = SpawnRules.surface(level, site.getX() + random.nextInt(ROOM_REACH * 2 + 1) - ROOM_REACH,
+                    site.getZ() + random.nextInt(ROOM_REACH * 2 + 1) - ROOM_REACH);
+            if (spot != null && SpeciesRange.lives(species, level.getBiome(spot))
+                    && SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, spot, random)) return spot;
+        }
+        return null;
     }
 
     /** Squared distance from a point to the nearest loaded group, of one species or of any (null). */
@@ -336,9 +364,11 @@ public final class NaturalPopulations {
      * pick may be and the biome which animals live here; the ledger, when used, tilts the pick toward
      * whichever side is abundant in the region.
      *
-     * <p>The groups already there decide the rest: no second group of a species within sight of the first, no
-     * hunter beside another group, and under the ledger model hunters, flyers and apex animals stay the
-     * minority of what a player has around.
+     * <p>The groups already there decide the rest: no second group of a species beside the first, no hunter
+     * beside another group, and under the ledger model flyers and apex animals stay the minority of what a
+     * player has around. Land hunters hold a share: about every fourth group is theirs wherever a hunter of
+     * the zone lives, and the others go to the plant eaters. Left to the weights alone, the first groups
+     * were plant eaters and no site was far enough from them for a hunter any more.
      */
     private static @Nullable Species pickSpecies(ServerLevel level, BlockPos pos, @Nullable Set<Species> only,
             boolean water, boolean ledger, List<Group> groups, Player player, double radius, int target) {
@@ -349,32 +379,41 @@ public final class NaturalPopulations {
         var region = ledger ? RegionalLedger.get(level).at(level, pos.getX(), pos.getZ()) : null;
         var eligible = new ArrayList<Species>();
         var weights = new ArrayList<Double>();
-        double total = 0;
-        boolean openDuringSleep = TreeShelter.sleepWindow(level) && !TreeShelter.treeBiome(level, pos);
         double x = pos.getX() + 0.5, z = pos.getZ() + 0.5;
         boolean crowded = nearestGroupSqr(groups, x, z, null) < PREDATOR_SPACING * PREDATOR_SPACING;
-        int predators = 0, flyers = 0, apex = 0;
+        int counted = 0, predators = 0, flyers = 0, apex = 0;
         if (ledger) for (var group : groups) {
             if (group.distanceSqr(player.getX(), player.getZ()) > radius * radius) continue;
+            counted++;
             if (group.species().predator) predators++;
             if (group.species().flyer()) flyers++;
             if (group.species().apex()) apex++;
         }
         int predatorCap = Math.max(1, (int) Math.round(target * PREDATOR_GROUPS));
+        // The second group around a player is a hunter's, then the sixth and the tenth.
+        boolean hunterTurn = predators < Math.min(predatorCap, Math.round((counted + 1) * PREDATOR_GROUPS));
         for (var species : Species.values()) {
             if (species.weight <= 0 || danger < species.minimumDanger() || species.aquatic() != water) continue;
             if (only != null && !only.contains(species)) continue;
             if (!biome.is(species.biomes) && !SpeciesRange.lives(species, profile)) continue;
-            if (openDuringSleep && TreeShelter.required(species)) continue;
             if (nearestGroupSqr(groups, x, z, species) < SPECIES_SPACING * SPECIES_SPACING) continue;
             if (species.predator && crowded) continue;
             if (ledger && (species.predator && predators >= predatorCap || species.flyer() && flyers >= FLYER_GROUPS
                     || species.apex() && apex >= 1)) continue;
-            double weight = species.weight * (region == null ? 1 : species.predator ? region.predators() : region.prey());
             eligible.add(species);
-            weights.add(weight);
-            total += weight;
+            weights.add(species.weight * (region == null ? 1 : species.predator ? region.predators() : region.prey()));
         }
+        // On land under the ledger model the pick is taken from one side: the hunters on their turn, the plant
+        // eaters otherwise, and whichever side lives here when the other does not. The sea, a requested giant
+        // and the BUDGET model keep the plain weighted pick.
+        if (ledger && !water && only == null) {
+            boolean hunters = hunterTurn && eligible.stream().anyMatch(species -> species.predator)
+                    || eligible.stream().allMatch(species -> species.predator);
+            for (int i = eligible.size() - 1; i >= 0; i--)
+                if (eligible.get(i).predator != hunters) { eligible.remove(i); weights.remove(i); }
+        }
+        double total = 0;
+        for (double weight : weights) total += weight;
         if (eligible.isEmpty() || !(total > 0)) return null;
         double roll = level.getRandom().nextDouble() * total;
         for (int i = 0; i < eligible.size(); i++) {
@@ -391,36 +430,37 @@ public final class NaturalPopulations {
         SpawnGroupData data = null;
         int placed = 0;
         for (int i = 0; i < count; i++) {
-            int x = anchor.getX() + level.getRandom().nextInt(spread * 2 + 1) - spread;
-            int z = anchor.getZ() + level.getRandom().nextInt(spread * 2 + 1) - spread;
-            BlockPos pos;
-            if (water) {
-                var surface = Water.surfaceWater(level, x, z);
-                if (surface == null || !Water.siteAllowed(level, species, surface)) continue;
-                pos = surface;
-            } else {
-                var surface = SpawnRules.surface(level, x, z);
-                if (surface == null || !SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, surface, level.getRandom()))
+            // The first member stands on the anchor, which the caller has checked; each of the others gets
+            // several tries around it, so the group reaches the size it rolled.
+            for (int attempt = 0; attempt < MEMBER_TRIES; attempt++) {
+                boolean onAnchor = i == 0 && attempt == 0;
+                // Each failed try looks a little farther out, up to the reach of the herd's cohesion.
+                int reach = spread + attempt * 2;
+                int x = anchor.getX() + (onAnchor ? 0 : level.getRandom().nextInt(reach * 2 + 1) - reach);
+                int z = anchor.getZ() + (onAnchor ? 0 : level.getRandom().nextInt(reach * 2 + 1) - reach);
+                BlockPos pos = water ? Water.surfaceWater(level, x, z) : SpawnRules.surface(level, x, z);
+                if (pos == null) continue;
+                if (water ? !Water.siteAllowed(level, species, pos)
+                        : !SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, pos, level.getRandom())) continue;
+                var creature = type.create(level, EntitySpawnReason.NATURAL);
+                if (creature == null) break;
+                creature.snapTo(x + 0.5, pos.getY(), z + 0.5, level.getRandom().nextFloat() * 360f, 0f);
+                if (!EventHooks.checkSpawnPosition(creature, level, EntitySpawnReason.NATURAL)) {
+                    creature.discard();
                     continue;
-                pos = surface;
+                }
+                // Through FinalizeSpawnEvent, so other mods can adjust or cancel these spawns.
+                data = EventHooks.finalizeMobSpawn(creature, level, level.getCurrentDifficultyAt(creature.blockPosition()),
+                        EntitySpawnReason.NATURAL, data);
+                if (creature.isSpawnCancelled()) {
+                    creature.discard();
+                    break;
+                }
+                SessionRecorder.note(creature, "budget_spawn");
+                level.addFreshEntityWithPassengers(creature);
+                placed++;
+                break;
             }
-            var creature = type.create(level, EntitySpawnReason.NATURAL);
-            if (creature == null) continue;
-            creature.snapTo(x + 0.5, pos.getY(), z + 0.5, level.getRandom().nextFloat() * 360f, 0f);
-            if (!EventHooks.checkSpawnPosition(creature, level, EntitySpawnReason.NATURAL)) {
-                creature.discard();
-                continue;
-            }
-            // Through FinalizeSpawnEvent, so other mods can adjust or cancel these spawns.
-            data = EventHooks.finalizeMobSpawn(creature, level, level.getCurrentDifficultyAt(creature.blockPosition()),
-                    EntitySpawnReason.NATURAL, data);
-            if (creature.isSpawnCancelled()) {
-                creature.discard();
-                continue;
-            }
-            SessionRecorder.note(creature, "budget_spawn");
-            level.addFreshEntityWithPassengers(creature);
-            placed++;
         }
         return placed;
     }

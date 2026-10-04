@@ -754,37 +754,19 @@
 		# Range: 1 ~ 100
 		max = 12
 
-	[levels.moderate]
+	[levels.dangerous]
 		# Default: 8
 		# Range: 1 ~ 100
 		min = 8
-		#Reversed endpoints are sorted automatically.
-		# Default: 28
-		# Range: 1 ~ 100
-		max = 28
-
-	[levels.hard]
-		# Default: 20
-		# Range: 1 ~ 100
-		min = 20
 		#Reversed endpoints are sorted automatically.
 		# Default: 50
 		# Range: 1 ~ 100
 		max = 50
 
-	[levels.severe]
+	[levels.deadly]
 		# Default: 32
 		# Range: 1 ~ 100
 		min = 32
-		#Reversed endpoints are sorted automatically.
-		# Default: 64
-		# Range: 1 ~ 100
-		max = 64
-
-	[levels.extreme]
-		# Default: 40
-		# Range: 1 ~ 100
-		min = 40
 		#Reversed endpoints are sorted automatically.
 		# Default: 80
 		# Range: 1 ~ 100

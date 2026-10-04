@@ -472,7 +472,7 @@
 
   <section id="world">
     <div><div class="eyebrow">World</div><h2>A map with hidden danger</h2></div>
-    <p class="lede">The Overworld repeats five equal-area danger zones in a symmetric grid. Curved borders make the pattern feel random on foot. The zone decides which species spawn and how strong they are. Players only see it through the Xaero map overlay, and that overlay can be locked until the tribe tames a creature from a rank-5 zone. This map runs the same formula as the mod. Drag to pan, scroll to zoom.</p>
+    <p class="lede">The Overworld repeats three danger zones in a symmetric grid: the easy zone around the spawn holds a fifth of the land, the dangerous and the deadly zone two fifths each. Curved borders make the pattern feel random on foot. The zone decides which species spawn and how strong they are. Players only see it through the Xaero map overlay, and that overlay can be locked until the tribe tames a creature from the deadly zone. This map runs the same formula as the mod. Drag to pan, scroll to zoom.</p>
     <div class="map-wrap">
       <canvas id="danger" aria-label="Interactive danger zone map"></canvas>
       <div class="map-bar">
@@ -488,7 +488,7 @@
       </div>
     </div>
     <h3>Habitats</h3>
-    <p class="lede">Danger and wild levels come only from the zone. The biome decides who lives there: each species has a range of biome kinds that suits it, grazers on open ground, browsers and ambushers under trees, crocodilians on the banks, runners on dry scrub, fishers on the coast, and the snow keeps its own residents. Wildlife comes as encounters: about seven small groups within 128 blocks of a player, kept apart from one another, hunters the minority and no species twice within sight of itself. The <a href="#biomes">Biomes</a> page shows every biome with its residents.</p>
+    <p class="lede">Danger and wild levels come only from the zone. The biome decides who lives there: each species has a range of biome kinds that suits it, grazers on open ground, browsers and ambushers under trees, crocodilians on the banks, runners on dry scrub, fishers on the coast, and the snow keeps its own residents. Wildlife is met the way livestock is in the vanilla game, which has no farm animals here: about ten groups within 128 blocks of a player, a herd, a pack or a lone animal every 70 blocks or so, each at its full size, kept apart from one another, hunters about a quarter of the groups by day and by night, and no species twice beside itself. The land ahead of a walking player fills first. The <a href="#biomes">Biomes</a> page shows every biome with its residents.</p>
     <div class="tiers">%%HABITATS%%</div>
     <div class="grid-3">
       <div class="card"><h4>Land habitats</h4><p class="muted">Herds keep home ranges near water and predators patrol and hunt. Each 256-block region keeps its own balance of predators and prey, which keeps cycling while nobody is near; hunting thins a region and it recovers over the following days. No chunk is ever forced to load.</p></div>
@@ -982,7 +982,7 @@ window.arkModels = (function () {
     v += Math.round(radius * 0.20 * Math.sin(2 * Math.PI * mod(u, period) / period));
     var dx = Math.abs(mod(u + radius, period) - radius), dz = Math.abs(mod(v + radius, period) - radius);
     var f = Math.max(dx, dz) / radius;
-    return 1 + Math.min(4, Math.floor(5 * f * f));
+    return 1 + Math.floor((Math.min(4, Math.floor(5 * f * f)) + 1) / 2);
   }
   function draw() {
     var w = canvas.clientWidth, h = canvas.clientHeight, step = 2;

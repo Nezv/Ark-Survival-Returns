@@ -33,8 +33,8 @@ final class NighttimeGameTests {
             biome(h, Biomes.FOREST);
             canopy(h, 40, 40, Blocks.OAK_LEAVES);
             var rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
-            var pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
-            pig.setNoAi(true); pig.setPos(rex.position().add(0, 0, 20)); world.addFreshEntity(pig); entities.add(pig);
+            var llama = EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND);
+            llama.setNoAi(true); llama.setPos(rex.position().add(0, 0, 20)); world.addFreshEntity(llama); entities.add(llama);
             rex.wildlife().mind().restoreNeeds(0.8, 0.1, 0);
             for (int i = 0; i < 8; i++) rex.wildlife().think();
             h.assertTrue(rex.behavior() == BehaviorState.SLEEP && rex.getTarget() == null, "Day Rex hunted instead of sleeping");
@@ -45,7 +45,7 @@ final class NighttimeGameTests {
             h.assertTrue(rex.behavior() == BehaviorState.SLEEP, "Distant player prevented daytime sleep");
             var crowd = new ArrayList<Entity>();
             for (int i = 0; i < 30; i++) {
-                var animal = EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
+                var animal = EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND);
                 animal.setNoAi(true); animal.setPos(rex.position().add(i % 5 * 0.1, 0, 2));
                 world.addFreshEntity(animal); crowd.add(animal); entities.add(animal);
             }
@@ -54,7 +54,7 @@ final class NighttimeGameTests {
             h.assertFalse(rex.behavior().sleeping(), "Nearby player failed to wake Rex");
             h.assertTrue(rex.getTarget() == null, "Wake skipped warning and attacked");
             crowd.forEach(Entity::discard);
-            player.discard(); pig.discard();
+            player.discard(); llama.discard();
             for (int i = 0; i < 25; i++) rex.wildlife().think();
             h.assertTrue(rex.behavior() == BehaviorState.SLEEP, "Rex did not settle after calm delay");
             rex.hurtServer(world, rex.damageSources().generic(), 1);
@@ -72,19 +72,19 @@ final class NighttimeGameTests {
             world.clockManager().setTotalTicks(clock, 18000);
             rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
             rex.wildlife().mind().restoreNeeds(0.8, 0.1, 0);
-            pig = EntityType.PIG.create(world, EntitySpawnReason.COMMAND); pig.setNoAi(true);
+            llama = EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND); llama.setNoAi(true);
             double range = world.isRaining() ? 45 : 56;
-            pig.setPos(rex.position().add(0, 0, range)); world.addFreshEntity(pig); entities.add(pig);
+            llama.setPos(rex.position().add(0, 0, range)); world.addFreshEntity(llama); entities.add(llama);
             h.assertTrue(Math.abs(WildlifeSenses.sightRange(rex) - 62.4) < 0.001, "Rex night range is not 1.3x daytime");
-            h.assertTrue(WildlifeSenses.detect(rex, pig).visible(), "Expanded night vision failed beyond daytime range");
+            h.assertTrue(WildlifeSenses.detect(rex, llama).visible(), "Expanded night vision failed beyond daytime range");
             for (int i = 0; i < 8; i++) rex.wildlife().think();
-            h.assertTrue(rex.getTarget() == pig && rex.behavior() == BehaviorState.HUNT, "Night candidate search clipped enhanced range");
+            h.assertTrue(rex.getTarget() == llama && rex.behavior() == BehaviorState.HUNT, "Night candidate search clipped enhanced range");
             h.assertTrue(rex.nightActive(), "Night eye state not synchronized");
             double hunger = rex.wildlife().mind().hunger();
             world.clockManager().setTotalTicks(clock, 6000); rex.wildlife().think();
             h.assertTrue(rex.wildlife().mind().hunger() - hunger < 0.001, "Clock skip applied catch-up hunger");
             h.assertFalse(rex.nightActive() || rex.behavior().sleeping(), "Dawn did not clear glow or slept during encounter");
-            rex.discard(); pig.discard();
+            rex.discard(); llama.discard();
 
             world.clockManager().setTotalTicks(clock, 18000);
             var trike = create(h, Species.TRICERATOPS, 40, 40); entities.add(trike);
@@ -132,7 +132,7 @@ final class NighttimeGameTests {
         }
         h.succeed();
     }
-    /** The same canopy rule must survive spawn selection, full AI and both cheaper tiers. */
+    /** The same canopy rule must hold for the sleeping site in full AI and both cheaper tiers. */
     private static void shelterRules(GameTestHelper h, ArrayList<Entity> entities) {
         var world = h.getLevel();
         var feet = h.absolutePos(new BlockPos(40, 2, 40));
@@ -140,20 +140,14 @@ final class NighttimeGameTests {
         boolean tiers = Config.BEHAVIOR_TIERS.get();
         try {
             biome(h, Biomes.PLAINS);
-            h.assertFalse(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Morning Rex spawned in plains");
             canopy(h, 40, 40, Blocks.OAK_LEAVES);
             h.assertFalse(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "An isolated plains tree bypassed biome policy");
             biome(h, Biomes.FOREST);
-            h.assertTrue(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Covered forest spawn refused");
+            h.assertTrue(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "Covered forest site refused");
             canopy(h, 40, 40, Blocks.STONE);
             h.assertFalse(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "Stone roof counted as trees");
             canopy(h, 40, 40, Blocks.AIR);
-            h.assertFalse(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Forest clearing accepted as shelter");
-            world.clockManager().setTotalTicks(clock, 18000);
-            biome(h, Biomes.PLAINS);
-            h.assertTrue(TreeShelter.spawnAllowed(world, Species.TYRANNOSAURUS, feet), "Active-night plains spawn was blocked");
-            world.clockManager().setTotalTicks(clock, 6000);
-            biome(h, Biomes.FOREST);
+            h.assertFalse(TreeShelter.sheltered(world, Species.TYRANNOSAURUS, feet), "Forest clearing accepted as shelter");
             var rex = create(h, Species.TYRANNOSAURUS, 40, 40); entities.add(rex);
             rex.wildlife().mind().restoreNeeds(.1, .1, .95);
             rex.wildlife().think();

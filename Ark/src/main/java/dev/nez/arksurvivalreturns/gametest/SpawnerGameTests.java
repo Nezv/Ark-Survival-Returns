@@ -102,7 +102,7 @@ public final class SpawnerGameTests {
         h.succeed();
     }
 
-    /** Danger 5 places a regional large, and foliage stops vetoing apex bodies while solids still do. */
+    /** Danger 3 places a regional large, and foliage stops vetoing apex bodies while solids still do. */
     public static void apex(GameTestHelper h) {
         for (int x = 0; x < 64; x++) for (int z = 0; z < 64; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
         var world = h.getLevel();
@@ -165,7 +165,7 @@ public final class SpawnerGameTests {
         }
         var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
         h.assertTrue(placed.stream().anyMatch(c -> NaturalPopulations.isRegionalLarge(c.species())),
-                "Danger-5 ground never produced a regional large: "
+                "Danger-3 ground never produced a regional large: "
                         + placed.stream().map(c -> c.species().id).toList());
         for (var creature : placed) creature.discard();
         h.succeed();

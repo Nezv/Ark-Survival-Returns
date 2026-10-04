@@ -637,7 +637,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public void recordOrigin(int danger) {
         if (originDanger < 0) originDanger = danger;
     }
-    /** Origin band used by the map entitlement: a rank-5 tame opens the map once. */
+    /** Origin zone used by the map entitlement: a tame from the last zone opens the map once. */
     public int originDanger() { return originDanger; }
     @Override public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             EntitySpawnReason reason, @Nullable SpawnGroupData data) {

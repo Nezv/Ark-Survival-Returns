@@ -65,7 +65,7 @@ Validation checks every configured Bliss option and its allowed values against t
 
 The **whole Xaero fullscreen map is open while `progression.mapRequiresUnlock` is `false`** (the development default). Set it to `true` and restart/rejoin to restore the progression gate; the following unlock rules apply only when that gate is enabled. Pressing its map key (normally **M**) displays the unlock condition. The milestone is **taming a creature that originated in a difficulty-5 region**, recorded when the creature first spawned — not a creature whose individual level happens to be 5.
 
-Completing the first tame whose saved origin band is 5 grants the entitlement automatically, and the same completion awards the hidden `journal/rank5_tame` discovery advancement. A rank-1 creature never grants the map, however it is transported later. Operators can still grant or revoke access for testing:
+Completing the first tame whose saved origin zone is 3 grants the entitlement automatically, and the same completion awards the hidden `journal/top_zone_tame` discovery advancement. A zone-1 creature never grants the map, however it is transported later. Operators can still grant or revoke access for testing:
 
 ```text
 /arkmap unlock
@@ -92,7 +92,7 @@ The build, 41 JUnit tests, all 40 headless GameTests, installer checksum checks,
 
 No interactive client was launched. Check these in the normal launcher:
 
-1. With the default development settings, M opens immediately. To test the progression gate, enable `progression.mapRequiresUnlock` and restart/rejoin; `/arkmap unlock` grants access, `/arkmap lock` revokes it, and taming a creature from a rank-5 region grants it through normal play.
+1. With the default development settings, M opens immediately. To test the progression gate, enable `progression.mapRequiresUnlock` and restart/rejoin; `/arkmap unlock` grants access, `/arkmap lock` revokes it, and taming a creature from a zone-3 region grants it through normal play.
 2. Toggle Difficulty on and off. Confirm only explored map receives the tint, including after exploring more terrain without moving the map camera. Compare the cursor's difficulty with the biome announcement at the same coordinates, including negative coordinates. Pan, zoom and change viewed dimensions; inspect the legend against Xaero controls.
 3. With the progression gate enabled, reconnect and respawn: the saved unlock survives. A second player stays locked until independently granted access.
 4. Enable the shader pack and inspect dinosaur materials, water, shadows and frame rate. Confirm warning calls remain audible with both sound mods enabled.

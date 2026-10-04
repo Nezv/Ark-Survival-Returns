@@ -61,28 +61,28 @@ public final class CreatureProfileRegistry {
 
         // -------------------------------- knockout: small terrestrial carnivores (120 s each)
         add(Species.DILOPHOSAUR, TamingMethod.KNOCKOUT, 120, MEAT, () -> Items.RABBIT, 1.0);
-        add(Species.DIREWOLF, TamingMethod.KNOCKOUT, 120, MEAT, () -> Items.MUTTON, 1.0);
-        add(Species.SABERTOOTH, TamingMethod.KNOCKOUT, 120, MEAT, () -> Items.BEEF, 1.0);
-        add(Species.RAVAGER, TamingMethod.KNOCKOUT, 120, MEAT, () -> Items.PORKCHOP, 1.0);
-        add(Species.TERRORBIRD, TamingMethod.KNOCKOUT, 120, MEAT, () -> Items.CHICKEN, 1.0);
+        add(Species.DIREWOLF, TamingMethod.KNOCKOUT, 120, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.GAME), 1.0);
+        add(Species.SABERTOOTH, TamingMethod.KNOCKOUT, 120, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.GAME), 1.0);
+        add(Species.RAVAGER, TamingMethod.KNOCKOUT, 120, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.GAME), 1.0);
+        add(Species.TERRORBIRD, TamingMethod.KNOCKOUT, 120, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.HERBIVORE), 1.0);
 
         // ------------------------------ knockout: medium terrestrial carnivores (210 s each)
-        add(Species.VELOCIRAPTOR, TamingMethod.KNOCKOUT, 210, MEAT, () -> Items.MUTTON, 1.0);
-        add(Species.ALLOSAURUS, TamingMethod.KNOCKOUT, 210, MEAT, () -> Items.BEEF, 1.0);
-        add(Species.CARNOTAURUS, TamingMethod.KNOCKOUT, 210, MEAT, () -> Items.PORKCHOP, 1.0);
-        add(Species.CERATOSAURUS, TamingMethod.KNOCKOUT, 210, MEAT, () -> Items.CHICKEN, 1.0);
-        add(Species.TITANOBOA, TamingMethod.KNOCKOUT, 210, MEAT, () -> Items.CHICKEN, 1.0);
+        add(Species.VELOCIRAPTOR, TamingMethod.KNOCKOUT, 210, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.HERBIVORE), 1.0);
+        add(Species.ALLOSAURUS, TamingMethod.KNOCKOUT, 210, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.HERBIVORE), 1.0);
+        add(Species.CARNOTAURUS, TamingMethod.KNOCKOUT, 210, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.HERBIVORE), 1.0);
+        add(Species.CERATOSAURUS, TamingMethod.KNOCKOUT, 210, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.REPTILE), 1.0);
+        add(Species.TITANOBOA, TamingMethod.KNOCKOUT, 210, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.BIRD), 1.0);
         add(Species.MEGAPITHECUS, TamingMethod.KNOCKOUT, 210, PLANTS_AND_MEAT, () -> Items.APPLE, 0.85);
 
         // ------------------------------- knockout: shoreline predators, meat and fish (210 s each)
         add(Species.KAPROSUCHUS, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, () -> Items.RABBIT, 0.85);
-        add(Species.SARCO, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, () -> Items.PORKCHOP, 1.0);
-        add(Species.DEINOSUCHUS, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, () -> Items.MUTTON, 0.85);
+        add(Species.SARCO, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.HERBIVORE), 1.0);
+        add(Species.DEINOSUCHUS, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.CARNIVORE), 0.85);
 
         // -------------------------------------------- knockout: large terrestrial carnivores (360 s)
-        add(Species.TYRANNOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, () -> Items.BEEF, 0.8);
-        add(Species.GIGANOTOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, () -> Items.BEEF, 0.7);
-        add(Species.ACROCANTHOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, () -> Items.BEEF, 0.75);
+        add(Species.TYRANNOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.PRIME), 0.8);
+        add(Species.GIGANOTOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.PRIME), 0.7);
+        add(Species.ACROCANTHOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT, meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat.PRIME), 0.75);
         add(Species.SPINOSAURUS, TamingMethod.KNOCKOUT, 360, MEAT_AND_FISH, () -> Items.SALMON, 0.8);
 
         // ---------------------------- explicit per-species aquatic decisions; never the aerial rule
@@ -96,6 +96,11 @@ public final class CreatureProfileRegistry {
         for (Species species : Species.values())
             if (!PROFILES.containsKey(species))
                 throw new IllegalStateException("Missing taming profile for registered creature: " + species.id);
+    }
+
+    /** A dinosaur meat: farm animals are gone, so every favourite comes from a carcass or the land. */
+    private static Supplier<Item> meat(dev.nez.arksurvivalreturns.feature.primitive.DinoMeat kind) {
+        return () -> dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.RAW_MEAT.get(kind).get();
     }
 
     private static Supplier<Item> berry(String id) {

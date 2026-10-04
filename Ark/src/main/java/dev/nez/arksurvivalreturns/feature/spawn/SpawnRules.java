@@ -71,7 +71,7 @@ public final class SpawnRules {
         return placement(type, world, pos) == Placement.OK;
     }
     /** Why a land placement was accepted or refused; also the diagnostic vocabulary of {@code /arkwildlife}. */
-    public enum Placement { OK, CONFIG, LOADED, BOUNDS, FLUID, DANGER, SHELTER, FOOTPRINT, CLEARANCE }
+    public enum Placement { OK, CONFIG, LOADED, BOUNDS, FLUID, DANGER, FOOTPRINT, CLEARANCE }
     /**
      * Ordered funnel for land species. The vanilla spawner, the population budget and the operator
      * diagnostic all read the same reasons, so a report of "stuck on clearance" is the real predicate.
@@ -88,7 +88,6 @@ public final class SpawnRules {
                 || pos.getY() < level.getMinY() + 1 || box.maxY >= level.getMaxY()) return Placement.BOUNDS;
         if (!world.getFluidState(pos).isEmpty()) return Placement.FLUID;
         if (!speciesAllowed(species, world.getBiome(pos), ProgressionData.dangerAt(level, pos))) return Placement.DANGER;
-        if (!TreeShelter.spawnAllowed(world, species, pos)) return Placement.SHELTER;
         if (!groundFits(world, species, pos, box)) return Placement.FOOTPRINT;
         return clearForBody(world, species, box) ? Placement.OK : Placement.CLEARANCE;
     }

@@ -319,7 +319,7 @@ public final class ArkGameTests {
         var biomes = world.registryAccess().lookupOrThrow(Registries.BIOME);
         for (var biome : biomes.listElements().toList()) {
             h.assertTrue(SpawnRules.speciesAllowed(Species.PTERANODON, biome, 1), "Biome has no starter wildlife: " + biome);
-            for (var species : Species.values()) for (int danger = 1; danger <= 5; danger++) {
+            for (var species : Species.values()) for (int danger = 1; danger <= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES; danger++) {
                 h.assertTrue(SpawnRules.speciesAllowed(species, biome, danger) == (danger >= species.minimumDanger()), "Displayed danger and eligibility disagree: " + species);
             }
         }
@@ -353,12 +353,12 @@ public final class ArkGameTests {
         var animals = new java.util.ArrayList<CreatureEntity>();
         try {
             world.getDataStorage().set(ProgressionData.TYPE, new ProgressionData(viewer.getX() - 512, viewer.getZ(), 256, true));
-            h.assertTrue(DangerTier.at(world, viewer).dangerLevel() == 5, "Fixture is not danger 5");
+            h.assertTrue(DangerTier.at(world, viewer).dangerLevel() == 3, "Fixture is not danger 3");
             var trike = ModContent.CREATURES.get(Species.TRICERATOPS).get();
-            h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer, world.getRandom()), "Valid danger-5 trike spawn rejected");
+            h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer, world.getRandom()), "Valid danger-3 trike spawn rejected");
             h.assertTrue(SpawnRules.canSpawn(trike, world, EntitySpawnReason.NATURAL, viewer.above(4), world.getRandom()) == false, "Covered spawn accepted");
             h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(viewer), 1), "Apex allowed at danger 1");
-            h.assertTrue(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(viewer), 5), "Apex rejected at danger 5");
+            h.assertTrue(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(viewer), 3), "Apex rejected at danger 3");
             // A vanilla spawn cluster shares one pack identity and stays inside the local level band.
             var difficulty = world.getCurrentDifficultyAt(viewer);
             net.minecraft.world.entity.SpawnGroupData pack = null;
@@ -389,35 +389,35 @@ public final class ArkGameTests {
         raptor.setNoGravity(true);
         raptor.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 2, 8))));
         world.addFreshEntity(raptor);
-        var pig = net.minecraft.world.entity.EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
-        pig.setNoAi(true);
-        pig.setNoGravity(true);
-        pig.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);
-        pig.setHealth(1000);
-        pig.setPos(raptor.position().add(0, 0, 1.5));
-        world.addFreshEntity(pig);
+        var llama = net.minecraft.world.entity.EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND);
+        llama.setNoAi(true);
+        llama.setNoGravity(true);
+        llama.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);
+        llama.setHealth(1000);
+        llama.setPos(raptor.position().add(0, 0, 1.5));
+        world.addFreshEntity(llama);
         var clips = CreatureAttackClips.of(Species.VELOCIRAPTOR);
         int hitDelay = (int)Math.round(clips.attackTicks() * Config.COMBAT_HIT_FRACTION.get());
         int cooldown = clips.attackTicks() + (int)Math.round(clips.attackTicks() * Config.COMBAT_RECOVERY_FRACTION.get());
-        float before = pig.getHealth();
+        float before = llama.getHealth();
         float[] baseline = {before};
-        h.assertTrue(raptor.strike(pig), "Raptor strike was rejected");
-        h.assertTrue(pig.getHealth() == before, "Damage landed before the wind-up");
-        h.runAfterDelay(hitDelay - 1, () -> h.assertTrue(pig.getHealth() == before, "Damage landed before the hit frame"));
+        h.assertTrue(raptor.strike(llama), "Raptor strike was rejected");
+        h.assertTrue(llama.getHealth() == before, "Damage landed before the wind-up");
+        h.runAfterDelay(hitDelay - 1, () -> h.assertTrue(llama.getHealth() == before, "Damage landed before the hit frame"));
         h.runAfterDelay(hitDelay + 2, () -> {
-            h.assertTrue(pig.getHealth() < baseline[0], "The bite never landed on its hit frame");
-            baseline[0] = pig.getHealth();
+            h.assertTrue(llama.getHealth() < baseline[0], "The bite never landed on its hit frame");
+            baseline[0] = llama.getHealth();
             h.assertFalse(raptor.canStrike(), "Attack cooldown ended with the clip");
         });
         h.runAfterDelay(cooldown + 4, () -> {
             h.assertTrue(raptor.canStrike(), "Attack cooldown never ended");
             // Within sight but out of melee reach: the wind-up starts, the hit has to whiff.
-            pig.setPos(raptor.position().add(0, 0, 6));
-            h.assertTrue(raptor.strike(pig), "Out-of-reach wind-up was rejected (line of sight is clear)");
+            llama.setPos(raptor.position().add(0, 0, 6));
+            h.assertTrue(raptor.strike(llama), "Out-of-reach wind-up was rejected (line of sight is clear)");
         });
         h.runAfterDelay(cooldown + 4 + clips.attackTicks() + 2, () -> {
-            h.assertTrue(pig.getHealth() == baseline[0], "A whiffed swing still landed damage");
-            raptor.discard(); pig.discard();
+            h.assertTrue(llama.getHealth() == baseline[0], "A whiffed swing still landed damage");
+            raptor.discard(); llama.discard();
             h.succeed();
         });
     }
@@ -432,7 +432,7 @@ public final class ArkGameTests {
         predator.wildlife().mind().restoreNeeds(0.8, 0.1, 0.1);
         predator.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(5, 2, 4))));
         predator.setYRot(0); predator.yBodyRot = 0; predator.yHeadRot = 0; predator.setOnGround(true);
-        var prey = net.minecraft.world.entity.EntityType.PIG.create(world, EntitySpawnReason.COMMAND);
+        var prey = net.minecraft.world.entity.EntityType.LLAMA.create(world, EntitySpawnReason.COMMAND);
         prey.setNoAi(true);
         prey.setPos(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(5, 2, 12))));
         world.addFreshEntity(predator); world.addFreshEntity(prey);

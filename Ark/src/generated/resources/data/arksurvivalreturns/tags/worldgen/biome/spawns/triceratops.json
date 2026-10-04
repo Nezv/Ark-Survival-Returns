@@ -6,6 +6,7 @@
     "minecraft:dark_forest",
     "minecraft:flower_forest",
     "minecraft:forest",
+    "minecraft:mangrove_swamp",
     "minecraft:meadow",
     "minecraft:old_growth_birch_forest",
     "minecraft:pale_garden",
@@ -13,6 +14,7 @@
     "minecraft:savanna",
     "minecraft:savanna_plateau",
     "minecraft:sunflower_plains",
+    "minecraft:swamp",
     "minecraft:windswept_forest",
     "minecraft:windswept_savanna",
     {
@@ -77,6 +79,10 @@
     },
     {
       "id": "terralith:moonlight_valley",
+      "required": false
+    },
+    {
+      "id": "terralith:orchid_swamp",
       "required": false
     },
     {

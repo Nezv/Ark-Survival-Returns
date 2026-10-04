@@ -1,10 +1,13 @@
 {
   "replace": false,
   "values": [
+    "minecraft:badlands",
     "minecraft:bamboo_jungle",
     "minecraft:birch_forest",
     "minecraft:cherry_grove",
     "minecraft:dark_forest",
+    "minecraft:desert",
+    "minecraft:eroded_badlands",
     "minecraft:flower_forest",
     "minecraft:forest",
     "minecraft:jungle",
@@ -18,12 +21,17 @@
     "minecraft:windswept_forest",
     "minecraft:windswept_gravelly_hills",
     "minecraft:windswept_hills",
+    "minecraft:wooded_badlands",
     {
       "id": "terralith:amethyst_canyon",
       "required": false
     },
     {
       "id": "terralith:amethyst_rainforest",
+      "required": false
+    },
+    {
+      "id": "terralith:ancient_sands",
       "required": false
     },
     {
@@ -39,11 +47,27 @@
       "required": false
     },
     {
+      "id": "terralith:bryce_canyon",
+      "required": false
+    },
+    {
       "id": "terralith:caldera",
       "required": false
     },
     {
       "id": "terralith:cloud_forest",
+      "required": false
+    },
+    {
+      "id": "terralith:desert_canyon",
+      "required": false
+    },
+    {
+      "id": "terralith:desert_oasis",
+      "required": false
+    },
+    {
+      "id": "terralith:desert_spires",
       "required": false
     },
     {
@@ -75,11 +99,23 @@
       "required": false
     },
     {
+      "id": "terralith:lush_desert",
+      "required": false
+    },
+    {
       "id": "terralith:moonlight_grove",
       "required": false
     },
     {
       "id": "terralith:moonlight_valley",
+      "required": false
+    },
+    {
+      "id": "terralith:painted_mountains",
+      "required": false
+    },
+    {
+      "id": "terralith:red_oasis",
       "required": false
     },
     {
@@ -92,6 +128,14 @@
     },
     {
       "id": "terralith:sakura_valley",
+      "required": false
+    },
+    {
+      "id": "terralith:sandstone_valley",
+      "required": false
+    },
+    {
+      "id": "terralith:savanna_badlands",
       "required": false
     },
     {
@@ -115,7 +159,15 @@
       "required": false
     },
     {
+      "id": "terralith:warped_mesa",
+      "required": false
+    },
+    {
       "id": "terralith:white_cliffs",
+      "required": false
+    },
+    {
+      "id": "terralith:white_mesa",
       "required": false
     },
     {

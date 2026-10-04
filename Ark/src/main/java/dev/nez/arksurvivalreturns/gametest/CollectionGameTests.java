@@ -48,7 +48,7 @@ final class CollectionGameTests {
                     "Missing role clip: " + species);
             h.assertTrue(CreatureAttackClips.of(species) != null && CreatureAttackClips.of(species).attackTicks() > 0,
                     "Missing melee timing: " + species);
-            h.assertTrue(species.minimumDanger() >= 1 && species.minimumDanger() <= 5, "Danger outside 1-5: " + species);
+            h.assertTrue(species.minimumDanger() >= 1 && species.minimumDanger() <= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES, "Danger outside 1-3: " + species);
             h.assertTrue(species.eyeBones().length == 0 || species.eyeBones().length == 2, "Eye bones must be empty or a pair: " + species);
             switch (species.realm()) {
                 case AIR -> {

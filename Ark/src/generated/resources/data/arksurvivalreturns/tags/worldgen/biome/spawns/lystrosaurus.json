@@ -7,7 +7,10 @@
     "minecraft:eroded_badlands",
     "minecraft:savanna",
     "minecraft:savanna_plateau",
+    "minecraft:stony_peaks",
     "minecraft:stony_shore",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:windswept_hills",
     "minecraft:windswept_savanna",
     "minecraft:wooded_badlands",
     {
@@ -23,7 +26,15 @@
       "required": false
     },
     {
+      "id": "terralith:basalt_cliffs",
+      "required": false
+    },
+    {
       "id": "terralith:bryce_canyon",
+      "required": false
+    },
+    {
+      "id": "terralith:caldera",
       "required": false
     },
     {
@@ -43,7 +54,15 @@
       "required": false
     },
     {
+      "id": "terralith:granite_cliffs",
+      "required": false
+    },
+    {
       "id": "terralith:gravel_beach",
+      "required": false
+    },
+    {
+      "id": "terralith:haze_mountain",
       "required": false
     },
     {
@@ -79,6 +98,10 @@
       "required": false
     },
     {
+      "id": "terralith:stony_spires",
+      "required": false
+    },
+    {
       "id": "terralith:volcanic_crater",
       "required": false
     },
@@ -91,11 +114,23 @@
       "required": false
     },
     {
+      "id": "terralith:white_cliffs",
+      "required": false
+    },
+    {
       "id": "terralith:white_mesa",
       "required": false
     },
     {
+      "id": "terralith:windswept_spires",
+      "required": false
+    },
+    {
       "id": "terralith:yellowstone",
+      "required": false
+    },
+    {
+      "id": "terralith:yosemite_cliffs",
       "required": false
     }
   ]
