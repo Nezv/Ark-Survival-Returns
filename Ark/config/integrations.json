@@ -190,11 +190,25 @@
           "license": "Complementary custom license",
           "source": "https://github.com/ComplementaryDevelopment/ComplementaryReimagined",
           "build": "shader"
+        },
+        {
+          "project": "photon-shader",
+          "arkName": "Photon Shaders",
+          "license": "Photon Shaders License (All Rights Reserved)",
+          "source": "https://github.com/sixthsurge/photon",
+          "build": "shader"
+        },
+        {
+          "project": "grassier-grass",
+          "arkName": "Ark - Grassier Grass",
+          "license": "All Rights Reserved",
+          "source": "closed",
+          "build": "release"
         }
       ],
-      "uses": "Sodium renders chunks and Iris loads shader packs. Bliss 2.1.2 is the configured prehistoric default; Complementary remains available as fallback.",
+      "uses": "Sodium renders chunks and Iris loads shader packs. Bliss 2.1.2 is the configured prehistoric default; Complementary remains available as fallback. On trial for a denser, ARK-like ambiance: Photon 1.3b (stock settings) and Grassier Grass 1.4.5, which draws wind-blown 3D blades on grass blocks and supports Iris.",
       "changed": "Authored Iris and Bliss defaults: dawn mist, biome fog, warm camp light, restrained water and bloom, 2048 shadows at 128 blocks, moderate clouds, no motion blur or depth of field. Installer and client preparation seed defaults; explicit reset backs up settings; Modrinth client overrides ship them.",
-      "next": "In-client visual and FPS validation on RTX 3050 6 GB; P12 CPU/GPU profiling and Sodium/DH distance tuning remain outstanding."
+      "next": "In-client comparison of Photon + Grassier Grass against Bliss (look, shader compile, FPS on RTX 3050 6 GB); if Photon wins, author its preset and make it the shipped default. P12 CPU/GPU profiling and Sodium/DH distance tuning remain outstanding."
     },
     {
       "id": "I07",
@@ -253,8 +267,8 @@
           "note": "Client-only in the pack: LODs are drawn on the client, and its server hook assumes a dedicated server (it crashes the headless GameTest server)."
         }
       ],
-      "uses": "Tectonic reshapes terrain (with built-in Terralith support), Terralith adds 95 biomes, and Lithostitched is their shared worldgen library. Distant Horizons draws far-away terrain as low-detail LODs on the client.",
-      "changed": "Ark maps every Terralith biome to its closest vanilla analog, so Terralith biomes get Ark creature spawns and a difficulty tier (optional tag entries, safe without Terralith). Danger zones are coordinate-based and work unchanged. Jars are only rebranded.",
+      "uses": "Tectonic reshapes terrain (with built-in Terralith support), Terralith supplies 90 of the pack's 127 active Overworld biomes, and Lithostitched is their shared worldgen library. Distant Horizons draws far-away terrain as low-detail LODs on the client.",
+      "changed": "Ark maps Terralith biomes to vanilla habitat analogs for creature spawns. Generated Lithostitched replacements exclude 22 requested biomes from new Overworld terrain, including all four Skylands and Alpha Islands; Alpha Islands Winter remains. Existing chunks and their habitat tags are retained. The biome showcase reads the same generated removal list. Danger zones remain coordinate-based. Third-party jars are only rebranded.",
       "next": "Tune DH together with shaders (I06). In-client check of spawn density in Terralith biomes."
     },
     {

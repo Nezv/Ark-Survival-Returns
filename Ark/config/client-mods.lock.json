@@ -1,7 +1,7 @@
 {
   "minecraft": "26.1.2",
   "loader": "neoforge",
-  "verified": "2026-09-25",
+  "verified": "2026-10-03",
   "entries": [
     {
       "project": "xaeros-world-map",
@@ -112,6 +112,28 @@
       "size": 1791406,
       "kind": "shader",
       "source": "https://modrinth.com/shader/bliss-shader"
+    },
+    {
+      "project": "photon-shader",
+      "version": "v1.3b",
+      "versionId": "gUv7fBPN",
+      "filename": "photon_v1.3b.zip",
+      "url": "https://cdn.modrinth.com/data/lLqFfGNs/versions/gUv7fBPN/photon_v1.3b.zip",
+      "sha512": "40bcbac9c656f2965f543e4b35cd0698723b2db8b67662f1b53c14223cfbef7d60d7fbf0176f73fcadd0d1e19ba60d951ed77e9eece8c8df7dca4d2be6315309",
+      "size": 3800987,
+      "kind": "shader",
+      "source": "https://modrinth.com/shader/photon-shader"
+    },
+    {
+      "project": "grassier-grass",
+      "version": "1.4.5",
+      "versionId": "eE7P5jGx",
+      "filename": "grassiergrass-neoforge-1.4.5+mc26.1.2.jar",
+      "url": "https://cdn.modrinth.com/data/3jCB9cn2/versions/eE7P5jGx/grassiergrass-neoforge-1.4.5%2Bmc26.1.2.jar",
+      "sha512": "92cf91460f34ab23006edba996c3d432d019dade86839d4b8deed7f26badea2e810d534c171cfe48c468890794bb8e3986ce6f60ee2bed477bcf7ac4ec65560d",
+      "size": 2325468,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/grassier-grass"
     }
   ]
 }
