@@ -6,13 +6,19 @@ still target them) and a separate bone tree is added under the skull:
 
     ark_eyes                        rest rotation cancels the skull's, so the eyes sit world-aligned
       ark_eye_calm                  predatory (carnivore) or calm (herbivore) lids
-        ark_eyeball_calm_l / _r     eyeballs, also used by the night-glow layer
+        ark_eyeball_calm_l / _r     eyeballs
       ark_eye_alert                 the attacking/defending variant, hidden unless the creature is alarmed
         ark_eyeball_alert_l / _r
 
 Eye art lives in a strip appended below each variant atlas, so body UVs never move. CreatureRenderer
 switches the two groups from the synced behaviour state.
+
+Big carnivores and raptors (HUNTING_EYES) also get <id>_eyes.png, the texture of their red hunting eyes:
+the vanilla spider's method, a sheet the size of the atlas that is transparent except for the irises, drawn
+over the model with the eyes render type (client/HuntingEyesLayer). Run this file to rewrite those sheets
+from the imported geometry without a full import.
 """
+import json
 import math
 import re
 from pathlib import Path
@@ -27,6 +33,9 @@ STRIP = 16                                       # rows appended below each atla
 ROUND_PUPIL = {'direwolf', 'sabertooth', 'ravager', 'mammoth', 'megalocerus', 'paraceratherium', 'unicorn',
                'megapithecus', 'argentavis', 'terrorbird', 'archaeopteryx'}
 BLACK_EYE = {'megalodon'}
+# Eyes that burn red while hunting; the same species as Species.glowingEyes() (CollectionGameTests checks it).
+HUNTING_EYES = {'tyrannosaurus', 'giganotosaurus', 'spinosaurus', 'ceratosaurus', 'acrocanthosaurus', 'carnotaurus',
+                'velociraptor'}
 
 # Expression per state: upper-lid cover (share of the eye), brow slant (degrees, + lowers the snout end),
 # lower-lid cover, and lid thickness (share of eye height).
@@ -42,7 +51,7 @@ SPECIES_JAVA = Path(__file__).resolve().parents[1] / 'src/main/java/dev/nez/arks
 
 
 def predators():
-    """Species ids whose `predator` flag is set in Species.java, the flag that also drives the night glow."""
+    """Species ids whose `predator` flag is set in Species.java."""
     source = SPECIES_JAVA.read_text(encoding='utf-8')
     pattern = re.compile(r'^\s+[A-Z_]+\("(\w+)",\s*"[^"]*",(?:[^,]+,){8}\s*(true|false)', re.M)
     return {m.group(1) for m in pattern.finditer(source) if m.group(2) == 'true'}
@@ -221,6 +230,17 @@ def density(bones):
     return float(np.median(ratios)) if ratios else 1.0
 
 
+def predator_pupil(width, height, state, pupil):
+    """Pixels of a carnivore's pupil: a vertical slit or a disc, narrower when alert."""
+    y, x = np.mgrid[0:height, 0:width]
+    cx, cy = (width - 1) / 2, (height - 1) / 2
+    if pupil == 'slit':
+        half = max(.5, width * (.09 if state == 'calm' else .05))
+        return (np.abs(x - cx) <= half) & (np.abs(y - cy) <= height * .42)
+    r = np.sqrt(((x - cx) / (width / 2)) ** 2 + ((y - cy) / (height / 2)) ** 2)
+    return r <= (.34 if state == 'calm' else .24)
+
+
 def sprite(width, height, diet, state, pupil, front_left):
     """The eye face: iris, pupil and highlight in whole pixels; transparent corners read as socket."""
     y, x = np.mgrid[0:height, 0:width]
@@ -235,11 +255,7 @@ def sprite(width, height, diet, state, pupil, front_left):
     elif diet == 'predator':
         inner, outer = (rgb('#f0b43a'), rgb('#9a5d12')) if state == 'calm' else (rgb('#ff7a2e'), rgb('#a8260f'))
         image[eye] = (inner * (1 - np.clip(r, 0, 1))[..., None] + outer * np.clip(r, 0, 1)[..., None])[eye]
-        if pupil == 'slit':
-            half = max(.5, width * (.09 if state == 'calm' else .05))
-            image[eye & (np.abs(x - cx) <= half) & (np.abs(y - cy) <= height * .42)] = rgb('#120d0a')
-        else:
-            image[eye & (r <= (.34 if state == 'calm' else .24))] = rgb('#120d0a')
+        image[eye & predator_pupil(width, height, state, pupil)] = rgb('#120d0a')
     else:
         if state == 'alert':
             image[eye] = rgb('#e3d9c6')                      # white shows around a startled iris
@@ -253,6 +269,27 @@ def sprite(width, height, diet, state, pupil, front_left):
         hx = int(round(cx - width * .22)) if front_left else int(round(cx + width * .22))
         image[max(0, int(cy - height * .25)), min(width - 1, max(0, hx))] = rgb('#f2eee4')
     return image.astype(np.uint8)
+
+
+def glow_sprite(width, height, state, pupil):
+    """The same eye face for the hunting glow: the iris in spider-eye red, pupil and socket transparent."""
+    y, x = np.mgrid[0:height, 0:width]
+    cx, cy = (width - 1) / 2, (height - 1) / 2
+    r = np.sqrt(((x - cx) / (width / 2)) ** 2 + ((y - cy) / (height / 2)) ** 2)
+    image = np.zeros((height, width, 4))
+    iris = (r <= 1.08) & ~predator_pupil(width, height, state, pupil)
+    blend = np.clip(r, 0, 1)[..., None]
+    image[..., :3] = rgb('#ff5a44') * (1 - blend) + rgb('#d01212') * blend
+    image[..., 3] = iris * 255
+    return image.astype(np.uint8)
+
+
+def hunting_eyes(width, height, sprites, pupil):
+    """The eyes texture of a hunter: its four irises in red on a transparent sheet the size of the atlas."""
+    pixels = np.zeros((height, width, 4), np.uint8)
+    for (state, _), (u, v, w, h) in sprites.items():
+        pixels[v:v + h, u:u + w] = glow_sprite(w, h, state, pupil)
+    return Image.fromarray(pixels)
 
 
 def skin_colour(bones, atlas):
@@ -290,7 +327,10 @@ def face_uv(rect):
 
 
 def add_eyes(identifier, geometry, atlases, predator):
-    """Add the eye bones to one imported geometry and the eye strip to its variant atlases (in place)."""
+    """Add the eye bones to one imported geometry and the eye strip to its variant atlases (in place).
+
+    A hunter's eyes texture comes back with the atlases, under the name 'eyes'.
+    """
     model = geometry['minecraft:geometry'][0]
     bones = model['bones']
     if identifier in NO_EYES:
@@ -388,4 +428,27 @@ def add_eyes(identifier, geometry, atlases, predator):
         pixels[v:v + h, u:u + w, :3] = np.clip(tone * .9 + shades[..., None], 0, 255)
         pixels[v:v + h, u:u + w, 3] = 255
         result[variant] = Image.fromarray(pixels)
+    if identifier in HUNTING_EYES:
+        result['eyes'] = hunting_eyes(width, base + STRIP, sprites, pupil)
     return result
+
+
+def main():
+    assets = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/arksurvivalreturns'
+    for identifier in sorted(HUNTING_EYES):
+        model = json.loads((assets / f'geckolib/models/entity/{identifier}.geo.json').read_text())['minecraft:geometry'][0]
+        sprites = {}
+        for bone in model['bones']:
+            if bone['name'].startswith('ark_eyeball_'):
+                face = bone['cubes'][0]['uv']['east']
+                sprites[tuple(bone['name'].split('_')[2:])] = (*face['uv'], *face['uv_size'])
+        assert len(sprites) == 4, f'{identifier}: {len(sprites)} eyeballs in the imported geometry'
+        desc = model['description']
+        pupil = 'round' if identifier in ROUND_PUPIL else 'slit'
+        hunting_eyes(desc['texture_width'], desc['texture_height'], sprites, pupil).save(
+            assets / f'textures/entity/{identifier}_eyes.png')
+    print(f'Wrote the hunting eyes of {len(HUNTING_EYES)} species.')
+
+
+if __name__ == '__main__':
+    main()

@@ -397,7 +397,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         overloadWarnedAt = tickCount;
         return true;
     }
-    public float nightEyeGlow(float partialTick) { return previousEyeGlow + (eyeGlow - previousEyeGlow) * partialTick; }
+    /** The hunting state behind the red eyes: the night's hunt of the daily schedule, or a pursuit at any hour. */
+    public boolean hunting() { return nightActive() || behavior() == BehaviorState.HUNT; }
+    public float huntingEyeGlow(float partialTick) { return previousEyeGlow + (eyeGlow - previousEyeGlow) * partialTick; }
     /** The animation-timed step inside the current behaviour state; synchronized for the clip choice. */
     public BehaviorAction action() {
         return BehaviorAction.values()[Math.clamp(entityData.get(ACTION), 0, BehaviorAction.values().length - 1)];
@@ -676,7 +678,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (!species.flyer()) {
             if (level().isClientSide()) {
                 previousEyeGlow = eyeGlow;
-                float target = nightActive() && isAlive() && !behavior().sleeping() ? 1 : 0;
+                float target = hunting() && isAlive() && !behavior().sleeping() ? 1 : 0;
                 eyeGlow += Math.clamp(target - eyeGlow, -0.05f, 0.05f);
             } else if (WildlifeSenses.hasNightCycle(this) && species.sleeps() && behavior().sleeping()
                     && (isInWater() || isInLava() || isOnFire() || !onGround())) wildlife().interruptSleep();

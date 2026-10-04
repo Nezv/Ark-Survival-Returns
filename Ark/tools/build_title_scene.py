@@ -429,11 +429,10 @@ BUTTONS = [
     ('forge_titlescreen_mods_button', 24, 32, 164, 20),
     ('mc_titlescreen_options_button', 24, 62, 80, 20),
     ('mc_titlescreen_quit_button', 108, 62, 80, 20),
-    ('mc_titlescreen_language_button', 192, 62, 20, 20),
-    ('mc_titlescreen_accessibility_button', 216, 62, 20, 20),
 ]
-HIDDEN = ['mc_titlescreen_realms_button', 'minecraft_logo_widget', 'minecraft_splash_widget',
-          'minecraft_realms_notification_icons_widget']
+# Language and accessibility stay reachable through Options.
+HIDDEN = ['mc_titlescreen_language_button', 'mc_titlescreen_accessibility_button', 'mc_titlescreen_realms_button',
+          'minecraft_logo_widget', 'minecraft_splash_widget', 'minecraft_realms_notification_icons_widget']
 
 
 def shader(name):

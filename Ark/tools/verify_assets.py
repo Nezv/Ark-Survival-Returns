@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
 from verify_camp_assets import verify_camp_assets
-from build_creature_eyes import NO_EYES
+from build_creature_eyes import NO_EYES, HUNTING_EYES
 from import_creatures import ROOT, ASSETS, SPECIES, source_files, with_behavior_clips
 
 # Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
@@ -46,7 +46,7 @@ def check_creature(folder, identifier, height, clips, report, check, fail):
     if 'Ark-Sleep' in clips:
         check(anim['Ark-Sleep']['loop'] and anim['Ark-Sleep']['animation_length'] == 4,
               f'{identifier}: Ark-Sleep must loop for four seconds')
-    # Every generated eyeball must exist and carry geometry: the renderer shows it and the night layer lights it.
+    # Every generated eyeball must exist and carry geometry: the renderer shows it and the hunting eyes light it.
     for name in eye_bones(identifier):
         eye = next((b for b in geo['bones'] if b['name'] == name), None)
         check(eye is not None, f'Missing eye geometry: {identifier}/{name}')
@@ -62,6 +62,13 @@ def check_creature(folder, identifier, height, clips, report, check, fail):
             continue
         with Image.open(path) as image:
             check(image.size == expected, f'{path.name}: {image.size}, expected {expected}')
+    # The red eyes of a hunter are drawn over the model with its UVs, so the sheet has the atlas size.
+    eyes = ASSETS/f'textures/entity/{identifier}_eyes.png'
+    check(eyes.is_file() == (identifier in HUNTING_EYES), f'{eyes.name}: only the hunters of build_creature_eyes get one')
+    if eyes.is_file():
+        with Image.open(eyes) as image:
+            check(image.mode == 'RGBA' and image.size == expected, f'{eyes.name}: {image.mode} {image.size}, expected RGBA {expected}')
+            check(image.getextrema()[3] == (0, 255), f'{eyes.name}: alpha range {image.getextrema()[3]}')
     palette = ASSETS/f'textures/entity/{identifier}.png'
     if not palette.is_file():
         fail(f'Missing preview palette: {palette.name}')

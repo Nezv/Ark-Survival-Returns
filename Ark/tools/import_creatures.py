@@ -146,7 +146,7 @@ def source_files(folder):
     return geometry, animation, files
 
 
-# Carnivores get predatory eyes and the night glow: the predator flag in Species.java.
+# Carnivores get predatory eyes: the predator flag in Species.java.
 PREDATORS = predators()
 
 

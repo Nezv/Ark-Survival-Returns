@@ -190,25 +190,13 @@ vanilla_button {
 vanilla_button {
   element_type = vanilla_button
   instance_identifier = mc_titlescreen_language_button
-  anchor_point = mid-left
-  x = 192
-  y = 62
-  width = 20
-  height = 20
-  stay_on_screen = true
-  is_hidden = false
+  is_hidden = true
 }
 
 vanilla_button {
   element_type = vanilla_button
   instance_identifier = mc_titlescreen_accessibility_button
-  anchor_point = mid-left
-  x = 216
-  y = 62
-  width = 20
-  height = 20
-  stay_on_screen = true
-  is_hidden = false
+  is_hidden = true
 }
 
 vanilla_button {

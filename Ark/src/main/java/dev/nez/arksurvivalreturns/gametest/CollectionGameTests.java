@@ -50,6 +50,8 @@ final class CollectionGameTests {
                     "Missing melee timing: " + species);
             h.assertTrue(species.minimumDanger() >= 1 && species.minimumDanger() <= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES, "Danger outside 1-3: " + species);
             h.assertTrue(species.eyeBones().length == 0 || species.eyeBones().length == 2, "Eye bones must be empty or a pair: " + species);
+            h.assertTrue(species.glowingEyes() == (CollectionGameTests.class.getResource("/assets/arksurvivalreturns/textures/entity/"
+                    + species.id + "_eyes.png") != null), "Hunting eyes texture does not match the species that glow: " + species);
             switch (species.realm()) {
                 case AIR -> {
                     h.assertTrue(species.flyer() && species.flyerProfile() != null, "AIR species needs a flight policy: " + species);

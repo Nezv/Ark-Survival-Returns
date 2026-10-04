@@ -115,14 +115,14 @@ class TitleLayoutTest {
         Map<String, Container> buttons = new LinkedHashMap<>();
         for (Container c : layout()) if (c.type().equals("vanilla_button")) buttons.put(c.get("instance_identifier"), c);
         for (String id : List.of("mc_titlescreen_singleplayer_button", "mc_titlescreen_multiplayer_button",
-                "forge_titlescreen_mods_button", "mc_titlescreen_options_button", "mc_titlescreen_quit_button",
-                "mc_titlescreen_language_button", "mc_titlescreen_accessibility_button")) {
+                "forge_titlescreen_mods_button", "mc_titlescreen_options_button", "mc_titlescreen_quit_button")) {
             Container button = buttons.get(id);
             assertNotNull(button, id);
             assertEquals("mid-left", button.get("anchor_point"), id);
             assertEquals("false", button.get("is_hidden"), id);
         }
-        for (String id : List.of("mc_titlescreen_realms_button", "minecraft_logo_widget", "minecraft_splash_widget")) {
+        for (String id : List.of("mc_titlescreen_language_button", "mc_titlescreen_accessibility_button",
+                "mc_titlescreen_realms_button", "minecraft_logo_widget", "minecraft_splash_widget")) {
             assertEquals("true", buttons.get(id).get("is_hidden"), id);
         }
     }

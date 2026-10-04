@@ -350,8 +350,8 @@ public enum Species {
     private static final java.util.Set<String> NO_EYES = java.util.Set.of("cnidaria", "tusoteuthis", "dragon");
 
     /**
-     * The generated eyeball bones of one eye set, which also receive the emissive night glow. Every rig
-     * with an eye anchor gets the same names; the calm set shows unless the creature is alarmed.
+     * The generated eyeball bones of one eye set. Every rig with an eye anchor gets the same names; the
+     * calm set shows unless the creature is alarmed.
      */
     public String[] eyeBones(boolean alert) {
         if (NO_EYES.contains(id)) return new String[0];
@@ -360,6 +360,11 @@ public enum Species {
     }
 
     public String[] eyeBones() { return eyeBones(false); }
-    /** Predators with dedicated eye geometry receive the red night glow. */
-    public boolean glowingEyes() { return predator && eyeBones().length > 0; }
+    /**
+     * Big carnivores and raptors: their eyes burn red while they hunt, from textures/entity/&lt;id&gt;_eyes.png
+     * (build_creature_eyes.HUNTING_EYES lists the same species).
+     */
+    public boolean glowingEyes() {
+        return (this == VELOCIRAPTOR || !flyer() && family() == LandFamily.BIG_CARNIVORE) && eyeBones().length > 0;
+    }
 }
