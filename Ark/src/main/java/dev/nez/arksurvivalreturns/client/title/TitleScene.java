@@ -46,6 +46,15 @@ public final class TitleScene {
     private static final Identifier THUNDER = Identifier.fromNamespaceAndPath("minecraft", "entity.lightning_bolt.thunder");
     private static final Map<String, TitleCreatureRenderer> RENDERERS = new HashMap<>();
     private static final Map<String, ModelBounds> BOUNDS = new HashMap<>();
+    private static final Map<String, TitleScene> SHARED = new HashMap<>();
+
+    /**
+     * The scene of a layout element. FancyMenu builds the element again on every screen, so its state is kept
+     * here: the creature goes on with its pose, gaze and thunder from one menu to the next.
+     */
+    public static TitleScene shared(String element) {
+        return SHARED.computeIfAbsent(element, key -> new TitleScene());
+    }
 
     /** What the element asks for this frame (its FancyMenu properties). */
     public record Settings(String species, String variant, String idleClip, float sceneX, float sceneGround,

@@ -33,8 +33,6 @@ public class CreatureElement extends AbstractElement {
     public final Property.FloatProperty thunderVolume = putProperty(Property.floatProperty("thunder_volume", 0.7F, KEY + "thunder_volume"));
     public final Property.FloatProperty parallax = putProperty(Property.floatProperty("parallax", 0.012F, KEY + "parallax"));
 
-    private final TitleScene scene = new TitleScene();
-
     public CreatureElement(ElementBuilder<?, ?> builder) { super(builder); }
 
     /** Every setting, in the order the editor's right-click menu lists them. */
@@ -54,7 +52,7 @@ public class CreatureElement extends AbstractElement {
                 sceneX.getFloat(), sceneGround.getFloat(), sceneHeight.getFloat(), bodyYaw.getFloat(), cameraPitch.getFloat(),
                 lookAround.getBoolean(), lookRange.getFloat(), color == null ? 0xFFFFFFFF : color.getColorInt() | 0xFF000000,
                 lightningBoost.getFloat(), thunder.getBoolean(), thunderVolume.getFloat(), parallax.getFloat());
-        scene.extract(graphics, settings, getAbsoluteX(), getAbsoluteY(), getAbsoluteWidth(), getAbsoluteHeight(),
+        TitleScene.shared(getInstanceIdentifier()).extract(graphics, settings, getAbsoluteX(), getAbsoluteY(), getAbsoluteWidth(), getAbsoluteHeight(),
                 mouseX, mouseY, partial, isEditor());
     }
 }

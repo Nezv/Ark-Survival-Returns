@@ -3,6 +3,7 @@
   "minVersion": "0.8.4",
   "package": "dev.nez.arksurvivalreturns.client.mixin",
   "compatibilityLevel": "JAVA_25",
-  "client": ["StorageBackgroundMixin", "StorageLabelsMixin", "TomTerminalMixin", "TomLinkLabelsMixin", "TomFrameExclusionsMixin"],
+  "client": ["StorageBackgroundMixin", "StorageLabelsMixin", "TomTerminalMixin", "TomLinkLabelsMixin", "TomFrameExclusionsMixin",
+    "MenuColumnMixin", "CreateWorldTabsMixin"],
   "injectors": { "defaultRequire": 1 }
 }

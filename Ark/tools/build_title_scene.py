@@ -1,4 +1,4 @@
-"""Build the night-rain title scene (F09): the masks the FancyMenu GLSL layers sample and the layout itself.
+"""Build the night-rain menu scene (F09, F24): the masks the FancyMenu GLSL layers sample and the layouts.
 
 Scene units: x runs from the screen centre in screen heights (16:9 spans -0.89..0.89), y from the bottom
 (0..1). The shaders (tools/title_scene/*.glsl) and the Ark creature element use the same units, so the
@@ -6,10 +6,13 @@ T-Rex stays on the painted path at any resolution or aspect ratio.
 
 textures/gui/title/scene_far.png   R distant treeline, G huts and camp, B firelit doors and torches, A side conifers
 textures/gui/title/scene_near.png  R ground, G wet path and puddles, B ferns, A near fronds (blurred)
-config/fancymenu/customization/ark_title_screen.txt  the layout, shaders inlined the way FancyMenu stores
-multi-line properties (one line, %%!serialized_property_newline!%% for each line break).
+config/fancymenu/customization/ark_menu_scene.txt    the scene, a universal layout: every screen in MENUS shows it.
+    Shaders are inlined the way FancyMenu stores multi-line properties (one line,
+    %%!serialized_property_newline!%% for each line break).
+config/fancymenu/customization/ark_title_screen.txt  the title screen's logo and buttons
+config/fancymenu/customizablemenus.txt               MENUS, the screens FancyMenu customises
 
-Run from Ark: python tools/build_title_scene.py [--layout]   (--layout rewrites only the layout, after a shader edit)
+Run from Ark: python tools/build_title_scene.py [--layout]   (--layout rewrites only the layouts, after a shader edit)
 Preview: python tools/preview_title_scene.py
 """
 import math
@@ -21,7 +24,9 @@ from PIL import Image, ImageDraw, ImageFilter
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui/title'
 SHADERS = ROOT / 'tools/title_scene'
+SCENE_LAYOUT = ROOT / 'config/fancymenu/customization/ark_menu_scene.txt'
 LAYOUT = ROOT / 'config/fancymenu/customization/ark_title_screen.txt'
+MENUS_FILE = ROOT / 'config/fancymenu/customizablemenus.txt'
 X0, X1 = -1.2, 1.2          # scene units covered by the textures (21:9 plus parallax margin)
 PPU = 1200                  # final pixels per scene unit
 SS = 2                      # supersampling while drawing
@@ -433,6 +438,16 @@ BUTTONS = [
 # Language and accessibility stay reachable through Options.
 HIDDEN = ['mc_titlescreen_language_button', 'mc_titlescreen_accessibility_button', 'mc_titlescreen_realms_button',
           'minecraft_logo_widget', 'minecraft_splash_widget', 'minecraft_realms_notification_icons_widget']
+# The screens that show the scene, all of them out of a world. On the world list, the server list and the
+# new-world screen, client/title/MenuColumn moves the list, the tabs and the buttons to the title's button
+# column; the small dialogs stay centred.
+MENUS = ['net.minecraft.client.gui.screens.TitleScreen',
+         'net.minecraft.client.gui.screens.worldselection.SelectWorldScreen',
+         'net.minecraft.client.gui.screens.worldselection.CreateWorldScreen',
+         'net.minecraft.client.gui.screens.worldselection.EditWorldScreen',
+         'net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen',
+         'net.minecraft.client.gui.screens.DirectJoinServerScreen',
+         'net.minecraft.client.gui.screens.ManageServerScreen']
 
 
 def shader(name):
@@ -464,23 +479,30 @@ def full_screen(identifier, element_type):
             ('stay_on_screen', 'false')]
 
 
-def layout_containers():
-    containers = [
-        ('layout-meta', [('identifier', 'title_screen'), ('render_custom_elements_behind_vanilla', 'true'),
-                         ('last_edited_time', str(EDITED)), ('is_enabled', 'true'), ('randommode', 'false'),
-                         ('randomgroup', '1'), ('randomonlyfirsttime', 'false'), ('layout_index', '0')]),
+UNIVERSAL = '%fancymenu:universal_layout%'           # Layout.UNIVERSAL_LAYOUT_IDENTIFIER
+
+
+def layout_meta(identifier, index):
+    return ('layout-meta', [('identifier', identifier), ('render_custom_elements_behind_vanilla', 'true'),
+                            ('last_edited_time', str(EDITED)), ('is_enabled', 'true'), ('randommode', 'false'),
+                            ('randomgroup', '1'), ('randomonlyfirsttime', 'false'), ('layout_index', str(index))])
+
+
+def scene_containers():
+    """The universal layout: FancyMenu stacks it under the own layout of every screen in MENUS."""
+    return [
+        layout_meta(UNIVERSAL, 0),
         ('menu_background', [('background_type', 'glsl'), ('instance_identifier', 'ark_night_scene'),
                              ('show_background', 'true'), ('enable_blending', 'false')] + shader_properties('background')),
         ('customization', [('action', 'backgroundoptions'), ('keepaspectratio', 'false')]),
-        ('scroll_list_customization', [('apply_vanilla_background_blur', 'false')]),
-        # Custom elements draw in this order, all behind the vanilla buttons.
+        # No blur, and no separator lines: the new-world screen draws its own across the whole screen.
+        ('scroll_list_customization', [('render_scroll_list_header_shadow', 'false'),
+                                       ('render_scroll_list_footer_shadow', 'false'),
+                                       ('apply_vanilla_background_blur', 'false')]),
+        # Custom elements draw in this order, all behind the vanilla widgets.
         ('element', full_screen('ark_creature', 'arksurvivalreturns_creature') + CREATURE),
         ('element', full_screen('ark_night_foreground', 'glsl_shader') + [('enable_blending', 'true')]
          + shader_properties('foreground')),
-        ('element', [('element_type', 'image'), ('instance_identifier', 'ark_logo'),
-                     ('source', SOURCE + 'arksurvivalreturns:textures/gui/title/logo.png'), ('anchor_point', 'top-left'),
-                     ('x', '22'), ('y', '18'), ('width', '200'), ('height', '63'), ('repeat_texture', 'false'),
-                     ('nine_slice_texture', 'false'), ('stay_on_screen', 'true')]),
         ('element', [('element_type', 'audio_v2'), ('instance_identifier', 'ark_rain'),
                      ('audio_instance_0', SOURCE + 'ambientsounds:sounds/weather/rain1.ogg'),
                      ('audio_instance_weight_0', '1.0'),
@@ -488,6 +510,16 @@ def layout_containers():
                      ('audio_instance_weight_1', '1.0'), ('play_mode', 'shuffle'), ('looping', 'true'),
                      ('sound_source', 'weather'), ('volume', '0.55'), ('anchor_point', 'top-left'), ('x', '4'),
                      ('y', '4'), ('width', '24'), ('height', '24')]),
+    ]
+
+
+def title_containers():
+    containers = [
+        layout_meta('title_screen', 1),
+        ('element', [('element_type', 'image'), ('instance_identifier', 'ark_logo'),
+                     ('source', SOURCE + 'arksurvivalreturns:textures/gui/title/logo.png'), ('anchor_point', 'top-left'),
+                     ('x', '22'), ('y', '18'), ('width', '200'), ('height', '63'), ('repeat_texture', 'false'),
+                     ('nine_slice_texture', 'false'), ('stay_on_screen', 'true')]),
     ]
     for identifier, x, y, width, height in BUTTONS:
         containers.append(('vanilla_button', [('element_type', 'vanilla_button'), ('instance_identifier', identifier),
@@ -500,14 +532,20 @@ def layout_containers():
     return containers
 
 
-def write_layout():
+def write_set(path, kind, containers):
     # PropertiesParser.serializeSetToFancyString: "type = ...", then each container and a blank line.
-    text = 'type = fancymenu_layout\n\n'
-    for kind, properties in layout_containers():
-        text += kind + ' {\n' + ''.join(f'  {key} = {value}\n' for key, value in properties) + '}\n\n'
-    LAYOUT.parent.mkdir(parents=True, exist_ok=True)
-    LAYOUT.write_text(text, encoding='utf-8', newline='\n')
-    print(f'Wrote {LAYOUT}')
+    text = f'type = {kind}\n\n'
+    for name, properties in containers:
+        text += name + ' {\n' + ''.join(f'  {key} = {value}\n' for key, value in properties) + '}\n\n'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding='utf-8', newline='\n')
+    print(f'Wrote {path}')
+
+
+def write_layout():
+    write_set(SCENE_LAYOUT, 'fancymenu_layout', scene_containers())
+    write_set(LAYOUT, 'fancymenu_layout', title_containers())
+    write_set(MENUS_FILE, 'customizablemenus', [(screen, []) for screen in MENUS])
 
 
 def main():

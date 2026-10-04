@@ -14,11 +14,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The FancyMenu title layout (written by tools/build_title_scene.py), read the way FancyMenu 3.9.12's
- * PropertiesParser reads it. FancyMenu drops what it does not understand without a word, so this catches a
- * mistyped key or a shader that no longer matches its source before anyone opens the client.
+ * The FancyMenu layouts (written by tools/build_title_scene.py): the universal scene layout and the title
+ * screen's, read the way FancyMenu 3.9.12's PropertiesParser reads them. FancyMenu drops what it does not
+ * understand without a word, so this catches a mistyped key or a shader that no longer matches its source
+ * before anyone opens the client.
  */
 class TitleLayoutTest {
+    private static final Path SCENE = Path.of("config/fancymenu/customization/ark_menu_scene.txt");
     private static final Path LAYOUT = Path.of("config/fancymenu/customization/ark_title_screen.txt");
     private static final String NEWLINE = "%%!serialized_property_newline!%%";
 
@@ -47,10 +49,18 @@ class TitleLayoutTest {
         return containers;
     }
 
-    private static List<Container> layout() throws Exception {
-        String text = Files.readString(LAYOUT).replace("\r\n", "\n"); // a Windows checkout has CRLF endings
+    private static List<Container> layout() throws Exception { return layout(LAYOUT); }
+
+    private static List<Container> scene() throws Exception { return layout(SCENE); }
+
+    private static List<Container> layout(Path file) throws Exception {
+        String text = Files.readString(file).replace("\r\n", "\n"); // a Windows checkout has CRLF endings
         assertTrue(text.startsWith("type = fancymenu_layout\n"));
         return parse(text);
+    }
+
+    private static Container meta(List<Container> containers) {
+        return containers.stream().filter(c -> c.type().equals("layout-meta")).findFirst().orElseThrow();
     }
 
     private static Container element(List<Container> containers, String type) {
@@ -59,26 +69,41 @@ class TitleLayoutTest {
     }
 
     /** FancyMenu applies layouts only to screens switched on in customizablemenus.txt, keyed by class name. */
-    @Test void titleScreenCustomizationIsSwitchedOn() throws Exception {
+    @Test void menuScreenCustomizationIsSwitchedOn() throws Exception {
         String text = Files.readString(Path.of("config/fancymenu/customizablemenus.txt")).replace("\r\n", "\n");
         assertTrue(text.startsWith("type = customizablemenus\n"));
-        assertTrue(parse(text).stream().anyMatch(c -> c.type().equals("net.minecraft.client.gui.screens.TitleScreen")),
-                "the title screen must be customizable, or FancyMenu ignores ark_title_screen.txt");
+        Set<String> screens = new TreeSet<>();
+        for (Container c : parse(text)) screens.add(c.type());
+        // The title screen and the three screens MenuColumn lays out (client/mixin/MenuColumnMixin).
+        for (String screen : List.of("net.minecraft.client.gui.screens.TitleScreen",
+                "net.minecraft.client.gui.screens.worldselection.SelectWorldScreen",
+                "net.minecraft.client.gui.screens.worldselection.CreateWorldScreen",
+                "net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen")) {
+            assertTrue(screens.contains(screen), screen + " must be customizable, or FancyMenu draws no scene on it");
+        }
     }
 
-    @Test void titleScreenLayoutWithTheShaderBackground() throws Exception {
-        List<Container> containers = layout();
-        Container meta = containers.stream().filter(c -> c.type().equals("layout-meta")).findFirst().orElseThrow();
-        assertEquals("title_screen", meta.get("identifier"));
-        assertEquals("true", meta.get("render_custom_elements_behind_vanilla"), "the scene stays behind the buttons");
+    @Test void sceneLayoutIsUniversalWithTheShaderBackground() throws Exception {
+        List<Container> containers = scene();
+        assertEquals("%fancymenu:universal_layout%", meta(containers).get("identifier"), "one scene for every menu");
+        assertEquals("true", meta(containers).get("render_custom_elements_behind_vanilla"), "the scene stays behind the buttons");
         Container background = containers.stream().filter(c -> c.type().equals("menu_background")).findFirst().orElseThrow();
         assertEquals("glsl", background.get("background_type"));
         assertEquals("resource0", background.get("image_ichannel0_input"), "unrouted channels sample FancyMenu's missing texture");
         assertEquals("resource1", background.get("image_ichannel1_input"));
     }
 
-    @Test void inlineShadersAreTheShaderSources() throws Exception {
+    @Test void titleLayoutLeavesTheSceneToTheUniversalLayout() throws Exception {
         List<Container> containers = layout();
+        assertEquals("title_screen", meta(containers).get("identifier"));
+        assertEquals("true", meta(containers).get("render_custom_elements_behind_vanilla"), "the logo stays behind the buttons");
+        assertTrue(containers.stream().noneMatch(c -> c.type().equals("menu_background")), "a second background would draw the scene twice");
+        assertTrue(Integer.parseInt(meta(containers).get("layout_index")) > Integer.parseInt(meta(scene()).get("layout_index")),
+                "the logo draws over the scene");
+    }
+
+    @Test void inlineShadersAreTheShaderSources() throws Exception {
+        List<Container> containers = scene();
         Container background = containers.stream().filter(c -> c.type().equals("menu_background")).findFirst().orElseThrow();
         assertShader("background", background);
         assertShader("foreground", element(containers, "glsl_shader"));
@@ -102,7 +127,7 @@ class TitleLayoutTest {
         assertTrue(keys.size() >= 15, "creature properties found: " + keys);
         Set<String> base = Set.of("element_type", "instance_identifier", "anchor_point", "x", "y", "width", "height",
                 "stretch_x", "stretch_y", "stay_on_screen");
-        Container creature = element(layout(), "arksurvivalreturns_creature");
+        Container creature = element(scene(), "arksurvivalreturns_creature");
         for (String key : creature.values().keySet()) {
             assertTrue(base.contains(key) || keys.contains(key), "CreatureElement has no property " + key);
         }

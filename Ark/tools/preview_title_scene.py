@@ -393,7 +393,7 @@ def main():
         seconds, millis = strike_time()
     clock = (seconds, millis, args.time)
 
-    containers = parse_layout(scene.LAYOUT)
+    containers = parse_layout(scene.SCENE_LAYOUT) + parse_layout(scene.LAYOUT)
     background = next(c for c in containers if c['_type'] == 'menu_background')
     foreground = next((c for c in containers if c.get('element_type') == 'glsl_shader'), None)
     creature = next((c for c in containers if c.get('element_type') == 'arksurvivalreturns_creature'), None)
