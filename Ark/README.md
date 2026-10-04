@@ -243,6 +243,7 @@ Asset rebuild (Python 3.12, Pillow for sprites):
 ```powershell
 python tools/import_creatures.py
 python tools/build_item_assets.py
+python tools/build_creature_eggs.py
 python tools/build_test_structure.py
 python tools/verify_assets.py
 ```

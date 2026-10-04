@@ -1,7 +1,6 @@
 """Author crisp 32px item sprites from pixel shapes, and an inventory review sheet."""
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-from import_creatures import SPECIES
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/item'
@@ -33,16 +32,7 @@ def main():
     layouts = [ [(11,15,6),(22,16,6),(16,24,5)], [(10,17,5),(20,14,5),(21,24,5),(12,25,4)],
                 [(10,15,5),(21,15,5),(11,24,5),(21,24,5)], [(11,16,6),(22,17,5),(17,25,4)] ]
     sprites = [berry(name, colors, layout) for (name, colors), layout in zip(PALETTES.items(), layouts)]
-    # Each species has its own two-tone egg icon, derived from its supplied palette.
-    for folder, identifier, *_ in SPECIES:
-        palette = Image.open(next((ROOT.parent/'Creatures'/folder/'textures/entity').glob('*.png'))).convert('RGB')
-        base, spot = palette.getpixel((2,2)), palette.getpixel((18,2))
-        im = Image.new('RGBA',(32,32)); d = ImageDraw.Draw(im)
-        d.polygon([(13,3),(19,3),(24,9),(27,19),(26,25),(22,29),(10,29),(6,25),(5,19),(8,9)], fill='#25282c')
-        d.polygon([(13,5),(18,5),(22,10),(25,19),(24,24),(21,27),(11,27),(8,24),(7,19),(10,10)], fill=base)
-        for box in [(11,9,15,13),(19,16,23,21),(10,22,14,25)]: d.rectangle(box,fill=spot)
-        d.line([(12,7),(10,11),(9,16)], fill=tuple(min(255,c+55) for c in base),width=2)
-        im.save(OUT/f'{identifier}_spawn_egg.png')
+    # The spawn eggs are generated per species by build_creature_eggs.py.
     sheet = Image.new('RGB',(920,320),'#18252b'); d = ImageDraw.Draw(sheet)
     try:
         title = ImageFont.truetype('C:/Windows/Fonts/segoeuib.ttf',25)
@@ -57,6 +47,6 @@ def main():
         d.text((x+25,273),'Sedative / no effect yet' if i==3 else 'Material / no use yet',fill='#99ada8',font=label)
     (ROOT/'docs').mkdir(exist_ok=True)
     sheet.save(ROOT/'docs/berry-assets.png')
-    print(f'Built four berry sprites, {len(SPECIES)} spawn egg sprites and review sheet.')
+    print('Built four berry sprites and review sheet.')
 
 if __name__ == '__main__': main()

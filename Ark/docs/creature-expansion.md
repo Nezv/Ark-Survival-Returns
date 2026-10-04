@@ -38,7 +38,7 @@ Re-extract/rebuild the ten projects from the repository root:
 python scripts/workflow.py --species Spinosaurus Parasaur Ceratosaurus Dilophosaur Acrochantosaur Allosaurus Ankylosaurus Carnotaurus Pegomastax Lystrosaurus
 ```
 
-Add `--reuse-exports` for offline builds from preserved source exports. From `Ark/`, run `python tools/import_creatures.py`, `python tools/build_item_assets.py`, `python tools/verify_assets.py`, and `python tools/verify_expansion.py` to update and verify the runtime resources.
+Add `--reuse-exports` for offline builds from preserved source exports. From `Ark/`, run `python tools/import_creatures.py`, `python tools/build_item_assets.py`, `python tools/build_creature_eggs.py`, `python tools/verify_assets.py`, and `python tools/verify_expansion.py` to update and verify the runtime resources.
 
 ## Scope
 

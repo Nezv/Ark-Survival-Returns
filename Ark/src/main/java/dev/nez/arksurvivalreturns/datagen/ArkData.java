@@ -131,6 +131,7 @@ public final class ArkData implements DataProvider {
                         "model", Map.of("type", "minecraft:model", "model", NS + ":item/debug_spyglass"))),
                 "fallback", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass_in_hand"))));
         en.put("itemGroup." + NS, "Ark Survival Returns"); pt.put("itemGroup." + NS, "Ark Survival Returns");
+        en.put("itemGroup." + NS + ".eggs", "Ark Creature Eggs"); pt.put("itemGroup." + NS + ".eggs", "Ovos de Criaturas Ark");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
         pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
         String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};

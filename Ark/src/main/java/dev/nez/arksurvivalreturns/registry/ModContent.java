@@ -274,6 +274,12 @@ public final class ModContent {
                     output.accept(ALLOSAUR_HEART.get());
                     output.accept(WORKSHOP_SCHEMATIC.get());
                     output.accept(GUARDIAN_TROPHY.get());
+                }).build());
+        // The creature eggs have a tab of their own: every spawn egg, then the eggs taken from nests.
+        TABS.register("eggs", () -> CreativeModeTab.builder()
+                .title(Component.translatable("itemGroup.arksurvivalreturns.eggs"))
+                .icon(() -> EGGS.get(Species.TYRANNOSAURUS).get().getDefaultInstance())
+                .displayItems((parameters, output) -> {
                     EGGS.values().forEach(i -> output.accept(i.get()));
                     NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());
