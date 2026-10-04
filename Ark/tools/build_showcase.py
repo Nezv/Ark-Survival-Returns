@@ -12,8 +12,9 @@ renderer load from Google Fonts / jsDelivr when online and fall back gracefully 
 the nav, the home index and the pager switch between them.
 
 The roadmap is Dashboard.csv itself: the page parses the CSV in the browser. Served over http it reads the live file
-next to it; opened from disk (where the browser blocks that read) it uses the copy embedded here. `--roadmap` swaps
-only that copy into the existing page, in milliseconds; the pre-commit hook (.githooks) runs it whenever Dashboard.csv
+next to it; opened from disk (where the browser blocks that read) it uses the copy embedded here, which holds only the
+columns the roadmap shows (no Description, the first Status line). `--roadmap` swaps only that copy into the existing
+page, in milliseconds; the pre-commit hook (.githooks) runs it whenever Dashboard.csv
 is committed, so the roadmap never needs a full rebuild.
 
 Vanilla item sprites come from the Minecraft sources jar that a Gradle build unpacks. Without it (a fresh
@@ -22,6 +23,7 @@ checkout), the sprites the current page already shows are carried over instead o
 Run from Ark after runData: python tools/build_showcase.py [--roadmap [--staged]]
 """
 import base64
+import csv
 import datetime
 import html
 import io
@@ -121,13 +123,24 @@ DASHBOARD = REPO / 'Dashboard.csv'
 CSV_BLOCK = re.compile(r'(<script type="text/csv" id="dashboard-csv">)(.*?)(</script>)', re.S)
 
 
+ROADMAP_COLUMNS = ('Type', 'ID', 'Item', 'Executed by', 'Status')
+
+
 def dashboard_csv(staged=False):
-    """Dashboard.csv verbatim (the staged copy for the pre-commit hook), safe inside a script element."""
+    """
+    The roadmap's columns of Dashboard.csv (the staged copy for the pre-commit hook), safe inside a script element.
+    The Description never enters the page, and of the other cells only the first line does.
+    """
     if staged:
         text = subprocess.run(['git', 'show', ':Dashboard.csv'], cwd=REPO, capture_output=True, check=True).stdout.decode('utf-8')
     else:
         text = DASHBOARD.read_text(encoding='utf-8')
-    return re.sub(r'</(script)', r'<\\/\1', text, flags=re.I)
+    out = io.StringIO()
+    writer = csv.writer(out, lineterminator='\n')
+    writer.writerow(ROADMAP_COLUMNS)
+    for row in csv.DictReader(io.StringIO(text.replace('\r\n', '\n'))):
+        writer.writerow([(row.get(column) or '').split('\n')[0].strip() for column in ROADMAP_COLUMNS])
+    return re.sub(r'</(script)', r'<\\/\1', out.getvalue(), flags=re.I)
 
 
 def refresh_roadmap(staged=False):

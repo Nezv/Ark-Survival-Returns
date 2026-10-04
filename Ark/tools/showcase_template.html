@@ -699,7 +699,8 @@
 <script type="text/csv" id="dashboard-csv">%%DASHBOARD%%</script>
 <script>
 // Roadmap: Dashboard.csv parsed here. Served over http, the live file next to the page wins; opened from disk the
-// browser blocks that read, so the copy the pre-commit hook embeds (build_showcase.py --roadmap) is shown.
+// browser blocks that read, so the copy the pre-commit hook embeds (build_showcase.py --roadmap) is shown. That copy
+// holds the columns of this table only: no Description, the first Status line.
 (() => {
   const WORDS = /^(Verified|Implemented|In production|Planned|Under discussion|Decided|To be done|Postponed|Deprecated)\b/i;
   const CLASSES = [[/^verified/i, 'ok'], [/^(implemented|in production)/i, 'check'], [/^(planned|under discussion|decided)/i, 'idea']];

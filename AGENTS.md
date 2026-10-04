@@ -5,8 +5,13 @@
 `Dashboard.csv` (root) tracks every feature/patch: ID, scope, proposer, executor, status and open issues.
 Read it before starting work; update the row's Status when a task finishes. Do not create new
 planning, proposal, audit or report markdown files — put status and open issues in the dashboard.
-The showcase parses it in the page; the pre-commit hook in `.githooks` refreshes the embedded copy whenever
-Dashboard.csv is committed (enable once per clone: `git config core.hooksPath .githooks`).
+Keep every row short: the Description says what the game does now, in three sentences at most; the Status is
+the state (Verified, Implemented, In production, Planned, Under discussion, Decided, To be done, Postponed or
+Deprecated, with what was checked), at most one dated line, and one `Open:` line. Rewrite a row in place, never
+append to it: no history, evidence, session ids or test counts — git keeps those (`git log -p Dashboard.csv`).
+The showcase roadmap shows Type, ID, Item, executor and the first Status line (the Description never enters the
+page); the pre-commit hook in `.githooks` refreshes its embedded copy whenever Dashboard.csv is committed
+(enable once per clone: `git config core.hooksPath .githooks`).
 
 Read only what the task needs. Skip generated/ignored trees: `Ark/src/generated/`, `Creatures/*/source/`,
 `graphify-out/`, `.work/`, `Scratch/`, `Integration/`.
