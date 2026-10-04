@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 /**
- * What the crusher grinds: stone down to gravel and sand, the usual powders (bone meal, blaze powder,
+ * What the crusher grinds: stone down to gravel and sand, the usual powders (bone meal,
  * sugar, dyes from flowers, string from wool), and gunpowder from coal and sulphur. The first matching
  * entry wins, so specific items come before tags.
  *
@@ -57,7 +57,6 @@ public final class CrusherRecipes {
             // Powders and fibres.
             of(Items.BONE, Items.BONE_MEAL, 5, 40),
             of(Items.BONE_BLOCK, Items.BONE_MEAL, 12, 100),
-            of(Items.BLAZE_ROD, Items.BLAZE_POWDER, 3, 60),
             of(Items.SUGAR_CANE, Items.SUGAR, 2, 40),
             of(ItemTags.WOOL, Items.STRING, 4, 60),
             of(Items.WHEAT, Items.WHEAT_SEEDS, 2, 40),

@@ -82,9 +82,9 @@ final class StationData {
         shaped(put, "storage_crate", 1, List.of("PPP", "P P", "PPP"), Map.of("P", "#minecraft:planks"));
         shaped(put, "smithing_table", 1, List.of("II", "SS", "PP"),
                 Map.of("I", "minecraft:iron_ingot", "S", "minecraft:smooth_stone", "P", "#minecraft:planks"));
-        // Bronze Age: the bench needs a bronze ingot and a pane of glass; its medicine is field-grade.
-        shaped(put, "medicine_bench", 1, List.of("IBI", "PPP", "LGL"), Map.of("I", "#c:ingots/bronze",
-                "B", "minecraft:glass_bottle", "P", "#minecraft:planks", "L", "#minecraft:logs", "G", "minecraft:glass"));
+        // Bronze Age: a bronze-bound bench with a Mortar & Pestle set into its top, no glass; its medicine is field-grade.
+        shaped(put, "medicine_bench", 1, List.of("IMI", "PPP", "L L"), Map.of("I", "#c:ingots/bronze",
+                "M", NS + ":mortar_and_pestle", "P", "#minecraft:planks", "L", "#minecraft:logs"));
         // A stone bowl and a rock pestle.
         shaped(put, "mortar_and_pestle", 1, List.of(" R ", "C C", " C "), Map.of("R", NS + ":rock", "C", "minecraft:cobblestone"));
         shaped(put, "crusher", 1, List.of("LGL", "C C", "CCC"),

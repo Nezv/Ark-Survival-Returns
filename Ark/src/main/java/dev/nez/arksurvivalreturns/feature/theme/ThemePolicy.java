@@ -118,34 +118,6 @@ public final class ThemePolicy {
             "minecraft:sculk_patch_deep_dark", "minecraft:sculk_patch_ancient_city", "minecraft:sculk_vein");
 
     /**
-     * Advancements replaced by an unobtainable placeholder. Covers every dimension gate, the
-     * Wither and the Ender Dragon, and the objectives of the removed mechanics that can no
-     * longer be completed.
-     */
-    public static final List<String> DISABLED_ADVANCEMENTS = List.of(
-            "nether/root", "nether/all_effects", "nether/all_potions", "nether/brew_potion",
-            "nether/charge_respawn_anchor", "nether/create_beacon", "nether/create_full_beacon",
-            "nether/distract_piglin", "nether/explore_nether", "nether/fast_travel", "nether/find_bastion",
-            "nether/find_fortress", "nether/get_wither_skull", "nether/loot_bastion", "nether/netherite_armor",
-            "nether/obtain_ancient_debris", "nether/obtain_blaze_rod", "nether/obtain_crying_obsidian",
-            "nether/return_to_sender", "nether/ride_strider", "nether/ride_strider_in_overworld_lava",
-            "nether/summon_wither", "nether/uneasy_alliance",
-            "end/root", "end/dragon_breath", "end/dragon_egg", "end/elytra", "end/enter_end_gateway",
-            "end/find_end_city", "end/kill_dragon", "end/levitate", "end/respawn_dragon",
-            "story/enter_the_nether", "story/enter_the_end", "story/follow_ender_eye", "story/form_obsidian",
-            "story/enchant_item", "story/cure_zombie_villager",
-            "adventure/avoid_vibration", "adventure/blowback", "adventure/heart_transplanter",
-            "adventure/hero_of_the_village", "adventure/kill_all_mobs", "adventure/kill_mob_near_sculk_catalyst",
-            "adventure/minecraft_trials_edition", "adventure/overoverkill", "adventure/revaulting",
-            "adventure/sniper_duel", "adventure/spyglass_at_dragon", "adventure/spyglass_at_ghast",
-            "adventure/summon_iron_golem", "adventure/totem_of_undying",
-            "adventure/trim_with_all_exclusive_armor_patterns", "adventure/two_birds_one_arrow",
-            "adventure/under_lock_and_key", "adventure/use_lodestone", "adventure/very_very_frightening",
-            "adventure/voluntary_exile", "adventure/who_needs_rockets", "adventure/whos_the_pillager_now",
-            "husbandry/balanced_diet", "husbandry/bred_all_animals", "husbandry/froglights",
-            "husbandry/obtain_netherite_hoe", "husbandry/place_dried_ghast_in_water", "husbandry/silk_touch_nest");
-
-    /**
      * Trade tags that keep only their surviving entries. Enchantment offers, Nether and End
      * offers, removed-mob purchases and maps to disabled structures are dropped.
      */
@@ -253,6 +225,14 @@ public final class ThemePolicy {
     }
 
     /** True when the stack is one of the items whose acquisition routes are removed. */
+    /**
+     * Ark is not vanilla: none of the Minecraft advancement tabs is loaded. The recipe unlocks stay, since they
+     * only feed the recipe book and have no display.
+     */
+    public static boolean removedAdvancement(Identifier id) {
+        return id.getNamespace().equals("minecraft") && !id.getPath().startsWith("recipes/");
+    }
+
     public static boolean removed(ItemStack stack) {
         return !stack.isEmpty() && removed(stack.getItem());
     }

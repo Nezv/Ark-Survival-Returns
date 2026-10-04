@@ -39,7 +39,7 @@
           "id": "00000000000001A2",
           "type": "item",
           "item": {
-            "id": "minecraft:stone_pickaxe"
+            "id": "arksurvivalreturns:rock_pickaxe"
           },
           "only_from_crafting": true
         },
@@ -47,7 +47,7 @@
           "id": "00000000000001A3",
           "type": "item",
           "item": {
-            "id": "minecraft:stone_axe"
+            "id": "arksurvivalreturns:stone_hatchet"
           },
           "only_from_crafting": true
         }
@@ -157,34 +157,6 @@
           "type": "item",
           "item": {
             "id": "minecraft:saddle"
-          }
-        }
-      ]
-    },
-    {
-      "id": "0000000000000106",
-      "x": 0.0,
-      "y": 3.0,
-      "dependencies": [
-        "0000000000000101"
-      ],
-      "tasks": [
-        {
-          "id": "00000000000001A9",
-          "type": "item",
-          "item": {
-            "id": "arksurvivalreturns:field_journal"
-          },
-          "only_from_crafting": true
-        }
-      ],
-      "rewards": [
-        {
-          "id": "00000000000001B6",
-          "type": "item",
-          "item": {
-            "id": "minecraft:leather",
-            "count": 3
           }
         }
       ]

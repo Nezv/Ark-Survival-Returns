@@ -13,13 +13,13 @@
   "task.00000000000001A1.title": "Set up camp with a mattress and a fire",
 
   "quest.0000000000000102.title": "Tools of the Survivor",
-  "quest.0000000000000102.quest_subtitle": "Stone changes what is possible.",
+  "quest.0000000000000102.quest_subtitle": "Rock changes what is possible.",
   "quest.0000000000000102.quest_desc": [
-    "Craft a stone pickaxe and a stone axe at a crafting table.",
-    "Wood gets you the first cobblestone; the axe opens wood and hide."
+    "Bind a Rock Axe by hand from a rock, a stick and plant fiber, then build an Armoury at the Working Station for the Rock Pickaxe.",
+    "The axe opens logs; the pickaxe opens stone and the first ores."
   ],
-  "task.00000000000001A2.title": "Craft a stone pickaxe",
-  "task.00000000000001A3.title": "Craft a stone axe",
+  "task.00000000000001A2.title": "Craft a Rock Pickaxe",
+  "task.00000000000001A3.title": "Craft a Rock Axe",
 
   "quest.0000000000000103.title": "Forage and Bone",
   "quest.0000000000000103.quest_subtitle": "Food and tools from the land.",
@@ -45,13 +45,5 @@
     "Feed a willing creature until it trusts you.",
     "A tame stays yours. Your tribe can be granted riding, cargo and order permissions with /arktribe."
   ],
-  "task.00000000000001A8.title": "Tame your first creature",
-
-  "quest.0000000000000106.title": "Claim Your Journal",
-  "quest.0000000000000106.quest_subtitle": "Write down what the land teaches you.",
-  "quest.0000000000000106.quest_desc": [
-    "Craft the Field Journal from a book and two leather.",
-    "Press J or use the journal to open the tribe's survival journal."
-  ],
-  "task.00000000000001A9.title": "Craft the Field Journal"
+  "task.00000000000001A8.title": "Tame your first creature"
 }

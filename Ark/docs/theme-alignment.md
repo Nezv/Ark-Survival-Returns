@@ -17,7 +17,7 @@ level cannot be rewritten by a data pack.
 | Any dimension change to the Nether or the End (`EntityTravelToDimensionEvent`) | Cancelled |
 | Nether portal travel, vanilla rule | `allow_entering_nether_using_portals=false` on every level |
 | Ruined portals, strongholds, end cities, nether fortresses and bastions | Removed from world generation |
-| Nether and End progression advancements | Replaced by an unobtainable placeholder |
+| Nether and End progression advancements | Not loaded, like every other vanilla advancement tab |
 | Nether and End trades (wart, glowstone is retained, ender pearls) | Removed from the trade tags |
 | Netherite upgrades, nether stars, dragon eggs, dragon breath, echo shards, shulker shells | Removed items: no recipe, no loot, no trade |
 | Players already inside a removed dimension | Returned to the Overworld on join and on respawn |
@@ -129,7 +129,7 @@ cream, nether wart and dragon breath.
 |---|---|---|
 | Biome modifiers | Spawn lists (`remove_spawns`) and features (`remove_features`) for every vanilla dimension | `src/generated/resources/data/arksurvivalreturns/neoforge/biome_modifier` |
 | Structure sets | 11 sets emptied, so the set is dropped before placement is ever considered | `data/minecraft/worldgen/structure_set` |
-| Advancements | One unobtainable placeholder per removed objective | `data/minecraft/advancement` |
+| Advancements | Every vanilla advancement is dropped at load; the recipe unlocks stay | `ThemePolicy.removedAdvancement`, `VanillaAdvancementsMixin` |
 | Trade tags | 23 profession/level tags re-listed without removed offers | `data/minecraft/tags/villager_trade` |
 | Recipes | 53 recipes removed as raw JSON before deserialization, and the 8 copper bulb recipes re-authored | `RecipeGuard` |
 | Loot | Enchantment functions and removed items stripped from the parsed table | `LootGuard` |
@@ -179,7 +179,7 @@ refused, no biome in either dimension keeps a removed spawner or feature, the el
 structure sets are empty while ordinary sets still place, removed recipes are absent and
 unrelated recipes remain, four chest and fishing tables keep mundane loot with no enchantment
 function or removed item, trade tags lose the removed offers and keep the surviving ones,
-seven disabled advancements use the impossible trigger while an unrelated one does not, the
+no vanilla advancement is loaded while the recipe unlocks and the journal records are, the
 dimension rules are applied, portal travel is cancelled, the Overworld return position is dry
 ground, and animal carcasses still drop bones.
 

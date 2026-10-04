@@ -91,10 +91,6 @@ public final class ModContent {
             "improved_tranquilizer_arrow",
             p -> new SedativeArrowItem(p, dev.nez.arksurvivalreturns.Config.IMPROVED_TRANQUILIZER_ARROW_POTENCY::get),
             p -> p.stacksTo(64));
-    /** Field Journal: opens the tribe's survival journal (the FTB Quests book). */
-    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem> FIELD_JOURNAL =
-            ITEMS.registerItem("field_journal",
-                    dev.nez.arksurvivalreturns.feature.journal.FieldJournalItem::new, p -> p.stacksTo(1));
     /** Plant fiber: the primitive binding material, harvested from grass. */
     public static final DeferredItem<Item> PLANT_FIBER = ITEMS.registerSimpleItem("plant_fiber", p -> p.stacksTo(64));
     /** Pack harness: unlocks the species cargo capacity for ordinary haulers. */
@@ -252,7 +248,6 @@ public final class ModContent {
                     output.accept(NARCOTICS.get());
                     output.accept(TRANQUILIZER_ARROW_ITEM.get());
                     output.accept(IMPROVED_TRANQUILIZER_ARROW_ITEM.get());
-                    output.accept(FIELD_JOURNAL.get());
                     output.accept(PLANT_FIBER.get());
                     dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.displayItems(output);
                     output.accept(PACK_HARNESS.get());

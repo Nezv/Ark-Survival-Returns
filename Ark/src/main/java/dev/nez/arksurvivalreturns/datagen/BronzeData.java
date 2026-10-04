@@ -88,8 +88,8 @@ final class BronzeData {
         shapeless("bronze_blend", NS + ":bronze_blend", 4,
                 "minecraft:copper_ingot", "minecraft:copper_ingot", "minecraft:copper_ingot", NS + ":tin_ingot");
         smelting("bronze_ingot", NS + ":bronze_blend", NS + ":bronze_ingot", 200, 1.0f);
-        // Tin ore and raw tin both reduce to tin_ingot; the forge only reads minecraft:smelting, blasting is kept
-        // for the vanilla recipe book and any future blast source.
+        // Tin ore and raw tin both reduce to tin_ingot; the forge only reads minecraft:smelting. The blasting twins
+        // load only when the furnaces are switched back on (primitive.replaceFurnaces = false).
         smelting("tin_ingot_from_smelting_ore", "#c:ores/tin", NS + ":tin_ingot", 200, 0.7f);
         blasting("tin_ingot_from_blasting_ore", "#c:ores/tin", NS + ":tin_ingot", 100, 0.7f);
         smelting("tin_ingot_from_smelting_raw", NS + ":raw_tin", NS + ":tin_ingot", 200, 0.7f);

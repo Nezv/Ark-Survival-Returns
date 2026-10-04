@@ -3,16 +3,15 @@
   "category": "misc",
   "group": "medicine_bench",
   "key": {
-    "B": "minecraft:glass_bottle",
-    "G": "minecraft:glass",
     "I": "#c:ingots/bronze",
     "L": "#minecraft:logs",
+    "M": "arksurvivalreturns:mortar_and_pestle",
     "P": "#minecraft:planks"
   },
   "pattern": [
-    "IBI",
+    "IMI",
     "PPP",
-    "LGL"
+    "L L"
   ],
   "result": {
     "count": 1,

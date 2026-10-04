@@ -2,7 +2,7 @@
 
 The survival journal is the [FTB Quests](https://www.curseforge.com/minecraft/mc-mods/ftb-quests-forge)
 book, and the tribe is the [FTB Teams](https://www.curseforge.com/minecraft/mc-mods/ftb-teams-forge)
-party. Ark Survival Returns adds only what those mods do not: the Field Journal item, the
+party. Ark Survival Returns adds only what those mods do not: the J key, the
 permission flags for tames, discovery advancements and the authored quest pack.
 
 ## Installed stack
@@ -24,9 +24,8 @@ license, so the artifacts are downloaded at runtime and never redistributed with
 1. **Create the tribe.** One player runs `/ftbteams party create <name>` (or opens the FTB Teams
    screen from the FTB Library sidebar) and invites the other. The invited player accepts with
    `/ftbteams` or the invitation screen. FTB Teams owns membership, ranks and team chat.
-2. **Open the journal.** Craft the Field Journal from a book and two leather, then press **J** or
-   right-click with it. The Primitive chapter starts with camp, tools, forage, sedation, the first
-   tame and the journal itself; Camp and Rescue follows with the bedroll, fiber, bandages, the flint
+2. **Open the journal.** Press **J**. The Primitive chapter starts with camp, the rock tools, forage,
+   sedation and the first tame; Camp and Rescue follows with the bedroll, fiber, bandages, the flint
    knife and keratin spear, and a revive.
 3. **Share progress.** Quest progress is per tribe; rewards are per player and granted exactly once.
    Pin an objective in the book to keep it on the HUD tracker.

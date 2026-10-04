@@ -1,6 +1,6 @@
-"""Cosy item sprites: the seventeen items that still borrowed a vanilla sprite.
+"""Cosy item sprites: the sixteen items that still borrowed a vanilla sprite.
 
-Plant Fiber, the five nest eggs, the Field Journal, the Fiber Bandage, both cargo
+Plant Fiber, the five nest eggs, the Fiber Bandage, both cargo
 harnesses, the Healing Mixture, the Hearty Stew, the Trail Mix, the Dried Ration, both tranquilizer arrows and
 the Debug Spyglass. Hand-pixelled on a 16 px grid and doubled to the 32 px Ark item
 size, like the other hand-drawn items (build_bronze_age_art.py). The look is warm and soft: rounded shapes, straw,
@@ -219,29 +219,6 @@ def reinforced_harness():
                          'u': (238, 203, 126), 'U': (176, 121, 44)})
 
 
-def field_journal():
-    """A leather field journal: a three-toed track pressed into the cover, a band to hold it shut, a red ribbon."""
-    return sprite(["................",
-                   "...sLLLLLLLLL...",
-                   "..sSLcccccckCp..",
-                   "..sScccccccKcp..",
-                   "..sScecececKcp..",
-                   "..sScceeeccKcp..",
-                   "..sScccecccKcp..",
-                   "..sScccecccKcp..",
-                   "..sScccccccKcp..",
-                   "..sScccccccKcp..",
-                   "..sSccccccckcp..",
-                   "..sSDDDDDDDkDp..",
-                   "..sppppRRppppP..",
-                   "...PPPPRRPPPP...",
-                   ".......Rr.......",
-                   "................"],
-                  {'s': (84, 50, 30), 'S': (120, 76, 44), 'L': (190, 138, 84), 'c': (160, 108, 62), 'C': (190, 138, 84),
-                   'D': (124, 80, 46), 'e': (232, 196, 128), 'k': (70, 44, 30), 'K': (98, 60, 38),
-                   'p': (244, 236, 212), 'P': (204, 192, 160), 'R': (200, 56, 52), 'r': (144, 36, 40)})
-
-
 # -------------------------------------------------------------------------------------------- kitchen
 
 def hearty_stew():
@@ -380,7 +357,6 @@ def sprites():
         'plant_fiber': plant_fiber(),
         'fiber_bandage': fiber_bandage(),
         **nest_eggs(),
-        'field_journal': field_journal(),
         'pack_harness': pack_harness(),
         'reinforced_harness': reinforced_harness(),
         'hearty_stew': hearty_stew(),

@@ -867,7 +867,7 @@ def main():
         crystal = name.endswith(('_bud', '_cluster'))
         save(item32(image) if crystal else image, TEX / 'block' / f'{name}.png')
 
-    layers = {layer: armour_layer(layer) for layer in ('humanoid', 'humanoid_leggings')}
+    layers = {layer: armour_layer(layer) for layer in ('humanoid', 'humanoid_leggings', 'humanoid_baby')}
     for layer, image in layers.items():
         save(image, TEX / 'entity/equipment' / layer / 'bronze.png')
     save(explosive_arrow_entity(), TEX / 'entity/projectiles/explosive_arrow.png')

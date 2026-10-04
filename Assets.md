@@ -52,7 +52,6 @@ No new PNG is shipped for these; the model or definition points at a vanilla tex
 
 | Ark asset | Vanilla source | What it is | A dedicated asset could |
 |---|---|---|---|
-| Field Journal | `item/book` | Opens the FTB journal | Bound journal with strap |
 | Tranquilizer Arrow | vanilla arrow / tipped-arrow renderer | Sedative projectile | Dart-and-vial model |
 | Plant Fiber | `item/wheat` | Grass gather material | Bundled fiber sprite |
 | Fiber Bandage | `item/paper` | Heal and revive item | Rolled bandage sprite |

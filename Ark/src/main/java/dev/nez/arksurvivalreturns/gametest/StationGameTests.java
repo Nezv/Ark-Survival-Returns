@@ -68,6 +68,14 @@ final class StationGameTests {
         var smith = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:smithing_table");
         h.assertTrue(smith.crafts().stream().anyMatch(c -> c.variant().item().equals("minecraft:hopper")
                 && c.variant().cost().containsKey("arksurvivalreturns:storage_crate")), "The smith's hopper must take a crate");
+        // The Medicine Bench costs no glass, and the bottles its remedies need are made on it (no 3x3 grid is left).
+        var working = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:working_station");
+        h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:medicine_bench")
+                && c.variant().cost().containsKey("arksurvivalreturns:mortar_and_pestle")
+                && c.variant().cost().keySet().stream().noneMatch(cost -> cost.contains("glass"))), "The Medicine Bench must not cost glass");
+        var medicine = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:medicine_bench");
+        h.assertTrue(medicine.crafts().stream().anyMatch(c -> c.variant().item().equals("minecraft:glass_bottle")
+                && c.variant().cost().equals(java.util.Map.of("minecraft:glass", 3))), "The Medicine Bench must make glass bottles");
 
         var medicinePlayer = FakePlayerFactory.get(level, new GameProfile(java.util.UUID.randomUUID(), "ArkMedicineBench"));
         medicinePlayer.experienceLevel = 99;

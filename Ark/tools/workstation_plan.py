@@ -652,8 +652,6 @@ def ark_place(recipe):
         return ws('camp/stations')
     if path in ('pack_harness', 'reinforced_harness'):
         return ws('camp/tame')
-    if path == 'field_journal':
-        return at('mechanical_press', 'paper', note='a book: bound at the press')
     if path == 'lead':
         return ws('fibre/leather', 'lead')
     if path == 'resin_clump':

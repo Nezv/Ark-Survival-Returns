@@ -249,6 +249,14 @@ final class PrimitiveGameTests {
         var recipes = level.getServer().getRecipeManager();
         h.assertTrue(recipes.byKey(recipe("minecraft:furnace")).isEmpty(), "The furnace recipe must be removed");
         h.assertTrue(recipes.byKey(recipe("minecraft:wooden_pickaxe")).isEmpty(), "Wooden tools must be removed");
+        for (String id : List.of("minecraft:iron_ingot_from_blasting_iron_ore", "minecraft:cooked_cod_from_smoking",
+                "arksurvivalreturns:tin_ingot_from_blasting_raw")) {
+            h.assertTrue(recipes.byKey(recipe(id)).isEmpty(), "A smoker or blast furnace recipe survived: " + id);
+        }
+        // Smelting stays for the forge, and for the cooked meat a burning creature drops.
+        for (String id : List.of("minecraft:iron_ingot_from_smelting_iron_ore", "minecraft:cooked_cod", "arksurvivalreturns:cooked_carnivore_meat")) {
+            h.assertTrue(recipes.byKey(recipe(id)).isPresent(), "A smelting recipe was lost: " + id);
+        }
         for (String id : List.of("stone_hatchet", "cooked_carnivore_meat_from_campfire_cooking")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
         }

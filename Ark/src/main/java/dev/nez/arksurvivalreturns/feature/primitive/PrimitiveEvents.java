@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns.feature.primitive;
 import java.util.Set;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
@@ -46,6 +47,11 @@ public final class PrimitiveEvents {
     public static final Set<String> FURNACES = Set.of("minecraft:furnace", "minecraft:smoker", "minecraft:blast_furnace");
     /** Vanilla recipes Ark replaces with its own (NeoForge ships its own copy, so a data override would lose). */
     public static final Set<String> REPLACED = Set.of("minecraft:arrow");
+    /**
+     * Recipe types only the smoker and the blast furnace run. Smelting stays: the forge reads it, and it is what
+     * cooks the meat a burning creature drops.
+     */
+    public static final Set<String> FURNACE_ONLY_TYPES = Set.of("minecraft:blasting", "minecraft:smoking");
 
     /** Server config loads after the first data pack load, so recipe filtering falls back to defaults. */
     static boolean enabled(ModConfigSpec.BooleanValue value) {
@@ -96,6 +102,7 @@ public final class PrimitiveEvents {
         boolean noFurnace = enabled(Config.PRIMITIVE_NO_FURNACES);
         int before = event.getRecipeJsons().size();
         event.getRecipeJsons().entrySet().removeIf(entry -> {
+            if (noFurnace && FURNACE_ONLY_TYPES.contains(type(entry.getValue()))) return true; // no station runs them
             if (entry.getKey().getNamespace().equals(ArkSurvivalReturns.MOD_ID)) return false;
             if (REPLACED.contains(entry.getKey().toString())) return true; // arksurvivalreturns:arrow takes over
             String result = result(entry.getValue());
@@ -105,6 +112,10 @@ public final class PrimitiveEvents {
         if (before != event.getRecipeJsons().size()) {
             ArkSurvivalReturns.LOGGER.info("Prehistoric progression removed {} recipes", before - event.getRecipeJsons().size());
         }
+    }
+
+    private static String type(JsonElement recipe) {
+        return recipe instanceof JsonObject object && object.get("type") instanceof JsonPrimitive type ? type.getAsString() : null;
     }
 
     private static String result(JsonElement recipe) {

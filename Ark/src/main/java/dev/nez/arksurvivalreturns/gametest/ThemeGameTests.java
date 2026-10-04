@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import dev.nez.arksurvivalreturns.feature.theme.DimensionGuard;
 import dev.nez.arksurvivalreturns.feature.theme.ThemePolicy;
-import net.minecraft.advancements.Criterion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -186,20 +185,16 @@ final class ThemeGameTests {
     }
 
     private static void advancements(GameTestHelper h, MinecraftServer server) {
-        for (String id : List.of("minecraft:story/enter_the_nether", "minecraft:story/enter_the_end",
-                "minecraft:end/kill_dragon", "minecraft:nether/summon_wither", "minecraft:story/enchant_item",
-                "minecraft:adventure/totem_of_undying", "minecraft:husbandry/balanced_diet")) {
-            var holder = server.getAdvancements().get(Identifier.parse(id));
-            h.assertTrue(holder != null, "Missing advancement " + id);
-            var criteria = holder.value().criteria();
-            h.assertFalse(criteria.isEmpty(), "Advancement has no criteria " + id);
-            for (var criterion : criteria.values()) {
-                h.assertTrue(trigger(criterion), "Advancement is still reachable: " + id);
-            }
+        for (var holder : server.getAdvancements().getAllAdvancements()) {
+            h.assertFalse(ThemePolicy.removedAdvancement(holder.id()), "A vanilla advancement is still loaded: " + holder.id());
         }
-        var reachable = server.getAdvancements().get(Identifier.parse("minecraft:story/mine_stone"));
-        h.assertTrue(reachable != null && reachable.value().criteria().values().stream().noneMatch(ThemeGameTests::trigger),
-                "An unrelated advancement was disabled");
+        for (String id : List.of("minecraft:story/root", "minecraft:nether/distract_piglin", "minecraft:husbandry/balanced_diet")) {
+            h.assertTrue(server.getAdvancements().get(Identifier.parse(id)) == null, "A vanilla advancement is still loaded: " + id);
+        }
+        // The recipe unlocks and Ark's own discovery records are not vanilla tabs.
+        for (String id : List.of("minecraft:recipes/root", "arksurvivalreturns:journal/first_tame")) {
+            h.assertTrue(server.getAdvancements().get(Identifier.parse(id)) != null, "An advancement outside the vanilla tabs was lost: " + id);
+        }
     }
 
     private static void mechanics(GameTestHelper h, ServerLevel world) {
@@ -300,11 +295,6 @@ final class ThemeGameTests {
             holder.unwrapKey().ifPresent(key -> found.add(key.identifier().toString()));
         }
         return found;
-    }
-
-    private static boolean trigger(Criterion<?> criterion) {
-        var id = BuiltInRegistries.TRIGGER_TYPES.getKey(criterion.trigger());
-        return id != null && id.toString().equals("minecraft:impossible");
     }
 
     private static boolean containsEnchantFunction(JsonElement element) {

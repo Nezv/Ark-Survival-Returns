@@ -96,7 +96,7 @@ public final class ArkData implements DataProvider {
         tag("item/mass/light", "string", "feather", "torch", "stick", "flint", "bone",
                 NS + ":plant_fiber", NS + ":fiber_bandage");
         tag("item/mass/bulk", NS + ":tintoberry", NS + ":amarberry", NS + ":azulberry", NS + ":narcoberry",
-                NS + ":field_journal", "sweet_berries", "glow_berries", "egg", "snowball", "paper",
+                "sweet_berries", "glow_berries", "egg", "snowball", "paper",
                 "wheat_seeds", "beetroot_seeds", "melon_seeds", "pumpkin_seeds", "torchflower_seeds", "pitcher_pod");
         tag("item/mass/food", "#c:foods");
         tag("item/mass/unit", "minecart", "chest_minecart", "furnace_minecart", "hopper_minecart", "tnt_minecart",
@@ -205,13 +205,6 @@ public final class ArkData implements DataProvider {
         pt.put("companion." + NS + ".order.stay", "Seu companheiro fica aqui");
         en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
         pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
-        // Field Journal: a leather journal with a track pressed into the cover (tools/build_cosy_items.py).
-        put("assets/" + NS + "/models/item/field_journal", Map.of("parent", "minecraft:item/generated",
-                "textures", Map.of("layer0", NS + ":item/field_journal")));
-        put("assets/" + NS + "/items/field_journal", Map.of("model", Map.of("type", "minecraft:model",
-                "model", NS + ":item/field_journal")));
-        en.put("item." + NS + ".field_journal", "Field Journal");
-        pt.put("item." + NS + ".field_journal", "Di\u00e1rio de campo");
         en.put("item." + NS + ".plant_fiber", "Plant Fiber");
         pt.put("item." + NS + ".plant_fiber", "Fibra vegetal");
         en.put("item." + NS + ".pack_harness", "Pack Harness");
@@ -240,8 +233,8 @@ public final class ArkData implements DataProvider {
         pt.put("block." + NS + ".bedroll", "Saco de dormir");
         en.put("item." + NS + ".bedroll", "Bedroll");
         pt.put("item." + NS + ".bedroll", "Saco de dormir");
-        en.put("key." + NS + ".journal", "Open Field Journal");
-        pt.put("key." + NS + ".journal", "Abrir di\u00e1rio de campo");
+        en.put("key." + NS + ".journal", "Open Journal");
+        pt.put("key." + NS + ".journal", "Abrir di\u00e1rio");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
         pt.put("key.category." + NS + ".keys", "Ark Survival Returns");
         // The tech-tree key (P) has its own Controls category (TechClient).
@@ -344,13 +337,8 @@ public final class ArkData implements DataProvider {
                 """.formatted(NS, NS));
     }
 
-    /** Field Journal crafting and the hidden discovery advancements the quest book reads. */
+    /** The hidden discovery advancements the quest book reads. */
     private void journal() {
-        json("data/" + NS + "/recipe/field_journal", """
-                {"type":"minecraft:crafting_shapeless","category":"misc","group":"field_journal",
-                 "ingredients":["minecraft:book","minecraft:leather","minecraft:leather"],
-                 "result":{"count":1,"id":"%s:field_journal"}}
-                """.formatted(NS));
         // Awarded by the taming code; hidden so it is a discovery record, not a popup.
         json("data/" + NS + "/advancement/journal/first_tame", """
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
@@ -424,7 +412,7 @@ public final class ArkData implements DataProvider {
 
     /**
      * Removals the theme enforces through data: biome spawn lists and features, structure sets,
-     * village trades, advancements and the grounded source for bones.
+     * village trades and the grounded source for bones.
      */
     private void theme() {
         tag("entity_type/theme/removed", dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.presentRemovedEntities().toArray(String[]::new));
@@ -444,11 +432,6 @@ public final class ArkData implements DataProvider {
                 "type", "minecraft:random_spread", "spacing", 32, "separation", 8, "salt", 0));
         for (String set : dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.DISABLED_STRUCTURE_SETS) {
             put("data/minecraft/worldgen/structure_set/" + set, emptySet);
-        }
-        // Replaced advancements keep their file path, so saved progress is simply never granted.
-        var unreachable = Map.of("criteria", Map.of("theme_removed", Map.of("trigger", "minecraft:impossible")));
-        for (String path : dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.DISABLED_ADVANCEMENTS) {
-            put("data/minecraft/advancement/" + path, unreachable);
         }
         dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.TRADE_TAGS.forEach((path, values) -> put(
                 "data/minecraft/tags/villager_trade/" + path, Map.of("replace", true, "values", values)));
