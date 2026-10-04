@@ -141,8 +141,98 @@ final class WildlifeRegressionGameTests {
     }
     /** No goals compete with the requested real path; AI, navigation, steering and physics all tick normally. */
     private static final class Walker extends CreatureEntity {
-        Walker(net.minecraft.server.level.ServerLevel world) { super(ModContent.CREATURES.get(Species.PEGOMASTAX).get(), world, Species.PEGOMASTAX); }
+        Walker(net.minecraft.server.level.ServerLevel world) { this(world, Species.PEGOMASTAX); }
+        Walker(net.minecraft.server.level.ServerLevel world, Species species) { super(ModContent.CREATURES.get(species).get(), world, species); }
         @Override protected void registerGoals() {}
+    }
+    /**
+     * A grazer left alone in its feeding hours, living its real routine for twenty seconds. A recorded stag
+     * walked for two minutes and a half without a pause; this one must have its head down most of the time,
+     * take a few steps now and then, and never make a turn its body could not make.
+     */
+    static void grazing(GameTestHelper h) {
+        floor(h);
+        // Real grass: in this version it is not in the dirt tag, and a routine tested on bare dirt hid that.
+        for (int x = 40; x < 90; x++) for (int z = 40; z < 90; z++) h.setBlock(x, 2, z, Blocks.GRASS_BLOCK);
+        var mob = ModContent.CREATURES.get(Species.PARASAUR).get().create(h.getLevel(), EntitySpawnReason.COMMAND);
+        // One known animal: the bouts of its routine come from its own identity.
+        mob.setUUID(new UUID(0x5EEDL, 0xB0D1L));
+        mob.initializeLevel(1); mob.setPersistenceRequired(); mob.getRandom().setSeed(0L);
+        mob.setPos(h.absoluteVec(new Vec3(64.5, 3, 64.5))); mob.setYRot(0); mob.yBodyRot = 0;
+        mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        mob.wildlife().mind().restoreNeeds(0.05, 0.05, 0.05);
+        h.getLevel().addFreshEntity(mob);
+        GameTestCleanup.onFinish(h, mob::discard);
+        int[] ticks = {0}, moving = {0}, head = {0}, feeding = {0};
+        float[] yaw = {mob.getYRot()}, sharpest = {0};
+        double[] at = {mob.getX(), mob.getZ()};
+        h.onEachTick(() -> {
+            ticks[0]++;
+            if (Math.hypot(mob.getX() - at[0], mob.getZ() - at[1]) > 0.02) moving[0]++;
+            if (mob.action() == BehaviorAction.GRAZE) head[0]++;
+            if (mob.behavior() == BehaviorState.FORAGE) feeding[0]++;
+            sharpest[0] = Math.max(sharpest[0], Math.abs(net.minecraft.util.Mth.wrapDegrees(mob.getYRot() - yaw[0])));
+            at[0] = mob.getX(); at[1] = mob.getZ(); yaw[0] = mob.getYRot();
+        });
+        h.runAfterDelay(420, () -> {
+            String seen = "feeding " + feeding[0] + " head down " + head[0] + " moving " + moving[0] + " of " + ticks[0] + " ticks";
+            h.assertTrue(feeding[0] >= ticks[0] * 0.75, "A grazer on grass in its feeding hours was not feeding: " + seen);
+            h.assertTrue(head[0] >= ticks[0] * 0.45, "A feeding grazer did not keep its head down: " + seen);
+            h.assertTrue(moving[0] <= ticks[0] * 0.35, "A feeding grazer walked like a patrol: " + seen);
+            h.assertTrue(sharpest[0] <= mob.turnRate(false) * 1.05f + 0.01f,
+                    "A calm animal turned " + sharpest[0] + " degrees in a tick; its body allows " + mob.turnRate(false));
+            h.succeed();
+        });
+    }
+    /**
+     * A big body has weight. A Triceratops sent to a point behind it turns about on the spot at the rate its
+     * bulk allows, gathers pace over many ticks instead of one, and runs its pace out when the way ends.
+     */
+    static void weight(GameTestHelper h) {
+        floor(h);
+        var mob = new Walker(h.getLevel(), Species.TRICERATOPS); mob.initializeLevel(1); mob.setPersistenceRequired();
+        Vec3 start = h.absoluteVec(new Vec3(64.5, 3, 64.5)), goal = start.add(0, 0, -24);
+        mob.setPos(start); mob.setOnGround(true); mob.setDeltaMovement(0, -0.08, 0);
+        mob.setYRot(0); mob.yBodyRot = 0; mob.setAction(BehaviorAction.WALK);
+        h.getLevel().addFreshEntity(mob); GameTestCleanup.onFinish(h, mob::discard);
+        h.assertTrue(mob.getNavigation().moveTo(goal.x, goal.y, goal.z, 0, mob.wanderModifier()), "Weight fixture has no real path");
+        double bulk = mob.bulk();
+        float rate = mob.turnRate(false);
+        int brake = dev.nez.arksurvivalreturns.feature.creature.Inertia.brakeTicks(bulk);
+        // tick counters: now, first step, about-face done, stop ordered; speeds: fastest, three ticks into the walk, two ticks after the stop
+        int[] now = {0}, stepped = {-1}, faced = {-1}, stopped = {-1}, rested = {-1};
+        double[] at = {mob.getX(), mob.getZ()}, fastest = {0}, early = {-1}, coast = {-1}, ran = {0};
+        float[] yaw = {mob.getYRot()}, sharpest = {0};
+        h.onEachTick(() -> {
+            now[0]++;
+            double speed = Math.hypot(mob.getX() - at[0], mob.getZ() - at[1]);
+            sharpest[0] = Math.max(sharpest[0], Math.abs(net.minecraft.util.Mth.wrapDegrees(mob.getYRot() - yaw[0])));
+            if (faced[0] < 0 && Math.abs(net.minecraft.util.Mth.wrapDegrees(mob.getYRot() - 180)) < 20) faced[0] = now[0];
+            if (stepped[0] < 0 && speed > 0.01) stepped[0] = now[0];
+            if (stepped[0] > 0 && now[0] == stepped[0] + 3) early[0] = speed;
+            if (stopped[0] < 0) fastest[0] = Math.max(fastest[0], speed);
+            // Well under way and still far from the goal: the path is taken away.
+            if (stopped[0] < 0 && stepped[0] > 0 && now[0] > stepped[0] + 60 && mob.position().distanceToSqr(goal) > 36) {
+                mob.getNavigation().stop();
+                stopped[0] = now[0];
+            } else if (stopped[0] > 0) {
+                ran[0] += speed;
+                if (now[0] == stopped[0] + 2) coast[0] = speed;
+                if (rested[0] < 0 && speed < 0.002) rested[0] = now[0];
+            }
+            at[0] = mob.getX(); at[1] = mob.getZ(); yaw[0] = mob.getYRot();
+        });
+        h.runAfterDelay(400, () -> {
+            h.assertTrue(faced[0] > 0 && stepped[0] > 0 && stopped[0] > 0,
+                    "The Triceratops never turned about, walked and was stopped: faced " + faced[0] + " stepped " + stepped[0] + " stopped " + stopped[0]);
+            h.assertTrue(sharpest[0] <= rate * 1.05f + 0.01f, "Turned " + sharpest[0] + " degrees in a tick; its bulk allows " + rate);
+            h.assertTrue(faced[0] >= 160 / rate, "An about-face took " + faced[0] + " ticks: quicker than its turn rate of " + rate + " a tick");
+            h.assertTrue(early[0] >= 0 && early[0] < fastest[0] * 0.6, "Full pace three ticks after a standstill: " + early[0] + " of " + fastest[0]);
+            h.assertTrue(coast[0] > 0.01, "The body stopped dead when its path ended: " + coast[0]);
+            h.assertTrue(ran[0] > 0.1 && ran[0] < 3, "The pace ran out over " + ran[0] + " blocks");
+            h.assertTrue(rested[0] > 0 && rested[0] <= stopped[0] + brake + 15, "Still moving " + (rested[0] - stopped[0]) + " ticks after the stop");
+            h.succeed();
+        });
     }
     static void turning(GameTestHelper h) {
         floor(h);

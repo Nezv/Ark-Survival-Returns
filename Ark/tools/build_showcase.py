@@ -198,7 +198,8 @@ def habitats_section(species):
 # ---------------------------------------------------------------------------------------- behaviour
 
 TIER_STYLE = {'FULL': ('Full detail', '#4bae66'), 'AMBIENT': ('Ambient', '#e4c653'), 'DORMANT': ('Dormant', '#8a8f86')}
-PHASE_STYLE = {'HUNT': ('Hunt', 'p-hunt'), 'SLEEP': ('Sleep', 'p-sleep'), 'ROAM': ('Roam', 'p-roam')}
+PHASE_STYLE = {'HUNT': ('Hunt', 'p-hunt'), 'SLEEP': ('Sleep', 'p-sleep'), 'ROAM': ('Roam', 'p-roam'),
+               'FEED': ('Graze', 'p-feed'), 'DRINK': ('Water', 'p-drink'), 'REST': ('Lie up', 'p-rest')}
 LAP_TITLES = {'LOOP': 'Wide wobbling loop', 'FIGURE_EIGHT': 'Figure eight over the nest',
               'THERMAL': 'Thermal circle, gaining height'}
 
@@ -231,14 +232,15 @@ def day_schedule(schedule):
                 if b > a:
                     label, css = PHASE_STYLE[phase]
                     spans.append(f'<span class="{css}" style="left:{a / 24 * 100:.3f}%;width:{(b - a) / 24 * 100:.3f}%" '
-                                 f'title="{label}">{label if b - a >= 2.5 else ""}</span>')
+                                 f'title="{label}">{label if b - a >= 1.6 else ""}</span>')
         return ''.join(spans)
 
-    dusk, dawn = hour(schedule['nightStart']), hour(schedule['nightEnd'])
-    daylight = (schedule['nightStart'] - schedule['nightEnd']) % 24000
-    wake = hour(schedule['nightEnd'] + schedule['carnivoreDaySleep'] * daylight)
-    rows = [('Carnivores', [(dawn, wake, 'SLEEP'), (wake, dusk, 'ROAM'), (dusk, dawn, 'HUNT')], schedule['carnivore']),
-            ('Herbivores', [(dawn, dusk, 'ROAM'), (dusk, dawn, 'SLEEP')], schedule['herbivore'])]
+    def runs(day):
+        # The day as the game schedules it: runs of one activity, exported by BehaviorModels.
+        return [(hour(run['from']), hour(run['to']), run['activity']) for run in day]
+
+    rows = [('Carnivores', runs(schedule['carnivoreDay']), schedule['carnivore']),
+            ('Herbivores', runs(schedule['herbivoreDay']), schedule['herbivore'])]
     body = ''.join(f'<div class="day-row"><b>{name}</b><div class="day-bar">{bar(segments)}</div>'
                    f'<small class="muted">{e(text)}</small></div>' for name, segments, text in rows)
     axis = ''.join(f'<span>{h:02d}:00</span>' for h in range(0, 25, 6))

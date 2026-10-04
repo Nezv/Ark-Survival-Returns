@@ -16,8 +16,18 @@ public final class WildlifeMind {
     }
     /** Ticks an animal keeps watching after a flight, and the least an investigation lasts. */
     public static final int WARY_TICKS = 100, INVESTIGATE_TICKS = 60;
+    /** The least a drink lasts, the thirst that sends an animal to water at watering time, and how long a dry range is remembered. */
+    public static final int DRINK_TICKS = 160, DRY_TICKS = 6000;
+    public static final double HABIT_THIRST = 0.25;
+    /** @param activity what the hour asks of an awake animal: feeding, watering, lying up, or nothing in particular */
     public record Routine(boolean enabled, boolean night, boolean sleepWanted, boolean safeToSleep,
-            boolean danger, boolean defended, boolean cornered, int calmTicks, double hungerMultiplier, boolean regroup) {
+            boolean danger, boolean defended, boolean cornered, int calmTicks, double hungerMultiplier, boolean regroup,
+            DailySchedule.Activity activity) {
+        public Routine(boolean enabled, boolean night, boolean sleepWanted, boolean safeToSleep,
+                boolean danger, boolean defended, boolean cornered, int calmTicks, double hungerMultiplier, boolean regroup) {
+            this(enabled, night, sleepWanted, safeToSleep, danger, defended, cornered, calmTicks, hungerMultiplier, regroup,
+                    DailySchedule.Activity.ROAM);
+        }
         public Routine(boolean enabled, boolean night, boolean sleepWanted, boolean safeToSleep,
                 boolean danger, boolean defended, boolean cornered, int calmTicks, double hungerMultiplier) {
             this(enabled, night, sleepWanted, safeToSleep, danger, defended, cornered, calmTicks, hungerMultiplier, false);
@@ -40,10 +50,10 @@ public final class WildlifeMind {
         REGROUP("separated from the herd after an alarm"),
         WARY("the alarm is over: watch a while before going back to the routine"),
         SLEEP_TIME("scheduled sleep, safe and calm"),
-        DRINK("thirsty with water at hand"),
-        SEEK_WATER("thirsty, no water in reach"),
-        TIRED("fatigue while calm"),
-        GRAZE("hungry herbivore on grazing ground"),
+        DRINK("thirsty, or watering time, with water at hand"),
+        SEEK_WATER("thirsty, or watering time, no water in reach"),
+        TIRED("fatigue, or the hour for lying up, while calm"),
+        GRAZE("feeding hours, or hunger, on grazing ground"),
         SEARCH("hungry carnivore at night"),
         ROUTINE("nothing pressing");
         private final String label;
@@ -55,7 +65,7 @@ public final class WildlifeMind {
     private Reason reason = Reason.ROUTINE;
     private double hunger = 0.55, thirst = 0.35, fatigue = 0.15, awareness;
     private int age, memory, warning, provoked, chase, recovery, feeding;
-    private int calm, flight, wary;
+    private int calm, flight, wary, dry;
     public WildlifeMind(boolean predator, boolean timid, boolean nocturnal) {
         this.predator = predator; this.timid = timid; this.nocturnal = nocturnal;
     }
@@ -95,10 +105,20 @@ public final class WildlifeMind {
      * No water within reach: the animal makes do with the moisture in its food until thirst builds again,
      * instead of searching without end and never resting. Real water still quenches it fully.
      */
-    public void makeDo() { thirst = Math.min(thirst, 0.5); }
+    public void makeDo() { thirst = Math.min(thirst, 0.5); dry = DRY_TICKS; }
+    /** Whether water is on this animal's mind: real thirst, or the watering hour with a little of it. */
+    public boolean wantsWater(DailySchedule.Activity activity) {
+        return thirst >= 0.6 || activity == DailySchedule.Activity.DRINK && thirst >= HABIT_THIRST && dry == 0;
+    }
+    /** Whether a grazer would feed here: hunger, or simply the hours it spends with its head down. */
+    public boolean wantsForage(DailySchedule.Activity activity) {
+        return !predator && (hunger >= 0.4 || activity == DailySchedule.Activity.FEED);
+    }
     /** Adopts the state a cheaper routine was showing (sleeping, roaming, grazing) when full detail resumes. */
     public void resumeAs(BehaviorState shown) { if (shown != state) { state = shown; age = 0; } }
     public void abandonChase() { recovery = 200; memory = 0; awareness = 0; chase = 0; }
+    /** It has watched long enough: what keeps its distance is let be, with nothing left to investigate. */
+    public void loseInterest() { memory = 0; awareness = 0; warning = 0; }
     /** A completed return ends recovery; a path request to the block beneath the body is not a new chase. */
     public void arrivedHome() { recovery = 0; }
     public void defendHerd() { provoked = 100; memory = 100; awareness = 1; }
@@ -117,6 +137,8 @@ public final class WildlifeMind {
         recovery = Math.max(0, recovery - ticks);
         feeding = Math.max(0, feeding - ticks);
         calm = Math.max(0, calm - ticks);
+        dry = Math.max(0, dry - ticks);
+        var activity = routine.enabled ? routine.activity : DailySchedule.Activity.ROAM;
         if (routine.enabled && (o.signal > 0 || o.attacked || routine.danger || !routine.safeToSleep)) calm = routine.calmTicks;
         flight = state == BehaviorState.FLEE ? flight + ticks : 0;
         wary = state == BehaviorState.FLEE ? WARY_TICKS : Math.max(0, wary - ticks);
@@ -165,12 +187,14 @@ public final class WildlifeMind {
                 && thirst < 0.9 && (predator || hunger < 0.9)
                 && !(state == BehaviorState.DRINK && thirst > 0.1)
                 && !(state == BehaviorState.FORAGE && hunger > 0.1)) { next = BehaviorState.SLEEP; why = Reason.SLEEP_TIME; }
-        else if ((thirst >= 0.6 || (state == BehaviorState.DRINK && thirst > 0.1)) && o.water) { next = BehaviorState.DRINK; why = Reason.DRINK; }
-        else if (thirst >= 0.6) { next = BehaviorState.SEEK_WATER; why = Reason.SEEK_WATER; }
+        // A drink lasts: an animal at the bank does not sip for a second and walk off.
+        else if ((wantsWater(activity) || state == BehaviorState.DRINK && (thirst > 0.1 || age < DRINK_TICKS)) && o.water) { next = BehaviorState.DRINK; why = Reason.DRINK; }
+        else if (wantsWater(activity)) { next = BehaviorState.SEEK_WATER; why = Reason.SEEK_WATER; }
         else if ((routine.safeToSleep && (!routine.enabled || calm == 0)) && (group != null ? group.state == BehaviorState.REST || fatigue >= 0.95 : fatigue >= 0.7
+                || activity == DailySchedule.Activity.REST
                 || (!routine.enabled && o.night != nocturnal && fatigue >= 0.2)
                 || (state == BehaviorState.REST && fatigue > 0.05))) { next = BehaviorState.REST; why = Reason.TIRED; }
-        else if (!predator && (group != null ? group.state == BehaviorState.FORAGE : hunger >= 0.4 || (state == BehaviorState.FORAGE && hunger > 0.1)) && o.forage) { next = BehaviorState.FORAGE; why = Reason.GRAZE; }
+        else if ((group != null ? !predator && group.state == BehaviorState.FORAGE : wantsForage(activity) || !predator && state == BehaviorState.FORAGE && hunger > 0.1) && o.forage) { next = BehaviorState.FORAGE; why = Reason.GRAZE; }
         else {
             next = group != null ? (group.state == BehaviorState.SEARCH && canHunt ? BehaviorState.SEARCH : BehaviorState.ROAM)
                     : routine.enabled && canHunt && hunger >= 0.4 ? BehaviorState.SEARCH : BehaviorState.ROAM;

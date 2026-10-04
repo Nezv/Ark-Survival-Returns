@@ -30,8 +30,13 @@ import net.minecraft.world.phys.Vec3;
  *
  * <p>FULL: bounded perception, the decision model ({@link WildlifeMind}), the timed bridges between states
  * ({@link Choreographer}), pack signals that ripple with individual delays, and collision-aware navigation.
- * AMBIENT: {@link AmbientRoutine}, a cheap visible routine with no senses and frozen needs. DORMANT: only the
+ * AMBIENT: the same calm routine on the schedule alone, with no senses and frozen needs. DORMANT: only the
  * sleep pose follows the schedule, on a slow timer.
+ *
+ * <p>While nothing presses it, an animal spends its time in bouts ({@link CalmRoutine}): the hour says what it
+ * is about ({@link DailySchedule.Activity}), the mind turns that into a state, and the planner fills the state
+ * with grazing, a few steps, a look around, a long stand, a walk. Walks go on from where the body faces,
+ * with the herd's heading for a follower, so nothing paces back and forth.
  */
 public final class WildlifeGoal extends WildlifeController {
     private WildlifeMind mind;
@@ -51,6 +56,14 @@ public final class WildlifeGoal extends WildlifeController {
     private static final java.util.List<BlockPos> WATER_OFFSETS = waterOffsets();
     private LivingEntity focus;
     private LivingEntity herdThreat;
+    /**
+     * What this animal has been watching without being pressed by it: for how long, from how near, and when it
+     * was last there. Watched long enough it is let be, until it comes closer.
+     */
+    private LivingEntity watched;
+    private int watchTicks;
+    private double watchedGap;
+    private long watchedSeen;
     private int herdThreatTicks, pendingAlarmTicks, alarmEvents;
     private java.util.UUID preyHerd;
     private int damageStamp = -1, failedPaths, nextRoutine, alarmTicks;
@@ -60,10 +73,12 @@ public final class WildlifeGoal extends WildlifeController {
     private boolean interrupted, regrouping;
     private java.util.List<CreatureEntity> packCache;
     private BehaviorTier tier = BehaviorTier.FULL;
-    private AmbientRoutine.Plan ambient;
-    private int ambientTicks;
-    private float ambientYaw;
-    private SplittableRandom ambientRandom;
+    /** The bout of the calm routine in progress and the one before it; the same planner near and far. */
+    private CalmRoutine.Plan plan;
+    private CalmRoutine.Step lastStep;
+    private int planTicks;
+    private float planYaw;
+    private SplittableRandom routineRandom;
     /** The session recorder's view of the decision pass in progress; null outside one and while nothing records. */
     private DecisionTrace trace;
     public WildlifeGoal(CreatureEntity mob) { super(mob); setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
@@ -112,6 +127,9 @@ public final class WildlifeGoal extends WildlifeController {
                 // Facing a stimulus turns the whole body in place, at the creature's own rate.
                 if (facing != null && choreo().action().motion() == BehaviorAction.Motion.FACE && mob.getNavigation().isDone())
                     turnToward(yawTo(facing), false);
+                // A turning bout ends when the body faces the new way.
+                else if (plan != null && plan.step() == CalmRoutine.Step.TURN && choreo().action() == BehaviorAction.TURN
+                        && turnToward(planYaw, false)) { choreo().release(); plan = null; }
             }
             case AMBIENT -> ambientTick();
             case DORMANT -> dormantTick();
@@ -156,8 +174,8 @@ public final class WildlifeGoal extends WildlifeController {
             mob.getNavigation().stop();
             choreo().reset(mind().state().sleeping() ? mind().state() : BehaviorState.ROAM);
         }
-        ambient = null;
-        ambientTicks = 0;
+        plan = null;
+        planTicks = 0;
         tier = next;
     }
 
@@ -167,63 +185,150 @@ public final class WildlifeGoal extends WildlifeController {
                 Config.NIGHT_START.get(), Config.NIGHT_END.get(), Config.NIGHT_TRANSITION.get(), Config.DAY_SLEEP.get());
     }
 
-    /** Tier 2: walk, turn, stop, look, sniff, graze, poop and sleep on schedule; one decision every few seconds. */
+    /** What the hour asks of this animal; without a day and night cycle, nothing in particular. */
+    private DailySchedule.Activity activity(ServerLevel world) {
+        if (!WildlifeSenses.hasNightCycle(mob)) return DailySchedule.Activity.ROAM;
+        long clock = world.getDefaultClockTime(), own = mob.getUUID().getLeastSignificantBits();
+        var activity = DailySchedule.activity(clock, own, mob.species().predator,
+                Config.NIGHT_START.get(), Config.NIGHT_END.get(), Config.NIGHT_TRANSITION.get(), Config.DAY_SLEEP.get());
+        // Not every member of a herd lies up at midday: some stay on their feet and keep feeding, a different few each day.
+        if (activity == DailySchedule.Activity.REST && !mob.species().predator
+                && Desync.unit(own, 31 + Math.floorDiv(clock, NighttimeCycle.DAY_TICKS)) >= 0.7) return DailySchedule.Activity.FEED;
+        return activity;
+    }
+
+    private SplittableRandom routineRandom() {
+        if (routineRandom == null) routineRandom = new SplittableRandom(mob.getUUID().getMostSignificantBits());
+        return routineRandom;
+    }
+
+    /** Tier 2: the calm routine on the schedule alone, one decision per bout. */
     private void ambientTick() {
         if (!(mob.level() instanceof ServerLevel world)) return;
-        if (ambientRandom == null) ambientRandom = new SplittableRandom(mob.getUUID().getMostSignificantBits());
-        if (ambient != null && ambient.step() == AmbientRoutine.Step.SLEEP
+        if (plan != null && plan.step() == CalmRoutine.Step.SLEEP
                 && Math.floorMod(mob.tickCount + mob.getId(), 20) == 0
-                && (schedule(world) != DailySchedule.Phase.SLEEP || !canSleepHere(world))) ambient = null;
-        if (ambient == null || --ambientTicks <= 0) { nextAmbient(world); return; }
-        switch (ambient.step()) {
-            case TURN -> { if (turnToward(ambientYaw, false)) ambientTicks = Math.min(ambientTicks, 10); }
-            case WALK -> { if (mob.getNavigation().isDone()) ambientTicks = Math.min(ambientTicks, 1); }
+                && (schedule(world) != DailySchedule.Phase.SLEEP || !canSleepHere(world))) plan = null;
+        if (plan == null || --planTicks <= 0) { nextAmbient(world); return; }
+        switch (plan.step()) {
+            case TURN -> { if (turnToward(planYaw, false)) planTicks = Math.min(planTicks, 10); }
+            case WALK, STEP -> { if (mob.getNavigation().isDone()) planTicks = Math.min(planTicks, 1); }
             default -> {}
         }
     }
 
     private void nextAmbient(ServerLevel world) {
-        var phase = schedule(world);
-        if (phase == DailySchedule.Phase.SLEEP && !canSleepHere(world)) {
+        var activity = activity(world);
+        boolean sleepTime = activity == DailySchedule.Activity.SLEEP;
+        if (sleepTime && !canSleepHere(world)) {
             boolean moving = TreeShelter.required(mob.species()) && seekShelter(world);
-            ambient = new AmbientRoutine.Plan(moving ? AmbientRoutine.Step.WALK : AmbientRoutine.Step.STAND, 40, 0, 0);
-            ambientTicks = 40;
+            plan = new CalmRoutine.Plan(moving ? CalmRoutine.Step.WALK : CalmRoutine.Step.STAND, 40, 0, 0, 1);
+            planTicks = 40;
             mob.setBehavior(BehaviorState.ROAM);
             mob.setAction(moving ? BehaviorAction.WALK : BehaviorAction.IDLE);
             mob.setNightActive(false);
             return;
         }
-        if (phase == DailySchedule.Phase.SLEEP && TreeShelter.required(mob.species())) adoptShelter();
+        if (sleepTime && TreeShelter.required(mob.species())) adoptShelter();
         double leash = LandWildlife.roam(mob.species()) * 0.8;
         boolean homeward = LandWildlife.distanceSqr(mob.blockPosition(), home()) > leash * leash;
-        ambient = AmbientRoutine.next(phase, mob.behaviorProfile(), ambientRandom, homeward);
-        ambientTicks = Math.max(1, ambient.ticks());
+        var mode = switch (activity) {
+            case HUNT -> CalmRoutine.Mode.PATROL;
+            case FEED -> mob.behaviorProfile().grazer() && LandWildlife.forage(world, mob.species(), mob.blockPosition())
+                    ? CalmRoutine.Mode.GRAZE : CalmRoutine.Mode.LOAF;
+            case REST -> canSleepHere(world) ? CalmRoutine.Mode.REST : CalmRoutine.Mode.LOAF;
+            default -> CalmRoutine.Mode.LOAF;
+        };
+        plan = sleepTime ? CalmRoutine.sleep(routineRandom()) : homeward ? CalmRoutine.homeward(mob.behaviorProfile(), routineRandom())
+                : CalmRoutine.next(mode, lastStep, mob.behaviorProfile(), routineRandom());
+        lastStep = plan.step();
+        planTicks = Math.max(1, plan.ticks());
         mob.getNavigation().stop();
-        switch (ambient.step()) {
-            case WALK -> {
-                Vec3 target;
-                if (homeward) target = Vec3.atBottomCenterOf(home());
-                else {
-                    float heading = mob.getYRot() + (float) (ambientRandom.nextDouble() * 120 - 60);
-                    target = mob.position().add(Vec3.directionFromRotation(0, heading).scale(ambient.distance()));
-                }
-                var ground = SpawnRules.surface(world, Mth.floor(target.x), Mth.floor(target.z));
-                if (ground == null || Math.abs(ground.getY() - mob.getY()) > 4
-                        || !move(world, Vec3.atBottomCenterOf(ground), mob.wanderModifier() * 0.85)) {
-                    ambient = new AmbientRoutine.Plan(AmbientRoutine.Step.STAND, 60, 0, 0);
-                    ambientTicks = 60;
+        switch (plan.step()) {
+            case WALK, STEP -> {
+                if (!stroll(world, plan, homeward)) {
+                    plan = new CalmRoutine.Plan(CalmRoutine.Step.STAND, 60, 0, 0, 0);
+                    planTicks = 60;
                 }
             }
-            case TURN -> { ambientYaw = mob.getYRot() + (float) ambient.turn(); ambientTicks = 200; }
+            case TURN -> planYaw = mob.getYRot() + (float) plan.turn();
             case LOOK -> mob.playCue(BehaviorAction.Cue.LOOK);
             case SNIFF -> mob.playCue(BehaviorAction.Cue.SNIFF);
             case POOP -> mob.playCue(BehaviorAction.Cue.POOP);
             default -> {}
         }
-        if (SessionRecorder.on()) SessionRecorder.event(mob, "ambient", ambient.step() + " " + ambientTicks + (homeward ? " homeward" : ""));
-        mob.setBehavior(AmbientRoutine.state(ambient.step()));
-        mob.setAction(AmbientRoutine.action(ambient.step()));
-        mob.setNightActive(phase == DailySchedule.Phase.HUNT);
+        if (SessionRecorder.on()) SessionRecorder.event(mob, "ambient", plan.step() + " " + planTicks + (homeward ? " homeward" : ""));
+        mob.setBehavior(CalmRoutine.state(plan.step()));
+        mob.setAction(CalmRoutine.action(plan.step()));
+        mob.setNightActive(activity == DailySchedule.Activity.HUNT);
+    }
+
+    /**
+     * Sets off on a walked bout. The way is straight on with a bend, never a turn back on itself: a follower
+     * takes the heading of its herd's leader, so a herd drifts one way, and an animal at the edge of its range
+     * heads for home. Wider bends are tried when the ground ahead cannot be walked.
+     */
+    private boolean stroll(ServerLevel world, CalmRoutine.Plan bout, boolean homeward) {
+        if (!canNavigate()) return false;
+        var random = routineRandom();
+        var leader = homeward || mob.species().solitary() ? null : leader(64);
+        float base = homeward ? yawTo(Vec3.atBottomCenterOf(home())) : leader != null ? leader.getYRot() : mob.getYRot();
+        double speed = mob.strollModifier(bout.pace()), range = LandWildlife.roam(mob.species());
+        for (int attempt = 0; attempt < 5; attempt++) {
+            float spread = homeward ? 25 : 40 + attempt * 25;
+            float heading = base + (float) ((random.nextDouble() * 2 - 1) * spread);
+            Vec3 target = mob.position().add(Vec3.directionFromRotation(0, heading).scale(bout.distance()));
+            var ground = SpawnRules.surface(world, Mth.floor(target.x), Mth.floor(target.z));
+            if (!standable(world, ground, 4)) continue;
+            if (!homeward && LandWildlife.distanceSqr(ground, home()) > range * range) continue;
+            // An animal does not stroll up to what it has been keeping an eye on.
+            if (watched != null && watched.isAlive()) {
+                double keep = flightDistance(watched) * 1.5;
+                if (Vec3.atBottomCenterOf(ground).distanceToSqr(watched.position()) < keep * keep) continue;
+            }
+            if (move(world, Vec3.atBottomCenterOf(ground), speed)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * The calm routine near a player. The mind has chosen the state (grazing, on its rounds, nothing to do);
+     * the planner fills it with bouts, and the choreographer holds each one for its time.
+     */
+    private void calm(ServerLevel world, CalmRoutine.Mode mode) {
+        // A herd keeps together: a member left behind closes up before anything else.
+        if (!mob.species().solitary()) {
+            var leader = leader(64);
+            if (leader != null && mob.distanceTo(leader) > mob.species().cohesionDistance()) {
+                if (trace != null) trace.branch("follow_leader");
+                plan = null;
+                move(world, slot(leader), Math.min(1, mob.wanderModifier() * 1.15));
+                return;
+            }
+        }
+        if (plan != null && plan.step().travels()) {
+            // Still on the way: a walk ends where it was going, or when it has taken too long.
+            if (travelling() && (planTicks -= 10) > 0) {
+                if (trace != null) trace.branch("bout_walk");
+                return;
+            }
+            mob.getNavigation().stop(); approach = null;
+        }
+        double leash = LandWildlife.roam(mob.species()) * 0.8;
+        boolean homeward = LandWildlife.distanceSqr(mob.blockPosition(), home()) > leash * leash;
+        plan = homeward ? CalmRoutine.homeward(mob.behaviorProfile(), routineRandom())
+                : CalmRoutine.next(mode, lastStep, mob.behaviorProfile(), routineRandom());
+        lastStep = plan.step();
+        planTicks = plan.ticks();
+        if (trace != null) trace.branch("bout_" + plan.step().name().toLowerCase(java.util.Locale.ROOT));
+        if (SessionRecorder.on()) SessionRecorder.event(mob, "ambient", plan.step() + " " + planTicks + (homeward ? " homeward" : ""));
+        switch (plan.step()) {
+            case WALK, STEP -> {
+                // No walkable ground that way: stand a while, then look again.
+                if (!stroll(world, plan, homeward)) { plan = null; choreo().perform(BehaviorAction.IDLE, 60); }
+            }
+            case TURN -> { planYaw = mob.getYRot() + (float) plan.turn(); choreo().perform(BehaviorAction.TURN, plan.ticks()); }
+            default -> choreo().perform(CalmRoutine.action(plan.step()), plan.ticks());
+        }
     }
 
     /** Tier 3: no routine; within the outer radius the pose still follows the sleep schedule. */
@@ -278,11 +383,9 @@ public final class WildlifeGoal extends WildlifeController {
         return false; // Stay awake if no reachable canopy exists; never teleport or sleep in the open.
     }
 
-    /** Rotates the facing toward a yaw at the creature's turn rate; true once aligned. */
+    /** Rotates the facing toward a yaw with the weight of the creature's size; true once aligned. */
     private boolean turnToward(float yaw, boolean running) {
-        float turned = Mth.approachDegrees(mob.getYRot(), yaw, mob.turnRate(running, false));
-        mob.setYRot(turned);
-        return Math.abs(Mth.wrapDegrees(yaw - turned)) < 2f;
+        return mob.steerYaw(yaw, running) || Math.abs(Mth.wrapDegrees(yaw - mob.getYRot())) < 2f;
     }
 
     private float yawTo(Vec3 point) {
@@ -345,8 +448,10 @@ public final class WildlifeGoal extends WildlifeController {
         WildlifeSenses.Detection detection = new WildlifeSenses.Detection(false, 0);
         LivingEntity sensed = null;
         double best = 0;
+        if (watched != null && (!watched.isAlive() || world.getGameTime() - watchedSeen > WATCH_MEMORY)) watched = null;
         for (var candidate : candidates) {
             if (!relevant(candidate) && candidate != attacker && candidate != herdThreat) continue;
+            if (candidate != attacker && candidate != herdThreat && letBe(world, candidate)) continue;
             var check = WildlifeSenses.detect(mob, candidate);
             double score = check.strength() / (1 + mob.distanceTo(candidate) / 32.0) + (candidate == focus && check.strength() > 0 ? 0.15 : 0);
             if (t != null) t.scored(candidate, check, score);
@@ -362,6 +467,13 @@ public final class WildlifeGoal extends WildlifeController {
                 if (t != null) t.forced("herd_threat");
             }
         }
+        // Inside the flight distance, hunting, or coming for this animal: a threat that must be answered.
+        // Beyond it the same threat is only watched, and watched long enough it is let be: this pass senses nothing.
+        double gap = sensed == null ? Double.MAX_VALUE : WildlifeSenses.bodyDistance(mob, sensed);
+        boolean pressing = attacked || herdThreat != null || alarmTicks > 0 || sensed != null && (gap < flightDistance(sensed)
+                || sensed instanceof net.minecraft.world.entity.Mob hunter && hunter.getTarget() == mob
+                || sensed instanceof CreatureEntity c && c.behavior().combat() && gap < flightDistance(sensed) * 2);
+        if (watch(world, sensed, gap, pressing, attacked)) { sensed = null; detection = new WildlifeSenses.Detection(false, 0); }
         if (sensed != null) {
             focus = sensed;
             // Non-visual stimuli carry an approximate point, not a continuously tracked hidden actor.
@@ -384,12 +496,6 @@ public final class WildlifeGoal extends WildlifeController {
                 : mob.distanceTo(sensed) < Math.max(6, mob.getBbWidth() + 3));
         if (visible && mob.species().herd() && sensed instanceof CreatureEntity c && c.species().predator
                 && mob.distanceTo(sensed) < mob.getBbWidth() + 10) intruding = true;
-        // Inside the flight distance, hunting, or coming for this animal: a threat that must be answered.
-        // Beyond it the same threat is only watched.
-        double gap = sensed == null ? Double.MAX_VALUE : WildlifeSenses.bodyDistance(mob, sensed);
-        boolean pressing = attacked || herdThreat != null || alarmTicks > 0 || sensed != null && (gap < flightDistance(sensed)
-                || sensed instanceof net.minecraft.world.entity.Mob hunter && hunter.getTarget() == mob
-                || sensed instanceof CreatureEntity c && c.behavior().combat() && gap < flightDistance(sensed) * 2);
         boolean guardedPrey = visible && sensed instanceof CreatureEntity prey && prey.species().defensiveHerd()
                 && world.getEntitiesOfClass(CreatureEntity.class, prey.getBoundingBox().inflate(32),
                     c -> c.isAlive() && c.packId().equals(prey.packId()) && c.getHealth() >= c.getMaxHealth() * 0.5).size() >= 2;
@@ -413,14 +519,16 @@ public final class WildlifeGoal extends WildlifeController {
         boolean far = !seekingShelter && !watering && LandWildlife.distanceSqr(mob.blockPosition(), home()) > territoryRadius() * territoryRadius();
         if (brain.recovery() > 0 && arrived(Vec3.atBottomCenterOf(home()))) brain.arrivedHome();
         // Terrain probes are only useful when the mind can act on them; other states skip the block sweep.
-        boolean needsWater = brain.thirst() >= 0.6 || before == BehaviorState.DRINK;
-        boolean needsForage = !mob.species().predator
-                && (brain.hunger() >= 0.4 || before == BehaviorState.FORAGE);
+        var activity = cycle ? activity(world) : DailySchedule.Activity.ROAM;
+        boolean needsWater = brain.wantsWater(activity) || before == BehaviorState.DRINK;
+        boolean needsForage = brain.wantsForage(activity) || !mob.species().predator && before == BehaviorState.FORAGE;
         // The body stops within a step of the bank it chose, and the bank is where the reach was checked:
         // from the neighbouring block the same water can be out of reach or behind the rim.
-        boolean water = needsWater && (nearbyWater(world)
+        boolean water = needsWater && (nearbyWater(world) || snowUnderfoot(world)
                 || canNavigate() && waterDestination != null && arrived(waterDestination) && waterAt(world, waterDestination));
-        boolean forage = needsForage && LandWildlife.forage(world, mob.species(), mob.blockPosition());
+        // A grazer that steps onto a bare block has not left its feeding ground: the ground beside it counts.
+        boolean forage = needsForage && (LandWildlife.forage(world, mob.species(), mob.blockPosition())
+                || before == BehaviorState.FORAGE && forageBeside(world));
         boolean huntable = visible && prey(sensed) && (!guardedPrey || sensed.getHealth() < sensed.getMaxHealth() * 0.35);
         boolean danger = attacked || herdThreat != null || alarmTicks > 0
                 || cycle && night && !mob.species().predator && intruding
@@ -444,7 +552,7 @@ public final class WildlifeGoal extends WildlifeController {
         var routine = cycle ? new WildlifeMind.Routine(true, night, schedule(world) == DailySchedule.Phase.SLEEP, safeSleep,
                 danger, defended,
                 corneredTicks > 0 || attacked && (mob.species() == Species.THERIZINOSAURUS || mob.species() == Species.TITANOSAUR),
-                Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null) : new WildlifeMind.Routine(false, false, false,
+                Config.SLEEP_CALM.get(), Config.NIGHT_HUNGER.get(), regroupDestination != null, activity) : new WildlifeMind.Routine(false, false, false,
                         sheltered, false, false, false, 0, 1);
         var observation = new WildlifeMind.Observation(signal, visible, huntable, intruding, attacked,
                 intimidating, far, water, forage, !world.isBrightOutside(), mob.getHealth() / mob.getMaxHealth(), pressing);
@@ -456,6 +564,7 @@ public final class WildlifeGoal extends WildlifeController {
         mob.setBehavior(state);
         if (state != before) {
             mob.getNavigation().stop(); destination = null; approach = null; nextRoutine = 0; failedPaths = 0; lastPathFailure = null;
+            plan = null;
             // Reflexes skip the display: a hit, or a threat already at the body.
             boolean urgent = attacked || sensed != null && WildlifeSenses.bodyDistance(mob, sensed) < 3;
             if (t != null) t.entered(urgent);
@@ -508,9 +617,10 @@ public final class WildlifeGoal extends WildlifeController {
             }
             case REGROUP -> { if (regroupDestination != null) move(world, regroupDestination, Math.min(1, mob.wanderModifier() * 1.3)); }
             case SEEK_WATER -> seekWater(world);
-            case ROAM, SEARCH -> {
+            case ROAM, SEARCH, FORAGE -> {
                 if (seekingShelter) seekShelter(world);
-                else roam(world);
+                else calm(world, state == BehaviorState.FORAGE ? CalmRoutine.Mode.GRAZE
+                        : state == BehaviorState.SEARCH ? CalmRoutine.Mode.PATROL : CalmRoutine.Mode.LOAF);
             }
             default -> { mob.getNavigation().stop(); approach = null; }
         }
@@ -581,6 +691,51 @@ public final class WildlifeGoal extends WildlifeController {
                 && (mob.species().herd() || c.getBbWidth() > mob.getBbWidth() * 1.4
                     || WildlifeSenses.night(mob) && !mob.species().predator && (c.getBbWidth() * 1.3 >= mob.getBbWidth() || c.getTarget() == mob)));
     }
+    /** Ticks a threat that keeps its distance is watched before it is let be (plus up to six seconds of the animal's own), and how long it is remembered unseen. */
+    private static final int WATCH_TICKS = 160, WATCH_MEMORY = 600;
+
+    /** Whether this is something a hunter would eat rather than something to keep an eye on. */
+    private boolean threat(LivingEntity other) { return !mob.species().predator || !prey(other); }
+
+    /**
+     * Habituation. An animal looks at a threat that keeps its distance for a while and then goes back to what
+     * it was doing; a herd does not stare at a hunter on the far side of the valley all afternoon. Coming
+     * closer, hunting, or stepping inside the flight distance renews the interest at once.
+     */
+    private boolean letBe(ServerLevel world, LivingEntity candidate) {
+        if (candidate != watched) return false;
+        watchedSeen = world.getGameTime();
+        double gap = WildlifeSenses.bodyDistance(mob, candidate);
+        boolean closing = gap < watchedGap - 3;
+        boolean urgent = gap < flightDistance(candidate) || candidate instanceof net.minecraft.world.entity.Mob m && m.getTarget() == mob
+                || candidate instanceof CreatureEntity c && c.behavior().combat();
+        if (closing || urgent) {
+            watchedGap = Math.min(watchedGap, gap);
+            watchTicks = 0;
+            return false;
+        }
+        return watchTicks >= WATCH_TICKS + (int) (Desync.unit(mob.getUUID().getLeastSignificantBits(), 57) * 120);
+    }
+
+    /** Counts how long the sensed threat has been watched. True at the limit: the mind lets go of it, from this pass on. */
+    private boolean watch(ServerLevel world, LivingEntity sensed, double gap, boolean pressing, boolean attacked) {
+        if (sensed == null || attacked || !threat(sensed)) return false;
+        if (sensed != watched) { watched = sensed; watchTicks = 0; watchedGap = gap; }
+        watchedSeen = world.getGameTime();
+        if (pressing) { watchTicks = 0; watchedGap = Math.min(watchedGap, gap); return false; }
+        watchTicks += 10;
+        if (!letBe(world, sensed)) return false;
+        mind().loseInterest();
+        return true;
+    }
+
+    /** Cold-adapted animals take their water from the snow they stand on. */
+    private boolean snowUnderfoot(ServerLevel world) {
+        if (!mob.species().coldAdapted() || !canNavigate()) return false;
+        var feet = mob.blockPosition();
+        return Boolean.TRUE.equals(LandWildlife.coldHydration(world, feet)) || Boolean.TRUE.equals(LandWildlife.coldHydration(world, feet.below()));
+    }
+
     /**
      * How near a threat may come before this animal must act: farther for a big threat and for a timid animal.
      * Half again as far it is watched; beyond that it is part of the landscape.
@@ -622,34 +777,13 @@ public final class WildlifeGoal extends WildlifeController {
         return leader.position().add(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
     }
     private double territoryRadius() { return LandWildlife.leash(mob.species()); }
-    private void roam(ServerLevel world) {
-        if (!mob.species().solitary()) {
-            var leader = leader(64);
-            if (leader != null && mob.distanceTo(leader) > mob.species().cohesionDistance()) {
-                if (trace != null) trace.branch("follow_leader");
-                move(world, slot(leader), Math.min(1, mob.wanderModifier() * 1.15));
-                return;
-            }
+    /** Whether grazing ground lies a couple of blocks from the body in any of the four directions. */
+    private boolean forageBeside(ServerLevel world) {
+        for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            var pos = SpawnRules.surface(world, mob.getBlockX() + direction.getStepX() * 2, mob.getBlockZ() + direction.getStepZ() * 2);
+            if (pos != null && Math.abs(pos.getY() - mob.getY()) <= 2 && LandWildlife.forage(world, mob.species(), pos)) return true;
         }
-        if (mob.tickCount < nextRoutine) {
-            // A roaming pause is filled with the idle beats the rig can play.
-            if (trace != null) trace.branch(travelling() ? "roam_walk" : "roam_pause");
-            if (!travelling()) choreo().pause();
-            return;
-        }
-        if (trace != null) trace.branch("roam_pick");
-        nextRoutine = mob.tickCount + (mind().state() == BehaviorState.SEARCH ? 60 : 100) + mob.getRandom().nextInt(100);
-        chooseDestination(world, Vec3.atBottomCenterOf(home()), mob.species().solitary() ? 36 : 24, mob.wanderModifier());
-    }
-    private boolean chooseDestination(ServerLevel world, Vec3 center, int radius, double speed) {
-        if (!canNavigate()) return routed("airborne_deferred", center, true);
-        for (int i = 0; i < 8; i++) {
-            var pos = SpawnRules.surface(world, (int) Math.floor(center.x) + mob.getRandom().nextInt(radius * 2 + 1) - radius,
-                    (int) Math.floor(center.z) + mob.getRandom().nextInt(radius * 2 + 1) - radius);
-            if (!standable(world, pos, 6)) continue;
-            if (move(world, Vec3.atBottomCenterOf(pos), speed)) return true;
-        }
-        return routed("no_destination", center, false);
+        return false;
     }
     /** Loaded natural ground within reach in height where the body fits. */
     private boolean standable(ServerLevel world, BlockPos pos, double rise) {
@@ -799,13 +933,24 @@ public final class WildlifeGoal extends WildlifeController {
         offsets.sort(Comparator.comparingInt(p -> p.getX() * p.getX() + p.getZ() * p.getZ()));
         return java.util.List.copyOf(offsets);
     }
+    /** Between two sweeps for water a thirsty animal walks on: a new place to look from, not a stand in the old one. */
+    private void moveOn(ServerLevel world) {
+        if (travelling()) return;
+        double leash = LandWildlife.roam(mob.species()) * 0.8;
+        boolean homeward = LandWildlife.distanceSqr(mob.blockPosition(), home()) > leash * leash;
+        plan = homeward ? CalmRoutine.homeward(mob.behaviorProfile(), routineRandom()) : new CalmRoutine.Plan(CalmRoutine.Step.WALK, 300, 0,
+                (12 + routineRandom().nextInt(9)) * CalmRoutine.stride(mob.behaviorProfile()), 1);
+        lastStep = plan.step();
+        planTicks = plan.ticks();
+        if (!stroll(world, plan, homeward)) plan = null;
+    }
     private void seekWater(ServerLevel world) {
         if (waterDestination != null) {
             if (waterAt(world, waterDestination) && toBank(world, waterDestination)) return;
             waterDestination = null;
         }
         boolean searching = waterSearchOrigin != null && waterSearchIndex < WATER_OFFSETS.size();
-        if (!searching && world.getGameTime() < nextWaterSearch) { roam(world); return; }
+        if (!searching && world.getGameTime() < nextWaterSearch) { moveOn(world); return; }
         if (!searching || LandWildlife.distanceSqr(mob.blockPosition(), waterSearchOrigin) > 64) {
             waterSearchOrigin = mob.blockPosition(); waterSearchIndex = 0; waterAttempts = 0;
             mob.getNavigation().stop(); destination = null; approach = null;
@@ -846,7 +991,7 @@ public final class WildlifeGoal extends WildlifeController {
         if (waterSearchIndex >= WATER_OFFSETS.size()) {
             nextWaterSearch = world.getGameTime() + 200;
             if (++drySweeps >= 3) { drySweeps = 0; mind().makeDo(); }
-            roam(world);
+            moveOn(world);
         }
     }
     /**
@@ -882,7 +1027,8 @@ public final class WildlifeGoal extends WildlifeController {
             int queued = choreo.queued().size();
             if (queued > 0) row.put("beats", queued);
         }
-        if (tier != BehaviorTier.FULL && ambient != null) row.put("amb", ambient.step()).put("amb_t", ambientTicks);
+        // The bout of the calm routine, near or far; the session tools know it by its first name.
+        if (plan != null) row.put("amb", plan.step()).put("amb_t", planTicks);
     }
     @Override public void save(ValueOutput out) {
         // The permanent anchor is saved; the prey-herd anchor is transient by design.
@@ -903,8 +1049,8 @@ public final class WildlifeGoal extends WildlifeController {
         focus = null; lastKnown = null; destination = null; regrouping = false; packCache = null; pendingAlarm = null; facing = null;
         approach = null; lastPathFailure = null; waterDestination = null; waterSearchOrigin = null; waterSearchIndex = 0;
         retryPathAt = 0; nextWaterSearch = 0; failedPaths = 0; lastFailureTick = Long.MIN_VALUE; waterAttempts = 0; drySweeps = 0;
-        herdThreat = null; herdThreatTicks = 0;
-        ambient = null; tier = BehaviorTier.FULL;
+        herdThreat = null; herdThreatTicks = 0; watched = null; watchTicks = 0;
+        plan = null; lastStep = null; tier = BehaviorTier.FULL;
         try { preyHerd = java.util.UUID.fromString(in.getStringOr("WildPreyHerd", "")); }
         catch (IllegalArgumentException ignored) { preyHerd = null; }
     }

@@ -91,7 +91,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private BehaviorTier behaviorTier = BehaviorTier.FULL;
     private int engagedTicks;
     private @Nullable BehaviorProfile behaviorProfile;
-    private float turnBase = -1;
+    /** Server: signed turn speed in degrees per tick and the tick it was last driven, for a turn with weight. */
+    private float yawSpeed;
+    private int yawTick = -2;
     /** Client: smoothed body yaw change in degrees per tick, positive when turning right. */
     private float bodyTurn;
     private BehaviorAction requestedAction = BehaviorAction.IDLE;
@@ -467,18 +469,35 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         return behaviorProfile;
     }
 
+    /** The bulk that decides how this body turns, starts and stops ({@link Inertia}). */
+    public double bulk() { return Inertia.bulk(species.width, species.height); }
+
+    /** Degrees per tick the body turns at most: slower the bulkier it is, faster in a chase or a flight. */
+    public float turnRate(boolean running) {
+        return Inertia.turnRate(bulk(), species.predator) * (running ? Inertia.HURRY : 1f);
+    }
+
     /**
-     * Degrees per tick the body may turn. Rigs with a turn clip turn about 75 degrees per clip cycle;
-     * the others turn slower the taller they stand. Running and walking turns are wider arcs.
+     * Turns the body one tick toward a heading with the weight of its size: the turn gathers speed, holds
+     * its rate and eases onto the heading instead of snapping. True once the body faces it.
      */
-    public float turnRate(boolean running, boolean moving) {
-        if (turnBase < 0) {
-            var turn = clips().role(ClipRole.TURN_LEFT);
-            float byClip = turn == null ? 0 : 75f / turn.ticks();
-            float bySize = (float) (18 / Math.sqrt(Math.max(1, species.height)));
-            turnBase = Math.clamp(turn == null ? bySize : byClip, 1.5f, 12f);
+    public boolean steerYaw(float heading, boolean running) {
+        // A turn left alone for a tick has stopped: its speed does not wait for the next one.
+        if (tickCount - yawTick > 1) yawSpeed = 0;
+        yawTick = tickCount;
+        float error = net.minecraft.util.Mth.wrapDegrees(heading - getYRot());
+        float rate = turnRate(running);
+        int ramp = Inertia.turnRamp(bulk());
+        if (Math.abs(error) < 0.75f && Math.abs(yawSpeed) <= rate / ramp) {
+            setYRot(heading);
+            yawSpeed = 0;
+            return true;
         }
-        return turnBase * (running ? 2.5f : 1f) * (moving ? 1.5f : 1f);
+        yawSpeed = Inertia.turn(yawSpeed, error, rate, ramp);
+        // Never swing past the heading: the last step lands on it.
+        if (Math.abs(yawSpeed) > Math.abs(error) && Math.signum(yawSpeed) == Math.signum(error)) yawSpeed = error;
+        setYRot(getYRot() + yawSpeed);
+        return false;
     }
 
     /**
@@ -490,6 +509,17 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         double target = MovementTuning.wanderBlocksPerSecond(clips().groundSpeed(species.walk),
                 MovementTuning.blocksPerSecond(attribute), Desync.speedFactor(getUUID().getLeastSignificantBits()));
         return Math.clamp(MovementTuning.modifierFor(target, attribute), 0.3, 0.9);
+    }
+
+    /**
+     * Navigation speed modifier for a share of the wandering pace, as ground speed: the few slow steps of a
+     * grazer. Never so slow that the walk clip gives way to a slide.
+     */
+    public double strollModifier(double share) {
+        double attribute = getAttributeValue(Attributes.MOVEMENT_SPEED);
+        double wander = MovementTuning.blocksPerSecond(wanderModifier() * attribute);
+        double target = Math.min(wander, Math.max(LocomotionSignal.START_BLOCKS_PER_SECOND * 1.2, wander * share));
+        return MovementTuning.modifierFor(target, attribute);
     }
 
     /** Level of detail of this creature's behaviour; always FULL for tames, riders and alarmed animals. */
@@ -560,7 +590,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     @Override protected net.minecraft.world.entity.ai.control.BodyRotationControl createBodyControl() {
         return new net.minecraft.world.entity.ai.control.BodyRotationControl(this) {
             @Override public void clientTick() {
-                float limit = isRidden() || riddenTicks > 0 ? 180f : turnRate(true, true) * 1.5f;
+                float limit = isRidden() || riddenTicks > 0 ? 180f : turnRate(true) * 1.5f;
                 yBodyRot = net.minecraft.util.Mth.approachDegrees(yBodyRot, getYRot(), limit);
                 float head = net.minecraft.util.Mth.wrapDegrees(yHeadRot - yBodyRot);
                 if (Math.abs(head) > 50f) yHeadRot = yBodyRot + Math.signum(head) * 50f;
@@ -637,7 +667,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             if (trampling && horizontalCollision && isAlive() && level() instanceof ServerLevel world) TreeTrample.clear(world, this);
             syncMovementAction();
             resolveStrike();
-            boolean sleeping = isAlive() && (behavior().sleeping() || torpor().torpid());
+            // Lying up awake is quiet: only real sleep and torpor breathe aloud.
+            boolean sleeping = isAlive() && (behavior() == BehaviorState.SLEEP || torpor().torpid());
             if (sleeping) playRoutineSound(CreatureSounds.Role.SLEEP);
             else if (audioSleeping && isAlive()) playCreatureSound(CreatureSounds.Role.WAKE, 0.7f);
             audioSleeping = sleeping;
@@ -973,7 +1004,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     protected String restingClip() { return swimming() ? species.swimIdle() : species.restClip(); }
     /** The routine selects the original call for its current state, including unconscious sleep. */
     public CreatureSounds.Role ambientSoundRole() {
-        if (TorporService.restricted(this) || behavior().sleeping()) return CreatureSounds.Role.SLEEP;
+        if (TorporService.restricted(this) || behavior() == BehaviorState.SLEEP) return CreatureSounds.Role.SLEEP;
         return eating(action(), behavior()) ? CreatureSounds.Role.EAT : CreatureSounds.Role.AMBIENT;
     }
     @Override protected @Nullable SoundEvent getAmbientSound() {

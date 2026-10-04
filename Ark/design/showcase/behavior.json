@@ -277,14 +277,14 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -299,7 +299,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -323,7 +323,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -343,7 +343,7 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -352,7 +352,7 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -361,7 +361,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -409,7 +409,7 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -418,7 +418,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -437,14 +437,14 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "REGROUP": [
                 "separated from the herd after an alarm"
@@ -456,7 +456,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -469,20 +469,20 @@
                 "the alarm is over: watch a while before going back to the routine"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -491,7 +491,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -507,13 +507,13 @@
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -528,7 +528,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -545,14 +545,14 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -561,13 +561,13 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "ROAM": [
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -587,14 +587,14 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -603,13 +603,13 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -629,14 +629,14 @@
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "night herd under threat: flee, or stand once defended or cornered"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -645,7 +645,7 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -667,13 +667,13 @@
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
               ],
               "FORAGE": [
-                "hungry herbivore on grazing ground"
+                "feeding hours, or hunger, on grazing ground"
               ],
               "INVESTIGATE": [
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -682,7 +682,7 @@
                 "separated from the herd after an alarm"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -691,7 +691,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ]
             },
             "THREATEN": {
@@ -737,42 +737,76 @@
           "matrix": {
             "GRAZE": {
               "GRAZE": [
-                "day 22%"
+                "feeding 14%",
+                "idle 14%"
               ],
               "LOOK": [
-                "day 11%"
+                "feeding 19%",
+                "idle 15%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "day 22%"
+                "feeding 9%",
+                "idle 25%"
+              ],
+              "STEP": [
+                "feeding 50%"
               ],
               "TURN": [
-                "day 15%"
+                "feeding 5%",
+                "idle 10%"
               ],
               "WALK": [
-                "day 30%"
+                "feeding 3%",
+                "idle 36%"
+              ]
+            },
+            "LIE": {
+              "LIE": [
+                "lying up 82%"
+              ],
+              "LOOK": [
+                "lying up 6%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "lying up 12%"
               ]
             },
             "LOOK": {
               "GRAZE": [
-                "day 22%"
+                "feeding 72%",
+                "idle 14%"
+              ],
+              "LIE": [
+                "lying up 61%"
               ],
               "LOOK": [
-                "day 11%"
+                "idle 15%",
+                "lying up 13%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "day 22%"
+                "feeding 8%",
+                "idle 25%",
+                "lying up 19%"
+              ],
+              "STEP": [
+                "feeding 16%"
               ],
               "TURN": [
-                "day 15%"
+                "feeding 4%",
+                "idle 11%",
+                "lying up 7%"
               ],
               "WALK": [
-                "day 30%"
+                "idle 35%"
               ]
             },
             "SLEEP": {
@@ -782,72 +816,114 @@
             },
             "STAND": {
               "GRAZE": [
-                "day 22%"
+                "feeding 71%",
+                "idle 15%"
+              ],
+              "LIE": [
+                "lying up 63%"
               ],
               "LOOK": [
-                "day 11%"
+                "idle 14%",
+                "lying up 12%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "day 22%"
+                "feeding 8%",
+                "idle 25%",
+                "lying up 18%"
+              ],
+              "STEP": [
+                "feeding 17%"
               ],
               "TURN": [
-                "day 15%"
+                "feeding 4%",
+                "idle 11%",
+                "lying up 8%"
               ],
               "WALK": [
-                "day 30%"
+                "idle 35%"
+              ]
+            },
+            "STEP": {
+              "GRAZE": [
+                "feeding 79%"
+              ],
+              "LOOK": [
+                "feeding 15%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "feeding 6%"
               ]
             },
             "TURN": {
               "GRAZE": [
-                "day 22%"
+                "feeding 71%",
+                "idle 14%"
+              ],
+              "LIE": [
+                "lying up 61%"
               ],
               "LOOK": [
-                "day 11%"
+                "idle 16%",
+                "lying up 12%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "day 22%"
+                "feeding 9%",
+                "idle 24%",
+                "lying up 20%"
+              ],
+              "STEP": [
+                "feeding 14%"
               ],
               "TURN": [
-                "day 15%"
+                "feeding 5%",
+                "idle 10%",
+                "lying up 7%"
               ],
               "WALK": [
-                "day 30%"
+                "idle 36%"
               ]
             },
             "WALK": {
               "GRAZE": [
-                "day 22%"
+                "feeding 76%",
+                "idle 17%"
               ],
               "LOOK": [
-                "day 11%"
+                "feeding 18%",
+                "idle 26%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "day 22%"
+                "feeding 7%",
+                "idle 48%"
               ],
               "TURN": [
-                "day 15%"
+                "idle 9%"
               ],
               "WALK": [
-                "day 30%",
                 "home-range edge: walk back"
               ]
             }
           },
-          "note": "Ambient routine (AmbientRoutine): odds of the next step, plus the schedule. A player within the full radius, or any hit, promotes to FULL.",
+          "note": "Calm routine (CalmRoutine): the odds of the bout that follows each bout, by what the hour asks. The near routine fills its calm states with the same bouts. A player within the full radius, or any hit, promotes to FULL.",
           "states": [
             "GRAZE",
+            "LIE",
             "LOOK",
             "SLEEP",
             "STAND",
+            "STEP",
             "TURN",
             "WALK"
           ],
@@ -1048,7 +1124,7 @@
                 "attacked: retaliate"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1066,7 +1142,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1098,7 +1174,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1118,7 +1194,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1130,7 +1206,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -1147,7 +1223,7 @@
                 "attacked: retaliate"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1165,7 +1241,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1219,7 +1295,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1234,7 +1310,7 @@
                 "attacked: retaliate"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FEED": [
                 "a kill or a shared meal"
@@ -1252,7 +1328,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "THREATEN": [
                 "intruder or prey in sight: warn first"
@@ -1264,7 +1340,7 @@
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1282,7 +1358,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -1297,7 +1373,7 @@
                 "attacked: retaliate"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FEED": [
                 "a kill or a shared meal"
@@ -1312,7 +1388,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "ROAM": [
                 "nothing pressing"
@@ -1321,7 +1397,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -1339,7 +1415,7 @@
                 "intruder stayed close through the warning"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1351,7 +1427,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1360,7 +1436,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -1378,7 +1454,7 @@
                 "intruder stayed close through the warning"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1390,7 +1466,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1399,7 +1475,7 @@
                 "nothing pressing"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ],
               "SLEEP": [
                 "scheduled sleep, safe and calm"
@@ -1417,7 +1493,7 @@
                 "intruder stayed close through the warning"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1429,7 +1505,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1453,7 +1529,7 @@
                 "woken by a hit, a noise or a close player"
               ],
               "DRINK": [
-                "thirsty with water at hand"
+                "thirsty, or watering time, with water at hand"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"
@@ -1462,7 +1538,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -1474,7 +1550,7 @@
                 "hungry carnivore at night"
               ],
               "SEEK_WATER": [
-                "thirsty, no water in reach"
+                "thirsty, or watering time, no water in reach"
               ]
             },
             "THREATEN": {
@@ -1520,25 +1596,44 @@
         },
         {
           "matrix": {
-            "LOOK": {
+            "LIE": {
+              "LIE": [
+                "lying up 82%"
+              ],
               "LOOK": [
-                "afternoon 8%",
-                "night 8%"
+                "lying up 6%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "afternoon 31%",
-                "night 15%"
+                "lying up 12%"
+              ]
+            },
+            "LOOK": {
+              "LIE": [
+                "lying up 62%"
+              ],
+              "LOOK": [
+                "idle 17%",
+                "lying up 11%",
+                "night round 11%"
+              ],
+              "SLEEP": [
+                "schedule turns to sleep"
+              ],
+              "STAND": [
+                "idle 30%",
+                "lying up 18%",
+                "night round 13%"
               ],
               "TURN": [
-                "afternoon 20%",
-                "night 20%"
+                "idle 12%",
+                "lying up 8%"
               ],
               "WALK": [
-                "afternoon 41%",
-                "night 58%"
+                "idle 40%",
+                "night round 76%"
               ]
             },
             "SLEEP": {
@@ -1547,72 +1642,81 @@
               ]
             },
             "STAND": {
+              "LIE": [
+                "lying up 62%"
+              ],
               "LOOK": [
-                "afternoon 8%",
-                "night 8%"
+                "idle 17%",
+                "lying up 13%",
+                "night round 11%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "afternoon 31%",
-                "night 15%"
+                "idle 29%",
+                "lying up 17%",
+                "night round 14%"
               ],
               "TURN": [
-                "afternoon 20%",
-                "night 20%"
+                "idle 13%",
+                "lying up 8%"
               ],
               "WALK": [
-                "afternoon 41%",
-                "night 58%"
+                "idle 41%",
+                "night round 76%"
               ]
             },
             "TURN": {
+              "LIE": [
+                "lying up 56%"
+              ],
               "LOOK": [
-                "afternoon 8%",
-                "night 8%"
+                "idle 17%",
+                "lying up 15%",
+                "night round 11%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "afternoon 31%",
-                "night 15%"
+                "idle 28%",
+                "lying up 21%",
+                "night round 13%"
               ],
               "TURN": [
-                "afternoon 20%",
-                "night 20%"
+                "idle 12%",
+                "lying up 8%"
               ],
               "WALK": [
-                "afternoon 41%",
-                "night 58%"
+                "idle 43%",
+                "night round 76%"
               ]
             },
             "WALK": {
               "LOOK": [
-                "afternoon 8%",
-                "night 8%"
+                "idle 33%",
+                "night round 40%"
               ],
               "SLEEP": [
                 "schedule turns to sleep"
               ],
               "STAND": [
-                "afternoon 31%",
-                "night 15%"
+                "idle 57%",
+                "night round 46%"
               ],
               "TURN": [
-                "afternoon 20%",
-                "night 20%"
+                "idle 10%",
+                "night round 13%"
               ],
               "WALK": [
-                "afternoon 41%",
-                "home-range edge: walk back",
-                "night 58%"
+                "home-range edge: walk back"
               ]
             }
           },
-          "note": "Ambient routine (AmbientRoutine): odds of the next step, plus the schedule. A player within the full radius, or any hit, promotes to FULL.",
+          "note": "Calm routine (CalmRoutine): the odds of the bout that follows each bout, by what the hour asks. The near routine fills its calm states with the same bouts. A player within the full radius, or any hit, promotes to FULL.",
           "states": [
+            "LIE",
             "LOOK",
             "SLEEP",
             "STAND",
@@ -3497,7 +3601,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "ROAM": [
                 "nothing pressing"
@@ -3525,7 +3629,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3555,7 +3659,7 @@
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "REST": [
-                "fatigue while calm"
+                "fatigue, or the hour for lying up, while calm"
               ],
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
@@ -3644,10 +3748,79 @@
     }
   ],
   "schedule": {
-    "carnivore": "Night: hunt. Morning: sleep. Afternoon: roam and drink.",
+    "carnivore": "Night: hunt. Morning: sleep. Afternoon: lie up, go a round of the range, water at dusk.",
+    "carnivoreDay": [
+      {
+        "activity": "SLEEP",
+        "from": 0,
+        "to": 6000
+      },
+      {
+        "activity": "REST",
+        "from": 6000,
+        "to": 9200
+      },
+      {
+        "activity": "ROAM",
+        "from": 9200,
+        "to": 11950
+      },
+      {
+        "activity": "DRINK",
+        "from": 11950,
+        "to": 13000
+      },
+      {
+        "activity": "HUNT",
+        "from": 13000,
+        "to": 23000
+      },
+      {
+        "activity": "SLEEP",
+        "from": 23000,
+        "to": 24000
+      }
+    ],
     "carnivoreDaySleep": 0.5,
     "flyer": "No schedule: flyers loop around their nest, land, perch and take off.",
-    "herbivore": "Night: sleep. Day: graze, drink and roam.",
+    "herbivore": "Night: sleep. Dawn and dusk: water. Morning and afternoon: graze. Midday: lie up.",
+    "herbivoreDay": [
+      {
+        "activity": "DRINK",
+        "from": 0,
+        "to": 150
+      },
+      {
+        "activity": "FEED",
+        "from": 150,
+        "to": 4900
+      },
+      {
+        "activity": "REST",
+        "from": 4900,
+        "to": 7150
+      },
+      {
+        "activity": "FEED",
+        "from": 7150,
+        "to": 11600
+      },
+      {
+        "activity": "DRINK",
+        "from": 11600,
+        "to": 13000
+      },
+      {
+        "activity": "SLEEP",
+        "from": 13000,
+        "to": 23000
+      },
+      {
+        "activity": "DRINK",
+        "from": 23000,
+        "to": 24000
+      }
+    ],
     "nightEnd": 23000,
     "nightStart": 13000
   },
@@ -3655,12 +3828,12 @@
     {
       "id": "FULL",
       "radius": 64,
-      "summary": "Full behaviour: senses, needs (hunger, thirst, fatigue), hunting, fleeing, drinking and the timed bridges between states. Decisions twice a second."
+      "summary": "Full behaviour: senses, needs (hunger, thirst, fatigue), hunting, fleeing, drinking and the timed bridges between states. Decisions twice a second. While calm, the animal spends its time in bouts: grazing, a few steps, a look around, a long stand, a walk."
     },
     {
       "id": "AMBIENT",
       "radius": 128,
-      "summary": "Seen from afar: short walks, turns, stops, looking around, grazing, sniffing, pooping and the daily sleep schedule. One cheap decision every few seconds; needs frozen."
+      "summary": "Seen from afar: the same calm bouts on the day's schedule alone, lying up at midday and asleep at night. One cheap decision per bout; no senses, needs frozen."
     },
     {
       "id": "DORMANT",

@@ -54,8 +54,10 @@ public final class LandWildlife {
     public static boolean forage(ServerLevel world, Species species, BlockPos pos) {
         if (world.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) == null) return false;
         var ground = world.getBlockState(pos.below());
-        if (ground.is(Blocks.GRASS_BLOCK) || ground.is(Blocks.PODZOL) || ground.is(Blocks.MYCELIUM)
-                || ground.is(Blocks.MOSS_BLOCK) || ground.is(Blocks.PALE_MOSS_BLOCK)) return true;
+        // Grass and forest floor to graze and browse, sand and baked clay to root in: the ground of every
+        // range a grazer lives in, so desert and badlands animals feed too. Bare rock and gravel hold nothing.
+        if (ground.is(net.minecraft.tags.BlockTags.SUBSTRATE_OVERWORLD) || ground.is(net.minecraft.tags.BlockTags.SAND)
+                || ground.is(net.minecraft.tags.BlockTags.TERRACOTTA)) return true;
         // Snow cover over browse ground is used as a browsing abstraction, never as terrain damage.
         if (species != null && species.coldAdapted())
             return ground.is(Blocks.SNOW) || ground.is(Blocks.SNOW_BLOCK) || ground.is(Blocks.POWDER_SNOW);

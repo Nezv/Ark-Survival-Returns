@@ -978,6 +978,13 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/regression_navigation", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_environment/regression_flying", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
         put("data/" + NS + "/test_environment/wildlife_regression", Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false)));
+        // A fixed morning hour inside a grazer's feeding time, so the calm routine is the same on every run.
+        put("data/" + NS + "/test_environment/wildlife_morning", Map.of("type", "minecraft:all_of", "definitions", List.of(
+                Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", false, "minecraft:advance_time", false)),
+                Map.of("type", "minecraft:clock_time", "clock", "minecraft:overworld", "time", 2000))));
+        for (String name : List.of("wildlife_grazing_day", "wildlife_body_weight"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":wildlife_morning", "structure", NS + ":test_population", "max_ticks", 600, "sky_access", true));
         for (String name : List.of("wildlife_packet_hearing", "wildlife_partial_cover", "wildlife_home_recovery",
                 "wildlife_navigation_turn", "wildlife_water_navigation", "wildlife_wide_pursuit",
                 "wildlife_tree_pursuit", "wildlife_log_wall", "wildlife_slope_escape", "wildlife_far_bank", "wildlife_dry_range",

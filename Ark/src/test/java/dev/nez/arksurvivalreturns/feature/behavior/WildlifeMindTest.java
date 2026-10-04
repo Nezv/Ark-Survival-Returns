@@ -135,6 +135,49 @@ class WildlifeMindTest {
         assertEquals(BehaviorState.ROAM, mind.state());
         assertEquals(2, changes, "Flee, watch, roam: no flicker between states");
     }
+    private static WildlifeMind.Routine hour(DailySchedule.Activity activity) {
+        return new WildlifeMind.Routine(true, false, false, true, false, false, false, 0, 1, false, activity);
+    }
+    @Test void theHourSendsAGrazerToFeedAndLieUpWithoutWaitingForTheNeed() {
+        var mind = new WildlifeMind(false, false, false);
+        mind.restoreNeeds(.05, .1, .05);
+        var onGrass = new WildlifeMind.Observation(0, false, false, false, false, false, false, false, true, false, 1);
+        assertEquals(BehaviorState.ROAM, mind.step(onGrass, 10, hour(DailySchedule.Activity.ROAM), null), "fed and rested, nothing to do");
+        assertEquals(BehaviorState.FORAGE, mind.step(onGrass, 10, hour(DailySchedule.Activity.FEED), null), "feeding hours on grazing ground");
+        for (int i = 0; i < 60; i++) assertEquals(BehaviorState.FORAGE, mind.step(onGrass, 10, hour(DailySchedule.Activity.FEED), null));
+        assertEquals(BehaviorState.REST, mind.step(onGrass, 10, hour(DailySchedule.Activity.REST), null), "the midday rest");
+        for (int i = 0; i < 60; i++) assertEquals(BehaviorState.REST, mind.step(onGrass, 10, hour(DailySchedule.Activity.REST), null));
+        assertEquals(BehaviorState.FORAGE, mind.step(onGrass, 10, hour(DailySchedule.Activity.FEED), null), "up again when the feeding hours return");
+        var offGrass = sight(false, false, false, 1);
+        assertEquals(BehaviorState.ROAM, mind.step(offGrass, 10, hour(DailySchedule.Activity.FEED), null), "no grazing ground: it moves on");
+        var hunter = new WildlifeMind(true, false, false);
+        hunter.restoreNeeds(.05, .1, .05);
+        assertEquals(BehaviorState.ROAM, hunter.step(onGrass, 10, hour(DailySchedule.Activity.FEED), null), "hunters do not graze");
+        assertEquals(BehaviorState.REST, hunter.step(onGrass, 10, hour(DailySchedule.Activity.REST), null), "but they lie up");
+        var exposed = new WildlifeMind.Routine(true, false, false, false, false, false, false, 0, 1, false, DailySchedule.Activity.REST);
+        assertEquals(BehaviorState.ROAM, hunter.step(onGrass, 10, exposed, null), "never where it is not safe to");
+    }
+    @Test void wateringTimeTakesALittleThirstToTheBankAndADrinkLasts() {
+        var mind = new WildlifeMind(false, false, false);
+        mind.restoreNeeds(.05, .3, .05);
+        var dryLand = sight(false, false, false, 1);
+        var atWater = new WildlifeMind.Observation(0, false, false, false, false, false, false, true, false, false, 1);
+        assertEquals(BehaviorState.ROAM, mind.step(dryLand, 10, hour(DailySchedule.Activity.ROAM), null), "a little thirst waits for the hour");
+        assertEquals(BehaviorState.SEEK_WATER, mind.step(dryLand, 10, hour(DailySchedule.Activity.DRINK), null));
+        assertEquals(BehaviorState.DRINK, mind.step(atWater, 10, hour(DailySchedule.Activity.DRINK), null));
+        int drinking = 10;
+        while (mind.step(atWater, 10, hour(DailySchedule.Activity.DRINK), null) == BehaviorState.DRINK && drinking < 2000) drinking += 10;
+        assertTrue(drinking >= WildlifeMind.DRINK_TICKS, "the drink lasted " + drinking + " ticks");
+        assertTrue(mind.thirst() < 0.05);
+        // A range with no water in reach is not searched again at every watering hour.
+        var dry = new WildlifeMind(false, false, false);
+        dry.restoreNeeds(.05, .4, .05);
+        assertEquals(BehaviorState.SEEK_WATER, dry.step(dryLand, 10, hour(DailySchedule.Activity.DRINK), null));
+        dry.makeDo();
+        assertEquals(BehaviorState.ROAM, dry.step(dryLand, 10, hour(DailySchedule.Activity.DRINK), null));
+        dry.restoreNeeds(.05, .7, .05);
+        assertEquals(BehaviorState.SEEK_WATER, dry.step(dryLand, 10, hour(DailySchedule.Activity.DRINK), null), "real thirst still searches");
+    }
     @Test void anInvestigationLastsLongEnoughToBeOne() {
         var mind = new WildlifeMind(true, false, false);
         var sound = new WildlifeMind.Observation(0.65, false, false, false, false, false, false, false, false, false, 1);

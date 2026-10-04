@@ -47,4 +47,32 @@ class DailyScheduleTest {
         assertEquals(0.5, DailySchedule.dayProgress(6000, 13000, 23000), 1e-9);
         assertEquals(0, DailySchedule.dayProgress(23000, 13000, 23000), 1e-9);
     }
+
+    @Test void theWakingDayHasFeedingWateringAndRestingHours() {
+        java.util.function.BiFunction<Boolean, Integer, DailySchedule.Activity> at =
+                (carnivore, clock) -> DailySchedule.activity(clock, 0, carnivore, 13000, 23000, 0, 0.5);
+        // A grazer: water at dawn, graze, lie up at midday, graze, water at dusk, sleep.
+        assertEquals(DailySchedule.Activity.DRINK, at.apply(false, 23200));
+        assertEquals(DailySchedule.Activity.FEED, at.apply(false, 2000));
+        assertEquals(DailySchedule.Activity.REST, at.apply(false, 6000));
+        assertEquals(DailySchedule.Activity.FEED, at.apply(false, 9000));
+        assertEquals(DailySchedule.Activity.DRINK, at.apply(false, 12500));
+        assertEquals(DailySchedule.Activity.SLEEP, at.apply(false, 18000));
+        // A hunter: asleep all morning, lying up, a round of its range, water before the night's hunt.
+        assertEquals(DailySchedule.Activity.SLEEP, at.apply(true, 2000));
+        assertEquals(DailySchedule.Activity.REST, at.apply(true, 7000));
+        assertEquals(DailySchedule.Activity.ROAM, at.apply(true, 10000));
+        assertEquals(DailySchedule.Activity.DRINK, at.apply(true, 12500));
+        assertEquals(DailySchedule.Activity.HUNT, at.apply(true, 18000));
+        // The activity never disagrees with the phase about sleep and the hunt, whatever the individual's offset.
+        int feeding = 0;
+        for (int clock = 0; clock < 24000; clock += 97) for (long own : new long[]{0, 311, -77}) for (boolean carnivore : new boolean[]{false, true}) {
+            var phase = DailySchedule.phase(clock, own, carnivore, 13000, 23000, 600, 0.5);
+            var activity = DailySchedule.activity(clock, own, carnivore, 13000, 23000, 600, 0.5);
+            assertEquals(phase == SLEEP, activity == DailySchedule.Activity.SLEEP);
+            assertEquals(phase == HUNT, activity == DailySchedule.Activity.HUNT);
+            if (!carnivore && own == 0 && activity == DailySchedule.Activity.FEED) feeding++;
+        }
+        assertTrue(feeding * 97 > 0.35 * 24000, "a grazer feeds well over a third of the whole day");
+    }
 }

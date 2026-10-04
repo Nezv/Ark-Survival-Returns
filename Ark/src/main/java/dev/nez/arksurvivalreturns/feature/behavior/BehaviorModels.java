@@ -2,7 +2,6 @@ package dev.nez.arksurvivalreturns.feature.behavior;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,9 @@ import com.google.gson.JsonObject;
  *
  * <p>Land and water matrices are not typed by hand: they are recorded by driving the real
  * {@link WildlifeMind} through seeded random encounters, so every cell names the rule that actually
- * fired. Bridges are recorded from the real {@link Choreographer}, tier-2 odds from
- * {@link AmbientRoutine}. Only the flight phases, which live in the flyer entity, are declared here.
+ * fired. Bridges are recorded from the real {@link Choreographer}, the odds of the calm bouts from
+ * {@link CalmRoutine}, the day from {@link DailySchedule}. Only the flight phases, which live in the flyer
+ * entity, are declared here.
  * Export runs in datagen (ShowcaseData) and writes Ark/design/showcase/behavior.json.
  */
 public final class BehaviorModels {
@@ -28,9 +28,10 @@ public final class BehaviorModels {
         var root = new JsonObject();
         var tiers = new JsonArray();
         tiers.add(tier("FULL", radii.full(), "Full behaviour: senses, needs (hunger, thirst, fatigue), hunting, fleeing, "
-                + "drinking and the timed bridges between states. Decisions twice a second."));
-        tiers.add(tier("AMBIENT", radii.ambient(), "Seen from afar: short walks, turns, stops, looking around, grazing, "
-                + "sniffing, pooping and the daily sleep schedule. One cheap decision every few seconds; needs frozen."));
+                + "drinking and the timed bridges between states. Decisions twice a second. While calm, the animal "
+                + "spends its time in bouts: grazing, a few steps, a look around, a long stand, a walk."));
+        tiers.add(tier("AMBIENT", radii.ambient(), "Seen from afar: the same calm bouts on the day's schedule alone, "
+                + "lying up at midday and asleep at night. One cheap decision per bout; no senses, needs frozen."));
         tiers.add(tier("DORMANT", radii.dormant(), "Culled: no routine. Within this radius the pose still follows the "
                 + "schedule (asleep or standing) on a slow timer; beyond it nothing runs."));
         root.add("tiers", tiers);
@@ -39,8 +40,10 @@ public final class BehaviorModels {
         schedule.addProperty("nightStart", nightStart);
         schedule.addProperty("nightEnd", nightEnd);
         schedule.addProperty("carnivoreDaySleep", carnivoreDaySleep);
-        schedule.addProperty("carnivore", "Night: hunt. Morning: sleep. Afternoon: roam and drink.");
-        schedule.addProperty("herbivore", "Night: sleep. Day: graze, drink and roam.");
+        schedule.addProperty("carnivore", "Night: hunt. Morning: sleep. Afternoon: lie up, go a round of the range, water at dusk.");
+        schedule.addProperty("herbivore", "Night: sleep. Dawn and dusk: water. Morning and afternoon: graze. Midday: lie up.");
+        schedule.add("carnivoreDay", day(true, nightStart, nightEnd, carnivoreDaySleep));
+        schedule.add("herbivoreDay", day(false, nightStart, nightEnd, carnivoreDaySleep));
         schedule.addProperty("flyer", "No schedule: flyers loop around their nest, land, perch and take off.");
         root.add("schedule", schedule);
         var models = new JsonArray();
@@ -59,6 +62,28 @@ public final class BehaviorModels {
         }
         root.add("actions", actions);
         return root;
+    }
+
+    /** One day as runs of the same activity: {from, to, activity} in ticks of the day, for an animal with no offset. */
+    private static JsonArray day(boolean carnivore, int nightStart, int nightEnd, double carnivoreDaySleep) {
+        var runs = new JsonArray();
+        DailySchedule.Activity current = null;
+        int from = 0;
+        for (int tick = 0; tick <= NighttimeCycle.DAY_TICKS; tick += 50) {
+            var now = tick == NighttimeCycle.DAY_TICKS ? null
+                    : DailySchedule.activity(tick, 0, carnivore, nightStart, nightEnd, 0, carnivoreDaySleep);
+            if (now == current) continue;
+            if (current != null) {
+                var run = new JsonObject();
+                run.addProperty("from", from);
+                run.addProperty("to", tick);
+                run.addProperty("activity", current.name());
+                runs.add(run);
+            }
+            current = now;
+            from = tick;
+        }
+        return runs;
     }
 
     private static JsonObject tier(String id, int radius, String summary) {
@@ -86,8 +111,9 @@ public final class BehaviorModels {
         var tiers = new JsonArray();
         tiers.add(tierMatrix("FULL", full, "Decision model (WildlifeMind), recorded from seeded encounters. "
                 + "Cells list the rule that chose the new state; every change plays a bridge first."));
-        tiers.add(tierMatrix("AMBIENT", ambientMatrix(carnivore), "Ambient routine (AmbientRoutine): odds of the next "
-                + "step, plus the schedule. A player within the full radius, or any hit, promotes to FULL."));
+        tiers.add(tierMatrix("AMBIENT", ambientMatrix(carnivore), "Calm routine (CalmRoutine): the odds of the bout that "
+                + "follows each bout, by what the hour asks. The near routine fills its calm states with the same bouts. "
+                + "A player within the full radius, or any hit, promotes to FULL."));
         tiers.add(tierMatrix("DORMANT", dormantMatrix(), "Pose only, on the schedule; beyond the outer radius nothing runs."));
         o.add("tiers", tiers);
         o.add("bridges", carnivore ? carnivoreBridges() : herbivoreBridges());
@@ -163,35 +189,38 @@ public final class BehaviorModels {
         boolean danger() { return this == ATTACKED || this == BIG_PREDATOR || this == CLOSE_INTRUDER; }
     }
 
+    /** The calm routine as it chains: for each way of spending the time, what follows each bout and how often. */
     private static Map<String, Map<String, TreeSet<String>>> ambientMatrix(boolean carnivore) {
         var profile = carnivore ? CANONICAL_CARNIVORE : CANONICAL_HERBIVORE;
         var matrix = new TreeMap<String, Map<String, TreeSet<String>>>();
-        var odds = new EnumMap<DailySchedule.Phase, Map<AmbientRoutine.Step, Integer>>(DailySchedule.Phase.class);
         int samples = 20000;
-        for (var phase : DailySchedule.Phase.values()) {
-            if (phase == DailySchedule.Phase.SLEEP || phase == DailySchedule.Phase.HUNT && !carnivore) continue;
-            var random = new SplittableRandom(SEED + phase.ordinal());
-            var counts = new EnumMap<AmbientRoutine.Step, Integer>(AmbientRoutine.Step.class);
-            for (int i = 0; i < samples; i++) counts.merge(AmbientRoutine.next(phase, profile, random, false).step(), 1, Integer::sum);
-            odds.put(phase, counts);
-        }
-        // Rows only for steps this model can take: a carnivore never grazes.
-        var steps = EnumSet.of(AmbientRoutine.Step.SLEEP);
-        odds.values().forEach(counts -> steps.addAll(counts.keySet()));
-        for (var from : steps) {
-            if (from == AmbientRoutine.Step.SLEEP) {
-                add(matrix, "SLEEP", "STAND", "schedule wakes it");
-                continue;
+        var modes = carnivore ? List.of(CalmRoutine.Mode.LOAF, CalmRoutine.Mode.PATROL, CalmRoutine.Mode.REST)
+                : List.of(CalmRoutine.Mode.GRAZE, CalmRoutine.Mode.LOAF, CalmRoutine.Mode.REST);
+        for (var mode : modes) {
+            String when = switch (mode) {
+                case GRAZE -> "feeding";
+                case LOAF -> "idle";
+                case PATROL -> "night round";
+                case REST -> "lying up";
+            };
+            var random = new SplittableRandom(SEED + mode.ordinal());
+            var counts = new EnumMap<CalmRoutine.Step, EnumMap<CalmRoutine.Step, Integer>>(CalmRoutine.Step.class);
+            CalmRoutine.Step previous = null;
+            for (int i = 0; i < samples; i++) {
+                var next = CalmRoutine.next(mode, previous, profile, random).step();
+                if (previous != null) counts.computeIfAbsent(previous, k -> new EnumMap<>(CalmRoutine.Step.class)).merge(next, 1, Integer::sum);
+                previous = next;
             }
-            add(matrix, from.name(), "SLEEP", "schedule turns to sleep");
-            odds.forEach((phase, counts) -> {
-                String when = phase == DailySchedule.Phase.HUNT ? "night" : carnivore ? "afternoon" : "day";
-                counts.forEach((to, count) -> {
-                    int percent = (int) Math.round(count * 100.0 / samples);
+            counts.forEach((from, row) -> {
+                int total = row.values().stream().mapToInt(Integer::intValue).sum();
+                row.forEach((to, count) -> {
+                    int percent = (int) Math.round(count * 100.0 / total);
                     if (percent > 0) add(matrix, from.name(), to.name(), when + " " + percent + "%");
                 });
             });
         }
+        for (var from : matrix.keySet().toArray(String[]::new)) add(matrix, from, "SLEEP", "schedule turns to sleep");
+        add(matrix, "SLEEP", "STAND", "schedule wakes it");
         add(matrix, "WALK", "WALK", "home-range edge: walk back");
         return matrix;
     }

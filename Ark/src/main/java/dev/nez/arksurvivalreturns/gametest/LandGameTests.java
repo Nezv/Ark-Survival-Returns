@@ -33,6 +33,12 @@ final class LandGameTests {
             h.assertTrue(SpawnRules.canSpawn(ModContent.CREATURES.get(Species.PARASAUR).get(), world,
                     EntitySpawnReason.NATURAL, origin, RandomSource.create(2)), "Valid bank spawn rejected");
             h.assertFalse(SpawnRules.speciesAllowed(Species.TYRANNOSAURUS, world.getBiome(origin), 1), "Apex allowed at danger 1");
+            // Feeding ground: grass and soil to graze, sand to root in; bare rock holds nothing.
+            h.assertTrue(LandWildlife.forage(world, Species.PARASAUR, origin), "Grass is not grazing ground");
+            h.setBlock(72, 1, 64, Blocks.SAND);
+            h.assertTrue(LandWildlife.forage(world, Species.LYSTROSAURUS, h.absolutePos(new BlockPos(72, 2, 64))), "Sand is not feeding ground");
+            h.setBlock(74, 1, 64, Blocks.STONE);
+            h.assertFalse(LandWildlife.forage(world, Species.PARASAUR, h.absolutePos(new BlockPos(74, 2, 64))), "Bare rock is feeding ground");
             // Snow browsing is a cold-adapted abstraction, never a warm-species one.
             h.setBlock(64, 1, 64, Blocks.SNOW_BLOCK);
             var browse = h.absolutePos(new BlockPos(64, 2, 64));
@@ -91,16 +97,22 @@ final class LandGameTests {
             }
             far.discard();
             var watching = grazer.apply(22, roam);
-            int changes = 0;
+            int changes = 0, watched = 0;
             var last = watching.behavior();
             for (int i = 0; i < 40; i++) {
                 watching.wildlife().think();
                 h.assertTrue(watching.behavior() != flee, "A grazer fled from a hunter that kept its distance");
+                if (watching.behavior() == dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.ALERT) watched++;
                 if (watching.behavior() != last) { changes++; last = watching.behavior(); }
             }
-            h.assertTrue(watching.behavior() == dev.nez.arksurvivalreturns.feature.behavior.BehaviorState.ALERT,
-                    "A grazer did not watch a hunter roaming 22 blocks off: " + watching.behavior());
-            h.assertTrue(changes <= 2, "The watching grazer changed state " + changes + " times in 20 seconds");
+            h.assertTrue(watched >= 12, "A grazer did not watch a hunter roaming 22 blocks off: " + watched + " of 40 decisions");
+            // Habituation: a hunter that keeps its distance is not stared at all afternoon.
+            h.assertFalse(watching.behavior().alarm(), "Still on alert after 20 seconds of a hunter keeping its distance: " + watching.behavior());
+            h.assertTrue(changes <= 3, "The watching grazer changed state " + changes + " times in 20 seconds");
+            // The hunter comes on: the interest is back at once, and inside the flight distance the grazer bolts.
+            hunter.setPos(watching.position().add(0, 0, 9));
+            for (int i = 0; i < 6; i++) watching.wildlife().think();
+            h.assertTrue(watching.behavior() == flee, "A grazer let a hunter it had grown used to walk up to it: " + watching.behavior());
             watching.discard();
             var pressed = grazer.apply(10, roam);
             for (int i = 0; i < 6; i++) pressed.wildlife().think();

@@ -140,18 +140,36 @@ How much runs depends on the distance to the nearest player (`[behavior]` in the
 | Tier | Default radius | What runs |
 |---|---|---|
 | Full detail | 64 | Senses, needs, decisions twice a second, bridges, pack alarms, pursuit and escape |
-| Ambient | 128 | `AmbientRoutine`: walk a few blocks, turn, stop, look, sniff, graze, poop, sleep on schedule; one decision every few seconds; needs frozen |
+| Ambient | 128 | `CalmRoutine` on the schedule alone: the same bouts as near a player (graze, a few steps, look, stand, walk, lie up), asleep at night; one decision per bout; needs frozen |
 | Dormant | 256 | No routine; the pose follows the sleep schedule every 5 s; beyond it nothing runs |
 
 An 8-block margin stops flicker at the borders. Hit, alarmed, targeting, tamed, ridden or torpid creatures always run full detail, and thirst and hunger only change there. GameTests stay in full detail unless a test supplies observers (`BehaviorLod.useTestObservers`). `/arkwildlife` prints the loaded wildlife per tier.
 
-`DailySchedule` sets the day: carnivores hunt at night, sleep through the first half of daylight (`carnivoreDaySleepFraction`, now 0.5) and roam the afternoon; herbivores sleep at night and graze, drink and roam by day. Each individual shifts its clock by up to `transitionTicks`.
+`DailySchedule` sets the day: carnivores hunt at night, sleep through the first part of daylight (`carnivoreDaySleepFraction`), then lie up, go a round of their range and water at dusk; herbivores sleep at night, water at dawn and dusk, graze the morning and the afternoon and lie up at midday. Each individual shifts its clock by up to `transitionTicks`.
 
 Groups no longer move like one machine: `Desync` gives each animal its own alarm delay (rippling out from the caller), speed factor, flee heading, formation slot around the leader and clip playback rate.
 
 Water-bound species keep a simpler model: cruise, investigate, warn, hunt, feed or flee, with no sleep, thirst or grazing (`WildlifeMind.quench`); the ambient tier swims slow legs with hover pauses. Flyers are described in [the flying ecosystem](flying-ecosystem.md).
 
 The transition matrices of every model and tier are recorded from the real code by `BehaviorModels` (runData writes `design/showcase/behavior.json`) and shown with state diagrams in the showcase's Behaviour section. The land matrices are fuzzed from seeded encounters, so every cell quotes the rule (`WildlifeMind.Reason`) that fired.
+
+## Calm routines and the weight of a body (P00, 2026-10-03)
+
+A recorded Megalocerus near a standing player walked for 150 seconds without a pause: 176 blocks inside a 25 by 37 block patch, turning at up to 217 degrees a second. The cause was the routine itself: roaming picked a random point around home every five to ten seconds, also in mid-walk, and grazing waited for a hunger that took eight minutes to build and six seconds to satisfy. The model for the replacement is the hunting games, theHunter: Call of the Wild above all: each species has hours for feeding, drinking and resting and places to do them, animals are calm, alert or fleeing, and a calm animal spends most of its time with its head down or lying, walking only to get somewhere.
+
+**The day.** `DailySchedule.activity` gives every waking hour an activity. Grazers water for the first and last tenth of daylight, feed through the morning and the afternoon and lie up at midday (three in ten keep feeding, a different few each day). Hunters lie up for the first part of their afternoon, go a round of their range, and water before the night's hunt. The places are found on the spot: grazing ground under the feet, the nearest reachable bank, the home range, and for a carnivore the canopy it already needs. `WildlifeMind` turns the hour into a state without waiting for the need: feeding hours on grazing ground are FORAGE, the rest hours are REST where it is safe, and watering time sends an animal with a little thirst to the bank, where a drink lasts at least eight seconds. Real hunger, thirst and fatigue still act at any hour, and every alarm still comes first. A range with no water in reach is not searched again at every watering hour.
+
+**Bouts.** `CalmRoutine` fills the calm states with bouts, each held for its time, and what came before decides what can follow. On feeding ground: head down for 8 to 22 seconds, then a few slow paces to fresh grass, a look around, or more grazing, and once in a few minutes a walk to another patch. With nothing to do: long stands, a look, a turn, a nibble, and a walk about one bout in three, always followed by a pause. A hunter on its night round walks a leg of 12 to 28 blocks and stops to scent and listen. Lying up is lying. Big animals hold every bout longer and cover more ground with it. The same planner runs the far, cheap routine, so a herd behaves the same at any distance; near a player the mind still chooses the state and the `Choreographer` holds each bout as a beat that a reaction can interrupt but the routine cannot.
+
+**Where a walk goes.** Straight on with a bend, never back on itself: a follower takes the heading of its herd's leader, so a herd drifts one way while it grazes, and an animal at the edge of its range heads home. A member more than its cohesion distance from the leader closes up first. Grazing ground is grass, forest floor, soil, moss and mud (the vanilla `substrate_overworld` tag), and sand and baked clay to root in, so desert and badlands animals feed too; bare rock and gravel hold nothing.
+
+**Watching.** A threat that keeps its distance (a hunter across the valley, a player standing thirty blocks off) is watched for 8 to 14 seconds and then let be; the animal goes back to its routine instead of staring all afternoon. Coming three blocks closer, hunting, or stepping inside the flight distance renews the interest at once, and an animal does not stroll up to what it has been keeping an eye on: its walks keep one and a half flight distances away. Unseen for half a minute, the threat is new again.
+
+**Water from snow.** Cold-adapted animals take their water from the snow they stand on, so a herd in the snow drinks where it is instead of searching a frozen range for open water. A thirsty animal with no water in reach walks on between its sweeps.
+
+**Weight.** See [movement tuning](movement-tuning.md): turn rate, the time a turn takes to gather and lose speed, and the time to build and run out pace all follow the body's bulk.
+
+Measured by the GameTests `wildlife_grazing_day` (a Parasaur in feeding hours: 418 of 421 ticks feeding, head down for 410, moving for 3, no turn sharper than its 74 degrees a second) and `wildlife_body_weight` (a Triceratops sent to a point behind it: 67 ticks to turn about at its 52 degrees a second, a quarter of its pace three ticks after stepping off, and a quarter block run out over nine ticks when the path ends).
 
 ## Player-facing development priorities after this model
 

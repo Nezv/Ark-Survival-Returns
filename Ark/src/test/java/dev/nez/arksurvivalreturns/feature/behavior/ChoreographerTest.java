@@ -113,21 +113,26 @@ class ChoreographerTest {
         assertEquals(BehaviorAction.SLEEP, settled.getLast());
     }
 
-    @Test void roamingPausesFillWithIdleBeatsTheRigCanPlayAndPoopIsRare() {
+    @Test void routineBoutsHoldTheirActionAndNeverCutAReactionShort() {
         var stag = new Choreographer(STAG, 11);
         stag.reset(ROAM);
-        int poops = 0, looks = 0, grazes = 0;
-        for (int i = 0; i < 400; i++) {
-            stag.pause();
-            var action = stag.action();
-            if (action == POOP) { poops++; assertEquals(Cue.POOP, stag.takeCue()); }
-            if (action == LOOK) looks++;
-            if (action == GRAZE) grazes++;
-            assertNotEquals(SNIFF, action, "the stag has no sniff clip");
-            while (stag.remaining() > 0) stag.advance(10, false);
-        }
-        assertTrue(looks > 20 && grazes > 20, "looks=" + looks + " grazes=" + grazes);
-        assertTrue(poops >= 1 && poops < 20, "poops=" + poops);
+        assertTrue(stag.perform(GRAZE, 200));
+        assertEquals(GRAZE, stag.action());
+        assertTrue(stag.holding(), "a grazing bout holds the body in place");
+        assertFalse(stag.perform(LOOK, 40), "a bout in progress is not replaced");
+        stag.advance(190, false);
+        assertEquals(GRAZE, stag.action());
+        stag.advance(10, false);
+        assertFalse(stag.holding());
+        assertEquals(IDLE, stag.action(), "the bout over, the body stands until the next one");
+        assertTrue(stag.perform(POOP, 30));
+        assertEquals(Cue.POOP, stag.takeCue(), "a bout with a clip plays it once");
+        assertNull(stag.takeCue());
+        stag.release();
+        assertFalse(stag.holding(), "a released bout ends at once, for a herd that moves off");
+        stag.enter(ROAM, FLEE, false);
+        assertFalse(stag.perform(GRAZE, 100), "the routine never cuts a startle short");
+        assertEquals(STARTLE, stag.action());
     }
 
     @Test void individualsDifferButTheSameAnimalIsReproducible() {

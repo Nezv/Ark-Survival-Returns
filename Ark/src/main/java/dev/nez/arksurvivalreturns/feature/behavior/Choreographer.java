@@ -1,7 +1,6 @@
 package dev.nez.arksurvivalreturns.feature.behavior;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.SplittableRandom;
 import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction.Cue;
@@ -9,8 +8,8 @@ import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction.Cue;
 /**
  * Turns decisions into a readable performance. When the mind changes state, the body does not snap
  * into it: an idle animal notices, faces the threat, roars or startles, and only then charges or bolts.
- * Sleepers wake before they react; a settling animal looks around before it lies down. While roaming,
- * pauses are filled with the idle beats the rig can play: looking around, sniffing, grazing, pooping.
+ * Sleepers wake before they react; a settling animal looks around before it lies down. While calm, the
+ * bouts of its routine ({@link CalmRoutine}) are played as held beats: grazing, looking, sniffing, standing.
  *
  * <p>Bridge beats last as long as their authored clip, varied per individual. Locomotion waits for
  * them; a strike on a target already in reach never does. No world access: the goal adapter feeds it
@@ -28,14 +27,12 @@ public final class Choreographer {
     private int remaining;
     private Cue cue;
     private boolean announced;
-    private int poopCooldown;
     private int beats;
 
     public Choreographer(BehaviorProfile profile, long seed) {
         this.profile = profile;
         this.seed = seed;
         this.random = new SplittableRandom(seed);
-        this.poopCooldown = 1200 + (int) (Desync.unit(seed, 41) * 2400);
     }
 
     public BehaviorState mode() { return mode; }
@@ -130,7 +127,6 @@ public final class Choreographer {
      * roaming pause fills with idle beats and a walk is labelled as one.
      */
     public void advance(int ticks, boolean travelling) {
-        poopCooldown = Math.max(0, poopCooldown - ticks);
         remaining -= ticks;
         if (remaining > 0) return;
         remaining = 0;
@@ -150,11 +146,21 @@ public final class Choreographer {
         }
     }
 
-    /** A roaming pause started: play one idle beat now instead of standing frozen. */
-    public void pause() {
-        if (!queue.isEmpty() || remaining > 0) return;
-        queue.add(idleBeat());
-        next(false);
+    /**
+     * One bout of the calm routine: holds the action for its time, with its cue. Ignored while a bridge or
+     * another bout still plays, so a reaction is never cut short by the routine.
+     */
+    public boolean perform(BehaviorAction bout, int ticks) {
+        if (!queue.isEmpty() || remaining > 0) return false;
+        start(bout, ticks);
+        return true;
+    }
+
+    /** Ends the bout in progress, e.g. when the herd moves off and this animal must follow. */
+    public void release() {
+        if (!queue.isEmpty()) return;
+        remaining = 0;
+        cue = null;
     }
 
     private void next(boolean travelling) {
@@ -195,26 +201,6 @@ public final class Choreographer {
             case THREATEN -> profile.clips().has(ClipRole.THREAT) ? BehaviorAction.THREAT : BehaviorAction.NOTICE;
             default -> travelling ? BehaviorAction.WALK : BehaviorAction.IDLE;
         };
-    }
-
-    /** One pause beat: mostly standing, sometimes looking, sniffing, grazing or, rarely, pooping. */
-    private Beat idleBeat() {
-        var options = new ArrayList<Beat>();
-        var weights = new ArrayList<Double>();
-        options.add(beat(BehaviorAction.IDLE, 40 + random.nextInt(80), 0.3)); weights.add(4.0);
-        options.add(beat(BehaviorAction.LOOK, profile.ticks(Cue.LOOK, 30), 0.2)); weights.add(profile.has(Cue.LOOK) ? 2.5 : 1.0);
-        if (profile.has(Cue.SNIFF)) { options.add(beat(BehaviorAction.SNIFF, profile.ticks(Cue.SNIFF, 40), 0.1)); weights.add(profile.predator() ? 2.5 : 1.0); }
-        if (profile.grazer()) { options.add(beat(BehaviorAction.GRAZE, 60 + random.nextInt(100), 0.3)); weights.add(3.0); }
-        if (profile.has(Cue.POOP) && poopCooldown == 0) { options.add(beat(BehaviorAction.POOP, profile.ticks(Cue.POOP, 30), 0.05)); weights.add(0.6); }
-        double total = weights.stream().mapToDouble(Double::doubleValue).sum(), roll = random.nextDouble() * total;
-        for (int i = 0; i < options.size(); i++) {
-            roll -= weights.get(i);
-            if (roll <= 0) {
-                if (options.get(i).action() == BehaviorAction.POOP) poopCooldown = 2400 + random.nextInt(3600);
-                return options.get(i);
-            }
-        }
-        return options.getFirst();
     }
 
     /** A beat whose length varies per individual and per occurrence by up to {@code spread}. */

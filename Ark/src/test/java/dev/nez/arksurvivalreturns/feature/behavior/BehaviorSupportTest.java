@@ -28,26 +28,64 @@ class BehaviorSupportTest {
         assertTrue(Desync.reactionDelay(5, 0, 20, true) < Desync.reactionDelay(5, 0, 20, false), "timid animals react first");
     }
 
-    @Test void ambientRoutineSleepsOnScheduleWalksHomeAndOnlyPlaysClipsTheRigHas() {
-        var random = new SplittableRandom(1);
-        assertEquals(AmbientRoutine.Step.SLEEP, AmbientRoutine.next(DailySchedule.Phase.SLEEP, REX, random, false).step());
-        assertEquals(AmbientRoutine.Step.WALK, AmbientRoutine.next(DailySchedule.Phase.ROAM, REX, random, true).step());
-        var seen = new EnumMap<AmbientRoutine.Step, Integer>(AmbientRoutine.Step.class);
-        for (int i = 0; i < 5000; i++) {
-            var plan = AmbientRoutine.next(DailySchedule.Phase.ROAM, REX, random, false);
-            seen.merge(plan.step(), 1, Integer::sum);
-            if (plan.step() == AmbientRoutine.Step.TURN) assertTrue(Math.abs(plan.turn()) >= 40 && Math.abs(plan.turn()) < 130);
-            if (plan.step() == AmbientRoutine.Step.WALK) assertTrue(plan.distance() >= 4 && plan.distance() < 16);
+    private static final BehaviorProfile STAG = new BehaviorProfile("megalocerus", false, true, true, false, true, 2.2,
+            "Stag-Startled", BehaviorClips.of("megalocerus"));
+
+    /** Runs the chain of bouts for a while and returns the share of the time spent on each step. */
+    private static EnumMap<CalmRoutine.Step, Double> budget(CalmRoutine.Mode mode, BehaviorProfile profile, long seed) {
+        var random = new SplittableRandom(seed);
+        var time = new EnumMap<CalmRoutine.Step, Double>(CalmRoutine.Step.class);
+        CalmRoutine.Step previous = null;
+        double total = 0;
+        for (int i = 0; i < 20000; i++) {
+            var plan = CalmRoutine.next(mode, previous, profile, random);
+            assertFalse(previous != null && previous.travels() && plan.step().travels(), "two walks in a row: " + mode);
+            // A walked bout lasts as long as its distance takes at a 1.6 blocks a second walk; a turn about a second.
+            double ticks = plan.step().travels() ? plan.distance() / (1.6 * plan.pace()) * 20 : plan.step() == CalmRoutine.Step.TURN ? 20 : plan.ticks();
+            assertTrue(ticks > 0, plan.toString());
+            time.merge(plan.step(), ticks, Double::sum);
+            total += ticks;
+            previous = plan.step();
         }
-        assertFalse(seen.containsKey(AmbientRoutine.Step.SNIFF), "Rex has no sniff clip");
-        assertFalse(seen.containsKey(AmbientRoutine.Step.GRAZE), "carnivores do not graze");
-        assertTrue(seen.getOrDefault(AmbientRoutine.Step.TURN, 0) > 500);
-        int sniffs = 0;
-        for (int i = 0; i < 2000; i++)
-            if (AmbientRoutine.next(DailySchedule.Phase.HUNT, WOLF, random, false).step() == AmbientRoutine.Step.SNIFF) sniffs++;
-        assertTrue(sniffs > 100, "wolves sniff on night patrols: " + sniffs);
-        assertEquals(BehaviorState.FORAGE, AmbientRoutine.state(AmbientRoutine.Step.GRAZE));
-        assertEquals(BehaviorAction.TURN, AmbientRoutine.action(AmbientRoutine.Step.TURN));
+        for (var step : time.keySet()) time.put(step, time.get(step) / total);
+        return time;
+    }
+
+    private static double moving(EnumMap<CalmRoutine.Step, Double> budget) {
+        return budget.getOrDefault(CalmRoutine.Step.WALK, 0.0) + budget.getOrDefault(CalmRoutine.Step.STEP, 0.0);
+    }
+
+    @Test void calmRoutineSpendsTimeLikeAnAnimalAndOnlyPlaysClipsTheRigHas() {
+        var random = new SplittableRandom(1);
+        assertEquals(CalmRoutine.Step.SLEEP, CalmRoutine.sleep(random).step());
+        assertEquals(CalmRoutine.Step.WALK, CalmRoutine.homeward(REX, random).step());
+        var grazing = budget(CalmRoutine.Mode.GRAZE, STAG, 2);
+        assertTrue(grazing.get(CalmRoutine.Step.GRAZE) > 0.6, "a grazer on its feeding ground has its head down: " + grazing);
+        assertTrue(moving(grazing) < 0.2, "and barely walks: " + grazing);
+        assertTrue(grazing.containsKey(CalmRoutine.Step.LOOK) && grazing.containsKey(CalmRoutine.Step.POOP), grazing.toString());
+        assertFalse(grazing.containsKey(CalmRoutine.Step.SNIFF), "the stag has no sniff clip");
+        assertFalse(grazing.containsKey(CalmRoutine.Step.LIE), "lying up belongs to the rest hours");
+        var loafing = budget(CalmRoutine.Mode.LOAF, REX, 3);
+        assertTrue(moving(loafing) < 0.4, "an animal with nothing to do stands more than it walks: " + loafing);
+        assertTrue(loafing.get(CalmRoutine.Step.STAND) > 0.3, loafing.toString());
+        assertFalse(loafing.containsKey(CalmRoutine.Step.SNIFF), "Rex has no sniff clip");
+        assertFalse(loafing.containsKey(CalmRoutine.Step.GRAZE) || loafing.containsKey(CalmRoutine.Step.STEP), "carnivores do not graze");
+        var patrol = budget(CalmRoutine.Mode.PATROL, WOLF, 4);
+        assertTrue(moving(patrol) > moving(loafing) && moving(patrol) < 0.75, "a round is mostly walking, with stops: " + patrol);
+        assertTrue(patrol.getOrDefault(CalmRoutine.Step.SNIFF, 0.0) > 0.03, "wolves scent the air on their rounds: " + patrol);
+        var resting = budget(CalmRoutine.Mode.REST, REX, 5);
+        assertTrue(resting.get(CalmRoutine.Step.LIE) > 0.7 && moving(resting) == 0, "lying up is lying: " + resting);
+        // The bouts of a big animal last longer and cover more ground.
+        assertTrue(CalmRoutine.slow(REX) > CalmRoutine.slow(STAG) && CalmRoutine.stride(REX) > CalmRoutine.stride(STAG));
+        for (int i = 0; i < 2000; i++) {
+            var plan = CalmRoutine.next(CalmRoutine.Mode.LOAF, CalmRoutine.Step.STAND, STAG, random);
+            if (plan.step() == CalmRoutine.Step.TURN) assertTrue(Math.abs(plan.turn()) >= 30 && Math.abs(plan.turn()) < 100);
+            if (plan.step() == CalmRoutine.Step.WALK) assertTrue(plan.distance() >= 6 && plan.distance() < 18 && plan.pace() == 1);
+        }
+        assertEquals(BehaviorState.FORAGE, CalmRoutine.state(CalmRoutine.Step.GRAZE));
+        assertEquals(BehaviorState.REST, CalmRoutine.state(CalmRoutine.Step.LIE));
+        assertEquals(BehaviorAction.TURN, CalmRoutine.action(CalmRoutine.Step.TURN));
+        assertEquals(BehaviorAction.WALK, CalmRoutine.action(CalmRoutine.Step.STEP));
     }
 
     @Test void flightCurvesStayAroundTheNestAndMoveSmoothly() {
