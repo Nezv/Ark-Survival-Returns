@@ -29,7 +29,7 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.storage.*;
 import net.minecraft.world.phys.Vec3;
 
-/** A persistent territorial dragon, generated once with its beacon. No key or activation step. */
+/** A persistent territorial dragon. It comes once, when a player first climbs into its beacon's eye (SkyBeaconStructure.wake). */
 public final class GuardianDragonEntity extends CreatureEntity {
     private static final EntityDataAccessor<Integer> VARIANT =
             SynchedEntityData.defineId(GuardianDragonEntity.class, EntityDataSerializers.INT);
@@ -88,7 +88,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
     @Override protected void customServerAiStep(ServerLevel world) {
         super.customServerAiStep(world);
         if (!initialized) {
-            anchorAt(blockPosition());
+            if (beaconHome == null) anchorAt(blockPosition());
             initializeLevel(1);
             getAttribute(Attributes.MAX_HEALTH).setBaseValue(Config.GUARDIAN_BASE_HEALTH.get());
             getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Species.DRAGON.damage * Config.GUARDIAN_DAMAGE_MULTIPLIER.get());
@@ -107,9 +107,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
         setTarget(target);
         setBehavior(target == null ? BehaviorState.ROAM : BehaviorState.DEFEND);
         Vec3 home = Vec3.atBottomCenterOf(beaconHome());
-        double angle = tickCount * 0.022 + (getUUID().hashCode() & 255) * 0.024;
-        // Home is the nest in the monolith's eye: circle the head outside the stone, rising and dipping past the opening.
-        Vec3 destination = home.add(Math.cos(angle) * 20, 6 + Math.sin(angle * 2) * 4, Math.sin(angle) * 20);
+        Vec3 destination = patrol();
         if (target != null) {
             Vec3 approach = target.position().add(0, 4, 0);
             destination = distanceToSqr(target) < 100 ? position().add(position().subtract(approach).normalize().scale(3)) : approach;
@@ -143,6 +141,13 @@ public final class GuardianDragonEntity extends CreatureEntity {
             for (ServerPlayer p : List.copyOf(bar.getPlayers())) if (!viewers.contains(p)) bar.removePlayer(p);
             viewers.forEach(bar::addPlayer);
         }
+    }
+
+    /** Where its round takes it now: home is the nest in the monolith's eye, and it circles the head outside the
+     * stone, rising and dipping past the opening. It arrives at this point too. */
+    public Vec3 patrol() {
+        double angle = tickCount * 0.022 + (getUUID().hashCode() & 255) * 0.024;
+        return Vec3.atBottomCenterOf(beaconHome()).add(Math.cos(angle) * 20, 6 + Math.sin(angle * 2) * 4, Math.sin(angle) * 20);
     }
 
     private void steer(ServerLevel world, Vec3 destination, double speed) {
@@ -196,7 +201,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
     }
     private void reward(ServerLevel world) {
         if (rewarded || creditedPlayer == null) return;
-        String key = "sky_beacon|" + world.dimension().identifier() + "|" + beaconHome().asLong();
+        String key = SkyBeaconStructure.key(world, beaconHome());
         GuardianData data = GuardianData.get(world);
         if (data.find(key).map(GuardianEncounter::rewardsIssued).orElse(false)) return;
         rewarded = true;

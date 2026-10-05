@@ -85,6 +85,7 @@ public final class GuardianEvents {
         MinecraftServer server = event.getServer();
         if (server.getTickCount() % 20 != 0) return;
         GuardianService.tick(server);
+        SkyBeaconStructure.tick(server);
     }
 
     @SubscribeEvent public static void logout(PlayerEvent.PlayerLoggedOutEvent event) {

@@ -1,5 +1,6 @@
 """Build the beacon monoliths: weathered stone pillars of stacked, tilted blocks hung with vines,
-each with a dragon nest and a loot crate in its eye and exactly one persistent dragon.
+each with a dragon nest and a loot crate in its eye. The templates hold no dragon, only a marker on the nest
+that stands for it: it comes when a player first climbs into the eye (SkyBeaconStructure.watch).
 Run from anywhere; no third-party assets or source structures are copied.
 """
 from pathlib import Path
@@ -15,16 +16,17 @@ DATA = ROOT / 'src/main/resources/data' / NS
 # Minecraft 26.1.2. A template without it is read as 1.9 data and run through every data fixer since.
 DATA_VERSION = 4790
 
-# Keep in step with SkyBeaconStructure (SIZE, NEST, CRATE).
+# Keep in step with SkyBeaconStructure (SIZE, NEST, CRATE, MARK).
 SIZE = (33, 100, 33)
 C = 16                  # the pillar's vertical axis, in x and z
 BASE = 4                # the tip; the rows below it only hold trailing vines
 EYE = (C, 66)           # centre of the round opening (x, y)
 EYE_R = 6.2
-NEST = (C, 63, C)       # on the opening's floor; the dragon spawns on it
+NEST = (C, 63, C)       # on the opening's floor; the dragon's home
 CRATE = (12, 63, 15)
 EMBLEM_Y = 83
 LOOT = NS + ':chests/sky_beacon'
+MARK = NS + '.sky_beacon'
 
 # One dragon colour per variant: the emblem glass, and the local stone worked into the grey.
 VARIANTS = {
@@ -228,15 +230,12 @@ def state(text):
 
 def build():
     dest = DATA / 'structure/sky_beacon'; dest.mkdir(parents=True, exist_ok=True)
-    spawn = [NEST[0] + .5, float(NEST[1]), NEST[2] + .5]
-    for i, variant in enumerate(VARIANTS):
+    spot = [NEST[0] + .5, float(NEST[1]), NEST[2] + .5]
+    for variant in VARIANTS:
         shape = blocks(variant)
         palette = list(dict.fromkeys(shape.values()))
         index = {n: k for k, n in enumerate(palette)}
-        entity = {'id': (8, NS + ':guardian_dragon'),
-                  'Pos': (9, (6, spawn)), 'Rotation': (9, (5, [0., 0.])),
-                  'Motion': (9, (6, [0., 0., 0.])), 'PersistenceRequired': (1, 1),
-                  'NoGravity': (1, 1), 'BeaconVariant': (3, i)}
+        mark = {'id': (8, 'minecraft:marker'), 'Tags': (9, (8, [MARK, f'{MARK}.{variant}']))}
         crate = {'id': (8, NS + ':storage_crate'), 'LootTable': (8, LOOT),
                  'CustomName': (10, {'translate': (8, f'container.{NS}.loot_crate')})}
         placed = []
@@ -247,9 +246,9 @@ def build():
         root = {'DataVersion': (3, DATA_VERSION), 'size': ints(SIZE),
                 'palette': (9, (10, [state(n) for n in palette])),
                 'blocks': (9, (10, placed)),
-                'entities': (9, (10, [{'pos': (9, (6, spawn)), 'blockPos': ints(NEST), 'nbt': (10, entity)}]))}
+                'entities': (9, (10, [{'pos': (9, (6, spot)), 'blockPos': ints(NEST), 'nbt': (10, mark)}]))}
         (dest / f'{variant}.nbt').write_bytes(gzip.compress(b'\x0a\0\0' + payload(10, root), mtime=0))
-        print(variant, len(shape), 'blocks; one dragon, one nest, one crate')
+        print(variant, len(shape), 'blocks; one nest, one crate, one mark for the dragon')
     def write(rel, data):
         p = DATA / rel; p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(data, indent=2) + '\n')

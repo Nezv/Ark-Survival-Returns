@@ -1,8 +1,8 @@
 # First Guardian: beacon monoliths
 
 P05 uses Ark's own beacon monolith and the authored dragon from I10. No Ancient Remnants
-installation, Allosaurus hunt, heart, altar or activation interaction is required. A dragon appears
-with each generated monolith, nests in its eye, circles its head and defends the nest.
+installation, Allosaurus hunt, heart, altar or activation interaction is required. A monolith stands
+empty until a player climbs into its eye; then its dragon comes, circles the head and defends the nest.
 
 ![Three beacon monoliths](sky-beacons.png)
 
@@ -32,15 +32,23 @@ the loot table arksurvivalreturns:chests/sky_beacon, rolled when first opened: 3
 taming supplies and rations, and 2-4 stacks of materials (keratin, pelts, fangs, amber, raw tin, raw
 copper, sulphur, wing membrane). Nothing leads up to the eye: climb, build or fly.
 
-The dragon is placed once by the structure template. Generation honours guardian.enabled,
-the natural-spawn config switch and minecraft:spawn_mobs; when disabled at generation time the
-beacon remains empty. The guardian is deliberately excluded from ordinary wildlife population
-counts and never despawns.
+The template holds no dragon, only a marker entity on the nest that stands for it. Once a second the
+game looks for such a mark beside each living, non-spectator player; when the player is in the core
+(within 7.5 blocks of the eye's middle: inside the opening or on its lip) the dragon arrives on its
+flight path round the head, 20 blocks out and clear of the stone, with its warning call, and the mark
+is removed. It comes once: a slain dragon is not replaced. Shaft, head and flanks do not count, and
+the ground below is quiet. The arrival honours guardian.enabled, the natural-spawn config switch and
+minecraft:spawn_mobs at that moment, so a beacon reached while they are off wakes when they are back
+on. It never loads a chunk: with no loaded room on the path the mark waits. The wyverns have no sleep
+clip (fly, hover, idle, walk, fire, glide, fly-fire), so the dragon does not lie in the nest beforehand.
+The guardian is deliberately excluded from ordinary wildlife population counts and never despawns.
+Beacons generated before this rule keep the dragon they were built with.
 
 For an operator preview, /place structure arksurvivalreturns:sky_beacon chooses a variant and
 resolves the height above the local terrain. /place template arksurvivalreturns:sky_beacon/red ~ ~ ~
 places the red template at the command position; use sufficient open space and height.
-The same template command accepts white and black.
+The same template command accepts white and black. Both carry the mark, so a placed beacon wakes like
+a generated one.
 
 ## Dragon and variants
 
@@ -52,7 +60,7 @@ The same template command accepts white and black.
 - Variants have the same combat rules and health; they are visual variants, not difficulty tiers.
 - The beacon guardian is a separate entity (arksurvivalreturns:guardian_dragon), untamable,
   immune to sedation, persistent and independent of the legacy Guardian Giganotosaurus.
-- Its home is the nest. It circles the monolith's head and attacks visible Survival players within
+- Its home is the nest. Once it has come it circles the monolith's head and attacks visible Survival players within
   40 blocks of the nest in three dimensions, so the ground under the monolith (about 64 blocks below
   the nest) is safe to walk and the climb is not. Whoever wounds it, or whose tame does, is hunted
   within 96 blocks of the nest for the next 30 seconds: the ground is no safe firing line. It returns
@@ -90,9 +98,10 @@ longer a prerequisite for P05 and remains separate work for other bosses.
 - python tools/preview_sky_beacons.py renders the geometry preview above; it is not a game screenshot.
 - runData generates names and test instances. build and runGameTestServer check gameplay.
 - sky_beacon_assets, sky_beacon_placement, sky_beacon_persistence and sky_beacon_rewards
-  cover structure registration/spacing, the loot table, actual template placement (dragon, nest, crate
-  and the open eye), saved home/palette/wounds, attack exclusions, the hunt after a wound, and one-time
-  progression rewards in the nest.
+  cover structure registration/spacing, the loot table, actual template placement (the dragon's mark,
+  nest, crate and the open eye), the arrival (not from the shaft, the head or the flank; from the lip of
+  the eye; one dragon of the beacon's palette, outside the stone, once), saved home/palette/wounds,
+  attack exclusions, the hunt after a wound, and one-time progression rewards in the nest.
 
 In-client visual review is still required for the monolith's look in real terrain, the height above
-the ground, wing clearance around the head, flight animation, lighting, and combat feel. The automated preview does not validate those artistic details.
+the ground, wing clearance around the head, the arrival as seen from the eye, flight animation, lighting, and combat feel. The automated preview does not validate those artistic details.

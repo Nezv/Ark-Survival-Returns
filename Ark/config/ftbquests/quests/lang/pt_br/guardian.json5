@@ -6,7 +6,7 @@
   "quest.0000000000000501.title": "Preparar para o Céu",
   "quest.0000000000000501.quest_subtitle": "Leve uma montaria voadora e suprimentos.",
   "quest.0000000000000501.quest_desc": [
-    "Procure um monólito flutuante com um dragão voando ao redor do centro.",
+    "Procure um monólito flutuante com um olho aberto perto do topo. O dragão chega quando alguém sobe até o olho.",
     "Prepare uma montaria voadora, armas de longo alcance e remédios. Nenhum coração ou ritual é necessário."
   ],
   "task.00000000000005A1.title": "Pronto para chegar ao farol",
@@ -14,7 +14,7 @@
   "quest.0000000000000502.quest_subtitle": "Alcance a plataforma de pouso.",
   "quest.0000000000000502.quest_desc": [
     "Os faróis aparecem em terreno novo do Mundo Superior a cerca de 500 blocos de distância.",
-    "Dragões vermelhos, brancos e negros defendem faróis correspondentes. Atacam invasores perto do centro.",
+    "Dragões vermelhos, brancos e negros defendem faróis correspondentes. O dragão chega quando você alcança o olho, e ataca invasores por perto.",
     "A plataforma abaixo da abertura permite pousar. Saia do território para recuar."
   ],
   "task.00000000000005A2.title": "Visite um farol flutuante",

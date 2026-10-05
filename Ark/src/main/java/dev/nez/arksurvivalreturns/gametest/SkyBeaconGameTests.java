@@ -42,13 +42,16 @@ final class SkyBeaconGameTests {
         var template = world.getStructureManager().getOrCreate(ArkSurvivalReturns.id("sky_beacon/white"));
         var settings = new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings()
                 .setIgnoreEntities(false).setFinalizeEntities(true);
-        // Place in the dedicated empty test arena; this exercises the native NBT entity placement path.
+        // Place in the dedicated empty test arena, entities and all: a mark for the dragon, and no dragon.
         h.assertTrue(template.placeInWorld(world, origin, origin, settings, world.getRandom(), 2), "Template placement failed");
-        var area = new AABB(net.minecraft.world.phys.Vec3.atLowerCornerOf(origin), net.minecraft.world.phys.Vec3.atLowerCornerOf(origin.offset(SkyBeaconStructure.SIZE)));
-        var dragons = world.getEntitiesOfClass(GuardianDragonEntity.class, area);
-        h.assertTrue(dragons.size() == 1 && dragons.getFirst().beaconVariant() == 1, "Template must contain exactly one white guardian");
-        var dragon = dragons.getFirst();
+        var area = new AABB(net.minecraft.world.phys.Vec3.atLowerCornerOf(origin), net.minecraft.world.phys.Vec3.atLowerCornerOf(origin.offset(SkyBeaconStructure.SIZE))).inflate(64);
+        java.util.function.Supplier<java.util.List<GuardianDragonEntity>> dragons = () -> world.getEntitiesOfClass(GuardianDragonEntity.class, area);
+        java.util.function.Supplier<java.util.List<net.minecraft.world.entity.Marker>> marks = () -> world.getEntities(
+                net.minecraft.world.entity.EntityType.MARKER, area, mark -> mark.entityTags().contains(SkyBeaconStructure.MARK));
         BlockPos nest = origin.offset(SkyBeaconStructure.NEST);
+        h.assertTrue(dragons.get().isEmpty(), "A beacon was built with its dragon already there");
+        h.assertTrue(marks.get().size() == 1 && marks.get().getFirst().blockPosition().equals(nest)
+                && marks.get().getFirst().entityTags().contains(SkyBeaconStructure.MARK + ".white"), "The nest carries no mark for the white dragon");
         h.assertTrue(world.getBlockState(nest).is(ModContent.NESTS.get(dev.nez.arksurvivalreturns.feature.creature.Species.DRAGON).get()),
                 "The monolith's eye holds no dragon nest");
         h.assertTrue(world.getBlockEntity(origin.offset(SkyBeaconStructure.CRATE))
@@ -56,9 +59,28 @@ final class SkyBeaconGameTests {
                 && SkyBeaconStructure.LOOT.equals(crate.getLootTable()), "The monolith's eye holds no loot crate");
         h.assertTrue(world.getBlockState(nest.above(3)).isAir() && world.getBlockState(nest.below()).isSolidRender()
                 && world.getBlockState(nest.above(10)).isSolidRender(), "The nest does not sit on the floor of an open eye");
+        // The climb does not bring the dragon; the eye does, once.
+        var centre = net.minecraft.world.phys.Vec3.atBottomCenterOf(nest);
+        var climber = FakePlayerFactory.get(world, new GameProfile(UUID.randomUUID(), "BeaconClimber"));
+        for (var shy : java.util.List.of(centre.add(0, -9, 6), centre.add(0, 14, 0), centre.add(9, 0, 0))) {
+            climber.snapTo(shy.x, shy.y, shy.z);
+            SkyBeaconStructure.watch(climber);
+        }
+        h.assertTrue(dragons.get().isEmpty() && marks.get().size() == 1, "A player on the shaft, the head or the flank brought the dragon");
+        climber.snapTo(centre.x, centre.y, centre.z + 6);
+        SkyBeaconStructure.watch(climber);
+        h.assertTrue(dragons.get().size() == 1 && marks.get().isEmpty(), "A player on the lip of the eye did not bring the dragon");
+        var dragon = dragons.get().getFirst();
+        h.assertTrue(dragon.beaconVariant() == 1 && dragon.beaconHome().equals(nest), "The dragon that came is not this beacon's white one");
+        h.assertTrue(world.noCollision(dragon) && dragon.position().subtract(centre).horizontalDistance() > 14,
+                "The dragon arrived inside the stone");
+        climber.snapTo(centre.x, centre.y, centre.z);
+        SkyBeaconStructure.watch(climber);
+        h.assertTrue(dragons.get().size() == 1, "A beacon brought a second dragon");
+        climber.discard();
         h.runAfterDelay(5, () -> {
-            h.assertTrue(dragon.beaconHome().equals(nest), "Template entity home used local coordinates");
-            h.assertTrue(dragon.getDeltaMovement().lengthSqr() > 0, "Dragon did not leave the nest");
+            h.assertTrue(dragon.beaconHome().equals(nest), "The dragon took where it arrived for its home");
+            h.assertTrue(dragon.getDeltaMovement().lengthSqr() > 0, "Dragon did not start its round");
             dragon.discard();
             // Remove only blocks placed by this test, inside its known template bounds; nothing breaks, drops or spills.
             int quiet = net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE

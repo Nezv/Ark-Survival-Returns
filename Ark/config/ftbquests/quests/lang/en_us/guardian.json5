@@ -6,7 +6,7 @@
   "quest.0000000000000501.title": "Prepare for the Sky",
   "quest.0000000000000501.quest_subtitle": "Bring a flying mount and supplies.",
   "quest.0000000000000501.quest_desc": [
-    "Look for a tall floating monolith with a dragon circling its open centre.",
+    "Look for a tall floating monolith with an open eye near its head. Its dragon comes when someone climbs into the eye.",
     "Prepare a flying mount, ranged weapons and medicine. No heart or ritual is needed."
   ],
   "task.00000000000005A1.title": "Ready to approach a beacon",
@@ -14,7 +14,7 @@
   "quest.0000000000000502.quest_subtitle": "Reach the landing terrace.",
   "quest.0000000000000502.quest_desc": [
     "Beacons appear in new Overworld terrain roughly 500 blocks apart.",
-    "Red, white and black dragons defend matching beacons. The dragon attacks intruders near its centre.",
+    "Red, white and black dragons defend matching beacons. The dragon comes when you reach the eye, and attacks intruders near it.",
     "The terrace beneath the opening offers a place to land. Retreat beyond its territory to disengage."
   ],
   "task.00000000000005A2.title": "Visit a floating beacon",
