@@ -38,6 +38,13 @@ public final class MassClient {
         event.registerAboveAll(ArkSurvivalReturns.id("mass_load"), (graphics, delta) -> render(graphics));
     }
 
+    /** The gauge's values in words for the debug screen, which hides the gauge; empty while the server sends none. */
+    public static String summary() {
+        if (capacity <= 0f) return "";
+        String band = MassRules.Band.values()[Math.clamp(MassClient.band, 0, MassRules.Band.values().length - 1)].name();
+        return Math.round(mass) + " / " + Math.round(capacity) + " " + band.toLowerCase(java.util.Locale.ROOT) + (mount ? " (mount)" : "");
+    }
+
     private static void render(GuiGraphicsExtractor graphics) {
         // The gauge sits top-left, where the F3 screen prints: step aside while it is open.
         if (!visible || capacity <= 0f || Minecraft.getInstance().options.hideGui

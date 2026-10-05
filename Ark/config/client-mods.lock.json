@@ -145,6 +145,17 @@
       "size": 59139197,
       "kind": "mod",
       "source": "https://modrinth.com/mod/physicsmod"
+    },
+    {
+      "project": "betterf3",
+      "version": "18.0.2",
+      "versionId": "qX8kcwKf",
+      "filename": "BetterF3-18.0.2-NeoForge-26.1.jar",
+      "url": "https://cdn.modrinth.com/data/8shC1gFX/versions/qX8kcwKf/BetterF3-18.0.2-NeoForge-26.1.jar",
+      "sha512": "0118401bd8c764545f7c03f6c251109369950acc251a0a8cc481b671466fc1866ef72d2b5492e0b65817fe5e30fe5e3fee05ef4e6aaba8ec5e3dde309a084a30",
+      "size": 494981,
+      "kind": "mod",
+      "source": "https://modrinth.com/mod/betterf3"
     }
   ]
 }

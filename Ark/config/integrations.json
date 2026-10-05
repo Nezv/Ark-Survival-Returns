@@ -338,6 +338,24 @@
       "uses": "Two effects only: a mob with a vanilla-style model (and a player) falls as a ragdoll when it dies, and dropped items tumble and come to rest on the ground. Client only; nothing changes on the server.",
       "changed": "No code changes (closed source); the jar is only rebranded. Ark ships the preset (config/client-defaults/config/physicsmod/physics_client_config.json): mob physics on ragdoll, dropped item physics on, and block, particle, projectile, item-break, cloth, vine, liquid, snow, smoke, wind, weather and ocean physics off, with vanilla block-break particles kept and the update notice off.",
       "next": "In-client check: start-up beside Sodium, Iris and FancyMenu, a vanilla mob's ragdoll, dropped items, FPS. Ark's GeckoLib creatures do not ragdoll: the mod only maps vanilla model parts, so they keep their own death animation until Ark feeds it their bones."
+    },
+    {
+      "id": "I14",
+      "title": "Debug screen",
+      "status": "integrated",
+      "side": "client",
+      "mods": [
+        {
+          "project": "betterf3",
+          "arkName": "Ark - BetterF3",
+          "license": "MIT",
+          "source": "https://github.com/TreyRuffy/BetterF3",
+          "build": "release"
+        }
+      ],
+      "uses": "The F3 screen as coloured, named modules that can be reordered, recoloured and switched off line by line. Ark adds a module of its own: danger zone, creatures drawn and loaded, the wildlife budget's count, render and server thread load, the creature aimed at, carried load, Ark level and shader pack. Cloth Config, already in the pack for Better Combat, is its settings screen.",
+      "changed": "Official 26.1 release, rebranded only. BetterF3 draws its own modules in place of the vanilla debug entries, so Ark registers its module with it (client/betterf3/ArkModule.java; compile-only, loaded only when BetterF3 is). The wildlife budget keeps its last count per player for the module, shown in single-player.",
+      "next": "In-client check: start-up beside Sodium, Iris and FancyMenu, the Ark module's lines in a world, its entry in BetterF3's module list. On a server the wildlife count would need a payload."
     }
   ]
 }

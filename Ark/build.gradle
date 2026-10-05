@@ -118,6 +118,8 @@ dependencies {
     // FancyMenu 3.9.12 and Konkrete 1.10.1 (client-mods.lock.json): the title screen's Ark creature element.
     compileOnly 'maven.modrinth:fancymenu:CcXZnQVp'
     compileOnly 'maven.modrinth:konkrete:S3KyS0Na'
+    // BetterF3 18.0.2 (client-mods.lock.json): the Ark module of the debug screen.
+    compileOnly 'maven.modrinth:betterf3:qX8kcwKf'
     immersiveClientRuntimeOnly installedPack
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

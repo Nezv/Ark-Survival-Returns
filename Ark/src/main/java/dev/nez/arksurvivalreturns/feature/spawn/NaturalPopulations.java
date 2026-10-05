@@ -82,6 +82,14 @@ public final class NaturalPopulations {
     private static final int CULL_DISTANCE = 56, CULLED_PER_PASS = 2;
     /** Each player's position at the previous check, for the direction of travel. */
     private static final Map<UUID, Vec3> LAST_SEEN = new HashMap<>();
+    /** What the last pass counted for each player; the debug screen of a single-player client reads it from another thread. */
+    private static final Map<UUID, Census> CENSUS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** One pass's count for a player: natural wildlife loaded against its cap, and groups (LEDGER) or animals (BUDGET) nearby against the target. */
+    public record Census(int loaded, int cap, int nearby, int target, boolean groups) {}
+
+    /** The last pass's count for this player, or null when the budget has not run for them. */
+    public static @Nullable Census census(UUID player) { return CENSUS.get(player); }
 
     public static boolean isRegionalLarge(Species species) { return REGIONAL_LARGE.contains(species); }
 
@@ -92,12 +100,15 @@ public final class NaturalPopulations {
         if (server.getTickCount() % Config.POPULATION_INTERVAL.get() != 0) return;
         var level = server.overworld();
         if (!Config.NATURAL_SPAWNS.get() || !Config.POPULATION_BUDGET.get()
-                || !level.getGameRules().get(GameRules.SPAWN_MOBS)) return;
+                || !level.getGameRules().get(GameRules.SPAWN_MOBS)) {
+            CENSUS.clear();
+            return;
+        }
         var players = level.players().stream().filter(player -> !player.isSpectator()).toList();
         if (!players.isEmpty()) enforce(level, players);
     }
 
-    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { LAST_SEEN.clear(); }
+    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { LAST_SEEN.clear(); CENSUS.clear(); }
 
     /** One budget pass; also the deterministic entry point for the headless tests. */
     public static void enforce(ServerLevel level, List<? extends Player> players) {
@@ -119,6 +130,7 @@ public final class NaturalPopulations {
             // LEDGER counts groups, BUDGET animals.
             int nearby = ledger ? near.size() : local.size();
             int target = targetFor(level, player);
+            CENSUS.put(player.getUUID(), new Census(wilds.size(), globalCap, nearby, target, ledger));
             int ceiling = ledger ? (int) Math.ceil(target * (1 + Config.POPULATION_CULL_FRACTION.get()))
                     : target + Config.POPULATION_CULL_MARGIN.get();
             if (nearby > ceiling) {

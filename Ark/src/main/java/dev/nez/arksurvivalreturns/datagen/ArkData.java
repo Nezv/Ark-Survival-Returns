@@ -123,6 +123,16 @@ public final class ArkData implements DataProvider {
             en.put("debug." + NS + "." + debugKeys[i], debugEn[i]);
             pt.put("debug." + NS + "." + debugKeys[i], debugPt[i]);
         }
+        // BetterF3 looks its module and line names up under its own keys (client/betterf3/ArkModule).
+        String[] f3Keys = {"zone", "creatures", "wildlife", "nearby", "threads", "target", "mass", "level", "shaders"};
+        String[] f3En = {"Danger zone", "Creatures", "Wildlife", "Nearby", "Threads", "Aimed at", "Load", "Ark level", "Shaders"};
+        String[] f3Pt = {"Zona de perigo", "Criaturas", "Vida selvagem", "Por perto", "Threads", "Na mira", "Carga", "Nível Ark", "Shaders"};
+        en.put("text.betterf3.module.ark", "Ark");
+        pt.put("text.betterf3.module.ark", "Ark");
+        for (int i = 0; i < f3Keys.length; i++) {
+            en.put("text.betterf3.line.ark_" + f3Keys[i], f3En[i]);
+            pt.put("text.betterf3.line.ark_" + f3Keys[i], f3Pt[i]);
+        }
         // The inventory icon is the Ark sprite (tools/build_cosy_items.py); in hand it stays the vanilla scope.
         put("assets/" + NS + "/models/item/debug_spyglass", Map.of("parent", "minecraft:item/generated",
                 "textures", Map.of("layer0", NS + ":item/debug_spyglass")));

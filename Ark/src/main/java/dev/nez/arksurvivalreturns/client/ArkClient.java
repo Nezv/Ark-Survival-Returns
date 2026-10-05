@@ -16,6 +16,14 @@ import dev.nez.arksurvivalreturns.client.audio.physics.SoundPhysicsMod;
 public final class ArkClient {
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         event.enqueueWork(SoundPhysicsMod::initClient);
+        // BetterF3 builds its module lists while it is constructed; by now they exist whatever the load order.
+        if (net.neoforged.fml.ModList.get().isLoaded("betterf3")) event.enqueueWork(() -> {
+            try {
+                dev.nez.arksurvivalreturns.client.betterf3.ArkModule.register();
+            } catch (LinkageError | RuntimeException e) {
+                ArkSurvivalReturns.LOGGER.warn("This BetterF3 version does not fit the Ark module; the debug screen shows without it", e);
+            }
+        });
     }
 
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
