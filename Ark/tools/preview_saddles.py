@@ -1,8 +1,10 @@
-"""Concept preview of creature saddles.
+"""Concept preview of creature saddles, for every species.
 
-Fits a parametric saddle kit to the runtime creature models and renders it over the creature's real skin.
-The trunk is measured station by station, every strap and pad plate is laid tangent to that outline and is
-owned by the bone of the cube under it, so the same boxes follow the animation.
+Fits one parametric saddle kit to each runtime creature model and renders it over the creature's real skin.
+The trunk is measured station by station; every strap and pad plate is laid tangent to that outline and is
+owned by the bone of the cube under it, so the same boxes follow the animation. The seat is chosen from the
+measured back: straddle where a player's legs fit round it, a framed chair where it is too wide, a platform
+for the largest, and nothing where the animal is smaller than the seat.
 
 Nothing here ships: the boxes are drawn, not written as geometry. Output: Scratch/saddles/*.png.
 
@@ -11,6 +13,7 @@ Nothing here ships: the boxes are drawn, not written as geometry. Output: Scratc
 import argparse
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -20,19 +23,29 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 import skin_studio as ss  # noqa: E402
+from build_taming_manifests import BODY_PLAN  # noqa: E402
 
 ASSETS = ROOT / "Ark/src/main/resources/assets/arksurvivalreturns"
+JAVA = ROOT / "Ark/src/main/java/dev/nez/arksurvivalreturns"
 OUT = ROOT / "Scratch/saddles"
 RIDER = 0.9375  # the player model is drawn at 15/16
 
-# seat: the back bone CreatureSeats uses. The seat kind follows from the measured back: straddle when a
-# player's legs fit round it, chair (a framed seat) when it is too wide; platform is asked for.
-SPECIES = {
-    "velociraptor": dict(seat="Cnt_Spine_003_JNT_SKL", skin="midnight", tier="hide", cargo=None),
-    "pteranodon": dict(seat="c_back4", skin="burgundy", tier="hide", cargo=None, drop=48, clip="Fly-Fwd"),
-    "triceratops": dict(seat="c_back4", skin="ivory", tier="bronze", cargo="pack"),
-    "tyrannosaurus": dict(seat="Cnt_Spine_002_JNT_SKL", skin="burgundy", tier="steel", cargo="reinforced"),
-    "brontosaurus": dict(seat="c_back3", skin="ivory", tier="bronze", cargo="reinforced", kind="platform"),
+FAMILIES = {
+    "theropods": ("bipedCarnivore", "bipedHerbivore"),
+    "quadrupeds": ("quadruped", "quadrupedHerbivore", "horned", "armored"),
+    "giants": ("sauropod",),
+    "flyers": ("flyer",),
+    "swimmers": ("longSwimmer", "broadSwimmer", "radial"),
+}
+# What the measurements cannot say: the animals that carry a deck, and the looks already agreed.
+OVERRIDES = {
+    "velociraptor": dict(skin="midnight"),
+    "pteranodon": dict(skin="burgundy"),
+    "triceratops": dict(skin="ivory"),
+    "tyrannosaurus": dict(skin="burgundy"),
+    "brontosaurus": dict(skin="ivory", tier="bronze", kind="platform"),
+    "titanosaur": dict(skin="midnight", tier="bronze", kind="platform"),
+    "quetzal": dict(skin="ivory", tier="bronze", kind="platform"),
 }
 
 TIERS = {
@@ -46,8 +59,37 @@ TIERS = {
                   strap=(50, 43, 40), stitch=(116, 108, 102), seat=(66, 50, 44), metal=(176, 186, 196),
                   metal_lo=(108, 118, 130), wood=(100, 82, 62), bag=(90, 88, 76), roll=(126, 54, 48)),
 }
+SKINS = {"hide": ("midnight", "burgundy"), "bronze": ("ivory", "midnight"), "steel": ("burgundy", "ivory")}
 RIDER_COLOR = (150, 162, 174)
+THIN = 2.0  # half-width under which a low crest is ignored: the saddle sits over it
 EDGES = np.array([(0, 1), (1, 2), (2, 3), (3, 0), (4, 5), (5, 6), (6, 7), (7, 4), (0, 4), (1, 5), (2, 6), (3, 7)])
+
+
+def catalog():
+    """Every species with what the game already says about it: seat bone, body plan, harness."""
+    ids = dict(re.findall(r'^\s+([A-Z_]+)\("([a-z_]+)"', (JAVA / "feature/creature/Species.java").read_text("utf-8"),
+                          re.M))
+    seats = re.findall(r'Species\.([A-Z_]+), new CreatureRideProfile\([^"]*"([^"]+)"',
+                       (JAVA / "feature/taming/CreatureSeats.java").read_text("utf-8"))
+    harness = {}
+    for tier, capacity, names in re.findall(r"put\(Harness\.(\w+), (\d+),([^;]+)\);",
+                                            (JAVA / "feature/cargo/CargoProfiles.java").read_text("utf-8")):
+        for name in re.findall(r"Species\.([A-Z_]+)", names):
+            harness[name] = (tier.lower(), int(capacity))
+    species = {}
+    for name, bone in seats:
+        sid = ids[name]
+        cargo, capacity = harness.get(name, ("pack", 150))
+        # light animals are shown bare of cargo; the rest carry the harness the game asks of them
+        tier = "hide" if capacity <= 150 else "bronze" if cargo == "pack" else "steel"
+        spec = dict(seat=bone, plan=BODY_PLAN[sid], tier=tier, cargo=cargo if capacity >= 200 else None)
+        spec.update(OVERRIDES.get(sid, {}))
+        spec.setdefault("skin", SKINS[spec["tier"]][sum(map(ord, sid)) % 2])
+        species[sid] = spec
+    return species
+
+
+SPECIES = catalog()
 
 
 def unit(v):
@@ -62,6 +104,13 @@ def slices(corners, z):
     crossing = (da * db <= 0) & (da != db)
     t = np.where(crossing, da / np.where(crossing, da - db, 1.0), 0.0)
     return (a + (b - a) * t[..., None])[..., :2], crossing
+
+
+def extents(points, crossing):
+    """Per cube, the box of its slice: x0, x1, y0, y1 (infinite where the cube does not cross)."""
+    x, y = points[..., 0], points[..., 1]
+    return (np.where(crossing, x, np.inf).min(1), np.where(crossing, x, -np.inf).max(1),
+            np.where(crossing, y, np.inf).min(1), np.where(crossing, y, -np.inf).max(1))
 
 
 def convex_hull(points):
@@ -82,7 +131,7 @@ def convex_hull(points):
 
 
 class Body:
-    """The creature at rest: all cubes, the central trunk and the limbs against it."""
+    """The creature at rest: all cubes, the central trunk, the limbs against it and what stands on its back."""
 
     def __init__(self, sid):
         self.sid = sid
@@ -91,12 +140,16 @@ class Body:
         sided = np.array([bool(ss.side_of(c["bone"])) for c in self.cubes])
         part = np.array([c["part"] for c in self.cubes])
         central = np.isin(part, ("torso", "neck", "tail")) & ~sided
+        torso = central & (part == "torso")
+        if not torso.any():  # squid, jellyfish: no spine names, the unsided body bones are the trunk
+            central = torso = ~sided & np.array([bool(re.search("body|main", c["bone"], re.I)) for c in self.cubes])
         self.trunk = np.flatnonzero(central)
+        self.is_torso = torso[self.trunk]
+        self.extra = np.flatnonzero(~central & ~sided)
         self.limbs = np.flatnonzero(sided & ~np.isin(part, ("head", "jaw", "eye", "horn")))
         self.wrap = np.flatnonzero(sided & ~np.isin(part, ("head", "jaw", "eye", "horn", "feather")))
         # hind legs: rigs name them leg, foot or "back" (which reads as torso), never arm
         self.hind = np.flatnonzero(sided & np.isin(part, ("torso", "leg", "legl", "legr", "foot", "footl", "footr")))
-        self.head = np.flatnonzero(np.isin(part, ("head", "jaw", "horn")))
         box = self.corners[self.trunk]
         edges = np.stack([box[:, 1] - box[:, 0], box[:, 3] - box[:, 0], box[:, 4] - box[:, 0]], 1)
         length = np.linalg.norm(edges, axis=2)
@@ -105,81 +158,154 @@ class Body:
             flat = length[:, k] < 1e-6
             axes[flat, k] = np.cross(axes[flat, (k + 1) % 3], axes[flat, (k + 2) % 3])
         self.centre, self.axes, self.half = box.mean(1), axes, np.maximum(length / 2, 1e-4)
-        torso = self.corners[central & (part == "torso")].reshape(-1, 3)
-        self.lo, self.hi = torso.min(0), torso.max(0)
-        self.ceiling = self.corners.reshape(-1, 3)[:, 1].max() + 10
-        self._span, self._point, self._section = {}, {}, {}
+        points = self.corners[torso].reshape(-1, 3)
+        self.lo, self.hi = points.min(0), points.max(0)
+        self.length = float(self.hi[2] - self.lo[2])
+        self.width = float(np.abs(points[:, 0]).max())
+        self.step = max(0.5, self.length / 160)
+        self._section, self._point, self._crest = {}, {}, {}
 
-    def span(self, z, x=0.05):
-        """Top and bottom of the trunk above this point, and the cube on top."""
-        key = (round(z, 2), round(x, 2))
-        if key not in self._span:
-            o = np.einsum("nij,nj->ni", self.axes, np.array([x, self.ceiling, z]) - self.centre)
-            d = self.axes @ np.array([0.0, -1.0, 0.0])
-            parallel = np.abs(d) < 1e-9
-            safe = np.where(parallel, 1.0, d)
-            t1, t2 = (-self.half - o) / safe, (self.half - o) / safe
-            inside = np.abs(o) <= self.half
-            near = np.where(parallel, np.where(inside, -np.inf, np.inf), np.minimum(t1, t2)).max(1)
-            far = np.where(parallel, np.where(inside, np.inf, -np.inf), np.maximum(t1, t2)).min(1)
-            index = np.flatnonzero((near <= far) & (far > 0))
-            if len(index):
-                first = index[np.argmin(near[index])]
-                self._span[key] = (self.ceiling - near[first], self.ceiling - far[index].max(), int(self.trunk[first]))
-            else:
-                self._span[key] = None
-        return self._span[key]
+    def grid(self, lo, hi):
+        """Stations between two ends, on one grid so that their sections are measured once."""
+        first, last = math.ceil(lo / self.step), math.floor(hi / self.step)
+        return [k * self.step for k in range(first, last + 1)]
 
     def section(self, z):
-        """The taut outline of the trunk at this station: a convex hull, as a strap pulled tight would lie.
+        """The trunk at this station: its taut outline (a convex hull, as a strap pulled tight would lie),
+        its span, the cubes in it and the ridge standing on it.
 
         The trunk cubes are a shell in places and the shoulders and hips fill its flanks, so the upper half
-        of whatever limb crosses the station is wrapped in too.
+        of whatever limb crosses the station is wrapped in too. A sail, a fin or a row of tall spines is not
+        part of the outline: it is a ridge the saddle has to go round.
         """
-        key = round(z, 2)
-        if key not in self._section:
-            points, crossing = slices(self.corners[self.trunk], z)
-            trunk = points[crossing]
-            if len(trunk) < 3:
-                self._section[key] = None
-                return None
-            lo, hi = trunk[:, 1].min(), trunk[:, 1].max()
-            points, crossing = slices(self.corners[self.wrap], z)
-            limbs = points[crossing]
+        key = round(float(z), 3)
+        if key in self._section:
+            return self._section[key]
+        result = None
+        points, crossing = slices(self.corners[self.trunk], z)
+        has = crossing.any(1)
+        if has.any():
+            x0, x1, y0, y1 = extents(points, crossing)
+            half = np.maximum(-x0, x1)
+            core = has & self.is_torso
+            member = has.copy()
+            if core.any():  # antlers and a neck held over the back cross the station without being trunk here
+                top, bottom = y1[core].max(), y0[core].min()
+                slack = 0.15 * (top - bottom)
+                member = has & (core | ((half <= 1.3 * self.width) & (y0 <= top + slack) & (y1 >= bottom - slack)))
+            widest = half[member].max()
+            wide = member & (half >= 0.45 * widest)
+            top = y1[wide].max()
+            # what stands narrow on the wide body; a fin a couple of pixels thick is decoration, not a ridge
+            crest = member & ~wide & (y1 > top + 3) & (half > THIN)
+            other, other_crossing = slices(self.corners[self.extra], z)
+            ox0, ox1, oy0, oy1 = extents(other, other_crossing)
+            other_half = np.maximum(-ox0, ox1)
+            fin = other_crossing.any(1) & (other_half < 0.45 * widest) & (oy0 < top + 3) & (oy1 > top) \
+                & ((other_half > THIN) | (oy1 > top + 12))
+            heights = np.concatenate([y1[crest], oy1[fin]])
+            widths = np.concatenate([half[crest], other_half[fin]])
+            ridge = None
+            # a hump as wide as it is tall can be sat on; a sail or a fin cannot
+            if len(heights) and heights.max() - top > 7 \
+                    and (heights.max() - top > 2.5 * widths.max() or heights.max() - top > 20):
+                member &= ~crest
+                ridge = float(widths.max())
+            trunk = points[member][crossing[member]]
+            lo, hi = float(trunk[:, 1].min()), float(trunk[:, 1].max())
+            limbs, limb_crossing = slices(self.corners[self.wrap], z)
+            limbs = limbs[limb_crossing]
             reach = 1.35 * np.abs(trunk[:, 0]).max()
             limbs = limbs[(limbs[:, 1] > (lo + hi) / 2) & (limbs[:, 1] < hi) & (np.abs(limbs[:, 0]) < reach)]
             both = np.vstack([trunk, limbs])
             both = np.vstack([both, both * [-1, 1]])  # the models are symmetric; keep the outline so
-            self._section[key] = (convex_hull(both), np.array([0.0, (lo + hi) / 2]), lo, hi)
-        return self._section[key]
+            result = dict(hull=convex_hull(both), centre=np.array([0.0, (lo + hi) / 2]), lo=lo, hi=hi,
+                          members=self.trunk[member], ridge=ridge)
+        self._section[key] = result
+        return result
+
+    def nearest(self, p):
+        local = np.einsum("nij,nj->ni", self.axes, p - self.centre)
+        return int(self.trunk[np.argmin(np.linalg.norm(np.maximum(np.abs(local) - self.half, 0), axis=1))])
 
     def point(self, z, theta):
         """Outline point at this station, theta degrees round from the top (positive towards +x), and the
         trunk cube nearest to it."""
-        key = (round(z, 2), round(theta, 1))
+        key = (round(float(z), 3), round(theta, 1))
         if key not in self._point:
-            hull, centre, _, _ = self.section(z)
+            section = self.section(z)
+            hull, centre = section["hull"], section["centre"]
             d = np.array([math.sin(math.radians(theta)), math.cos(math.radians(theta))])
-            a = hull
-            e = np.roll(hull, -1, axis=0) - a
+            e = np.roll(hull, -1, axis=0) - hull
             den = d[0] * e[:, 1] - d[1] * e[:, 0]
             den = np.where(np.abs(den) < 1e-12, 1e-12, den)
-            t = ((a[:, 0] - centre[0]) * e[:, 1] - (a[:, 1] - centre[1]) * e[:, 0]) / den
-            u = ((a[:, 0] - centre[0]) * d[1] - (a[:, 1] - centre[1]) * d[0]) / den
+            t = ((hull[:, 0] - centre[0]) * e[:, 1] - (hull[:, 1] - centre[1]) * e[:, 0]) / den
+            u = ((hull[:, 0] - centre[0]) * d[1] - (hull[:, 1] - centre[1]) * d[0]) / den
             ok = (t > 0) & (u >= -1e-6) & (u <= 1 + 1e-6)
             r = t[ok].max() if ok.any() else 0.0
             p = np.array([centre[0] + r * d[0], centre[1] + r * d[1], z])
-            local = np.einsum("nij,nj->ni", self.axes, p - self.centre)
-            gap = np.linalg.norm(np.maximum(np.abs(local) - self.half, 0), axis=1)
-            self._point[key] = (p, int(self.trunk[np.argmin(gap)]))
+            self._point[key] = (p, self.nearest(p))
         return self._point[key]
+
+    def top(self, z, x=0.0):
+        """Height of the outline over this point, or None off the trunk."""
+        section = self.section(z)
+        if section is None:
+            return None
+        hull = section["hull"]
+        a, b = hull, np.roll(hull, -1, axis=0)
+        spans = (np.minimum(a[:, 0], b[:, 0]) <= x) & (np.maximum(a[:, 0], b[:, 0]) >= x) & (a[:, 0] != b[:, 0])
+        if not spans.any():
+            return None
+        t = (x - a[spans, 0]) / (b[spans, 0] - a[spans, 0])
+        return float((a[spans, 1] + t * (b[spans, 1] - a[spans, 1])).max())
+
+    def ridge_angle(self, z0, z1):
+        """How far round from the top a sail or fin keeps the saddle off the back between two stations."""
+        angle = 0.0
+        for z in np.linspace(z0, z1, 3):
+            section = self.section(z)
+            if section and section["ridge"]:
+                for theta in range(2, 88, 2):
+                    if abs(self.point(z, theta)[0][0]) >= section["ridge"] + 1.5:
+                        break
+                angle = max(angle, float(theta))
+        return angle
+
+    def crest(self, z):
+        """How high anything stands in the rider's place over this station: head, frill, antler, sail, fin."""
+        key = round(float(z), 3)
+        if key not in self._crest:
+            section = self.section(z)
+            if section is None:
+                self._crest[key] = np.inf
+            else:
+                points, crossing = slices(self.corners, z)
+                x0, x1, y0, y1 = extents(points, crossing)
+                has = crossing.any(1)
+                has[section["members"]] = False
+                hi = section["hi"]
+                block = has & (x0 < 5) & (x1 > -5) & (y1 > hi + 2.5) & (y0 < hi + 32) \
+                    & ((x1 - x0 > 2 * THIN) | (y1 > hi + 12))
+                self._crest[key] = float(y1[block].max() - hi) if block.any() else 0.0
+        return self._crest[key]
+
+    def seat_station(self, nominal, back, front):
+        """The station nearest the game's seat where the rider has room: (station, what is still in the way)."""
+        best = None
+        for z in self.grid(float(self.lo[2]) + back, float(self.hi[2]) + 0.15 * self.length):
+            worst = max(self.crest(s) for s in self.grid(z - back, z + front))
+            key = (max(worst, 2.5), abs(z - nominal))
+            if best is None or key < best[0]:
+                best = (key, z, worst)
+        return best[1], best[2]
 
     def cost(self, z, width, cubes):
         """How many of these limb cubes lie against the flank here, where a girth would have to pass."""
         section = self.section(z)
         if section is None:
             return None
-        _, _, lo, hi = section
+        lo, hi = section["lo"], section["hi"]
         hit = np.zeros(len(cubes), bool)
         for plane in (z - width / 2, z, z + width / 2):
             points, crossing = slices(self.corners[cubes], plane)
@@ -189,7 +315,7 @@ class Body:
     def clear(self, z, width, lo, hi):
         """The station in [lo, hi] with the fewest limbs in the way, nearest to z: (station, limbs)."""
         best = None
-        for station in np.arange(lo, hi + 0.01, 0.5):
+        for station in self.grid(lo, hi):
             cost = self.cost(station, width, self.limbs)
             if cost is not None and (best is None or (cost, abs(station - z)) < (best[1], abs(best[0] - z))):
                 best = (float(station), cost)
@@ -197,15 +323,9 @@ class Body:
 
     def hind_front(self, width):
         """Front edge of the hind legs: a girth further back would sit on the rump, holding nothing."""
-        lo, hi = float(self.lo[2]), float(self.hi[2])
-        blocked = [z for z in np.arange(lo + width, lo + 0.6 * (hi - lo), 0.5) if self.cost(z, width, self.hind)]
-        return max(blocked) + 0.5 if blocked else lo
-
-    def head_back(self, level):
-        """How far back the head, frill or crest reaches above the back."""
-        reach = [c[:, 2].min() for c in self.corners[self.head]
-                 if c[:, 1].max() > level and np.abs(c[:, 0]).min() < 10]
-        return min(reach) if reach else np.inf
+        lo = float(self.lo[2])
+        blocked = [z for z in self.grid(lo + width, lo + 0.6 * self.length) if self.cost(z, width, self.hind)]
+        return max(blocked) + self.step if blocked else lo
 
 
 class Kit:
@@ -258,34 +378,46 @@ class Kit:
         self.box(centre + n * (rise + lift + thick / 2), [u, n, w], half, mat, hits[1][len(angles) // 2][1], **ctx)
 
     def ring(self, z, width, thick, lift, t0=-180.0, t1=180.0, step=24.0, buckle=None):
-        edges = np.linspace(t0, t1, max(1, round((t1 - t0) / step)) + 1)
-        for a, b in zip(edges[:-1], edges[1:]):
-            self.plate(z - width / 2, z + width / 2, a, b, thick, "strap", lift,
-                       buckle=buckle is not None and a <= buckle < b)
+        """A strap round the trunk, or part of the way; it stops either side of a sail or fin."""
+        bars = [(t0, t1)]
+        gap = self.body.ridge_angle(z - width / 2, z + width / 2)
+        if gap and t0 < gap and t1 > -gap:
+            bars = [(a, b) for a, b in ((t0, min(t1, -gap)), (max(t0, gap), t1)) if b - a > 4]
+        for a, b in bars:
+            edges = np.linspace(a, b, max(1, round((b - a) / step)) + 1)
+            for e0, e1 in zip(edges[:-1], edges[1:]):
+                self.plate(z - width / 2, z + width / 2, e0, e1, thick, "strap", lift,
+                           buckle=buckle is not None and e0 <= buckle < e1)
 
     def pad(self, z0, z1, drop, thick, lift, density, rows, step=21.0):
-        edges = np.linspace(-drop, drop, max(2, round(2 * drop / step)) + 1)
+        """The blanket: rows of plates over the back, or two side panels where a sail or fin is in the way."""
         cuts = np.linspace(z0, z1, rows + 1)
         outline = np.array([self.body.point((z0 + z1) / 2, t)[0] for t in np.linspace(0, drop, 9)])
         arc_px = np.linalg.norm(np.diff(outline, axis=0), axis=1).sum() * density
         for row in range(rows):
-            for a, b in zip(edges[:-1], edges[1:]):
-                self.plate(cuts[row], cuts[row + 1], a, b, thick, "pad", lift, a0=a / drop, a1=b / drop,
-                           b0=row / rows, b1=(row + 1) / rows, arc_px=arc_px, len_px=(z1 - z0) * density)
+            gap = self.body.ridge_angle(cuts[row], cuts[row + 1])
+            reach = max(drop, gap + 40.0) if gap else drop
+            panels = [(-reach, reach)] if not gap else [(-reach, -gap), (gap, reach)]
+            for lo, hi in panels:
+                edges = np.linspace(lo, hi, max(1 if gap else 2, round((hi - lo) / step)) + 1)
+                for a, b in zip(edges[:-1], edges[1:]):
+                    self.plate(cuts[row], cuts[row + 1], a, b, thick, "pad", lift, a0=a / reach, a1=b / reach,
+                               b0=row / rows, b1=(row + 1) / rows, arc_px=arc_px, len_px=(z1 - z0) * density)
 
     def rest(self, zs, reach, half_width, limit):
         """Where a seat this long rests on the back: height at zs, lean, the gap left under it, the cube."""
         stations, tops = [], []
         for z in np.linspace(zs - reach, zs + reach, 9):
-            hits = [h for h in (self.body.span(z, x) for x in (0.05, -half_width, half_width)) if h]
+            hits = [h for h in (self.body.top(z, x) for x in (0.0, -half_width, half_width)) if h is not None]
             if hits:
                 stations.append(z - zs)
-                tops.append(max(h[0] for h in hits))
+                tops.append(max(hits))
         stations, tops = np.array(stations), np.array(tops)
-        lean = float(np.clip(math.atan(np.polyfit(stations, tops, 1)[0]), -limit, limit))
+        lean = float(np.clip(math.atan(np.polyfit(stations, tops, 1)[0]), -limit, limit)) if len(tops) > 1 else 0.0
         line = math.tan(lean) * stations
         height = float((tops - line).max())
-        return height, lean, float((height + line - tops).max()), self.body.span(zs)[2]
+        owner = self.body.nearest(np.array([0.0, self.body.top(zs), zs]))
+        return height, lean, float((height + line - tops).max()), owner
 
     def straddle_seat(self, zs, lift):
         height, lean, gap, owner = self.rest(zs, 6.5, 2.5, 0.45)
@@ -307,14 +439,15 @@ class Kit:
             self.block(foot + (side * 1.6, -1.6, 0), (1.2, 3.2, 3.4), "metal", owner)
         return seat, owner
 
-    def chair_seat(self, zs, lift, owner=None, base=None):
-        if base is None:
+    def chair_seat(self, zs, lift, frame=None, owner=None):
+        """The framed seat: resting on the back, or set on a deck."""
+        if frame is None:
             height, lean, gap, owner = self.rest(zs, 13.0, 9.0, 0.21)
             self.mount((0, height + lift, zs), lean)
+            fill = min(gap, 10.0)
         else:
-            gap = 0.0
-            self.mount((0, base, zs))
-        fill = min(gap, 10.0)
+            self.mount(*frame)
+            fill = 0.0
         self.block((0, 1.25 - fill / 2, 0), (20, 2.5 + fill, 26), "wood", owner)
         self.block((0, 4.0, 12.0), (20, 3, 2), "wood", owner)
         self.block((0, 3.75, -3.0), (11, 2.5, 13), "leather", owner)
@@ -333,6 +466,8 @@ class Kit:
         for side in (-1, 1):
             for k in range(count):
                 zk = z - k * (length + 0.12 * size)
+                if self.body.section(zk - length / 2) is None:
+                    continue
                 flank, _ = self.body.point(zk, side * 72.0)
                 widest = max(abs(self.body.point(zk + dz, side * t)[0][0])
                              for dz in (-length / 2, 0, length / 2) for t in (72, 85, 98, 110))
@@ -342,36 +477,42 @@ class Kit:
                 # the strap the bag hangs from, over the back
                 self.ring(zk, 0.22 * size, 0.5, lift + 0.15, *sorted((side * 6.0, side * 72.0)), step=22.0)
 
-    def platform(self, zc, length, width, lift, owner, cargo):
-        tops = [h[0] for h in (self.body.span(z, x) for z in np.linspace(zc - length / 2, zc + length / 2, 9)
-                               for x in (0.05, -6.0, 6.0)) if h]
-        y = max(tops) + lift + 3.5
-        self.mount((0, y, zc))
-        edge = width / 2 - 1.5
+    def platform(self, zc, length, width, lift, cargo, k):
+        """A deck on legs over the back, lying along it; k scales its timbers with the animal, the seat
+        stays rider-sized."""
+        height, lean, _, owner = self.rest(zc, length / 2, 6.0, 0.14)
+        self.mount((0, height + lift + 3.5 * k, zc), lean)
+        edge = width / 2 - 1.5 * k
         for dz in (-0.42, -0.14, 0.14, 0.42):
-            self.block((0, -1.6, dz * length), (width - 2, 3.2, 3.2), "wood", owner, dark=True)
-        self.block((0, 1.0, 0), (width, 2, length), "wood", owner)
+            self.block((0, -1.6 * k, dz * length), (width - 2 * k, 3.2 * k, 3.2 * k), "wood", owner, dark=True)
+        self.block((0, k, 0), (width, 2 * k, length), "wood", owner)
         for side in (-1, 1):
             for dz in (-0.5, -0.17, 0.17, 0.5):
-                self.block((side * edge, 7.0, dz * (length - 3)), (2.4, 10, 2.4), "wood", owner)
-            self.block((side * edge, 11.0, 0), (2, 2, length), "wood", owner, dark=True)
-            self.block((side * edge, 6.5, 0), (1.2, 1.6, length - 3), "strap", owner)
+                self.block((side * edge, 7.0 * k, dz * (length - 3 * k)), (2.4 * k, 10 * k, 2.4 * k), "wood", owner)
+            self.block((side * edge, 11.0 * k, 0), (2 * k, 2 * k, length), "wood", owner, dark=True)
+            self.block((side * edge, 6.5 * k, 0), (1.2 * k, 1.6 * k, length - 3 * k), "strap", owner)
         for x in np.linspace(-edge, edge, 5)[1:-1]:
-            self.block((x, 7.0, -(length - 3) / 2), (2.4, 10, 2.4), "wood", owner)
-        self.block((0, 11.0, -(length - 3) / 2), (width - 3, 2, 2), "wood", owner, dark=True)
+            self.block((x, 7.0 * k, -(length - 3 * k) / 2), (2.4 * k, 10 * k, 2.4 * k), "wood", owner)
+        self.block((0, 11.0 * k, -(length - 3 * k) / 2), (width - 3 * k, 2 * k, 2 * k), "wood", owner, dark=True)
         if cargo:
             for x, z, s in ((-0.24, -0.22, 14), (0.2, -0.3, 11), (0.27, -0.02, 9), (-0.26, 0.08, 10)):
-                self.block((x * width, 2 + s / 2, z * length), (s, s, s), "crate", owner)
-            self.block((-0.02 * width, 6, -0.36 * length), (20, 8, 8), "roll", owner)
+                self.block((x * width, (2 + s / 2) * k, z * length), (s * k, s * k, s * k), "crate", owner)
+            self.block((-0.02 * width, 6 * k, -0.36 * length), (20 * k, 8 * k, 8 * k), "roll", owner)
+        deck, turn = self.origin, self.turn
         self.mount()
         for side in (-1, 1):  # legs down to the flank, braced against it
             for dz in (-0.42, 0.42):
-                z = zc + dz * length
-                flank, _ = self.body.point(z, side * 88.0)
-                self.along((side * edge, flank[1], z), (side * edge, y, z), (3, 3), "wood", owner, dark=True)
-                self.along((side * edge, flank[1] + 2, z), (side * (abs(flank[0]) - 1), flank[1] + 2, z),
-                           (2.4, 2.4), "wood", owner, hint=(0, 0, 1), dark=True)
-        return self.chair_seat(zc + length / 2 - 12.0, 0.0, owner, base=y + 2.0)
+                corner = deck + turn @ np.array([side * edge, 0, dz * length])
+                if self.body.section(corner[2]) is None:
+                    continue
+                flank, _ = self.body.point(corner[2], side * 72.0)
+                foot = np.array([corner[0], min(flank[1], corner[1] - 2 * k), corner[2]])
+                self.along(foot, corner, (3 * k, 3 * k), "wood", owner, dark=True)
+                if abs(flank[0]) < edge:
+                    self.along(foot + (0, 2 * k, 0), (side * (abs(flank[0]) - 1), foot[1] + 2 * k, corner[2]),
+                               (2.4 * k, 2.4 * k), "wood", owner, hint=(0, 0, 1), dark=True)
+        seat = deck + turn @ np.array([0, 2.0 * k, length / 2 - 12.0 - 2 * k])
+        return self.chair_seat(None, 0.0, frame=(seat, lean), owner=owner)
 
     def rider(self, seat):
         s = RIDER
@@ -403,36 +544,58 @@ def build(sid, tier=None, cargo="default", rider=True):
     cargo = spec.get("cargo") if cargo == "default" else cargo
     body = Body(sid)
     kit = Kit(body, tier)
-    zs = float(next(c["bone_world"][2] for c in body.cubes if c["bone"] == spec["seat"]))
-    top, bottom, _ = body.span(zs)
-    height, length = top - bottom, float(body.hi[2] - body.lo[2])
-    thigh = max(abs(body.point(zs, t)[0][0]) for t in (40, 55, 70))
+    length = body.length
+    nominal = float(next(c["bone_world"][2] for c in body.cubes if c["bone"] == spec["seat"]))
+    nominal = float(np.clip(nominal, body.lo[2] + 1, body.hi[2] - 1))
+    girth = body.section(nominal)
+    height = girth["hi"] - girth["lo"]
+    thigh = max(abs(body.point(nominal, t)[0][0]) for t in (40, 55, 70))
     kind = spec.get("kind") or ("straddle" if thigh <= 9.5 else "chair")
-    seat_back, seat_front = (8.0, 8.0) if kind == "straddle" else (14.0, 15.0)
-    if kind != "platform":  # sit behind whatever of the head hangs over the back
-        zs = min(zs, body.head_back(top - 2.0) - seat_front)
-    density = float(np.clip(texel_density(body), 0.6, 1.0))
+    if kind != "platform" and (length < 12 or thigh < 2.5):
+        kind = "none"
+    info = dict(kind=kind, tier=tier, cargo=cargo, boxes=0, plan=spec["plan"], blocks=(round(length / 16, 1),
+                round(2 * thigh / 16, 1)), density=1.0, seat_owner=None, moved=0.0, blocked=0.0, girths=[])
+    if kind == "none":
+        return body, kit, info
+    if height >= 150:  # the skins of the giants are coarse; keep the saddle near them
+        density = float(np.clip(1.5 * texel_density(body), 0.2, 0.6))
+    else:
+        density = float(np.clip(texel_density(body), 0.6, 1.0))
     thick = float(np.clip(0.02 * height, 0.8, 2.2))
     strap = float(np.clip(0.05 * length, 2.0, 7.0))
     size = float(np.clip(0.2 * height, 5.0, 15.0)) * (1.25 if cargo == "reinforced" else 1.0)
-    drop = spec.get("drop", 62.0 if height < 60 else 52.0)
+    drop = 48.0 if spec["plan"] == "flyer" else 62.0 if height < 60 else 52.0
     lift = 2 * thick + 0.6
     rear_end, front_end = float(body.lo[2]) + strap, float(body.hi[2]) - strap
     hind = max(rear_end, body.hind_front(strap))
 
     if kind == "platform":
-        deck_l = 0.56 * length
-        deck_w = 2.1 * max(abs(body.point(zs + d, 90.0)[0][0]) for d in (-20, 0, 20))
-        z0, z1 = zs - 0.46 * deck_l, zs + 0.46 * deck_l
+        zs = float(body.lo[2] + body.hi[2]) / 2
+        widest = max(abs(body.point(zs + d * length, 90.0)[0][0]) for d in (-0.15, 0, 0.15))
+        deck_w = min((1.6 if spec["plan"] == "flyer" else 2.1) * widest, 208.0)  # a flyer's deck clears its wings
+        deck_l = float(np.clip(0.56 * length, 48.0, 288.0))
+        scale = float(np.clip(deck_w / 70.0, 1.0, 3.0))
+        z0, z1 = max(rear_end, zs - 0.46 * deck_l), min(front_end, zs + 0.46 * deck_l)
         girths = [g for g in (body.clear(zs + 0.34 * deck_l, strap, max(zs, hind), front_end),
                               body.clear(zs - 0.34 * deck_l, strap, rear_end, zs)) if g]
     else:
+        # sit where nothing stands in the rider's place: behind a frill or a crest, ahead of a sail
+        room = {"straddle": (5.0, 8.0), "chair": (6.0, 13.0)}
+        zs, worst = body.seat_station(nominal, *room[kind])
+        wide = max(abs(body.point(zs, t)[0][0]) for t in (40, 55, 70)) > 9.5
+        if not spec.get("kind") and wide != (kind == "chair"):  # the back is another width where the seat went
+            kind = info["kind"] = "chair" if wide else "straddle"
+            zs, worst = body.seat_station(nominal, *room[kind])
+        info["moved"], info["blocked"] = round(zs - nominal, 1), round(worst, 1)
+        seat_back, seat_front = (8.0, 8.0) if kind == "straddle" else (14.0, 15.0)
         back = max(seat_back + 2, 0.15 * length) + (1.5 * size if cargo else 0) \
             + (1.3 * size if cargo == "reinforced" else 0)
-        z0, z1 = max(rear_end, zs - back), min(front_end, zs + max(seat_front + 1, 0.11 * length))
-        girths = [g for g in (body.clear(z1 - strap, strap, max(hind, zs - 2), max(hind, z1 - strap / 2)),
-                              body.clear(z0 + strap, strap, max(hind, z0 + strap / 2), zs)
-                              if zs > max(hind, z0 + strap / 2) else None) if g]
+        z1 = min(front_end, zs + max(seat_front + 1, 0.11 * length))
+        z0 = max(rear_end, min(zs - back, z1 - max(16.0, 0.25 * length)))
+        ahead = max(hind, min(zs - 2, z1 - 3 * strap))
+        girths = [g for g in (body.clear(z1 - strap, strap, ahead, max(ahead, z1 - strap / 2)),
+                              body.clear(z0 + strap, strap, max(hind, z0 + strap / 2), min(zs, z1 - 3 * strap))
+                              if min(zs, z1 - 3 * strap) > max(hind, z0 + strap / 2) else None) if g]
     # a second girth only where nothing is in its way and it is not on top of the first
     girths = girths[:1] + [g for g in girths[1:] if g[1] == 0 and girths[0][0] - g[0] >= 2 * strap]
     z0 = min([z0] + [g[0] - strap for g in girths])
@@ -442,18 +605,18 @@ def build(sid, tier=None, cargo="default", rider=True):
     kit.pad(z0, z1, 70.0 if kind == "platform" else drop, thick, thick + 0.6, density,
             rows=int(np.clip(round((z1 - z0) / max(9.0, 0.13 * length)), 1, 4)))
     if kind == "platform":
-        seat, owner = kit.platform(zs, deck_l, deck_w, lift, body.span(zs)[2], cargo)
+        seat, owner = kit.platform(zs, deck_l, deck_w, lift, cargo, scale)
     else:
         seat, owner = kit.straddle_seat(zs, lift) if kind == "straddle" else kit.chair_seat(zs, lift)
         if cargo:
-            behind = zs - seat_back - 0.8 * size
+            behind = min(zs, z1) - seat_back - 0.8 * size
             kit.bags(behind, size, lift + 0.3, owner, count=2 if cargo == "reinforced" else 1)
-            tops = [h[0] for h in (body.span(behind + d, 0.05) for d in (-0.2 * size, 0.2 * size, 0.6 * size)) if h]
-            kit.block((0, max(tops) + lift + 0.36 * size, behind + 0.2 * size),
-                      (max(12.0, 1.5 * thigh), 0.72 * size, 0.72 * size), "roll", owner)
-    info = dict(kind=kind, tier=tier, cargo=cargo, boxes=len(kit.boxes), density=density, seat_owner=owner,
-                seat_z=round(zs, 1), girths=[(round(z - zs, 1), cost) for z, cost in girths],
-                pad=(round(z0 - zs, 1), round(z1 - zs, 1)))
+            tops = [h for h in (body.top(behind + d) for d in (-0.2 * size, 0.2 * size, 0.6 * size)) if h is not None]
+            if tops and not body.ridge_angle(behind - 0.2 * size, behind + 0.6 * size):
+                kit.block((0, max(tops) + lift + 0.36 * size, behind + 0.2 * size),
+                          (max(12.0, 1.5 * thigh), 0.72 * size, 0.72 * size), "roll", owner)
+    info.update(boxes=len(kit.boxes), density=density, seat_owner=owner,
+                girths=[(round(z - zs, 1), cost) for z, cost in girths])
     if rider:
         kit.rider(seat)
     return body, kit, info
@@ -576,7 +739,8 @@ def texture(kit, density, offset):
             t, s = np.meshgrid((np.arange(h) + 0.5) / h, (np.arange(w) + 0.5) / w, indexing="ij")
             image = paint(box, key, face_unit(key, s, t), np.random.default_rng(index * 6 + slot), palette, kit.tier)
             faces.append((index, key, np.clip(image, 0, 255)))
-    width, x, y, shelf, spots = 256, 0, 0, 0, {}
+    width = max([256] + [64 * math.ceil((f[2].shape[1] + 2) / 64) for f in faces])
+    x, y, shelf, spots = 0, 0, 0, {}
     for i in sorted(range(len(faces)), key=lambda i: -faces[i][2].shape[0]):
         h, w = faces[i][2].shape[:2]
         if x + w + 2 > width:
@@ -603,17 +767,22 @@ CAMS = {
 }
 
 
-def clip_of(sid, word):
+def clip_of(sid):
+    """The clip that shows the animal moving the way it is ridden."""
     clips = json.loads((ASSETS / f"geckolib/animations/entity/{sid}.animation.json").read_text("utf-8"))["animations"]
-    name = next((n for n in clips if word.lower() in n.lower()), None)
-    return (name, clips[name]) if name else (None, None)
+    words = ("Fly-Fwd", "Fly") if SPECIES[sid]["plan"] == "flyer" else ()
+    for word in words + ("Move-Fwd", "Swim-Fwd", "Swim", "Walk", "Move"):
+        name = next((n for n in clips if word.lower() in n.lower()), None)
+        if name:
+            return name, clips[name]
+    return None, None
 
 
 def scene(sid, tier=None, cargo="default", rider=True, clip=None, time=0.0):
     """Everything the renderer needs: cubes with UVs, the joined texture, the saddle's corners, the facts."""
     body, kit, info = build(sid, tier, cargo, rider)
     skin = Image.open(ASSETS / f"textures/entity/{sid}_{SPECIES[sid]['skin']}.png").convert("RGB")
-    atlas, uvs = texture(kit, info["density"], skin.height)
+    atlas, uvs = texture(kit, info["density"], skin.height) if kit.boxes else (np.zeros((1, 1, 3), np.uint8), [])
     sheet = Image.new("RGB", (max(skin.width, atlas.shape[1]), skin.height + atlas.shape[0]))
     sheet.paste(skin, (0, 0))
     sheet.paste(Image.fromarray(atlas), (0, skin.height))
@@ -630,8 +799,8 @@ def scene(sid, tier=None, cargo="default", rider=True, clip=None, time=0.0):
         body_corners, kit_corners = posed[:len(body.cubes)], posed[len(body.cubes):]
     decoded = [{"corners": body_corners[i], "faces": c["source_uv"]} for i, c in enumerate(body.cubes)]
     decoded += [{"corners": kit_corners[i], "faces": uvs[i]} for i in range(len(kit.boxes))]
-    saddle = np.concatenate([c for c, box in zip(kit_corners, kit.boxes) if box["mat"] != "rider"])
-    return decoded, sheet, saddle, info, atlas
+    saddle = [c for c, box in zip(kit_corners, kit.boxes) if box["mat"] != "rider"]
+    return decoded, sheet, np.concatenate(saddle) if saddle else None, info, atlas
 
 
 def caption(image, title, subtitle=""):
@@ -652,6 +821,8 @@ def close_up(decoded, sheet, saddle, cam, size, room=1.12):
 
 
 def describe(info):
+    if info["kind"] == "none":
+        return f"no saddle: the trunk is {info['blocks'][0]} blocks long and {info['blocks'][1]} wide, smaller than the seat"
     cargo = f", {info['cargo']} harness" if info["cargo"] else ""
     return f"{info['kind']} seat, {info['tier']} tier{cargo}  |  {info['boxes']} boxes"
 
@@ -659,14 +830,17 @@ def describe(info):
 def species_sheet(sid):
     decoded, sheet, saddle, info, atlas = scene(sid)
     tile = (1000, 700)
+    front = caption(ss.render(decoded, sheet, CAMS["front"], tile, margin=70), sid.capitalize(),
+                    describe(info) + ("  |  grey figure: a player, for scale" if saddle is not None else ""))
+    if saddle is None:
+        front.save(OUT / f"{sid}.png")
+        return info, front
     room = 1.6 if info["kind"] == "straddle" else 1.12  # a small saddle: leave the rider in the frame
-    tiles = [caption(ss.render(decoded, sheet, CAMS["front"], tile, margin=70), sid.capitalize(),
-                     describe(info) + "  |  grey figure: a player, for scale"),
-             caption(close_up(decoded, sheet, saddle, CAMS["rear"], tile, room), "Saddle, from behind")]
-    name, clip = clip_of(sid, SPECIES[sid].get("clip", "Move-Fwd"))
+    tiles = [front, caption(close_up(decoded, sheet, saddle, CAMS["rear"], tile, room), "Saddle, from behind")]
+    name, clip = clip_of(sid)
     if clip:
-        walking = scene(sid, clip=clip, time=0.3 * float(clip.get("animation_length", 1.0)))
-        tiles.append(caption(ss.render(walking[0], walking[1], CAMS["side"], tile, margin=70), "In motion, mid-clip",
+        moving = scene(sid, clip=clip, time=0.3 * float(clip.get("animation_length", 1.0)))
+        tiles.append(caption(ss.render(moving[0], moving[1], CAMS["side"], tile, margin=70), "In motion, mid-clip",
                              f"{name}: every box rides the bone of the cube under it"))
     else:
         tiles.append(caption(ss.render(decoded, sheet, CAMS["side"], tile, margin=70), "Side"))
@@ -675,8 +849,7 @@ def species_sheet(sid):
     for index, image in enumerate(tiles):
         page.paste(image, (index % 2 * 1000, index // 2 * 700))
     page.save(OUT / f"{sid}.png")
-    Image.fromarray(atlas).resize((atlas.shape[1] * 3, atlas.shape[0] * 3), Image.NEAREST).save(OUT / f"{sid}_atlas.png")
-    return info, tiles[0]
+    return info, front
 
 
 def tier_sheet(sid="triceratops"):
@@ -695,17 +868,20 @@ def main():
     parser.add_argument("--species", nargs="*", default=list(SPECIES))
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    fronts = []
+    fronts = {}
     for sid in args.species:
-        info, front = species_sheet(sid)
-        fronts.append(front)
-        print(sid, {k: v for k, v in info.items() if k != "seat_owner"})
+        info, fronts[sid] = species_sheet(sid)
+        print(f"{sid:17s} {info['plan']:18s} {info['kind']:9s} {info['tier']:7s} {str(info['cargo']):11s} "
+              f"boxes {info['boxes']:3d}  seat moved {info['moved']:6.1f}  in the way {info['blocked']:5.1f}  "
+              f"girths {info['girths']}")
     if args.species == list(SPECIES):
         tier_sheet()
-        page = Image.new("RGB", (3000, 1400), (19, 30, 39))
-        for index, front in enumerate(fronts):
-            page.paste(front, (index % 3 * 1000, index // 3 * 700))
-        page.save(OUT / "overview.png")
+        for family, plans in FAMILIES.items():
+            members = [sid for sid in SPECIES if SPECIES[sid]["plan"] in plans]
+            page = Image.new("RGB", (3000, 700 * math.ceil(len(members) / 3)), (19, 30, 39))
+            for index, sid in enumerate(members):
+                page.paste(fronts[sid], (index % 3 * 1000, index // 3 * 700))
+            page.save(OUT / f"overview_{family}.png")
 
 
 if __name__ == "__main__":
