@@ -13,20 +13,27 @@ final class CreatureModel extends GeoModel<CreatureEntity> {
     /** Alert eyes: attacking, defending, threatening or fleeing (the synced behaviour state). */
     static final DataTicket<Boolean> EYE_ALERT = DataTicket.create("arksurvivalreturns:eye_alert", Boolean.class);
     private static final String[] VARIANTS = {"ivory", "darken", "emerald", "midnight", "burgundy"};
-    private final Species species;
-    CreatureModel(Species species) { this.species = species; }
     private static final String[] DRAGONS = {"red", "white", "black"};
+    private final Species species;
+    /** Asked for every creature in every frame, so made once: per dragon, or one model and a texture per skin. */
+    private final Identifier[] models, textures;
+    CreatureModel(Species species) {
+        this.species = species;
+        boolean dragon = species == Species.DRAGON;
+        models = new Identifier[dragon ? DRAGONS.length : 1];
+        textures = new Identifier[dragon ? DRAGONS.length : VARIANTS.length];
+        for (int i = 0; i < models.length; i++) models[i] = ArkSurvivalReturns.id("entity/" + modelId(i));
+        for (int i = 0; i < textures.length; i++)
+            textures[i] = ArkSurvivalReturns.id("textures/entity/" + (dragon ? modelId(i) : species.id + "_" + VARIANTS[i]) + ".png");
+    }
     private String modelId(int variant) {
         return species == Species.DRAGON ? "dragon_" + DRAGONS[Math.floorMod(variant, 3)] : species.id;
     }
     @Override public Identifier getModelResource(GeoRenderState state) {
-        return ArkSurvivalReturns.id("entity/" + modelId(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0)));
+        return models[Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), models.length)];
     }
     @Override public Identifier getTextureResource(GeoRenderState state) {
-        if (species == Species.DRAGON)
-            return ArkSurvivalReturns.id("textures/entity/" + modelId(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0)) + ".png");
-        int index = Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), VARIANTS.length);
-        return ArkSurvivalReturns.id("textures/entity/" + species.id + "_" + VARIANTS[index] + ".png");
+        return textures[Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), textures.length)];
     }
     @Override public Identifier getAnimationResource(CreatureEntity creature) {
         int variant = creature instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity dragon

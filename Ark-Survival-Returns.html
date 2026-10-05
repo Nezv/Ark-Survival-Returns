@@ -3291,7 +3291,7 @@ Patch,P07,Iron Age Mechanics,Not started,Deprecated: merged into F17; the machin
 Patch,P08,Husbandry and Expedition Orders,Not started,Under discussion.
 Patch,P09,Bronze + Iron Age bosses,Not started,To be done.
 Patch,P10,Fabrication Oracle and Final Expedition,Not started,Deprecated: merged into F17 (Survey & Hunt lane).
-Patch,P12,Graphics and Atmosphere,Claude Opus 5.5,"Implemented (benchmark and profiler, run on the RTX 3050 laptop at 1920x1080); optimisation to be done."
+Patch,P12,Graphics and Atmosphere,Claude Opus 5.5,"Implemented (benchmark and profiler, run on the RTX 3050 laptop at 1920x1080); optimisation in production, the creature renderer first (F27)."
 Analysis,P00,Behaviour Model,Claude Code,"Implemented; 18 controlled trials recorded in a real client came out as expected (B10), not yet judged by the user."
 Patch,P17,Difficulty patch,Astra 6,Implemented; unverified in client.
 Patch,P18,Creature models,Astra 6,Implemented; unverified in client (also by ear).
@@ -3364,6 +3364,7 @@ Integration,I13,Physics Mod (ragdolls and dropped items),Claude Opus 5.5,"Implem
 Fix,X08,Planks craftable by hand again,Claude Opus 5.5,"Verified; build and the headless GameTests pass (StationGameTests asserts the ten plank recipes load), unverified in client."
 Change,C04,Vanilla advancements removed,Claude Opus 5.5,"Implemented; build and the headless GameTests pass (no vanilla advancement is loaded), unverified in client."
 Integration,I14,BetterF3 (debug screen),Claude Opus 5.5,"Implemented; unverified in client (checked offline: checksum, branded jar, client-only classpath, build, headless GameTests)."
+Feature,F27,Creature drawing: Ark's cube writer,Claude Opus 5.5,"Implemented; its vertices equal GeckoLib's in CubeWriterParityTest (44 models in every clip, part of the build) and in the client (session_bench.py --verify, 7 species); not yet looked at by the user."
 </script>
 <script>
 // Roadmap: Dashboard.csv parsed here. Served over http, the live file next to the page wins; opened from disk the

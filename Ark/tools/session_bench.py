@@ -3,6 +3,8 @@
     python tools/session_bench.py --prepare [--seed SEED]     the benchmark world, made once and kept
     python tools/session_bench.py --warm                      one more pass over it (more chunks and far terrain)
     python tools/session_bench.py [--setups full,noshader,...] [--heap 8G] [--repeat N] [--profile]
+    python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|ark   who draws the creatures (client/draw)
+    python tools/session_bench.py --setups bare --verify      Ark's creature writer checked against GeckoLib's, not timed
 
 Each setup plays a disposable copy of run/saves/ArkBenchmark, so every one starts from the same chunks and the
 same Distant Horizons data. The client (client/FrameBenchmark) stands the player at the world spawn at noon,
@@ -270,7 +272,7 @@ def summarise(folder: Path) -> dict | None:
         result["limit"] = ("card" if result.get("gpu_load", 0) >= 92 else "render thread" if result["render_thread"] >= 0.85 else "mixed")
         result["valid"] = unseen == 0 and throttled == 0 and window.get("covers_screen") is not False and not window.get("killed")
         phases[phase] = result
-    return {"setup": meta["variant"], "window": meta["window"], "fullscreen": meta["fullscreen"], "gpu": meta["gpu"],
+    return {"setup": meta["variant"], "creature_draw": meta.get("creature_draw", {}).get("mode"), "window": meta["window"], "fullscreen": meta["fullscreen"], "gpu": meta["gpu"],
             "shaders": meta["shaders"], "heap_max_mb": meta["heap_max_mb"], "start": meta["start"],
             "mains_power": window.get("mains_power"), "in_front": f"{window.get('in_front')}/{window.get('checks')}",
             "brought_forward": window.get("brought_forward"), "phases": phases}
@@ -288,6 +290,7 @@ def table(results: list[dict]):
                   f"  {row['limit']}{'' if row['valid'] else '  INVALID'}")
     for result in results:
         print(f"{result['setup']}: {result['window']} full screen {result['fullscreen']}, {result['gpu']}, shaders {result['shaders']}, "
+              f"creatures drawn by {result.get('creature_draw') or 'geckolib'}, "
               f"in front {result['in_front']} checks (brought forward {result['brought_forward']} times), "
               f"mains power {result['mains_power']}")
 
@@ -302,6 +305,10 @@ def main() -> int:
     parser.add_argument("--settle", type=int, help="seconds to wait for chunks and shaders before measuring (default 30; 150 when preparing)")
     parser.add_argument("--repeat", type=int, default=1, help="runs per setup")
     parser.add_argument("--profile", action="store_true", help="also record the Java threads with Flight Recorder (profile.jfr in the setup's folder)")
+    parser.add_argument("--draw", choices=("geckolib", "allfaces", "ark"),
+                        help="who writes the creatures' cubes: GeckoLib, Ark's writer with every face, or Ark's writer (default: the client settings)")
+    parser.add_argument("--verify", action="store_true",
+                        help="draw every eighth creature both ways and compare the vertices (meta.json, creature_draw.verify); not a run to time")
     parser.add_argument("--timeout", type=int, default=600, help="seconds before a client is closed by force")
     parser.add_argument("--summarise", help="only print the table of an earlier run's folder under run/diagnostics/bench")
     arguments = parser.parse_args()
@@ -326,6 +333,7 @@ def main() -> int:
             sys.exit(f"unknown setup '{name}'; known: {', '.join(SETUPS)}")
     stamp = BENCH / time.strftime("%Y%m%d-%H%M%S")
     extra = ([f"-ParkHeap={arguments.heap}"] if arguments.heap else []) + [f"-ParkSettle={arguments.settle or (150 if building else 30)}"]
+    extra += ([f"-ParkDraw={arguments.draw}"] if arguments.draw else []) + (["-ParkVerify=true"] if arguments.verify else [])
     if on_mains() is False:
         print("on battery: the graphics card is throttled, the numbers will not be the machine's", flush=True)
     results = []

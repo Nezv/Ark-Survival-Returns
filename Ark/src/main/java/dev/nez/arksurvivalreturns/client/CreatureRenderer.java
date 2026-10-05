@@ -40,6 +40,17 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
         snapshots.ifPresent(Species.EYES_ALERT, bone -> bone.skipRender(!alert).skipChildrenRender(!alert));
     }
 
+    /** The cubes are written by Ark's own writer (client/draw); GeckoLib's stays for what that one declines. */
+    @Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public void submitRenderTasks(RenderPassInfo pass, net.minecraft.client.renderer.OrderedSubmitNodeCollector renderTasks,
+                                  net.minecraft.client.renderer.rendertype.RenderType renderType) {
+        if (renderType == null) return;
+        if (!dev.nez.arksurvivalreturns.client.draw.CreatureDraw.submit(pass, renderTasks, renderType,
+                getTextureLocation((EntityRenderState) pass.renderState()), pass.packedLight(), pass.packedOverlay(), pass.renderColor(), false))
+            super.submitRenderTasks(pass, renderTasks, renderType);
+    }
+
     @Override
     @SuppressWarnings({"rawtypes", "unchecked"}) // GeckoLib adds GeoRenderState to EntityRenderState through a runtime mixin.
     protected void applyRotations(RenderPassInfo pass, PoseStack pose, float nativeScale) {

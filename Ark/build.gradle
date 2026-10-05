@@ -66,6 +66,9 @@ neoForge {
             if (project.hasProperty('arkVariant')) systemProperty 'arksurvivalreturns.benchmark.variant', project.property('arkVariant').toString()
             if (project.hasProperty('arkSettle')) systemProperty 'arksurvivalreturns.benchmark.settle', project.property('arkSettle').toString()
             if (project.hasProperty('arkMobs')) systemProperty 'arksurvivalreturns.benchmark.mobs', project.property('arkMobs').toString()
+            // Who writes the creatures' cubes (client/draw): geckolib, allfaces or ark; and a self-check against GeckoLib.
+            if (project.hasProperty('arkDraw')) systemProperty 'arksurvivalreturns.creatureDraw', project.property('arkDraw').toString()
+            if (project.hasProperty('arkVerify')) systemProperty 'arksurvivalreturns.creatureDraw.verify', 'true'
             if (project.hasProperty('arkJfr')) jvmArgument "-XX:StartFlightRecording=filename=${project.property('arkJfr')},settings=profile"
         }
         server { server(); jvmArgument "-Xmx${devRuntime.serverHeap}"; programArgument '--nogui' }
@@ -87,6 +90,8 @@ neoForge {
         }
     }
     mods { "${mod_id}" { sourceSet sourceSets.main } }
+    // The creature writer's parity test draws with GeckoLib's and Minecraft's own classes; no game is started.
+    addModdingDependenciesTo sourceSets.test
 }
 // These projects are embedded in Ark Survival Returns. Keep any stale downloaded
 // copies out of the runtime classpath so their mod containers cannot load twice.
@@ -110,7 +115,24 @@ def installedPack = useArkPack
 def sharedPack = useArkPack
     ? fileTree(dir: 'pack/out/mods', include: ['Ark-*.jar'])
     : fileTree(dir: 'shared-mods', include: ['*.jar'])
+// Sodium 0.9.2 (client-mods.lock.json) keeps its classes in a nested jar; the bulk vertex writer of
+// client/draw/sodium is compiled against that one. Sodium stays optional at run time.
+configurations { sodiumBundle { transitive = false } }
+def sodiumClasses = tasks.register('extractSodiumClasses', Copy) {
+    from({ zipTree(configurations.sodiumBundle.singleFile) }) {
+        include 'META-INF/jarjar/*.jar'
+        eachFile { it.path = it.name }
+        includeEmptyDirs = false
+    }
+    into layout.buildDirectory.dir('sodium-classes')
+}
+def sodiumApi = fileTree(layout.buildDirectory.dir('sodium-classes')) { include '*.jar'; builtBy sodiumClasses }
 dependencies {
+    sodiumBundle 'maven.modrinth:sodium:zg4YQ9EL'
+    compileOnly sodiumApi
+    testImplementation sodiumApi
+    // Iris 1.11.4 (client-mods.lock.json): only its public API, to know the shadow pass and a shader pack in use.
+    compileOnly 'maven.modrinth:iris:qE5Y7GrZ'
     implementation "maven.modrinth:geckolib:${geckolib_version}"
     implementation sharedPack
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'

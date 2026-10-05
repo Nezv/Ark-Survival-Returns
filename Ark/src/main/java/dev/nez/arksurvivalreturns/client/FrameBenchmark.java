@@ -315,6 +315,7 @@ public final class FrameBenchmark {
         meta.addProperty("heading", heading);
         meta.addProperty("unseen_samples", unseenSamples);
         meta.add("phases", PHASES);
+        meta.add("creature_draw", dev.nez.arksurvivalreturns.client.draw.CreatureDraw.report());
         var frames = new StringBuilder("phase,frame_ns\n");
         for (int i = 0; i < FRAMES.size(); i++)
             frames.append(Phase.values()[FRAME_PHASES.getByte(i)].name().toLowerCase(Locale.ROOT)).append(',').append(FRAMES.getLong(i)).append('\n');

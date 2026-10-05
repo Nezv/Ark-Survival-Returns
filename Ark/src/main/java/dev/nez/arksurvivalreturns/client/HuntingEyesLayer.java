@@ -27,9 +27,11 @@ final class HuntingEyesLayer<R extends EntityRenderState & GeoRenderState> exten
     private static final DataTicket<Float> GLOW = DataTicket.create("arksurvivalreturns:hunting_eyes", Float.class);
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();
     private final RenderType eyes;
+    private final net.minecraft.resources.Identifier texture;
     HuntingEyesLayer(GeoRenderer<CreatureEntity, Void, R> renderer, Species species) {
         super(renderer);
-        eyes = RenderTypes.eyes(ArkSurvivalReturns.id("textures/entity/" + species.id + "_eyes.png"));
+        texture = ArkSurvivalReturns.id("textures/entity/" + species.id + "_eyes.png");
+        eyes = RenderTypes.eyes(texture);
     }
     @Override public void addRenderData(CreatureEntity creature, Void unused, R state, float partialTick) {
         float glow = creature.huntingEyeGlow(partialTick) * NighttimeClientConfig.EYE_GLOW.get().floatValue();
@@ -44,6 +46,9 @@ final class HuntingEyesLayer<R extends EntityRenderState & GeoRenderState> exten
         if (!pass.willRender() || pass.renderState().isInvisible || glow <= 0.001f) return;
         // The eyes fade in and out through the alpha of the pass; the red is the texture's own.
         int color = ARGB.white(glow);
+        // Ark's writer leaves out the faces the eyes texture is transparent on; all but the irises.
+        if (dev.nez.arksurvivalreturns.client.draw.CreatureDraw.submit(pass, collector.order(1), eyes, texture,
+                LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, color, true)) return;
         collector.order(1).submitCustomGeometry(pass.poseStack(), eyes, (pose, vertices) -> {
             var stack = pass.poseStack();
             stack.pushPose();
