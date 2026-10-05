@@ -1,0 +1,210 @@
+{
+ "note": "Concept saddles of tools/preview_saddles.py, as pictured on the showcase's creature cards.",
+ "species": {
+  "pteranodon": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "velociraptor": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "argentavis": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "triceratops": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "therizinosaurus": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "brontosaurus": {
+   "seat": "platform",
+   "tier": "bronze",
+   "harness": "reinforced"
+  },
+  "tyrannosaurus": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "giganotosaurus": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "titanosaur": {
+   "seat": "platform",
+   "tier": "bronze",
+   "harness": "reinforced"
+  },
+  "spinosaurus": {
+   "seat": "sail",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "parasaur": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "ceratosaurus": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "dilophosaur": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "acrocanthosaurus": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "allosaurus": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "ankylosaurus": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "carnotaurus": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "pegomastax": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "lystrosaurus": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "cnidaria": {
+   "seat": "none",
+   "tier": "hide",
+   "harness": null
+  },
+  "plesiosaur": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "megalodon": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "liopleurodon": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "mosasaurus": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "tusoteuthis": {
+   "seat": "straddle",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "kaprosuchus": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "sarco": {
+   "seat": "chair",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "deinosuchus": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "titanoboa": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "megalocerus": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "unicorn": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "mammoth": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "direwolf": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "sabertooth": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "megapithecus": {
+   "seat": "chair",
+   "tier": "hide",
+   "harness": null
+  },
+  "paraceratherium": {
+   "seat": "chair",
+   "tier": "steel",
+   "harness": "reinforced"
+  },
+  "terrorbird": {
+   "seat": "straddle",
+   "tier": "hide",
+   "harness": null
+  },
+  "ravager": {
+   "seat": "straddle",
+   "tier": "bronze",
+   "harness": "pack"
+  },
+  "archaeopteryx": {
+   "seat": "none",
+   "tier": "hide",
+   "harness": null
+  },
+  "quetzal": {
+   "seat": "platform",
+   "tier": "bronze",
+   "harness": "reinforced"
+  },
+  "dragon": {
+   "seat": "straddle",
+   "tier": "steel",
+   "harness": "reinforced"
+  }
+ }
+}

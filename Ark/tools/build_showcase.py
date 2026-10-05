@@ -101,13 +101,22 @@ def cutout(path):
     return rgba
 
 
-def creature_image(species_id):
+SADDLES = ARK / 'design/showcase/saddles'
+SADDLE_TAGS = {'straddle': 'straddle saddle', 'chair': 'chair saddle', 'platform': 'deck saddle', 'sail': 'own saddle',
+               'none': 'no saddle'}
+
+
+def creature_image(species_id, saddles):
+    """The card picture and its tag: the animal under its concept saddle (tools/preview_saddles.py), else bare."""
+    saddled = SADDLES / f'{species_id}.webp'
+    if saddled.is_file() and species_id in saddles:
+        return uri(saddled, quality=82), SADDLE_TAGS[saddles[species_id]['seat']]
     folder = REPO / 'Creatures' / FOLDERS.get(species_id, species_id.capitalize())
     for candidate in (folder / 'skin/previews/three_quarter.png', folder / 'textures/previews/three_quarter.png',
                       folder / 'previews/model.png'):
         if candidate.is_file():
-            return uri(cutout(candidate), quality=80), 'textured' if 'three_quarter' in candidate.name else 'model'
-    return '', 'none'
+            return uri(cutout(candidate), quality=80), 'textured' if 'three_quarter' in candidate.name else ''
+    return '', ''
 
 
 # -------------------------------------------------------------------------------------------- data
@@ -158,14 +167,16 @@ def refresh_roadmap(staged=False):
 
 def creatures_section(species):
     cards = []
+    manifest = SADDLES.parent / 'saddles.json'
+    saddles = load_json(manifest)['species'] if manifest.is_file() else {}
     for s in sorted(species, key=lambda s: (s['danger'], s['name'])):
-        image, kind = creature_image(s['id'])
+        image, tag = creature_image(s['id'], saddles)
         pips = ''.join(f'<i style="background:{RANK_COLORS[i] if i < s["danger"] else "var(--line)"}"></i>' for i in range(len(RANK_COLORS)))
         group = f'{s["groupMin"]}' if s['groupMin'] == s['groupMax'] else f'{s["groupMin"]}-{s["groupMax"]}'
         tags = [s['realm']] + (['predator'] if s['predator'] else ['herbivore']) + (['apex'] if s['apex'] else []) + (['cold'] if s['cold'] else [])
         filters = ' '.join(tags)
         cards.append(f'''<article class="dino" data-tags="{filters}">
-  <div class="dino-art">{f'<img loading="lazy" src="{image}" alt="{e(s["name"])} model">' if image else ''}{'<span class="art-tag">textured</span>' if kind == 'textured' else ''}</div>
+  <div class="dino-art">{f'<img loading="lazy" src="{image}" alt="{e(s["name"])} model">' if image else ''}{f'<span class="art-tag">{tag}</span>' if tag else ''}</div>
   <div class="dino-body">
     <div class="dino-head"><h3>{e(s["name"])}</h3><span class="pips" title="Appears from danger rank {s["danger"]}">{pips}</span></div>
     <div class="chips">{''.join(f'<span class="chip">{t}</span>' for t in tags)}</div>
