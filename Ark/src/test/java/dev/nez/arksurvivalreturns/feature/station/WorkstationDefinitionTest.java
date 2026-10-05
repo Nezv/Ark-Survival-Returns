@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class WorkstationDefinitionTest {
     @Test void VerbatimDesignAndRuleSupplementsReconstructShowcaseTrees() throws Exception {
         Gson gson = new Gson();
-        for (String bench : new String[]{"armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table"}) {
+        for (String bench : new String[]{"armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery"}) {
             var raw = gson.fromJson(Files.readString(Path.of("design/workstations/" + bench + ".json")), WorkstationDefinition.class);
             var rules = gson.fromJson(Files.readString(Path.of("build/workstations/resources/data/arksurvivalreturns/workstation_rules/" + bench + ".json")), WorkstationDefinition.class);
             var expected = gson.fromJson(Files.readString(Path.of("build/workstations/fixtures/" + bench + ".json")), WorkstationDefinition.class);

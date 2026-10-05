@@ -8,7 +8,7 @@ import java.util.function.BiConsumer;
 
 /**
  * State, item, loot, recipe, tag and translation wiring for the workstations authored by
- * tools/build_station_assets.py (Working Station, Storage Crate, smithing table, Medicine Bench, Crusher).
+ * tools/build_station_assets.py (Working Station, Storage Crate, smithing table, Medicine Bench, Crusher, Saddlery).
  */
 final class StationData {
     private static final String NS = "arksurvivalreturns";
@@ -29,11 +29,24 @@ final class StationData {
             item(put, id, id);
             loot(put, id);
         }
+        saddlery(put);
         mortar(put);
         crate(put);
         crusher(put);
         recipes(put);
         tags(put);
+    }
+
+    /** Two blocks tall: the bench below, the saddle horse and tack rack above; the item shows both. */
+    private static void saddlery(BiConsumer<String, Object> put) {
+        var variants = new LinkedHashMap<String, Object>();
+        for (String facing : DIRECTIONS) {
+            for (String half : List.of("lower", "upper"))
+                variants.put("facing=" + facing + ",half=" + half, rotated("saddlery_" + half, facing));
+        }
+        put.accept(ASSETS + "blockstates/saddlery", Map.of("variants", variants));
+        item(put, "saddlery", "saddlery_item");
+        put.accept(DATA + "loot_table/blocks/saddlery", PrimitiveData.lowerHalfLoot("saddlery"));
     }
 
     /** The Mortar & Pestle model comes from the design pack (tools/build_prehistoric_camp.py). */
@@ -119,7 +132,8 @@ final class StationData {
                     "values", List.of(NS + ":working_station")));
         }
         put.accept("data/minecraft/tags/block/mineable/axe", Map.of("replace", false,
-                "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate", NS + ":armoury")));
+                "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate", NS + ":armoury",
+                        NS + ":saddlery")));
         put.accept("data/minecraft/tags/block/mineable/pickaxe", Map.of("replace", false,
                 // Bronze Age (F12): tin ore mines like copper and iron, at the same rock-pickaxe tier; sulphur crystals (SulphurData).
                 "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle",
@@ -131,6 +145,8 @@ final class StationData {
     static void messages(Map<String, String> en, Map<String, String> pt) {
         en.put("block." + NS + ".armoury", "Armoury");
         pt.put("block." + NS + ".armoury", "Arsenal");
+        en.put("block." + NS + ".saddlery", "Saddlery");
+        pt.put("block." + NS + ".saddlery", "Selaria");
         en.put("block." + NS + ".working_station", "Working Station");
         pt.put("block." + NS + ".working_station", "Estação de trabalho");
         en.put("block." + NS + ".storage_crate", "Storage Crate");

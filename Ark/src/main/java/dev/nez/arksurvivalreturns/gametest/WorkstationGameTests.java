@@ -119,7 +119,36 @@ final class WorkstationGameTests {
             h.assertTrue(ItemStack.matches(before.get(i), inventory.getItem(i)), "Rejected removed-bench craft changed inventory slot " + i);
         h.setBlock(rel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
         h.assertTrue(WorkstationCrafting.craft(player, tonicPacket), "The same funded request must work with the bench restored");
+        saddlery(h, player, rel, pos);
         player.containerMenu = player.inventoryMenu; inventory.clearContent();
+    }
+    /** Two blocks tall: the graph is bound to the lower half, tack moved here, and the halves fall together. */
+    private static void saddlery(GameTestHelper h, net.minecraft.server.level.ServerPlayer player, BlockPos rel, BlockPos pos) {
+        var inventory = player.getInventory();
+        var lower = StationContent.SADDLERY.get().defaultBlockState();
+        var upper = lower.setValue(dev.nez.arksurvivalreturns.feature.camp.TallBlocks.HALF,
+                net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER);
+        h.setBlock(rel, lower); h.setBlock(rel.above(), upper);
+        h.assertBlockPresent(StationContent.SADDLERY.get(), rel);
+        var menu = new WorkstationMenu(81, inventory, pos, "arksurvivalreturns:saddlery"); player.containerMenu = menu;
+        var graph = WorkstationCatalog.get(menu.station);
+        for (String item : java.util.List.of("minecraft:saddle", "minecraft:lead", "arksurvivalreturns:pack_harness",
+                "arksurvivalreturns:reinforced_harness")) {
+            h.assertTrue(graph.crafts().stream().anyMatch(c -> c.variant().item().equals(item)), "The Saddlery must make " + item);
+        }
+        for (String bench : java.util.List.of("armoury", "working_station")) {
+            h.assertTrue(WorkstationCatalog.get("arksurvivalreturns:" + bench).crafts().stream().noneMatch(c ->
+                    java.util.Set.of("minecraft:saddle", "minecraft:lead", "arksurvivalreturns:pack_harness").contains(c.variant().item())),
+                    "Tack must have left the " + bench);
+        }
+        inventory.clearContent(); inventory.setItem(0, new ItemStack(Items.LEATHER, 3)); inventory.setItem(1, new ItemStack(Items.IRON_INGOT));
+        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "minecraft:saddle", 1, "i:riding/saddle", 0, 81)),
+                "The Saddlery must stitch a saddle");
+        h.assertTrue(inventory.countItem(Items.SADDLE) == 1, "Saddle output missing");
+        h.assertTrue(((SaddleryBlock) upper.getBlock()).menuPos(upper, pos.above()).equals(pos), "The upper half must open the lower half's graph");
+        h.setBlock(rel.above(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        h.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, rel);
+        h.setBlock(rel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
     }
     private WorkstationGameTests() {}
 }

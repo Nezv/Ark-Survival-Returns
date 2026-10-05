@@ -9,6 +9,9 @@ Geometry lives under models/block/station; StationData owns blockstate/item/reci
   smithing_table    a stone forge block with an iron anvil top, horn, tongs and hammer
   medicine_bench    herb table: mortar and pestle, three mixtures, a bandage roll and drying herbs
   crusher           stone housing, feed hopper, two rollers and a side flywheel; four spin frames
+  saddlery          two blocks tall: a saddler's bench, a saddle horse carrying the bronze saddle of
+                    tools/preview_saddles.py (blanket, seat, stirrup, girth) and a tack board; the hide and steel
+                    blankets, saddlebags, a bedroll and the saddler's tools lie around it
 """
 import json
 import math
@@ -16,7 +19,7 @@ import random
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw
-from build_camp_assets import ROOT, ASSETS, box, rot, DISPLAY
+from build_camp_assets import ROOT, ASSETS, box, rot, split, lift, DISPLAY, TALL_DISPLAY
 
 MODELS = ASSETS / 'models/block/station'
 TEXTURES = ASSETS / 'textures/block/station'
@@ -44,6 +47,21 @@ PALETTE = {
     'gear': ((126, 88, 52), 'planks'),
     'roller': ((96, 94, 90), 'metal'),
     'hopper': ((44, 40, 36), 'stone'),
+    # The Saddlery: the colours of the three saddle tiers in tools/preview_saddles.py (TIERS).
+    'saddle_leather': ((126, 78, 44), 'leather'),
+    'saddle_strap': ((112, 76, 46), 'strap'),
+    'saddle_red': ((142, 48, 42), 'blanket'),
+    'saddle_red_trim': ((72, 30, 28), 'blanket'),
+    'saddle_gold': ((208, 164, 68), 'piping'),
+    'saddle_blue': ((54, 68, 86), 'blanket'),
+    'saddle_blue_trim': ((28, 36, 46), 'blanket'),
+    'saddle_steel': ((176, 186, 196), 'rivets'),
+    'saddle_hide': ((156, 124, 86), 'blanket'),
+    'saddle_fur': ((216, 204, 178), 'fur'),
+    'saddle_bag': ((148, 116, 80), 'bag'),
+    'saddle_roll': ((180, 152, 104), 'bedroll'),
+    'saddle_bronze': ((204, 140, 62), 'metal'),
+    'saddle_thread': ((196, 72, 58), 'thread'),
 }
 
 
@@ -102,14 +120,53 @@ def material(name):
             d.line((x + 1, y, x + 1, y + 3), fill=dark)
     if style == 'glass':
         d.line((6, 3, 6, 28), fill=(255, 255, 255, 255), width=2)
+    # A box face shows the tile from its top-left corner at two texels a pixel, so these marks start there.
+    if style == 'leather':
+        for _ in range(26):
+            x, y = rng.randrange(32), rng.randrange(32)
+            px[x, y] = dark if rng.random() < .6 else light
+        d.line((0, 0, 31, 0), fill=light)
+    if style == 'strap':
+        for v in range(0, 32, 2):
+            px[v, 0] = px[0, v] = tuple(min(255, c + 62) for c in base) + (255,)
+    if style == 'blanket':
+        for y in range(32):
+            for x in range(32):
+                if rng.random() < .26:
+                    px[x, y] = tuple(max(0, c - 16) for c in base) + (255,)
+    if style == 'piping':
+        for y in range(32):
+            for x in range(32):
+                if (x // 2 + y) % 2:
+                    px[x, y] = tuple(max(0, c - 58) for c in base) + (255,)
+    if style == 'rivets':
+        d.line((0, 0, 31, 0), fill=light)
+        for x in range(1, 32, 4):
+            px[x, 1] = tuple(max(0, c - 68) for c in base) + (255,)
+    if style == 'fur':
+        for x in range(32):
+            for y in range(rng.randrange(1, 4), 32, rng.randrange(3, 6)):
+                px[x, y] = tuple(max(0, c - 34) for c in base) + (255,)
+    if style == 'bag':
+        d.rectangle((0, 0, 31, 3), fill=tuple(max(0, c - 16) for c in base) + (255,))   # the flap
+        d.line((0, 4, 31, 4), fill=tuple(max(0, c - 52) for c in base) + (255,))
+        for x in (2, 6):
+            d.line((x, 2, x, 6), fill=(112, 76, 46, 255))
+            px[x, 4] = (204, 140, 62, 255)
+    if style == 'bedroll':
+        for y in range(2, 32, 3):
+            d.line((0, y, 31, y), fill=dark)
+    if style == 'thread':
+        for y in range(0, 32, 2):
+            d.line((0, y, 31, y), fill=dark)
     im.save(TEXTURES / (name + '.png'))
 
 
-def save(name, elements, particle=None):
+def save(name, elements, particle=None, display=DISPLAY):
     keys = {f['texture'][1:] for e in elements for f in e['faces'].values()}
     textures = {key: 'arksurvivalreturns:block/station/' + key for key in sorted(keys)}
     textures['particle'] = 'arksurvivalreturns:block/station/' + (particle or sorted(keys)[0])
-    model = {'parent': 'minecraft:block/block', 'textures': textures, 'display': DISPLAY, 'elements': elements}
+    model = {'parent': 'minecraft:block/block', 'textures': textures, 'display': display, 'elements': elements}
     (MODELS / (name + '.json')).write_text(json.dumps(model, indent=2) + '\n', encoding='utf8')
 
 
@@ -307,6 +364,114 @@ def crusher():
         save(f'crusher_spin{frame}', base + crusher_frame(frame), 'stone')
 
 
+# ------------------------------------------------------------------------------------ saddlery
+
+def faced(element, tex, *faces):
+    """Another material on some faces of a box."""
+    for face in faces:
+        element['faces'][face]['texture'] = '#' + tex
+    return element
+
+
+def hoop(lo, hi, band, tex, name, axis='z'):
+    """A ring standing across an axis: four bars round a hole (a rope coil, a stirrup)."""
+    (x, y, z), (X, Y, Z) = lo, hi
+    bars = [box([x, Y - band, z], [X, Y, Z], tex, name), box([x, y, z], [X, y + band, Z], tex, name)]
+    if axis == 'z':
+        return bars + [box([x, y + band, z], [x + band, Y - band, Z], tex, name),
+                       box([X - band, y + band, z], [X, Y - band, Z], tex, name)]
+    return bars + [box([x, y + band, z], [X, Y - band, z + band], tex, name),
+                   box([x, y + band, Z - band], [X, Y - band, Z], tex, name)]
+
+
+def blanket_flap(x, X, y, Y, z, Z, cloth, trim, edge, name):
+    """One hanging side of a saddle blanket: the cloth, a border down both sides and the tier's edge under it."""
+    return [box([x + .6, y + 1.4, z], [X - .6, Y, Z], cloth, name),
+            box([x, y + .8, z], [x + .6, Y, Z], trim, name + ' border'),
+            box([X - .6, y + .8, z], [X, Y, Z], trim, name + ' border'),
+            box([x + .6, y + .8, z], [X - .6, y + 1.4, Z], edge, name + ' edge'),
+            box([x, y, z], [X, y + .8, Z], trim, name + ' hem')]
+
+
+def saddlery():
+    """Front is north. The bench fills the lower block; the saddle horse and the tack board stand in the upper one."""
+    e = legs('log')
+    e += [box([0, 12, 0], [16, 14.5, 16], 'planks', 'bench top'),
+          box([1.5, 10.5, 1], [14.5, 12, 2.2], 'planks_dark', 'front apron'),
+          box([1.5, 10.5, 13.8], [14.5, 12, 15], 'planks_dark', 'back apron'),
+          box([4.5, 10.3, .5], [11.5, 11.9, 1], 'planks', 'drawer'),
+          box([7.5, 10.8, .1], [8.5, 11.4, .5], 'saddle_bronze', 'drawer pull'),
+          box([1.5, 3, 1.5], [14.5, 4, 14.5], 'planks', 'lower shelf'),
+          # Under the bench: the hide blanket rolled in its fur fringe, saddlebags, a bedroll and a box of buckles.
+          box([3.6, 4, 3.7], [9, 7.4, 7], 'saddle_hide', 'rolled hide blanket'),
+          box([3, 4, 3.7], [3.6, 7.4, 7], 'saddle_fur', 'fur fringe'),
+          box([9, 4, 3.7], [9.6, 7.4, 7], 'saddle_fur', 'fur fringe'),
+          box([5.8, 3.95, 3.65], [6.8, 7.45, 7.05], 'saddle_strap', 'blanket tie'),
+          box([10.4, 4, 3.6], [14, 8, 7.2], 'saddle_bag', 'saddlebag'),
+          box([2.6, 4, 9.4], [9.2, 7, 12.4], 'saddle_roll', 'bedroll'),
+          box([3.8, 3.95, 9.35], [4.6, 7.05, 12.45], 'saddle_strap', 'bedroll strap'),
+          box([7.2, 3.95, 9.35], [8, 7.05, 12.45], 'saddle_strap', 'bedroll strap'),
+          box([10.4, 4, 9.4], [14, 6.4, 12.6], 'planks_dark', 'buckle box'),
+          box([10.9, 6.4, 9.9], [13.5, 6.7, 12.1], 'saddle_bronze', 'buckles'),
+          # A girth on the west edge and a coiled lead on the east one.
+          box([-.4, 4.5, 6.6], [0, 12.4, 8.4], 'saddle_strap', 'hanging girth'),
+          box([-.6, 5.2, 6.4], [-.4, 6.8, 8.6], 'saddle_bronze', 'girth buckle'),
+          box([16, 11.6, 7.6], [17, 12.2, 8.4], 'planks_dark', 'lead peg')]
+    e += hoop([16, 6, 5.6], [16.5, 11.6, 10.4], 1, 'rope', 'coiled lead', 'x')
+    # The saddler's tools: round knife, mallet, a strap being cut, thread and needle, an awl.
+    e += [box([.8, 14.5, .8], [4.6, 14.8, 2.1], 'saddle_steel', 'round knife blade'),
+          box([2.2, 14.5, 2.1], [3.2, 15.3, 4.9], 'planks_dark', 'round knife handle'),
+          box([5.6, 14.5, .8], [8, 16.7, 3], 'log_end', 'mallet head'),
+          box([8, 14.5, 1.5], [12.4, 15.3, 2.3], 'planks_dark', 'mallet handle'),
+          box([4.4, 14.5, 3.3], [11.6, 14.75, 4.2], 'saddle_strap', 'strap in work'),
+          box([11.4, 14.5, 3.1], [12.5, 14.95, 4.4], 'saddle_bronze', 'strap buckle'),
+          box([13, 14.5, .9], [15.4, 14.9, 3.3], 'planks_dark', 'spool foot'),
+          box([13.4, 14.9, 1.3], [15, 16.5, 2.9], 'saddle_thread', 'thread'),
+          box([13, 16.5, .9], [15.4, 16.9, 3.3], 'planks_dark', 'spool head'),
+          box([14.05, 16.9, 1.95], [14.35, 18.5, 2.25], 'saddle_steel', 'needle'),
+          box([13.85, 14.5, 4.35], [14.15, 15.5, 4.65], 'saddle_steel', 'awl point'),
+          box([13.5, 15.5, 4], [14.5, 17.2, 5], 'planks_dark', 'awl handle')]
+    # The saddle horse: a log on two trestles, the saddle across it with its pommel to the east.
+    for x in (1, 12.4):
+        e += [box([x, 14.5, 5.9], [x + 2.6, 15.3, 11.1], 'planks_dark', 'trestle foot'),
+              box([x + .6, 15.3, 7.4], [x + 2, 20, 9.6], 'planks_dark', 'trestle post')]
+    e.append(faced(box([.8, 20, 6.8], [15.2, 22.6, 10.2], 'log', 'saddle horse'), 'log_end', 'east', 'west'))
+    e += [box([4, 22.6, 5.9], [12, 23.2, 11.1], 'saddle_red', 'saddle blanket'),
+          box([3.4, 22.6, 5.9], [4, 23.2, 11.1], 'saddle_red_trim', 'blanket border'),
+          box([12, 22.6, 5.9], [12.6, 23.2, 11.1], 'saddle_red_trim', 'blanket border')]
+    e += blanket_flap(3.4, 12.6, 17.2, 23.2, 5.3, 5.9, 'saddle_red', 'saddle_red_trim', 'saddle_gold', 'blanket front')
+    e += blanket_flap(3.4, 12.6, 17.2, 23.2, 11.1, 11.7, 'saddle_red', 'saddle_red_trim', 'saddle_gold', 'blanket back')
+    e += [box([4.6, 23.2, 6.4], [11.6, 24.6, 10.6], 'saddle_leather', 'seat'),
+          box([4.2, 24.6, 6.6], [5.8, 26.2, 10.4], 'saddle_leather', 'cantle'),
+          box([3.8, 26.2, 7], [5.2, 27.4, 10], 'saddle_leather', 'cantle rim'),
+          box([10.2, 24.6, 7.3], [11.9, 26, 9.7], 'saddle_leather', 'pommel'),
+          box([10.8, 26, 8], [11.6, 27, 9], 'saddle_bronze', 'horn'),
+          box([10.5, 27, 7.7], [11.9, 27.6, 9.3], 'saddle_bronze', 'horn cap'),
+          box([5.6, 20.6, 5.1], [9.2, 23.2, 5.3], 'saddle_leather', 'fender'),
+          box([6.9, 17.6, 5], [7.9, 20.6, 5.2], 'saddle_strap', 'stirrup leather'),
+          box([10.3, 16.2, 5.1], [11.3, 23.2, 5.3], 'saddle_strap', 'girth'),
+          box([10.1, 19.4, 4.9], [11.5, 20.8, 5.1], 'saddle_bronze', 'girth buckle')]
+    e += hoop([6.1, 14.9, 4.6], [8.7, 17.6, 5.6], .5, 'saddle_bronze', 'stirrup')
+    # The tack rack: a rope coil and shears on pegs, the steel blanket folded over the top rail.
+    for x in (.4, 13.8):
+        e.append(box([x, 14.5, 13.4], [x + 1.8, 31, 15.2], 'log', 'rack post'))
+    e += [box([0, 29.6, 13], [16, 31.4, 15.6], 'planks_dark', 'top rail'),
+          box([2.2, 19.4, 13.8], [13.8, 20.6, 14.8], 'planks_dark', 'lower rail'),
+          box([4.9, 28.2, 12.6], [5.5, 28.8, 13.8], 'planks_dark', 'peg'),
+          box([8.6, 28.6, 12.6], [9.2, 29.2, 13.8], 'planks_dark', 'peg'),
+          box([8.1, 26.4, 13], [9.7, 28.6, 13.6], 'saddle_bronze', 'shear grips'),
+          box([8.2, 21.8, 13.1], [8.8, 26.4, 13.6], 'saddle_steel', 'shear blade'),
+          box([9, 21.8, 13.1], [9.6, 26.4, 13.6], 'saddle_steel', 'shear blade'),
+          box([10.4, 31.4, 12.4], [15.2, 31.9, 16], 'saddle_blue', 'steel blanket, folded'),
+          box([10.4, 27, 15.6], [15.2, 31.4, 16], 'saddle_blue', 'steel blanket, behind')]
+    e += hoop([3.2, 22.4, 13], [7.2, 28.2, 13.7], 1.1, 'rope', 'coiled lead')
+    e += blanket_flap(10.4, 15.2, 22.6, 31.4, 12.4, 13, 'saddle_blue', 'saddle_steel', 'saddle_blue_trim', 'steel blanket')
+    lower, upper = split(e)
+    save('saddlery_lower', lower, 'planks')
+    save('saddlery_upper', upper, 'planks')
+    save('saddlery_item', lower + lift(upper, 'y', 16), 'planks', TALL_DISPLAY)
+
+
 def main():
     MODELS.mkdir(parents=True, exist_ok=True)
     TEXTURES.mkdir(parents=True, exist_ok=True)
@@ -318,6 +483,7 @@ def main():
     smithing_table()
     medicine_bench()
     crusher()
+    saddlery()
     print(f'{len(list(MODELS.glob("*.json")))} models, {len(PALETTE)} textures -> {MODELS.relative_to(ROOT)}')
     if '--preview' in sys.argv:
         preview()

@@ -59,8 +59,8 @@ final class StationGameTests {
                 "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Phase A grid recipe survived: " + id);
         }
-        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().size() == 5, "All phase A designs must load");
-        for (String id : List.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table")) {
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().size() == 6, "All phase A designs must load");
+        for (String id : List.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery")) {
             var definition = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:" + id);
             h.assertTrue(definition != null && !definition.crafts().isEmpty(), "Missing graph recipes for " + id);
         }

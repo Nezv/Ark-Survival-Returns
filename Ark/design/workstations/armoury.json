@@ -40,7 +40,6 @@
         {"item": "minecraft:leather_chestplate", "level": 4, "cost": {"minecraft:leather": 8, "arksurvivalreturns:plant_fiber": 4}},
         {"item": "minecraft:leather_leggings", "level": 3, "cost": {"minecraft:leather": 7, "arksurvivalreturns:plant_fiber": 3}},
         {"item": "minecraft:leather_boots", "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "minecraft:saddle", "level": 3, "cost": {"minecraft:leather": 3, "minecraft:iron_ingot": 1}},
         {"item": "minecraft:leather_horse_armor", "level": 4, "cost": {"minecraft:leather": 7}}
       ]
     },

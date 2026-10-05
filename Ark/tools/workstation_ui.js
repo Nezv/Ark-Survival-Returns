@@ -139,6 +139,10 @@ window.ArkWorkstationUI = (function () {
         px = Math.floor(rnd() * w); py = Math.floor(rnd() * h);
         x.fillRect(px, py, 2, 1); x.fillRect(px + 1, py + 1, 2, 1);
       }
+    } else if (kind === 'stitches') {
+      for (i = 0, py = 5; py < h - 2; py += 9, i++) {
+        for (px = 3 + i % 2 * 3; px < w - 4; px += 6) x.fillRect(px, py, 3, 1);
+      }
     } else if (kind === 'sparks') {
       for (i = 0; i < w * h / 150; i++) {
         x.fillStyle = css(rnd() < 0.3 ? '#3a2410' : pal.wellDot);

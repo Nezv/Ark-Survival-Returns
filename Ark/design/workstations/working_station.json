@@ -22,13 +22,13 @@
         {"group": "stations", "title": "Stations", "icon": "arksurvivalreturns:working_station", "items": [
           {"item": "minecraft:stonecutter", "cost": {"arksurvivalreturns:rock": 4, "minecraft:flint": 2, "#minecraft:planks": 2}},
           {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "arksurvivalreturns:rock": 4, "arksurvivalreturns:plant_fiber": 3}},
+          {"item": "arksurvivalreturns:saddlery", "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 4}},
           {"item": "arksurvivalreturns:mechanical_press", "planned": true, "level": 12, "cost": {"arksurvivalreturns:bronze_ingot": 4, "#minecraft:logs": 4, "minecraft:smooth_stone": 2, "minecraft:copper_ingot": 2}},
           {"item": "arksurvivalreturns:cutting_machine", "planned": true, "level": 25, "cost": {"arksurvivalreturns:steel_ingot": 3, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "#minecraft:planks": 4}},
           {"item": "arksurvivalreturns:milling_machine", "planned": true, "level": 26, "cost": {"arksurvivalreturns:steel_ingot": 4, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "minecraft:smooth_stone": 2}},
           {"item": "arksurvivalreturns:generator", "title": "Generator", "planned": true, "level": 28, "cost": {"arksurvivalreturns:engine": 1, "arksurvivalreturns:copper_wire": 8, "arksurvivalreturns:metal_sheet": 4, "minecraft:redstone": 4}}
         ]},
-        {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress"},
-        {"group": "tame", "title": "Tame gear", "icon": "arksurvivalreturns:pack_harness"}
+        {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress"}
       ]
     },
     {

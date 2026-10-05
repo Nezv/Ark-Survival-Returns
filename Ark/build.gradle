@@ -152,7 +152,7 @@ dependencies {
 tasks.named('test') { useJUnitPlatform() }
 
 // The reviewed showcase designs are the only authored workstation data and frame assets.
-def phaseABenches = ['armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table']
+def phaseABenches = ['armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery']
 def workstationBuild = layout.buildDirectory.dir('workstations')
 tasks.register('generateWorkstationData', Exec) {
     dependsOn 'createMinecraftArtifacts'

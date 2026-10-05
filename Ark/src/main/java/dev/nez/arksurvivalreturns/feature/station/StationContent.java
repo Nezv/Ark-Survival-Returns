@@ -32,7 +32,7 @@ import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 /**
  * Exclusive workstations: the Working Station (the crafting table), the Storage Crate (every wooden chest),
- * the Ark smithing table, the Medicine Bench and the unpowered Crusher. Vanilla recipes for the replaced
+ * the Ark smithing table, the Medicine Bench, the Saddlery and the unpowered Crusher. Vanilla recipes for the replaced
  * blocks now make these, and stray vanilla items convert on pickup ({@link StationEvents}).
  */
 public final class StationContent {
@@ -48,6 +48,11 @@ public final class StationContent {
     public static final DeferredBlock<StationBlock> ARMOURY = ModContent.BLOCKS.registerBlock("armoury",
             p -> new StationBlock(StationBlock.Kind.ARMOURY, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
     public static final DeferredItem<BlockItem> ARMOURY_ITEM = ModContent.ITEMS.registerSimpleBlockItem(ARMOURY);
+
+    /** Two blocks tall: saddles, leads and harnesses are made here. */
+    public static final DeferredBlock<SaddleryBlock> SADDLERY = ModContent.BLOCKS.registerBlock("saddlery",
+            SaddleryBlock::new, p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
+    public static final DeferredItem<BlockItem> SADDLERY_ITEM = ModContent.ITEMS.registerSimpleBlockItem(SADDLERY);
 
     public static final DeferredBlock<StationBlock> MEDICINE_BENCH = ModContent.BLOCKS.registerBlock("medicine_bench",
             p -> new StationBlock(StationBlock.Kind.MEDICINE, p), p -> p.strength(2.5f).noOcclusion().sound(SoundType.WOOD).ignitedByLava());
@@ -118,6 +123,7 @@ public final class StationContent {
     public static void displayItems(CreativeModeTab.Output output) {
         output.accept(WORKING_STATION_ITEM.get());
         output.accept(ARMOURY_ITEM.get());
+        output.accept(SADDLERY_ITEM.get());
         output.accept(MORTAR_AND_PESTLE_ITEM.get());
         output.accept(STORAGE_CRATE_ITEM.get());
         output.accept(SMITHING_TABLE_ITEM.get());

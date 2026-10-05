@@ -1,7 +1,7 @@
 """Models page of the showcase: every authored 3D asset, live in the browser.
 
 Machines (build_machine_assets.py) run their animation specs; armour sets turn on a walking player; the
-authored weapons (build_weapon_models.py) turn in place. Everything is baked here from the shipped files into
+authored weapons (build_weapon_models.py) and the tall benches (build_station_assets.py) turn in place. Everything is baked here from the shipped files into
 textured quads (world space: block pixels, y up), so the page only draws them: three.js from jsDelivr, loaded
 when the Models page opens. Each card also carries a static render, shown until (or instead of) the 3D view.
 build_showcase.py calls section().
@@ -24,6 +24,8 @@ MACHINES = [('mechanical_press', 'Mechanical Press', 'Presses metal sheets. The 
 WEAPONS = [('bronze_longsword', 'Bronze Longsword', 'Faceted pommel, wrapped grip, rolled crossguard and a fullered blade with bright edges.'),
            ('bronze_hammer', 'Bronze Hammer', 'A wrapped haft, socket langets and a flared two-faced head.'),
            ('keratin_spear', 'Keratin Spear', 'A leaf-shaped keratin head on a mid-ridge, a fiber binding and an ochre-dyed grip.')]
+STATIONS = [('saddlery', 'Saddlery', "A saddler's bench under a saddle horse: the bronze saddle with its blanket, stirrup and girth, "
+             'the hide and steel blankets, saddlebags, a bedroll, and the round knife, mallet, awl, thread and shears.')]
 ARMOUR_PIECES = ('helmet', 'chestplate', 'leggings', 'boots')
 WALK = {'right_arm': (-18, 0, 4), 'left_arm': (18, 0, -4), 'right_leg': (16, 0, 0), 'left_leg': (-16, 0, 0)}
 
@@ -128,6 +130,20 @@ def weapon(ident, title, note, uri):
     return asset.data, poster
 
 
+# ------------------------------------------------------------------------------------------ stations
+
+def station(ident, title, note, uri):
+    """A bench two blocks tall, from its stacked item model; it opens on its front (north)."""
+    asset = Asset(ident, title, 'stations', note, 'In game')
+    model, images = java_model(f'arksurvivalreturns:block/station/{ident}_item')
+    points = []
+    add_java(asset, asset.part('station'), model, images, uri, bounds=points)
+    asset.frame(*extent(points))
+    asset.data['view'] = {'yaw': 30, 'pitch': 22}
+    poster = M.render(M.java_quads(model), images, yaw=30, pitch=22, size=300)
+    return asset.data, poster
+
+
 # ------------------------------------------------------------------------------------------ armour
 
 def to_world(v):
@@ -206,9 +222,11 @@ def card(asset, poster, uri, e):
 
 
 def section(uri, e):
-    assets = {'machines': [], 'armour': [], 'weapons': []}
+    assets = {'machines': [], 'stations': [], 'armour': [], 'weapons': []}
     for ident, title, note in MACHINES:
         assets['machines'].append(machine(ident, title, note, uri))
+    for ident, title, note in STATIONS:
+        assets['stations'].append(station(ident, title, note, uri))
     steel = authored_set('steel')
     if steel:
         assets['armour'].append(armour('steel_armour', 'Steel armour', 'The Iron Age knight: a great helm, keeled '
@@ -224,5 +242,6 @@ def section(uri, e):
         assets['weapons'].append(weapon(ident, title, note, uri))
     data = [a for group in assets.values() for a, _ in group]
     html = {key: '\n'.join(card(a, poster, uri, e) for a, poster in group) for key, group in assets.items()}
-    return {'MODELS_MACHINES': html['machines'], 'MODELS_ARMOUR': html['armour'], 'MODELS_WEAPONS': html['weapons'],
+    return {'MODELS_MACHINES': html['machines'], 'MODELS_STATIONS': html['stations'], 'MODELS_ARMOUR': html['armour'],
+            'MODELS_WEAPONS': html['weapons'],
             'MODELS_DATA': json.dumps(data, separators=(',', ':')), 'MODELS_COUNT': len(data)}

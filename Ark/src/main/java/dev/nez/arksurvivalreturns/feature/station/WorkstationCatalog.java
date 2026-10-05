@@ -15,7 +15,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 
 /** An atomic server snapshot. Client state is held separately so integrated servers never share it. */
 public final class WorkstationCatalog extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
-    public static final Set<String> PHASE_A = Set.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table");
+    public static final Set<String> PHASE_A = Set.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery");
     private static volatile Map<String, WorkstationDefinition> stations = Map.of();
     public static Map<String, WorkstationDefinition> all() { return stations; }
     public static WorkstationDefinition get(String station) { return stations.get(station); }

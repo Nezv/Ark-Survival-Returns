@@ -31,7 +31,7 @@ POLICY = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePoli
 PRIMITIVE = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/PrimitiveEvents.java'
 NS = 'arksurvivalreturns'
 
-BENCHES = ['armoury', 'working_station', 'campfire', 'stonecutter', 'mortar_and_pestle', 'primitive_forge',
+BENCHES = ['armoury', 'working_station', 'saddlery', 'campfire', 'stonecutter', 'mortar_and_pestle', 'primitive_forge',
            'medicine_bench', 'smithing_table', 'mechanical_press', 'milling_machine', 'cutting_machine']
 TIMED = ('smelting', 'campfire_cooking')  # recipes that take time over the fire; the variant carries it in seconds
 FATES = ('go', 'stay', 'change', 'decide')
@@ -626,8 +626,10 @@ def crafted(recipe):
         return ws('fibre/banners', 'bed' if fam == 'bed' else 'dye_bed')
     if fam == 'banner' or rid.endswith('_banner_duplicate'):
         return ws('fibre/banners', 'banner' if fam == 'banner' else 'banner_copy')
-    if path in ('leather', 'bundle') or fam in ('bundle_dye', 'lead'):
-        return ws('fibre/leather', fam if fam in ('bundle_dye', 'lead') else None)
+    if fam == 'lead':
+        return at('saddlery', 'riding', 'lead')
+    if path in ('leather', 'bundle') or fam == 'bundle_dye':
+        return ws('fibre/leather', fam if fam == 'bundle_dye' else None)
 
     # Weapons and tools the Armoury adds to its own designs.
     if path in ('carrot_on_a_stick', 'warped_fungus_on_a_stick', 'spectral_arrow'):
@@ -651,9 +653,9 @@ def ark_place(recipe):
                 'medicine_bench', 'smithing_table', 'crusher'):
         return ws('camp/stations')
     if path in ('pack_harness', 'reinforced_harness'):
-        return ws('camp/tame')
+        return at('saddlery', 'cargo')
     if path == 'lead':
-        return ws('fibre/leather', 'lead')
+        return at('saddlery', 'riding', 'lead')
     if path == 'resin_clump':
         return ws('wood', 'resin_clump')
     if path == 'bronze_blend':

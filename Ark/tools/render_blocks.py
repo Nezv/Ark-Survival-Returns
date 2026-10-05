@@ -52,8 +52,20 @@ def texture(name, textures):
     return np.array(image.crop((0, 0, image.width, image.width)))
 
 
+_mesh = rc.mesh
+
+
+def mesh(identifier, offset=(0, 0, 0)):
+    """A model id ending in @180 is turned half round its block: its north front then faces the camera."""
+    name, _, turn = identifier.partition('@')
+    if not turn:
+        return _mesh(name, offset)
+    flip = np.array([-1.0, 1.0, -1.0])
+    return [(v * flip + (16, 0, 16) + np.array(offset, dtype=float), normal * flip, uv, tex) for v, normal, uv, tex in _mesh(name)]
+
+
 # The camp renderer resolves models and textures through these module globals.
-rc.model, rc.texture = model, texture
+rc.model, rc.texture, rc.mesh = model, texture, mesh
 
 A = 'arksurvivalreturns:block/'
 UP = (0, 16, 0)
@@ -91,6 +103,9 @@ BLOCKS = [
     ('armoury', 'Armoury', 'In game', '1 block', '2 Logs + 4 Planks + 4 Rock + 3 Fiber',
      'Every weapon, tool and armour piece is made here, on a graph that opens with the permanent level of the player.',
      [(A + 'station/armoury', (0, 0, 0))]),
+    ('saddlery', 'Saddlery', 'In game', '2 blocks tall', '2 Logs + 4 Planks + 2 Leather + 4 Fiber',
+     'Tack for tames is stitched here: the saddle, leads and the pack harnesses. The Chronicle asks for it at We should ride them.',
+     [(A + 'station/saddlery_lower@180', (0, 0, 0)), (A + 'station/saddlery_upper@180', UP)]),
     ('storage_crate', 'Storage Crate', 'In game', '1 block, joins', '8 Planks',
      'Replaces every wooden chest. 27 slots; crates side by side join into one look, but each keeps and shows only its own slots.',
      [(A + 'station/storage_crate_item', (0, 0, 0))]),

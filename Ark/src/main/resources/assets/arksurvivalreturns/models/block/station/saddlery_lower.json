@@ -1,0 +1,3289 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "log": "arksurvivalreturns:block/station/log",
+    "log_end": "arksurvivalreturns:block/station/log_end",
+    "planks": "arksurvivalreturns:block/station/planks",
+    "planks_dark": "arksurvivalreturns:block/station/planks_dark",
+    "rope": "arksurvivalreturns:block/station/rope",
+    "saddle_bag": "arksurvivalreturns:block/station/saddle_bag",
+    "saddle_bronze": "arksurvivalreturns:block/station/saddle_bronze",
+    "saddle_fur": "arksurvivalreturns:block/station/saddle_fur",
+    "saddle_hide": "arksurvivalreturns:block/station/saddle_hide",
+    "saddle_roll": "arksurvivalreturns:block/station/saddle_roll",
+    "saddle_steel": "arksurvivalreturns:block/station/saddle_steel",
+    "saddle_strap": "arksurvivalreturns:block/station/saddle_strap",
+    "saddle_thread": "arksurvivalreturns:block/station/saddle_thread",
+    "particle": "arksurvivalreturns:block/station/planks"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "elements": [
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        3.5,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        1,
+        0,
+        12.5
+      ],
+      "to": [
+        3.5,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        1
+      ],
+      "to": [
+        15.0,
+        12,
+        3.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "leg",
+      "from": [
+        12.5,
+        0,
+        12.5
+      ],
+      "to": [
+        15.0,
+        12,
+        15.0
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            2.5
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.5,
+            12
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "bench top",
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        14.5,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            2.5
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            2.5
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            2.5
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            2.5
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "front apron",
+      "from": [
+        1.5,
+        10.5,
+        1
+      ],
+      "to": [
+        14.5,
+        12,
+        2.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.2000000000000002
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.2000000000000002
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.2000000000000002,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.2000000000000002,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "back apron",
+      "from": [
+        1.5,
+        10.5,
+        13.8
+      ],
+      "to": [
+        14.5,
+        12,
+        15
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.1999999999999993,
+            1.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "drawer",
+      "from": [
+        4.5,
+        10.3,
+        0.5
+      ],
+      "to": [
+        11.5,
+        11.9,
+        1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.5
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            0.5
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            1.5999999999999996
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            7.0,
+            1.5999999999999996
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.5999999999999996
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.5999999999999996
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "drawer pull",
+      "from": [
+        7.5,
+        10.8,
+        0.1
+      ],
+      "to": [
+        8.5,
+        11.4,
+        0.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.4
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.4
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "lower shelf",
+      "from": [
+        1.5,
+        3,
+        1.5
+      ],
+      "to": [
+        14.5,
+        4,
+        14.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            13.0
+          ],
+          "texture": "#planks"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            1
+          ],
+          "texture": "#planks"
+        }
+      }
+    },
+    {
+      "name": "rolled hide blanket",
+      "from": [
+        3.6,
+        4,
+        3.7
+      ],
+      "to": [
+        9,
+        7.4,
+        7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            5.4,
+            3.3
+          ],
+          "texture": "#saddle_hide"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            5.4,
+            3.3
+          ],
+          "texture": "#saddle_hide"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            5.4,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_hide"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            5.4,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_hide"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_hide"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_hide"
+        }
+      }
+    },
+    {
+      "name": "fur fringe",
+      "from": [
+        3,
+        4,
+        3.7
+      ],
+      "to": [
+        3.6,
+        7.4,
+        7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000001,
+            3.3
+          ],
+          "texture": "#saddle_fur"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000001,
+            3.3
+          ],
+          "texture": "#saddle_fur"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000001,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.6000000000000001,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        }
+      }
+    },
+    {
+      "name": "fur fringe",
+      "from": [
+        9,
+        4,
+        3.7
+      ],
+      "to": [
+        9.6,
+        7.4,
+        7
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5999999999999996,
+            3.3
+          ],
+          "texture": "#saddle_fur"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5999999999999996,
+            3.3
+          ],
+          "texture": "#saddle_fur"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5999999999999996,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5999999999999996,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.3,
+            3.4000000000000004
+          ],
+          "texture": "#saddle_fur"
+        }
+      }
+    },
+    {
+      "name": "blanket tie",
+      "from": [
+        5.8,
+        3.95,
+        3.65
+      ],
+      "to": [
+        6.8,
+        7.45,
+        7.05
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.4
+          ],
+          "texture": "#saddle_strap"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.4
+          ],
+          "texture": "#saddle_strap"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5
+          ],
+          "texture": "#saddle_strap"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5
+          ],
+          "texture": "#saddle_strap"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.4,
+            3.5
+          ],
+          "texture": "#saddle_strap"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.4,
+            3.5
+          ],
+          "texture": "#saddle_strap"
+        }
+      }
+    },
+    {
+      "name": "saddlebag",
+      "from": [
+        10.4,
+        4,
+        3.6
+      ],
+      "to": [
+        14,
+        8,
+        7.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            3.6
+          ],
+          "texture": "#saddle_bag"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            3.6
+          ],
+          "texture": "#saddle_bag"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            4
+          ],
+          "texture": "#saddle_bag"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            4
+          ],
+          "texture": "#saddle_bag"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.6,
+            4
+          ],
+          "texture": "#saddle_bag"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.6,
+            4
+          ],
+          "texture": "#saddle_bag"
+        }
+      }
+    },
+    {
+      "name": "bedroll",
+      "from": [
+        2.6,
+        4,
+        9.4
+      ],
+      "to": [
+        9.2,
+        7,
+        12.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            6.6,
+            3.0
+          ],
+          "texture": "#saddle_roll"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6.6,
+            3.0
+          ],
+          "texture": "#saddle_roll"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            6.6,
+            3
+          ],
+          "texture": "#saddle_roll"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            6.6,
+            3
+          ],
+          "texture": "#saddle_roll"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.0,
+            3
+          ],
+          "texture": "#saddle_roll"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.0,
+            3
+          ],
+          "texture": "#saddle_roll"
+        }
+      }
+    },
+    {
+      "name": "bedroll strap",
+      "from": [
+        3.8,
+        3.95,
+        9.35
+      ],
+      "to": [
+        4.6,
+        7.05,
+        12.45
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.0999999999999996,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.0999999999999996,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        }
+      }
+    },
+    {
+      "name": "bedroll strap",
+      "from": [
+        7.2,
+        3.95,
+        9.35
+      ],
+      "to": [
+        8,
+        7.05,
+        12.45
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.0999999999999996,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.0999999999999996,
+            3.0999999999999996
+          ],
+          "texture": "#saddle_strap"
+        }
+      }
+    },
+    {
+      "name": "buckle box",
+      "from": [
+        10.4,
+        4,
+        9.4
+      ],
+      "to": [
+        14,
+        6.4,
+        12.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            3.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            3.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            2.4000000000000004
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.5999999999999996,
+            2.4000000000000004
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            3.1999999999999993,
+            2.4000000000000004
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            3.1999999999999993,
+            2.4000000000000004
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "buckles",
+      "from": [
+        10.9,
+        6.4,
+        9.9
+      ],
+      "to": [
+        13.5,
+        6.7,
+        12.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            2.1999999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            2.1999999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.2999999999999998
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.2999999999999998
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.2999999999999998
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.2999999999999998
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "hanging girth",
+      "from": [
+        -0.4,
+        4.5,
+        6.6
+      ],
+      "to": [
+        0,
+        12.4,
+        8.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            1.8000000000000007
+          ],
+          "texture": "#saddle_strap"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            1.8000000000000007
+          ],
+          "texture": "#saddle_strap"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            7.9
+          ],
+          "texture": "#saddle_strap"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.4,
+            7.9
+          ],
+          "texture": "#saddle_strap"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            7.9
+          ],
+          "texture": "#saddle_strap"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            7.9
+          ],
+          "texture": "#saddle_strap"
+        }
+      }
+    },
+    {
+      "name": "girth buckle",
+      "from": [
+        -0.6,
+        5.2,
+        6.4
+      ],
+      "to": [
+        -0.4,
+        6.8,
+        8.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            2.1999999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            2.1999999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.25,
+            1.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            1.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            1.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "lead peg",
+      "from": [
+        16,
+        11.6,
+        7.6
+      ],
+      "to": [
+        17,
+        12.2,
+        8.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.5999999999999996
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.5999999999999996
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.5999999999999996
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.8000000000000007,
+            0.5999999999999996
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "coiled lead",
+      "from": [
+        16,
+        10.6,
+        5.6
+      ],
+      "to": [
+        16.5,
+        11.6,
+        10.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            4.800000000000001
+          ],
+          "texture": "#rope"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            4.800000000000001
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            1.0
+          ],
+          "texture": "#rope"
+        }
+      }
+    },
+    {
+      "name": "coiled lead",
+      "from": [
+        16,
+        6,
+        5.6
+      ],
+      "to": [
+        16.5,
+        7,
+        10.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            4.800000000000001
+          ],
+          "texture": "#rope"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            4.800000000000001
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            1
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            4.800000000000001,
+            1
+          ],
+          "texture": "#rope"
+        }
+      }
+    },
+    {
+      "name": "coiled lead",
+      "from": [
+        16,
+        7,
+        5.6
+      ],
+      "to": [
+        16.5,
+        10.6,
+        6.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        }
+      }
+    },
+    {
+      "name": "coiled lead",
+      "from": [
+        16,
+        7,
+        9.4
+      ],
+      "to": [
+        16.5,
+        10.6,
+        10.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            3.5999999999999996
+          ],
+          "texture": "#rope"
+        }
+      }
+    },
+    {
+      "name": "round knife blade",
+      "from": [
+        0.8,
+        14.5,
+        0.8
+      ],
+      "to": [
+        4.6,
+        14.8,
+        2.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.8,
+            1.3
+          ],
+          "texture": "#saddle_steel"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            3.8,
+            1.3
+          ],
+          "texture": "#saddle_steel"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            3.8,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            3.8,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.3,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.3,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        }
+      }
+    },
+    {
+      "name": "round knife handle",
+      "from": [
+        2.2,
+        14.5,
+        2.1
+      ],
+      "to": [
+        3.2,
+        15.3,
+        4.9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            2.8000000000000003
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            2.8000000000000003
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.8000000000000003,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.8000000000000003,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "mallet head",
+      "from": [
+        5.6,
+        14.5,
+        0.8
+      ],
+      "to": [
+        8,
+        16,
+        3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.2
+          ],
+          "texture": "#log_end"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.2
+          ],
+          "texture": "#log_end"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            1.5
+          ],
+          "texture": "#log_end"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            1.5
+          ],
+          "texture": "#log_end"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.2,
+            1.5
+          ],
+          "texture": "#log_end"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.2,
+            1.5
+          ],
+          "texture": "#log_end"
+        }
+      }
+    },
+    {
+      "name": "mallet handle",
+      "from": [
+        8,
+        14.5,
+        1.5
+      ],
+      "to": [
+        12.4,
+        15.3,
+        2.3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            4.4,
+            0.7999999999999998
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            4.4,
+            0.7999999999999998
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            4.4,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            4.4,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.7999999999999998,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "strap in work",
+      "from": [
+        4.4,
+        14.5,
+        3.3
+      ],
+      "to": [
+        11.6,
+        14.75,
+        4.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            7.199999999999999,
+            0.9000000000000004
+          ],
+          "texture": "#saddle_strap"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            7.199999999999999,
+            0.9000000000000004
+          ],
+          "texture": "#saddle_strap"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            7.199999999999999,
+            0.25
+          ],
+          "texture": "#saddle_strap"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            7.199999999999999,
+            0.25
+          ],
+          "texture": "#saddle_strap"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.9000000000000004,
+            0.25
+          ],
+          "texture": "#saddle_strap"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.9000000000000004,
+            0.25
+          ],
+          "texture": "#saddle_strap"
+        }
+      }
+    },
+    {
+      "name": "strap buckle",
+      "from": [
+        11.4,
+        14.5,
+        3.1
+      ],
+      "to": [
+        12.5,
+        14.95,
+        4.4
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.0999999999999996,
+            1.3000000000000003
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.0999999999999996,
+            1.3000000000000003
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.0999999999999996,
+            0.4499999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.0999999999999996,
+            0.4499999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000003,
+            0.4499999999999993
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.3000000000000003,
+            0.4499999999999993
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "spool foot",
+      "from": [
+        13,
+        14.5,
+        0.9
+      ],
+      "to": [
+        15.4,
+        14.9,
+        3.3
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.4
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            2.4
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            0.40000000000000036
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.4000000000000004,
+            0.40000000000000036
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.4,
+            0.40000000000000036
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.4,
+            0.40000000000000036
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "thread",
+      "from": [
+        13.4,
+        14.9,
+        1.3
+      ],
+      "to": [
+        15,
+        16,
+        2.9
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999996,
+            1.5999999999999999
+          ],
+          "texture": "#saddle_thread"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999996,
+            1.5999999999999999
+          ],
+          "texture": "#saddle_thread"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999996,
+            1.0999999999999996
+          ],
+          "texture": "#saddle_thread"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999996,
+            1.0999999999999996
+          ],
+          "texture": "#saddle_thread"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999999,
+            1.0999999999999996
+          ],
+          "texture": "#saddle_thread"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.5999999999999999,
+            1.0999999999999996
+          ],
+          "texture": "#saddle_thread"
+        }
+      }
+    },
+    {
+      "name": "awl point",
+      "from": [
+        13.85,
+        14.5,
+        4.35
+      ],
+      "to": [
+        14.15,
+        15.5,
+        4.65
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            0.3000000000000007
+          ],
+          "texture": "#saddle_steel"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            1.0
+          ],
+          "texture": "#saddle_steel"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            1.0
+          ],
+          "texture": "#saddle_steel"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            1.0
+          ],
+          "texture": "#saddle_steel"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0.3000000000000007,
+            1.0
+          ],
+          "texture": "#saddle_steel"
+        }
+      }
+    },
+    {
+      "name": "awl handle",
+      "from": [
+        13.5,
+        15.5,
+        4
+      ],
+      "to": [
+        14.5,
+        16,
+        5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            1
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            1
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.5
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1,
+            0.5
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "trestle foot",
+      "from": [
+        1,
+        14.5,
+        5.9
+      ],
+      "to": [
+        3.6,
+        15.3,
+        11.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.6,
+            5.199999999999999
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.6,
+            5.199999999999999
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.6,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.6,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            5.199999999999999,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            5.199999999999999,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "trestle post",
+      "from": [
+        1.6,
+        15.3,
+        7.4
+      ],
+      "to": [
+        3,
+        16,
+        9.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            2.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            2.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.4,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "trestle foot",
+      "from": [
+        12.4,
+        14.5,
+        5.9
+      ],
+      "to": [
+        15.0,
+        15.3,
+        11.1
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            5.199999999999999
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            5.199999999999999
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            5.199999999999999,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            5.199999999999999,
+            0.8000000000000007
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "trestle post",
+      "from": [
+        13.0,
+        15.3,
+        7.4
+      ],
+      "to": [
+        14.4,
+        16,
+        9.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            2.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            2.1999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.4000000000000004,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2.1999999999999993,
+            0.6999999999999993
+          ],
+          "texture": "#planks_dark"
+        }
+      }
+    },
+    {
+      "name": "stirrup",
+      "from": [
+        6.1,
+        14.9,
+        4.6
+      ],
+      "to": [
+        8.7,
+        15.4,
+        5.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.5
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.5999999999999996,
+            0.5
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "stirrup",
+      "from": [
+        6.1,
+        15.4,
+        4.6
+      ],
+      "to": [
+        6.6,
+        16,
+        5.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "stirrup",
+      "from": [
+        8.2,
+        15.4,
+        4.6
+      ],
+      "to": [
+        8.7,
+        16,
+        5.6
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            1.0
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            0.5,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.0,
+            0.5999999999999996
+          ],
+          "texture": "#saddle_bronze"
+        }
+      }
+    },
+    {
+      "name": "rack post",
+      "from": [
+        0.4,
+        14.5,
+        13.4
+      ],
+      "to": [
+        2.2,
+        16,
+        15.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000003,
+            1.799999999999999
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000003,
+            1.799999999999999
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000003,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000003,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            1.5
+          ],
+          "texture": "#log"
+        }
+      }
+    },
+    {
+      "name": "rack post",
+      "from": [
+        13.8,
+        14.5,
+        13.4
+      ],
+      "to": [
+        15.600000000000001,
+        16,
+        15.2
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            1.799999999999999
+          ],
+          "texture": "#log"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            1.799999999999999
+          ],
+          "texture": "#log"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1.8000000000000007,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            1.5
+          ],
+          "texture": "#log"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1.799999999999999,
+            1.5
+          ],
+          "texture": "#log"
+        }
+      }
+    }
+  ]
+}

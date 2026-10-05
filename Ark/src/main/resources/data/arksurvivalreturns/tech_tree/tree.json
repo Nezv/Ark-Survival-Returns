@@ -261,7 +261,7 @@
     {
       "id": "ride",
       "title": "We should ride them",
-      "task": "Craft a leash.",
+      "task": "Craft a Saddlery: saddles, leads and harnesses are made on it.",
       "age": "prehistoric",
       "lane": 1,
       "requires": [
@@ -278,7 +278,7 @@
       "trigger": {
         "type": "craft",
         "items": [
-          "minecraft:lead"
+          "arksurvivalreturns:saddlery"
         ]
       },
       "icon": "arksurvivalreturns:textures/gui/tech/icons/ride.png"

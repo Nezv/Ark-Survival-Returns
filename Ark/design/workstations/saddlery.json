@@ -1,0 +1,18 @@
+{
+  "station": "arksurvivalreturns:saddlery",
+  "title": "Saddlery",
+  "about": "P14 design data (see armoury.json). Tack for tames: the saddle and the lead to ride and walk them, the harnesses that let them carry. The saddle came from the Armoury, the leads and harnesses from the Working Station, each at the cost it had.",
+  "verb": "Stitch",
+  "accent": "#c9894f",
+  "sigil": "saddle",
+  "well": "stitches",
+  "categories": [
+    {
+      "id": "riding", "title": "Riding", "icon": "minecraft:saddle", "color": "#b5683c", "level": 0,
+      "items": [
+        {"item": "minecraft:saddle", "level": 3, "cost": {"minecraft:leather": 3, "minecraft:iron_ingot": 1}}
+      ]
+    },
+    {"id": "cargo", "title": "Cargo", "icon": "arksurvivalreturns:pack_harness", "color": "#b5895a", "level": 0, "after": "riding"}
+  ]
+}

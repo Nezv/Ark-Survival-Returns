@@ -27,10 +27,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * A workbench-style station: the Working Station (the crafting table), the Mortar & Pestle, the Medicine Bench
- * and the Ark smithing table, plus the Armoury. Each opens its position-bound workstation graph.
+ * and the Ark smithing table, plus the Armoury and the two-block Saddlery ({@link SaddleryBlock}). Each opens its
+ * position-bound workstation graph.
  */
-public final class StationBlock extends Block {
-    public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR, ARMOURY }
+public class StationBlock extends Block {
+    public enum Kind { WORKING, MEDICINE, SMITHING, MORTAR, ARMOURY, SADDLERY }
 
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     /** Collision: the bench tops. The outlines below also cover the tools and bottles standing on them. */
@@ -54,6 +55,7 @@ public final class StationBlock extends Block {
             case SMITHING -> "smithing_table";
             case MORTAR -> "mortar_and_pestle";
             case ARMOURY -> "armoury";
+            case SADDLERY -> "saddlery";
         };
     }
 
@@ -82,7 +84,7 @@ public final class StationBlock extends Block {
             case MORTAR -> MORTAR_SHAPE;
             case WORKING -> WORKING_OUTLINE;
             case MEDICINE -> MEDICINE_OUTLINE;
-            case SMITHING -> SHAPE;
+            case SMITHING, SADDLERY -> SHAPE;
             case ARMOURY -> Block.box(1, 0, 1, 15, 24, 15);
         };
     }
@@ -95,13 +97,17 @@ public final class StationBlock extends Block {
             BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(menu(level, pos), data -> { data.writeBlockPos(pos); data.writeUtf(stationId(), 128); });
+            BlockPos at = menuPos(state, pos);
+            serverPlayer.openMenu(menu(level, at), data -> { data.writeBlockPos(at); data.writeUtf(stationId(), 128); });
         }
         if (player instanceof ServerPlayer server) {
             server.awardStat(kind == Kind.SMITHING ? Stats.INTERACT_WITH_SMITHING_TABLE : Stats.INTERACT_WITH_CRAFTING_TABLE);
         }
         return InteractionResult.CONSUME;
     }
+
+    /** Where the menu is bound: the block itself, or the lower half of a station two blocks tall. */
+    public BlockPos menuPos(BlockState state, BlockPos pos) { return pos; }
 
     private MenuProvider menu(Level level, BlockPos pos) {
         Component title = getName();

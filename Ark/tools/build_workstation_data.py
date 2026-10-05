@@ -12,7 +12,7 @@ from pathlib import Path
 import workstation_plan as wp
 from PIL import Image
 
-PHASE_A = ('armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table')
+PHASE_A = ('armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery')
 FIELD = {f'{wp.NS}:{name}' for name in
          ('stone_hatchet', 'flint_knife', 'sharp_rock', 'fiber_bandage', 'working_station')}
 # Recipe families that stay in the hand grid as well as on their bench: the Working Station itself costs planks.

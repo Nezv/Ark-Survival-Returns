@@ -362,6 +362,8 @@ public final class WorkstationScreen extends AbstractContainerScreen<Workstation
             for (int i = 0; i < w * h / 26.0; i++) out.add(new Pixel((int) (random.next() * w), (int) (random.next() * h), random.next() < .2 ? 2 : 1, dot));
         } else if (kind.equals("leaves")) {
             for (int i = 0; i < w * h / 180.0; i++) { int x = (int) (random.next() * w), y = (int) (random.next() * h); out.add(new Pixel(x, y, 2, dot)); out.add(new Pixel(x + 1, y + 1, 2, dot)); }
+        } else if (kind.equals("stitches")) {
+            for (int row = 0, py = 5; py < h - 2; py += 9, row++) for (int px = 3 + row % 2 * 3; px < w - 4; px += 6) out.add(new Pixel(px, py, 3, dot));
         } else if (kind.equals("sparks")) {
             for (int i = 0; i < w * h / 150.0; i++) { int c = random.next() < .3 ? hex("#3a2410") : dot; out.add(new Pixel((int) (random.next() * w), (int) (random.next() * h), 1, c)); }
         } else for (int x = 6; x < w - 2; x += 12) for (int y = 6; y < h - 2; y += 12) out.add(new Pixel(x, y, 1, dot));
