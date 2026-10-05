@@ -51,13 +51,19 @@ class CubeWriterParityTest {
     private final VertexRecorder geckoLib = new VertexRecorder(), plain = new VertexRecorder(), pushed = new VertexRecorder(),
             winding = new VertexRecorder(), culled = new VertexRecorder();
     private final CubeWriter writer = new CubeWriter();
+    private final CubeWriter.Posed posed = new CubeWriter.Posed();
+    private final VertexRecorder moved = new VertexRecorder(), small = new VertexRecorder();
+    /** Pixels a radian covers on a screen 1080 high with a view of 70 degrees. */
+    private static final float PIXELS_PER_RADIAN = (float) (540.0 / Math.tan(Math.toRadians(35.0)));
     private final ConsumerSink sink = new ConsumerSink();
     private final BulkSink bulk = new BulkSink();
     private final PushDecoder decoder = new PushDecoder(pushed);
 
     private static final class Row {
         int cubes, bones, poses, closed, culledFaces, allFaces, windingQuads;
-        final VertexRecorder.Difference plain = new VertexRecorder.Difference(), bulk = new VertexRecorder.Difference();
+        final VertexRecorder.Difference plain = new VertexRecorder.Difference(), bulk = new VertexRecorder.Difference(),
+                kept = new VertexRecorder.Difference();
+        int smallCubes, smallChecked, farCubes;
         double windingNormal, windingSmall;
         String textures = "";
     }
@@ -109,7 +115,7 @@ class CubeWriterParityTest {
         }
 
         StringBuilder table = new StringBuilder(String.format(Locale.ROOT, "%-18s %5s %5s %5s %10s %10s %10s %10s %9s %10s %8s  %s%n",
-                "model", "bones", "cubes", "poses", "vertices", "position", "scaled", "normal", "bulk norm", "winding n", "far side", "closed cubes not opaque, per texture"));
+                "model", "bones", "cubes", "poses", "vertices", "position", "scaled", "normal", "bulk norm", "winding n", "far side", "closed cubes not opaque, per texture; kept bones moved on (scaled); cubes under a pixel at 90 to 450 blocks"));
         double worstPosition = 0, worstNormal = 0;
         for (Map.Entry<String, Row> entry : rows.entrySet()) {
             Row row = entry.getValue();
@@ -117,7 +123,8 @@ class CubeWriterParityTest {
                     row.cubes, row.poses, row.plain.vertices, Math.max(row.plain.position, row.bulk.position),
                     Math.max(row.plain.positionScaled, row.bulk.positionScaled), row.plain.normal,
                     row.bulk.normalBytes == 0 ? "same byte" : row.bulk.normalBytes + " off",
-                    row.windingNormal, 100.0 * row.culledFaces / Math.max(1, row.allFaces), row.textures));
+                    row.windingNormal, 100.0 * row.culledFaces / Math.max(1, row.allFaces),
+                    row.textures + String.format(Locale.ROOT, "; %.2e; %.0f%%", row.kept.positionScaled, 100.0 * row.smallCubes / Math.max(1, row.farCubes))));
             worstPosition = Math.max(worstPosition, Math.max(row.plain.position, row.bulk.position));
             worstNormal = Math.max(worstNormal, row.plain.normal);
         }
@@ -131,6 +138,7 @@ class CubeWriterParityTest {
         Files.writeString(report, table);
         System.out.print(table);
 
+        int smallChecked = 0;
         for (Map.Entry<String, Row> entry : rows.entrySet()) {
             Row row = entry.getValue();
             String name = entry.getKey();
@@ -141,7 +149,10 @@ class CubeWriterParityTest {
             assertTrue(row.windingNormal <= WINDING_NORMAL, name + " winding normals: " + row.windingNormal);
             assertTrue(row.windingSmall <= 4.0, name + " winding normals of small quads, in units of their rounding: " + row.windingSmall);
             assertTrue(row.windingQuads > 0, name + " checked no winding normal");
+            assertTrue(row.kept.within(POSITION, 0.0, NORMAL), name + " kept bones: " + row.kept);
+            smallChecked += row.smallChecked;
         }
+        assertTrue(smallChecked > 1000, "cubes under a pixel were checked: " + smallChecked);
     }
 
     private void compare(String name, Row row, BakedGeoModel model, CreatureMesh mesh, TextureCoverage opaque, List<BoneSnapshot> snapshots, int pose) {
@@ -167,27 +178,57 @@ class CubeWriterParityTest {
             model.render(pass, geckoLib, LIGHT, OVERLAY, COLOR);
             assertEquals(root.pose(), stack.last().pose(), "GeckoLib left the pose stack as it found it");
 
+            writer.pose(mesh, posed);
             sink.begin(plain, COLOR, OVERLAY, LIGHT);
-            writer.write(mesh, root.pose(), root.normal(), sink, CubeWriter.ALL, null, false);
+            writer.write(mesh, posed, root.pose(), root.normal(), sink, CubeWriter.ALL, null, false, 0f);
             sink.end();
             row.plain.add(geckoLib, plain);
 
             assertTrue(bulk.begin(decoder, COLOR, OVERLAY, LIGHT));
-            writer.write(mesh, root.pose(), root.normal(), bulk, CubeWriter.ALL, null, false);
+            writer.write(mesh, posed, root.pose(), root.normal(), bulk, CubeWriter.ALL, null, false, 0f);
             bulk.end();
             row.bulk.add(geckoLib, pushed);
 
             sink.begin(winding, COLOR, OVERLAY, LIGHT);
-            writer.write(mesh, root.pose(), root.normal(), sink, CubeWriter.ALL, null, true);
+            writer.write(mesh, posed, root.pose(), root.normal(), sink, CubeWriter.ALL, null, true, 0f);
             sink.end();
             windingNormals(name, row);
 
             long before = writer.facesSkipped;
             sink.begin(culled, COLOR, OVERLAY, LIGHT);
-            writer.write(mesh, root.pose(), root.normal(), sink, CubeWriter.FAR_SIDES, opaque, false);
+            writer.write(mesh, posed, root.pose(), root.normal(), sink, CubeWriter.FAR_SIDES, opaque, false, 0f);
             sink.end();
             boolean hidden = snapshots.stream().anyMatch(snapshot -> snapshot.isHidden() || snapshot.areChildrenHidden());
             farSides(name, row, mesh, (int) (writer.facesSkipped - before), hidden);
+
+            // Far away, where boxes fall under a pixel: the same bones, placed there.
+            PoseStack far = new PoseStack();
+            far.translate(30f + pose % 5 * 45f, -8f, -(90f + pose % 7 * 60f));
+            far.scale(size, size, size);
+            far.mulPose(Axis.YP.rotationDegrees(63f * pose));
+            moved.clear();
+            small.clear();
+            sink.begin(moved, COLOR, OVERLAY, LIGHT);
+            writer.write(mesh, posed, far.last().pose(), far.last().normal(), sink, CubeWriter.ALL, null, false, 0f);
+            sink.end();
+            long tooSmall = writer.cubesTooSmall;
+            sink.begin(small, COLOR, OVERLAY, LIGHT);
+            writer.write(mesh, posed, far.last().pose(), far.last().normal(), sink, CubeWriter.ALL, null, false, PIXELS_PER_RADIAN * PIXELS_PER_RADIAN);
+            sink.end();
+            boolean even = snapshots.stream().allMatch(snapshot -> snapshot.getScaleX() == snapshot.getScaleY() && snapshot.getScaleY() == snapshot.getScaleZ());
+            smallBoxes(name, row, mesh, (int) (writer.cubesTooSmall - tooSmall), hidden, even);
+
+            // The bones kept, the entity moved on: what a later pass or a later frame draws from them is what GeckoLib
+            // draws there with the same animation.
+            stack.translate(0.37f, 0.11f, -0.52f);
+            stack.mulPose(Axis.YP.rotationDegrees(11f));
+            geckoLib.clear();
+            moved.clear();
+            model.render(pass, geckoLib, LIGHT, OVERLAY, COLOR);
+            sink.begin(moved, COLOR, OVERLAY, LIGHT);
+            writer.write(mesh, posed, stack.last().pose(), stack.last().normal(), sink, CubeWriter.ALL, null, false, 0f);
+            sink.end();
+            row.kept.add(geckoLib, moved);
         } finally {
             for (BoneSnapshot snapshot : snapshots) snapshot.cleanup();
         }
@@ -295,6 +336,54 @@ class CubeWriterParityTest {
         assertEquals(skipped, left, name + ": faces left out");
         row.culledFaces += left;
         row.allFaces += quads;
+    }
+
+    /**
+     * With a limit of one pixel: what is left are the faces drawn before, in order, less whole cubes, and a cube
+     * left out is smaller than a pixel across, even measured generously (its whole diagonal, from its farthest corner).
+     */
+    private void smallBoxes(String name, Row row, CreatureMesh mesh, int skipped, boolean hidden, boolean even) {
+        float[] all = moved.floats, kept = small.floats;
+        int quads = moved.vertices / 4, next = 0, quad = 0, cubesOut = 0;
+        for (; hidden && quad < quads; quad++) {
+            int at = quad * 4 * VertexRecorder.FLOATS;
+            boolean same = next < small.vertices / 4;
+            for (int i = 0; same && i < 4 * VertexRecorder.FLOATS; i++) same = Float.compare(all[at + i], kept[next * 4 * VertexRecorder.FLOATS + i]) == 0;
+            if (same) next++;
+        }
+        for (int cube = 0; cube < mesh.cubes && quad < quads; cube++) {
+            int faces = Integer.bitCount(mesh.present[cube] & 0xFF);
+            if (faces == 0) continue;
+            boolean same = next + faces <= small.vertices / 4;
+            for (int i = 0; same && i < faces * 4 * VertexRecorder.FLOATS; i++)
+                same = Float.compare(all[quad * 4 * VertexRecorder.FLOATS + i], kept[next * 4 * VertexRecorder.FLOATS + i]) == 0;
+            if (same) {
+                next += faces;
+            } else {
+                cubesOut++;
+                double diagonal = 0, far = 0;
+                for (int i = 0; i < faces * 4; i++) {
+                    int a = (quad * 4 + i) * VertexRecorder.FLOATS;
+                    far = Math.max(far, Math.sqrt((double) all[a] * all[a] + (double) all[a + 1] * all[a + 1] + (double) all[a + 2] * all[a + 2]));
+                    for (int j = 0; j < i; j++) {
+                        int b = (quad * 4 + j) * VertexRecorder.FLOATS;
+                        diagonal = Math.max(diagonal, Math.sqrt(Math.pow((double) all[a] - all[b], 2) + Math.pow((double) all[a + 1] - all[b + 1], 2)
+                                + Math.pow((double) all[a + 2] - all[b + 2], 2)));
+                    }
+                }
+                // A bone stretched unevenly under a turned parent is sheared; its cubes are measured by the bone's
+                // longest axis, which may come out a little short there. Checked where no bone is stretched unevenly.
+                if (even) {
+                    row.smallChecked++;
+                    assertTrue(diagonal * PIXELS_PER_RADIAN / far < 1.0 + 1e-3, name + ": a cube " + diagonal * PIXELS_PER_RADIAN / far + " pixels across was left out");
+                }
+            }
+            quad += faces;
+        }
+        assertEquals(small.vertices / 4, next, name + ": the faces kept are not the faces drawn before, in order");
+        if (!hidden) assertEquals(skipped, cubesOut, name + ": cubes left out as too small");
+        row.smallCubes += skipped;
+        row.farCubes += quads / 6;
     }
 
     /** The clip's bones at a moment: straight interpolation between its keys, in GeckoLib's units and signs. */
@@ -437,11 +526,12 @@ class CubeWriterParityTest {
             stack.mulPose(Axis.YP.rotationDegrees(33f));
             plain.clear();
             culled.clear();
+            writer.pose(mesh, posed);
             sink.begin(plain, COLOR, OVERLAY, LIGHT);
-            writer.write(mesh, stack.last().pose(), stack.last().normal(), sink, CubeWriter.ALL, null, false);
+            writer.write(mesh, posed, stack.last().pose(), stack.last().normal(), sink, CubeWriter.ALL, null, false, 0f);
             sink.end();
             sink.begin(culled, COLOR, OVERLAY, LIGHT);
-            writer.write(mesh, stack.last().pose(), stack.last().normal(), sink, CubeWriter.EMPTY_FACES, coverage, false);
+            writer.write(mesh, posed, stack.last().pose(), stack.last().normal(), sink, CubeWriter.EMPTY_FACES, coverage, false, 0f);
             sink.end();
             int next = 0, kept = culled.vertices / 4;
             for (int quad = 0; quad < plain.vertices / 4; quad++) {

@@ -3,7 +3,7 @@
     python tools/session_bench.py --prepare [--seed SEED]     the benchmark world, made once and kept
     python tools/session_bench.py --warm                      one more pass over it (more chunks and far terrain)
     python tools/session_bench.py [--setups full,noshader,...] [--heap 8G] [--repeat N] [--profile]
-    python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|ark   who draws the creatures (client/draw)
+    python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|nolod|ark   who draws the creatures (client/draw)
     python tools/session_bench.py --setups bare --verify      Ark's creature writer checked against GeckoLib's, not timed
 
 Each setup plays a disposable copy of run/saves/ArkBenchmark, so every one starts from the same chunks and the
@@ -305,8 +305,9 @@ def main() -> int:
     parser.add_argument("--settle", type=int, help="seconds to wait for chunks and shaders before measuring (default 30; 150 when preparing)")
     parser.add_argument("--repeat", type=int, default=1, help="runs per setup")
     parser.add_argument("--profile", action="store_true", help="also record the Java threads with Flight Recorder (profile.jfr in the setup's folder)")
-    parser.add_argument("--draw", choices=("geckolib", "allfaces", "ark"),
-                        help="who writes the creatures' cubes: GeckoLib, Ark's writer with every face, or Ark's writer (default: the client settings)")
+    parser.add_argument("--draw", choices=("geckolib", "allfaces", "nolod", "ark"),
+                        help="who writes the creatures' cubes: GeckoLib; Ark's writer with every face; without the hidden faces; "
+                             "or with distance detail as well, its defaults (default: the client settings)")
     parser.add_argument("--verify", action="store_true",
                         help="draw every eighth creature both ways and compare the vertices (meta.json, creature_draw.verify); not a run to time")
     parser.add_argument("--timeout", type=int, default=600, help="seconds before a client is closed by force")

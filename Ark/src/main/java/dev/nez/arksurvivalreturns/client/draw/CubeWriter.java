@@ -11,9 +11,11 @@ import org.joml.Matrix4fc;
  * corners and the normals of its faces. It does what GeckoLib's own drawing does (BakedGeoModel.render down to
  * GeoQuad.render, RenderUtil.prepMatrixForBone, PoseStack.Pose for the normals) with its own matrices: the
  * animation's translation, the pivot, Z then Y then X, the scale, hidden bones and hidden children, in JOML's
- * own arithmetic so the numbers agree to the last digits and not merely to the eye. It must
- * run where GeckoLib's would, inside RenderPassInfo.renderPosed, because the bones carry their animated state
- * only there. One instance, render thread only; nothing is allocated while it writes.
+ * own arithmetic so the numbers agree to the last digits and not merely to the eye. It works in two steps:
+ * {@link #pose} reads the bones where GeckoLib's drawing would, inside RenderPassInfo.renderPosed, because they
+ * carry their animated state only there, and keeps them relative to the model; {@link #write} places them by
+ * the entity's pose and writes the cubes, in that pass or in a later one. One instance, render thread only;
+ * nothing is allocated while it writes.
  */
 public final class CubeWriter {
     /** Every face GeckoLib would draw. */
@@ -33,44 +35,49 @@ public final class CubeWriter {
     static final float EYE_MARGIN = 0.5f;
     private static final float MARGIN_SQUARED = EYE_MARGIN * EYE_MARGIN;
 
-    private float[] poses = new float[0], normals = new float[0];
+    /** A creature's bones as one pass of the animation left them, relative to the model: kept to be drawn again. */
+    public static final class Posed {
+        static final int HIDDEN = 1, CHILDREN_HIDDEN = 2;
+        CreatureMesh mesh;
+        float[] pose = new float[0], normal = new float[0];
+        byte[] flags = new byte[0];
+        /** The frame and the creature's age the bones were read at; the caller's to keep. */
+        public long frame = Long.MIN_VALUE;
+        public float age = Float.NaN;
+
+        public boolean of(CreatureMesh mesh) { return this.mesh == mesh; }
+    }
+
+    private final float[] matrix = new float[12], normalMatrix = new float[9];
     private final float[] corners = new float[24], faceNormals = new float[18];
-    /** Faces handed to the sink and faces left out since the counters were last read. */
-    public long facesWritten, facesSkipped;
+    /** Faces handed to the sink, faces left out, and cubes left out as too small, since the counters were last read. */
+    public long facesWritten, facesSkipped, cubesTooSmall;
 
-    /**
-     * @param pose the entity's pose, an affine matrix
-     * @param skip {@link #ALL}, {@link #FAR_SIDES} or {@link #EMPTY_FACES}; the last two need the coverage
-     * @param windingNormals the normal of a face from the way its corners wind, as Iris recomputes it for
-     *                       every quad of a level pass, instead of the one GeckoLib passes
-     */
-    public void write(CreatureMesh mesh, Matrix4fc pose, Matrix3fc normal, QuadSink sink, int skip, TextureCoverage coverage,
-                      boolean windingNormals) {
-        int levels = mesh.maxDepth + 2;
-        if (poses.length < levels * 12) {
-            poses = new float[levels * 12];
-            normals = new float[levels * 9];
-        }
-        float[] ps = poses, ns = normals;
-        ps[0] = pose.m00(); ps[1] = pose.m01(); ps[2] = pose.m02();
-        ps[3] = pose.m10(); ps[4] = pose.m11(); ps[5] = pose.m12();
-        ps[6] = pose.m20(); ps[7] = pose.m21(); ps[8] = pose.m22();
-        ps[9] = pose.m30(); ps[10] = pose.m31(); ps[11] = pose.m32();
-        ns[0] = normal.m00(); ns[1] = normal.m01(); ns[2] = normal.m02();
-        ns[3] = normal.m10(); ns[4] = normal.m11(); ns[5] = normal.m12();
-        ns[6] = normal.m20(); ns[7] = normal.m21(); ns[8] = normal.m22();
-
+    /** Reads the animated bones into the keep. Inside RenderPassInfo.renderPosed only. */
+    public void pose(CreatureMesh mesh, Posed out) {
         GeoBone[] bones = mesh.bones;
-        int[] depth = mesh.depth, subtreeEnd = mesh.subtreeEnd, cubeEnd = mesh.cubeEnd;
-        float[] pivots = mesh.pivot, rotations = mesh.baseRotation;
         int count = bones.length, index = 0;
+        if (out.mesh != mesh || out.flags.length != count) {
+            out.mesh = mesh;
+            out.pose = new float[count * 12];
+            out.normal = new float[count * 9];
+            out.flags = new byte[count];
+        }
+        float[] ps = out.pose, ns = out.normal;
+        int[] parents = mesh.parent, subtreeEnd = mesh.subtreeEnd;
+        float[] pivots = mesh.pivot, rotations = mesh.baseRotation;
         while (index < count) {
             BoneSnapshot snapshot = bones[index].frameSnapshot;
-            int to = (depth[index] + 1) * 12, from = to - 12, nTo = (depth[index] + 1) * 9, nFrom = nTo - 9;
-            float m00 = ps[from], m01 = ps[from + 1], m02 = ps[from + 2], m10 = ps[from + 3], m11 = ps[from + 4], m12 = ps[from + 5],
-                    m20 = ps[from + 6], m21 = ps[from + 7], m22 = ps[from + 8], m30 = ps[from + 9], m31 = ps[from + 10], m32 = ps[from + 11];
-            float n00 = ns[nFrom], n01 = ns[nFrom + 1], n02 = ns[nFrom + 2], n10 = ns[nFrom + 3], n11 = ns[nFrom + 4], n12 = ns[nFrom + 5],
-                    n20 = ns[nFrom + 6], n21 = ns[nFrom + 7], n22 = ns[nFrom + 8];
+            int parent = parents[index], to = index * 12, nTo = index * 9;
+            float m00 = 1f, m01 = 0f, m02 = 0f, m10 = 0f, m11 = 1f, m12 = 0f, m20 = 0f, m21 = 0f, m22 = 1f, m30 = 0f, m31 = 0f, m32 = 0f;
+            float n00 = 1f, n01 = 0f, n02 = 0f, n10 = 0f, n11 = 1f, n12 = 0f, n20 = 0f, n21 = 0f, n22 = 1f;
+            if (parent >= 0) {
+                int from = parent * 12, nFrom = parent * 9;
+                m00 = ps[from]; m01 = ps[from + 1]; m02 = ps[from + 2]; m10 = ps[from + 3]; m11 = ps[from + 4]; m12 = ps[from + 5];
+                m20 = ps[from + 6]; m21 = ps[from + 7]; m22 = ps[from + 8]; m30 = ps[from + 9]; m31 = ps[from + 10]; m32 = ps[from + 11];
+                n00 = ns[nFrom]; n01 = ns[nFrom + 1]; n02 = ns[nFrom + 2]; n10 = ns[nFrom + 3]; n11 = ns[nFrom + 4]; n12 = ns[nFrom + 5];
+                n20 = ns[nFrom + 6]; n21 = ns[nFrom + 7]; n22 = ns[nFrom + 8];
+            }
             float pivotX = pivots[index * 3], pivotY = pivots[index * 3 + 1], pivotZ = pivots[index * 3 + 2];
             float rotX = rotations[index * 3], rotY = rotations[index * 3 + 1], rotZ = rotations[index * 3 + 2];
             boolean hidden = false, childrenHidden = false;
@@ -153,20 +160,67 @@ public final class CubeWriter {
             ps[to + 6] = m20; ps[to + 7] = m21; ps[to + 8] = m22; ps[to + 9] = m30; ps[to + 10] = m31; ps[to + 11] = m32;
             ns[nTo] = n00; ns[nTo + 1] = n01; ns[nTo + 2] = n02; ns[nTo + 3] = n10; ns[nTo + 4] = n11; ns[nTo + 5] = n12;
             ns[nTo + 6] = n20; ns[nTo + 7] = n21; ns[nTo + 8] = n22;
-            int first = index == 0 ? 0 : cubeEnd[index - 1], end = cubeEnd[index];
-            if (!hidden && first < end) cubes(mesh, first, end, to, nTo, sink, skip, coverage, windingNormals);
+            out.flags[index] = (byte) ((hidden ? Posed.HIDDEN : 0) | (childrenHidden ? Posed.CHILDREN_HIDDEN : 0));
             index = childrenHidden ? subtreeEnd[index] : index + 1;
         }
     }
 
-    private void cubes(CreatureMesh mesh, int first, int end, int at, int normalAt, QuadSink sink, int skip, TextureCoverage coverage,
-                       boolean windingNormals) {
-        float[] ps = poses, ns = normals, box = mesh.box, local = mesh.normal, corner = corners, out = faceNormals;
+    /**
+     * Places the kept bones by the entity's pose and writes their cubes.
+     *
+     * @param pose the entity's pose, an affine matrix
+     * @param skip {@link #ALL}, {@link #FAR_SIDES} or {@link #EMPTY_FACES}; the last two need the coverage
+     * @param windingNormals the normal of a face from the way its corners wind, as Iris recomputes it for
+     *                       every quad of a level pass, instead of the one GeckoLib passes
+     * @param smallest zero, or the square of pixels per radian over the size in pixels below which a cube is
+     *                 left out; the eye must be the origin of the pose's space then
+     */
+    public void write(CreatureMesh mesh, Posed posed, Matrix4fc pose, Matrix3fc normal, QuadSink sink, int skip, TextureCoverage coverage,
+                      boolean windingNormals, float smallest) {
+        float r00 = pose.m00(), r01 = pose.m01(), r02 = pose.m02(), r10 = pose.m10(), r11 = pose.m11(), r12 = pose.m12(),
+                r20 = pose.m20(), r21 = pose.m21(), r22 = pose.m22(), r30 = pose.m30(), r31 = pose.m31(), r32 = pose.m32();
+        float s00 = normal.m00(), s01 = normal.m01(), s02 = normal.m02(), s10 = normal.m10(), s11 = normal.m11(), s12 = normal.m12(),
+                s20 = normal.m20(), s21 = normal.m21(), s22 = normal.m22();
+        float[] ps = posed.pose, ns = posed.normal, m = matrix, n = normalMatrix;
+        byte[] flags = posed.flags;
+        int[] subtreeEnd = mesh.subtreeEnd, cubeEnd = mesh.cubeEnd;
+        int count = mesh.bones.length, index = 0;
+        while (index < count) {
+            int flag = flags[index], first = index == 0 ? 0 : cubeEnd[index - 1], end = cubeEnd[index];
+            if ((flag & Posed.HIDDEN) == 0 && first < end) {
+                int at = index * 12, nAt = index * 9;
+                float x = ps[at], y = ps[at + 1], z = ps[at + 2];
+                m[0] = r00 * x + r10 * y + r20 * z; m[1] = r01 * x + r11 * y + r21 * z; m[2] = r02 * x + r12 * y + r22 * z;
+                x = ps[at + 3]; y = ps[at + 4]; z = ps[at + 5];
+                m[3] = r00 * x + r10 * y + r20 * z; m[4] = r01 * x + r11 * y + r21 * z; m[5] = r02 * x + r12 * y + r22 * z;
+                x = ps[at + 6]; y = ps[at + 7]; z = ps[at + 8];
+                m[6] = r00 * x + r10 * y + r20 * z; m[7] = r01 * x + r11 * y + r21 * z; m[8] = r02 * x + r12 * y + r22 * z;
+                x = ps[at + 9]; y = ps[at + 10]; z = ps[at + 11];
+                m[9] = r00 * x + r10 * y + r20 * z + r30; m[10] = r01 * x + r11 * y + r21 * z + r31; m[11] = r02 * x + r12 * y + r22 * z + r32;
+                x = ns[nAt]; y = ns[nAt + 1]; z = ns[nAt + 2];
+                n[0] = s00 * x + s10 * y + s20 * z; n[1] = s01 * x + s11 * y + s21 * z; n[2] = s02 * x + s12 * y + s22 * z;
+                x = ns[nAt + 3]; y = ns[nAt + 4]; z = ns[nAt + 5];
+                n[3] = s00 * x + s10 * y + s20 * z; n[4] = s01 * x + s11 * y + s21 * z; n[5] = s02 * x + s12 * y + s22 * z;
+                x = ns[nAt + 6]; y = ns[nAt + 7]; z = ns[nAt + 8];
+                n[6] = s00 * x + s10 * y + s20 * z; n[7] = s01 * x + s11 * y + s21 * z; n[8] = s02 * x + s12 * y + s22 * z;
+                cubes(mesh, first, end, sink, skip, coverage, windingNormals, smallest);
+            }
+            index = (flag & Posed.CHILDREN_HIDDEN) != 0 ? subtreeEnd[index] : index + 1;
+        }
+    }
+
+    private void cubes(CreatureMesh mesh, int first, int end, QuadSink sink, int skip, TextureCoverage coverage, boolean windingNormals,
+                       float smallest) {
+        float[] ps = matrix, ns = normalMatrix, box = mesh.box, local = mesh.normal, corner = corners, out = faceNormals, sizes = mesh.sizeSquared;
         byte[] present = mesh.present, flags = mesh.flags, sides = mesh.side, winding = mesh.winding, slotFace = mesh.slotFace;
-        float m00 = ps[at], m01 = ps[at + 1], m02 = ps[at + 2], m10 = ps[at + 3], m11 = ps[at + 4], m12 = ps[at + 5],
-                m20 = ps[at + 6], m21 = ps[at + 7], m22 = ps[at + 8], m30 = ps[at + 9], m31 = ps[at + 10], m32 = ps[at + 11];
-        float n00 = ns[normalAt], n01 = ns[normalAt + 1], n02 = ns[normalAt + 2], n10 = ns[normalAt + 3], n11 = ns[normalAt + 4],
-                n12 = ns[normalAt + 5], n20 = ns[normalAt + 6], n21 = ns[normalAt + 7], n22 = ns[normalAt + 8];
+        float m00 = ps[0], m01 = ps[1], m02 = ps[2], m10 = ps[3], m11 = ps[4], m12 = ps[5], m20 = ps[6], m21 = ps[7], m22 = ps[8],
+                m30 = ps[9], m31 = ps[10], m32 = ps[11];
+        float n00 = ns[0], n01 = ns[1], n02 = ns[2], n10 = ns[3], n11 = ns[4], n12 = ns[5], n20 = ns[6], n21 = ns[7], n22 = ns[8];
+        // How much the bone stretches a length at most, squared, times the limit: a cube whose diagonal times this is
+        // less than its distance from the eye, both squared, is smaller than the limit on the screen.
+        float reach = smallest <= 0f ? 0f : smallest * Math.max(m00 * m00 + m01 * m01 + m02 * m02,
+                Math.max(m10 * m10 + m11 * m11 + m12 * m12, m20 * m20 + m21 * m21 + m22 * m22));
+        long small = 0;
         long written = 0, skipped = 0;
         for (int cube = first; cube < end; cube++) {
             int mask = present[cube];
@@ -174,6 +228,11 @@ public final class CubeWriter {
             int all = mask, flag = flags[cube], b = cube * CreatureMesh.BOX, f = cube * CreatureMesh.FACES;
             float x = box[b], y = box[b + 1], z = box[b + 2];
             float ox = m00 * x + m10 * y + m20 * z + m30, oy = m01 * x + m11 * y + m21 * z + m31, oz = m02 * x + m12 * y + m22 * z + m32;
+            if (reach > 0f && sizes[cube] * reach < ox * ox + oy * oy + oz * oz) {
+                small++;
+                skipped += Integer.bitCount(mask);
+                continue;
+            }
             x = box[b + 3]; y = box[b + 4]; z = box[b + 5];
             float ax = m00 * x + m10 * y + m20 * z, ay = m01 * x + m11 * y + m21 * z, az = m02 * x + m12 * y + m22 * z;
             x = box[b + 6]; y = box[b + 7]; z = box[b + 8];
@@ -268,5 +327,6 @@ public final class CubeWriter {
         }
         facesWritten += written;
         facesSkipped += skipped;
+        cubesTooSmall += small;
     }
 }

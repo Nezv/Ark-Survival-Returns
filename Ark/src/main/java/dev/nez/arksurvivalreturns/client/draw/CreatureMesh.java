@@ -41,10 +41,12 @@ public final class CreatureMesh {
 
     final GeoBone[] bones;
     final GeoLocator[] locators;
-    final int[] depth, subtreeEnd, cubeEnd;
+    final int[] depth, parent, subtreeEnd, cubeEnd;
     final float[] pivot, baseRotation;
     final int maxDepth, cubes;
     final float[] box;
+    /** Per cube: the square of its diagonal, in the bone's space. */
+    final float[] sizeSquared;
     /** Per face: the normal GeckoLib gives the quad, turned by the cube's rotation. */
     final float[] normal;
     /** Per face: u and v of its four vertices. */
@@ -74,7 +76,7 @@ public final class CreatureMesh {
 
     public static CreatureMesh compile(BakedGeoModel model) {
         Builder builder = new Builder();
-        for (GeoBone bone : model.topLevelBones()) builder.bone(bone, 0);
+        for (GeoBone bone : model.topLevelBones()) builder.bone(bone, 0, -1);
         return builder.supported ? new CreatureMesh(builder) : UNSUPPORTED;
     }
 
@@ -98,8 +100,8 @@ public final class CreatureMesh {
     private CreatureMesh() {
         bones = new GeoBone[0];
         locators = new GeoLocator[0];
-        depth = subtreeEnd = cubeEnd = new int[0];
-        pivot = baseRotation = box = normal = uv = new float[0];
+        depth = parent = subtreeEnd = cubeEnd = new int[0];
+        pivot = baseRotation = box = sizeSquared = normal = uv = new float[0];
         corner = present = flags = side = winding = slotFace = new byte[0];
         maxDepth = cubes = 0;
     }
@@ -108,11 +110,13 @@ public final class CreatureMesh {
         bones = builder.bones.toArray(GeoBone[]::new);
         locators = builder.locators.toArray(GeoLocator[]::new);
         depth = builder.depth.toIntArray();
+        parent = builder.parent.toIntArray();
         subtreeEnd = builder.subtreeEnd.toIntArray();
         cubeEnd = builder.cubeEnd.toIntArray();
         pivot = builder.pivot.toFloatArray();
         baseRotation = builder.baseRotation.toFloatArray();
         box = builder.box.toFloatArray();
+        sizeSquared = builder.sizeSquared.toFloatArray();
         normal = builder.normal.toFloatArray();
         uv = builder.uv.toFloatArray();
         corner = builder.corner.toByteArray();
@@ -134,17 +138,19 @@ public final class CreatureMesh {
     private static final class Builder {
         final List<GeoBone> bones = new ArrayList<>();
         final List<GeoLocator> locators = new ArrayList<>();
-        final IntArrayList depth = new IntArrayList(), subtreeEnd = new IntArrayList(), cubeEnd = new IntArrayList();
+        final IntArrayList depth = new IntArrayList(), parent = new IntArrayList(), subtreeEnd = new IntArrayList(), cubeEnd = new IntArrayList();
+        final FloatArrayList sizeSquared = new FloatArrayList();
         final FloatArrayList pivot = new FloatArrayList(), baseRotation = new FloatArrayList();
         final FloatArrayList box = new FloatArrayList(), normal = new FloatArrayList(), uv = new FloatArrayList();
         final ByteArrayList corner = new ByteArrayList(), present = new ByteArrayList(), flags = new ByteArrayList();
         final ByteArrayList side = new ByteArrayList(), winding = new ByteArrayList();
         boolean supported = true;
 
-        void bone(GeoBone bone, int level) {
+        void bone(GeoBone bone, int level, int above) {
             int index = bones.size();
             bones.add(bone);
             depth.add(level);
+            parent.add(above);
             subtreeEnd.add(0);
             pivot.add(bone.pivotX() / 16f);
             pivot.add(bone.pivotY() / 16f);
@@ -159,7 +165,7 @@ public final class CreatureMesh {
                 supported = false;
             }
             cubeEnd.add(present.size());
-            for (GeoBone child : bone.children()) bone(child, level + 1);
+            for (GeoBone child : bone.children()) bone(child, level + 1, index);
             subtreeEnd.set(index, bones.size());
         }
 
@@ -204,6 +210,9 @@ public final class CreatureMesh {
             box.add((float) origin.x);
             box.add((float) origin.y);
             box.add((float) origin.z);
+            double diagonal = 0;
+            for (int axis = 0; axis < 3; axis++) diagonal += ((double) high[axis] - low[axis]) * ((double) high[axis] - low[axis]);
+            sizeSquared.add((float) diagonal);
             for (int axis = 0; axis < 3; axis++) {
                 double length = (double) high[axis] - low[axis];
                 Vector3d edge = axis == 0 ? new Vector3d(placed.m00(), placed.m01(), placed.m02()).mul(length)

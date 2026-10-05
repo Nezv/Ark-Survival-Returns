@@ -11,6 +11,8 @@ public final class NighttimeClientConfig {
     public static final ModConfigSpec.BooleanValue MIRROR_TURN_CLIPS;
     public static final ModConfigSpec.BooleanValue CREATURE_FAST_DRAWING;
     public static final ModConfigSpec.BooleanValue CREATURE_HIDDEN_FACES;
+    public static final ModConfigSpec.DoubleValue CREATURE_ANIMATION_DISTANCE;
+    public static final ModConfigSpec.DoubleValue CREATURE_SMALLEST_BOX;
     static {
         var builder = new ModConfigSpec.Builder();
         EYE_GLOW = builder.comment("Brightness of the red eyes of hunting big carnivores and raptors. Zero disables the visual; does not change server behavior.")
@@ -29,6 +31,13 @@ public final class NighttimeClientConfig {
         CREATURE_HIDDEN_FACES = builder.comment("With creatureFastDrawing: leave out the sides of a creature's box that the box itself hides "
                         + "(closed, opaque boxes in the world view only). Set false to draw every face.")
                 .define("creatureHiddenFaces", true);
+        CREATURE_ANIMATION_DISTANCE = builder.comment("With creatureFastDrawing: a creature farther away than this many blocks has its limbs "
+                        + "moved every second frame, every third beyond twice the distance and every fourth beyond four times; where it stands "
+                        + "and faces stays smooth, and a spyglass brings it as close as it shows it. 0 moves every limb in every frame.")
+                .defineInRange("creatureAnimationDistance", 64.0, 0.0, 1024.0);
+        CREATURE_SMALLEST_BOX = builder.comment("With creatureFastDrawing: a box of a creature that would be smaller than this many pixels "
+                        + "across is not drawn. 0 draws every box.")
+                .defineInRange("creatureSmallestBox", 1.0, 0.0, 16.0);
         SPEC = builder.build();
     }
     private NighttimeClientConfig() {}
