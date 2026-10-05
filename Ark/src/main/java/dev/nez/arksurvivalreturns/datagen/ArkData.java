@@ -28,6 +28,7 @@ public final class ArkData implements DataProvider {
         BronzeData.generate(this::put);
         IntegrationData.generate(this::put);
         StationData.generate(this::put);
+        DropData.generate(this::put);
         StationData.itemModels(this::put);
         SulphurData.generate(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
@@ -268,6 +269,7 @@ public final class ArkData implements DataProvider {
         tribeMessages(en, pt);
         campMessages(en, pt);
         StationData.messages(en, pt);
+        DropData.messages(en, pt);
         TitleData.messages(en, pt);
         downedMessages(en, pt);
         massMessages(en, pt);
@@ -1000,6 +1002,9 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("sky_beacon_assets", "sky_beacon_placement", "sky_beacon_persistence", "sky_beacon_rewards"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
                     "environment", NS + ":empty", "structure", NS + ":test_population", "max_ticks", 100, "sky_access", true));
+        for (String name : List.of("supply_drop_loot", "supply_drop_landing", "supply_drop_expiry", "supply_drop_aim"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function", "function", NS + ":" + name,
+                    "environment", NS + ":empty", "structure", NS + ":test_empty", "max_ticks", 200, "sky_access", true));
         var spawningRules = Map.of("type", "minecraft:game_rules", "rules", Map.of("minecraft:spawn_mobs", true));
         put("data/" + NS + "/test_environment/empty", spawningRules);
         put("data/" + NS + "/test_environment/collection", spawningRules);

@@ -1,0 +1,8 @@
+{
+  "parent": "arksurvivalreturns:block/station/storage_crate_item",
+  "textures": {
+    "crate": "arksurvivalreturns:block/drop/crate_white",
+    "crate_frame": "arksurvivalreturns:block/drop/frame_white",
+    "particle": "arksurvivalreturns:block/drop/crate_white"
+  }
+}

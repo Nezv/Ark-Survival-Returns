@@ -28,6 +28,10 @@ public final class ArkGameTests {
         FUNCTIONS.register("sky_beacon_assets", () -> SkyBeaconGameTests::assets);
         FUNCTIONS.register("sky_beacon_persistence", () -> SkyBeaconGameTests::persistence);
         FUNCTIONS.register("sky_beacon_rewards", () -> SkyBeaconGameTests::rewards);
+        FUNCTIONS.register("supply_drop_loot", () -> SupplyDropGameTests::loot);
+        FUNCTIONS.register("supply_drop_landing", () -> SupplyDropGameTests::landing);
+        FUNCTIONS.register("supply_drop_expiry", () -> SupplyDropGameTests::expiry);
+        FUNCTIONS.register("supply_drop_aim", () -> SupplyDropGameTests::aim);
         FUNCTIONS.register("pack_runtime_contract", () -> RuntimeGameTests::pack);
         FUNCTIONS.register("tech_real_event_flow", () -> ProgressionGameTests::events);
         FUNCTIONS.register("tech_lighting_flow", () -> ProgressionGameTests::lighting);

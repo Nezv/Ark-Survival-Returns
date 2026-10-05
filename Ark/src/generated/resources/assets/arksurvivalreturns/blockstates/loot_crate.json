@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "tier=blue": {
+      "model": "arksurvivalreturns:block/drop/loot_crate_blue"
+    },
+    "tier=green": {
+      "model": "arksurvivalreturns:block/drop/loot_crate_green"
+    },
+    "tier=purple": {
+      "model": "arksurvivalreturns:block/drop/loot_crate_purple"
+    },
+    "tier=white": {
+      "model": "arksurvivalreturns:block/drop/loot_crate_white"
+    }
+  }
+}

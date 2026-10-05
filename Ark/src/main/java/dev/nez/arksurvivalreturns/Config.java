@@ -114,6 +114,8 @@ public final class Config {
     public static final ModConfigSpec.IntValue DOWNED_WINDOW;
     public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL;
     public static final ModConfigSpec.DoubleValue SOUND_RANGE_MULTIPLIER;
+    public static final ModConfigSpec.BooleanValue DROPS_ENABLED;
+    public static final ModConfigSpec.IntValue DROP_INTERVAL_DAYS, DROP_LIFETIME, DROP_MIN_DISTANCE, DROP_MAX_DISTANCE, DROP_FALL_HEIGHT;
     // ------------------------------------------------------------------------- guardian
     public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED, GUARDIAN_ANNOUNCE;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GUARDIAN_STRUCTURES;
@@ -591,6 +593,18 @@ public final class Config {
         b.pop();
         b.push("workstations");
         WORKSTATION_LEVEL_GATE = b.comment("Enforce the levels in the workstation designs.").define("levelGates", true);
+        b.pop();
+        b.push("supplyDrops");
+        DROPS_ENABLED = b.comment("Send supply drops: a loot crate under a parachute, near a random player in the Overworld.")
+                .define("enabled", true);
+        DROP_INTERVAL_DAYS = b.comment("In-game days between two drops.").defineInRange("intervalDays", 2, 1, 1000);
+        DROP_LIFETIME = b.comment("Ticks a landed crate and its beam stay before the crate goes, loot and all (24000 = one day).")
+                .defineInRange("crateLifetimeTicks", 24000, 200, 2400000);
+        DROP_MIN_DISTANCE = b.comment("A drop lands at least this many blocks from the player it was sent near.")
+                .defineInRange("minDistance", 32, 0, 256);
+        DROP_MAX_DISTANCE = b.comment("And at most this many; only loaded chunks are ever chosen.").defineInRange("maxDistance", 96, 8, 256);
+        DROP_FALL_HEIGHT = b.comment("Blocks above its landing place a drop appears at; it comes down three blocks a second.")
+                .defineInRange("fallHeight", 90, 8, 320);
         b.pop();
         SPEC = b.build();
     }

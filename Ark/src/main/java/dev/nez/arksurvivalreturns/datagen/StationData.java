@@ -133,7 +133,7 @@ final class StationData {
         }
         put.accept("data/minecraft/tags/block/mineable/axe", Map.of("replace", false,
                 "values", List.of(NS + ":working_station", NS + ":medicine_bench", NS + ":storage_crate", NS + ":armoury",
-                        NS + ":saddlery")));
+                        NS + ":saddlery", NS + ":loot_crate")));
         put.accept("data/minecraft/tags/block/mineable/pickaxe", Map.of("replace", false,
                 // Bronze Age (F12): tin ore mines like copper and iron, at the same rock-pickaxe tier; sulphur crystals (SulphurData).
                 "values", List.of(NS + ":smithing_table", NS + ":crusher", NS + ":primitive_forge", NS + ":mortar_and_pestle",

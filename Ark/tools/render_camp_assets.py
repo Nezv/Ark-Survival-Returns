@@ -53,7 +53,16 @@ def mesh(identifier, offset=(0, 0, 0)):
         }
         for face, f in e['faces'].items():
             v = np.array(vertices[face], dtype=float)
-            if 'rotation' in e:
+            if 'rotation' in e and 'axis' not in e['rotation']:
+                # 26.1's x/y/z form: turned about x first, then y, then z.
+                r = e['rotation']; origin = np.array(r['origin'])
+                for axis in range(3):
+                    angle = math.radians(r.get('xyz'[axis], 0))
+                    a, b = [i for i in range(3) if i != axis]
+                    if axis == 1: a, b = b, a
+                    m = np.eye(3); m[a,a] = m[b,b] = math.cos(angle); m[a,b] = -math.sin(angle); m[b,a] = math.sin(angle)
+                    v = (v-origin) @ m.T + origin
+            elif 'rotation' in e:
                 r = e['rotation']; axis = 'xyz'.index(r['axis']); angle = math.radians(r['angle'])
                 a, b = [i for i in range(3) if i != axis]
                 if axis == 1: a, b = b, a

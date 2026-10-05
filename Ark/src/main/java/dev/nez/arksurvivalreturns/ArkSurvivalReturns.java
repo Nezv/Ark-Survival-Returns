@@ -31,6 +31,7 @@ public final class ArkSurvivalReturns {
         dev.nez.arksurvivalreturns.feature.station.StationContent.register(bus);
         dev.nez.arksurvivalreturns.feature.sulphur.SulphurContent.register(bus);
         dev.nez.arksurvivalreturns.feature.explosive.ExplosiveContent.register(bus);
+        dev.nez.arksurvivalreturns.feature.drop.DropContent.register(bus);
         dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.register(bus);
         dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.register(bus);
         dev.nez.arksurvivalreturns.feature.levels.LevelAttachments.register(bus);
