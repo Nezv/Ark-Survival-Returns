@@ -66,6 +66,9 @@ neoForge {
             if (project.hasProperty('arkVariant')) systemProperty 'arksurvivalreturns.benchmark.variant', project.property('arkVariant').toString()
             if (project.hasProperty('arkSettle')) systemProperty 'arksurvivalreturns.benchmark.settle', project.property('arkSettle').toString()
             if (project.hasProperty('arkMobs')) systemProperty 'arksurvivalreturns.benchmark.mobs', project.property('arkMobs').toString()
+            // Preparing the benchmark world: the biome its start is moved into, and the chunks Chunky generates around it.
+            if (project.hasProperty('arkBiome')) systemProperty 'arksurvivalreturns.benchmark.biome', project.property('arkBiome').toString()
+            if (project.hasProperty('arkPregen')) systemProperty 'arksurvivalreturns.benchmark.pregen', project.property('arkPregen').toString()
             // Who writes the creatures' cubes (client/draw): geckolib, allfaces or ark; and a self-check against GeckoLib.
             if (project.hasProperty('arkDraw')) systemProperty 'arksurvivalreturns.creatureDraw', project.property('arkDraw').toString()
             if (project.hasProperty('arkVerify')) systemProperty 'arksurvivalreturns.creatureDraw.verify', 'true'
@@ -253,6 +256,7 @@ tasks.register('prepareDevRuntime') {
     group = 'application'
     description = 'Applies explicit dev distances and syncs the authored quest pack into the instance config.'
     inputs.file(devRuntimeFile)
+    inputs.property('arkRenderDistance', (project.findProperty('arkRenderDistance') ?: '').toString())
     if (questSource.isDirectory()) inputs.dir(questSource)
     if (menuSource.isDirectory()) inputs.dir(menuSource)
     outputs.files(devOptions, devServerProperties)
@@ -268,7 +272,8 @@ tasks.register('prepareDevRuntime') {
             }
             target.setText(lines.join('\n') + '\n', 'UTF-8')
         }
-        update(devOptions, ':', [renderDistance:settings.renderDistance, simulationDistance:settings.simulationDistance])
+        // -ParkRenderDistance: one launch at another render distance (tools/session_bench.py), the file's value kept.
+        update(devOptions, ':', [renderDistance:project.findProperty('arkRenderDistance') ?: settings.renderDistance, simulationDistance:settings.simulationDistance])
         update(devServerProperties, '=', ['view-distance':settings.renderDistance, 'simulation-distance':settings.simulationDistance])
         // FTB Quests reads its pack from the instance config folder, never from a data pack.
         if (questSource.isDirectory()) {

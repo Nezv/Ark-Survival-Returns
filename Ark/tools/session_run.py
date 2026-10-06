@@ -112,12 +112,12 @@ def newest_world() -> str:
     return max(worlds, key=lambda folder: (folder / "level.dat").stat().st_mtime).name
 
 
-def copy_world(name: str) -> Path:
+def copy_world(name: str, ignore=shutil.ignore_patterns("session.lock")) -> Path:
     source, target = SAVES / name, SAVES / COPY
     if not (source / "level.dat").is_file():
         sys.exit(f"no world '{name}' under {SAVES}")
     drop_copy()
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns("session.lock"))
+    shutil.copytree(source, target, ignore=ignore)
     (target / MARKER).write_text(f"Copy of '{name}' made by tools/session_run.py for one recording; safe to delete.\n", encoding="utf-8")
     # Minecraft otherwise leaves quick-play at its experimental-world backup prompt. This world is
     # already an isolated disposable copy; accept only its existing byte flag, never the original.

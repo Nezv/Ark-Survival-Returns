@@ -1,8 +1,13 @@
 """Measures the frame times of the real client on a fixed camera path, one launch per setup, and compares them.
 
     python tools/session_bench.py --prepare [--seed SEED]     the benchmark world, made once and kept
+    python tools/session_bench.py --prepare --biome minecraft:plains --pregen 512
+                                                              the same, started in the middle of the nearest plains and with
+                                                              512 chunks generated around it in every direction by Chunky
     python tools/session_bench.py --warm                      one more pass over it (more chunks and far terrain)
     python tools/session_bench.py [--setups full,noshader,...] [--heap 8G] [--repeat N] [--profile]
+    python tools/session_bench.py --setups rd6,rd8,rd12,rd16  the real render distance, dense fog around it and
+                                                              Distant Horizons at 64 chunks behind
     python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|nolod|ark   who draws the creatures (client/draw)
     python tools/session_bench.py --setups bare --verify      Ark's creature writer checked against GeckoLib's, not timed
 
@@ -19,11 +24,21 @@ For the run only: full screen, vertical sync off, no frame limit, muted, and the
 and kept there, because a full-screen window opened from the background draws nothing; a second in which it
 was not in front is counted, and a measured phase with one is marked invalid. The user's files are put back
 afterwards, also when the run fails. Do not use the machine while it runs.
+
+--pregen takes hours for a large radius (a square of 2 x radius + 1 chunks a side) and needs no window in front;
+Chunky's jar is fetched once from Modrinth and is in run/mods only for that launch. A setup's copy of the world
+leaves out the chunk files farther than 2,048 blocks from the start: the path never loads them, and what
+Distant Horizons draws out there comes from its own data, which is copied whole.
+
+The rd setups show how far creatures were drawn (the column 'far', in blocks): the server sends a creature to
+the client only within the render distance, 192 blocks at most. Their fog is a patched copy of the shader pack
+in use, made for the run (Photon alone: with Distant Horizons it ties its border fog to that mod's distance).
 """
 from __future__ import annotations
 
 import argparse
 import ctypes
+import hashlib
 import json
 import os
 import re
@@ -32,6 +47,8 @@ import statistics
 import subprocess
 import sys
 import time
+import urllib.request
+import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -58,6 +75,27 @@ SETUPS = {
     "nomobs": {"game": {"Mobs": "false"}},
     "barenomobs": {"iris": {"enableShaders": "false"}, "grass": GRASS_OFF, "dh": {"rendererMode": '"DISABLED"'}, "game": {"Mobs": "false"}},
 }
+# The trim to measure (P12): the real render distance, fog closing around it, Distant Horizons at 64 chunks behind.
+SETUPS.update({f"rd{chunks}": {"dh": {"lodChunkRenderDistanceRadius": "64"}, "fog": True, "game": {"RenderDistance": str(chunks)}}
+               for chunks in (6, 8, 12, 16)})
+# Generating a world needs neither the shader pack nor the grass; Distant Horizons stays on to keep what it is shown.
+PREGEN = {"iris": {"enableShaders": "false"}, "grass": GRASS_OFF}
+CHUNKY = {"file": "Chunky-NeoForge-1.5.4.jar",
+          "url": "https://cdn.modrinth.com/data/fALzjamp/versions/EyCqftOK/Chunky-NeoForge-1.5.4.jar",
+          "sha512": "ffcbedca6a0b5018962a8a62df21afdafe327ef306e6acb2f602b3bb56f313b88c90e9a57d9a2abaa9d12bd122e888d933ccb243c8fa3388e086a5dd1c18e30d"}
+REGION = re.compile(r"^r\.(-?\d+)\.(-?\d+)\.mc[ac]$")
+KEEP_BLOCKS = 2048
+FOG_PACK = "Ark-Bench-Fog.zip"
+FOG_FILE = "shaders/include/fog/simple_fog.glsl"
+FOG_WAS = ("#else\n"
+           "    float fog = length(scene_pos.xz) / float(lod_render_distance);\n"
+           "    fog = exp2(-2.4 * sqr(fog));\n"
+           "#endif")
+# The pack's own curve for a world without far terrain, with a floor: what lies beyond keeps that much of itself.
+FOG_NOW = ("#elif defined DISTANT_HORIZONS\n"
+           "    float fog = cubic_length(scene_pos.xz) / far;\n"
+           "    fog = mix(%.2f, 1.0, exp2(-8.0 * pow8(fog)));\n"
+           + FOG_WAS)
 
 
 def toml_set(path: Path, values: dict[str, str]):
@@ -70,15 +108,85 @@ def toml_set(path: Path, values: dict[str, str]):
     path.write_bytes(raw.encode("utf-8"))
 
 
-def pack_options() -> str:
-    """The file Iris keeps the active shader pack's changed options in, relative to the game folder."""
+def pack_name() -> str:
     for line in (run.RUN / "config" / "iris.properties").read_text(encoding="utf-8").splitlines():
         if line.startswith("shaderPack="):
-            return f"shaderpacks/{line.split('=', 1)[1].strip()}.txt"
+            return line.split("=", 1)[1].strip()
     sys.exit("config/iris.properties names no shader pack")
 
 
-def apply(setup: dict):
+def pack_options() -> str:
+    """The file Iris keeps the active shader pack's changed options in, relative to the game folder."""
+    return f"shaderpacks/{pack_name()}.txt"
+
+
+def fog_pack(floor: float) -> str:
+    """A copy of the shader pack in use whose border fog closes around the real render distance while Distant
+    Horizons draws, with the pack's options. Returns its name; drop_fog_pack removes it."""
+    packs = run.RUN / "shaderpacks"
+    source = packs / pack_name()
+    if not source.is_file() or not zipfile.is_zipfile(source):
+        sys.exit(f"the fog of the rd setups patches a zipped shader pack; {source.name} is none")
+    found = False
+    with zipfile.ZipFile(source) as original, zipfile.ZipFile(packs / FOG_PACK, "w", zipfile.ZIP_DEFLATED) as patched:
+        for item in original.infolist():
+            data = original.read(item)
+            if item.filename == FOG_FILE:
+                text = data.decode("utf-8")
+                ending = "\r\n" if "\r\n" in text else "\n"
+                was = FOG_WAS.replace("\n", ending)
+                if text.count(was) != 1:
+                    break
+                data = text.replace(was, (FOG_NOW % floor).replace("\n", ending)).encode("utf-8")
+                found = True
+            patched.writestr(item, data)
+    if not found:
+        drop_fog_pack()
+        sys.exit(f"{source.name} has no border fog of the kind the rd setups patch ({FOG_FILE}); they are written for Photon")
+    if (packs / f"{source.name}.txt").is_file():
+        shutil.copy2(packs / f"{source.name}.txt", packs / f"{FOG_PACK}.txt")
+    return FOG_PACK
+
+
+def drop_fog_pack():
+    for name in (FOG_PACK, f"{FOG_PACK}.txt"):
+        (run.RUN / "shaderpacks" / name).unlink(missing_ok=True)
+
+
+def chunky() -> Path:
+    """Chunky's jar, fetched once from Modrinth and checked against the pinned checksum."""
+    jar = run.ARK / "build" / "bench-mods" / CHUNKY["file"]
+    if not jar.is_file():
+        jar.parent.mkdir(parents=True, exist_ok=True)
+        print(f"fetching {CHUNKY['url']}", flush=True)
+        request = urllib.request.Request(CHUNKY["url"], headers={"User-Agent": "Ark-Survival-Returns session_bench"})
+        with urllib.request.urlopen(request, timeout=120) as response:
+            jar.write_bytes(response.read())
+    if hashlib.sha512(jar.read_bytes()).hexdigest() != CHUNKY["sha512"]:
+        sys.exit(f"{jar} is not the pinned Chunky build; delete it and run again")
+    return jar
+
+
+def world_start(world: Path) -> tuple[int, int] | None:
+    """Where the path starts, as the prepared world's note keeps it (x and z)."""
+    note = world / KEPT
+    found = re.search(r"^start=(-?\d+) (-?\d+)$", note.read_text(encoding="utf-8"), re.M) if note.is_file() else None
+    return (int(found[1]), int(found[2])) if found else None
+
+
+def near_start(start: tuple[int, int] | None):
+    """What a setup's copy leaves out: the lock, and the chunk files too far from the start for the path to load."""
+    def ignore(folder, names):
+        out = {name for name in names if name == "session.lock"}
+        for name in names if start else ():
+            region = REGION.match(name)
+            if region and max(abs(int(region[1]) * 512 + 256 - start[0]), abs(int(region[2]) * 512 + 256 - start[1])) > KEEP_BLOCKS + 256:
+                out.add(name)
+        return out
+    return ignore
+
+
+def apply(setup: dict, fog_floor: float | None = 0.25):
     run.lines_set(run.RUN / "options.txt", ":", OPTIONS)
     run.lines_set(run.RUN / "config" / "iris.properties", "=", {"enableShaders": "true", **setup.get("iris", {})})
     toml_set(run.RUN / "config" / "DistantHorizons.toml", {"rendererMode": '"DEFAULT"', **setup.get("dh", {})})
@@ -86,6 +194,8 @@ def apply(setup: dict):
         toml_set(run.RUN / "config" / "grassiergrass-client.toml", setup["grass"])
     if "pack" in setup:
         run.lines_set(run.RUN / pack_options(), "=", setup["pack"])
+    if setup.get("fog") and fog_floor is not None:
+        run.lines_set(run.RUN / "config" / "iris.properties", "=", {"shaderPack": fog_pack(fog_floor)})
     arm = run.DIAGNOSTICS / "arm"
     if arm.is_file():
         arm.unlink()
@@ -161,7 +271,7 @@ def launch(folder: Path, name: str, opening: list[str], extra: list[str], timeou
     command = gradle + ["runClient", *opening, f"-ParkBenchmark={folder.as_posix()}", f"-ParkVariant={name}", *extra, "--console=plain"]
     window = {"checks": 0, "in_front": 0, "brought_forward": 0, "covers_screen": None, "mains_power": on_mains(), "killed": False}
     started = time.monotonic()
-    pids, pictured, measuring = [], False, False
+    pids, pictured, measuring, told, told_at = [], False, False, "", 0.0
     card = None
     try:
         card = subprocess.Popen(["nvidia-smi", "--query-gpu=timestamp,utilization.gpu,memory.used,temperature.gpu,power.draw",
@@ -177,7 +287,13 @@ def launch(folder: Path, name: str, opening: list[str], extra: list[str], timeou
                     pids = pids or run.clients()
                     game = game_window(pids) if pids else None
                     phase = (folder / "phase").read_text(encoding="utf-8") if (folder / "phase").is_file() else ""
-                    if game:
+                    if phase == "pregen":
+                        # Hours of chunk generation: no window to keep in front, a line of progress a minute.
+                        progress = (folder / "pregen").read_text(encoding="utf-8") if (folder / "pregen").is_file() else ""
+                        if progress != told and time.monotonic() - told_at >= 60:
+                            told, told_at = progress, time.monotonic()
+                            print(f"[{time.monotonic() - started:5.0f} s] {progress}", flush=True)
+                    elif game:
                         front = in_front(game)
                         if phase and phase != "done":
                             if not measuring:
@@ -265,6 +381,7 @@ def summarise(folder: Path) -> dict | None:
             "server_tick_ms": round(mean("server_tick_ms"), 1),
             "gc_ms": int(rows[-1]["gc_ms"]) - int(rows[0]["gc_ms"]), "heap_mb": round(max(float(row["heap_mb"]) for row in rows)),
             "entities": round(mean("entities")), "creatures": round(mean("creatures")) if "creatures" in rows[0] else None,
+            "creature_far": round(max(float(row["creature_far"]) for row in rows)) if "creature_far" in rows[0] else None,
             "unseen_seconds": unseen, "throttled_seconds": throttled,
             **card_load(folder, begin, begin + meta["phases"][phase]["seconds"] * 1000),
         }
@@ -274,22 +391,25 @@ def summarise(folder: Path) -> dict | None:
         phases[phase] = result
     return {"setup": meta["variant"], "creature_draw": meta.get("creature_draw", {}).get("mode"), "window": meta["window"], "fullscreen": meta["fullscreen"], "gpu": meta["gpu"],
             "shaders": meta["shaders"], "heap_max_mb": meta["heap_max_mb"], "start": meta["start"],
+            "render_distance": meta.get("render_distance"), "simulation_distance": meta.get("simulation_distance"),
             "mains_power": window.get("mains_power"), "in_front": f"{window.get('in_front')}/{window.get('checks')}",
             "brought_forward": window.get("brought_forward"), "phases": phases}
 
 
 def table(results: list[dict]):
     print(f"\n{'setup':<10}{'phase':<8}{'fps':>7}{'1% low':>8}{'p50 ms':>8}{'p99 ms':>8}{'max ms':>8}{'>50ms':>6}{'card %':>7}"
-          f"{'VRAM':>6}{'render':>7}{'server':>7}{'others':>7}{'GC ms':>7}{'mobs':>6}{'ours':>6}  limit / valid")
+          f"{'VRAM':>6}{'render':>7}{'server':>7}{'others':>7}{'GC ms':>7}{'mobs':>6}{'ours':>6}{'far':>5}  limit / valid")
     for result in results:
         for phase, row in result["phases"].items():
             print(f"{result['setup']:<10}{phase:<8}{row['fps']:>7}{row['fps_low_1pc']:>8}{row['ms_p50']:>8}{row['ms_p99']:>8}"
                   f"{row['ms_max']:>8}{row['frames_over_50ms']:>6}{row.get('gpu_load', '-'):>7}{row.get('vram_mb', '-'):>6}"
                   f"{row['render_thread']:>7}{row['server_thread']:>7}{row['other_processes']:>7}{row['gc_ms']:>7}{row['entities']:>6}"
                   f"{row.get('creatures') if row.get('creatures') is not None else '-':>6}"
+                  f"{row.get('creature_far') if row.get('creature_far') is not None else '-':>5}"
                   f"  {row['limit']}{'' if row['valid'] else '  INVALID'}")
     for result in results:
         print(f"{result['setup']}: {result['window']} full screen {result['fullscreen']}, {result['gpu']}, shaders {result['shaders']}, "
+              f"render distance {result.get('render_distance', '?')} chunks, "
               f"creatures drawn by {result.get('creature_draw') or 'geckolib'}, "
               f"in front {result['in_front']} checks (brought forward {result['brought_forward']} times), "
               f"mains power {result['mains_power']}")
@@ -300,6 +420,12 @@ def main() -> int:
     parser.add_argument("--prepare", action="store_true", help=f"create run/saves/{WORLD} and fly the path once")
     parser.add_argument("--warm", action="store_true", help=f"fly the path once more over run/saves/{WORLD} and keep what it generated")
     parser.add_argument("--seed", default="2026", help="seed of the prepared world")
+    parser.add_argument("--biome", help="with --prepare: start in the middle of the nearest patch of this biome, for example minecraft:plains")
+    parser.add_argument("--pregen", type=int, metavar="CHUNKS",
+                        help="with --prepare: Chunky generates this many chunks around the start in every direction before the path is flown")
+    parser.add_argument("--fog-floor", type=float, default=0.25,
+                        help="rd setups: the part of itself the terrain beyond the render distance keeps through the fog, 0 to 1 (default 0.25)")
+    parser.add_argument("--no-fog", action="store_true", help="rd setups: leave the shader pack as it is (should the patched one not compile)")
     parser.add_argument("--setups", default=",".join(SETUPS), help=f"comma-separated, of: {', '.join(SETUPS)}")
     parser.add_argument("--heap", help="client heap for the run, for example 8G (default: config/dev-runtime.properties)")
     parser.add_argument("--settle", type=int, help="seconds to wait for chunks and shaders before measuring (default 30; 150 when preparing)")
@@ -310,7 +436,7 @@ def main() -> int:
                              "or with distance detail as well, its defaults (default: the client settings)")
     parser.add_argument("--verify", action="store_true",
                         help="draw every eighth creature both ways and compare the vertices (meta.json, creature_draw.verify); not a run to time")
-    parser.add_argument("--timeout", type=int, default=600, help="seconds before a client is closed by force")
+    parser.add_argument("--timeout", type=int, help="seconds before a client is closed by force (default 600; none with --pregen)")
     parser.add_argument("--summarise", help="only print the table of an earlier run's folder under run/diagnostics/bench")
     arguments = parser.parse_args()
 
@@ -320,6 +446,12 @@ def main() -> int:
         return 0
     if run.clients():
         sys.exit("a dev client is already running; close it first")
+    if (arguments.biome or arguments.pregen) and not arguments.prepare:
+        sys.exit("--biome and --pregen shape a new world; add --prepare")
+    if not 0 <= arguments.fog_floor <= 1:
+        sys.exit("--fog-floor is a share, 0 to 1")
+    jar = chunky() if arguments.pregen else None
+    timeout = arguments.timeout or (float("inf") if arguments.pregen else 600)
     kept = run.SAVES / WORLD
     building = arguments.prepare or arguments.warm
     if arguments.prepare and kept.exists():
@@ -343,26 +475,43 @@ def main() -> int:
             folder = stamp / (name if arguments.repeat == 1 else f"{name}-{turn + 1}")
             folder.mkdir(parents=True)
             run.borrow((*run.BORROWED, "config/DistantHorizons.toml", "config/grassiergrass-client.toml", pack_options()))
+            mod = run.RUN / "mods" / CHUNKY["file"] if jar else None
             try:
-                apply(SETUPS.get(name, {}))
+                apply(PREGEN if jar else SETUPS.get(name, {}), None if arguments.no_fog else arguments.fog_floor)
                 if arguments.prepare:
                     opening = [f"-ParkFreshWorld={WORLD}", f"-ParkSeed={arguments.seed}"]
+                    opening += [f"-ParkBiome={arguments.biome}"] if arguments.biome else []
+                    if jar:
+                        opening.append(f"-ParkPregen={arguments.pregen}")
+                        mod.parent.mkdir(exist_ok=True)
+                        shutil.copy2(jar, mod)
                 else:
-                    run.copy_world(WORLD)
+                    # A warmed copy becomes the kept world, so it is copied whole.
+                    run.copy_world(WORLD, near_start(None if arguments.warm else world_start(kept)))
                     opening = [f"-ParkWorld={run.COPY}"]
                 print(f"setup '{name}' -> {folder}", flush=True)
                 game = [f"-Park{key}={value}" for key, value in SETUPS.get(name, {}).get("game", {}).items()]
                 profile = [f"-ParkJfr={(folder / 'profile.jfr').as_posix()}"] if arguments.profile else []
-                launch(folder, name, opening, extra + game + profile, arguments.timeout, folder / "client.log")
+                launch(folder, name, opening, extra + game + profile, timeout, folder / "client.log")
             finally:
                 run.give_back()
+                drop_fog_pack()
+                if mod:
+                    mod.unlink(missing_ok=True)
             result = summarise(folder)
-            if result is None:
+            refused = (folder / "error").read_text(encoding="utf-8") if (folder / "error").is_file() else None
+            if refused:
+                print(f"setup '{name}' could not start: {refused}", flush=True)
+            elif result is None:
                 print(f"setup '{name}' wrote no measurements; see {folder / 'client.log'} and {run.RUN / 'logs' / 'latest.log'}", flush=True)
             else:
                 results.append(result)
-            if arguments.prepare and (kept / "level.dat").is_file():
-                (kept / KEPT).write_text("The benchmark world of tools/session_bench.py; every setup plays a copy of it.\n", encoding="utf-8")
+            if arguments.prepare and refused and kept.is_dir():
+                shutil.rmtree(kept)
+            elif arguments.prepare and (kept / "level.dat").is_file():
+                x, _, z = result["start"].split() if result else ("", "", "")
+                (kept / KEPT).write_text("The benchmark world of tools/session_bench.py; every setup plays a copy of it.\n"
+                                         + (f"start={x} {z}\n" if result else ""), encoding="utf-8")
             elif arguments.warm and result is not None:
                 played = run.SAVES / run.COPY
                 (played / run.MARKER).unlink()

@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -22,6 +23,9 @@ import net.minecraft.client.player.ClientInput;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
@@ -29,6 +33,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Input;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.Vec2;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -48,6 +53,12 @@ import org.lwjgl.glfw.GLFW;
  * duration is kept with its phase; once a second a sample of position, window state, thread load and heap.
  * {@code -Darksurvivalreturns.benchmark.mobs=false} empties the world of every creature, for the cost of drawing them.
  * The folder gets frames.csv, samples.csv, meta.json and a screenshot per measured phase; the game then closes.
+ *
+ * <p>When the world is prepared, {@code -Darksurvivalreturns.benchmark.biome=minecraft:plains} moves the world spawn,
+ * and with it the start of every later run, to the middle of the nearest patch of that biome, and
+ * {@code -Darksurvivalreturns.benchmark.pregen=<chunks>} has Chunky generate that many chunks around it in every
+ * direction before the path is flown (the file {@code pregen} in the folder holds its progress; nothing is
+ * measured meanwhile). A start that cannot be made writes the file {@code error} and closes the game.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class FrameBenchmark {
@@ -56,11 +67,15 @@ public final class FrameBenchmark {
             PAN_SECONDS = Integer.getInteger("arksurvivalreturns.benchmark.pan", 30),
             CLIMB_SECONDS = 8, FLIGHT_SECONDS = Integer.getInteger("arksurvivalreturns.benchmark.flight", 40);
     private static final boolean MOBS = !"false".equals(System.getProperty("arksurvivalreturns.benchmark.mobs"));
+    private static final String BIOME = System.getProperty("arksurvivalreturns.benchmark.biome", "");
+    private static final int PREGEN_CHUNKS = Integer.getInteger("arksurvivalreturns.benchmark.pregen", 0);
     private static final float FLIGHT_PITCH = 12;
     private static final int LIFT = 30, CLEARANCE_LOW = 22, CLEARANCE_HIGH = 38;
+    private static final int BIOME_SEARCH = 6400, PATCH_REACH = 384, PATCH_AROUND = 160, PATCH_STEP = 32;
 
     private enum Phase {
-        WAIT(0), SETTLE(SETTLE_SECONDS), PAN(PAN_SECONDS), CLIMB(CLIMB_SECONDS), FLIGHT(FLIGHT_SECONDS), DONE(0);
+        // PREGEN ends when Chunky reports the end, never by the clock.
+        WAIT(0), PREGEN(Integer.MAX_VALUE), SETTLE(SETTLE_SECONDS), PAN(PAN_SECONDS), CLIMB(CLIMB_SECONDS), FLIGHT(FLIGHT_SECONDS), DONE(0);
 
         final long nanos;
 
@@ -81,12 +96,14 @@ public final class FrameBenchmark {
     private static final ByteArrayList FRAME_PHASES = new ByteArrayList();
     private static final StringBuilder SAMPLES = new StringBuilder(
             "t_ms,phase,fps,x,y,z,focused,iconified,fullscreen,throttle,entities,creatures,heap_mb,render_cpu,server_cpu,"
-                    + "process_cpu,system_cpu,server_tick_ms,gc_count,gc_ms\n");
+                    + "process_cpu,system_cpu,server_tick_ms,gc_count,gc_ms,creature_far\n");
     private static final JsonObject PHASES = new JsonObject();
     private static volatile Phase phase = Phase.WAIT;
     private static volatile double renderLoad, serverLoad, processLoad, systemLoad;
+    private static volatile boolean pregenDone, failed;
+    private static volatile String pregenProgress = "";
     private static long began, phaseBegan, lastFrame, lastSample;
-    private static int framesInSample, unseenSamples, quitIn = -1;
+    private static int framesInSample, unseenSamples, quitIn = -1, pregenTicks;
     private static boolean windowSet;
     private static volatile float heading = -90;
     private static String start = "";
@@ -100,12 +117,20 @@ public final class FrameBenchmark {
             GLFW.glfwSetWindowAttrib(mc.getWindow().handle(), GLFW.GLFW_AUTO_ICONIFY, GLFW.GLFW_FALSE);
         }
         if (quitIn >= 0 && quitIn-- == 0) mc.stop();
+        if (failed && quitIn < 0) {
+            phase = Phase.DONE;
+            quitIn = 20;
+        }
         var player = mc.player;
         if (player == null || mc.level == null || phase == Phase.DONE) return;
         if (mc.screen != null && mc.screen.isPauseScreen()) mc.setScreen(null);
         if (phase == Phase.WAIT) {
             if (mc.screen == null && mc.getOverlay() == null && !mc.isPaused() && mc.getSingleplayerServer() != null) begin(mc);
             return;
+        }
+        if (phase == Phase.PREGEN) {
+            if (pregenTicks++ % 200 == 0) note("pregen", pregenProgress);
+            if (pregenDone) settle();
         }
         if (player.input != DRIVE) player.input = DRIVE;
         DRIVE.forward = DRIVE.up = DRIVE.down = false;
@@ -132,7 +157,7 @@ public final class FrameBenchmark {
     }
 
     @SubscribeEvent public static void frameEnd(RenderFrameEvent.Post event) {
-        if (phase == Phase.WAIT || phase == Phase.DONE) return;
+        if (phase == Phase.WAIT || phase == Phase.PREGEN || phase == Phase.DONE) return;
         long now = System.nanoTime();
         if (lastFrame != 0) {
             FRAMES.add(now - lastFrame);
@@ -145,10 +170,15 @@ public final class FrameBenchmark {
 
     private static void begin(Minecraft mc) {
         var server = mc.getSingleplayerServer();
-        var spawn = server.getRespawnData().pos();
         server.execute(() -> {
             var level = server.overworld();
+            var spawn = BIOME.isEmpty() ? server.getRespawnData().pos() : patchCentre(level, server.getRespawnData().pos());
+            if (spawn == null) {
+                fail("no " + BIOME + " within " + BIOME_SEARCH + " blocks of the world spawn; prepare with another seed");
+                return;
+            }
             int y = level.getChunk(spawn).getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawn.getX(), spawn.getZ()) + 1;
+            if (!BIOME.isEmpty()) level.setRespawnData(LevelData.RespawnData.of(level.dimension(), new BlockPos(spawn.getX(), y, spawn.getZ()), 0, 0));
             start = spawn.getX() + " " + y + " " + spawn.getZ();
             heading = landward(level, spawn);
             var source = server.createCommandSourceStack();
@@ -157,12 +187,90 @@ public final class FrameBenchmark {
                     "weather clear", "time set 6000", "execute in minecraft:overworld run tp @a " + (spawn.getX() + 0.5) + " " + y + " "
                             + (spawn.getZ() + 0.5) + " " + heading + " 0"))
                 server.getCommands().performPrefixedCommand(source, command);
+            if (PREGEN_CHUNKS > 0) pregenerate(spawn.getX(), spawn.getZ());
         });
         began = phaseBegan = lastSample = System.nanoTime();
-        phase = Phase.SETTLE;
+        phase = PREGEN_CHUNKS > 0 ? Phase.PREGEN : Phase.SETTLE;
         watchLoad(Thread.currentThread().threadId(), server.getRunningThread().threadId());
-        mark(Phase.SETTLE);
+        mark(phase);
         ArkSurvivalReturns.LOGGER.info("Frame benchmark: started, output {}", OUT);
+    }
+
+    /**
+     * The middle of the nearest patch of the wanted biome: of the points around the nearest find, the one with the
+     * most of that biome within 160 blocks. Null when the biome is not within reach of the world spawn.
+     */
+    private static BlockPos patchCentre(ServerLevel level, BlockPos from) {
+        var wanted = ResourceKey.create(Registries.BIOME, Identifier.parse(BIOME));
+        var found = level.findClosestBiome3d(biome -> biome.is(wanted), from, BIOME_SEARCH, 32, 64);
+        if (found == null) return null;
+        var biomes = level.getChunkSource().getGenerator().getBiomeSource();
+        var sampler = level.getChunkSource().randomState().sampler();
+        BlockPos near = found.getFirst();
+        int side = (PATCH_REACH + PATCH_AROUND) / PATCH_STEP, span = PATCH_AROUND / PATCH_STEP;
+        boolean[][] is = new boolean[2 * side + 1][2 * side + 1];
+        for (int i = 0; i <= 2 * side; i++)
+            for (int j = 0; j <= 2 * side; j++)
+                is[i][j] = biomes.getNoiseBiome(QuartPos.fromBlock(near.getX() + (i - side) * PATCH_STEP), QuartPos.fromBlock(from.getY()),
+                        QuartPos.fromBlock(near.getZ() + (j - side) * PATCH_STEP), sampler).is(wanted);
+        BlockPos centre = near;
+        int most = -1;
+        for (int i = span; i <= 2 * side - span; i++)
+            for (int j = span; j <= 2 * side - span; j++) {
+                if (!is[i][j]) continue;
+                int count = 0;
+                for (int di = -span; di <= span; di++)
+                    for (int dj = -span; dj <= span; dj++) if (di * di + dj * dj <= span * span && is[i + di][j + dj]) count++;
+                if (count > most) {
+                    most = count;
+                    centre = new BlockPos(near.getX() + (i - side) * PATCH_STEP, from.getY(), near.getZ() + (j - side) * PATCH_STEP);
+                }
+            }
+        ArkSurvivalReturns.LOGGER.info("Frame benchmark: {} found at {}, start moved to {}", BIOME, near.toShortString(), centre.toShortString());
+        return centre;
+    }
+
+    /** Chunky is not part of the game: the runner puts it in run/mods for this launch, and it is reached by name. */
+    private static void pregenerate(double x, double z) {
+        try {
+            Object chunky = Class.forName("org.popcraft.chunky.ChunkyProvider").getMethod("get").invoke(null);
+            Object api = chunky.getClass().getMethod("getApi").invoke(chunky);
+            Class<?> type = Class.forName("org.popcraft.chunky.api.ChunkyAPI");
+            type.getMethod("onGenerationProgress", Consumer.class).invoke(api, (Consumer<Object>) event -> pregenProgress = event.toString());
+            type.getMethod("onGenerationComplete", Consumer.class).invoke(api, (Consumer<Object>) event -> pregenDone = true);
+            double radius = PREGEN_CHUNKS * 16.0;
+            Object started = type.getMethod("startTask", String.class, String.class, double.class, double.class, double.class, double.class, String.class)
+                    .invoke(api, "minecraft:overworld", "square", x, z, radius, radius, "region");
+            if (!Boolean.TRUE.equals(started)) fail("Chunky did not start its task");
+            else ArkSurvivalReturns.LOGGER.info("Frame benchmark: Chunky generates {} chunks around {} {} in every direction", PREGEN_CHUNKS, x, z);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            ArkSurvivalReturns.LOGGER.error("Frame benchmark: Chunky could not be started", e);
+            fail("Chunky is not loaded or does not answer: " + e);
+        }
+    }
+
+    /** The generated world is settled on like any other: the clock of the path starts here. */
+    private static void settle() {
+        note("pregen", "done " + pregenProgress);
+        phaseBegan = lastSample = System.nanoTime();
+        lastFrame = 0;
+        phase = Phase.SETTLE;
+        mark(Phase.SETTLE);
+    }
+
+    private static void fail(String message) {
+        ArkSurvivalReturns.LOGGER.error("Frame benchmark: {}", message);
+        note("error", message);
+        failed = true;
+    }
+
+    private static void note(String file, String text) {
+        try {
+            Files.createDirectories(Path.of(OUT));
+            Files.writeString(Path.of(OUT, file), text);
+        } catch (IOException e) {
+            ArkSurvivalReturns.LOGGER.warn("Frame benchmark: could not write {} to {}", file, OUT, e);
+        }
     }
 
     /** Of the eight compass directions, the one whose next 480 blocks hold the fewest ocean and river biomes. */
@@ -280,13 +388,19 @@ public final class FrameBenchmark {
         });
         var player = mc.player;
         var runtime = Runtime.getRuntime();
+        // The creatures the client holds are the ones it can draw; the farthest shows where the server stops sending them.
         int creatures = 0;
-        for (Entity entity : mc.level.entitiesForRendering()) if (entity instanceof CreatureEntity) creatures++;
-        SAMPLES.append(String.format(Locale.ROOT, "%d,%s,%.1f,%.1f,%.1f,%.1f,%b,%b,%b,%s,%d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.2f,%d,%d%n",
+        double farthest = 0;
+        for (Entity entity : mc.level.entitiesForRendering())
+            if (entity instanceof CreatureEntity) {
+                creatures++;
+                farthest = Math.max(farthest, Math.hypot(entity.getX() - player.getX(), entity.getZ() - player.getZ()));
+            }
+        SAMPLES.append(String.format(Locale.ROOT, "%d,%s,%.1f,%.1f,%.1f,%.1f,%b,%b,%b,%s,%d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.2f,%d,%d,%.0f%n",
                 (now - began) / 1_000_000, phase.name().toLowerCase(Locale.ROOT), framesInSample / seconds, player.getX(), player.getY(),
                 player.getZ(), window.isFocused(), window.isIconified(), window.isFullscreen(), limiter.getThrottleReason(),
                 mc.level.getEntityCount(), creatures, (runtime.totalMemory() - runtime.freeMemory()) >> 20, renderLoad, serverLoad,
-                processLoad, systemLoad, server == null ? 0 : server.getCurrentSmoothedTickTime(), gc(false), gc(true)));
+                processLoad, systemLoad, server == null ? 0 : server.getCurrentSmoothedTickTime(), gc(false), gc(true), farthest));
         lastSample = now;
         framesInSample = 0;
     }
@@ -312,6 +426,8 @@ public final class FrameBenchmark {
         meta.addProperty("heap_max_mb", Runtime.getRuntime().maxMemory() >> 20);
         meta.addProperty("processors", Runtime.getRuntime().availableProcessors());
         meta.addProperty("start", start);
+        meta.addProperty("start_biome", BIOME);
+        meta.addProperty("pregen_chunks", PREGEN_CHUNKS);
         meta.addProperty("heading", heading);
         meta.addProperty("unseen_samples", unseenSamples);
         meta.add("phases", PHASES);
