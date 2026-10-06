@@ -40,6 +40,8 @@ public final class ModContent {
     public static final EnumMap<Species, DeferredHolder<EntityType<?>, EntityType<CreatureEntity>>> CREATURES = new EnumMap<>(Species.class);
     public static final Map<String, DeferredItem<Item>> BERRIES = new LinkedHashMap<>();
     public static final EnumMap<Species, DeferredItem<SpawnEggItem>> EGGS = new EnumMap<>(Species.class);
+    /** One saddle per species: a creature takes only its own, stitched at the Saddlery (tools/build_saddle_items.py). */
+    public static final EnumMap<Species, DeferredItem<Item>> SADDLES = new EnumMap<>(Species.class);
     /** Horse-style creature inventory, opened through the vanilla open-screen path. */
     public static final DeferredHolder<MenuType<?>, MenuType<CreatureMountMenu>> CREATURE_MOUNT_MENU = MENUS.register(
             "creature_mount", () -> IMenuTypeExtension.create((containerId, inventory, data) ->
@@ -224,6 +226,7 @@ public final class ModContent {
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id(s.id))));
             CREATURES.put(s, type);
             EGGS.put(s, ITEMS.registerItem(s.id + "_spawn_egg", p -> new SpawnEggItem(p.spawnEgg(type.get()))));
+            SADDLES.put(s, ITEMS.registerSimpleItem(s.id + "_saddle", p -> p.stacksTo(1)));
         }
         for (Species s : Species.values()) {
             if (!s.flyer()) continue;
@@ -252,6 +255,7 @@ public final class ModContent {
                     dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent.displayItems(output);
                     output.accept(PACK_HARNESS.get());
                     output.accept(REINFORCED_HARNESS.get());
+                    SADDLES.values().forEach(i -> output.accept(i.get()));
                     output.accept(FIBER_BANDAGE.get());
                     dev.nez.arksurvivalreturns.feature.station.StationContent.displayItems(output);
                     dev.nez.arksurvivalreturns.feature.bronze.BronzeContent.displayItems(output);

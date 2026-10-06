@@ -13,7 +13,7 @@ removed on 2026-09-26: a real death drops items as in vanilla.
   rejoining never duplicates it. Disable with `camp.starterKit=false`.
 - **Recipes:** flint knife = flint + stick + fiber; keratin spear = keratin + two sticks + fiber
   (keratin drops from horned, plated and beaked creatures); fiber bandage = three fiber + string
-  (yields two); bedroll = four plant fiber + leather.
+  (yields two); bedroll = four plant fiber + hide.
 
 ## Primitive bedroll
 

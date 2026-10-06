@@ -327,10 +327,12 @@ def propose(recipe, source):
     # Equipment the answers of 2026-09-29 do not cover, and the special recipes.
     if re.fullmatch(r'(copper|iron)_(helmet|chestplate|leggings|boots)', path):
         return decision('go', note='assumed gone with the copper and iron tools')
+    if rid == 'minecraft:saddle':
+        return decision('go', 'saddlery', note='every creature takes its own saddle, stitched at the Saddlery')
     if rid == 'minecraft:repair_item':
         return decision('decide', 'armoury', note='combine two worn tools: keep, or repair at the Smithing Table?')
     if kind == 'crafting_dye':
-        return decision('decide', 'armoury', note='dye leather gear: keep as an Armoury action?')
+        return decision('decide', 'armoury', note='dye hide gear: keep as an Armoury action?')
     if rid == 'minecraft:map_cloning':
         return decision('decide', 'mechanical_press', 'paper', note='copy a filled map (Xaero replaces map editing)')
     if rid == 'minecraft:shield_decoration':
@@ -627,7 +629,7 @@ def crafted(recipe):
     if fam == 'banner' or rid.endswith('_banner_duplicate'):
         return ws('fibre/banners', 'banner' if fam == 'banner' else 'banner_copy')
     if fam == 'lead':
-        return at('saddlery', 'riding', 'lead')
+        return at('saddlery', 'tack', 'lead')
     if path in ('leather', 'bundle') or fam == 'bundle_dye':
         return ws('fibre/leather', fam if fam == 'bundle_dye' else None)
 
@@ -653,9 +655,9 @@ def ark_place(recipe):
                 'medicine_bench', 'smithing_table', 'crusher'):
         return ws('camp/stations')
     if path in ('pack_harness', 'reinforced_harness'):
-        return at('saddlery', 'cargo')
+        return at('saddlery', 'tack')
     if path == 'lead':
-        return at('saddlery', 'riding', 'lead')
+        return at('saddlery', 'tack', 'lead')
     if path == 'resin_clump':
         return ws('wood', 'resin_clump')
     if path == 'bronze_blend':

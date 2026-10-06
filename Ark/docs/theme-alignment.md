@@ -72,7 +72,7 @@ are removed as their chunks load.
 | String | Spiders, and the existing trader offers |
 | Bone meal, wolf taming, bone blocks | Unchanged, fed by the new bone source |
 | Gunpowder, slime balls | Wandering trader's uncommon offers, kept as the existing grounded source |
-| Leather, feathers, meat | Dinosaur carcasses (farm animals are removed: cow, mooshroom, pig, sheep, chicken, horse, donkey, mule) |
+| Hide (the renamed leather), feathers, meat | Dinosaur carcasses (farm animals are removed: cow, mooshroom, pig, sheep, chicken, horse, donkey, mule) |
 | Wool, ink | String (four to a block) and squid, unchanged |
 | Eggs | No source left; cake and pumpkin pie cannot be crafted |
 | Glowstone, quartz | Cleric and mason trades, kept for lighting and redstone |

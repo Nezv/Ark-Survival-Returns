@@ -34,7 +34,7 @@
       ]
     },
     {
-      "id": "leather", "title": "Leather", "icon": "minecraft:leather", "color": "#9c6b45", "level": 2, "after": "rock",
+      "id": "leather", "title": "Hide", "icon": "minecraft:leather", "color": "#9c6b45", "level": 2, "after": "rock",
       "items": [
         {"item": "minecraft:leather_helmet", "cost": {"minecraft:leather": 5, "arksurvivalreturns:plant_fiber": 2}},
         {"item": "minecraft:leather_chestplate", "level": 4, "cost": {"minecraft:leather": 8, "arksurvivalreturns:plant_fiber": 4}},

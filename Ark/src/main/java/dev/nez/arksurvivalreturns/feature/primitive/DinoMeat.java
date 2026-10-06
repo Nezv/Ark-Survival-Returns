@@ -63,7 +63,7 @@ public enum DinoMeat {
         };
     }
 
-    /** Whether the carcass yields leather (hide); birds and sea creatures do not. */
+    /** Whether the carcass yields Hide (the vanilla leather item, renamed); birds and sea creatures do not. */
     public static boolean hide(Species species) {
         DinoMeat meat = of(species);
         return meat != null && meat != BIRD && meat != MARINE;

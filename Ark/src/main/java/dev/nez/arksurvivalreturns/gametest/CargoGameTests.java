@@ -252,7 +252,7 @@ final class CargoGameTests {
         CreatureEntity bird = create(h, Species.PTERANODON, new BlockPos(8, 3, 8));
         TamingService.of(bird).setOwner(rider.getUUID());
         bird.applyTameState();
-        bird.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+        bird.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(ModContent.SADDLES.get(Species.PTERANODON).get()));
         bird.harnessSlot().setItem(0, new ItemStack(ModContent.PACK_HARNESS.get()));
         bird.tamingInventory().setItem(0, new ItemStack(Items.STONE, 64));
         bird.tamingInventory().setItem(1, new ItemStack(Items.STONE, 64));
@@ -283,7 +283,7 @@ final class CargoGameTests {
         CreatureEntity shark = create(h, Species.MEGALODON, new BlockPos(8, 3, 8));
         TamingService.of(shark).setOwner(rider.getUUID());
         shark.applyTameState();
-        shark.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+        shark.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(ModContent.SADDLES.get(Species.MEGALODON).get()));
         shark.tamingInventory().setItem(0, new ItemStack(Items.STONE, 64));
         shark.tamingInventory().setItem(1, new ItemStack(Items.STONE, 64));
         MassService.refreshCreature(shark);

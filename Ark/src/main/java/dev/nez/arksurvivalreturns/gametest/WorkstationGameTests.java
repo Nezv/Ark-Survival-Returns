@@ -2,6 +2,7 @@ package dev.nez.arksurvivalreturns.gametest;
 
 import com.mojang.authlib.GameProfile;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
 import dev.nez.arksurvivalreturns.feature.station.*;
@@ -132,19 +133,35 @@ final class WorkstationGameTests {
         h.assertBlockPresent(StationContent.SADDLERY.get(), rel);
         var menu = new WorkstationMenu(81, inventory, pos, "arksurvivalreturns:saddlery"); player.containerMenu = menu;
         var graph = WorkstationCatalog.get(menu.station);
-        for (String item : java.util.List.of("minecraft:saddle", "minecraft:lead", "arksurvivalreturns:pack_harness",
-                "arksurvivalreturns:reinforced_harness")) {
+        for (String item : java.util.List.of("minecraft:lead", "arksurvivalreturns:pack_harness", "arksurvivalreturns:reinforced_harness")) {
             h.assertTrue(graph.crafts().stream().anyMatch(c -> c.variant().item().equals(item)), "The Saddlery must make " + item);
         }
-        for (String bench : java.util.List.of("armoury", "working_station")) {
-            h.assertTrue(WorkstationCatalog.get("arksurvivalreturns:" + bench).crafts().stream().noneMatch(c ->
-                    java.util.Set.of("minecraft:saddle", "minecraft:lead", "arksurvivalreturns:pack_harness").contains(c.variant().item())),
-                    "Tack must have left the " + bench);
+        // One saddle per species (tools/build_saddle_items.py), and a greater animal never asks for a lower level.
+        var saddles = new java.util.EnumMap<Species, WorkstationDefinition.Craft>(Species.class);
+        for (Species species : Species.values()) {
+            String item = "arksurvivalreturns:" + species.id + "_saddle";
+            var found = graph.crafts().stream().filter(c -> c.variant().item().equals(item)).toList();
+            h.assertTrue(found.size() == 1, "The Saddlery must make one " + item + ", found " + found.size());
+            saddles.put(species, found.getFirst());
         }
-        inventory.clearContent(); inventory.setItem(0, new ItemStack(Items.LEATHER, 3)); inventory.setItem(1, new ItemStack(Items.IRON_INGOT));
-        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "minecraft:saddle", 1, "i:riding/saddle", 0, 81)),
-                "The Saddlery must stitch a saddle");
-        h.assertTrue(inventory.countItem(Items.SADDLE) == 1, "Saddle output missing");
+        for (Species lesser : Species.values()) for (Species greater : Species.values())
+            h.assertTrue(lesser.health >= greater.health || saddles.get(lesser).level() <= saddles.get(greater).level(),
+                    "The " + lesser.id + " saddle asks for a higher level than the " + greater.id + " saddle");
+        for (String bench : java.util.List.of("armoury", "working_station", "saddlery")) {
+            h.assertTrue(WorkstationCatalog.get("arksurvivalreturns:" + bench).crafts().stream().noneMatch(c ->
+                    c.variant().item().equals("minecraft:saddle") || !bench.equals("saddlery")
+                            && java.util.Set.of("minecraft:lead", "arksurvivalreturns:pack_harness").contains(c.variant().item())),
+                    "Tack must have left the " + bench + ", and no bench makes the vanilla saddle");
+        }
+        var stitched = saddles.get(Species.PEGOMASTAX);
+        inventory.clearContent();
+        for (var cost : stitched.variant().cost().entrySet())
+            inventory.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
+                    net.minecraft.resources.Identifier.parse(cost.getKey())), cost.getValue()));
+        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, stitched.variant().item(), 1,
+                "i:" + stitched.category().id() + "/" + stitched.entry().family(), 0, 81)), "The Saddlery must stitch a saddle");
+        h.assertTrue(inventory.countItem(ModContent.SADDLES.get(Species.PEGOMASTAX).get()) == 1 && inventory.countItem(Items.LEATHER) == 0,
+                "Saddle output missing, or its hide was not spent");
         h.assertTrue(((SaddleryBlock) upper.getBlock()).menuPos(upper, pos.above()).equals(pos), "The upper half must open the lower half's graph");
         h.setBlock(rel.above(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         h.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, rel);

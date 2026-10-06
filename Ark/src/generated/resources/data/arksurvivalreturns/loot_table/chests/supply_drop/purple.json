@@ -145,7 +145,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:saddle",
+          "name": "arksurvivalreturns:tyrannosaurus_saddle",
           "weight": 2
         },
         {

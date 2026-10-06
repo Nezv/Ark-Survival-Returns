@@ -1,18 +1,78 @@
 {
   "station": "arksurvivalreturns:saddlery",
   "title": "Saddlery",
-  "about": "P14 design data (see armoury.json). Tack for tames: the saddle and the lead to ride and walk them, the harnesses that let them carry. The saddle came from the Armoury, the leads and harnesses from the Working Station, each at the cost it had.",
+  "about": "P14 design data (see armoury.json). Tack for tames: the lead to walk them, the harnesses that let them carry, and a saddle for every species, which fits no other. The leads and harnesses came from the Working Station at the cost they had and are placed by the rules; tools/build_saddle_items.py writes the five saddle categories from the roster, the level growing with the animal.",
   "verb": "Stitch",
   "accent": "#c9894f",
   "sigil": "saddle",
   "well": "stitches",
   "categories": [
+    {"id": "tack", "title": "Leads and Harnesses", "icon": "arksurvivalreturns:pack_harness", "color": "#b5895a", "level": 0},
     {
-      "id": "riding", "title": "Riding", "icon": "minecraft:saddle", "color": "#b5683c", "level": 0,
+      "id": "herbivores", "title": "Land Herbivores", "icon": "arksurvivalreturns:triceratops_spawn_egg", "color": "#8fb07f", "level": 5, "after": "tack",
       "items": [
-        {"item": "minecraft:saddle", "level": 3, "cost": {"minecraft:leather": 3, "minecraft:iron_ingot": 1}}
+        {"item": "arksurvivalreturns:pegomastax_saddle", "level": 5, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:lystrosaurus_saddle", "level": 5, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:parasaur_saddle", "level": 12, "cost": {"minecraft:leather": 6, "arksurvivalreturns:bronze_ingot": 3, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:megalocerus_saddle", "level": 15, "cost": {"minecraft:leather": 8, "arksurvivalreturns:bronze_ingot": 4, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:unicorn_saddle", "level": 17, "cost": {"minecraft:leather": 8, "arksurvivalreturns:bronze_ingot": 4, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:triceratops_saddle", "level": 22, "cost": {"minecraft:leather": 11, "arksurvivalreturns:bronze_ingot": 5, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 7}},
+        {"item": "arksurvivalreturns:ankylosaurus_saddle", "level": 24, "cost": {"minecraft:leather": 12, "arksurvivalreturns:bronze_ingot": 6, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:therizinosaurus_saddle", "level": 25, "cost": {"minecraft:leather": 13, "arksurvivalreturns:bronze_ingot": 6, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:mammoth_saddle", "level": 35, "cost": {"minecraft:leather": 18, "minecraft:iron_ingot": 9, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:brontosaurus_saddle", "level": 37, "cost": {"minecraft:leather": 18, "arksurvivalreturns:bronze_ingot": 9, "#minecraft:planks": 8, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:paraceratherium_saddle", "level": 39, "cost": {"minecraft:leather": 19, "minecraft:iron_ingot": 10, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:titanosaur_saddle", "level": 48, "cost": {"minecraft:leather": 24, "arksurvivalreturns:bronze_ingot": 12, "#minecraft:planks": 8, "arksurvivalreturns:plant_fiber": 12}}
       ]
     },
-    {"id": "cargo", "title": "Cargo", "icon": "arksurvivalreturns:pack_harness", "color": "#b5895a", "level": 0, "after": "riding"}
+    {
+      "id": "carnivores", "title": "Land Carnivores", "icon": "arksurvivalreturns:tyrannosaurus_spawn_egg", "color": "#c2573f", "level": 6, "after": "herbivores",
+      "items": [
+        {"item": "arksurvivalreturns:dilophosaur_saddle", "level": 6, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:velociraptor_saddle", "level": 8, "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 3}},
+        {"item": "arksurvivalreturns:terrorbird_saddle", "level": 12, "cost": {"minecraft:leather": 6, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:direwolf_saddle", "level": 13, "cost": {"minecraft:leather": 6, "arksurvivalreturns:bronze_ingot": 3, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:sabertooth_saddle", "level": 15, "cost": {"minecraft:leather": 8, "arksurvivalreturns:bronze_ingot": 4, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:ravager_saddle", "level": 17, "cost": {"minecraft:leather": 8, "arksurvivalreturns:bronze_ingot": 4, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:allosaurus_saddle", "level": 20, "cost": {"minecraft:leather": 10, "arksurvivalreturns:bronze_ingot": 5, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 7}},
+        {"item": "arksurvivalreturns:carnotaurus_saddle", "level": 21, "cost": {"minecraft:leather": 10, "arksurvivalreturns:bronze_ingot": 5, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 7}},
+        {"item": "arksurvivalreturns:ceratosaurus_saddle", "level": 22, "cost": {"minecraft:leather": 11, "arksurvivalreturns:bronze_ingot": 6, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 7}},
+        {"item": "arksurvivalreturns:spinosaurus_saddle", "level": 32, "cost": {"minecraft:leather": 16, "minecraft:iron_ingot": 8, "minecraft:stick": 8, "arksurvivalreturns:plant_fiber": 10}},
+        {"item": "arksurvivalreturns:tyrannosaurus_saddle", "level": 33, "cost": {"minecraft:leather": 16, "minecraft:iron_ingot": 8, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 11}},
+        {"item": "arksurvivalreturns:acrocanthosaurus_saddle", "level": 39, "cost": {"minecraft:leather": 19, "minecraft:iron_ingot": 10, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:giganotosaurus_saddle", "level": 43, "cost": {"minecraft:leather": 21, "minecraft:iron_ingot": 11, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:megapithecus_saddle", "level": 45, "cost": {"minecraft:leather": 23, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}}
+      ]
+    },
+    {
+      "id": "fliers", "title": "Fliers", "icon": "arksurvivalreturns:pteranodon_spawn_egg", "color": "#8fb6d9", "level": 3, "after": "tack",
+      "items": [
+        {"item": "arksurvivalreturns:archaeopteryx_saddle", "level": 3, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:pteranodon_saddle", "level": 6, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:argentavis_saddle", "level": 12, "cost": {"minecraft:leather": 6, "arksurvivalreturns:bronze_ingot": 3, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:quetzal_saddle", "level": 33, "cost": {"minecraft:leather": 16, "arksurvivalreturns:bronze_ingot": 8, "#minecraft:planks": 8, "arksurvivalreturns:plant_fiber": 11}},
+        {"item": "arksurvivalreturns:dragon_saddle", "level": 48, "cost": {"minecraft:leather": 24, "minecraft:iron_ingot": 12, "arksurvivalreturns:plant_fiber": 12}}
+      ]
+    },
+    {
+      "id": "aquatic", "title": "Aquatic", "icon": "arksurvivalreturns:megalodon_spawn_egg", "color": "#4f8fb5", "level": 3, "after": "tack",
+      "items": [
+        {"item": "arksurvivalreturns:cnidaria_saddle", "level": 3, "cost": {"minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "arksurvivalreturns:plesiosaur_saddle", "level": 15, "cost": {"minecraft:leather": 8, "minecraft:iron_ingot": 4, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:liopleurodon_saddle", "level": 20, "cost": {"minecraft:leather": 10, "minecraft:iron_ingot": 5, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 7}},
+        {"item": "arksurvivalreturns:megalodon_saddle", "level": 23, "cost": {"minecraft:leather": 11, "minecraft:iron_ingot": 6, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:tusoteuthis_saddle", "level": 38, "cost": {"minecraft:leather": 19, "minecraft:iron_ingot": 9, "arksurvivalreturns:plant_fiber": 12}},
+        {"item": "arksurvivalreturns:mosasaurus_saddle", "level": 40, "cost": {"minecraft:leather": 20, "minecraft:iron_ingot": 10, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 12}}
+      ]
+    },
+    {
+      "id": "amphibious", "title": "Amphibious", "icon": "arksurvivalreturns:sarco_spawn_egg", "color": "#6fa58c", "level": 12, "after": "aquatic",
+      "items": [
+        {"item": "arksurvivalreturns:titanoboa_saddle", "level": 12, "cost": {"minecraft:leather": 6, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:kaprosuchus_saddle", "level": 14, "cost": {"minecraft:leather": 7, "arksurvivalreturns:bronze_ingot": 3, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:sarco_saddle", "level": 18, "cost": {"minecraft:leather": 9, "arksurvivalreturns:bronze_ingot": 4, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "arksurvivalreturns:deinosuchus_saddle", "level": 30, "cost": {"minecraft:leather": 15, "minecraft:iron_ingot": 8, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 10}}
+      ]
+    }
   ]
 }

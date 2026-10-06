@@ -33,7 +33,7 @@ TAG_NAMES = {'#minecraft:planks': 'Any Planks', '#minecraft:logs': 'Any Log', '#
              '#minecraft:trim_materials': 'Any Trim Material', '#minecraft:dyes': 'Any Dye', '#minecraft:bundles': 'Any Bundle',
              '#minecraft:candles': 'Any Candle', '#minecraft:wool_carpets': 'Any Carpet', '#minecraft:beds': 'Any Bed',
              '#minecraft:decorated_pot_ingredients': 'Brick or Pottery Sherd', '#minecraft:soul_fire_base_blocks': 'Soul Sand or Soil',
-             '#minecraft:metal_nuggets': 'Iron or Copper Nugget', '#c:leathers': 'Leather', '#c:ingots/bronze': 'Bronze Ingot',
+             '#minecraft:metal_nuggets': 'Iron or Copper Nugget', '#c:leathers': 'Hide', '#c:ingots/bronze': 'Bronze Ingot',
              '#c:ores/tin': 'Tin Ore', '#arksurvivalreturns:berries': 'Any Berry', '#minecraft:meat': 'Any Meat',
              '#minecraft:piglin_loved': 'Golden Tool or Armour', '#minecraft:logs_that_burn': 'Any Log',
              '#minecraft:smelts_to_glass': 'Sand or Red Sand', '#minecraft:leaves': 'Any Leaves'}

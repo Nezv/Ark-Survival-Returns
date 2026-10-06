@@ -47,6 +47,9 @@ class Icons:
     def read(self, namespace, path):
         """A resource from assets/<namespace>/<path>, or None."""
         if namespace == 'minecraft':
+            override = ARK / 'src/main/resources/assets/minecraft' / path
+            if override.is_file():  # a vanilla texture the mod repaints: the hide
+                return override.read_bytes()
             try:
                 return self.jar.read(f'assets/minecraft/{path}') if self.jar else None
             except KeyError:

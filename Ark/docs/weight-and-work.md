@@ -49,7 +49,7 @@ movement curve, the HUD denominator and the automation stop:
 
 ## Cargo rigs and transfer
 
-- **Pack harness** (leather + plant fiber) and **reinforced harness** (pack harness + leather + flint
+- **Pack harness** (hide + plant fiber) and **reinforced harness** (pack harness + hide + flint
   + fiber) fit the rig slot in the tame screen. Each species declares a harness tier and capacity in
   `CargoProfiles`, tunable per species under `[mass.<species>]`.
 - Heavy haulers (Brontosaurus, Titanosaur, Paraceratherium, Mammoth, Quetzal) and the giants require

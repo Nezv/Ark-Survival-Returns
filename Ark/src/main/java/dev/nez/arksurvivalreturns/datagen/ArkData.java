@@ -289,6 +289,10 @@ public final class ArkData implements DataProvider {
             en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
             en.put("item." + NS + "." + s.id + "_spawn_egg", s.displayName + " Spawn Egg");
             pt.put("item." + NS + "." + s.id + "_spawn_egg", "Ovo gerador de " + s.displayName);
+            // The sprites come from tools/build_saddle_items.py, by the tier and seat of the concept saddle (F28).
+            model(s.id + "_saddle");
+            en.put("item." + NS + "." + s.id + "_saddle", s.displayName + " Saddle");
+            pt.put("item." + NS + "." + s.id + "_saddle", "Sela de " + s.displayName);
         }
         en.put("map."+NS+".land_on", "Land habitats: on"); en.put("map."+NS+".land_off", "Land habitats: off");
         pt.put("map."+NS+".land_on", "Habitats: ligados"); pt.put("map."+NS+".land_off", "Habitats: desligados");
@@ -383,7 +387,7 @@ public final class ArkData implements DataProvider {
                 "not unconscious", "another player holds this attempt", "already tamed", "not a valid target",
                 "you cannot attack", "you cannot interact", "you cannot use items", "you cannot walk",
                 "you cannot mount", "the creature is unconscious", "you must tame it first",
-                "you do not own this creature", "it needs a saddle", "someone is already riding it",
+                "you do not own this creature", "it needs its own saddle", "someone is already riding it",
                 "there is no room to mount here", "your tribe has not granted you riding permission for %s",
                 "your tribe has not granted you cargo access to %s",
                 "your tribe has not granted you order permission for %s"};
@@ -395,7 +399,7 @@ public final class ArkData implements DataProvider {
                 "n\u00e3o est\u00e1 inconsciente", "outro jogador det\u00e9m esta tentativa", "j\u00e1 domesticado", "alvo inv\u00e1lido",
                 "voc\u00ea n\u00e3o pode atacar", "voc\u00ea n\u00e3o pode interagir", "voc\u00ea n\u00e3o pode usar itens", "voc\u00ea n\u00e3o pode andar",
                 "voc\u00ea n\u00e3o pode montar", "a criatura est\u00e1 inconsciente", "voc\u00ea precisa domar primeiro",
-                "voc\u00ea n\u00e3o \u00e9 o dono desta criatura", "precisa de uma sela", "algu\u00e9m j\u00e1 est\u00e1 montado",
+                "voc\u00ea n\u00e3o \u00e9 o dono desta criatura", "precisa da sela da própria espécie", "algu\u00e9m j\u00e1 est\u00e1 montado",
                 "n\u00e3o h\u00e1 espa\u00e7o para montar aqui", "sua tribo n\u00e3o lhe deu permiss\u00e3o de montaria em %s",
                 "sua tribo n\u00e3o lhe deu acesso \u00e0 carga de %s",
                 "sua tribo n\u00e3o lhe deu permiss\u00e3o de ordens para %s"};
@@ -658,8 +662,15 @@ public final class ArkData implements DataProvider {
         model("narcotics");
         vanillaModel("improved_tranquilizer_arrow", NS + ":item/improved_tranquilizer_arrow");
         // The recipe gates rename the vanilla Stick: the leaves drop it, and it is the twig of the spec.
-        put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig"));
-        put("assets/minecraft/lang/pt_br", Map.of("item.minecraft.stick", "Graveto"));
+        // Leather is the Hide a carcass gives (F31), and so is the armour sewn from it.
+        put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig", "item.minecraft.leather", "Hide",
+                "item.minecraft.leather_helmet", "Hide Cap", "item.minecraft.leather_chestplate", "Hide Tunic",
+                "item.minecraft.leather_leggings", "Hide Pants", "item.minecraft.leather_boots", "Hide Boots",
+                "item.minecraft.leather_horse_armor", "Hide Horse Armor"));
+        put("assets/minecraft/lang/pt_br", Map.of("item.minecraft.stick", "Graveto", "item.minecraft.leather", "Pele",
+                "item.minecraft.leather_helmet", "Capuz de pele", "item.minecraft.leather_chestplate", "T\u00fanica de pele",
+                "item.minecraft.leather_leggings", "Cal\u00e7as de pele", "item.minecraft.leather_boots", "Botas de pele",
+                "item.minecraft.leather_horse_armor", "Armadura de pele para cavalo"));
     }
 
     /** The downed state's two hidden discovery advancements. */

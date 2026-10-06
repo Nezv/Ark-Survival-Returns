@@ -15,7 +15,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -61,7 +60,9 @@ public final class CreatureMountMenu extends AbstractContainerMenu {
                 : creature.createEquipmentSlotContainer(EquipmentSlot.SADDLE);
         this.addSlot(new Slot(saddle, 0, 8, 18) {
             @Override public boolean mayPlace(ItemStack stack) {
-                return stack.is(Items.SADDLE);
+                // A client that has not resolved the creature lets any saddle through; the server holds the rule.
+                return creature == null ? ModContent.SADDLES.values().stream().anyMatch(saddle -> stack.is(saddle.get()))
+                        : stack.is(ModContent.SADDLES.get(creature.species()).get());
             }
         });
         Container harness = creature == null ? new SimpleContainer(1) : creature.harnessSlot();

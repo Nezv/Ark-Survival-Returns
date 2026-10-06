@@ -126,8 +126,11 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     public CargoProfiles.Harness harnessTier() { return CargoProfiles.tier(harnessSlot.getItem(0)); }
 
-    /** The saddle lives in the real equipment slot, so vanilla persists, syncs and drops it. */
-    public boolean isSaddled() { return getItemBySlot(EquipmentSlot.SADDLE).is(Items.SADDLE); }
+    /**
+     * The saddle lives in the real equipment slot, so vanilla persists, syncs and drops it. Only the saddle of
+     * its own species fits a creature.
+     */
+    public boolean isSaddled() { return getItemBySlot(EquipmentSlot.SADDLE).is(ModContent.SADDLES.get(species).get()); }
 
     public boolean isTamed() { return TamingService.isTamed(this); }
 
@@ -748,6 +751,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     }
     @Override protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
+        // Saves from before the species saddles: the vanilla saddle a creature wore becomes its own.
+        if (getItemBySlot(EquipmentSlot.SADDLE).is(Items.SADDLE))
+            setItemSlot(EquipmentSlot.SADDLE, new ItemStack(ModContent.SADDLES.get(species).get()));
         entityData.set(LEVEL, LevelScaling.clamp(input.getIntOr("CreatureLevel", 1)));
         levelInitialized = input.getBooleanOr("LevelInitialized", false);
         originDanger = input.getIntOr("OriginDanger", -1);

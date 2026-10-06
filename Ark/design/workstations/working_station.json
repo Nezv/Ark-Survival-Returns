@@ -46,11 +46,11 @@
     {"id": "farm", "title": "Farm", "icon": "minecraft:wheat", "color": "#b9c35a", "level": 1, "after": "camp"},
     {"id": "earth", "title": "Clay, mud and snow", "icon": "minecraft:clay_ball", "color": "#c07b5a", "level": 2, "after": "wood"},
     {
-      "id": "fibre", "title": "Wool and leather", "icon": "minecraft:white_wool", "color": "#d8d4c8", "level": 3, "after": "farm",
+      "id": "fibre", "title": "Wool and hide", "icon": "minecraft:white_wool", "color": "#d8d4c8", "level": 3, "after": "farm",
       "items": [
         {"group": "wool", "title": "Wool and carpets", "icon": "minecraft:white_carpet"},
         {"group": "banners", "title": "Beds and banners", "icon": "minecraft:red_bed"},
-        {"group": "leather", "title": "Leather and string", "icon": "minecraft:bundle"}
+        {"group": "leather", "title": "Hide and string", "icon": "minecraft:bundle"}
       ]
     },
     {

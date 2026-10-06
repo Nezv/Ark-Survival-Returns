@@ -411,7 +411,13 @@ final class TamingGameTests {
             h.assertTrue(!CreatureRideController.canMount(creature, rider), "Unsaddled creature was mountable: " + species.id);
             h.assertTrue(!CreatureRideController.canMount(creature, stranger), "Stranger could mount an owned creature: " + species.id);
 
-            creature.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+            // Neither the vanilla saddle nor another species' saddle fits.
+            var other = Species.values()[(species.ordinal() + 1) % Species.values().length];
+            for (var wrong : java.util.List.of(Items.SADDLE, ModContent.SADDLES.get(other).get())) {
+                creature.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(wrong));
+                h.assertTrue(!creature.isSaddled(), wrong + " fitted: " + species.id);
+            }
+            creature.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(ModContent.SADDLES.get(species).get()));
             h.assertTrue(creature.isSaddled(), "Saddle did not register: " + species.id);
             h.assertTrue(CreatureRideController.canMount(creature, rider), "Owner could not mount: " + species.id);
             h.assertTrue(!CreatureRideController.canMount(creature, stranger), "Stranger could mount: " + species.id);
@@ -456,7 +462,7 @@ final class TamingGameTests {
         double expectedProgress = taming.progress();
         double expectedTorpor = TorporService.of(creature).maximum() * 0.75;
         TorporService.setTorpor(creature, expectedTorpor);
-        creature.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+        creature.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(ModContent.SADDLES.get(creature.species()).get()));
         creature.tamingInventory().setItem(0, new ItemStack(Items.BEEF, 7));
         creature.tamingInventory().setItem(4, new ItemStack(ModContent.BERRIES.get("narcoberry").get(), 3));
 

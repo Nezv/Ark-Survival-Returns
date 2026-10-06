@@ -1,3 +1,9 @@
 {
+  "item.minecraft.leather": "Hide",
+  "item.minecraft.leather_boots": "Hide Boots",
+  "item.minecraft.leather_chestplate": "Hide Tunic",
+  "item.minecraft.leather_helmet": "Hide Cap",
+  "item.minecraft.leather_horse_armor": "Hide Horse Armor",
+  "item.minecraft.leather_leggings": "Hide Pants",
   "item.minecraft.stick": "Twig"
 }

@@ -43,7 +43,7 @@ final class DropData {
                 entry("minecraft:iron_ingot", 4, 8, 5), entry("bronze_ingot", 6, 10, 4), entry("explosive_arrow", 3, 6, 4),
                 entry("improved_tranquilizer_arrow", 8, 16, 4), entry("minecraft:gunpowder", 6, 12, 3), entry("healing_mixture", 3, 4, 3),
                 entry("vitamins", 2, 3, 3), entry("hearty_stew", 2, 4, 3), entry("amber", 2, 4, 3),
-                entry("reinforced_harness", 1, 1, 2), entry("minecraft:saddle", 1, 1, 2), entry("bronze_longsword", 1, 1, 2),
+                entry("reinforced_harness", 1, 1, 2), entry("tyrannosaurus_saddle", 1, 1, 2), entry("bronze_longsword", 1, 1, 2),
                 entry("bronze_chestplate", 1, 1, 2), entry("bronze_leggings", 1, 1, 2), entry("keratin_chestplate", 1, 1, 1),
                 entry("keratin_helmet", 1, 1, 1), entry("bronze_hammer", 1, 1, 1)));
     }
