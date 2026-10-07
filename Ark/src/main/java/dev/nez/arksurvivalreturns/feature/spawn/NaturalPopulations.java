@@ -56,8 +56,12 @@ import org.jspecify.annotations.Nullable;
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
-    /** LEDGER: density near players scaled by the regional predator-prey ledger. BUDGET: fixed target per player. */
-    public enum Model { LEDGER, BUDGET }
+    /**
+     * BIOME: the land's biome regions are settled once as their chunks load and kept at their quotas by arrivals that
+     * come with the days ({@link LandRegister}). LEDGER: density near players scaled by the regional predator-prey
+     * ledger. BUDGET: fixed target per player.
+     */
+    public enum Model { BIOME, LEDGER, BUDGET }
 
     /**
      * Regional large species the budget wants at least one of near a player, mirroring the deleted
@@ -85,6 +89,8 @@ public final class NaturalPopulations {
     private static final double TRAVEL_PACE = 0.12;
     /** A group is only removed this far from every player and out of their sight, a couple per check, so nothing vanishes in view. */
     private static final int CULL_DISTANCE = 56, CULLED_PER_PASS = 2;
+    /** The chunk each player stood in at the previous check of the BIOME model: one who was elsewhere has just come to this land. */
+    private static final Map<UUID, ChunkPos> LAST_CHUNK = new HashMap<>();
     /** Each player's position at the previous check, for the direction of travel. */
     private static final Map<UUID, Vec3> LAST_SEEN = new HashMap<>();
     /** What the last pass counted for each player; the debug screen of a single-player client reads it from another thread. */
@@ -113,13 +119,17 @@ public final class NaturalPopulations {
         if (!players.isEmpty()) enforce(level, players);
     }
 
-    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { LAST_SEEN.clear(); CENSUS.clear(); }
+    @SubscribeEvent public static void stopped(ServerStoppedEvent event) { LAST_SEEN.clear(); LAST_CHUNK.clear(); CENSUS.clear(); }
 
     /** One budget pass; also the deterministic entry point for the headless tests. */
     public static void enforce(ServerLevel level, List<? extends Player> players) {
         boolean ledger = ledger();
         var wilds = loadedWildlife(level);
         WildlifeRegister.get(level).refresh(level, wilds);
+        if (Config.POPULATION_MODEL.get() == Model.BIOME) {
+            settle(level, players, wilds);
+            return;
+        }
         int globalCap = globalCap(players.size());
         if (wilds.size() > globalCap) {
             cull(level, players, wilds, wilds.size() - globalCap);
@@ -165,6 +175,155 @@ public final class NaturalPopulations {
                 }
             }
         }
+    }
+
+    /**
+     * The BIOME model. Every loaded chunk in reach of a player is looked at once: it gets its share of its region's
+     * groups, drawn from the world's seed, while the region is below its quota. After that a region below a quota
+     * takes in what the days have allowed it, in a chunk nobody watches. Nothing is placed around a player for being
+     * there, and nothing is removed: what lives is in the {@link WildlifeRegister} until it dies.
+     */
+    private static void settle(ServerLevel level, List<? extends Player> players, List<CreatureEntity> wilds) {
+        var land = LandRegister.get(level);
+        var counts = land.count(level, WildlifeRegister.get(level));
+        var groups = new ArrayList<>(groups(wilds));
+        int cap = globalCap(players.size()), loaded = wilds.size(), kinds = WildClass.values().length;
+        double today = level.getServer().overworld().getGameTime() / 24000.0;
+        int view = level.getServer().getPlayerList().getViewDistance(), reach = view > 0 ? Math.min(view, 12) : 8;
+        Map<LandRegister.Region, List<ChunkPos>> inReach = new java.util.IdentityHashMap<>();
+        // Land a player has only just come to, by joining or by a leap, they have not looked at yet: its first animals
+        // are there before they do. Only the players who were already here count as watching.
+        var watchers = new ArrayList<Player>();
+        for (var player : players) {
+            var here = new ChunkPos(player.getBlockX() >> 4, player.getBlockZ() >> 4);
+            var last = LAST_CHUNK.put(player.getUUID(), here);
+            if (last != null && Math.abs(last.getMinBlockX() - here.getMinBlockX()) <= 64 && Math.abs(last.getMinBlockZ() - here.getMinBlockZ()) <= 64)
+                watchers.add(player);
+        }
+        for (var player : players) {
+            int centreX = player.getBlockX() >> 4, centreZ = player.getBlockZ() >> 4;
+            for (int dz = -reach; dz <= reach; dz++) for (int dx = -reach; dx <= reach; dx++) {
+                int chunkX = centreX + dx, chunkZ = centreZ + dz;
+                var chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
+                if (chunk == null) continue;
+                var tile = land.tile(level, chunkX, chunkZ);
+                land.survey(level, tile, chunk);
+                var region = land.region(tile, chunkX, chunkZ);
+                inReach.computeIfAbsent(region, ignored -> new ArrayList<>()).add(new ChunkPos(chunkX, chunkZ));
+                if (land.settled(tile, chunkX, chunkZ)) continue;
+                land.settle(tile, chunkX, chunkZ);
+                int[] count = counts.computeIfAbsent(region, ignored -> new int[kinds]);
+                for (WildClass kind : WildClass.values()) {
+                    int quota = land.quota(level, region, kind);
+                    if (quota == 0 || count[kind.ordinal()] >= quota || loaded >= cap || !land.suits(tile, chunkX, chunkZ, kind)
+                            || share(level.getSeed(), chunkX, chunkZ, kind) >= (double) quota / region.cells) continue;
+                    int placed = place(level, players, watchers, kind, chunkX, chunkZ, groups);
+                    if (placed > 0) {
+                        count[kind.ordinal()]++;
+                        loaded += placed;
+                    }
+                }
+            }
+        }
+        var random = level.getRandom();
+        for (var entry : inReach.entrySet()) {
+            var region = entry.getKey();
+            var chunks = entry.getValue();
+            int[] count = counts.computeIfAbsent(region, ignored -> new int[kinds]);
+            land.grow(level, region, today, count);
+            for (WildClass kind : WildClass.values()) {
+                if (region.arrivals(kind) < 1.0 || count[kind.ordinal()] >= land.quota(level, region, kind) || loaded >= cap) continue;
+                int placed = 0;
+                for (int attempt = 0; attempt < 4 && placed == 0; attempt++) {
+                    var pos = chunks.get(random.nextInt(chunks.size()));
+                    int chunkX = pos.getMinBlockX() >> 4, chunkZ = pos.getMinBlockZ() >> 4;
+                    if (land.suits(land.tile(level, chunkX, chunkZ), chunkX, chunkZ, kind)) placed = place(level, players, players, kind, chunkX, chunkZ, groups);
+                }
+                if (placed == 0) {
+                    land.full(region, kind);
+                    continue;
+                }
+                land.arrived(region, kind);
+                count[kind.ordinal()]++;
+                loaded += placed;
+            }
+        }
+        for (var player : players) {
+            var region = land.regionAt(level, player.getBlockX(), player.getBlockZ());
+            int[] count = counts.getOrDefault(region, new int[kinds]);
+            int have = 0, room = 0;
+            for (WildClass kind : WildClass.values()) {
+                have += count[kind.ordinal()];
+                room += land.quota(level, region, kind);
+            }
+            CENSUS.put(player.getUUID(), new Census(wilds.size(), cap, have, room, true));
+        }
+    }
+
+    /** A number from 0 to 1 that belongs to this chunk and class in this world: the same whenever it is asked. */
+    private static double share(long seed, int chunkX, int chunkZ, WildClass kind) {
+        long mix = seed ^ chunkX * 0x9E3779B97F4A7C15L ^ chunkZ * 0xC2B2AE3D27D4EB4FL ^ (kind.ordinal() + 1) * 0x165667B19E3779F9L;
+        mix = (mix ^ mix >>> 33) * 0xFF51AFD7ED558CCDL;
+        mix = (mix ^ mix >>> 33) * 0xC4CEB9FE1A85EC53L;
+        return ((mix ^ mix >>> 33) >>> 11) / (double) (1L << 53);
+    }
+
+    /**
+     * Puts one group of the class into the chunk where the placement rules allow, away from every player and out of
+     * the sight of those watching; the animals placed.
+     */
+    private static int place(ServerLevel level, List<? extends Player> players, List<? extends Player> watchers, WildClass kind,
+                             int chunkX, int chunkZ, List<Group> groups) {
+        var random = level.getRandom();
+        double minDistance = Config.POPULATION_MIN_DISTANCE.get();
+        boolean water = kind == WildClass.SEA;
+        for (int attempt = 0; attempt < 4; attempt++) {
+            int x = (chunkX << 4) + random.nextInt(16), z = (chunkZ << 4) + random.nextInt(16);
+            boolean close = nearestGroupSqr(groups, x + 0.5, z + 0.5, null) < GROUP_SPACING * GROUP_SPACING;
+            for (var player : players) if (horizontalSqr(player, x + 0.5, z + 0.5) < minDistance * minDistance) close = true;
+            if (close) continue;
+            BlockPos site = water ? Water.surfaceWater(level, x, z) : SpawnRules.surface(level, x, z);
+            if (site == null) continue;
+            var species = pickOfClass(level, site, kind, groups);
+            if (species == null) continue;
+            if (water) {
+                if (!Water.siteAllowed(level, species, site)) continue;
+            } else if (!SpawnRules.canSpawn(ModContent.CREATURES.get(species).get(), level, EntitySpawnReason.NATURAL, site, random)) {
+                site = roomNear(level, species, site);
+                if (site == null) continue;
+            }
+            if (seen(level, watchers, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
+            int placed = spawnGroup(level, watchers, species, site, water);
+            if (placed == 0) continue;
+            groups.add(new Group(species, List.of(), site.getX() + 0.5, site.getZ() + 0.5));
+            return placed;
+        }
+        return 0;
+    }
+
+    /** A species of the class that may live at the site: its danger zone and range, apart from its own kind and, a hunter, from any group. */
+    private static @Nullable Species pickOfClass(ServerLevel level, BlockPos pos, WildClass kind, List<Group> groups) {
+        int danger = ProgressionData.dangerAt(level, pos);
+        if (danger < 1) return null;
+        var biome = level.getBiome(pos);
+        var profile = SurfaceBiomes.profile(biome);
+        double x = pos.getX() + 0.5, z = pos.getZ() + 0.5, total = 0;
+        boolean crowded = nearestGroupSqr(groups, x, z, null) < PREDATOR_SPACING * PREDATOR_SPACING;
+        var eligible = new ArrayList<Species>();
+        for (var species : Species.values()) {
+            if (species.weight <= 0 || WildClass.of(species) != kind || danger < species.minimumDanger()) continue;
+            if (!biome.is(species.biomes) && !SpeciesRange.lives(species, profile)) continue;
+            if (nearestGroupSqr(groups, x, z, species) < SPECIES_SPACING * SPECIES_SPACING || species.predator && crowded) continue;
+            eligible.add(species);
+            total += species.weight;
+        }
+        if (eligible.isEmpty()) return null;
+        double roll = level.getRandom().nextDouble() * total;
+        for (var species : eligible) {
+            roll -= species.weight;
+            if (roll < 0) return species;
+        }
+        return eligible.getLast();
     }
 
     /** What the budget keeps within the population radius of this player: groups under LEDGER, animals under BUDGET. */

@@ -137,6 +137,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("spawn_ranges", () -> SpawnerGameTests::ranges);
         FUNCTIONS.register("spawn_sight", () -> SpawnerGameTests::sight);
         FUNCTIONS.register("spawn_register", () -> SpawnerGameTests::register);
+        FUNCTIONS.register("spawn_biome", () -> SpawnerGameTests::biome);
         FUNCTIONS.register("mass_load", () -> MassGameTests::load);
         FUNCTIONS.register("cargo_load", () -> CargoGameTests::load);
         FUNCTIONS.register("cargo_transfer", () -> CargoGameTests::transfer);

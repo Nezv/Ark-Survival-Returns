@@ -35,6 +35,8 @@ public final class WildlifeCommand {
                             WildlifeRegister.get(context.getSource().getLevel()).report(12).forEach(line -> send(context.getSource(), line));
                             return 1;
                         }))
+                .then(Commands.literal("land")
+                        .executes(context -> landReport(context.getSource())))
                 .then(Commands.literal("biome")
                         .executes(context -> biomeReport(context.getSource(), 256))
                         .then(Commands.argument("radius", IntegerArgumentType.integer(16, BiomePatchSurvey.MAX_RADIUS))
@@ -43,6 +45,26 @@ public final class WildlifeCommand {
                 .then(Commands.argument("radius", IntegerArgumentType.integer(16, 256))
                         .executes(context -> report(context.getSource(),
                                 IntegerArgumentType.getInteger(context, "radius")))));
+    }
+
+    /** The biome region the player stands in: what its chunks showed, and its groups against its quotas, class by class. */
+    private static int landReport(CommandSourceStack source) {
+        if (!(source.getEntity() instanceof net.minecraft.server.level.ServerPlayer player)) {
+            source.sendFailure(Component.literal("Run this as a player: the report is for the region you stand in."));
+            return 0;
+        }
+        var level = source.getLevel();
+        var land = LandRegister.get(level);
+        var region = land.regionAt(level, player.getBlockX(), player.getBlockZ());
+        int[] count = land.count(level, WildlifeRegister.get(level)).getOrDefault(region, new int[WildClass.values().length]);
+        send(source, String.format(java.util.Locale.ROOT, "region: %s, %d chunks (%d seen), water in %.0f%% of them, mean height %.0f; %d tiles known",
+                region.biome, region.cells, region.surveyed(), region.waterShare() * 100, region.meanHeight(), land.tiles()));
+        var text = new StringBuilder("groups living / room");
+        for (WildClass kind : WildClass.values())
+            text.append(String.format(java.util.Locale.ROOT, "  %s %d/%d (+%.1f)", kind.name().toLowerCase(java.util.Locale.ROOT),
+                    count[kind.ordinal()], land.quota(level, region, kind), region.arrivals(kind)));
+        send(source, text.toString());
+        return 1;
     }
 
     private static int biomeReport(CommandSourceStack source, int radius) {

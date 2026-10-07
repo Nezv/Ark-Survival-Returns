@@ -6,11 +6,13 @@ import java.util.List;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.spawn.LandRegister;
 import dev.nez.arksurvivalreturns.feature.spawn.LedgerModel;
 import dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations;
 import dev.nez.arksurvivalreturns.feature.spawn.PlainSight;
 import dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
+import dev.nez.arksurvivalreturns.feature.spawn.WildClass;
 import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
@@ -329,6 +331,17 @@ public final class SpawnerGameTests {
         h.assertTrue(seen(world, player, at.add(ahead.scale(14)).add(right.scale(12)), 1f, 1f), "An animal beside the wall is hidden by it");
         for (int x = 60; x <= 68; x++) for (int y = 2; y <= 7; y++) h.setBlock(x, y, 22, Blocks.AIR);
 
+        // The deadly zone, wherever the test world put this floor: every animal of the plains may live here, in every run.
+        var oldProgression = dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.get(world);
+        world.getDataStorage().set(dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.TYPE,
+                new dev.nez.arksurvivalreturns.feature.spawn.ProgressionData((int) at.x, (int) at.z - 512, 256, true));
+        // The budget places within its radius of the player, which reaches the floors of the tests beside this one:
+        // whatever it adds anywhere around is this test's to count and to clear, and what stood there before is not.
+        var reach = new AABB(player.blockPosition()).inflate(200, 320, 200);
+        var before = new java.util.HashSet<java.util.UUID>();
+        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, reach)) before.add(creature.getUUID());
+        java.util.function.Supplier<List<CreatureEntity>> mine = () -> world.getEntitiesOfClass(CreatureEntity.class, reach,
+                creature -> creature.isNaturalWildlife() && !before.contains(creature.getUUID()));
         var model = Config.POPULATION_MODEL.get();
         int radius = Config.POPULATION_RADIUS.get(), minDistance = Config.POPULATION_MIN_DISTANCE.get();
         int attempts = Config.POPULATION_ATTEMPTS.get(), groups = Config.POPULATION_GROUPS_PER_PASS.get();
@@ -345,7 +358,7 @@ public final class SpawnerGameTests {
             world.getRandom().setSeed(0x51647L);
             // Looking at the floor ahead: whatever is placed is placed where the player cannot make it out.
             for (int pass = 0; pass < 40; pass++) NaturalPopulations.enforce(world, List.of(player));
-            var watching = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            var watching = mine.get();
             for (var creature : watching)
                 h.assertFalse(seen(world, player, creature.position(), creature.getBbWidth(), creature.getBbHeight()),
                         "Placed in plain sight: " + creature.species() + " at " + creature.blockPosition());
@@ -354,7 +367,7 @@ public final class SpawnerGameTests {
             // Looking away from the floor: it fills behind the player's back.
             face(player, forwards + 180f);
             for (int pass = 0; pass < 40; pass++) NaturalPopulations.enforce(world, List.of(player));
-            var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            var placed = mine.get();
             int herds = NaturalPopulations.groups(placed).size();
             h.assertTrue(herds >= 2,"The land behind a player's back stays empty: " + herds + " groups");
             // One group is wanted now and none tolerated above it. Facing them, none the player can make out is taken away.
@@ -368,7 +381,7 @@ public final class SpawnerGameTests {
             // With their back turned again the spare groups beyond the near ground go.
             face(player, forwards + 180f);
             for (int pass = 0; pass < 12; pass++) NaturalPopulations.enforce(world, List.of(player));
-            var left = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            var left = mine.get();
             h.assertTrue(NaturalPopulations.groups(left).size() < herds, "No spare group left behind the player's back: " + herds);
         } finally {
             Config.POPULATION_MODEL.set(model);
@@ -378,8 +391,79 @@ public final class SpawnerGameTests {
             Config.POPULATION_GROUPS_PER_PASS.set(groups);
             Config.POPULATION_GROUPS.set(wanted);
             Config.POPULATION_CULL_FRACTION.set(cull);
-            for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
-                creature.discard();
+            world.getDataStorage().set(dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.TYPE, oldProgression);
+            mine.get().forEach(CreatureEntity::discard);
+        }
+        h.succeed();
+    }
+
+    /**
+     * The BIOME model. The land around a player belongs to a biome region with room for groups of each class; its
+     * loaded chunks are given their animals once, never beyond the region's quotas, and a second look adds none;
+     * a region short of its quota takes groups in as the days pass; animals lost are not made good the same day.
+     */
+    public static void biome(GameTestHelper h) {
+        for (int x = 0; x < 128; x++) for (int z = 0; z < 128; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var world = h.getLevel();
+        var center = h.absolutePos(new BlockPos(64, 2, 64));
+        var floor = new AABB(center).inflate(72, 160, 72);
+        var around = new AABB(center).inflate(240, 320, 240);
+        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, floor, CreatureEntity::isNaturalWildlife)) creature.discard();
+        var before = new java.util.HashSet<java.util.UUID>();
+        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, around)) before.add(creature.getUUID());
+        var player = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        player.snapTo(Vec3.atBottomCenterOf(center));
+        // Eyes on the ground: nothing that stands on the land is in this player's sight.
+        player.setXRot(90f);
+        // The deadly zone, wherever the test world put this floor: every animal of the plains may live here, in every run.
+        var oldProgression = dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.get(world);
+        world.getDataStorage().set(dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.TYPE,
+                new dev.nez.arksurvivalreturns.feature.spawn.ProgressionData(center.getX(), center.getZ() - 512, 256, true));
+        var land = LandRegister.get(world);
+        var register = WildlifeRegister.get(world);
+        var region = land.regionAt(world, center.getX(), center.getZ());
+        int room = 0;
+        for (WildClass kind : WildClass.values()) room += land.quota(world, region, kind);
+        h.assertTrue(region.cells > 0 && room > 0, "The land here has room for no wildlife: " + region.biome + ", " + region.cells + " chunks");
+        var model = Config.POPULATION_MODEL.get();
+        int minDistance = Config.POPULATION_MIN_DISTANCE.get();
+        java.util.function.Supplier<List<CreatureEntity>> mine = () -> world.getEntitiesOfClass(CreatureEntity.class, floor,
+                creature -> creature.isNaturalWildlife() && creature.isAlive() && !before.contains(creature.getUUID()));
+        try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.BIOME);
+            Config.POPULATION_MIN_DISTANCE.set(8);
+            world.getRandom().setSeed(0xB10E5L);
+            for (int pass = 0; pass < 3; pass++) NaturalPopulations.enforce(world, List.of(player));
+            int first = NaturalPopulations.groups(mine.get()).size();
+            h.assertTrue(region.surveyed() > 0, "No loaded chunk of the region was looked at");
+            // A second look at the same land on the same day adds nothing.
+            for (int pass = 0; pass < 5; pass++) NaturalPopulations.enforce(world, List.of(player));
+            h.assertTrue(NaturalPopulations.groups(mine.get()).size() == first, "Land already settled was given animals again: " + first + " groups became "
+                    + NaturalPopulations.groups(mine.get()).size());
+            // Short of its quota, the region takes groups in as the days pass.
+            land.age(region, 4.0);
+            for (int pass = 0; pass < 30; pass++) NaturalPopulations.enforce(world, List.of(player));
+            int grown = NaturalPopulations.groups(mine.get()).size();
+            h.assertTrue(grown > first && grown >= 2, "Four days brought no arrivals: " + first + " groups, then " + grown);
+            int[] count = land.count(world, register).get(region);
+            for (WildClass kind : WildClass.values())
+                h.assertTrue(count[kind.ordinal()] <= land.quota(world, region, kind), "More " + kind + " groups than the region has room for: "
+                        + count[kind.ordinal()] + " of " + land.quota(world, region, kind));
+            // Animals lost are not made good the same day.
+            land.empty(region);
+            for (var creature : mine.get()) creature.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
+            for (int pass = 0; pass < 5; pass++) NaturalPopulations.enforce(world, List.of(player));
+            h.assertTrue(mine.get().isEmpty(), "Hunted land was refilled at once: " + mine.get().size() + " animals");
+            // Two days later some are back.
+            land.age(region, 2.0);
+            for (int pass = 0; pass < 30; pass++) NaturalPopulations.enforce(world, List.of(player));
+            h.assertTrue(!mine.get().isEmpty(), "Two days brought nothing back to hunted land");
+        } finally {
+            Config.POPULATION_MODEL.set(model);
+            Config.POPULATION_MIN_DISTANCE.set(minDistance);
+            world.getDataStorage().set(dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.TYPE, oldProgression);
+            for (var creature : world.getEntitiesOfClass(CreatureEntity.class, around,
+                    creature -> creature.isNaturalWildlife() && !before.contains(creature.getUUID()))) creature.discard();
         }
         h.succeed();
     }

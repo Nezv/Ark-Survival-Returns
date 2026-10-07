@@ -28,6 +28,7 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue POPULATION_BUDGET, POPULATION_OUT_OF_SIGHT;
     public static final ModConfigSpec.IntValue POPULATION_TARGET, POPULATION_RADIUS, POPULATION_GLOBAL_CAP,
             POPULATION_INTERVAL, POPULATION_ATTEMPTS, POPULATION_CULL_MARGIN, POPULATION_MIN_DISTANCE, POPULATION_GROUPS;
+    public static final ModConfigSpec.DoubleValue POPULATION_REFILL_DAYS;
     public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model> POPULATION_MODEL;
     public static final ModConfigSpec.DoubleValue POPULATION_CULL_FRACTION, LEDGER_CYCLE_DAYS;
     public static final ModConfigSpec.IntValue POPULATION_GROUPS_PER_PASS, POPULATION_CAP_PER_PLAYER, POPULATION_HARD_CAP, LEDGER_REGION_SIZE;
@@ -152,10 +153,14 @@ public final class Config {
                         "sight: behind the player, behind ground, walls or foliage, or so far off that they are a speck. Set false",
                         "to let them appear anywhere beyond populationMinPlayerDistance, as before.")
                 .define("populationOutOfSight", true);
-        POPULATION_MODEL = b.comment("LEDGER keeps the number of wild groups below around each player, scaled by a regional predator-prey",
-                        "ledger that also advances land nobody is near. BUDGET is the previous fixed target per player",
-                        "(populationTargetPerPlayer, populationCullMargin, populationGlobalCap), kept for comparison.")
-                .defineEnum("populationModel", dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model.LEDGER);
+        POPULATION_MODEL = b.comment("BIOME divides the land into biome regions, gives each its first animals once as its chunks load and",
+                        "keeps it at its quota of groups per class with arrivals that come over days (populationRefillDays); nothing",
+                        "is placed around a player for being there. LEDGER keeps the number of wild groups below around each player,",
+                        "scaled by a regional predator-prey ledger. BUDGET is the first fixed target per player",
+                        "(populationTargetPerPlayer, populationCullMargin, populationGlobalCap). The last two are kept for comparison.")
+                .defineEnum("populationModel", dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model.BIOME);
+        POPULATION_REFILL_DAYS = b.comment("BIOME: game days in which an emptied biome region is allowed back its whole quota of groups.")
+                .defineInRange("populationRefillDays", 4.0, 0.25, 120.0);
         POPULATION_GROUPS = b.comment("LEDGER: wild groups (a herd, a pack, a pair or a lone animal) kept within populationRadius of each",
                         "player while the ledger is balanced; the ledger swings it a quarter either way. 10 within 128 blocks is a",
                         "group every 70 blocks or so, about 23 animals: what vanilla livestock amounts to on open ground.")
