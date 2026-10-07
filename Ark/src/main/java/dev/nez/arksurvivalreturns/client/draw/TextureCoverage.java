@@ -17,7 +17,7 @@ import net.minecraft.util.Util;
  * ones (those draw nothing). Read from the image off the render thread; until it is there, and when the image
  * cannot be read, nothing is known and nothing is skipped.
  */
-final class TextureCoverage {
+public final class TextureCoverage {
     @FunctionalInterface
     interface Alpha {
         int at(int x, int y);

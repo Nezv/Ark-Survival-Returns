@@ -13,6 +13,8 @@ public final class NighttimeClientConfig {
     public static final ModConfigSpec.BooleanValue CREATURE_HIDDEN_FACES;
     public static final ModConfigSpec.DoubleValue CREATURE_ANIMATION_DISTANCE;
     public static final ModConfigSpec.DoubleValue CREATURE_SMALLEST_BOX;
+    public static final ModConfigSpec.BooleanValue CREATURE_SHADER_VERTICES;
+    public static final ModConfigSpec.BooleanValue CREATURE_FAST_ANIMATION;
     static {
         var builder = new ModConfigSpec.Builder();
         EYE_GLOW = builder.comment("Brightness of the red eyes of hunting big carnivores and raptors. Zero disables the visual; does not change server behavior.")
@@ -38,6 +40,13 @@ public final class NighttimeClientConfig {
         CREATURE_SMALLEST_BOX = builder.comment("With creatureFastDrawing: a box of a creature that would be smaller than this many pixels "
                         + "across is not drawn. 0 draws every box.")
                 .defineInRange("creatureSmallestBox", 1.0, 0.0, 16.0);
+        CREATURE_SHADER_VERTICES = builder.comment("With creatureFastDrawing, Sodium and a shader pack: Ark writes the vertices of its creatures "
+                        + "in the wider format Iris gives a shader pack, with the tangent and the middle of the texture kept per face of the "
+                        + "model. Set false to have Iris convert every vertex as before.")
+                .define("creatureShaderVertices", true);
+        CREATURE_FAST_ANIMATION = builder.comment("The keys of an animation are read directly where they are plain linear or catmull-rom keys, "
+                        + "as all of Ark's are, instead of through GeckoLib's easing objects; the values are the same. Set false for GeckoLib's own reading.")
+                .define("creatureFastAnimation", true);
         SPEC = builder.build();
     }
     private NighttimeClientConfig() {}

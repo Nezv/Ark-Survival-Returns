@@ -69,10 +69,13 @@ neoForge {
             // Preparing the benchmark world: the biome its start is moved into, and the chunks Chunky generates around it.
             if (project.hasProperty('arkBiome')) systemProperty 'arksurvivalreturns.benchmark.biome', project.property('arkBiome').toString()
             if (project.hasProperty('arkPregen')) systemProperty 'arksurvivalreturns.benchmark.pregen', project.property('arkPregen').toString()
-            // Who writes the creatures' cubes (client/draw): geckolib, allfaces or ark; and a self-check against GeckoLib.
+            // Who writes the creatures' cubes (client/draw): geckolib, allfaces, nolod, serializer, easing or ark; and a self-check.
             if (project.hasProperty('arkDraw')) systemProperty 'arksurvivalreturns.creatureDraw', project.property('arkDraw').toString()
             if (project.hasProperty('arkVerify')) systemProperty 'arksurvivalreturns.creatureDraw.verify', 'true'
             if (project.hasProperty('arkJfr')) jvmArgument "-XX:StartFlightRecording=filename=${project.property('arkJfr')},settings=profile"
+            // The garbage collector of one launch (tools/session_bench.py: zgc, g1short, shenandoah) instead of the default G1.
+            if (project.hasProperty('arkGc')) [zgc: ['-XX:+UseZGC'], g1short: ['-XX:MaxGCPauseMillis=50'],
+                    shenandoah: ['-XX:+UseShenandoahGC', '-XX:ShenandoahGCMode=generational']][project.property('arkGc')].each { jvmArgument it }
         }
         server { server(); jvmArgument "-Xmx${devRuntime.serverHeap}"; programArgument '--nogui' }
         gameTestServer {
@@ -134,8 +137,10 @@ dependencies {
     sodiumBundle 'maven.modrinth:sodium:zg4YQ9EL'
     compileOnly sodiumApi
     testImplementation sodiumApi
-    // Iris 1.11.4 (client-mods.lock.json): only its public API, to know the shadow pass and a shader pack in use.
+    // Iris 1.11.4 (client-mods.lock.json): its public API, to know the shadow pass and a shader pack in use, and the
+    // vertex format it gives a pack (client/draw/iris); the tests run its own serializer against Ark's writing of it.
     compileOnly 'maven.modrinth:iris:qE5Y7GrZ'
+    testImplementation 'maven.modrinth:iris:qE5Y7GrZ'
     implementation "maven.modrinth:geckolib:${geckolib_version}"
     implementation sharedPack
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'

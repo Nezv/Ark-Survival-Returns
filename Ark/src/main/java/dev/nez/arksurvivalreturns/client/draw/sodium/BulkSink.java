@@ -1,6 +1,7 @@
 package dev.nez.arksurvivalreturns.client.draw.sodium;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import dev.nez.arksurvivalreturns.client.draw.CreatureMesh;
 import dev.nez.arksurvivalreturns.client.draw.QuadSink;
 import net.caffeinemc.mods.sodium.api.util.ColorARGB;
 import net.caffeinemc.mods.sodium.api.util.NormI8;
@@ -32,8 +33,11 @@ public final class BulkSink extends QuadSink {
         return true;
     }
 
-    @Override public void cube(float[] corners, float[] normals, float[] uv, int uvAt, byte[] corner, int cornerAt, int mask) {
+    @Override public void cube(float[] corners, float[] normals, CreatureMesh mesh, int cube, int mask) {
         if (vertices > CAPACITY - CUBE_VERTICES) flush();
+        float[] uv = mesh.uv;
+        byte[] corner = mesh.corner;
+        int uvAt = cube * 48, cornerAt = cube * 24;
         long pointer = at;
         int color = this.color, overlay = this.overlay, light = this.light, added = 0;
         for (int face = 0; face < 6; face++) {

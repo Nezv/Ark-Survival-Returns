@@ -22,6 +22,8 @@ config="arksurvivalreturns.tech.mixins.json"
 config="arksurvivalreturns.ui.mixins.json"
 [[mixins]]
 config="arksurvivalreturns.theme.mixins.json"
+[[mixins]]
+config="arksurvivalreturns.draw.mixins.json"
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"

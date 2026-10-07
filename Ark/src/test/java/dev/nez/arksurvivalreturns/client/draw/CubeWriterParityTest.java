@@ -23,8 +23,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import dev.nez.arksurvivalreturns.client.draw.iris.IrisCheck;
 import dev.nez.arksurvivalreturns.client.draw.sodium.BulkSink;
 import dev.nez.arksurvivalreturns.client.draw.sodium.PushDecoder;
+import net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer;
 import net.minecraft.resources.Identifier;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,8 +35,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * The correctness gate of Ark's creature writer: every shipped model, posed at three moments of every one of
  * its animation clips and in a few poses no clip has, is drawn by GeckoLib's own code and by the writer, and
  * the vertices are compared number by number: position, texture coordinate, normal, colour, overlay and light,
- * in the same order. The bulk path is read back from the memory it pushes. The table goes to
- * build/reports/creature-draw-parity.txt.
+ * in the same order. The bulk path is read back from the memory it pushes, and the vertices written in the
+ * format Iris gives a shader pack are compared, byte by byte, with what Iris's own serializer makes of the
+ * plain ones. The table goes to build/reports/creature-draw-parity.txt.
  */
 class CubeWriterParityTest {
     private static final Path ASSETS = Path.of("src/main/resources/assets/arksurvivalreturns");
@@ -58,11 +61,13 @@ class CubeWriterParityTest {
     private final ConsumerSink sink = new ConsumerSink();
     private final BulkSink bulk = new BulkSink();
     private final PushDecoder decoder = new PushDecoder(pushed);
+    private final IrisCheck shaderCheck = new IrisCheck(new ModelToEntityVertexSerializer());
 
     private static final class Row {
-        int cubes, bones, poses, closed, culledFaces, allFaces, windingQuads;
+        int cubes, bones, poses, closed, culledFaces, allFaces, windingQuads, faces, facesAsked;
         final VertexRecorder.Difference plain = new VertexRecorder.Difference(), bulk = new VertexRecorder.Difference(),
                 kept = new VertexRecorder.Difference();
+        final IrisCheck.Difference shader = new IrisCheck.Difference();
         int smallCubes, smallChecked, farCubes;
         double windingNormal, windingSmall;
         String textures = "";
@@ -88,6 +93,11 @@ class CubeWriterParityTest {
             row.cubes = mesh.cubeCount();
             row.bones = mesh.boneCount();
             for (int cube = 0; cube < mesh.cubes; cube++) if (mesh.closed(cube)) row.closed++;
+            for (int face = 0; face < mesh.cubes * CreatureMesh.FACES; face++) {
+                if ((mesh.present[face / CreatureMesh.FACES] >> face % CreatureMesh.FACES & 1) == 0) continue;
+                row.faces++;
+                if (mesh.handed[face] == 0) row.facesAsked++;
+            }
             TextureCoverage opaque = new TextureCoverage(mesh);
             opaque.read(1024, 1024, (x, y) -> 255);
 
@@ -128,6 +138,23 @@ class CubeWriterParityTest {
             worstPosition = Math.max(worstPosition, Math.max(row.plain.position, row.bulk.position));
             worstNormal = Math.max(worstNormal, row.plain.normal);
         }
+        IrisCheck.Difference shader = new IrisCheck.Difference();
+        int faces = 0, facesAsked = 0;
+        for (Row row : rows.values()) {
+            faces += row.faces;
+            facesAsked += row.facesAsked;
+            shader.vertices += row.shader.vertices;
+            shader.quads += row.shader.quads;
+            shader.counts += row.shader.counts;
+            shader.plain += row.shader.plain;
+            shader.drawn += row.shader.drawn;
+            shader.middle += row.shader.middle;
+            shader.tangentNotSame += row.shader.tangentNotSame;
+            shader.tangentOff += row.shader.tangentOff;
+            shader.flat += row.shader.flat;
+        }
+        table.append(String.format(Locale.ROOT, "in the shader pack's format, against Iris's serializer on the plain vertices: %s; "
+                + "%d of the models' %d faces have their tangent's side asked of Iris at run time%n", shader, facesAsked, faces));
         table.append(String.format(Locale.ROOT, "largest deviation from GeckoLib: position %.2e blocks (scaled: against the largest coordinate of the "
                 + "creature, a float's seven digits), normal %.2e of its length; texture coordinates, "
                 + "colour, overlay, light, count and order identical. bulk: read back from the pushed memory, its normal within one step of the "
@@ -150,6 +177,7 @@ class CubeWriterParityTest {
             assertTrue(row.windingSmall <= 4.0, name + " winding normals of small quads, in units of their rounding: " + row.windingSmall);
             assertTrue(row.windingQuads > 0, name + " checked no winding normal");
             assertTrue(row.kept.within(POSITION, 0.0, NORMAL), name + " kept bones: " + row.kept);
+            assertTrue(row.shader.same() && row.shader.quads > 0, name + " in the shader pack's format: " + row.shader);
             smallChecked += row.smallChecked;
         }
         assertTrue(smallChecked > 1000, "cubes under a pixel were checked: " + smallChecked);
@@ -189,6 +217,9 @@ class CubeWriterParityTest {
             bulk.end();
             row.bulk.add(geckoLib, pushed);
 
+            shaderCheck.compare(mesh, posed, root.pose(), root.normal(), CubeWriter.ALL, null, 0f, COLOR, OVERLAY, LIGHT, row.shader);
+            shaderCheck.compare(mesh, posed, root.pose(), root.normal(), CubeWriter.FAR_SIDES, opaque, 0f, COLOR, OVERLAY, LIGHT, row.shader);
+
             sink.begin(winding, COLOR, OVERLAY, LIGHT);
             writer.write(mesh, posed, root.pose(), root.normal(), sink, CubeWriter.ALL, null, true, 0f);
             sink.end();
@@ -215,6 +246,8 @@ class CubeWriterParityTest {
             sink.begin(small, COLOR, OVERLAY, LIGHT);
             writer.write(mesh, posed, far.last().pose(), far.last().normal(), sink, CubeWriter.ALL, null, false, PIXELS_PER_RADIAN * PIXELS_PER_RADIAN);
             sink.end();
+            shaderCheck.compare(mesh, posed, far.last().pose(), far.last().normal(), CubeWriter.ALL, null, PIXELS_PER_RADIAN * PIXELS_PER_RADIAN,
+                    COLOR, OVERLAY, LIGHT, row.shader);
             boolean even = snapshots.stream().allMatch(snapshot -> snapshot.getScaleX() == snapshot.getScaleY() && snapshot.getScaleY() == snapshot.getScaleZ());
             smallBoxes(name, row, mesh, (int) (writer.cubesTooSmall - tooSmall), hidden, even);
 

@@ -8,7 +8,8 @@
     python tools/session_bench.py [--setups full,noshader,...] [--heap 8G] [--repeat N] [--profile]
     python tools/session_bench.py --setups rd6,rd8,rd12,rd16  the real render distance, dense fog around it and
                                                               Distant Horizons at 64 chunks behind
-    python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|nolod|ark   who draws the creatures (client/draw)
+    python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|nolod|serializer|easing|ark
+                                                              who draws the creatures (client/draw)
     python tools/session_bench.py --setups bare --verify      Ark's creature writer checked against GeckoLib's, not timed
 
 Each setup plays a disposable copy of run/saves/ArkBenchmark, so every one starts from the same chunks and the
@@ -74,6 +75,21 @@ SETUPS = {
     "bare": {"iris": {"enableShaders": "false"}, "grass": GRASS_OFF, "dh": {"rendererMode": '"DISABLED"'}},
     "nomobs": {"game": {"Mobs": "false"}},
     "barenomobs": {"iris": {"enableShaders": "false"}, "grass": GRASS_OFF, "dh": {"rendererMode": '"DISABLED"'}, "game": {"Mobs": "false"}},
+    # The full stack under another garbage collector: two that tidy up while the game runs, and the default one
+    # (G1) asked for pauses of 50 ms instead of 200.
+    "zgc": {"game": {"Gc": "zgc"}},
+    "shenandoah": {"game": {"Gc": "shenandoah"}},
+    "g1short": {"game": {"Gc": "g1short"}},
+    # The full stack with Iris converting the creatures' vertices to the shader pack's format, as before F27's own sink.
+    "serializer": {"game": {"Draw": "serializer"}},
+    # The full stack with GeckoLib's easing objects reading the animation's keys, as before client/draw/PlainKeys.
+    "easing": {"game": {"Draw": "easing"}},
+    # Distant Horizons builds far terrain on six threads at full pace as configured, and allocates most of what the
+    # collector has to clear; here on two or three threads that rest half the time.
+    "dh2": {"dh": {"numberOfThreads": "2", "threadRunTimeRatio": '"0.5"'}},
+    "dh3": {"dh": {"numberOfThreads": "3", "threadRunTimeRatio": '"0.5"'}},
+    # The same with the shader pack drawing three quarters of the picture's width and height and scaling it up.
+    "dh3taau75": {"dh": {"numberOfThreads": "3", "threadRunTimeRatio": '"0.5"'}, "pack": {"TAAU": "true", "TAAU_RENDER_SCALE": "0.75"}},
 }
 # The trim to measure (P12): the real render distance, fog closing around it, Distant Horizons at 64 chunks behind.
 SETUPS.update({f"rd{chunks}": {"dh": {"lodChunkRenderDistanceRadius": "64"}, "fog": True, "game": {"RenderDistance": str(chunks)}}
@@ -430,10 +446,14 @@ def main() -> int:
     parser.add_argument("--heap", help="client heap for the run, for example 8G (default: config/dev-runtime.properties)")
     parser.add_argument("--settle", type=int, help="seconds to wait for chunks and shaders before measuring (default 30; 150 when preparing)")
     parser.add_argument("--repeat", type=int, default=1, help="runs per setup")
+    parser.add_argument("--interleave", action="store_true",
+                        help="with --repeat: every setup once, then every setup again, so the machine warming up counts against all alike")
     parser.add_argument("--profile", action="store_true", help="also record the Java threads with Flight Recorder (profile.jfr in the setup's folder)")
-    parser.add_argument("--draw", choices=("geckolib", "allfaces", "nolod", "ark"),
+    parser.add_argument("--draw", choices=("geckolib", "allfaces", "nolod", "serializer", "easing", "ark"),
                         help="who writes the creatures' cubes: GeckoLib; Ark's writer with every face; without the hidden faces; "
-                             "or with distance detail as well, its defaults (default: the client settings)")
+                             "with distance detail as well; with all but the plain reading of the animation's keys; "
+                             "or also in the shader pack's own vertex format, its defaults "
+                             "(default: the client settings)")
     parser.add_argument("--verify", action="store_true",
                         help="draw every eighth creature both ways and compare the vertices (meta.json, creature_draw.verify); not a run to time")
     parser.add_argument("--timeout", type=int, help="seconds before a client is closed by force (default 600; none with --pregen)")
@@ -470,56 +490,57 @@ def main() -> int:
     if on_mains() is False:
         print("on battery: the graphics card is throttled, the numbers will not be the machine's", flush=True)
     results = []
-    for name in names:
-        for turn in range(arguments.repeat):
-            folder = stamp / (name if arguments.repeat == 1 else f"{name}-{turn + 1}")
-            folder.mkdir(parents=True)
-            run.borrow((*run.BORROWED, "config/DistantHorizons.toml", "config/grassiergrass-client.toml", pack_options()))
-            mod = run.RUN / "mods" / CHUNKY["file"] if jar else None
-            try:
-                apply(PREGEN if jar else SETUPS.get(name, {}), None if arguments.no_fog else arguments.fog_floor)
-                if arguments.prepare:
-                    opening = [f"-ParkFreshWorld={WORLD}", f"-ParkSeed={arguments.seed}"]
-                    opening += [f"-ParkBiome={arguments.biome}"] if arguments.biome else []
-                    if jar:
-                        opening.append(f"-ParkPregen={arguments.pregen}")
-                        mod.parent.mkdir(exist_ok=True)
-                        shutil.copy2(jar, mod)
-                else:
-                    # A warmed copy becomes the kept world, so it is copied whole.
-                    run.copy_world(WORLD, near_start(None if arguments.warm else world_start(kept)))
-                    opening = [f"-ParkWorld={run.COPY}"]
-                print(f"setup '{name}' -> {folder}", flush=True)
-                game = [f"-Park{key}={value}" for key, value in SETUPS.get(name, {}).get("game", {}).items()]
-                profile = [f"-ParkJfr={(folder / 'profile.jfr').as_posix()}"] if arguments.profile else []
-                launch(folder, name, opening, extra + game + profile, timeout, folder / "client.log")
-            finally:
-                run.give_back()
-                drop_fog_pack()
-                if mod:
-                    mod.unlink(missing_ok=True)
-            result = summarise(folder)
-            refused = (folder / "error").read_text(encoding="utf-8") if (folder / "error").is_file() else None
-            if refused:
-                print(f"setup '{name}' could not start: {refused}", flush=True)
-            elif result is None:
-                print(f"setup '{name}' wrote no measurements; see {folder / 'client.log'} and {run.RUN / 'logs' / 'latest.log'}", flush=True)
+    order = ([(name, turn) for turn in range(arguments.repeat) for name in names] if arguments.interleave
+             else [(name, turn) for name in names for turn in range(arguments.repeat)])
+    for name, turn in order:
+        folder = stamp / (name if arguments.repeat == 1 else f"{name}-{turn + 1}")
+        folder.mkdir(parents=True)
+        run.borrow((*run.BORROWED, "config/DistantHorizons.toml", "config/grassiergrass-client.toml", pack_options()))
+        mod = run.RUN / "mods" / CHUNKY["file"] if jar else None
+        try:
+            apply(PREGEN if jar else SETUPS.get(name, {}), None if arguments.no_fog else arguments.fog_floor)
+            if arguments.prepare:
+                opening = [f"-ParkFreshWorld={WORLD}", f"-ParkSeed={arguments.seed}"]
+                opening += [f"-ParkBiome={arguments.biome}"] if arguments.biome else []
+                if jar:
+                    opening.append(f"-ParkPregen={arguments.pregen}")
+                    mod.parent.mkdir(exist_ok=True)
+                    shutil.copy2(jar, mod)
             else:
-                results.append(result)
-            if arguments.prepare and refused and kept.is_dir():
-                shutil.rmtree(kept)
-            elif arguments.prepare and (kept / "level.dat").is_file():
-                x, _, z = result["start"].split() if result else ("", "", "")
-                (kept / KEPT).write_text("The benchmark world of tools/session_bench.py; every setup plays a copy of it.\n"
-                                         + (f"start={x} {z}\n" if result else ""), encoding="utf-8")
-            elif arguments.warm and result is not None:
-                played = run.SAVES / run.COPY
-                (played / run.MARKER).unlink()
-                (played / KEPT).write_text((kept / KEPT).read_text(encoding="utf-8"), encoding="utf-8")
-                shutil.rmtree(kept)
-                played.rename(kept)
-            else:
-                run.drop_copy()
+                # A warmed copy becomes the kept world, so it is copied whole.
+                run.copy_world(WORLD, near_start(None if arguments.warm else world_start(kept)))
+                opening = [f"-ParkWorld={run.COPY}"]
+            print(f"setup '{name}' -> {folder}", flush=True)
+            game = [f"-Park{key}={value}" for key, value in SETUPS.get(name, {}).get("game", {}).items()]
+            profile = [f"-ParkJfr={(folder / 'profile.jfr').as_posix()}"] if arguments.profile else []
+            launch(folder, name, opening, extra + game + profile, timeout, folder / "client.log")
+        finally:
+            run.give_back()
+            drop_fog_pack()
+            if mod:
+                mod.unlink(missing_ok=True)
+        result = summarise(folder)
+        refused = (folder / "error").read_text(encoding="utf-8") if (folder / "error").is_file() else None
+        if refused:
+            print(f"setup '{name}' could not start: {refused}", flush=True)
+        elif result is None:
+            print(f"setup '{name}' wrote no measurements; see {folder / 'client.log'} and {run.RUN / 'logs' / 'latest.log'}", flush=True)
+        else:
+            results.append(result)
+        if arguments.prepare and refused and kept.is_dir():
+            shutil.rmtree(kept)
+        elif arguments.prepare and (kept / "level.dat").is_file():
+            x, _, z = result["start"].split() if result else ("", "", "")
+            (kept / KEPT).write_text("The benchmark world of tools/session_bench.py; every setup plays a copy of it.\n"
+                                     + (f"start={x} {z}\n" if result else ""), encoding="utf-8")
+        elif arguments.warm and result is not None:
+            played = run.SAVES / run.COPY
+            (played / run.MARKER).unlink()
+            (played / KEPT).write_text((kept / KEPT).read_text(encoding="utf-8"), encoding="utf-8")
+            shutil.rmtree(kept)
+            played.rename(kept)
+        else:
+            run.drop_copy()
     (stamp / "summary.json").write_text(json.dumps(results, indent=1), encoding="utf-8")
     table(results)
     return 0 if len(results) == len(names) * arguments.repeat else 1

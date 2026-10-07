@@ -323,7 +323,7 @@ public final class CubeWriter {
                     out[o] = nx; out[o + 1] = ny; out[o + 2] = nz;
                 }
             }
-            sink.cube(corner, out, mesh.uv, f * 8, mesh.corner, f * 4, mask);
+            sink.cube(corner, out, mesh, cube, mask);
         }
         facesWritten += written;
         facesSkipped += skipped;

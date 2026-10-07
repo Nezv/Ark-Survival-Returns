@@ -50,9 +50,21 @@ public final class CreatureMesh {
     /** Per face: the normal GeckoLib gives the quad, turned by the cube's rotation. */
     final float[] normal;
     /** Per face: u and v of its four vertices. */
-    final float[] uv;
+    public final float[] uv;
     /** Per face: which corner of the box each of its four vertices is, as an offset into the writer's corners. */
-    final byte[] corner;
+    public final byte[] corner;
+    /** Per face: the middle of its texture coordinates, summed and quartered the way Iris does it. */
+    public final float[] mid;
+    /**
+     * Per face, for the tangent a shader pack is given (Iris, NormalHelper.computeTangent): how v changes from the
+     * first vertex to the third and to the second, and one over the area the first three cover in the texture.
+     */
+    public final float[] tangent;
+    /**
+     * Per face: which way the texture's v runs against that tangent and the normal the corners give, 1 or -1. It
+     * stays the same however the bone is moved, turned, stretched or mirrored. 0 where it is not known beforehand.
+     */
+    public final byte[] handed;
     /** Per cube: the faces GeckoLib baked a quad for. */
     final byte[] present;
     final byte[] flags;
@@ -101,8 +113,8 @@ public final class CreatureMesh {
         bones = new GeoBone[0];
         locators = new GeoLocator[0];
         depth = parent = subtreeEnd = cubeEnd = new int[0];
-        pivot = baseRotation = box = sizeSquared = normal = uv = new float[0];
-        corner = present = flags = side = winding = slotFace = new byte[0];
+        pivot = baseRotation = box = sizeSquared = normal = uv = mid = tangent = new float[0];
+        corner = present = flags = side = winding = slotFace = handed = new byte[0];
         maxDepth = cubes = 0;
     }
 
@@ -120,6 +132,9 @@ public final class CreatureMesh {
         normal = builder.normal.toFloatArray();
         uv = builder.uv.toFloatArray();
         corner = builder.corner.toByteArray();
+        mid = builder.mid.toFloatArray();
+        tangent = builder.tangent.toFloatArray();
+        handed = builder.handed.toByteArray();
         present = builder.present.toByteArray();
         flags = builder.flags.toByteArray();
         side = builder.side.toByteArray();
@@ -144,6 +159,8 @@ public final class CreatureMesh {
         final FloatArrayList box = new FloatArrayList(), normal = new FloatArrayList(), uv = new FloatArrayList();
         final ByteArrayList corner = new ByteArrayList(), present = new ByteArrayList(), flags = new ByteArrayList();
         final ByteArrayList side = new ByteArrayList(), winding = new ByteArrayList();
+        final FloatArrayList mid = new FloatArrayList(), tangent = new FloatArrayList();
+        final ByteArrayList handed = new ByteArrayList();
         boolean supported = true;
 
         void bone(GeoBone bone, int level, int above) {
@@ -230,6 +247,9 @@ public final class CreatureMesh {
                     for (int i = 0; i < 3; i++) normal.add(0f);
                     for (int i = 0; i < 8; i++) uv.add(0f);
                     for (int i = 0; i < 4; i++) corner.add((byte) 0);
+                    for (int i = 0; i < 2; i++) mid.add(0f);
+                    for (int i = 0; i < 3; i++) tangent.add(0f);
+                    handed.add((byte) 0);
                     side.add((byte) -1);
                     winding.add((byte) 0);
                     continue;
@@ -261,6 +281,7 @@ public final class CreatureMesh {
                     boolean agree = (bits[0] & bit) == (bits[1] & bit) && (bits[1] & bit) == (bits[2] & bit) && (bits[2] & bit) == (bits[3] & bit);
                     if (agree && (found < 0 || high[axis] == low[axis])) found = axis;
                 }
+                texture(vertices, found >= 0);
                 if (found < 0) {
                     side.add((byte) -1);
                     winding.add((byte) 0);
@@ -284,6 +305,39 @@ public final class CreatureMesh {
             if (flatX || flatY) flag |= FIX_Z;
             if (flatX || flatY || flatZ) flag &= ~CLOSED;
             flags.add((byte) flag);
+        }
+
+        /**
+         * What Iris works out for every quad it is handed, as far as the model alone decides it. The floats are
+         * taken in its order, so the middle and the tangent come out as its own to the last digit.
+         *
+         * @param windingNormal the writer gives this face the normal its corners wind to, as Iris takes it
+         */
+        private void texture(GeoVertex[] vertices, boolean windingNormal) {
+            float u0 = vertices[0].texU(), v0 = vertices[0].texV(), u1 = vertices[1].texU(), v1 = vertices[1].texV();
+            float u2 = vertices[2].texU(), v2 = vertices[2].texV(), u3 = vertices[3].texU(), v3 = vertices[3].texV();
+            mid.add((u0 + u1 + u2 + u3) * 0.25f);
+            mid.add((v0 + v1 + v2 + v3) * 0.25f);
+            float deltaU1 = u1 - u0, deltaV2 = v2 - v0, deltaU2 = u2 - u0, deltaV1 = v1 - v0;
+            float area = deltaU1 * deltaV2 - deltaU2 * deltaV1, f = (double) area == 0.0 ? 1.0f : 1.0f / area;
+            tangent.add(deltaV2);
+            tangent.add(deltaV1);
+            tangent.add(f);
+            // The sign of bitangent . (tangent x normal), with the normal (v2 - v0) x (v3 - v1): all three lie in
+            // or across the face, so no movement of the bone changes it.
+            double[] first = difference(vertices[1], vertices[0]), second = difference(vertices[2], vertices[0]);
+            double[] a = difference(vertices[2], vertices[0]), b = difference(vertices[3], vertices[1]);
+            double[] n = {a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]};
+            double[] t = new double[3], bi = new double[3];
+            for (int k = 0; k < 3; k++) {
+                t[k] = (double) f * ((double) deltaV2 * first[k] - (double) deltaV1 * second[k]);
+                bi[k] = (double) f * (-(double) deltaU2 * first[k] + (double) deltaU1 * second[k]);
+            }
+            double dot = bi[0] * (t[1] * n[2] - t[2] * n[1]) + bi[1] * (t[2] * n[0] - t[0] * n[2]) + bi[2] * (t[0] * n[1] - t[1] * n[0]);
+            double size = Math.sqrt(bi[0] * bi[0] + bi[1] * bi[1] + bi[2] * bi[2]) * Math.sqrt(t[0] * t[0] + t[1] * t[1] + t[2] * t[2])
+                    * Math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]);
+            // A face without an area, in the model or in the texture, has no side to tell: asked at run time.
+            handed.add((byte) (!windingNormal || !(Math.abs(dot) > 1e-3 * size) ? 0 : dot < 0.0 ? -1 : 1));
         }
 
         private static double[] difference(GeoVertex a, GeoVertex b) {

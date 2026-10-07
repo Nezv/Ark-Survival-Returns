@@ -39,17 +39,21 @@ import org.joml.Matrix4fc;
  * the model, runs the animation and poses the bones; this takes the vertex writing: in bulk through Sodium
  * where it is installed, and without the sides of a box that the box itself hides. The bones of a creature are
  * kept once read, so a second pass of the same frame does not ask GeckoLib for them again, and with distance a
- * creature's limbs are read every second to fourth frame and its smallest boxes left out. The client settings
- * (creatureFastDrawing, creatureHiddenFaces, creatureAnimationDistance, creatureSmallestBox) switch all of it;
- * where a case is not this writer's, GeckoLib draws.
+ * creature's limbs are read every second to fourth frame and its smallest boxes left out. Under a shader pack
+ * the vertices are written in the wider format Iris gives the pack, so Iris has nothing left to work out for
+ * them. The client settings (creatureFastDrawing, creatureHiddenFaces, creatureAnimationDistance,
+ * creatureSmallestBox, creatureShaderVertices) switch all of it; where a case is not this writer's, GeckoLib draws.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class CreatureDraw {
     /**
      * -Darksurvivalreturns.creatureDraw fixes the client settings for a comparison: geckolib (GeckoLib draws),
-     * allfaces (this writer, every face, no distance detail), nolod (hidden faces left out) or ark (the defaults).
+     * allfaces (this writer, every face, no distance detail), nolod (hidden faces left out), serializer (all but
+     * the shader pack's vertices, which Iris then makes of the plain ones), easing (all but the plain reading of
+     * the animation's keys, which GeckoLib's easing then does) or ark (the defaults).
      */
     private static final String FORCED = System.getProperty("arksurvivalreturns.creatureDraw", "");
+    private static final boolean FORCED_DETAIL = FORCED.equals("ark") || FORCED.equals("serializer") || FORCED.equals("easing");
     /** -Darksurvivalreturns.creatureDraw.verify=true: every eighth creature is also drawn the old way and compared. */
     private static final boolean VERIFY = Boolean.getBoolean("arksurvivalreturns.creatureDraw.verify");
     private static final double DEFAULT_ANIMATION_DISTANCE = 64.0, DEFAULT_SMALLEST_BOX = 1.0;
@@ -61,12 +65,13 @@ public final class CreatureDraw {
     private static final CubeWriter.Posed UNKEPT = new CubeWriter.Posed();
     /** What a pass was asked to report bone or locator positions to; GeckoLib keeps no public way to ask. */
     private static final MethodHandle BONE_LISTENERS = listeners("bonePositionListeners"), LOCATOR_LISTENERS = listeners("locatorPositionListeners");
-    private static QuadSink bulk;
+    private static QuadSink bulk, wide;
     private static boolean sodium = ModList.get().isLoaded("sodium"), iris = ModList.get().isLoaded("iris");
+    private static boolean wideUsable = sodium && iris;
     private static long frame;
     /** Of the world view: pixels a radian covers, and how much narrower the view is than the field-of-view setting. */
     private static float pixelsPerRadian, zoom = 1f;
-    private static long bulkDraws, plainDraws, geckoLibDraws, farSideDraws, freshPoses, sameFramePoses, heldPoses;
+    private static long bulkDraws, wideDraws, plainDraws, geckoLibDraws, farSideDraws, freshPoses, sameFramePoses, heldPoses;
     private static Probe probe;
 
     public static boolean enabled() {
@@ -74,19 +79,30 @@ public final class CreatureDraw {
     }
 
     private static boolean skipsFaces() {
-        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_HIDDEN_FACES.get() : FORCED.equals("ark") || FORCED.equals("nolod");
+        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_HIDDEN_FACES.get() : FORCED_DETAIL || FORCED.equals("nolod");
     }
 
     private static double animationDistance() {
-        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_ANIMATION_DISTANCE.get() : FORCED.equals("ark") ? DEFAULT_ANIMATION_DISTANCE : 0.0;
+        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_ANIMATION_DISTANCE.get() : FORCED_DETAIL ? DEFAULT_ANIMATION_DISTANCE : 0.0;
     }
 
     private static double smallestBox() {
-        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_SMALLEST_BOX.get() : FORCED.equals("ark") ? DEFAULT_SMALLEST_BOX : 0.0;
+        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_SMALLEST_BOX.get() : FORCED_DETAIL ? DEFAULT_SMALLEST_BOX : 0.0;
+    }
+
+    private static boolean shaderVertices() {
+        return FORCED.isEmpty() ? NighttimeClientConfig.CREATURE_SHADER_VERTICES.get() : FORCED.equals("ark") || FORCED.equals("easing");
+    }
+
+    /** Whether the animation's keys are read plainly (PlainKeys, asked by the mixin on GeckoLib's AnimationProcessor). */
+    private static boolean plainKeys() {
+        if (!FORCED.isEmpty()) return FORCED.equals("ark") || FORCED.equals("serializer");
+        return !NighttimeClientConfig.SPEC.isLoaded() || NighttimeClientConfig.CREATURE_FAST_ANIMATION.get();
     }
 
     @SubscribeEvent public static void frameStart(RenderFrameEvent.Pre event) {
         frame++;
+        PlainKeys.enabled = plainKeys();
         // Creatures that left the view or the world: their bones are dropped after a while.
         if ((frame & 1023) == 0) POSES.values().removeIf(posed -> frame - posed.frame > 1024);
     }
@@ -114,8 +130,10 @@ public final class CreatureDraw {
     /** Counters since the client started and, when verifying, the comparison with GeckoLib's drawing. */
     public static JsonObject report() {
         JsonObject report = new JsonObject();
-        report.addProperty("mode", !enabled() ? "geckolib" : !skipsFaces() ? "allfaces" : animationDistance() > 0 || smallestBox() > 0 ? "ark" : "nolod");
+        report.addProperty("mode", !enabled() ? "geckolib" : !skipsFaces() ? "allfaces" : !(animationDistance() > 0 || smallestBox() > 0) ? "nolod"
+                : !shaderVertices() ? "serializer" : plainKeys() ? "ark" : "easing");
         report.addProperty("draws_bulk", bulkDraws);
+        report.addProperty("draws_in_the_shader_packs_format", wideDraws);
         report.addProperty("draws_vertex_by_vertex", plainDraws);
         report.addProperty("draws_left_to_geckolib", geckoLibDraws);
         report.addProperty("draws_without_far_sides", farSideDraws);
@@ -126,6 +144,8 @@ public final class CreatureDraw {
         report.addProperty("poses_of_the_same_frame_drawn_again", sameFramePoses);
         report.addProperty("poses_held_for_distance", heldPoses);
         report.addProperty("pose_keeping", BONE_LISTENERS != null && LOCATOR_LISTENERS != null);
+        report.addProperty("animation_channels_read_plainly", PlainKeys.read);
+        report.addProperty("animation_channels_left_to_geckolib", PlainKeys.left);
         if (probe != null) report.add("verify", probe.report());
         return report;
     }
@@ -241,24 +261,29 @@ public final class CreatureDraw {
                 float perPixel = (float) (pixelsPerRadian / limit);
                 smallest = perPixel * perPixel;
             }
-            QuadSink sink = bulk(consumer, color, overlay, light);
-            if (sink == null) {
+            // Iris replaces the normal of every quad drawn into the level vertex by vertex with the one its corners
+            // give; its bulk serializer keeps what it is handed, so the same normal is handed over.
+            boolean windingNormals = pack && (world || shadow);
+            // The buffer of a level pass under a shader pack takes a wider vertex; written as such, it only copies.
+            QuadSink sink = windingNormals && buffer && shaderVertices() ? wide(consumer, color, overlay, light) : null;
+            boolean widened = sink != null;
+            if (widened) {
+                wideDraws++;
+            } else if ((sink = bulk(consumer, color, overlay, light)) != null) {
+                bulkDraws++;
+            } else {
                 sink = PLAIN;
                 sink.begin(consumer, color, overlay, light);
                 plainDraws++;
-            } else {
-                bulkDraws++;
             }
             try {
-                // Iris replaces the normal of every quad drawn into the level vertex by vertex with the one its corners
-                // give; its bulk serializer keeps what it is handed, so the same normal is handed over.
-                WRITER.write(mesh, posed, pose.pose(), pose.normal(), sink, skip, coverage, pack && (world || shadow), smallest);
+                WRITER.write(mesh, posed, pose.pose(), pose.normal(), sink, skip, coverage, windingNormals, smallest);
             } finally {
                 sink.end();
             }
             if (VERIFY) {
                 if (probe == null) probe = new Probe();
-                probe.check(texture.getPath(), kind, pass, mesh, posed, pose, light, overlay, color);
+                probe.check(texture.getPath(), kind, pass, mesh, posed, pose, light, overlay, color, widened, skip, coverage, smallest);
             }
         }
     }
@@ -283,6 +308,27 @@ public final class CreatureDraw {
             ArkSurvivalReturns.LOGGER.warn("Sodium's vertex writer is not usable; creatures are written vertex by vertex", e);
             return null;
         }
+    }
+
+    /** The sink of the format Iris gives a shader pack, when this buffer has it; null for any other. */
+    private static QuadSink wide(VertexConsumer consumer, int color, int overlay, int light) {
+        if (!wideUsable) return null;
+        try {
+            if (wide == null) wide = (QuadSink) Class.forName("dev.nez.arksurvivalreturns.client.draw.iris.IrisSink").getDeclaredConstructor().newInstance();
+            return wide.begin(consumer, color, overlay, light) ? wide : null;
+        } catch (ReflectiveOperationException | LinkageError | RuntimeException e) {
+            wideUsable = false;
+            ArkSurvivalReturns.LOGGER.warn("This Iris's vertex format is not written from here; Iris converts the creatures' vertices itself", e);
+            return null;
+        }
+    }
+
+    /** The comparison of the shader pack's vertices with Iris's own making of them; it lives with the code that needs Iris. */
+    public interface ShaderCheck {
+        void check(CreatureMesh mesh, CubeWriter.Posed posed, Matrix4fc pose, org.joml.Matrix3fc normal, int skip, TextureCoverage coverage,
+                   float smallest, int color, int overlay, int light);
+
+        JsonObject report();
     }
 
     static QuadSink bulkSink() {
@@ -382,11 +428,23 @@ public final class CreatureDraw {
         private final Map<String, VertexRecorder.Difference> plainDifference = new TreeMap<>(), bulkDifference = new TreeMap<>(),
                 keptDifference = new TreeMap<>();
         private VertexConsumer decoder;
+        private ShaderCheck shaderCheck;
+        private String shaderCheckFailed;
         private int calls, compared, held;
 
         void check(String label, int kind, RenderPassInfo<?> pass, CreatureMesh mesh, CubeWriter.Posed posed, PoseStack.Pose pose,
-                   int light, int overlay, int color) {
+                   int light, int overlay, int color, boolean widened, int skip, TextureCoverage coverage, float smallest) {
             if (calls++ % 8 != 0) return;
+            // Drawn in the shader pack's format: the same creature once more both ways, against Iris's own serializer.
+            if (widened && shaderCheckFailed == null) {
+                try {
+                    if (shaderCheck == null) shaderCheck = (ShaderCheck) Class.forName("dev.nez.arksurvivalreturns.client.draw.iris.IrisCheck")
+                            .getDeclaredConstructor().newInstance();
+                    shaderCheck.check(mesh, posed, pose.pose(), pose.normal(), skip, coverage, smallest, color, overlay, light);
+                } catch (ReflectiveOperationException | LinkageError | RuntimeException e) {
+                    shaderCheckFailed = e.toString();
+                }
+            }
             if (kind == HELD) {
                 // Bones of an earlier frame, by choice: nothing of this frame to compare them with.
                 held++;
@@ -423,6 +481,8 @@ public final class CreatureDraw {
             report.add("vertex_by_vertex", rows(plainDifference));
             report.add("bulk", rows(bulkDifference));
             report.add("bones_of_the_same_frame_drawn_again", rows(keptDifference));
+            if (shaderCheck != null) report.add("shader_pack_vertices_against_iris", shaderCheck.report());
+            if (shaderCheckFailed != null) report.addProperty("shader_pack_vertices_not_checked", shaderCheckFailed);
             return report;
         }
 

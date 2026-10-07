@@ -353,8 +353,9 @@ public final class FrameBenchmark {
 
     private static long gc(boolean millis) {
         long total = 0;
+        // A concurrent collector (ZGC, Shenandoah) reports its cycles beside its pauses; only a pause stops the game.
         for (GarbageCollectorMXBean bean : ManagementFactory.getGarbageCollectorMXBeans())
-            total += Math.max(0, millis ? bean.getCollectionTime() : bean.getCollectionCount());
+            if (!bean.getName().endsWith("Cycles")) total += Math.max(0, millis ? bean.getCollectionTime() : bean.getCollectionCount());
         return total;
     }
 

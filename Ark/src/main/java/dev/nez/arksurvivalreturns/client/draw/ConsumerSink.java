@@ -15,8 +15,11 @@ public final class ConsumerSink extends QuadSink {
         return true;
     }
 
-    @Override public void cube(float[] corners, float[] normals, float[] uv, int uvAt, byte[] corner, int cornerAt, int mask) {
+    @Override public void cube(float[] corners, float[] normals, CreatureMesh mesh, int cube, int mask) {
         VertexConsumer consumer = this.consumer;
+        float[] uv = mesh.uv;
+        byte[] corner = mesh.corner;
+        int uvAt = cube * CreatureMesh.FACES * 8, cornerAt = cube * CreatureMesh.FACES * 4;
         int color = this.color, overlay = this.overlay, light = this.light;
         for (int face = 0; face < CreatureMesh.FACES; face++) {
             if ((mask >> face & 1) == 0) continue;
