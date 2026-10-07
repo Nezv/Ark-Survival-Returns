@@ -11,6 +11,7 @@ import dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations;
 import dev.nez.arksurvivalreturns.feature.spawn.PlainSight;
 import dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
+import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -379,6 +380,70 @@ public final class SpawnerGameTests {
             Config.POPULATION_CULL_FRACTION.set(cull);
             for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
                 creature.discard();
+        }
+        h.succeed();
+    }
+
+    /**
+     * The register knows who lives. A wild animal is entered when it joins the world and found there with its
+     * place; one a client was sent is no longer the budget's to delete; a life ends on the record with its cause
+     * (a player's blow, the species of the wild animal that killed it, a taming, a removal without a death); and
+     * what is saved reads back the same.
+     */
+    public static void register(GameTestHelper h) {
+        for (int x = 0; x < 24; x++) for (int z = 0; z < 24; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var world = h.getLevel();
+        var register = WildlifeRegister.get(world);
+        var player = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        var animals = new java.util.ArrayList<CreatureEntity>();
+        Species[] kinds = {Species.PARASAUR, Species.PARASAUR, Species.PARASAUR, Species.TYRANNOSAURUS};
+        for (int i = 0; i < kinds.length; i++) {
+            var pos = h.absolutePos(new BlockPos(3 + i * 6, 2, 12));
+            var creature = ModContent.CREATURES.get(kinds[i]).get().create(world, EntitySpawnReason.NATURAL);
+            creature.snapTo(Vec3.atBottomCenterOf(pos), 0, 0);
+            creature.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), EntitySpawnReason.NATURAL, null);
+            world.addFreshEntity(creature);
+            animals.add(creature);
+        }
+        try {
+            var known = animals.get(0);
+            var life = register.life(known.getUUID());
+            h.assertTrue(life != null && life.species().equals(known.species().id) && !life.shown(),
+                    "A wild animal that joined the world is not on the register: " + life);
+            h.assertTrue(life.x() == known.getBlockX() && life.z() == known.getBlockZ(), "The register has the animal somewhere else: " + life);
+            h.assertTrue(NaturalPopulations.cullable(known), "An animal no client was sent is not the budget's to remove");
+            known.markShown();
+            register.refresh(world, animals);
+            h.assertFalse(NaturalPopulations.cullable(known), "An animal a client was sent can still be deleted");
+            h.assertTrue(register.life(known.getUUID()).shown(), "The register does not know the animal was shown");
+
+            var hunted = animals.get(1);
+            hunted.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
+            var kill = register.end(hunted.getUUID());
+            h.assertTrue(register.life(hunted.getUUID()) == null && kill != null && kill.cause().equals("player"),
+                    "A player's kill was not entered: " + kill);
+            var rex = animals.get(3);
+            var prey = animals.get(2);
+            prey.hurtServer(world, world.damageSources().mobAttack(rex), Float.MAX_VALUE);
+            var eaten = register.end(prey.getUUID());
+            h.assertTrue(eaten != null && eaten.cause().equals(Species.TYRANNOSAURUS.id), "A wild animal's kill was not entered with its species: " + eaten);
+            rex.onTamed(player.getUUID());
+            var tamed = register.end(rex.getUUID());
+            h.assertTrue(register.life(rex.getUUID()) == null && tamed != null && tamed.cause().equals(WildlifeRegister.TAMED),
+                    "A taming was not entered: " + tamed);
+
+            var saved = WildlifeRegister.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, register).getOrThrow();
+            var read = WildlifeRegister.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, saved).getOrThrow();
+            h.assertTrue(read.living().size() == register.living().size() && read.life(known.getUUID()) != null
+                    && read.life(known.getUUID()).shown() && "player".equals(read.end(hunted.getUUID()).cause()),
+                    "The register does not read back what it saved");
+
+            known.discard();
+            var removed = register.end(known.getUUID());
+            h.assertTrue(removed != null && removed.cause().equals(WildlifeRegister.REMOVED) && removed.shown(),
+                    "An animal taken out of the world without a death left no entry: " + removed);
+        } finally {
+            for (var creature : animals) if (!creature.isRemoved()) creature.discard();
         }
         h.succeed();
     }

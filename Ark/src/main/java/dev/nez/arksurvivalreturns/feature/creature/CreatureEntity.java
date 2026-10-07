@@ -67,6 +67,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     private int originDanger = -1;
     private UUID packId = UUID.randomUUID();
     private boolean naturalWildlife;
+    /** The server has sent this creature to a client: a player may know it (feature/spawn/WildlifeRegister). */
+    private boolean shown;
     private WildlifeController wildlife;
     private final LocomotionSignal locomotion = new LocomotionSignal();
     private double animationBlocksPerSecond;
@@ -153,6 +155,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     public void onTamed(UUID owner) {
         // Before persistence ends its natural status: a tame leaves the regional wild population.
         dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger.record(this);
+        dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister.tamed(this);
         setPersistenceRequired();
         setTarget(null);
         if (wildlife != null) wildlife.interruptSleep();
@@ -376,6 +379,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
     /** Puts this creature in a pack by hand, for trials and tests; a natural spawn gets its pack in finalizeSpawn. */
     public void joinPack(UUID pack) { packId = pack; }
     public boolean isNaturalWildlife() { return naturalWildlife && !isPersistenceRequired(); }
+    public boolean shown() { return shown; }
+    public void markShown() { shown = true; }
     /**
      * The wild routine. Types whose registerGoals replaces the realm goals (the Guardian) get an unregistered
      * one on first use, so saving, loading and waking never meet a null controller.
@@ -736,8 +741,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
             setDeltaMovement(velocity.x, 0.3, velocity.z);
     }
     @Override public int getMaxSpawnClusterSize() { return species.maxGroup; }
-    // Natural wildlife persists like vanilla animals; the population budget owns culling.
-    @Override public boolean removeWhenFarAway(double distance) { return !isNaturalWildlife(); }
+    // No creature of Ark's goes the vanilla way of despawning, however it came into the world: wildlife lives until
+    // it dies (feature/spawn/WildlifeRegister), and one from a dispenser's egg or a spawner stays as well.
+    @Override public boolean removeWhenFarAway(double distance) { return false; }
     @Override protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putInt("CreatureLevel", creatureLevel());
@@ -745,6 +751,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         output.putInt("OriginDanger", originDanger);
         output.putString("PackId", packId.toString());
         output.putBoolean("NaturalWildlife", naturalWildlife);
+        output.putBoolean("Shown", shown);
         tamingInventory.serialize(output.child("TamingInventory"));
         ContainerHelper.saveAllItems(output.child("Harness"), harnessSlot.getItems());
         wildlife().save(output);
@@ -758,6 +765,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         levelInitialized = input.getBooleanOr("LevelInitialized", false);
         originDanger = input.getIntOr("OriginDanger", -1);
         naturalWildlife = input.getBooleanOr("NaturalWildlife", !isPersistenceRequired());
+        // An animal saved before this was kept is taken as known: it may have been met.
+        shown = input.getBooleanOr("Shown", true);
         input.child("TamingInventory").ifPresent(tamingInventory::deserialize);
         input.child("Harness").ifPresent(harness -> {
             harnessSlot.clearContent();

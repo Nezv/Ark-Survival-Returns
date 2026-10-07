@@ -30,6 +30,11 @@ public final class WildlifeCommand {
         event.getDispatcher().register(Commands.literal("arkwildlife")
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(context -> report(context.getSource(), 64))
+                .then(Commands.literal("register")
+                        .executes(context -> {
+                            WildlifeRegister.get(context.getSource().getLevel()).report(12).forEach(line -> send(context.getSource(), line));
+                            return 1;
+                        }))
                 .then(Commands.literal("biome")
                         .executes(context -> biomeReport(context.getSource(), 256))
                         .then(Commands.argument("radius", IntegerArgumentType.integer(16, BiomePatchSurvey.MAX_RADIUS))

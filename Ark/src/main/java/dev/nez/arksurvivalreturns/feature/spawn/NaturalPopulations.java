@@ -51,7 +51,8 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Nothing appears or vanishes while somebody watches: an animal is placed, and a spare group removed, only
  * where no player has it in plain sight ({@link PlainSight}): behind them, behind a hill or a wood, or so far
- * off that it is a speck.
+ * off that it is a speck. And an animal the server has sent to a client is never removed at all: it is in the
+ * {@link WildlifeRegister} and lives until it dies. Above its targets the budget only stops placing.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
@@ -118,6 +119,7 @@ public final class NaturalPopulations {
     public static void enforce(ServerLevel level, List<? extends Player> players) {
         boolean ledger = ledger();
         var wilds = loadedWildlife(level);
+        WildlifeRegister.get(level).refresh(level, wilds);
         int globalCap = globalCap(players.size());
         if (wilds.size() > globalCap) {
             cull(level, players, wilds, wilds.size() - globalCap);
@@ -279,10 +281,11 @@ public final class NaturalPopulations {
 
     /**
      * A creature someone is taming is not spare wildlife: knocked out, claimed, fed or holding deposited
-     * food, it would vanish with the tamer's food and progress. The list may be stale after an earlier cull.
+     * food, it would vanish with the tamer's food and progress. Nor is one a client was ever sent: a player may
+     * know it, so it stays until it dies. The list may be stale after an earlier cull.
      */
     public static boolean cullable(CreatureEntity c) {
-        if (c.isRemoved() || c.isPersistenceRequired() || c.isPassenger() || c.isVehicle() || c.isLeashed()) return false;
+        if (c.isRemoved() || c.isPersistenceRequired() || c.isPassenger() || c.isVehicle() || c.isLeashed() || c.shown()) return false;
         if (TorporService.restricted(c) || !c.tamingInventory().isEmpty()) return false;
         if (!TamingService.tracked(c)) return true;
         var taming = TamingService.of(c);
