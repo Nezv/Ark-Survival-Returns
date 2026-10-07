@@ -8,6 +8,7 @@ import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.spawn.LedgerModel;
 import dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations;
+import dev.nez.arksurvivalreturns.feature.spawn.PlainSight;
 import dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import dev.nez.arksurvivalreturns.registry.ModContent;
@@ -291,6 +292,105 @@ public final class SpawnerGameTests {
             spawned.forEach(net.minecraft.world.entity.Entity::discard);
         }
         h.succeed();
+    }
+
+    /**
+     * Nothing appears or vanishes while somebody watches. The rule on bare ground: in front of a player an animal
+     * is in plain sight, behind them it is not, a wall hides what does not tower over it and distance makes a small
+     * animal a speck. Then the budget itself: around a player who looks one way no animal is placed that they could
+     * make out, and of the groups to spare none goes while the player has turned to face it.
+     */
+    public static void sight(GameTestHelper h) {
+        for (int x = 0; x < 128; x++) for (int z = 0; z < 128; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var world = h.getLevel();
+        var border = new AABB(h.absolutePos(new BlockPos(64, 2, 64))).inflate(80, 160, 80);
+        for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
+            creature.discard();
+        var player = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        // Near one edge of the floor, looking along it: 'ahead' is the structure's own +z whichever way it was turned.
+        player.snapTo(h.absoluteVec(new Vec3(64.5, 2, 12.5)));
+        Vec3 at = player.position(), ahead = h.absoluteVec(new Vec3(64.5, 2, 13.5)).subtract(at).normalize();
+        Vec3 right = new Vec3(-ahead.z, 0, ahead.x);
+        float forwards = (float) Math.toDegrees(Math.atan2(-ahead.x, ahead.z));
+        face(player, forwards);
+        h.assertTrue(seen(world, player, at.add(ahead.scale(30)), 1f, 1f), "An animal 30 blocks ahead on open ground is not in plain sight");
+        h.assertTrue(seen(world, player, at.add(ahead.scale(10)).add(right.scale(30)), 2f, 2f), "An animal 72 degrees to the side counts as off the screen");
+        h.assertFalse(seen(world, player, at.add(ahead.scale(-10)).add(right.scale(40)), 3f, 3f), "An animal behind the shoulder is in plain sight");
+        h.assertFalse(seen(world, player, at.add(ahead.scale(60)), 0.6f, 0.6f), "A small animal 60 blocks off is more than a speck");
+        h.assertTrue(seen(world, player, at.add(ahead.scale(60)), 3f, 3f), "A large animal 60 blocks off is a speck");
+        face(player, forwards + 180f);
+        h.assertFalse(seen(world, player, at.add(ahead.scale(30)), 3f, 3f), "An animal behind the player is in plain sight");
+        face(player, forwards);
+        // A wall nine wide and six high, ten blocks ahead.
+        for (int x = 60; x <= 68; x++) for (int y = 2; y <= 7; y++) h.setBlock(x, y, 22, Blocks.STONE);
+        h.assertFalse(seen(world, player, at.add(ahead.scale(14)), 1f, 1f), "An animal behind a wall is in plain sight");
+        h.assertTrue(seen(world, player, at.add(ahead.scale(14)), 1f, 9f), "An animal towering over the wall is hidden by it");
+        h.assertTrue(seen(world, player, at.add(ahead.scale(14)).add(right.scale(12)), 1f, 1f), "An animal beside the wall is hidden by it");
+        for (int x = 60; x <= 68; x++) for (int y = 2; y <= 7; y++) h.setBlock(x, y, 22, Blocks.AIR);
+
+        var model = Config.POPULATION_MODEL.get();
+        int radius = Config.POPULATION_RADIUS.get(), minDistance = Config.POPULATION_MIN_DISTANCE.get();
+        int attempts = Config.POPULATION_ATTEMPTS.get(), groups = Config.POPULATION_GROUPS_PER_PASS.get();
+        int wanted = Config.POPULATION_GROUPS.get();
+        double cull = Config.POPULATION_CULL_FRACTION.get();
+        try {
+            Config.POPULATION_MODEL.set(NaturalPopulations.Model.LEDGER);
+            Config.POPULATION_RADIUS.set(110);
+            Config.POPULATION_MIN_DISTANCE.set(8);
+            Config.POPULATION_ATTEMPTS.set(4);
+            Config.POPULATION_GROUPS_PER_PASS.set(4);
+            Config.POPULATION_GROUPS.set(6);
+            Config.POPULATION_CULL_FRACTION.set(0.25);
+            world.getRandom().setSeed(0x51647L);
+            // Looking at the floor ahead: whatever is placed is placed where the player cannot make it out.
+            for (int pass = 0; pass < 40; pass++) NaturalPopulations.enforce(world, List.of(player));
+            var watching = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            for (var creature : watching)
+                h.assertFalse(seen(world, player, creature.position(), creature.getBbWidth(), creature.getBbHeight()),
+                        "Placed in plain sight: " + creature.species() + " at " + creature.blockPosition());
+            // What stood at the edges of the picture or as specks far off made up the count; the land is emptied again.
+            watching.forEach(CreatureEntity::discard);
+            // Looking away from the floor: it fills behind the player's back.
+            face(player, forwards + 180f);
+            for (int pass = 0; pass < 40; pass++) NaturalPopulations.enforce(world, List.of(player));
+            var placed = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            int herds = NaturalPopulations.groups(placed).size();
+            h.assertTrue(herds >= 2,"The land behind a player's back stays empty: " + herds + " groups");
+            // One group is wanted now and none tolerated above it. Facing them, none the player can make out is taken away.
+            Config.POPULATION_GROUPS.set(1);
+            Config.POPULATION_CULL_FRACTION.set(0.0);
+            face(player, forwards);
+            var watched = placed.stream().filter(c -> seen(world, player, c.position(), c.getBbWidth(), c.getBbHeight())).toList();
+            h.assertTrue(!watched.isEmpty(), "Turned round, the player makes out none of the animals behind them");
+            for (int pass = 0; pass < 6; pass++) NaturalPopulations.enforce(world, List.of(player));
+            h.assertTrue(watched.stream().noneMatch(CreatureEntity::isRemoved), "An animal was taken away while the player watched it");
+            // With their back turned again the spare groups beyond the near ground go.
+            face(player, forwards + 180f);
+            for (int pass = 0; pass < 12; pass++) NaturalPopulations.enforce(world, List.of(player));
+            var left = world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife);
+            h.assertTrue(NaturalPopulations.groups(left).size() < herds, "No spare group left behind the player's back: " + herds);
+        } finally {
+            Config.POPULATION_MODEL.set(model);
+            Config.POPULATION_RADIUS.set(radius);
+            Config.POPULATION_MIN_DISTANCE.set(minDistance);
+            Config.POPULATION_ATTEMPTS.set(attempts);
+            Config.POPULATION_GROUPS_PER_PASS.set(groups);
+            Config.POPULATION_GROUPS.set(wanted);
+            Config.POPULATION_CULL_FRACTION.set(cull);
+            for (var creature : world.getEntitiesOfClass(CreatureEntity.class, border, CreatureEntity::isNaturalWildlife))
+                creature.discard();
+        }
+        h.succeed();
+    }
+
+    private static boolean seen(ServerLevel world, net.minecraft.world.entity.player.Player player, Vec3 feet, float width, float height) {
+        return PlainSight.seenBy(world, player, feet.x, feet.y, feet.z, width, height);
+    }
+
+    private static void face(net.minecraft.world.entity.player.Player player, float yaw) {
+        player.setYRot(yaw);
+        player.setYHeadRot(yaw);
+        player.setXRot(0f);
     }
 
     /**

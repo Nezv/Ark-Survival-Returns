@@ -25,7 +25,7 @@ public final class Config {
     public static final EnumMap<Species, ModConfigSpec.DoubleValue> STRIDE_SCALE = new EnumMap<>(Species.class);
     public static final ModConfigSpec.BooleanValue NATURAL_SPAWNS;
     public static final ModConfigSpec.IntValue WILDLIFE_WATER_DEPTH;
-    public static final ModConfigSpec.BooleanValue POPULATION_BUDGET;
+    public static final ModConfigSpec.BooleanValue POPULATION_BUDGET, POPULATION_OUT_OF_SIGHT;
     public static final ModConfigSpec.IntValue POPULATION_TARGET, POPULATION_RADIUS, POPULATION_GLOBAL_CAP,
             POPULATION_INTERVAL, POPULATION_ATTEMPTS, POPULATION_CULL_MARGIN, POPULATION_MIN_DISTANCE, POPULATION_GROUPS;
     public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model> POPULATION_MODEL;
@@ -148,6 +148,10 @@ public final class Config {
                 .defineInRange("populationCullMargin", 4, 0, 32);
         POPULATION_MIN_DISTANCE = b.comment("Never spawn natural creatures closer than this to a player.")
                 .defineInRange("populationMinPlayerDistance", 32, 8, 128);
+        POPULATION_OUT_OF_SIGHT = b.comment("Natural creatures appear, and spare groups are removed, only where no player has them in plain",
+                        "sight: behind the player, behind ground, walls or foliage, or so far off that they are a speck. Set false",
+                        "to let them appear anywhere beyond populationMinPlayerDistance, as before.")
+                .define("populationOutOfSight", true);
         POPULATION_MODEL = b.comment("LEDGER keeps the number of wild groups below around each player, scaled by a regional predator-prey",
                         "ledger that also advances land nobody is near. BUDGET is the previous fixed target per player",
                         "(populationTargetPerPlayer, populationCullMargin, populationGlobalCap), kept for comparison.")

@@ -47,7 +47,11 @@ import org.jspecify.annotations.Nullable;
  * <p>Wildlife is laid out the way livestock is met in the vanilla game: a herd, a pack or a lone animal every
  * few dozen blocks, each of a species whose range holds the biome ({@link SpeciesRange}) and at its full
  * size, apart from one another, with hunters the minority by day and by night and no species repeated
- * beside itself. A walking player has the land ahead filled first.
+ * beside itself. A walking player has the land ahead filled first, where it is hidden from them.
+ *
+ * <p>Nothing appears or vanishes while somebody watches: an animal is placed, and a spare group removed, only
+ * where no player has it in plain sight ({@link PlainSight}): behind them, behind a hill or a wood, or so far
+ * off that it is a speck.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
@@ -78,7 +82,7 @@ public final class NaturalPopulations {
     private static final int ROOM_TRIES = 12, ROOM_REACH = 12;
     /** Blocks a tick (2.4 a second, a slow walk) from which a player counts as travelling. */
     private static final double TRAVEL_PACE = 0.12;
-    /** A group is only removed this far from every player, a couple per check, so nothing vanishes in view. */
+    /** A group is only removed this far from every player and out of their sight, a couple per check, so nothing vanishes in view. */
     private static final int CULL_DISTANCE = 56, CULLED_PER_PASS = 2;
     /** Each player's position at the previous check, for the direction of travel. */
     private static final Map<UUID, Vec3> LAST_SEEN = new HashMap<>();
@@ -116,7 +120,7 @@ public final class NaturalPopulations {
         var wilds = loadedWildlife(level);
         int globalCap = globalCap(players.size());
         if (wilds.size() > globalCap) {
-            cull(level, wilds, wilds.size() - globalCap);
+            cull(level, players, wilds, wilds.size() - globalCap);
             wilds = loadedWildlife(level);
         }
         double radius = Config.POPULATION_RADIUS.get();
@@ -136,8 +140,8 @@ public final class NaturalPopulations {
             if (nearby > ceiling) {
                 // The ledger target drifts with the cycle: only the excess goes, whole groups at a time and
                 // out of sight, so a falling target neither thins a herd nor empties the view.
-                if (ledger) cullGroups(level, near, nearby - ceiling);
-                else cull(level, local, nearby - target);
+                if (ledger) cullGroups(level, players, near, nearby - ceiling);
+                else cull(level, players, local, nearby - target);
                 continue;
             }
             if (nearby >= target) continue;
@@ -149,7 +153,7 @@ public final class NaturalPopulations {
                 // normal roll so an unreachable apex cannot stall the budget. Under the ledger model a
                 // travelling player gets every other attempt ahead of them.
                 var only = attempt == 0 && wanted != null ? java.util.Collections.singleton(wanted) : null;
-                int added = tryGroup(level, player, radius, minDistance, only, ledger, ledger && attempt % 2 == 0 ? heading : null,
+                int added = tryGroup(level, player, players, radius, minDistance, only, ledger, ledger && attempt % 2 == 0 ? heading : null,
                         groups, ledger ? target : 0);
                 if (added > 0) {
                     placed++; nearby += ledger ? 1 : added; loaded += added;
@@ -245,11 +249,12 @@ public final class NaturalPopulations {
         return wilds;
     }
 
-    /** Discards the farthest cullable wilds first; tames, riders, leashed and mid-tame creatures are immune. */
-    private static void cull(ServerLevel level, List<CreatureEntity> candidates, int excess) {
+    /** Discards the farthest cullable wilds nobody watches first; tames, riders, leashed and mid-tame creatures are immune. */
+    private static void cull(ServerLevel level, List<? extends Player> players, List<CreatureEntity> candidates, int excess) {
         if (excess <= 0) return;
         var cullable = candidates.stream()
                 .filter(NaturalPopulations::cullable)
+                .filter(creature -> !seen(level, players, creature))
                 .sorted(Comparator.comparingDouble(c -> -nearestPlayerDistanceSqr(level, c)))
                 .limit(excess).toList();
         for (var creature : cullable) {
@@ -258,11 +263,12 @@ public final class NaturalPopulations {
         }
     }
 
-    /** Removes whole spare groups, farthest first: never one a player is near, never one with a member someone needs. */
-    private static void cullGroups(ServerLevel level, List<Group> candidates, int excess) {
+    /** Removes whole spare groups, farthest first: never one a player is near or watches, never one with a member someone needs. */
+    private static void cullGroups(ServerLevel level, List<? extends Player> players, List<Group> candidates, int excess) {
         var spare = candidates.stream()
                 .filter(group -> group.members().stream().allMatch(NaturalPopulations::cullable))
                 .filter(group -> group.members().stream().allMatch(c -> nearestPlayerDistanceSqr(level, c) >= CULL_DISTANCE * CULL_DISTANCE))
+                .filter(group -> group.members().stream().noneMatch(c -> seen(level, players, c)))
                 .sorted(Comparator.comparingDouble((Group group) -> -nearestPlayerDistanceSqr(level, group.members().getFirst())))
                 .limit(Math.min(excess, CULLED_PER_PASS)).toList();
         for (var group : spare) for (var creature : group.members()) {
@@ -283,6 +289,15 @@ public final class NaturalPopulations {
         return taming.claimant() == null && taming.progress() <= 0f;
     }
 
+    private static boolean seen(ServerLevel level, List<? extends Player> players, CreatureEntity creature) {
+        return seen(level, players, creature.getX(), creature.getY(), creature.getZ(), creature.getBbWidth(), creature.getBbHeight());
+    }
+
+    /** Whether a player would watch an animal of this size appear or vanish with its feet here (spawning.populationOutOfSight). */
+    private static boolean seen(ServerLevel level, List<? extends Player> players, double x, double y, double z, float width, float height) {
+        return Config.POPULATION_OUT_OF_SIGHT.get() && PlainSight.seen(level, players, x, y, z, width, height);
+    }
+
     private static double nearestPlayerDistanceSqr(ServerLevel level, CreatureEntity creature) {
         double nearest = Double.MAX_VALUE;
         for (var player : level.players()) nearest = Math.min(nearest, horizontalSqr(creature, player.getX(), player.getZ()));
@@ -295,7 +310,7 @@ public final class NaturalPopulations {
     }
 
     /** Finds one habitat/danger-legal group site around the player, places the group and returns its size. */
-    private static int tryGroup(ServerLevel level, Player player, double radius, double minDistance,
+    private static int tryGroup(ServerLevel level, Player player, List<? extends Player> players, double radius, double minDistance,
             @Nullable Set<Species> only, boolean ledger, @Nullable Vec3 heading, List<Group> groups, int target) {
         int reach = (int) radius;
         var random = level.getRandom();
@@ -334,14 +349,17 @@ public final class NaturalPopulations {
             if (species == null) continue;
             if (water) {
                 if (!Water.siteAllowed(level, species, site)) continue;
-                return spawnGroup(level, species, site, true);
+                if (seen(level, players, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
+                return spawnGroup(level, players, species, site, true);
             }
             var type = ModContent.CREATURES.get(species).get();
             if (!SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, site, random)) {
                 site = roomNear(level, species, site);
                 if (site == null) continue;
             }
-            return spawnGroup(level, species, site, false);
+            // Nobody may watch the group appear: the next try falls elsewhere.
+            if (seen(level, players, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
+            return spawnGroup(level, players, species, site, false);
         }
         return 0;
     }
@@ -435,7 +453,7 @@ public final class NaturalPopulations {
         return eligible.getLast();
     }
 
-    private static int spawnGroup(ServerLevel level, Species species, BlockPos anchor, boolean water) {
+    private static int spawnGroup(ServerLevel level, List<? extends Player> players, Species species, BlockPos anchor, boolean water) {
         var type = ModContent.CREATURES.get(species).get();
         int count = species.minGroup + level.getRandom().nextInt(1 + species.maxGroup - species.minGroup);
         int spread = species.solitary() ? 2 : 6;
@@ -454,6 +472,8 @@ public final class NaturalPopulations {
                 if (pos == null) continue;
                 if (water ? !Water.siteAllowed(level, species, pos)
                         : !SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, pos, level.getRandom())) continue;
+                // A member that would step out from behind the cover its group was anchored in stays unborn.
+                if (seen(level, players, x + 0.5, pos.getY(), z + 0.5, species.width, species.height)) continue;
                 var creature = type.create(level, EntitySpawnReason.NATURAL);
                 if (creature == null) break;
                 creature.snapTo(x + 0.5, pos.getY(), z + 0.5, level.getRandom().nextFloat() * 360f, 0f);
