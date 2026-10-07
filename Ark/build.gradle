@@ -273,7 +273,7 @@ tasks.register('prepareDevRuntime') {
             target.setText(lines.join('\n') + '\n', 'UTF-8')
         }
         // -ParkRenderDistance: one launch at another render distance (tools/session_bench.py), the file's value kept.
-        update(devOptions, ':', [renderDistance:project.findProperty('arkRenderDistance') ?: settings.renderDistance, simulationDistance:settings.simulationDistance])
+        update(devOptions, ':', [renderDistance:inputs.properties.arkRenderDistance ?: settings.renderDistance,simulationDistance:settings.simulationDistance])
         update(devServerProperties, '=', ['view-distance':settings.renderDistance, 'simulation-distance':settings.simulationDistance])
         // FTB Quests reads its pack from the instance config folder, never from a data pack.
         if (questSource.isDirectory()) {
