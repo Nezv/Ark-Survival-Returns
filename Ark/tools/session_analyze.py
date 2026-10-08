@@ -105,12 +105,22 @@ TABLES: dict[str, dict[str, str]] = {
     "register": {"seq": L, "tick": I, "living": I, "loaded": I, "unborn": I, "silent": I, "claimed": I, "shown": I, "ends": I,
                  "tiles": I, "day": D, "biome": S, "cells": I, "surveyed": I, "groups": "INTEGER[]", "quota": "INTEGER[]",
                  "due": "DOUBLE[]", "stayed": D, "lived": D},
+    # Per biome region and species: the animals in the world and those that are records only, at each count.
+    "register_species": {"seq": L, "tick": I, "day": D, "tile_x": I, "tile_z": I, "region": I, "species": S, "in_world": I,
+                         "records": I},
+    "regions": {"seq": L, "tick": I, "ns": L, "tile": "INTEGER[]", "biome": S, "type": S, "snowy": B, "cells": I, "surveyed": I,
+                "ground": I, "wet": I, "feeds": I, "water": B, "sea": B, "rich": D, "room": "DOUBLE[]", "quota": "INTEGER[]", "zones": "INTEGER[]", "pool": "VARCHAR[]"},
+    "tiles": {"seq": L, "tick": I, "ns": L, "tile": "INTEGER[]", "side": I, "regions": I, "cells": S},
     "rolls": {"seq": L, "tick": I, "ns": L, "at_name": S, "day": D, "ends": I, "records": I, "with_body": I},
     "roll_rows": {"seq": L, "tick": I, "at_name": S, "uuid": S, "species": S, "pack": S, "lvl": I, **xyz("", I), "hunger": D,
                   "appeared": D, "seen": D, "flags": I, "shown": B, "body": B, "silent": B, "claimed": B, "loaded": B},
     "lives": {"seq": L, "tick": I, "ns": L, "ev": S, "u": S, "e": I, "species": S, "pack": S, "lvl": I, **xyz("pos_", I),
               **xyz("", D), "cause": S, "lived": D, "silent": B, "shown": B, "biome": S, "cells": I, "groups": I, "records": I,
-              "ended": I, "born": I, "day": D, "stayed": D, "moved": D, "hunger0": D, "hunger": D, "us": L, "bodies": I},
+              "ended": I, "born": I, "day": D, "stayed": D, "moved": D, "hunger0": D, "hunger": D, "us": L, "bodies": I,
+              # A round of the bounded rules: by role (grazer, hunter, apex, flyer) the region as the round found it.
+              "rules": S, "tile": "INTEGER[]", "arrived": I, "aged": I, "hunted": I, "starved": I, "days": D, "sea": B, "supply": D,
+              "rich": D, "guests": I, "animals": "INTEGER[]", "taking": "INTEGER[]", "demand": "DOUBLE[]", "food": "DOUBLE[]",
+              "pressure": "DOUBLE[]", "regions": I, "rounds": I},
 }
 RENAMES = {"s": "seq", "k": "tick", "from": "from_name", "to": "to_name", "where": "where_", "left": "left_",
            "pivot": "pivoting", "drop": "dropped", "over": "over_ticks", "at": "at_e", "by": "by_e"}
@@ -254,7 +264,17 @@ class Splitter:
         elif kind == "w":
             self.write("world", self.flatten("world", row, ("rain", "thunder", "bright")))
         elif kind == "reg":
+            for region in row.pop("regions", []):
+                tile = region.get("tile") or [None, None, None]
+                for species, (in_world, records) in region.get("species", {}).items():
+                    self.write("register_species", {"seq": row["s"], "tick": row["k"], "day": row.get("day"), "tile_x": tile[0],
+                                                    "tile_z": tile[1], "region": tile[2], "species": species, "in_world": in_world,
+                                                    "records": records})
             self.write("register", self.flatten("register", row))
+        elif kind == "region":
+            self.write("regions", self.flatten("regions", row, ("snowy", "water", "sea")))
+        elif kind == "tile":
+            self.write("tiles", self.flatten("tiles", row))
         elif kind == "roll":
             columns = (self.meta.get("header") or {}).get("legend", {}).get("roll") or list(TABLES["roll_rows"])[3:14]
             rows = [dict(zip(columns, cells)) for cells in row.get("rows", [])]
@@ -266,7 +286,8 @@ class Splitter:
                                          "body": bool(flags & 2), "silent": bool(flags & 4), "claimed": bool(flags & 8),
                                          "loaded": bool(flags & 16)})
         elif kind == "life":
-            self.write("lives", self.flatten("lives", row, ("silent", "shown") if row.get("ev") == "end" else ()))
+            self.write("lives", self.flatten("lives", row, ("silent", "shown") if row.get("ev") == "end"
+                                             else ("sea",) if row.get("rules") == "bounded" else ()))
         elif kind == "gap":
             self.announced[row["from"]] = row.get("why", "queue_full")
         elif kind in ("header", "end", "footer"):

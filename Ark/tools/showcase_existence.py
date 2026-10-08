@@ -1,8 +1,9 @@
 """The existence column of the showcase's Existence Model page: the data its simulator runs on.
 
-design/existence/model.json holds the weights of the proposed model, the sample regions and the constants of the
-rules the game runs today; design/existence/weights.json, once the page's Save weights has written it, holds the
-weights as they were tuned there and wins. This module joins them with what the game itself says: the species of
+design/existence/model.json holds the weights of the bounded model the game runs (the defaults of spawning.boundedLife),
+the sample regions and the constants of the first rules, kept in the game for comparison; design/existence/weights.json,
+once the page's Save weights has written it, holds the weights as they were tuned there and wins on the page (the
+game reads its own config). This module joins them with what the game itself says: the species of
 design/showcase/species.json (runData), their spawn weight and timidity from Species.java (runData does not export
 them yet), and who lives in each sample biome from the generated spawn tags, so the simulator follows the code.
 The model is tools/existence_model.js, the page's controls tools/existence_ui.js; build_showcase.py calls
@@ -60,9 +61,28 @@ def java_traits(species):
     return traits
 
 
-def drift(coded):
+def drift(coded, model=None):
     """Constants of the game's rules that no longer are what model.json says they were; never stops the build."""
     notes = []
+    config = (JAVA / 'Config.java').read_text(encoding='utf-8')
+    if model:
+        # The bounded rules: the weights are config defaults, the rest constants of BoundedLife.java.
+        bounded = (JAVA / 'feature/spawn/BoundedLife.java').read_text(encoding='utf-8')
+        for weight in model['weights']:
+            name = 'populationRefillDays' if weight['id'] == 'refill' else weight['id']
+            match = re.search(rf'defineInRange\("{name}", ([\d.]+)', config)
+            if not match or float(match.group(1)) != weight['value']:
+                notes.append(f'Config {name} is {match.group(1) if match else "gone"}, model.json says {weight["value"]}')
+        for kind, value in model['fertility'].items():
+            match = re.search(rf'FERTILITY\.put\(BiomeProfile\.Type\.{kind}, ([\d.]+)\)', bounded)
+            if not match or float(match.group(1)) != value:
+                notes.append(f'BoundedLife fertility of {kind} is {match.group(1) if match else "gone"}, model.json says {value}')
+        fixed = model['fixed']
+        for name, value in (('SIZE_EXPONENT', fixed['sizeExponent']), ('SNOW', fixed['snow']), ('FLYER_SHARE', fixed['flyerShare']),
+                            ('SEA_GRAZER', fixed['sea']['grazer']), ('SEA_HUNTER', fixed['sea']['hunter']), ('SEA_APEX', fixed['sea']['apex'])):
+            match = re.search(rf'\b{name} = ([\d.]+)', bounded)
+            if not match or float(match.group(1)) != value:
+                notes.append(f'BoundedLife.{name} is {match.group(1) if match else "gone"}, model.json says {value}')
     silent = (JAVA / 'feature/spawn/SilentLife.java').read_text(encoding='utf-8')
     for name, value in coded['silent'].items():
         match = re.search(rf'\b{name} = ([\d.]+)', silent)
@@ -75,7 +95,6 @@ def drift(coded):
         match = re.search(rf'\b{name}\(([\d.]+)\)', classes)
         if not match or float(match.group(1)) != value:
             notes.append(f'WildClass.{name} is {match.group(1) if match else "gone"}, model.json says {value}')
-    config = (JAVA / 'Config.java').read_text(encoding='utf-8')
     for name, value in coded['config'].items():
         match = re.search(rf'defineInRange\("{name}", ([\d.]+)', config)
         if not match or float(match.group(1)) != value:
@@ -100,7 +119,7 @@ def data():
             raise SystemExit(f'{region["biome"]} holds no Ark wildlife; take it out of design/existence/model.json')
         fertility = model['fertility'][region['type']] * (model['fixed']['snow'] if region['snowy'] else 1)
         regions.append({**region, 'fertility': round(fertility, 4), 'pool': pool})
-    for note in drift(model['coded']):
+    for note in drift(model['coded'], json.loads(MODEL.read_text(encoding='utf-8'))):
         print(f'existence: {note}', file=sys.stderr)
     keep = ('id', 'name', 'health', 'damage', 'groupMin', 'groupMax', 'predator', 'apex', 'realm', 'cold', 'danger')
     return {

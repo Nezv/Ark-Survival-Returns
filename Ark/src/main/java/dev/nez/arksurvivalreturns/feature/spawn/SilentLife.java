@@ -29,11 +29,13 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * The life of the animals beyond the loaded land. There a wild animal is its record in the {@link WildlifeRegister}
- * and nothing else, and the records of a biome region ({@link LandRegister}) live by rounds of cheap rules: an
- * animal past its span dies of age, a group feeds, a hungry pack of hunters is matched against a group of its
- * region by the odds of their strength, a fed group below its size may gain a young, and the group shifts a little.
- * The rules weigh the species, the size of the group, the water of the region and its hunters. A region gets a round
- * each silentRoundDays, and silentLivedInRounds times as often once players have stayed a day in it.
+ * and nothing else, and the records of a biome region ({@link LandRegister}) live by rounds of cheap rules. A region
+ * gets a round each silentRoundDays, and silentLivedInRounds times as often once players have stayed a day in it.
+ *
+ * <p>The rules are the bounded ones ({@link BoundedLife}, spawning.silentRules), or the first ones, kept here for
+ * comparison: an animal past its span dies of age, a group feeds, a hungry pack of hunters is matched against a
+ * group of its region by the odds of their strength, a fed group below its size may gain a young, and the group
+ * shifts a little. Those weigh the species, the size of the group, the water of the region and its hunters.
  *
  * <p>No record leaves the chunk it was left in, so the body saved there stays its own. As the chunk loads the body
  * is brought to its record (the place and the hunger), a record born meanwhile gets a body, and the body of one
@@ -41,7 +43,11 @@ import org.jspecify.annotations.Nullable;
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class SilentLife {
-    public static final String AGE = "age", STARVED = "starved";
+    /** The rules a round lives by: every odd bounded by the pressure on what the animal eats, or the first ones with their fixed odds. */
+    public enum Rules { BOUNDED, ODDS }
+
+    /** Ends that name no species: of age, of hunger, and to a hunter the bounded rules could not name. */
+    public static final String AGE = "age", STARVED = "starved", HUNTED = "hunted";
     /** A region is lived in once players have stayed this many game days in it. */
     public static final double STAY_DAYS = 1.0;
     /** Blocks a group may shift each way in a round; every animal stops at the edge of the chunk it was left in. */
@@ -53,13 +59,14 @@ public final class SilentLife {
      * of a death in a pack that starves; and of one in a pack that prey standing its ground has beaten off.
      */
     public static final double BIRTH = 0.25, DRY = 0.5, STARVES = 0.25, STRIKES_BACK = 0.3;
-    private static final int ROUNDS_AT_ONCE = 4, PROBES = 6, MISSES = 12;
+    static final int ROUNDS_AT_ONCE = 4;
+    private static final int PROBES = 6, MISSES = 12;
     private static final int NO_ROOM = 0, WAIT = 1, BORN = 2;
     /** Looks in which a record found no room for its body in its loaded chunk. */
     private static final Map<UUID, Integer> MISSED = new HashMap<>();
 
-    /** A group in a round: its records and the hunger they share. */
-    private static final class Herd {
+    /** A group in a round: its records and, under the first rules, the hunger they share. */
+    static final class Herd {
         final Species species;
         final List<WildlifeRegister.Life> members = new ArrayList<>();
         double hunger;
@@ -67,12 +74,20 @@ public final class SilentLife {
         Herd(Species species) { this.species = species; }
     }
 
-    /** A region in a round: the groups that take part, and how many groups and groups of hunters it holds in all, loaded or not. */
-    private record Country(List<Herd> herds, int[] groups) {}
+    /**
+     * A region in a round: the groups that take part, the groups held back (one of theirs is in the world or in
+     * somebody's hands), and how many groups and groups of hunters it holds in all.
+     */
+    record Country(List<Herd> herds, List<Herd> held, int[] groups) {}
+
+    public static boolean bounded() { return Config.SILENT_RULES.get() == Rules.BOUNDED; }
 
     @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
         var level = event.getServer().overworld();
         var register = WildlifeRegister.get(level);
+        // The register's calendar: the game's days, and more of them while it is set to run faster than the sun.
+        double speed = Config.WILD_CALENDAR_SPEED.get();
+        if (speed > 1.0 && event.getServer().tickRateManager().runsNormally()) register.hasten((speed - 1.0) / 24000.0);
         if (register.returning().isEmpty()) return;
         long began = SessionRecorder.on() ? System.nanoTime() : 0;
         int bodies = register.returning().size();
@@ -90,7 +105,9 @@ public final class SilentLife {
             double today = today(level);
             for (var player : players)
                 land.stay(land.regionAt(level, player.getBlockX(), player.getBlockZ()), Config.POPULATION_INTERVAL.get() / 24000.0);
-            for (var entry : gather(level, land, register).entrySet()) {
+            var countries = gather(level, land, register);
+            if (bounded()) BoundedLife.pass(level, land, register, countries, today);
+            else for (var entry : countries.entrySet()) {
                 if (entry.getValue().herds().isEmpty()) continue;
                 int rounds = land.due(entry.getKey(), today, every(entry.getKey()), ROUNDS_AT_ONCE);
                 for (int round = 0; round < rounds; round++) round(level, register, entry.getKey(), entry.getValue(), today);
@@ -104,11 +121,13 @@ public final class SilentLife {
         return Config.SILENT_ROUND_DAYS.get() / (region.stayed() >= STAY_DAYS ? Config.SILENT_LIVED_IN_ROUNDS.get() : 1);
     }
 
-    /** One round for the region now, whatever its clock says; for the tests. */
+    /** One round of the rules in force for the region now, whatever its clock says; for the tests. */
     public static void round(ServerLevel level, LandRegister.Region region) {
         var register = WildlifeRegister.get(level);
         var country = gather(level, LandRegister.get(level), register).get(region);
-        if (country != null) round(level, register, region, country, today(level));
+        if (bounded()) BoundedLife.round(level, region, country != null ? country : new Country(new ArrayList<>(), new ArrayList<>(), new int[2]),
+                today(level), every(region));
+        else if (country != null) round(level, register, region, country, today(level));
     }
 
     /** Game days a species lives: the larger the animal, the longer. */
@@ -125,9 +144,7 @@ public final class SilentLife {
         return life.appeared() + lifespan(species) * (0.25 + ((mix ^ mix >>> 32) >>> 11) / (double) (1L << 53));
     }
 
-    private static double today(ServerLevel level) {
-        return level.getServer().overworld().getGameTime() / 24000.0;
-    }
+    private static double today(ServerLevel level) { return WildlifeRegister.day(level); }
 
     /** The regions with their groups, from the register: a group takes part while none of its animals is in the world or in somebody's hands. */
     private static Map<LandRegister.Region, Country> gather(ServerLevel level, LandRegister land, WildlifeRegister register) {
@@ -142,10 +159,11 @@ public final class SilentLife {
         Map<LandRegister.Region, Country> countries = new IdentityHashMap<>();
         packs.forEach((pack, herd) -> {
             var first = herd.members.getFirst();
-            var country = countries.computeIfAbsent(land.regionAt(level, first.x(), first.z()), ignored -> new Country(new ArrayList<>(), new int[2]));
+            var country = countries.computeIfAbsent(land.regionAt(level, first.x(), first.z()),
+                    ignored -> new Country(new ArrayList<>(), new ArrayList<>(), new int[2]));
             country.groups()[0]++;
             if (herd.species.predator) country.groups()[1]++;
-            if (!held.contains(pack)) country.herds().add(herd);
+            (held.contains(pack) ? country.held() : country.herds()).add(herd);
         });
         return countries;
     }
@@ -266,7 +284,8 @@ public final class SilentLife {
     /**
      * Gives a body to every record in a loaded chunk that has none in the world: one born beyond the loaded land, or
      * one whose saved body did not come back with the chunk. One that finds no room in its chunk, look after look,
-     * is taken off the register.
+     * moves on to another chunk of its region if it never had a body (no chunk holds one of it), and is taken off
+     * the register otherwise.
      */
     public static void embody(ServerLevel level, List<? extends Player> players) {
         var register = WildlifeRegister.get(level);
@@ -283,9 +302,23 @@ public final class SilentLife {
             if (outcome == BORN) MISSED.remove(life.id());
             else if (outcome == NO_ROOM && MISSED.merge(life.id(), 1, Integer::sum) >= MISSES) {
                 MISSED.remove(life.id());
-                register.end(level, life, WildlifeRegister.REMOVED);
+                if (life.body() || !moveOn(level, register, life, species)) register.end(level, life, WildlifeRegister.REMOVED);
             }
         }
+    }
+
+    /** Puts a record that never had a body into another chunk of its region that was seen loaded; false where there is none. */
+    private static boolean moveOn(ServerLevel level, WildlifeRegister register, WildlifeRegister.Life life, Species species) {
+        var land = LandRegister.get(level);
+        var tile = land.known(life.x() >> 4, life.z() >> 4);
+        if (tile == null) return false;
+        int index = tile.regions.indexOf(land.region(tile, life.x() >> 4, life.z() >> 4));
+        ChunkPos chunk = land.suited(level, tile, index, WildClass.of(species), level.getRandom());
+        if (chunk == null || chunk.getMinBlockX() >> 4 == life.x() >> 4 && chunk.getMinBlockZ() >> 4 == life.z() >> 4) return false;
+        var moved = life.after(chunk.getMinBlockX() + level.getRandom().nextInt(16), chunk.getMinBlockZ() + level.getRandom().nextInt(16), life.hunger());
+        register.put(moved);
+        SessionRecorder.lifeMoved(moved);
+        return true;
     }
 
     /** Makes the animal of a record where it is, or elsewhere in its chunk, away from every player and out of their sight. */

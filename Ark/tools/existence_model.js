@@ -3,11 +3,15 @@
  *
  * Two rule sets run on the same records (groups of animals, each with a level, the day it appeared, the day it
  * dies of age and a hunger from 0 to 1):
- *   coded    SilentLife.java as it was read at the commit named in design/existence/model.json: a round of rules
- *            for the region, its odds fixed per round;
- *   bounded  the proposal: every daily odd is a clamped linear function of the pressure on what the animal eats
- *            (its appetite over its food), so a region can neither empty its land nor outgrow it.
+ *   bounded  what the game lives by (BoundedLife.java, spawning.silentRules = BOUNDED): every daily odd is a clamped
+ *            linear function of the pressure on what the animal eats (its appetite over its food), so a region can
+ *            neither empty its land nor outgrow it;
+ *   coded    the first rules (SilentLife.java, silentRules = ODDS), kept in the game for comparison: a round of
+ *            rules for the region, its odds fixed per round.
  * Space inside the region is left out: only who lives, in which group, counts.
+ *
+ * A run may also start from a region as a session recorded it (options.state, with its quota, room, richness and
+ * day): tools/session_inspect.py lives the recorded register on to see whether the game went where the model does.
  *
  * One file for the showcase page (window.ArkExistence, tools/existence_ui.js) and for Node
  * (tools/existence_check.py), so both show the same numbers. `data` is what tools/showcase_existence.py
@@ -54,8 +58,8 @@
   }
 
   /** The species as the rules see them: the class, the role, the span, the appetite and the tempo of each. */
-  function prepare(data, w) {
-    var days = data.model.coded.config.wildLifespanDays, byId = {};
+  function prepare(data, w, coded) {
+    var days = coded.config.wildLifespanDays, byId = {};
     data.species.forEach(function (s) {
       var span = 0.5 + s.health / 100;
       byId[s.id] = {
@@ -92,19 +96,25 @@
    * weights (overrides by id).
    */
   function Sim(data, options) {
-    var coded = data.model.coded, region = options.region;
+    var coded = data.model.coded, region = options.region, key;
+    if (options.config) {
+      // A recorded run: the values its game ran with take the place of the ones read from the sources.
+      coded = { commit: coded.commit, silent: coded.silent, share: coded.share, levels: coded.levels, hunger: coded.hunger, config: {} };
+      for (key in data.model.coded.config) coded.config[key] = data.model.coded.config[key];
+      for (key in options.config) coded.config[key] = options.config[key];
+    }
     this.coded = coded;
     this.rules = options.rules || 'bounded';
     this.w = weights(data, options.weights);
-    this.species = prepare(data, this.w);
+    this.species = prepare(data, this.w, coded);
     this.rand = random(options.seed == null ? 1 : options.seed);
     this.cells = options.cells || 256;
     this.zone = options.zone || 3;
     this.water = options.water == null ? region.water : options.water;
-    this.sea = region.type === 'OCEAN' || region.type === 'RIVER';
+    this.sea = options.sea == null ? region.type === 'OCEAN' || region.type === 'RIVER' : options.sea;
     this.fertility = options.fertility == null ? region.fertility : options.fertility;
     // What the land grows, against the richest: the bounded model's measure of a region's resources.
-    this.richness = this.rules === 'bounded' ? this.fertility * (this.water ? 1 : this.w.dry) : 1;
+    this.richness = options.richness != null ? options.richness : this.rules === 'bounded' ? this.fertility * (this.water ? 1 : this.w.dry) : 1;
     this.arrivals = options.arrivals !== false;
     this.dt = 1 / (options.pace || 1);
     this.levels = coded.levels[this.zone];
@@ -124,14 +134,30 @@
       // What the zone keeps out cannot come: a class with a quota and nobody to fill it stays empty.
       self.room[kind] = self.eligible[kind].length ? groups : 0;
       self.quota[kind] = Math.floor(groups) + (self.rand() < groups - Math.floor(groups) ? 1 : 0);
+      // A recorded region brings the room and the quota its game gave it.
+      if (options.room) self.room[kind] = self.eligible[kind].length ? options.room[kind] || 0 : 0;
+      if (options.quota) self.quota[kind] = options.quota[kind] || 0;
     });
-    this.day = 0;
+    this.day = options.day || 0;
     this.groups = [];
     this.due = { GRAZER: 0, HUNTER: 0, APEX: 0, FLYER: 0, SEA: 0 };
     this.tally = {};       // per species: record-days in each state, moves between them, ends, young, arrivals
     this.deaths = {};      // ends by cause
-    this.start(options.start || 'settled');
+    if (options.state) this.load(options.state);
+    else this.start(options.start || 'settled');
   }
+
+  /** The register as a session recorded it: groups of a species, each animal with its level, its hunger and the day it dies of age. */
+  Sim.prototype.load = function (state) {
+    var self = this;
+    state.forEach(function (entry) {
+      var species = self.species[entry.species];
+      if (!species || !entry.members.length) return;
+      self.groups.push({ species: species, hunger: self.coded.hunger, members: entry.members.map(function (m) {
+        return { level: m.level, born: m.born, last: m.last, hunger: m.hunger };
+      }) });
+    });
+  };
 
   Sim.prototype.tallyOf = function (species) {
     var t = this.tally[species.id];
@@ -444,12 +470,13 @@
   /** Who lives now: animals and groups by class and by species, the mean level, and the pressures of the bounded model. */
   Sim.prototype.snapshot = function () {
     var animals = { GRAZER: 0, HUNTER: 0, APEX: 0, FLYER: 0, SEA: 0 }, groups = { GRAZER: 0, HUNTER: 0, APEX: 0, FLYER: 0, SEA: 0 };
-    var species = {}, levels = 0, total = 0;
+    var species = {}, levels = 0, total = 0, sides = { prey: 0, predators: 0 };
     for (var i = 0; i < this.groups.length; i++) {
       var g = this.groups[i], n = g.members.length;
       if (!n) continue;
       animals[g.species.kind] += n;
       groups[g.species.kind]++;
+      sides[g.species.predator ? 'predators' : 'prey'] += n;
       var s = species[g.species.id] || (species[g.species.id] = { animals: 0, groups: 0 });
       s.animals += n;
       s.groups++;
@@ -458,7 +485,7 @@
     }
     var now = this.census();
     return { day: this.day, animals: animals, groups: groups, species: species, total: total, level: total ? levels / total : 0,
-      pressure: now.pressure, demand: now.demand, food: now.food, supply: now.supply };
+      sides: sides, pressure: now.pressure, demand: now.demand, food: now.food, supply: now.supply };
   };
 
   /**
@@ -467,7 +494,8 @@
    */
   function run(data, options) {
     var sim = new Sim(data, options), days = options.days || 720, every = options.every || Math.max(1, Math.round(days / 240));
-    var series = [sim.snapshot()], next = every, lost = {}, seen = {};
+    var series = [sim.snapshot()], next = sim.day + every, lost = {}, seen = {};
+    days += sim.day;
     function watch(shot) {
       CLASSES.concat(Object.keys(sim.species)).forEach(function (key) {
         var n = shot.animals[key] !== undefined ? shot.animals[key] : shot.species[key] ? shot.species[key].animals : 0;
@@ -508,8 +536,15 @@
     var kinds = CLASSES.filter(function (kind) { return all.some(function (r) { return r.seen[kind] || r.room[kind] > 0; }); });
     var mean = {}, low = {}, high = {}, groups = {}, pressure = { grazer: [], hunter: [], apex: [], flyer: [] }, level = [], total = [];
     var demand = { grazer: 0, hunter: 0, apex: 0, flyer: 0 }, food = { grazer: 0, hunter: 0, apex: 0, flyer: 0 }, tailFrom = Math.floor(steps * 2 / 3);
+    var sides = { prey: { mean: [], low: [], high: [] }, predators: { mean: [], low: [], high: [] }, total: { mean: [], low: [], high: [] } };
     kinds.forEach(function (kind) { mean[kind] = []; low[kind] = []; high[kind] = []; groups[kind] = []; });
     for (var t = 0; t < steps; t++) {
+      ['prey', 'predators', 'total'].forEach(function (side) {
+        var values = all.map(function (r) { return side === 'total' ? r.series[t].total : r.series[t].sides[side]; }).sort(function (a, b) { return a - b; });
+        sides[side].mean.push(values.reduce(function (a, b) { return a + b; }, 0) / runs);
+        sides[side].low.push(quantile(values, 0.1));
+        sides[side].high.push(quantile(values, 0.9));
+      });
       kinds.forEach(function (kind) {
         var values = all.map(function (r) { return r.series[t].animals[kind]; }).sort(function (a, b) { return a - b; });
         mean[kind].push(values.reduce(function (a, b) { return a + b; }, 0) / runs);
@@ -584,7 +619,7 @@
       });
       Object.keys(r.deaths).forEach(function (cause) { deaths[cause] = (deaths[cause] || 0) + r.deaths[cause]; });
     });
-    return { runs: runs, days: days, kinds: kinds, mean: mean, low: low, high: high, groups: groups, pressure: pressure, demand: demand, food: food,
+    return { runs: runs, days: days, kinds: kinds, mean: mean, low: low, high: high, sides: sides, groups: groups, pressure: pressure, demand: demand, food: food,
       supply: first.series[0].supply, level: level, total: total,
       species: species, classes: classes, tally: tally, deaths: deaths, last: first.sim, verdict: verdict(classes, species, total, level, days) };
   }
@@ -662,14 +697,19 @@ if (typeof module === 'object' && module.exports && typeof require === 'function
     process.stdout.write(JSON.stringify(setups.map(function (setup) {
       var options = {}, key;
       for (key in setup) options[key] = setup[key];
-      options.region = data.regions.filter(function (region) { return region.id === setup.region; })[0];
+      // A setup names one of the sample regions, or brings a region of its own (a recorded one).
+      options.region = typeof setup.region === 'string' ? data.regions.filter(function (region) { return region.id === setup.region; })[0] : setup.region;
       var result = model.ensemble(data, options, setup.runs || 24), tail = Math.floor(result.days.length * 2 / 3), pressure = {};
       model.ROLES.forEach(function (role) {
         var list = result.pressure[role].slice(tail);
         pressure[role] = list.reduce(function (a, b) { return a + b; }, 0) / list.length;
       });
-      return { setup: setup, verdict: result.verdict, classes: result.classes, species: result.species, deaths: result.deaths, pressure: pressure,
-        start: result.total[0] };
+      var out = { setup: setup.series ? { key: setup.key } : setup, verdict: result.verdict, classes: result.classes, species: result.species,
+        deaths: result.deaths, pressure: pressure, start: result.total[0] };
+      // The day by day course, for a reader that draws it: the mean and the band most runs stay in.
+      if (setup.series) out.series = { days: result.days, kinds: result.kinds, mean: result.mean, low: result.low, high: result.high,
+        sides: result.sides, pressure: result.pressure };
+      return out;
     })));
   })();
 }

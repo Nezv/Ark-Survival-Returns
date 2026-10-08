@@ -47,6 +47,9 @@ import org.jspecify.annotations.Nullable;
  * it may shift, feed, be born or die there. A record the rules have changed is marked silent until its body is back
  * in the world and brought to it; one born there has no body until its chunk loads; and of one that died there the
  * saved body is not let back in.
+ *
+ * <p>The days of a record (when it appeared, when it was last seen, when it ended) are days of the register's own
+ * calendar ({@link #day}): the game's days, or more of them in a game day while spawning.wildCalendarSpeed is above 1.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class WildlifeRegister extends SavedData {
@@ -111,7 +114,8 @@ public final class WildlifeRegister extends SavedData {
     public static final Codec<WildlifeRegister> CODEC = RecordCodecBuilder.create(i -> i.group(
             Life.CODEC.listOf().fieldOf("living").forGetter(register -> List.copyOf(register.living.values())),
             End.CODEC.listOf().fieldOf("ended").forGetter(register -> List.copyOf(register.ended)),
-            UUIDUtil.CODEC.listOf().optionalFieldOf("gone", List.of()).forGetter(register -> List.copyOf(register.gone))
+            UUIDUtil.CODEC.listOf().optionalFieldOf("gone", List.of()).forGetter(register -> List.copyOf(register.gone)),
+            Codec.DOUBLE.optionalFieldOf("ahead", 0.0).forGetter(register -> register.ahead)
     ).apply(i, WildlifeRegister::new));
     public static final SavedDataType<WildlifeRegister> TYPE = new SavedDataType<>(
             ArkSurvivalReturns.id("wildlife_register"), () -> new WildlifeRegister(), CODEC);
@@ -122,18 +126,33 @@ public final class WildlifeRegister extends SavedData {
     private final Set<UUID> gone = new HashSet<>();
     /** Bodies back in the world whose record lived on meanwhile; {@link SilentLife} brings them to it on the next tick. */
     private final Set<CreatureEntity> returning = new LinkedHashSet<>();
+    /** Days the register's calendar has run ahead of the game's: what a quicker calendar has added. */
+    private double ahead;
 
     public WildlifeRegister() {}
 
-    private WildlifeRegister(List<Life> living, List<End> ended, List<UUID> gone) {
+    private WildlifeRegister(List<Life> living, List<End> ended, List<UUID> gone, double ahead) {
         for (Life life : living) this.living.put(life.id(), life);
         this.ended.addAll(ended);
         this.gone.addAll(gone);
+        this.ahead = ahead;
     }
 
     /** The overworld's register; Ark wildlife lives there only. */
     public static WildlifeRegister get(ServerLevel level) {
         return level.getServer().overworld().getDataStorage().computeIfAbsent(TYPE);
+    }
+
+    /** Today on the register's calendar, in days: the game's day and what the calendar has run ahead of it. */
+    public static double day(ServerLevel level) {
+        var overworld = level.getServer().overworld();
+        return overworld.getGameTime() / 24000.0 + get(overworld).ahead;
+    }
+
+    /** The calendar runs this much further ahead of the game's days. */
+    public void hasten(double days) {
+        ahead += days;
+        setDirty();
     }
 
     public @Nullable Life life(UUID id) { return living.get(id); }
@@ -243,9 +262,7 @@ public final class WildlifeRegister extends SavedData {
         return level.dimension() == Level.OVERWORLD && creature.isNaturalWildlife();
     }
 
-    private static double today(ServerLevel level) {
-        return level.getServer().overworld().getGameTime() / 24000.0;
-    }
+    private static double today(ServerLevel level) { return day(level); }
 
     /**
      * Only the register is touched here: the chunk of a body read from the save may not be whole yet. The body of an

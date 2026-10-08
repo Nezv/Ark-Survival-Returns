@@ -137,6 +137,7 @@ def analyse(path: Path, first: str | None = None, last: str | None = None, radiu
     between = [r for r in rolls if before["tick"] <= r["tick"] <= after["tick"]]
     ends = {life["u"]: life for life in data["lives"] if life.get("ev") == "end" and before["tick"] <= life["k"] <= after["tick"]}
     born = {life["u"]: life for life in data["lives"] if life.get("ev") == "born"}
+    came = {life["u"]: life for life in data["lives"] if life.get("ev") == "arrived"}
     rounds = [life for life in data["lives"] if life.get("ev") == "round" and before["tick"] <= life["k"] <= after["tick"]]
     welcomes = {life["u"]: life for life in data["lives"] if life.get("ev") == "welcome" and before["tick"] <= life["k"] <= after["tick"]}
     refused = [life for life in data["lives"] if life.get("ev") == "refused" and before["tick"] <= life["k"] <= after["tick"]]
@@ -180,7 +181,7 @@ def analyse(path: Path, first: str | None = None, last: str | None = None, radiu
         if uuid in cohort or not record["flags"] & LOADED or not near(record, place, radius):
             continue
         entity = by_uuid.get(uuid, {})
-        newcomers["born_as_record" if uuid in born else "walked_in" if uuid in before["records"]
+        newcomers["born_as_record" if uuid in born else "arrived_as_record" if uuid in came else "walked_in" if uuid in before["records"]
                   else "arrived" if entity.get("note") == "budget_spawn" else "loaded_later" if entity.get("origin") in ("load", "present")
                   else "unexplained"] += 1
 
@@ -200,7 +201,8 @@ def analyse(path: Path, first: str | None = None, last: str | None = None, radiu
                                                   "records": len(r["records"]),
                                                   "with_body": sum(1 for x in r["records"].values() if x["flags"] & LOADED)} for r in rolls],
         "place": {"x": round(place[0], 1), "z": round(place[1], 1), "radius": radius},
-        "config": {key: config.get(f"spawning.{key}") for key in ("populationModel", "silentLife", "silentRoundDays", "silentLivedInRounds",
+        "config": {key: config.get(f"spawning.{key}") for key in ("populationModel", "silentLife", "silentRules", "wildCalendarSpeed",
+                                                                 "silentRoundDays", "silentLivedInRounds",
                                                                  "wildLifespanDays", "populationRefillDays", "wildGroupsPerPlayer")},
         "view_distance": header.get("server", {}).get("view_distance"),
         "cohort": {"animals": len(cohort), "groups": len(packs_before), "species": dict(Counter(a["species"] for a in animals).most_common())},
@@ -209,7 +211,9 @@ def analyse(path: Path, first: str | None = None, last: str | None = None, radiu
         "lived_without_body": {"animals": len(lived), "record_changed": sum(a["record_changed"] for a in lived),
                                "rounds": len(rounds), "regions": len({r.get("biome", "") + str(r.get("cells")) for r in rounds}),
                                "round_records": sum(r.get("records", 0) for r in rounds), "round_ended": sum(r.get("ended", 0) for r in rounds),
-                               "round_born": sum(r.get("born", 0) for r in rounds)},
+                               "round_born": sum(r.get("born", 0) for r in rounds),
+                               "round_arrived": sum(r.get("arrived", 0) for r in rounds),
+                               "calendar_days": round(after["day"] - before["day"], 2) if after.get("day") is not None and before.get("day") is not None else None},
         "returned": {"groups_with_a_member_back": len(packs_after), "welcomed": sum(1 for a in animals if "welcomed" in a),
                      "moved_to_record": sum(1 for a in animals if a.get("welcomed", {}).get("moved", 0) > 0.5),
                      "mean_shift_blocks": round(statistics.fmean([a["moved"] for a in lived if "moved" in a]), 1) if any("moved" in a for a in lived) else 0,

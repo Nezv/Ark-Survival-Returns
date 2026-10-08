@@ -32,6 +32,9 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue SILENT_LIFE;
     public static final ModConfigSpec.DoubleValue SILENT_ROUND_DAYS, WILD_LIFESPAN_DAYS;
     public static final ModConfigSpec.IntValue SILENT_LIVED_IN_ROUNDS;
+    public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.SilentLife.Rules> SILENT_RULES;
+    public static final ModConfigSpec.DoubleValue WILD_CALENDAR_SPEED, BOUNDED_SUPPLY, BOUNDED_DRY, BOUNDED_FECUNDITY, BOUNDED_STARVE,
+            BOUNDED_KILL, BOUNDED_CARRY_HUNTER, BOUNDED_CARRY_APEX, BOUNDED_WANDER;
     public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model> POPULATION_MODEL;
     public static final ModConfigSpec.DoubleValue POPULATION_CULL_FRACTION, LEDGER_CYCLE_DAYS;
     public static final ModConfigSpec.IntValue POPULATION_GROUPS_PER_PASS, POPULATION_CAP_PER_PLAYER, POPULATION_HARD_CAP, LEDGER_REGION_SIZE;
@@ -165,10 +168,18 @@ public final class Config {
         POPULATION_REFILL_DAYS = b.comment("BIOME: game days in which an emptied biome region is allowed back its whole quota of groups.")
                 .defineInRange("populationRefillDays", 4.0, 0.25, 120.0);
         SILENT_LIFE = b.comment("BIOME: the animals beyond the loaded land live on as records, by rounds of cheap rules for each biome",
-                        "region: a group shifts within its chunks and feeds, hunters are matched against a group of the region by",
-                        "the odds of their strength, a fed group below its size may gain a young, and an animal past its span dies",
-                        "of age. As a chunk loads its animals are where and as their records are. False: they stand still.")
+                        "region (silentRules): they feed or go hungry, are hunted, have young and die of age, and a group shifts",
+                        "within its chunk. As a chunk loads its animals are where and as their records are. False: they stand still.")
                 .define("silentLife", true);
+        SILENT_RULES = b.comment("BIOME: the rules of those rounds. BOUNDED: every daily odd of a record is a clamped linear function of the",
+                        "pressure on what it eats, the appetite of its kind over its food (boundedLife below), so a region can neither",
+                        "empty its land nor outgrow it; poorer land holds fewer groups, a group comes only where the land can feed it,",
+                        "and the land nobody is near takes its arrivals in as records. ODDS: the first rules, fixed odds a round and",
+                        "hunts decided by strength; kept for comparison.")
+                .defineEnum("silentRules", dev.nez.arksurvivalreturns.feature.spawn.SilentLife.Rules.BOUNDED);
+        WILD_CALENDAR_SPEED = b.comment("Days of the wildlife register's calendar in one game day. 1 for play. Higher lives the records faster",
+                        "than the sun, to watch many days of a region in one short session: ages, rounds and arrivals all follow it.")
+                .defineInRange("wildCalendarSpeed", 1.0, 1.0, 5000.0);
         SILENT_ROUND_DAYS = b.comment("BIOME: game days between two rounds of those rules in a biome region.")
                 .defineInRange("silentRoundDays", 1.0, 0.05, 30.0);
         SILENT_LIVED_IN_ROUNDS = b.comment("BIOME: the rounds come this many times as often in a region where players have stayed a game day in all.")
@@ -190,6 +201,25 @@ public final class Config {
                 .defineInRange("populationCapPerPlayer", 140, 16, 512);
         POPULATION_HARD_CAP = b.comment("LEDGER: absolute ceiling of loaded natural animals in the dimension.")
                 .defineInRange("populationHardCap", 600, 32, 4096);
+        b.comment("The weights of silentRules = BOUNDED. An appetite is what an animal of 50 base HP eats a day; an animal of",
+                "another size eats (HP / 50) ^ 0.75 of it. tools/existence_check.py lives a region through with other values",
+                "without the game.").push("boundedLife");
+        BOUNDED_SUPPLY = b.comment("Appetites a chunk of the richest land feeds a day; poorer biomes feed a share of it.")
+                .defineInRange("supply", 0.24, 0.01, 5.0);
+        BOUNDED_DRY = b.comment("What is left of the supply in a region with no water at the surface.").defineInRange("dry", 0.5, 0.0, 1.0);
+        BOUNDED_FECUNDITY = b.comment("Young a fed animal with a mate in its region and all the room would have over its species' span.")
+                .defineInRange("fecundity", 4.0, 0.0, 40.0);
+        BOUNDED_STARVE = b.comment("Daily odds that a starving animal dies.").defineInRange("starve", 0.25, 0.0, 1.0);
+        BOUNDED_KILL = b.comment("Daily odds that an animal of 50 base HP is hunted while its hunters are at the limit of what their prey",
+                        "carries; a larger species is hunted less often.")
+                .defineInRange("kill", 0.02, 0.0, 1.0);
+        BOUNDED_CARRY_HUNTER = b.comment("Appetites of hunters one appetite of plant eaters carries.").defineInRange("carryHunter", 0.21, 0.0, 2.0);
+        BOUNDED_CARRY_APEX = b.comment("Appetites of hunting giants one appetite of their prey carries: plant eaters and lesser hunters.")
+                .defineInRange("carryApex", 0.12, 0.0, 2.0);
+        BOUNDED_WANDER = b.comment("Days in which a region at its quota still meets as many passing groups as its quota holds, so a species",
+                        "it lost comes back; 0 turns them off. Of a group only as many stay as the land can feed.")
+                .defineInRange("wander", 240.0, 0.0, 10000.0);
+        b.pop();
         b.push("ledger");
         LEDGER_REGION_SIZE = b.comment("Side of one ledger region in blocks.").defineInRange("regionSize", 256, 64, 2048);
         LEDGER_CYCLES = b.comment("True: predators and prey cycle in every region, each region at its own phase.",

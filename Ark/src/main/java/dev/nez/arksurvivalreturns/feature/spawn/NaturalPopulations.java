@@ -54,6 +54,8 @@ import org.jspecify.annotations.Nullable;
  * off that it is a speck. And an animal the server has sent to a client is never removed at all: it is in the
  * {@link WildlifeRegister} and lives until it dies. Above its targets the budget only stops placing. Beyond the
  * loaded land the animals live on as records ({@link SilentLife}), which the BIOME model's pass also moves on.
+ * Under the bounded rules ({@link BoundedLife}) the budget settles a chunk only with what the land can feed, the
+ * plant eaters first, and leaves the arrivals to the rounds, which bring them as records to all of a region.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
@@ -90,6 +92,11 @@ public final class NaturalPopulations {
     private static final double TRAVEL_PACE = 0.12;
     /** A group is only removed this far from every player and out of their sight, a couple per check, so nothing vanishes in view. */
     private static final int CULL_DISTANCE = 56, CULLED_PER_PASS = 2;
+    /** Under the first rules a chunk is settled class by class as they come. */
+    private static final WildClass[][] SETTLING = {WildClass.values()};
+
+    /** A chunk a pass meets for the first time: it has not been given its animals yet. */
+    private record Fresh(LandRegister.Tile tile, LandRegister.Region region, int chunkX, int chunkZ) {}
     /** The chunk each player stood in at the previous check of the BIOME model: one who was elsewhere has just come to this land. */
     private static final Map<UUID, ChunkPos> LAST_CHUNK = new HashMap<>();
     /** Each player's position at the previous check, for the direction of travel. */
@@ -192,9 +199,13 @@ public final class NaturalPopulations {
         var counts = land.count(level, WildlifeRegister.get(level));
         var groups = new ArrayList<>(groups(wilds));
         int cap = globalCap(players.size()), loaded = wilds.size(), kinds = WildClass.values().length;
-        double today = level.getServer().overworld().getGameTime() / 24000.0;
+        double today = WildlifeRegister.day(level);
         int view = level.getServer().getPlayerList().getViewDistance(), reach = view > 0 ? Math.min(view, 12) : 8;
         Map<LandRegister.Region, List<ChunkPos>> inReach = new java.util.IdentityHashMap<>();
+        boolean bounded = SilentLife.bounded();
+        // Bounded: what each region's animals eat and what feeds them, counted once a chunk is to be settled.
+        Map<LandRegister.Region, BoundedLife.Census> fed = null;
+        var fresh = new ArrayList<Fresh>();
         // Land a player has only just come to, by joining or by a leap, they have not looked at yet: its first animals
         // are there before they do. Only the players who were already here count as watching.
         var watchers = new ArrayList<Player>();
@@ -216,12 +227,22 @@ public final class NaturalPopulations {
                 inReach.computeIfAbsent(region, ignored -> new ArrayList<>()).add(new ChunkPos(chunkX, chunkZ));
                 if (land.settled(tile, chunkX, chunkZ)) continue;
                 land.settle(tile, chunkX, chunkZ);
+                fresh.add(new Fresh(tile, region, chunkX, chunkZ));
+            }
+        }
+        if (bounded && !fresh.isEmpty()) fed = BoundedLife.censuses(level, land, WildlifeRegister.get(level));
+        for (WildClass[] sweep : bounded ? BoundedLife.SETTLING : SETTLING) {
+            for (Fresh chunk : fresh) {
+                var region = chunk.region();
                 int[] count = counts.computeIfAbsent(region, ignored -> new int[kinds]);
-                for (WildClass kind : WildClass.values()) {
+                var census = fed == null ? null : fed.computeIfAbsent(region, ignored -> BoundedLife.empty(level, land, region));
+                for (WildClass kind : sweep) {
                     int quota = land.quota(level, region, kind);
-                    if (quota == 0 || count[kind.ordinal()] >= quota || loaded >= cap || !land.suits(tile, chunkX, chunkZ, kind)
-                            || share(level.getSeed(), chunkX, chunkZ, kind) >= (double) quota / region.cells) continue;
-                    int placed = place(level, players, watchers, kind, chunkX, chunkZ, groups);
+                    // The chunk's share of its region's groups: under the bounded rules what a chunk of this land holds.
+                    double due = bounded ? land.density(level, region, kind) : (double) quota / region.cells;
+                    if (quota == 0 || count[kind.ordinal()] >= quota || loaded >= cap || !land.suits(chunk.tile(), chunk.chunkX(), chunk.chunkZ(), kind)
+                            || share(level.getSeed(), chunk.chunkX(), chunk.chunkZ(), kind) >= due) continue;
+                    int placed = place(level, players, watchers, kind, chunk.chunkX(), chunk.chunkZ(), groups, census);
                     if (placed > 0) {
                         count[kind.ordinal()]++;
                         loaded += placed;
@@ -230,10 +251,15 @@ public final class NaturalPopulations {
             }
         }
         var random = level.getRandom();
+        // Bounded, with the life beyond the loaded land on: the rounds bring the arrivals, as records and to all of a region.
+        boolean arrivals = !(bounded && Config.SILENT_LIFE.get());
+        if (arrivals && bounded && fed == null) fed = BoundedLife.censuses(level, land, WildlifeRegister.get(level));
         for (var entry : inReach.entrySet()) {
+            if (!arrivals) break;
             var region = entry.getKey();
             var chunks = entry.getValue();
             int[] count = counts.computeIfAbsent(region, ignored -> new int[kinds]);
+            var census = fed == null ? null : fed.computeIfAbsent(region, ignored -> BoundedLife.empty(level, land, region));
             land.grow(level, region, today, count);
             for (WildClass kind : WildClass.values()) {
                 if (region.arrivals(kind) < 1.0 || count[kind.ordinal()] >= land.quota(level, region, kind) || loaded >= cap) continue;
@@ -241,7 +267,8 @@ public final class NaturalPopulations {
                 for (int attempt = 0; attempt < 4 && placed == 0; attempt++) {
                     var pos = chunks.get(random.nextInt(chunks.size()));
                     int chunkX = pos.getMinBlockX() >> 4, chunkZ = pos.getMinBlockZ() >> 4;
-                    if (land.suits(land.tile(level, chunkX, chunkZ), chunkX, chunkZ, kind)) placed = place(level, players, players, kind, chunkX, chunkZ, groups);
+                    if (land.suits(land.tile(level, chunkX, chunkZ), chunkX, chunkZ, kind))
+                        placed = place(level, players, players, kind, chunkX, chunkZ, groups, census);
                 }
                 if (placed == 0) {
                     land.full(region, kind);
@@ -274,10 +301,11 @@ public final class NaturalPopulations {
 
     /**
      * Puts one group of the class into the chunk where the placement rules allow, away from every player and out of
-     * the sight of those watching; the animals placed.
+     * the sight of those watching; the animals placed. With a census of the region (the bounded rules) only as many
+     * of the group are placed as the land can feed as well, and none of a species it can feed no more of.
      */
     private static int place(ServerLevel level, List<? extends Player> players, List<? extends Player> watchers, WildClass kind,
-                             int chunkX, int chunkZ, List<Group> groups) {
+                             int chunkX, int chunkZ, List<Group> groups, BoundedLife.@Nullable Census fed) {
         var random = level.getRandom();
         double minDistance = Config.POPULATION_MIN_DISTANCE.get();
         boolean water = kind == WildClass.SEA;
@@ -297,8 +325,14 @@ public final class NaturalPopulations {
                 if (site == null) continue;
             }
             if (seen(level, watchers, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
-            int placed = spawnGroup(level, watchers, species, site, water);
+            int most = fed == null ? species.maxGroup : fed.fed(species, species.maxGroup);
+            if (most == 0) continue;
+            int placed = spawnGroup(level, watchers, species, site, water, most);
             if (placed == 0) continue;
+            if (fed != null) {
+                fed.add(species, placed);
+                fed.weigh();
+            }
             groups.add(new Group(species, List.of(), site.getX() + 0.5, site.getZ() + 0.5));
             return placed;
         }
@@ -521,7 +555,7 @@ public final class NaturalPopulations {
             if (water) {
                 if (!Water.siteAllowed(level, species, site)) continue;
                 if (seen(level, players, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
-                return spawnGroup(level, players, species, site, true);
+                return spawnGroup(level, players, species, site, true, species.maxGroup);
             }
             var type = ModContent.CREATURES.get(species).get();
             if (!SpawnRules.canSpawn(type, level, EntitySpawnReason.NATURAL, site, random)) {
@@ -530,7 +564,7 @@ public final class NaturalPopulations {
             }
             // Nobody may watch the group appear: the next try falls elsewhere.
             if (seen(level, players, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
-            return spawnGroup(level, players, species, site, false);
+            return spawnGroup(level, players, species, site, false, species.maxGroup);
         }
         return 0;
     }
@@ -624,9 +658,10 @@ public final class NaturalPopulations {
         return eligible.getLast();
     }
 
-    private static int spawnGroup(ServerLevel level, List<? extends Player> players, Species species, BlockPos anchor, boolean water) {
+    /** Places a group of the size the species rolls, of at most so many animals. */
+    private static int spawnGroup(ServerLevel level, List<? extends Player> players, Species species, BlockPos anchor, boolean water, int most) {
         var type = ModContent.CREATURES.get(species).get();
-        int count = species.minGroup + level.getRandom().nextInt(1 + species.maxGroup - species.minGroup);
+        int count = Math.min(most, species.minGroup + level.getRandom().nextInt(1 + species.maxGroup - species.minGroup));
         int spread = species.solitary() ? 2 : 6;
         SpawnGroupData data = null;
         int placed = 0;

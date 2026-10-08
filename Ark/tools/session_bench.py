@@ -153,6 +153,10 @@ def server_config(world: Path, values: dict[str, str]):
         if not section:
             sys.exit(f"--config {name}: name the section too, for example spawning.{name}")
         heads = [index for index, line in enumerate(lines) if line.strip() == f"[{section}]"]
+        if not heads and "." in section and any(line.strip() == f"[{section.split('.')[0]}]" for line in lines):
+            # A table a newer build added: it goes at the end of the file, where a table may always start.
+            lines += [f"[{section}]"]
+            heads = [len(lines) - 1]
         if len(heads) != 1:
             sys.exit(f"--config {name}: {SERVER_CONFIG} has {len(heads)} sections [{section}]")
         # The section's own keys end at the next table, its sub-tables included.

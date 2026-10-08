@@ -853,11 +853,11 @@
             <label>Start<select data-ex="start"><option value="settled" selected>Settled by the budget</option><option value="empty">Empty</option><option value="crowded">Twice its quota</option><option value="no_hunters">No hunters</option><option value="hunters">Hunters only</option></select></label>
             <label>Span<select data-ex="days"><option value="180">180 days, 60 h of play</option><option value="360">360 days, 120 h</option><option value="720" selected>720 days, 240 h</option><option value="1440">1440 days, 480 h</option><option value="2880">2880 days, 960 h</option></select></label>
             <label>Pace<select data-ex="pace"><option value="1" selected>A round a day</option><option value="4">Four a day, lived in</option></select></label>
-            <div class="ws-seg" data-ex-seg="rules" role="group" aria-label="Rules"><span>Rules</span><button type="button" data-value="bounded" aria-pressed="true">Bounded model</button><button type="button" data-value="coded" aria-pressed="false">As coded today</button></div>
+            <div class="ws-seg" data-ex-seg="rules" role="group" aria-label="Rules"><span>Rules</span><button type="button" data-value="bounded" aria-pressed="true">Bounded model</button><button type="button" data-value="coded" aria-pressed="false">First rules</button></div>
             <div class="ws-seg" data-ex-seg="arrivals" role="group" aria-label="Arrivals"><span>Arrivals</span><button type="button" data-value="1" aria-pressed="true">On</button><button type="button" data-value="0" aria-pressed="false">Off</button></div>
             <button type="button" class="ws-reset" data-ex="draw">Another draw</button>
           </div>
-          <p class="muted ex-idle" hidden>As coded: the rounds of <code>SilentLife</code> as they stood at commit <code>%%EXISTENCE_COMMIT%%</code>, with their own constants (listed under Parameters). The game takes new groups in only where a player is near, so Arrivals starts off: this is the land nobody visits. Switch it on for land a player keeps coming back to.</p>
+          <p class="muted ex-idle" hidden>The first rules: the rounds of <code>SilentLife</code> the game ran before the bounded model (commit <code>%%EXISTENCE_COMMIT%%</code>), kept as <code>silentRules = ODDS</code> with their own constants (listed under Parameters). Under them the game takes new groups in only where a player is near, so Arrivals starts off: this is the land nobody visits. Switch it on for land a player keeps coming back to.</p>
           <p class="muted ex-status" aria-live="polite"></p>
         </div>
 
@@ -866,9 +866,9 @@
           <p class="muted">A biome region is a connected patch of one biome inside a tile of 32 by 32 chunks. Who lives in each sample biome is read from the spawn tags the game uses; the run is repeated from different draws, and the verdict speaks for all of them.</p>
           <div class="ex-verdict" aria-live="polite"><span class="muted">The region is lived through when this page opens.</span></div>
           <details class="fold"><summary>Every sample region</summary>
-            <p class="muted">The same three questions for each of the %%EXISTENCE_REGIONS%% sample regions, under the bounded model and under the coded rules, with the size, zone, start, span and weights set on this page.</p>
+            <p class="muted">The same three questions for each of the %%EXISTENCE_REGIONS%% sample regions, under the bounded model and under the first rules, with the size, zone, start, span and weights set on this page.</p>
             <div class="ex-survey-bar"><button type="button" class="ws-reset ex-survey-run">Survey every sample region</button><span class="muted ex-survey-status" aria-live="polite"></span></div>
-            <div class="table-wrap ex-survey-wrap" hidden><table class="ex-table ex-survey"><thead><tr><th>Region</th><th>Bounded model</th><th>As coded, nobody near</th><th>As coded, players near</th></tr></thead><tbody></tbody></table></div>
+            <div class="table-wrap ex-survey-wrap" hidden><table class="ex-table ex-survey"><thead><tr><th>Region</th><th>Bounded model</th><th>First rules, nobody near</th><th>First rules, players near</th></tr></thead><tbody></tbody></table></div>
           </details>
         </div>
 
@@ -895,7 +895,7 @@
           </div>
           <div class="panel ex-live ex-stat" data-stat="pressure" role="tabpanel" hidden>
             <h5>Pressure on food<small>appetite over food for each kind of eater; at 1 all of it is taken</small></h5>
-            <p class="muted ex-yardstick" hidden>The coded rules do not count food: this is the bounded model's yardstick laid on their register.</p>
+            <p class="muted ex-yardstick" hidden>The first rules do not count food: this is the bounded model's yardstick laid on their register.</p>
             <div class="ex-legend" data-legend="pressure"></div>
             <div class="ex-chart" data-chart="pressure"></div>
             <div class="table-wrap"><table class="ex-table ex-pressures"><thead><tr><th>Eater</th><th>Eats</th><th>Appetite</th><th>Food</th><th>Pressure</th><th>Room</th><th>Meal</th></tr></thead><tbody></tbody></table></div>
@@ -909,15 +909,15 @@
 
         <div class="step">
           <h4><i>4</i>Model<small>the bounded functions</small></h4>
-          <p class="muted">The proposal. Each round the region counts its register and reduces it to one number for each kind of eater, its pressure. Every daily odd is a straight line through that number, clamped to 0..1, so the same few weights decide every connection of the diagram.</p>
+          <p class="muted">What the game runs beyond the loaded land (<code>spawning.silentRules = BOUNDED</code>, <code>BoundedLife.java</code>). Each round the region counts its register and reduces it to one number for each kind of eater, its pressure. Every daily odd is a straight line through that number, clamped to 0..1, so the same few weights decide every connection of the diagram.</p>
           <dl class="panel ex-math">
             <div><dt>Appetite</dt><dd><code>(HP / 50) ^ 0.75</code> for each animal: a 50 HP animal eats 1 a day, a Brontosaurus 2.2, a Pegomastax 0.5.</dd></div>
-            <div><dt>Food</dt><dd>Plant eaters: <code>chunks &times; supply &times; fertility</code>, times <code>dry</code> without surface water. Hunters: <code>carry &times; appetite of their prey</code>. Flyers and the animals of the sea take fixed shares of the supply.</dd></div>
+            <div><dt>Food</dt><dd>Plant eaters: <code>chunks &times; supply &times; fertility</code>, times <code>dry</code> without surface water; in the game the chunks are those of the region that were seen loaded and showed open ground. Hunters: <code>carry &times; appetite of their prey</code>. Flyers and the animals of the sea take fixed shares of the supply.</dd></div>
             <div><dt>Pressure</dt><dd><code>p = appetite &divide; food</code>.</dd></div>
             <div><dt>Room</dt><dd><code>clamp(1 &minus; p)</code>. A fed animal with a mate in the region has a young with daily odds <code>fecundity &divide; span &times; room</code>, where the land can feed it too; it joins a group of its kind that has room, or founds one.</dd></div>
             <div><dt>Meal</dt><dd><code>clamp(2 &minus; p)</code>: the odds that the day's meal is found. Found, the record steps towards fed; missed, towards starving, where it dies with daily odds <code>starve</code>.</dd></div>
             <div><dt>Hunted</dt><dd>Daily odds <code>kill &times; tempo &times; &Sigma; clamp(p of its hunters)</code>, with <code>tempo = 1 &divide; (0.5 + HP / 100)</code>: the more hunters their prey has to carry, the more often it is taken, and giants less often than the small.</dd></div>
-            <div><dt>Age</dt><dd>As coded: the span of a species is <code>60 &times; (0.5 + HP / 100)</code> game days, and an animal dies a quarter to five quarters of it after it appeared.</dd></div>
+            <div><dt>Age</dt><dd>As under the first rules: the span of a species is <code>60 &times; (0.5 + HP / 100)</code> game days, and an animal dies a quarter to five quarters of it after it appeared.</dd></div>
             <div><dt>Arrivals</dt><dd>A class below its quota of groups is allowed the quota in <code>refill</code> days; at its quota it still meets wanderers, the quota in <code>wander</code> days. Of a group only as many come as keep <code>p &le; 1</code>. The quota is the game's, times fertility.</dd></div>
             <p class="ex-bounds">Two bounds hold whatever the weights. No young is born and no animal arrives that would take <code>p</code> above 1, so plant eaters never outgrow what the land grows, and hunters never outgrow what their prey carries. A kind passes its food only when the food itself shrinks (its prey is eaten, the water is gone); then meals are missed and it starves back under.</p>
           </dl>
@@ -925,14 +925,14 @@
 
         <div class="step">
           <h4><i>5</i>Parameters<small>the weights</small></h4>
-          <p class="muted">Move one and the region is lived through again. What is changed here stays in this browser; Save weights writes the file the next build of this page starts from.</p>
+          <p class="muted">Move one and the region is lived through again. What is changed here stays in this browser; Save weights writes the file the next build of this page starts from. The game reads its own: <code>spawning.boundedLife</code> in the server config, whose defaults these are. Recorded runs are set against this model by <code>tools/session_inspect.py</code> (<code>design/existence/inspector.html</code>).</p>
           <div class="panel ex-weights">
             <div class="rv-bar"><span class="muted ex-changed"></span>
               <div class="rv-actions"><button type="button" class="rv-save ex-save">Save weights</button><button type="button" class="ex-copy">Copy JSON</button><button type="button" class="ex-reset">Reset</button></div></div>
             <div class="ex-sliders"></div>
             <ul class="ex-edges ex-balance" aria-label="What the weights imply"></ul>
             <p class="muted ex-saved" aria-live="polite"></p>
-            <details class="fold"><summary>The constants of the coded rules</summary>
+            <details class="fold"><summary>The constants of the first rules</summary>
               <div class="table-wrap"><table class="ex-table ex-coded"><thead><tr><th>Constant</th><th>Where</th><th>Value</th></tr></thead><tbody>%%EXISTENCE_CODED%%</tbody></table></div>
             </details>
           </div>

@@ -68,9 +68,20 @@ public final class WildlifeCommand {
             text.append(String.format(java.util.Locale.ROOT, "  %s %d/%d (+%.1f)", kind.name().toLowerCase(java.util.Locale.ROOT),
                     count[kind.ordinal()], land.quota(level, region, kind), region.arrivals(kind)));
         send(source, text.toString());
-        send(source, String.format(java.util.Locale.ROOT, "beyond the loaded land: %s, players stayed %.2f days here (%s), a round every %.2f days, the last on day %.2f",
-                Config.SILENT_LIFE.get() ? "lives on" : "stands still", region.stayed(),
-                region.stayed() >= SilentLife.STAY_DAYS ? "lived in" : "passed through", SilentLife.every(region), Math.max(0.0, region.lived())));
+        send(source, String.format(java.util.Locale.ROOT, "beyond the loaded land: %s by the %s rules, players stayed %.2f days here (%s), a round every %.2f days, the last on day %.2f of %.2f",
+                Config.SILENT_LIFE.get() ? "lives on" : "stands still", SilentLife.bounded() ? "bounded" : "first", region.stayed(),
+                region.stayed() >= SilentLife.STAY_DAYS ? "lived in" : "passed through", SilentLife.every(region), Math.max(0.0, region.lived()),
+                WildlifeRegister.day(level)));
+        if (SilentLife.bounded()) {
+            // What the region grows and what is asked of it: the pressure every odd of its records follows.
+            var census = BoundedLife.of(level, region);
+            var pressure = new StringBuilder(String.format(java.util.Locale.ROOT, "food: %d chunks known, richness %.2f, %.1f appetites a day; animals, appetite / food = pressure",
+                    region.known(census.sea), census.richness, census.supply));
+            for (BoundedLife.Role role : BoundedLife.Role.values())
+                pressure.append(String.format(java.util.Locale.ROOT, "  %s %d, %.1f / %.1f = %.2f", role.name().toLowerCase(java.util.Locale.ROOT),
+                        census.animals[role.ordinal()], census.demand[role.ordinal()], census.food[role.ordinal()], census.pressure[role.ordinal()]));
+            send(source, pressure.toString());
+        }
         return 1;
     }
 

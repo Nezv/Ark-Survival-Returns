@@ -1,8 +1,8 @@
 """Lives the sample regions of the existence model through and prints the verdict of each, without the game.
 
 The same model as the showcase's Existence Model page (tools/existence_model.js, run with Node) on the same data
-(tools/showcase_existence.py): the wildlife register of one biome region beyond the loaded land, under the proposed
-bounded model and under the rules the game runs today. For each run it says whether the register stays bounded,
+(tools/showcase_existence.py): the wildlife register of one biome region beyond the loaded land, under the
+bounded model the game runs and under the first rules it keeps for comparison. For each run it says whether the register stays bounded,
 keeps every class it has room for and settles, how many animals it starts and ends with, the pressure on what each
 kind eats, and which species are gone.
 
@@ -10,7 +10,7 @@ Run from Ark:
   python tools/existence_check.py                         every sample region, both rule sets
   python tools/existence_check.py --region plains desert --cells 64 256 1024 --days 1440
   python tools/existence_check.py --rules bounded --set kill=0.03 fecundity=5 --species
-  python tools/existence_check.py --rules bounded --strict   exit 1 unless the proposal is bounded, alive and settled everywhere
+  python tools/existence_check.py --rules bounded --strict   exit 1 unless the bounded model is bounded, alive and settled everywhere
 """
 import argparse
 import json
@@ -42,7 +42,7 @@ def setups(args, data):
     for region in regions:
         for cells in args.cells:
             for rules in args.rules:
-                # The proposal has arrivals everywhere; the game today only where a player is near.
+                # The bounded model has arrivals everywhere; the first rules only where a player is near.
                 for arrivals in ((True,) if rules == 'bounded' else (False, True)) if args.arrivals == 'both' else (args.arrivals == 'on',):
                     out.append({'region': region, 'cells': cells, 'zone': args.zone, 'rules': rules, 'arrivals': arrivals, 'start': args.start,
                                 'days': args.days, 'pace': args.pace, 'seed': args.seed, 'runs': args.runs, 'weights': weights})

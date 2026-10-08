@@ -22,6 +22,7 @@ import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.spawn.BoundedLife;
 import dev.nez.arksurvivalreturns.feature.spawn.LandRegister;
 import dev.nez.arksurvivalreturns.feature.spawn.WildClass;
 import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
@@ -57,10 +58,12 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 final class Session {
     enum Phase { WAIT_READY, COUNTDOWN, RECORDING, CLOSED }
 
-    static final int SCHEMA = 2;
+    static final int SCHEMA = 3;
     static final int SNAPSHOT_TICKS = 10;
     /** Ticks between two counts of the register; a multiple of the snapshot. */
     static final int REGISTER_TICKS = 200;
+    /** Ticks between two roll calls of the register that no mark asked for: who lives, one by one, as the session goes. */
+    static final int ROLL_TICKS = 600;
     /** The columns of a roll call's rows, and the bits of its flags; the header repeats both. */
     static final List<String> ROLL_COLUMNS = List.of("uuid", "species", "pack", "lvl", "x", "y", "z", "hunger", "appeared", "seen", "flags");
     static final int R_SHOWN = 1, R_BODY = 2, R_SILENT = 4, R_CLAIMED = 8, R_LOADED = 16;
@@ -146,6 +149,10 @@ final class Session {
     private int nextSid;
     private final IdentityHashMap<Entity, Track> tracks = new IdentityHashMap<>();
     private final HashMap<UUID, Track> known = new HashMap<>();
+    /** The biome regions already described in this recording, each with how much of it had been seen then. */
+    private final Map<LandRegister.Region, Integer> described = new java.util.IdentityHashMap<>();
+    /** The tiles whose division into regions this recording already holds. */
+    private final java.util.Set<Long> laidOut = new java.util.HashSet<>();
     private final ArrayList<Track> playerTracks = new ArrayList<>();
     private final ArrayList<Object[]> motion = new ArrayList<>();
     private final IdentityHashMap<Entity, String> notes = new IdentityHashMap<>();
@@ -577,7 +584,7 @@ final class Session {
             rows.add(new Object[]{life.id().toString(), life.species(), life.pack().toString(), life.level(), life.x(), life.y(), life.z(),
                     life.hunger(), life.appeared(), life.seen(), flags});
         }
-        timed(new Row("roll").put("at", at).put("day", level.getGameTime() / 24000.0).put("ends", register.ended().size()).list("rows", rows));
+        timed(new Row("roll").put("at", at).put("day", WildlifeRegister.day(level)).put("ends", register.ended().size()).list("rows", rows));
     }
 
     /**
@@ -595,22 +602,44 @@ final class Session {
         int kinds = WildClass.values().length, living = 0, loaded = 0, unborn = 0, silent = 0, claimed = 0, shown = 0;
         var packs = new ArrayList<java.util.HashSet<UUID>>(kinds);
         for (int i = 0; i < kinds; i++) packs.add(new java.util.HashSet<>());
+        // Per region and species: the animals in the world, and those that are records only.
+        var kept = new java.util.LinkedHashMap<LandRegister.Region, java.util.TreeMap<String, int[]>>();
+        var places = new java.util.IdentityHashMap<LandRegister.Region, LandRegister.Tile>();
+        var nowhere = new java.util.TreeMap<String, int[]>();
         for (var life : register.living()) {
             living++;
-            if (level.getEntity(life.id()) != null) loaded++;
+            boolean here = level.getEntity(life.id()) != null;
+            if (here) loaded++;
             if (!life.body()) unborn++;
             if (life.silent()) silent++;
             if (life.claimed()) claimed++;
             if (life.shown()) shown++;
-            if (region == null) continue;
             var theirs = land.known(life.x() >> 4, life.z() >> 4);
+            var home = theirs == null ? null : land.region(theirs, life.x() >> 4, life.z() >> 4);
+            if (home != null) places.putIfAbsent(home, theirs);
+            (home == null ? nowhere : kept.computeIfAbsent(home, ignored -> new java.util.TreeMap<>()))
+                    .computeIfAbsent(life.species(), ignored -> new int[2])[here ? 0 : 1]++;
             Species species = WildClass.species(life.species());
-            if (theirs != null && species != null && land.region(theirs, life.x() >> 4, life.z() >> 4) == region)
-                packs.get(WildClass.of(species).ordinal()).add(life.pack());
+            if (region != null && species != null && home == region) packs.get(WildClass.of(species).ordinal()).add(life.pack());
         }
         var row = new Row("reg").put("living", living).put("loaded", loaded).put("unborn", unborn).put("silent", silent)
                 .put("claimed", claimed).put("shown", shown).put("ends", register.ended().size()).put("tiles", land.tiles())
-                .put("day", level.getGameTime() / 24000.0);
+                .put("day", WildlifeRegister.day(level));
+        var regions = new ArrayList<Row>();
+        for (var entry : kept.entrySet()) {
+            var theirs = places.get(entry.getKey());
+            int index = theirs.regions.indexOf(entry.getKey());
+            describe(level, land, theirs, index);
+            var species = new Row("species");
+            entry.getValue().forEach(species::ints);
+            regions.add(new Row("region").ints("tile", new int[]{theirs.x, theirs.z, index}).row("species", species));
+        }
+        if (!nowhere.isEmpty()) {
+            var species = new Row("species");
+            nowhere.forEach(species::ints);
+            regions.add(new Row("region").row("species", species));
+        }
+        row.list("regions", regions);
         if (region != null) {
             int[] groups = new int[kinds], quota = new int[kinds];
             double[] due = new double[kinds];
@@ -625,23 +654,77 @@ final class Session {
         emit(row);
     }
 
+    /**
+     * What a biome region is, the first time the count meets records in it and again when more of it was seen: its
+     * biome and size, what it grows, the groups of each class it has room for, the danger zones of its chunks and
+     * the species that live in it.
+     */
+    private void describe(ServerLevel level, LandRegister land, LandRegister.Tile tile, int index) {
+        var region = tile.regions.get(index);
+        // The tile once: which of its 32 by 32 chunks belongs to which region, two hex digits a chunk.
+        if (laidOut.add(((long) tile.x << 32) | (tile.z & 0xFFFFFFFFL))) {
+            var cells = new StringBuilder(2048);
+            for (byte cell : land.layout(tile)) cells.append(Character.forDigit(cell >> 4 & 15, 16)).append(Character.forDigit(cell & 15, 16));
+            timed(new Row("tile").ints("tile", new int[]{tile.x, tile.z}).put("side", 32).put("regions", tile.regions.size())
+                    .put("cells", cells.toString()));
+        }
+        int signature = (region.surveyed() * 1024 + region.ground()) * 1024 + region.wet();
+        Integer before = described.put(region, signature);
+        if (before != null && before == signature) return;
+        var profile = land.profile(level, region);
+        int kinds = WildClass.values().length;
+        double[] room = new double[kinds];
+        int[] quota = new int[kinds];
+        for (WildClass kind : WildClass.values()) {
+            room[kind.ordinal()] = land.room(level, region, kind);
+            quota[kind.ordinal()] = land.quota(level, region, kind);
+        }
+        var pool = new ArrayList<String>();
+        for (Species species : Species.values()) if (species.weight > 0 && land.lives(level, region, species)) pool.add(species.id);
+        timed(new Row("region").ints("tile", new int[]{tile.x, tile.z, index}).put("biome", region.biome).put("type", profile.type())
+                .flag("snowy", profile.snowy()).put("cells", region.cells).put("surveyed", region.surveyed()).put("ground", region.ground())
+                .put("wet", region.wet()).put("feeds", region.known(land.sea(level, region))).flag("water", region.hasWater())
+                .flag("sea", land.sea(level, region)).put("rich", BoundedLife.richness(profile, region.hasWater())).doubles("room", room)
+                .ints("quota", quota).ints("zones", land.dangers(level, tile, index)).list("pool", pool));
+    }
+
     void lifeEnded(WildlifeRegister.End end) {
         var row = new Row("life").put("ev", "end").put("u", end.id().toString()).put("species", end.species()).put("lvl", end.level())
                 .block("pos", end.x(), end.y(), end.z()).put("cause", end.cause()).put("lived", end.day() - end.appeared())
+                .put("day", end.day())
                 .flag("silent", end.silent()).flag("shown", end.shown());
         var track = known.get(end.id());
         if (track != null) row.put("e", track.sid);
         timed(row);
     }
 
-    void lifeBorn(WildlifeRegister.Life young) {
-        timed(new Row("life").put("ev", "born").put("u", young.id().toString()).put("species", young.species())
-                .put("pack", young.pack().toString()).put("lvl", young.level()).block("pos", young.x(), young.y(), young.z()));
+    void lifeBorn(WildlifeRegister.Life young) { lifeEntered("born", young); }
+
+    /** A record entered the register beyond the loaded land: born there, or arrived. */
+    void lifeEntered(String how, WildlifeRegister.Life life) {
+        timed(new Row("life").put("ev", how).put("u", life.id().toString()).put("species", life.species())
+                .put("pack", life.pack().toString()).put("lvl", life.level()).block("pos", life.x(), life.y(), life.z())
+                .put("day", life.appeared()));
     }
 
     void round(LandRegister.Region region, int groups, int records, int ended, int born, double day) {
-        timed(new Row("life").put("ev", "round").put("biome", region.biome).put("cells", region.cells).put("groups", groups)
+        timed(new Row("life").put("ev", "round").put("rules", "odds").put("biome", region.biome).put("cells", region.cells).put("groups", groups)
                 .put("records", records).put("ended", ended).put("born", born).put("day", day).put("stayed", region.stayed()));
+    }
+
+    void round(BoundedLife.Report report) {
+        var region = report.region();
+        int records = 0;
+        for (int count : report.taking()) records += count;
+        int ended = report.aged() + report.hunted() + report.starved();
+        timed(new Row("life").put("ev", "round").put("rules", "bounded").put("biome", region.biome).put("cells", region.cells)
+                .ints("tile", new int[]{report.tileX(), report.tileZ(), report.index()}).put("groups", report.groups())
+                .put("records", records).put("ended", ended).put("born", report.born()).put("arrived", report.arrived())
+                .put("aged", report.aged()).put("hunted", report.hunted()).put("starved", report.starved())
+                .put("day", report.day()).put("days", report.days()).put("stayed", region.stayed()).flag("sea", report.sea())
+                .put("supply", report.supply()).put("rich", report.richness()).put("guests", report.guests())
+                .ints("animals", report.animals()).ints("taking", report.taking()).doubles("demand", report.demand())
+                .doubles("food", report.food()).doubles("pressure", report.pressure()));
     }
 
     void welcomed(CreatureEntity creature, double moved, double hungerBefore, double hungerNow) {
@@ -654,6 +737,10 @@ final class Session {
 
     void refused(Entity body) {
         timed(new Row("life").put("ev", "refused").put("u", body.getUUID().toString()).xyz("p", body.getX(), body.getY(), body.getZ()));
+    }
+
+    void rounds(long nanos, int regions, int rounds) {
+        timed(new Row("life").put("ev", "rounds").put("us", nanos / 1000).put("regions", regions).put("rounds", rounds));
     }
 
     void cost(String what, long nanos, int records, int bodies) {
@@ -688,6 +775,9 @@ final class Session {
         if (!motion.isEmpty()) emit(new Row("m").list("rows", new ArrayList<>(motion)));
         if (snapshot) for (ServerLevel level : server.getAllLevels()) world(level);
         if (recordedTicks % REGISTER_TICKS == 0) census();
+        if (recordedTicks % ROLL_TICKS == 0 && recordedTicks > 0) {
+            try { rollCall("tick"); } catch (Throwable t) { fail("roll_call", t); }
+        }
         long now = System.nanoTime();
         var row = new Row("tick").put("gt", server.overworld().getGameTime())
                 .put("act_us", (activeNanos - recordStartActive) / 1000)
@@ -975,7 +1065,9 @@ final class Session {
             species.add(new Row("species").put("id", s.id).put("realm", s.realm()).flag("predator", s.predator)
                     .flag("timid", s.timid()).flag("herd", s.herd()).flag("solitary", s.solitary()).flag("apex", s.apex())
                     .put("w", s.width).put("h", s.height).put("danger", s.minimumDanger())
-                    .put("family", s.flyer() ? null : s.family().name()).put("health", s.health).put("damage", s.damage));
+                    .put("family", s.flyer() ? null : s.family().name()).put("health", s.health).put("damage", s.damage)
+                    .put("min_group", s.minGroup).put("max_group", s.maxGroup).put("weight", s.weight).flag("cold", s.coldAdapted())
+                    .put("class", WildClass.of(s).name()).put("role", BoundedLife.role(s).name()));
         row.list("species", species);
         var mods = new ArrayList<String>();
         for (var mod : ModList.get().getMods()) mods.add(mod.getModId() + "@" + mod.getVersion());
@@ -989,7 +1081,7 @@ final class Session {
                 .list("player_flags", List.of("on_ground", "sprint", "crouch", "swim", "flying", "in_water", "creative",
                         "spectator", "sleeping", "using_item", "passenger", "dead", "invisible"))
                 .list("roll", ROLL_COLUMNS).list("roll_flags", List.of("shown", "body", "silent", "claimed", "loaded"))
-                .list("classes", names(WildClass.values()))
+                .list("classes", names(WildClass.values())).list("roles", names(BoundedLife.Role.values()))
                 .list("terrain_kinds", List.of("none", "full", "partial", "fluid")));
         return row;
     }

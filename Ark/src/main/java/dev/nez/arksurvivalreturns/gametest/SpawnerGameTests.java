@@ -423,16 +423,20 @@ public final class SpawnerGameTests {
         var land = LandRegister.get(world);
         var register = WildlifeRegister.get(world);
         var region = land.regionAt(world, center.getX(), center.getZ());
-        int room = 0;
-        for (WildClass kind : WildClass.values()) room += land.quota(world, region, kind);
-        h.assertTrue(region.cells > 0 && room > 0, "The land here has room for no wildlife: " + region.biome + ", " + region.cells + " chunks");
         var model = Config.POPULATION_MODEL.get();
+        var rules = Config.SILENT_RULES.get();
         int minDistance = Config.POPULATION_MIN_DISTANCE.get();
         java.util.function.Supplier<List<CreatureEntity>> mine = () -> world.getEntitiesOfClass(CreatureEntity.class, floor,
                 creature -> creature.isNaturalWildlife() && creature.isAlive() && !before.contains(creature.getUUID()));
         try {
             Config.POPULATION_MODEL.set(NaturalPopulations.Model.BIOME);
+            // The first rules: under them a region has room by its size, seen or not, and the budget itself brings the
+            // arrivals, as bodies near the player.
+            Config.SILENT_RULES.set(SilentLife.Rules.ODDS);
             Config.POPULATION_MIN_DISTANCE.set(8);
+            int room = 0;
+            for (WildClass kind : WildClass.values()) room += land.quota(world, region, kind);
+            h.assertTrue(region.cells > 0 && room > 0, "The land here has room for no wildlife: " + region.biome + ", " + region.cells + " chunks");
             world.getRandom().setSeed(0xB10E5L);
             for (int pass = 0; pass < 3; pass++) NaturalPopulations.enforce(world, List.of(player));
             int first = NaturalPopulations.groups(mine.get()).size();
@@ -461,6 +465,7 @@ public final class SpawnerGameTests {
             h.assertTrue(!mine.get().isEmpty(), "Two days brought nothing back to hunted land");
         } finally {
             Config.POPULATION_MODEL.set(model);
+            Config.SILENT_RULES.set(rules);
             Config.POPULATION_MIN_DISTANCE.set(minDistance);
             world.getDataStorage().set(dev.nez.arksurvivalreturns.feature.spawn.ProgressionData.TYPE, oldProgression);
             for (var creature : world.getEntitiesOfClass(CreatureEntity.class, around,
@@ -534,7 +539,7 @@ public final class SpawnerGameTests {
     }
 
     /**
-     * Beyond the loaded land an animal lives on as its record. A round of the rules ends a life past its span of
+     * Beyond the loaded land an animal lives on as its record. A round of the first rules ends a life past its span of
      * age, gives a fed group below its size a young, shifts a group without taking an animal out of its chunk, and
      * lets a hungry pack kill by its odds and be fed. A region players have stayed a day in gets its rounds more
      * often. As a chunk loads, the body of a record that died stays out, a record without a body gets one, and a
@@ -552,8 +557,10 @@ public final class SpawnerGameTests {
         double today = world.getServer().overworld().getGameTime() / 24000.0;
         var packs = new java.util.HashSet<java.util.UUID>();
         var bodies = new java.util.ArrayList<CreatureEntity>();
+        var rules = Config.SILENT_RULES.get();
         boolean stayed = false;
         try {
+            Config.SILENT_RULES.set(SilentLife.Rules.ODDS);
             // Age: far past any span, each of a group dies of it, and its saved body is not to come back.
             var elders = java.util.UUID.randomUUID();
             packs.add(elders);
@@ -645,6 +652,7 @@ public final class SpawnerGameTests {
                     + creature.blockPosition() + " for " + moved);
             h.assertTrue(Math.abs(creature.wildlife().mind().hunger() - 0.9) < 1.0e-6 && !register.life(born.id()).silent(), "The body did not take its record's hunger");
         } finally {
+            Config.SILENT_RULES.set(rules);
             if (stayed) land.stay(region, -SilentLife.STAY_DAYS);
             for (var creature : bodies) if (!creature.isRemoved()) creature.discard();
             for (var life : List.copyOf(register.living())) if (packs.contains(life.pack())) register.end(world, life, WildlifeRegister.REMOVED);

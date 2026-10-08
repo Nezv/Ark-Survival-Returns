@@ -9,6 +9,7 @@ import java.util.Properties;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.spawn.BoundedLife;
 import dev.nez.arksurvivalreturns.feature.spawn.LandRegister;
 import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
 import net.minecraft.server.MinecraftServer;
@@ -389,11 +390,38 @@ public final class SessionRecorder {
         try { current.lifeBorn(young); } catch (Throwable t) { current.fail("life_born", t); }
     }
 
-    /** A biome region lived a round of its rules: the groups and records that took part, and how many it ended and added. */
+    /** A group came to a region as records, beyond the loaded land: one of its animals, without a body until its chunk loads. */
+    public static void lifeArrived(WildlifeRegister.Life arrival) {
+        var current = live();
+        if (current == null) return;
+        try { current.lifeEntered("arrived", arrival); } catch (Throwable t) { current.fail("life_arrived", t); }
+    }
+
+    /** A record that never had a body found no room for one in its loaded chunk and moved on to another chunk of its region. */
+    public static void lifeMoved(WildlifeRegister.Life life) {
+        var current = live();
+        if (current == null) return;
+        try { current.lifeEntered("moved", life); } catch (Throwable t) { current.fail("life_moved", t); }
+    }
+
+    /** A biome region lived a round of the first rules: the groups and records that took part, and how many it ended and added. */
     public static void round(LandRegister.Region region, int groups, int records, int ended, int born, double day) {
         var current = live();
         if (current == null) return;
         try { current.round(region, groups, records, ended, born, day); } catch (Throwable t) { current.fail("round", t); }
+    }
+
+    /** A biome region lived a round of the bounded rules: its pressures, who took part and what came of it. */
+    public static void round(BoundedLife.Report report) {
+        var current = live();
+        if (current == null) return;
+        try { current.round(report); } catch (Throwable t) { current.fail("round", t); }
+    }
+
+    /** The rounds of one pass: what they took, and how many regions lived how many rounds. */
+    public static void rounds(long nanos, int regions, int rounds) {
+        var current = live();
+        if (current != null) current.rounds(nanos, regions, rounds);
     }
 
     /** A body back in the world was brought to its record: how far it was moved, and the hunger it came with and has now. */

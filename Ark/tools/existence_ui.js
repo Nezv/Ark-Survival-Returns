@@ -185,7 +185,7 @@ window.ArkExistenceUI = (function () {
     });
   }
 
-  // What sets each connection, under the proposal and under the rules the game runs today.
+  // What sets each connection, under the bounded model and under the first rules.
   var CAPTION = {
     bounded: { worse: '1 \u2212 meal', better: 'meal', arrives: 'refill, wanderers', born: 'fecundity \u00f7 span \u00d7 room', hunted: 'kill \u00d7 tempo \u00d7 \u03a3 p',
       age: 'its span', starves: 'starve' },
@@ -326,7 +326,7 @@ window.ArkExistenceUI = (function () {
         button.addEventListener('click', function () {
           if (key === 'rules') {
             state.rules = button.dataset.value;
-            // Each rule set starts as it stands in the game or in the proposal: today nothing arrives where nobody is near.
+            // Each rule set starts as it stands in the game: under the first rules nothing arrives where nobody is near.
             state.arrivals = state.rules === 'bounded';
           } else state.arrivals = button.dataset.value === '1';
           press();
