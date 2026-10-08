@@ -73,7 +73,11 @@ public final class SilentLife {
     @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
         var level = event.getServer().overworld();
         var register = WildlifeRegister.get(level);
-        if (!register.returning().isEmpty()) welcome(level, register);
+        if (register.returning().isEmpty()) return;
+        long began = SessionRecorder.on() ? System.nanoTime() : 0;
+        int bodies = register.returning().size();
+        welcome(level, register);
+        if (began != 0) SessionRecorder.welcomes(System.nanoTime() - began, bodies);
     }
 
     @SubscribeEvent public static void stopped(ServerStoppedEvent event) { MISSED.clear(); }
@@ -149,6 +153,8 @@ public final class SilentLife {
     private static void round(ServerLevel level, WildlifeRegister register, LandRegister.Region region, Country country, double today) {
         var random = level.getRandom();
         var herds = country.herds();
+        int records = 0, born = 0;
+        for (Herd herd : herds) records += herd.members.size();
         // Age first: an animal past its span is not there to feed, to breed or to be hunted.
         for (Herd herd : herds) {
             herd.hunger = 0;
@@ -181,8 +187,11 @@ public final class SilentLife {
                         * (herd.species.predator || groups == 0 ? 1.0 : 1.0 - (double) hunters / groups);
                 if (random.nextDouble() < odds) {
                     var parent = herd.members.get(random.nextInt(size));
-                    herd.members.add(new WildlifeRegister.Life(UUID.randomUUID(), parent.species(), parent.pack(), parent.level(),
-                            parent.x(), parent.y(), parent.z(), today, today, false, herd.hunger, false, true, false));
+                    var young = new WildlifeRegister.Life(UUID.randomUUID(), parent.species(), parent.pack(), parent.level(),
+                            parent.x(), parent.y(), parent.z(), today, today, false, herd.hunger, false, true, false);
+                    herd.members.add(young);
+                    born++;
+                    SessionRecorder.lifeBorn(young);
                 }
             }
             // The group shifts as one and each animal stops at the edge of its chunk; a flyer keeps its place and its height.
@@ -195,6 +204,11 @@ public final class SilentLife {
                 herd.members.set(i, now);
                 register.put(now);
             }
+        }
+        if (SessionRecorder.on()) {
+            int left = 0;
+            for (Herd herd : herds) left += herd.members.size();
+            SessionRecorder.round(region, herds.size(), records, records + born - left, born, today);
         }
     }
 
@@ -326,6 +340,7 @@ public final class SilentLife {
             var life = register.life(creature.getUUID());
             if (life != null && life.silent()) {
                 var species = creature.species();
+                double fromX = creature.getX(), fromZ = creature.getZ(), hunger = creature.wildlife().mind().hunger();
                 if (life.x() != creature.getBlockX() || life.z() != creature.getBlockZ()) {
                     BlockPos site = site(level, species, life.x(), life.z());
                     if (site != null && !NaturalPopulations.seen(level, players, creature)
@@ -336,6 +351,8 @@ public final class SilentLife {
                 }
                 var mind = creature.wildlife().mind();
                 mind.restoreNeeds(life.hunger(), mind.thirst(), mind.fatigue());
+                if (SessionRecorder.on())
+                    SessionRecorder.welcomed(creature, Math.hypot(creature.getX() - fromX, creature.getZ() - fromZ), hunger, life.hunger());
             }
             register.keep(level, creature);
         }

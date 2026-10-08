@@ -11,6 +11,8 @@
     python tools/session_bench.py --setups full,bare --draw geckolib|allfaces|nolod|serializer|easing|ark
                                                               who draws the creatures (client/draw)
     python tools/session_bench.py --setups bare --verify      Ark's creature writer checked against GeckoLib's, not timed
+    python tools/session_bench.py --setups full --path return --record --config spawning.silentRoundDays=0.05
+                                                              out and back: the land a player leaves and comes back to
 
 Each setup plays a disposable copy of run/saves/ArkBenchmark, so every one starts from the same chunks and the
 same Distant Horizons data. The client (client/FrameBenchmark) stands the player at the world spawn at noon,
@@ -34,6 +36,17 @@ Distant Horizons draws out there comes from its own data, which is copied whole.
 The rd setups show how far creatures were drawn (the column 'far', in blocks): the server sends a creature to
 the client only within the render distance, 192 blocks at most. Their fog is a patched copy of the shader pack
 in use, made for the run (Photon alone: with Distant Horizons it ties its border fog to that mod's distance).
+
+--path return flies out and back instead of the turn and the flight: the player is taken 768 blocks from the
+start to where the most land is (--teleport), stands there a minute while the land is settled (--arrive), flies
+straight until that place is the render distance and eleven chunks behind (--out), stays away (--hold, 150 s),
+flies back and hovers over it (--home, 60 s). Each leg is a phase of the table, and screenshots/depart.png and
+home.png show the same view before and after.
+--record arms the session recorder for the launch: its file (run/diagnostics/<session>) follows every body and
+the wildlife register through the path, session_analyze.py and session_existence.py are run on it, and the
+existence report says who was there before, who lived on as a record and who was there after. --config sets a
+value of Ark's server configuration for the played copy alone, for example spawning.silentRoundDays=0.05 (a round
+of the rules beyond the loaded land every game minute instead of every game day, so a stay of minutes holds some).
 """
 from __future__ import annotations
 
@@ -59,6 +72,9 @@ WORLD = "ArkBenchmark"
 KEPT = "benchmark_world.txt"
 BENCH = run.DIAGNOSTICS / "bench"
 MEASURED = ("pan", "flight")
+# The legs of the way out and back (--path return): standing where it starts, flying out, staying away, flying back, hovering.
+RETURN = ("arrive", "out", "away", "back", "home")
+SERVER_CONFIG = "arksurvivalreturns-server.toml"
 OPTIONS = {"pauseOnLostFocus": "false", "fullscreen": "true", "soundCategory_master": "0.0", "enableVsync": "false",
            "maxFps": "260", "inactivityFpsLimit": '"minimized"', "startedCleanly": "true"}
 GRASS_OFF = {"grassSparsity": "1.0", "grassPlantsAsBlades": "false"}
@@ -122,6 +138,35 @@ def toml_set(path: Path, values: dict[str, str]):
         if count != 1:
             sys.exit(f"{path.name}: '{key}' found {count} times")
     path.write_bytes(raw.encode("utf-8"))
+
+
+def server_config(world: Path, values: dict[str, str]):
+    """
+    Ark's server configuration for one world: a copy of the instance's file in the world's serverconfig folder, which
+    the game reads in its place, with these values set (section.key to a toml value). The instance's file is not touched.
+    """
+    raw = (run.RUN / "config" / SERVER_CONFIG).read_bytes().decode("utf-8")
+    ending = "\r\n" if "\r\n" in raw else "\n"
+    lines = raw.replace("\r\n", "\n").split("\n")
+    for name, value in values.items():
+        section, _, key = name.rpartition(".")
+        if not section:
+            sys.exit(f"--config {name}: name the section too, for example spawning.{name}")
+        heads = [index for index, line in enumerate(lines) if line.strip() == f"[{section}]"]
+        if len(heads) != 1:
+            sys.exit(f"--config {name}: {SERVER_CONFIG} has {len(heads)} sections [{section}]")
+        # The section's own keys end at the next table, its sub-tables included.
+        end = next((index for index in range(heads[0] + 1, len(lines)) if lines[index].strip().startswith("[")), len(lines))
+        indent = lines[heads[0]][:len(lines[heads[0]]) - len(lines[heads[0]].lstrip())] + "\t"
+        found = [index for index in range(heads[0] + 1, end) if re.match(rf"\s*{re.escape(key)}\s*=", lines[index])]
+        if found:
+            lines[found[0]] = f"{indent}{key} = {value}"
+        else:
+            # A key the file does not hold yet (a newer build's): the game fills in its comment when it reads the file.
+            lines.insert(heads[0] + 1, f"{indent}{key} = {value}")
+    target = world / "serverconfig" / SERVER_CONFIG
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(ending.join(lines).encode("utf-8"))
 
 
 def pack_name() -> str:
@@ -377,7 +422,8 @@ def summarise(folder: Path) -> dict | None:
     head = lines[0].split(",")
     samples = [dict(zip(head, line.split(","))) for line in lines[1:]]
     phases = {}
-    for phase in MEASURED:
+    marks = sorted(meta["phases"].items(), key=lambda item: item[1]["epoch_ms"])
+    for phase in RETURN if meta.get("path") == "return" else MEASURED:
         times = sorted(frames.get(phase, []))
         rows = [row for row in samples if row["phase"] == phase]
         if not times or not rows:
@@ -385,10 +431,13 @@ def summarise(folder: Path) -> dict | None:
         slowest = times[-max(1, len(times) // 100):]
         mean = lambda key: statistics.fmean(float(row[key]) for row in rows)  # noqa: E731
         begin = meta["phases"][phase]["epoch_ms"]
+        # A leg flown to a place has no length of its own: it lasted until the next phase began.
+        later = [mark["epoch_ms"] for _, mark in marks if mark["epoch_ms"] > begin]
+        seconds = (later[0] - begin) / 1000 if later else meta["phases"][phase]["seconds"]
         unseen = sum(row["focused"] != "true" or row["iconified"] != "false" for row in rows)
         throttled = sum(row["throttle"] != "NONE" for row in rows)
         result = {
-            "frames": len(times), "fps": round(len(times) / (sum(times) / 1000), 1),
+            "seconds": round(seconds, 1), "frames": len(times), "fps": round(len(times) / (sum(times) / 1000), 1),
             "fps_low_1pc": round(1000 / statistics.fmean(slowest), 1),
             "ms_p50": round(percentile(times, 0.5), 2), "ms_p99": round(percentile(times, 0.99), 2), "ms_max": round(times[-1], 1),
             "frames_over_50ms": sum(value > 50 for value in times),
@@ -399,14 +448,16 @@ def summarise(folder: Path) -> dict | None:
             "entities": round(mean("entities")), "creatures": round(mean("creatures")) if "creatures" in rows[0] else None,
             "creature_far": round(max(float(row["creature_far"]) for row in rows)) if "creature_far" in rows[0] else None,
             "unseen_seconds": unseen, "throttled_seconds": throttled,
-            **card_load(folder, begin, begin + meta["phases"][phase]["seconds"] * 1000),
+            **card_load(folder, begin, begin + seconds * 1000),
         }
         # Nearly all of the card's time used: the picture waits for the card, not for the game's threads.
         result["limit"] = ("card" if result.get("gpu_load", 0) >= 92 else "render thread" if result["render_thread"] >= 0.85 else "mixed")
         result["valid"] = unseen == 0 and throttled == 0 and window.get("covers_screen") is not False and not window.get("killed")
         phases[phase] = result
+    session = (folder / "session.txt").read_text(encoding="utf-8").strip() if (folder / "session.txt").is_file() else None
     return {"setup": meta["variant"], "creature_draw": meta.get("creature_draw", {}).get("mode"), "window": meta["window"], "fullscreen": meta["fullscreen"], "gpu": meta["gpu"],
             "shaders": meta["shaders"], "heap_max_mb": meta["heap_max_mb"], "start": meta["start"],
+            "path": meta.get("path"), "anchor": meta.get("anchor"), "out_blocks": meta.get("out_blocks"), "session": session,
             "render_distance": meta.get("render_distance"), "simulation_distance": meta.get("simulation_distance"),
             "mains_power": window.get("mains_power"), "in_front": f"{window.get('in_front')}/{window.get('checks')}",
             "brought_forward": window.get("brought_forward"), "phases": phases}
@@ -424,11 +475,26 @@ def table(results: list[dict]):
                   f"{row.get('creature_far') if row.get('creature_far') is not None else '-':>5}"
                   f"  {row['limit']}{'' if row['valid'] else '  INVALID'}")
     for result in results:
+        if result.get("path") == "return":
+            print(f"{result['setup']}: out and back from {result['anchor']}, {result['out_blocks']} blocks out; legs of "
+                  + ", ".join(f"{phase} {row['seconds']:.0f} s" for phase, row in result["phases"].items())
+                  + (f"; recorded as {result['session']}" if result.get("session") else ""))
         print(f"{result['setup']}: {result['window']} full screen {result['fullscreen']}, {result['gpu']}, shaders {result['shaders']}, "
               f"render distance {result.get('render_distance', '?')} chunks, "
               f"creatures drawn by {result.get('creature_draw') or 'geckolib'}, "
               f"in front {result['in_front']} checks (brought forward {result['brought_forward']} times), "
               f"mains power {result['mains_power']}")
+
+
+def recording(folder: Path):
+    """The launch's session recording, analysed: its tables, and what became of the animals of the place left and come back to."""
+    if not (folder / "session.txt").is_file():
+        print(f"no session was recorded; see {folder / 'client.log'}", flush=True)
+        return
+    session = run.DIAGNOSTICS / (folder / "session.txt").read_text(encoding="utf-8").strip()
+    tools = run.ARK / "tools"
+    subprocess.run([sys.executable, str(tools / "session_analyze.py"), str(session)])
+    subprocess.run([sys.executable, str(tools / "session_existence.py"), str(session), "--bench", str(folder)])
 
 
 def main() -> int:
@@ -456,7 +522,17 @@ def main() -> int:
                              "(default: the client settings)")
     parser.add_argument("--verify", action="store_true",
                         help="draw every eighth creature both ways and compare the vertices (meta.json, creature_draw.verify); not a run to time")
-    parser.add_argument("--timeout", type=int, help="seconds before a client is closed by force (default 600; none with --pregen)")
+    parser.add_argument("--path", choices=("return",), help="return: fly out and back instead of the turn and the flight")
+    parser.add_argument("--teleport", type=int, help="--path return: blocks from the world's start to where the way out and back begins (default 768)")
+    parser.add_argument("--arrive", type=int, help="--path return: seconds standing there before leaving, while the land is settled (default 60)")
+    parser.add_argument("--out", type=int, help="--path return: chunks to fly out (default: the render distance and eleven more)")
+    parser.add_argument("--hold", type=int, help="--path return: seconds to stay away (default 150)")
+    parser.add_argument("--home", type=int, help="--path return: seconds to hover over the start after the return (default 60)")
+    parser.add_argument("--record", action="store_true",
+                        help="arm the session recorder for the launch and analyse its file: every body and the wildlife register through the path")
+    parser.add_argument("--config", action="append", default=[], metavar="SECTION.KEY=VALUE",
+                        help="a value of Ark's server configuration for the played copy alone, as toml: spawning.silentRoundDays=0.05")
+    parser.add_argument("--timeout", type=int, help="seconds before a client is closed by force (default 600, 900 on the way out and back; none with --pregen)")
     parser.add_argument("--summarise", help="only print the table of an earlier run's folder under run/diagnostics/bench")
     arguments = parser.parse_args()
 
@@ -471,7 +547,12 @@ def main() -> int:
     if not 0 <= arguments.fog_floor <= 1:
         sys.exit("--fog-floor is a share, 0 to 1")
     jar = chunky() if arguments.pregen else None
-    timeout = arguments.timeout or (float("inf") if arguments.pregen else 600)
+    timeout = arguments.timeout or (float("inf") if arguments.pregen else 900 if arguments.path else 600)
+    config = dict(pair.split("=", 1) for pair in arguments.config if "=" in pair)
+    if len(config) != len(arguments.config):
+        sys.exit("--config takes SECTION.KEY=VALUE")
+    if (arguments.path or arguments.record or config) and (arguments.prepare or arguments.warm):
+        sys.exit("--path, --record and --config are for a run on the kept world, not for preparing it")
     kept = run.SAVES / WORLD
     building = arguments.prepare or arguments.warm
     if arguments.prepare and kept.exists():
@@ -487,6 +568,8 @@ def main() -> int:
     stamp = BENCH / time.strftime("%Y%m%d-%H%M%S")
     extra = ([f"-ParkHeap={arguments.heap}"] if arguments.heap else []) + [f"-ParkSettle={arguments.settle or (150 if building else 30)}"]
     extra += ([f"-ParkDraw={arguments.draw}"] if arguments.draw else []) + (["-ParkVerify=true"] if arguments.verify else [])
+    extra += [f"-Park{name.capitalize()}={value}" for name in ("path", "teleport", "arrive", "out", "hold", "home")
+              if (value := getattr(arguments, name)) is not None]
     if on_mains() is False:
         print("on battery: the graphics card is throttled, the numbers will not be the machine's", flush=True)
     results = []
@@ -508,18 +591,29 @@ def main() -> int:
                     shutil.copy2(jar, mod)
             else:
                 # A warmed copy becomes the kept world, so it is copied whole.
-                run.copy_world(WORLD, near_start(None if arguments.warm else world_start(kept)))
+                played = run.copy_world(WORLD, near_start(None if arguments.warm else world_start(kept)))
                 opening = [f"-ParkWorld={run.COPY}"]
+                if config:
+                    server_config(played, config)
+            before = run.sessions()
+            if arguments.record:
+                # The recording runs from the moment the player is in control until the game closes.
+                (run.DIAGNOSTICS / "arm").write_text("delaySeconds=0\nrecordSeconds=3600\n", encoding="utf-8")
             print(f"setup '{name}' -> {folder}", flush=True)
             game = [f"-Park{key}={value}" for key, value in SETUPS.get(name, {}).get("game", {}).items()]
             profile = [f"-ParkJfr={(folder / 'profile.jfr').as_posix()}"] if arguments.profile else []
             launch(folder, name, opening, extra + game + profile, timeout, folder / "client.log")
+            recorded = sorted(run.sessions() - before)
+            if recorded:
+                (folder / "session.txt").write_text(recorded[-1], encoding="utf-8")
         finally:
             run.give_back()
             drop_fog_pack()
             if mod:
                 mod.unlink(missing_ok=True)
         result = summarise(folder)
+        if arguments.record:
+            recording(folder)
         refused = (folder / "error").read_text(encoding="utf-8") if (folder / "error").is_file() else None
         if refused:
             print(f"setup '{name}' could not start: {refused}", flush=True)

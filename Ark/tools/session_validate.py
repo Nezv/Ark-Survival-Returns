@@ -4,9 +4,10 @@
 
 Run session_analyze.py first. Reads its database and summary without modifying them, and writes
 validation.json beside the recording. A complete recording can still leave a check unexercised.
-Population counts are horizontal, like NaturalPopulations; the changing regional target is not
-recorded, so these counts cannot establish exact target compliance. Appearance, audio, multiplayer
-and long-session ledger feedback still need their own validations.
+Population counts are horizontal, like NaturalPopulations; the quota of the biome region the player
+stands in is recorded with the register's counts (BIOME model), the LEDGER target is not. What became
+of the animals of a place between two roll calls of the register comes from session_existence.py.
+Appearance, audio, multiplayer and long-session feedback still need their own validations.
 """
 from __future__ import annotations
 
@@ -17,6 +18,7 @@ from pathlib import Path
 
 import duckdb
 
+import session_existence
 from session_analyze import locate
 
 
@@ -217,6 +219,10 @@ def validate(folder: Path) -> dict:
                 max(q) AS queue_max FROM ticks
         """)[0]
 
+        quotas = query(con, "SELECT game_s(tick) AS game_s, biome, cells, groups, quota, due, living, loaded FROM register WHERE biome IS NOT NULL ORDER BY seq")
+    # The register: who was there before and after, and whether anyone lived on without a body in between.
+    existence = session_existence.analyse(locate(str(folder)))
+    lived = existence.get("lived_without_body", {})
     loops = [i for i in incidents if i["kind"] == "return_home_loop"]
     chases = [i for i in incidents if i["kind"] == "chase_without_movement" and i.get("target") == "player"]
     deaths = [event for event in player_events if event["ev"] == "death"]
@@ -228,7 +234,15 @@ def validate(folder: Path) -> dict:
     checks = [
         {"id": "B07", "check": "recording integrity", "result": "observed" if usable else "needs_review"},
         {"id": "P21", "check": "population and server cost", "result": "fixture_only" if not real_client else "measured" if population_observed else "not_exercised",
-         "limit": "Regional abundance/target is absent; no exact density assertion. Five minutes do not verify the long ledger cycle."},
+         "limit": ("The groups and quotas of the region the player stood in are recorded every ten seconds; other regions are not."
+                   if quotas else "Regional abundance/target is absent; no exact density assertion.")
+                  + " Minutes do not verify what days do to a region."},
+        {"id": "C05", "check": "animals of a place alive at a later roll call",
+         "result": "not_recorded" if not existence.get("recorded") else {"persisted": "observed", "failed": "needs_review",
+                                                                          "not_exercised": "not_exercised"}[existence["verdict"]["result"]],
+         "limit": "Exercised only when animals of the place had no body between the two roll calls; an end on record is not a failure."},
+        {"id": "C05", "check": "rounds beyond the loaded land", "result": "observed" if lived.get("rounds") else "not_exercised",
+         "limit": "A round is counted, its odds are not judged; at the default pace a region lives one a game day."},
         {"id": "P00", "check": "nearby land tier", "result": "needs_review" if nearby_tier["not_full"] else "observed" if nearby_tier["snapshots"] else "not_exercised"},
         {"id": "B08", "check": "player chase progress", "result": "needs_review" if chases else "observed_strike" if player_hits else "not_exercised",
          "limit": "No stall flag alone does not establish successful pursuit; inspect strikes and encounter coverage."},
@@ -260,9 +274,11 @@ def validate(folder: Path) -> dict:
             "build": summary["setup"]["build"], "seed": header.get("server", {}).get("seed"),
             "integrity": summary["integrity"], "world": summary["world"], "checks": checks,
             "scenario": header.get("scenario"), "controlled_water": controlled_water,
+            "existence": {key: value for key, value in existence.items() if key != "animals"},
             "population": {"radius": radius, "density": density,
                 "unscaled_reference": round(density * math.pi * radius * radius / 256) if density is not None else None,
-                "actual_target_recorded": False, "census": census, "species": species, "origins": origins},
+                "actual_target_recorded": bool(quotas), "region_quotas": quotas,
+                "census": census, "species": species, "origins": origins},
             "tiers": tiers, "nearby_land_tier": nearby_tier,
             "player": {**exposure, "healthy_predator_exposure": predator_exposure, "events": player_events},
             "senses": senses, "navigation": navigation, "combat": combat, "home_passes": home_passes,

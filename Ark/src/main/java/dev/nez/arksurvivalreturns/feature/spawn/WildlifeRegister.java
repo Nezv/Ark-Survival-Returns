@@ -14,6 +14,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.recorder.SessionRecorder;
 import dev.nez.arksurvivalreturns.feature.taming.TamingService;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -180,6 +181,7 @@ public final class WildlifeRegister extends SavedData {
             if (!wild(level, creature) || creature.isRemoved()) continue;
             Life life = living.get(creature.getUUID());
             if (life == null && gone.remove(creature.getUUID())) {
+                SessionRecorder.refused(creature);
                 creature.discard();
                 setDirty();
             } else meet(level, creature);
@@ -203,20 +205,24 @@ public final class WildlifeRegister extends SavedData {
     public void end(ServerLevel level, CreatureEntity creature, String cause) {
         Life life = living.remove(creature.getUUID());
         double today = today(level);
-        ended.addLast(new End(creature.getUUID(), creature.species().id, creature.creatureLevel(), creature.getBlockX(), creature.getBlockY(),
-                creature.getBlockZ(), life == null ? today : life.appeared(), today, cause, creature.shown() || life != null && life.shown(), false));
+        End end = new End(creature.getUUID(), creature.species().id, creature.creatureLevel(), creature.getBlockX(), creature.getBlockY(),
+                creature.getBlockZ(), life == null ? today : life.appeared(), today, cause, creature.shown() || life != null && life.shown(), false);
+        ended.addLast(end);
         while (ended.size() > ENDS_KEPT) ended.removeFirst();
         setDirty();
+        SessionRecorder.lifeEnded(end);
     }
 
     /** A life ends as a record, beyond the loaded land; a body it left in a saved chunk is not let back in. */
     public void end(ServerLevel level, Life life, String cause) {
         if (living.remove(life.id()) == null) return;
         if (life.body()) gone.add(life.id());
-        ended.addLast(new End(life.id(), life.species(), life.level(), life.x(), life.y(), life.z(), life.appeared(), today(level), cause,
-                life.shown(), true));
+        End end = new End(life.id(), life.species(), life.level(), life.x(), life.y(), life.z(), life.appeared(), today(level), cause,
+                life.shown(), true);
+        ended.addLast(end);
         while (ended.size() > ENDS_KEPT) ended.removeFirst();
         setDirty();
+        SessionRecorder.lifeEnded(end);
     }
 
     /** A wild animal became somebody's: called before it stops counting as wildlife. */
@@ -250,6 +256,7 @@ public final class WildlifeRegister extends SavedData {
         WildlifeRegister register = get(level);
         Life life = register.living.get(creature.getUUID());
         if (event.loadedFromDisk() && life == null && register.gone.remove(creature.getUUID())) {
+            SessionRecorder.refused(creature);
             event.setCanceled(true);
             register.setDirty();
         } else if (event.loadedFromDisk() && life != null && life.silent()) register.returning.add(creature);

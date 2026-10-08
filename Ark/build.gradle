@@ -66,6 +66,10 @@ neoForge {
             if (project.hasProperty('arkVariant')) systemProperty 'arksurvivalreturns.benchmark.variant', project.property('arkVariant').toString()
             if (project.hasProperty('arkSettle')) systemProperty 'arksurvivalreturns.benchmark.settle', project.property('arkSettle').toString()
             if (project.hasProperty('arkMobs')) systemProperty 'arksurvivalreturns.benchmark.mobs', project.property('arkMobs').toString()
+            // The way out and back (-ParkPath=return): how far on it starts, how long it stands, how far it flies, how long it stays away and stays back.
+            ['Path', 'Teleport', 'Arrive', 'Out', 'Hold', 'Home'].each { name ->
+                if (project.hasProperty("ark${name}")) systemProperty "arksurvivalreturns.benchmark.${name.toLowerCase()}", project.property("ark${name}").toString()
+            }
             // Preparing the benchmark world: the biome its start is moved into, and the chunks Chunky generates around it.
             if (project.hasProperty('arkBiome')) systemProperty 'arksurvivalreturns.benchmark.biome', project.property('arkBiome').toString()
             if (project.hasProperty('arkPregen')) systemProperty 'arksurvivalreturns.benchmark.pregen', project.property('arkPregen').toString()

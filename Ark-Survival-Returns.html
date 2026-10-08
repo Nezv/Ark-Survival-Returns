@@ -3507,13 +3507,13 @@ Patch,P07,Iron Age Mechanics,Not started,Deprecated: merged into F17; the machin
 Patch,P08,Husbandry and Expedition Orders,Not started,Under discussion.
 Patch,P09,Bronze + Iron Age bosses,Not started,To be done.
 Patch,P10,Fabrication Oracle and Final Expedition,Not started,Deprecated: merged into F17 (Survey & Hunt lane).
-Patch,P12,Graphics and Atmosphere,Claude Opus 5.5,"Implemented and run on the RTX 3050 laptop at 1920x1080 at its working temperature (card 87 C, 40-45 W standing; the reference for play, user). Frames a second standing / flying on the plains world: full stack 40 / 30, Distant Horizons on 3 threads at half pace 40 / 32, without Grassier Grass 44 / 36, without Distant Horizons 43 / 31, without shaders 58 / 38; render scale 0.75, a render distance of 6 to 16 chunks, the faster creature path (F27) and other garbage collectors gain nothing or lose."
+Patch,P12,Graphics and Atmosphere,Claude Opus 5.5,"Implemented and run on the RTX 3050 laptop at 1920x1080 at its working temperature (card 87 C, 40-45 W standing; the reference for play, user). Frames a second standing / flying on the plains world: full stack 40 / 30, Distant Horizons on 3 threads at half pace 40 / 32, without Grassier Grass 44 / 36, without Distant Horizons 43 / 31, without shaders 58 / 38; render scale 0.75, a render distance of 6 to 16 chunks, the faster creature path (F27) and other garbage collectors gain nothing or lose. On the way out and back, full stack with the recorder on: 46 to 49 standing where it starts, 38 to 39 flying out, 40 to 44 hovering away and back over it."
 Analysis,P00,Behaviour Model,Claude Code,"Implemented; 18 controlled trials recorded in a real client came out as expected (B10), not yet judged by the user."
 Patch,P17,Difficulty patch,Astra 6,Implemented; unverified in client.
 Patch,P18,Creature models,Astra 6,Implemented; unverified in client (also by ear).
 Patch,P19,Taming/Riding patch,Deepseek v4.1,Implemented; unverified in client.
 Patch,P20,Flyer patch,Astra 6,Implemented; unverified in client.
-Patch,P21,Population density and regional ledger,Claude Opus 5.5,"Implemented; the LEDGER density was measured in recorded client sessions, the BIOME model only in headless GameTests (spawn_biome, spawn_sight); not yet played by the user."
+Patch,P21,Population density and regional ledger,Claude Opus 5.5,"Implemented; the LEDGER density was measured in recorded client sessions and the BIOME model in three recorded client runs out and back on the benchmark world (C05), where the recording holds the groups and quotas of the region the player stands in: a minute after arriving at land nobody had been to, 5 to 6 groups (11 to 18 animals) stood within 128 blocks. Not yet played by the user."
 Patch,P22,Farm animal removal,Claude Opus 5.5,"Implemented; seen in recorded client sessions, not yet played by the user."
 Integration,I02,SFX setup,Deepseek v4.1,Implemented; unverified in client (footstep cadence and loudness by ear).
 Integration,I01,World Map,Astra 6,Implemented; unverified in client.
@@ -3562,7 +3562,7 @@ Patch,P15,Redstone removal,Claude Opus 5.5,"Postponed (user, 2026-10-01)."
 Feature,F20,Creature tiers and item quality,Not started,Under discussion.
 Feature,F22,Command wheel (item-less whistle),Not started,"To be done. It blocks survival progression: nothing gives a tame an order, so WORK, Scavenger, Hell Forge and the Bronze Age wait for it."
 Patch,P16,Baroque UI,Codex,"In production: first asset pass (hotbar, buttons, sliders, tabs, Storage Crate and Tom's Storage panels, workstation sigils), unverified in client."
-Backlog,B07,Three-minute creature session recorder,"Codex (plan), Claude Opus 5.5","Implemented; in use for B08, B09, B10, P00 and P21."
+Backlog,B07,Three-minute creature session recorder,"Codex (plan), Claude Opus 5.5","Implemented; in use for B08, B09, B10, P00, P21 and C05."
 Backlog,B08,"Land AI: return-home loop, airborne first decision, chase that stops short","Codex, Claude Opus 5.5",Implemented; measured in recorded client sessions on flat plains.
 Backlog,B09,Creature senses and movement: findings of the first real session,"Codex, Claude Opus 5.5",Implemented; measured in recorded client sessions.
 Fix,X05,"Craftability, sprite, model and achievement audit",Claude Opus 5.5,"Implemented; build and the headless GameTests pass, unverified in client."
@@ -3586,7 +3586,7 @@ Feature,F29,Saddlery,Claude Opus 5.5,"Implemented; build and GameTests pass (bot
 Feature,F30,Spinosaurus saddle (own design),Claude Opus 5.5,"Under discussion: first design drawn (108 boxes); the item is in game (F28), the design is not drawn on the animal."
 Feature,F31,Hide (renamed leather),Claude Opus 5.5,"Implemented; build and GameTests pass, the names and the sprite read on the showcase Recipes page; unverified in client."
 Feature,F32,Supply drops,Claude Opus 5.5,"Implemented; build and GameTests pass (loot fits the slots, landing through leaves and on water, the emptied and the expired crate, aim at loaded chunks only), unverified in client (the fall, the parachutes, the beam, the crate screen)."
-Change,C05,Wildlife that lasts: every creature traced from its appearance to its death,Claude Opus 5.5,"Implemented; compiled and data generated only: the GameTest spawn_silent is written and was not run (C06), unverified in client."
+Change,C05,Wildlife that lasts: every creature traced from its appearance to its death,Claude Opus 5.5,"Verified in the client for an absence of minutes; the GameTest spawn_silent was not run (C06). On the benchmark world, with a round a game minute instead of a game day, the animals around a place left 320 blocks behind lived on as records and every one was accounted for on the return: of 37, 31 came back from their chunks under their own ids, 3 had never unloaded and 3 had been hunted as records, their saved bodies kept out; of 18 in another run, 17 and one starved."
 Change,C06,Build and GameTests only when shipping or fixing a bug,Claude Opus 5.5,Implemented.
 Feature,F33,Existence model and simulator,Claude Opus 5.5,"Implemented as a page and a tool, not in the game; the bounded model stays bounded, alive and settled in the 14 sample regions (256 chunks, zones 1 to 3, from settled, empty and crowded starts, a round a day or four) and its balance matches 1 - 4 / (3 x fecundity); the page was looked at in a headless browser at 1600 and 520 px, light and dark."
 </script>

@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.recorder.RecorderPayloads;
 import it.unimi.dsi.fastutil.bytes.ByteArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import net.minecraft.client.Minecraft;
@@ -26,6 +27,7 @@ import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
@@ -41,6 +43,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderFrameEvent;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -53,6 +56,15 @@ import org.lwjgl.glfw.GLFW;
  * duration is kept with its phase; once a second a sample of position, window state, thread load and heap.
  * {@code -Darksurvivalreturns.benchmark.mobs=false} empties the world of every creature, for the cost of drawing them.
  * The folder gets frames.csv, samples.csv, meta.json and a screenshot per measured phase; the game then closes.
+ *
+ * <p>{@code -Darksurvivalreturns.benchmark.path=return} flies out and back instead, for what happens to the land a
+ * player leaves: after the pause at the world spawn the player is taken {@code benchmark.teleport} blocks on (768),
+ * stands there while the chunks load and the land is settled ({@code benchmark.arrive} seconds), lifts, flies
+ * straight until that place is {@code benchmark.out} chunks behind (the render distance and eleven more, so the
+ * land within 128 blocks of it is no longer loaded), stays away {@code benchmark.hold} seconds, flies back and hovers over the same
+ * spot with the same view for {@code benchmark.home} seconds. Each leg is a phase of the frame times; a picture
+ * is taken before leaving and after the return, and each turn of the path is marked in a running session
+ * recording, whose roll calls of the wildlife register say who was there before and after.
  *
  * <p>When the world is prepared, {@code -Darksurvivalreturns.benchmark.biome=minecraft:plains} moves the world spawn,
  * and with it the start of every later run, to the middle of the nearest patch of that biome, and
@@ -69,17 +81,42 @@ public final class FrameBenchmark {
     private static final boolean MOBS = !"false".equals(System.getProperty("arksurvivalreturns.benchmark.mobs"));
     private static final String BIOME = System.getProperty("arksurvivalreturns.benchmark.biome", "");
     private static final int PREGEN_CHUNKS = Integer.getInteger("arksurvivalreturns.benchmark.pregen", 0);
+    private static final boolean RETURN = "return".equals(System.getProperty("arksurvivalreturns.benchmark.path"));
+    private static final int TELEPORT_BLOCKS = Integer.getInteger("arksurvivalreturns.benchmark.teleport", 768),
+            ARRIVE_SECONDS = Integer.getInteger("arksurvivalreturns.benchmark.arrive", 60),
+            OUT_CHUNKS = Integer.getInteger("arksurvivalreturns.benchmark.out", 0),
+            HOLD_SECONDS = Integer.getInteger("arksurvivalreturns.benchmark.hold", 150),
+            HOME_SECONDS = Integer.getInteger("arksurvivalreturns.benchmark.home", 60);
     private static final float FLIGHT_PITCH = 12;
     private static final int LIFT = 30, CLEARANCE_LOW = 22, CLEARANCE_HIGH = 38;
     private static final int BIOME_SEARCH = 6400, PATCH_REACH = 384, PATCH_AROUND = 160, PATCH_STEP = 32;
+    /** A leg flown to a place ends there; should it never arrive, it ends after this long. */
+    private static final int LEG_SECONDS = 180;
 
     private enum Phase {
         // PREGEN ends when Chunky reports the end, never by the clock.
-        WAIT(0), PREGEN(Integer.MAX_VALUE), SETTLE(SETTLE_SECONDS), PAN(PAN_SECONDS), CLIMB(CLIMB_SECONDS), FLIGHT(FLIGHT_SECONDS), DONE(0);
+        WAIT(0), PREGEN(Integer.MAX_VALUE), SETTLE(SETTLE_SECONDS), PAN(PAN_SECONDS), CLIMB(CLIMB_SECONDS), FLIGHT(FLIGHT_SECONDS),
+        // The out-and-back path. OUT and BACK end where the player is, not by the clock.
+        ARRIVE(ARRIVE_SECONDS), OUT(LEG_SECONDS), AWAY(HOLD_SECONDS), BACK(LEG_SECONDS), HOME(HOME_SECONDS), DONE(0);
 
         final long nanos;
 
         Phase(int seconds) { nanos = seconds * 1_000_000_000L; }
+
+        /** The phase that follows on the path being flown. */
+        Phase next() {
+            if (!RETURN) return this == FLIGHT ? DONE : values()[ordinal() + 1];
+            return switch (this) {
+                case SETTLE -> ARRIVE;
+                case ARRIVE -> CLIMB;
+                case CLIMB -> OUT;
+                default -> values()[ordinal() + 1];
+            };
+        }
+
+        boolean flying() { return this == CLIMB || this == FLIGHT || this == OUT || this == AWAY || this == BACK || this == HOME; }
+
+        boolean moving() { return this == FLIGHT || this == OUT || this == BACK; }
     }
 
     private static final class Drive extends ClientInput {
@@ -107,6 +144,12 @@ public final class FrameBenchmark {
     private static boolean windowSet;
     private static volatile float heading = -90;
     private static String start = "";
+    /** The out-and-back path: where it starts and returns to, the way out, how far, and whether the server has put the player there. */
+    private static volatile double anchorX, anchorZ;
+    private static volatile float outYaw;
+    private static volatile boolean anchored;
+    private static volatile String anchor = "";
+    private static int outBlocks;
 
     @SubscribeEvent public static void tick(ClientTickEvent.Pre event) {
         if (OUT.isEmpty()) return;
@@ -134,10 +177,16 @@ public final class FrameBenchmark {
         }
         if (player.input != DRIVE) player.input = DRIVE;
         DRIVE.forward = DRIVE.up = DRIVE.down = false;
-        if (phase != Phase.CLIMB && phase != Phase.FLIGHT) return;
+        if (!phase.flying()) return;
         var abilities = player.getAbilities();
         if (abilities.mayfly && !abilities.flying) { abilities.flying = true; player.onUpdateAbilities(); }
-        if (phase != Phase.FLIGHT) return;
+        if (!phase.moving()) return;
+        // A leg of the out-and-back path ends where it leads: far enough out, or back over where it began.
+        double along = (player.getX() - anchorX) * -Mth.sin(outYaw * Mth.DEG_TO_RAD) + (player.getZ() - anchorZ) * Mth.cos(outYaw * Mth.DEG_TO_RAD);
+        if (phase == Phase.OUT && along >= outBlocks || phase == Phase.BACK && along <= 0) {
+            next(System.nanoTime(), false);
+            return;
+        }
         DRIVE.forward = true;
         double gap = player.getY() - groundAhead(mc, player);
         DRIVE.up = player.horizontalCollision || gap < CLEARANCE_LOW;
@@ -148,12 +197,14 @@ public final class FrameBenchmark {
         var player = Minecraft.getInstance().player;
         if (player == null || phase == Phase.WAIT || phase == Phase.DONE) return;
         long now = System.nanoTime();
-        while (phase != Phase.DONE && now - phaseBegan >= phase.nanos) next(now);
+        // The stand at the far start begins once the server has put the player there.
+        if (phase == Phase.ARRIVE && !anchored) phaseBegan = now;
+        while (phase != Phase.DONE && now - phaseBegan >= phase.nanos) next(now, true);
         if (phase == Phase.DONE) return;
         // The view follows the clock, not the frame count, so every setup is measured on the same path.
         float turn = phase == Phase.PAN ? 360f * (now - phaseBegan) / phase.nanos : 0;
         player.setYRot(Mth.wrapDegrees(heading + turn));
-        player.setXRot(phase == Phase.CLIMB || phase == Phase.FLIGHT ? FLIGHT_PITCH : 0);
+        player.setXRot(phase.flying() ? FLIGHT_PITCH : 0);
     }
 
     @SubscribeEvent public static void frameEnd(RenderFrameEvent.Post event) {
@@ -190,6 +241,9 @@ public final class FrameBenchmark {
             if (PREGEN_CHUNKS > 0) pregenerate(spawn.getX(), spawn.getZ());
         });
         began = phaseBegan = lastSample = System.nanoTime();
+        // Far enough that the place left behind, 128 blocks around it, is beyond the chunks the server keeps loaded:
+        // the render distance, the eight chunks of the place and a margin for the ring the server holds on to.
+        outBlocks = (OUT_CHUNKS > 0 ? OUT_CHUNKS : mc.options.getEffectiveRenderDistance() + 11) * 16;
         phase = PREGEN_CHUNKS > 0 ? Phase.PREGEN : Phase.SETTLE;
         watchLoad(Thread.currentThread().threadId(), server.getRunningThread().threadId());
         mark(phase);
@@ -318,21 +372,76 @@ public final class FrameBenchmark {
         watcher.start();
     }
 
-    private static void next(long now) {
+    /** Ends the phase: by the clock when it ran its time, so the next begins where it ended; now when a leg reached its end. */
+    private static void next(long now, boolean byClock) {
         var mc = Minecraft.getInstance();
-        if (phase == Phase.PAN || phase == Phase.FLIGHT)
-            Screenshot.grab(new File(OUT), phase.name().toLowerCase(Locale.ROOT) + ".png", mc.getMainRenderTarget(), 1, message -> {});
-        phaseBegan += phase.nanos;
-        phase = Phase.values()[phase.ordinal() + 1];
+        Phase ended = phase;
+        // What the phase showed last: the turn, the flight, and on the way out and back the same view before and after.
+        if (ended == Phase.PAN || ended == Phase.FLIGHT || ended == Phase.HOME || RETURN && ended == Phase.CLIMB)
+            Screenshot.grab(new File(OUT), (ended == Phase.CLIMB ? "depart" : ended.name().toLowerCase(Locale.ROOT)) + ".png",
+                    mc.getMainRenderTarget(), 1, message -> {});
+        phaseBegan = byClock ? phaseBegan + ended.nanos : now;
+        phase = ended.next();
         // The frame that takes the screenshot or follows a teleport is not the setup's own.
         lastFrame = 0;
-        if (phase == Phase.CLIMB) {
-            var server = mc.getSingleplayerServer();
+        var server = mc.getSingleplayerServer();
+        if (phase == Phase.ARRIVE) server.execute(() -> anchorAt(server));
+        if (phase == Phase.CLIMB)
             server.execute(() -> server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),
                     "execute as @a at @s run tp @s ~ ~" + LIFT + " ~"));
-        }
+        if (phase == Phase.BACK) heading = Mth.wrapDegrees(outYaw + 180);
+        if (phase == Phase.HOME) heading = outYaw;
+        // The turns of the way out and back, flagged in a session recording: it answers each with a roll call of the register.
+        String turn = ended == Phase.ARRIVE ? "depart" : phase == Phase.AWAY ? "far" : phase == Phase.BACK ? "turn"
+                : phase == Phase.HOME ? "home" : ended == Phase.HOME ? "settled" : null;
+        var connection = mc.getConnection();
+        if (RETURN && turn != null && connection != null && connection.hasChannel(RecorderPayloads.Mark.TYPE))
+            ClientPacketDistributor.sendToServer(new RecorderPayloads.Mark(turn));
         if (phase == Phase.DONE) finish(mc);
         else mark(phase);
+    }
+
+    /**
+     * Puts the player where the way out and back starts: as far from the world spawn as asked, in the direction, of
+     * sixteen, with the most land within 256 blocks of the place, land of the spawn's own biome counting double (the
+     * first heading where several have as much): there are animals to leave and to come back to, and on the open
+     * ground of a plains world they are in the pictures. The way out is the landward one from there.
+     */
+    private static void anchorAt(MinecraftServer server) {
+        var level = server.overworld();
+        var spawn = server.getRespawnData().pos();
+        var biomes = level.getChunkSource().getGenerator().getBiomeSource();
+        var sampler = level.getChunkSource().randomState().sampler();
+        int x = spawn.getX(), z = spawn.getZ(), most = -1;
+        var home = biomes.getNoiseBiome(QuartPos.fromBlock(spawn.getX()), QuartPos.fromBlock(spawn.getY()), QuartPos.fromBlock(spawn.getZ()), sampler);
+        for (int step = 0; step < 16; step++) {
+            float way = heading + step * 22.5f;
+            int cx = Mth.floor(spawn.getX() - Mth.sin(way * Mth.DEG_TO_RAD) * TELEPORT_BLOCKS);
+            int cz = Mth.floor(spawn.getZ() + Mth.cos(way * Mth.DEG_TO_RAD) * TELEPORT_BLOCKS);
+            int land = 0;
+            for (int dx = -256; dx <= 256; dx += 64)
+                for (int dz = -256; dz <= 256; dz += 64) {
+                    var biome = biomes.getNoiseBiome(QuartPos.fromBlock(cx + dx), QuartPos.fromBlock(spawn.getY()), QuartPos.fromBlock(cz + dz), sampler);
+                    if (!biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_DEEP_OCEAN) && !biome.is(BiomeTags.IS_RIVER))
+                        land += biome.equals(home) ? 2 : 1;
+                }
+            if (land > most) {
+                most = land;
+                x = cx;
+                z = cz;
+            }
+        }
+        var at = new BlockPos(x, spawn.getY(), z);
+        int y = level.getChunk(at).getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 1;
+        float yaw = landward(level, at);
+        server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),
+                "execute in minecraft:overworld run tp @a " + (x + 0.5) + " " + y + " " + (z + 0.5) + " " + yaw + " 0");
+        anchorX = x + 0.5;
+        anchorZ = z + 0.5;
+        outYaw = heading = yaw;
+        anchor = x + " " + y + " " + z;
+        anchored = true;
+        ArkSurvivalReturns.LOGGER.info("Frame benchmark: the way out and back starts at {}, heading {}", anchor, yaw);
     }
 
     private static void mark(Phase started) {
@@ -429,7 +538,14 @@ public final class FrameBenchmark {
         meta.addProperty("start", start);
         meta.addProperty("start_biome", BIOME);
         meta.addProperty("pregen_chunks", PREGEN_CHUNKS);
-        meta.addProperty("heading", heading);
+        meta.addProperty("heading", RETURN ? outYaw : heading);
+        if (RETURN) {
+            meta.addProperty("path", "return");
+            meta.addProperty("anchor", anchor);
+            meta.addProperty("teleport_blocks", TELEPORT_BLOCKS);
+            meta.addProperty("out_blocks", outBlocks);
+            meta.addProperty("hold_seconds", HOLD_SECONDS);
+        }
         meta.addProperty("unseen_samples", unseenSamples);
         meta.add("phases", PHASES);
         meta.add("creature_draw", dev.nez.arksurvivalreturns.client.draw.CreatureDraw.report());

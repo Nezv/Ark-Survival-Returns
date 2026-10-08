@@ -125,10 +125,12 @@ public final class NaturalPopulations {
     /** One budget pass; also the deterministic entry point for the headless tests. */
     public static void enforce(ServerLevel level, List<? extends Player> players) {
         boolean ledger = ledger();
+        long began = SessionRecorder.on() ? System.nanoTime() : 0;
         var wilds = loadedWildlife(level);
         WildlifeRegister.get(level).refresh(level, wilds);
         if (Config.POPULATION_MODEL.get() == Model.BIOME) {
             settle(level, players, wilds);
+            if (began != 0) SessionRecorder.pass(System.nanoTime() - began, WildlifeRegister.get(level).living().size(), wilds.size());
             return;
         }
         int globalCap = globalCap(players.size());

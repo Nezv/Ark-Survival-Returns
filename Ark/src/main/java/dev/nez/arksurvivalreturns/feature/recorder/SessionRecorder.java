@@ -9,6 +9,8 @@ import java.util.Properties;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.spawn.LandRegister;
+import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,6 +42,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * arms the next world join once: the recording starts a minute after the client reports that the player
  * controls the world and runs for three minutes of unpaused real time, or until the player leaves. The
  * file is {@code diagnostics/<session>/session.jsonl}, compressed when the recording ends.
+ *
+ * <p>A creature whose chunk is not loaded has no body to record, so the recording also follows the wildlife
+ * register: a roll call of every living record at the start, at each mark and at the end, a count every ten
+ * seconds, and every end, silent birth, round of rules and body brought back to its record as it happens.
  *
  * <p>The game code calls the static hooks below. They do nothing but a flag test while no session
  * records, and while one does they only copy what the caller already computed: no sense, path, random
@@ -215,12 +221,14 @@ public final class SessionRecorder {
         if (current != null && current.isSubject(event.getEntity())) current.stop("player_left");
     }
 
-    @SubscribeEvent public static void before(ServerTickEvent.Pre event) {
+    // First before the tick and last after it: what the game's own tick handlers do (the population budget's pass among
+    // them) lies inside the recorded tick, and is on the register by the time it is counted.
+    @SubscribeEvent(priority = EventPriority.HIGHEST) public static void before(ServerTickEvent.Pre event) {
         var current = session;
         if (current != null && current.server == event.getServer()) current.pre();
     }
 
-    @SubscribeEvent public static void after(ServerTickEvent.Post event) {
+    @SubscribeEvent(priority = EventPriority.LOWEST) public static void after(ServerTickEvent.Post event) {
         var current = session;
         if (current != null && current.server == event.getServer()) current.post();
     }
@@ -239,7 +247,8 @@ public final class SessionRecorder {
 
     // ------------------------------------------------------------------------------ events
 
-    @SubscribeEvent public static void join(EntityJoinLevelEvent event) {
+    // Last, and not for a join that was called off: a saved body the register keeps out never joins the world.
+    @SubscribeEvent(priority = EventPriority.LOWEST) public static void join(EntityJoinLevelEvent event) {
         var current = live();
         if (current == null || event.getLevel().isClientSide()) return;
         try { current.join(event.getEntity(), event.loadedFromDisk()); } catch (Throwable t) { current.fail("join", t); }
@@ -362,6 +371,55 @@ public final class SessionRecorder {
     public static void note(Entity entity, String text) {
         var current = live();
         if (current != null) current.note(entity, text);
+    }
+
+    // ------------------------------------------- the register: lives beyond the loaded land
+
+    /** A wild life left the register: a death, a taming or a removal; silent when it ended as a record beyond the loaded land. */
+    public static void lifeEnded(WildlifeRegister.End end) {
+        var current = live();
+        if (current == null) return;
+        try { current.lifeEnded(end); } catch (Throwable t) { current.fail("life_end", t); }
+    }
+
+    /** A young entered the register beyond the loaded land; it has no body until its chunk loads. */
+    public static void lifeBorn(WildlifeRegister.Life young) {
+        var current = live();
+        if (current == null) return;
+        try { current.lifeBorn(young); } catch (Throwable t) { current.fail("life_born", t); }
+    }
+
+    /** A biome region lived a round of its rules: the groups and records that took part, and how many it ended and added. */
+    public static void round(LandRegister.Region region, int groups, int records, int ended, int born, double day) {
+        var current = live();
+        if (current == null) return;
+        try { current.round(region, groups, records, ended, born, day); } catch (Throwable t) { current.fail("round", t); }
+    }
+
+    /** A body back in the world was brought to its record: how far it was moved, and the hunger it came with and has now. */
+    public static void welcomed(CreatureEntity creature, double moved, double hungerBefore, double hungerNow) {
+        var current = live();
+        if (current == null) return;
+        try { current.welcomed(creature, moved, hungerBefore, hungerNow); } catch (Throwable t) { current.fail("welcome", t); }
+    }
+
+    /** The saved body of an animal that died as a record was kept out of the world. */
+    public static void refused(Entity body) {
+        var current = live();
+        if (current == null) return;
+        try { current.refused(body); } catch (Throwable t) { current.fail("refused", t); }
+    }
+
+    /** One pass of the population budget over the register: what it took, and how many records and bodies it went through. */
+    public static void pass(long nanos, int records, int bodies) {
+        var current = live();
+        if (current != null) current.cost("pass", nanos, records, bodies);
+    }
+
+    /** The bodies that came back in one tick, brought to their records: what that took. */
+    public static void welcomes(long nanos, int bodies) {
+        var current = live();
+        if (current != null) current.cost("welcomes", nanos, -1, bodies);
     }
 
     /** Session id of an entity for a record: -1 none, -2 not tracked. */

@@ -22,6 +22,9 @@ import dev.nez.arksurvivalreturns.feature.behavior.WildlifeMind;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.spawn.LandRegister;
+import dev.nez.arksurvivalreturns.feature.spawn.WildClass;
+import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -47,13 +50,20 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * <p>The clock counts real time while the server is not paused. After the client reports that the
  * player controls the world, a countdown runs, then every loaded mob is recorded: a full status every
  * {@link #SNAPSHOT_TICKS} ticks, the player and everything near the player every tick, and decisions,
- * target changes, strikes, damage, joins and leaves on the tick they happen.
+ * target changes, strikes, damage, joins and leaves on the tick they happen. The wildlife register is
+ * recorded beside them, since an animal beyond the loaded land is its record alone: who is on it at the start,
+ * at each mark and at the end, a count every {@link #REGISTER_TICKS} ticks, and what happens to a record.
  */
 final class Session {
     enum Phase { WAIT_READY, COUNTDOWN, RECORDING, CLOSED }
 
-    static final int SCHEMA = 1;
+    static final int SCHEMA = 2;
     static final int SNAPSHOT_TICKS = 10;
+    /** Ticks between two counts of the register; a multiple of the snapshot. */
+    static final int REGISTER_TICKS = 200;
+    /** The columns of a roll call's rows, and the bits of its flags; the header repeats both. */
+    static final List<String> ROLL_COLUMNS = List.of("uuid", "species", "pack", "lvl", "x", "y", "z", "hunger", "appeared", "seen", "flags");
+    static final int R_SHOWN = 1, R_BODY = 2, R_SILENT = 4, R_CLAIMED = 8, R_LOADED = 16;
     static final double NEAR_RADIUS = 64;
     /** Ticks a creature keeps its per-tick samples after it left the player's surroundings. */
     static final int NEAR_LINGER_TICKS = 100;
@@ -248,6 +258,7 @@ final class Session {
             for (ServerLevel level : server.getAllLevels())
                 for (Entity entity : level.getAllEntities())
                     if (trackable(entity)) register(entity, "present");
+            rollCall("start");
         } catch (Throwable t) {
             fail("header", t);
         }
@@ -267,6 +278,7 @@ final class Session {
         SessionRecorder.recording(false);
         SessionRecorder.closed(this);
         if (recorded) {
+            try { rollCall("end"); } catch (Throwable t) { fail("roll_call", t); }
             long real = System.nanoTime() - recordStartNanos;
             emit(new Row("end").put("reason", reason).put("ticks", recordedTicks)
                     .put("real_ms", real / 1_000_000).put("active_ms", (activeNanos - recordStartActive) / 1_000_000)
@@ -544,7 +556,110 @@ final class Session {
         var row = new Row("ev").put("ev", "mark").put("e", sid(player)).put("note", text);
         if (player != null) row.xyz("p", player.getX(), player.getY(), player.getZ());
         timed(row);
+        // A marked moment is one to compare the register at: who was on it, and who had a body.
+        try { rollCall(text); } catch (Throwable t) { fail("roll_call", t); }
         tell("Marked at " + (activeNanos - recordStartActive) / 100_000_000L / 10.0 + " s: " + text, ChatFormatting.GRAY);
+    }
+
+    // ---------------------------------------------------------------------------- register
+
+    /**
+     * Who is on the wildlife register: every living record with its place, hunger and days, and whether its body is in
+     * the world. Two roll calls say who persisted between them, loaded or not.
+     */
+    void rollCall(String at) {
+        var level = server.overworld();
+        var register = WildlifeRegister.get(level);
+        var rows = new ArrayList<Object[]>(register.living().size());
+        for (var life : register.living()) {
+            int flags = (life.shown() ? R_SHOWN : 0) | (life.body() ? R_BODY : 0) | (life.silent() ? R_SILENT : 0)
+                    | (life.claimed() ? R_CLAIMED : 0) | (level.getEntity(life.id()) != null ? R_LOADED : 0);
+            rows.add(new Object[]{life.id().toString(), life.species(), life.pack().toString(), life.level(), life.x(), life.y(), life.z(),
+                    life.hunger(), life.appeared(), life.seen(), flags});
+        }
+        timed(new Row("roll").put("at", at).put("day", level.getGameTime() / 24000.0).put("ends", register.ended().size()).list("rows", rows));
+    }
+
+    /**
+     * The register in numbers, and the biome region the recorded player stands in: its groups of each class against
+     * its quotas, what it is still allowed, how long players stayed and when its records last lived a round.
+     */
+    private void census() {
+        var level = server.overworld();
+        var register = WildlifeRegister.get(level);
+        var land = LandRegister.get(level);
+        Player subject = subject();
+        // Only land the game has already divided is read: the recording never makes the register look at new land.
+        var tile = subject == null || subject.level() != level ? null : land.known(subject.getBlockX() >> 4, subject.getBlockZ() >> 4);
+        var region = tile == null ? null : land.region(tile, subject.getBlockX() >> 4, subject.getBlockZ() >> 4);
+        int kinds = WildClass.values().length, living = 0, loaded = 0, unborn = 0, silent = 0, claimed = 0, shown = 0;
+        var packs = new ArrayList<java.util.HashSet<UUID>>(kinds);
+        for (int i = 0; i < kinds; i++) packs.add(new java.util.HashSet<>());
+        for (var life : register.living()) {
+            living++;
+            if (level.getEntity(life.id()) != null) loaded++;
+            if (!life.body()) unborn++;
+            if (life.silent()) silent++;
+            if (life.claimed()) claimed++;
+            if (life.shown()) shown++;
+            if (region == null) continue;
+            var theirs = land.known(life.x() >> 4, life.z() >> 4);
+            Species species = WildClass.species(life.species());
+            if (theirs != null && species != null && land.region(theirs, life.x() >> 4, life.z() >> 4) == region)
+                packs.get(WildClass.of(species).ordinal()).add(life.pack());
+        }
+        var row = new Row("reg").put("living", living).put("loaded", loaded).put("unborn", unborn).put("silent", silent)
+                .put("claimed", claimed).put("shown", shown).put("ends", register.ended().size()).put("tiles", land.tiles())
+                .put("day", level.getGameTime() / 24000.0);
+        if (region != null) {
+            int[] groups = new int[kinds], quota = new int[kinds];
+            double[] due = new double[kinds];
+            for (WildClass kind : WildClass.values()) {
+                groups[kind.ordinal()] = packs.get(kind.ordinal()).size();
+                quota[kind.ordinal()] = land.quota(level, region, kind);
+                due[kind.ordinal()] = region.arrivals(kind);
+            }
+            row.put("biome", region.biome).put("cells", region.cells).put("surveyed", region.surveyed()).ints("groups", groups)
+                    .ints("quota", quota).doubles("due", due).put("stayed", region.stayed()).put("lived", region.lived());
+        }
+        emit(row);
+    }
+
+    void lifeEnded(WildlifeRegister.End end) {
+        var row = new Row("life").put("ev", "end").put("u", end.id().toString()).put("species", end.species()).put("lvl", end.level())
+                .block("pos", end.x(), end.y(), end.z()).put("cause", end.cause()).put("lived", end.day() - end.appeared())
+                .flag("silent", end.silent()).flag("shown", end.shown());
+        var track = known.get(end.id());
+        if (track != null) row.put("e", track.sid);
+        timed(row);
+    }
+
+    void lifeBorn(WildlifeRegister.Life young) {
+        timed(new Row("life").put("ev", "born").put("u", young.id().toString()).put("species", young.species())
+                .put("pack", young.pack().toString()).put("lvl", young.level()).block("pos", young.x(), young.y(), young.z()));
+    }
+
+    void round(LandRegister.Region region, int groups, int records, int ended, int born, double day) {
+        timed(new Row("life").put("ev", "round").put("biome", region.biome).put("cells", region.cells).put("groups", groups)
+                .put("records", records).put("ended", ended).put("born", born).put("day", day).put("stayed", region.stayed()));
+    }
+
+    void welcomed(CreatureEntity creature, double moved, double hungerBefore, double hungerNow) {
+        var row = new Row("life").put("ev", "welcome").put("u", creature.getUUID().toString()).put("moved", moved)
+                .put("hunger0", hungerBefore).put("hunger", hungerNow).xyz("p", creature.getX(), creature.getY(), creature.getZ());
+        int e = sid(creature);
+        if (e >= 0) row.put("e", e);
+        timed(row);
+    }
+
+    void refused(Entity body) {
+        timed(new Row("life").put("ev", "refused").put("u", body.getUUID().toString()).xyz("p", body.getX(), body.getY(), body.getZ()));
+    }
+
+    void cost(String what, long nanos, int records, int bodies) {
+        var row = new Row("life").put("ev", what).put("us", nanos / 1000).put("bodies", bodies);
+        if (records >= 0) row.put("records", records);
+        timed(row);
     }
 
     // ----------------------------------------------------------------------------- capture
@@ -572,6 +687,7 @@ final class Session {
         }
         if (!motion.isEmpty()) emit(new Row("m").list("rows", new ArrayList<>(motion)));
         if (snapshot) for (ServerLevel level : server.getAllLevels()) world(level);
+        if (recordedTicks % REGISTER_TICKS == 0) census();
         long now = System.nanoTime();
         var row = new Row("tick").put("gt", server.overworld().getGameTime())
                 .put("act_us", (activeNanos - recordStartActive) / 1000)
@@ -872,6 +988,8 @@ final class Session {
                         "aggressive", "sleep_pose", "dying"))
                 .list("player_flags", List.of("on_ground", "sprint", "crouch", "swim", "flying", "in_water", "creative",
                         "spectator", "sleeping", "using_item", "passenger", "dead", "invisible"))
+                .list("roll", ROLL_COLUMNS).list("roll_flags", List.of("shown", "body", "silent", "claimed", "loaded"))
+                .list("classes", names(WildClass.values()))
                 .list("terrain_kinds", List.of("none", "full", "partial", "fluid")));
         return row;
     }

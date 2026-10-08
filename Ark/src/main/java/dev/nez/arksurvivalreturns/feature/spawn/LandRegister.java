@@ -166,6 +166,11 @@ public final class LandRegister extends SavedData {
         return tile;
     }
 
+    /** The tile holding this chunk where the land was already divided, or null: for a reader that must not divide new land. */
+    public @Nullable Tile known(int chunkX, int chunkZ) {
+        return tiles.get(key(Math.floorDiv(chunkX, BiomeRegions.SIDE), Math.floorDiv(chunkZ, BiomeRegions.SIDE)));
+    }
+
     private static int cell(int chunkX, int chunkZ) {
         return Math.floorMod(chunkZ, BiomeRegions.SIDE) * BiomeRegions.SIDE + Math.floorMod(chunkX, BiomeRegions.SIDE);
     }

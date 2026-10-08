@@ -11,6 +11,9 @@ is missing (sequence numbers, footer, a cut last line), and loads typed tables i
 From those it writes summary.json (counts, coverage, timing) and incidents.jsonl (ranked episodes:
 ignored approach, sensed but holding, pursuit without progress, failed or deferred paths, stalls with
 the blocks around the body, missed strikes, and the ordinary responses for reference).
+The wildlife register is loaded beside the bodies: register (its counts), rolls and roll_rows (who was on it
+at the start, at each mark and at the end) and lives (ends, silent births, rounds beyond the loaded land, bodies
+brought back to their record); tools/session_existence.py reports what became of the animals of a place.
 
 An incident is a hypothesis with its evidence (creature, ticks, distances, source sequence numbers);
 read the window around it before calling it a cause. Times are game seconds: ticks since the first
@@ -98,6 +101,16 @@ TABLES: dict[str, dict[str, str]] = {
     "world": {"seq": L, "tick": I, "dim": S, "gt": L, "day": L, "rain": B, "thunder": B, "bright": B, "wind": D,
               "diff": S, "chunks": I},
     "gaps": {"from_seq": L, "to_seq": L, "n": L, "tick0": I, "tick1": I, "why": S},
+    # The wildlife register: an animal beyond the loaded land is its record alone.
+    "register": {"seq": L, "tick": I, "living": I, "loaded": I, "unborn": I, "silent": I, "claimed": I, "shown": I, "ends": I,
+                 "tiles": I, "day": D, "biome": S, "cells": I, "surveyed": I, "groups": "INTEGER[]", "quota": "INTEGER[]",
+                 "due": "DOUBLE[]", "stayed": D, "lived": D},
+    "rolls": {"seq": L, "tick": I, "ns": L, "at_name": S, "day": D, "ends": I, "records": I, "with_body": I},
+    "roll_rows": {"seq": L, "tick": I, "at_name": S, "uuid": S, "species": S, "pack": S, "lvl": I, **xyz("", I), "hunger": D,
+                  "appeared": D, "seen": D, "flags": I, "shown": B, "body": B, "silent": B, "claimed": B, "loaded": B},
+    "lives": {"seq": L, "tick": I, "ns": L, "ev": S, "u": S, "e": I, "species": S, "pack": S, "lvl": I, **xyz("pos_", I),
+              **xyz("", D), "cause": S, "lived": D, "silent": B, "shown": B, "biome": S, "cells": I, "groups": I, "records": I,
+              "ended": I, "born": I, "day": D, "stayed": D, "moved": D, "hunger0": D, "hunger": D, "us": L, "bodies": I},
 }
 RENAMES = {"s": "seq", "k": "tick", "from": "from_name", "to": "to_name", "where": "where_", "left": "left_",
            "pivot": "pivoting", "drop": "dropped", "over": "over_ticks", "at": "at_e", "by": "by_e"}
@@ -240,6 +253,20 @@ class Splitter:
                                               "z": oz + dz, "block": palette[name], "kind": collision})
         elif kind == "w":
             self.write("world", self.flatten("world", row, ("rain", "thunder", "bright")))
+        elif kind == "reg":
+            self.write("register", self.flatten("register", row))
+        elif kind == "roll":
+            columns = (self.meta.get("header") or {}).get("legend", {}).get("roll") or list(TABLES["roll_rows"])[3:14]
+            rows = [dict(zip(columns, cells)) for cells in row.get("rows", [])]
+            self.write("rolls", {"seq": row["s"], "tick": row["k"], "ns": row.get("ns"), "at_name": row["at"], "day": row.get("day"),
+                                 "ends": row.get("ends"), "records": len(rows), "with_body": sum(1 for r in rows if r["flags"] & 16)})
+            for record in rows:
+                flags = record["flags"]
+                self.write("roll_rows", {"seq": row["s"], "tick": row["k"], "at_name": row["at"], **record, "shown": bool(flags & 1),
+                                         "body": bool(flags & 2), "silent": bool(flags & 4), "claimed": bool(flags & 8),
+                                         "loaded": bool(flags & 16)})
+        elif kind == "life":
+            self.write("lives", self.flatten("lives", row, ("silent", "shown") if row.get("ev") == "end" else ()))
         elif kind == "gap":
             self.announced[row["from"]] = row.get("why", "queue_full")
         elif kind in ("header", "end", "footer"):
