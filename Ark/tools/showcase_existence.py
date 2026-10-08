@@ -1,4 +1,4 @@
-"""The existence half of the showcase's Behaviour page: the data its simulator runs on.
+"""The existence column of the showcase's Existence Model page: the data its simulator runs on.
 
 design/existence/model.json holds the weights of the proposed model, the sample regions and the constants of the
 rules the game runs today; design/existence/weights.json, once the page's Save weights has written it, holds the
@@ -120,6 +120,27 @@ CODED_NAMES = {
     'populationRadius': 'Population radius, blocks', 'healthGrowth': 'Health growth a level', 'damageGrowth': 'Damage growth a level'}
 
 
+def beyond(config):
+    """
+    The stretch past the last distance tier, which the existence column opens with as the behaviour column opens
+    with its tiers: no body, a record lived on by rounds, and the hand-over as the chunk loads.
+    """
+    every, lived = config['silentRoundDays'], config['silentLivedInRounds']
+    cards = [
+        ('Record only', 'Chunk not loaded', 'No body. The animal is its line on the wildlife register of its biome region, '
+                                            'and nothing of it runs between two rounds.'),
+        ('Rounds', 'A round a game day' if every == 1 else f'A round every {every:g} game days',
+         f'The existence model lives the region on: its animals feed, are hunted, breed and age. {lived:g} times as often '
+         'where players have stayed a day.'),
+        ('Hand-over', 'As the chunk loads', 'Each animal gets its body where and as its record is, hunger included: a young '
+                                            'born meanwhile has one, an animal that died has none.'),
+    ]
+    return ('<div class="lod-scale" aria-hidden="true"><em>Past the last tier</em><span class="lod-beyond"><b>Record only</b>'
+            '<small>any distance</small></span></div><div class="lod-cols">'
+            + ''.join(f'<div class="lod-col"><h4><i class="lod-beyond"></i>{title}</h4><b class="range">{span}</b><p>{text}</p></div>'
+                      for title, span, text in cards) + '</div>')
+
+
 def section(e):
     """The placeholders of the existence column: the data and scripts of its simulator, and the constants of the coded rules."""
     payload = data()
@@ -134,6 +155,7 @@ def section(e):
         'EXISTENCE_CODED': table,
         'EXISTENCE_COMMIT': e(coded['commit']),
         'EXISTENCE_REGIONS': len(payload['regions']),
+        'EXISTENCE_BEYOND': beyond(coded['config']),
     }
 
 

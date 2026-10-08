@@ -208,7 +208,8 @@ def state_name(state):
 def tier_cards(data):
     """
     The distance tiers as one ruler from the player outwards, with what runs in each stretch under it. Past the
-    last tier the chunk unloads and the animal is its record alone: the stretch the existence machine takes over.
+    last tier the chunk unloads and the animal is its record alone: the stretch the existence column opens with
+    (showcase_existence.py).
     """
     scale, cards, inner = [], [], 0
     for tier in data['tiers']:
@@ -219,11 +220,7 @@ def tier_cards(data):
         cards.append(f'<div class="lod-col"><h4><i style="background:{color}"></i>{e(title)}</h4>'
                      f'<b class="range">{span}</b><p>{e(tier["summary"])}</p></div>')
         inner = tier['radius']
-    cards.append('<div class="lod-col"><h4><i class="lod-beyond"></i>Record only</h4><b class="range">Chunk not loaded</b>'
-                 '<p>No body. The animal is its line on the wildlife register, and the existence machine lives it on '
-                 'by rounds: it feeds, is hunted, breeds, ages.</p></div>')
-    return (f'<div class="lod-scale" aria-hidden="true"><em>Player</em>{"".join(scale)}<em>blocks</em>'
-            f'<span class="lod-beyond"><b>Record only</b></span></div>'
+    return (f'<div class="lod-scale" aria-hidden="true"><em>Player</em>{"".join(scale)}<em>blocks</em></div>'
             f'<div class="lod-cols">{"".join(cards)}</div>')
 
 
@@ -360,51 +357,47 @@ def lap_figures(model):
     return f'<div class="laps">{"".join(figures)}</div>' if figures else ''
 
 
-def model_panel(model, actions, names, species_names):
-    tier_tabs, tier_panels = [], []
-    for index, tier in enumerate(model['tiers']):
-        title = TIER_STYLE[tier['tier']][0]
-        selected = 'true' if index == 0 else 'false'
-        tier_tabs.append(f'<button type="button" role="tab" data-tier="{tier["tier"]}" aria-selected="{selected}">'
-                         f'Tier {index + 1}: {e(title)}</button>')
+def model_blocks(model, actions, names, species_names):
+    """
+    One model's share of the cells it fills in the behaviour column: what it is, and for each distance tier its
+    note, its matrix and its diagram; then its bridges. The page shows the model and the tier picked.
+    """
+    notes, machines, diagrams = [], [], []
+    for tier in model['tiers']:
         count = sum(len(row) for row in tier['matrix'].values())
-        diagram = state_diagram(tier)
-        legend = ('<p class="muted diagram-note">The dashed "Any state" stands for a rule that fires from most states; '
-                  'the matrix lists every source.</p>' if 'any_state' in diagram else '')
-        tier_panels.append(
-            f'<div class="tier-panel" data-tier="{tier["tier"]}" role="tabpanel">'
-            f'<p class="muted tier-note">{e(tier["note"])} <span class="chip">{len(tier["states"])} states, {count} transitions</span></p>'
-            f'<div class="machine"><div class="matrix-wrap">{matrix_table(tier)}</div>'
-            f'<div class="cell-info" aria-live="polite"></div></div>'
-            f'<details class="fold"><summary>The same transitions as a diagram</summary>{legend}'
-            f'<div class="diagram"><div class="diagram-svg"></div><pre class="diagram-src">{e(diagram)}</pre></div></details>'
-            f'</div>')
+        notes.append(f'<p class="muted tier-note" data-tier="{tier["tier"]}">{e(tier["note"])} '
+                     f'<span class="chip">{len(tier["states"])} states, {count} transitions</span></p>')
+        machines.append(f'<div class="machine" data-tier="{tier["tier"]}"><div class="matrix-wrap">{matrix_table(tier)}</div>'
+                        f'<div class="cell-info" aria-live="polite"></div></div>')
+        diagrams.append(f'<div class="diagram" data-tier="{tier["tier"]}"><div class="diagram-svg"></div>'
+                        f'<pre class="diagram-src">{e(state_diagram(tier))}</pre></div>')
     chips = ''.join(f'<span class="chip">{e(r)}</span>' for r in model['realms'].split())
     chips += '<span class="chip">predator</span>' if model['predator'] else ''
-    extra = ''
-    if model['bridges']:
-        extra += ('<div class="model-part"><h4>Bridges: the actions inside a change of state</h4><p class="muted">Every change '
-                  'of state first plays a short bridge timed to the rig\'s own clips (lengths are the named species\'). A hit '
-                  'or a threat at the body is a reflex and skips the display.</p>'
-                  + bridges_list(model, actions, names, species_names) + '</div>')
+    between = bridges_list(model, actions, names, species_names) if model['bridges'] else ''
     if model.get('curves'):
-        extra += ('<div class="model-part"><h4>Flight curves</h4><p class="muted">One sample lap of each shape from the flight '
-                  'code. Each lap may pick a new shape, and the bird follows a point that slides along it, so it banks and '
-                  'climbs smoothly.</p>' + lap_figures(model) + '</div>')
-    return (f'<div class="model panel" data-model="{model["id"]}" role="tabpanel">'
-            f'<div class="model-head"><h4>{e(model["title"])}</h4>{chips}</div>'
-            f'<p>{e(model["summary"])}</p>'
-            f'<div class="tabs tier-tabs" role="tablist" aria-label="Distance tier">{"".join(tier_tabs)}</div>'
-            f'{"".join(tier_panels)}'
-            f'{extra}</div>')
+        between += ('<div class="model-part"><h5>Flight curves</h5><p class="muted">One sample lap of each shape from the flight '
+                    'code. Each lap may pick a new shape, and the bird follows a point that slides along it, so it banks and '
+                    'climbs smoothly.</p>' + lap_figures(model) + '</div>')
+    between = between or f'<p class="muted">No bridge is timed for the {e(model["title"].lower())} model: it changes state at once.</p>'
+    key = f'data-model="{model["id"]}"'
+    return {
+        'MODELABOUT': f'<div class="model-about" {key}><div class="model-head"><h4>{e(model["title"])}</h4>{chips}</div>'
+                      f'<p>{e(model["summary"])}</p>{"".join(notes)}</div>',
+        'MACHINES': f'<div class="model-cell" {key} role="tabpanel">{"".join(machines)}</div>',
+        'BRIDGES': f'<div class="model-cell" {key}>{between}</div>',
+        'DIAGRAMS': f'<div class="panel model-cell" {key}>{"".join(diagrams)}</div>',
+    }
 
 
 def behavior_section(names, species):
     data = load_json(ARK / 'design/showcase/behavior.json')
     species_names = {s['id']: s['name'] for s in species}
-    tabs = ''.join(f'<button type="button" role="tab" data-model="{m["id"]}" aria-selected="{"true" if i == 0 else "false"}">'
-                   f'{e(m["title"])}</button>' for i, m in enumerate(data['models']))
-    panels = '\n'.join(model_panel(m, data['actions'], names, species_names) for m in data['models'])
+
+    def tabs(key, entries):
+        return ''.join(f'<button type="button" role="tab" data-{key}="{value}" aria-selected="{"true" if i == 0 else "false"}">'
+                       f'{label}</button>' for i, (value, label) in enumerate(entries))
+
+    blocks = [model_blocks(m, data['actions'], names, species_names) for m in data['models']]
     motions = {}
     for action in data['actions']:
         label = names.get(f'action.arksurvivalreturns.{action["id"].lower()}', state_name(action['id']))
@@ -417,8 +410,10 @@ def behavior_section(names, species):
         'BEHAVIORTIERS': tier_cards(data),
         'BEHAVIORMARGIN': f'{margin} block{"s" if margin != 1 else ""}',
         'SCHEDULE': day_schedule(data['schedule']),
-        'MODELTABS': tabs,
-        'MODELS': panels,
+        'MODELTABS': tabs('model', [(m['id'], e(m['title'])) for m in data['models']]),
+        'TIERTABS': tabs('tier', [(t['id'], f'<i style="background:{TIER_STYLE[t["id"]][1]}"></i>{e(TIER_STYLE[t["id"]][0])}')
+                                  for t in data['tiers']]),
+        **{key: '\n'.join(block[key] for block in blocks) for key in blocks[0]},
         'ACTIONS': legend,
     }
 

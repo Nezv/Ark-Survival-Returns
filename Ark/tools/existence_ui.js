@@ -1,5 +1,5 @@
 /*
- * The existence simulator of the showcase's Behaviour page: one biome region's wildlife register lived through
+ * The existence simulator of the showcase's Existence Model page: one biome region's wildlife register lived through
  * beyond the loaded land, without the game. It runs tools/existence_model.js on what
  * tools/showcase_existence.py assembled (the species, who lives in each sample biome, the weights) and draws
  * the life of a record with the weight of every connection, who lives in the region day by day, the pressure
@@ -72,6 +72,7 @@ window.ArkExistenceUI = (function () {
    * spec: days, series [{label, color, values, low, high}], label, bound {y, label}, digits.
    */
   function lineChart(host, spec) {
+    if (!host.clientWidth) return;  // its panel is not the one on show: drawn once it is
     host.textContent = '';
     var width = Math.max(280, host.clientWidth), height = spec.height || 220;
     var longest = spec.series.reduce(function (n, s) { return Math.max(n, s.label.length); }, spec.bound ? spec.bound.label.length - 4 : 0);
@@ -342,6 +343,15 @@ window.ArkExistenceUI = (function () {
       q('.ex-idle').hidden = state.rules === 'bounded';
     }
     q('[data-ex="draw"]').addEventListener('click', function () { state.seed++; run(); });
+    // Statistics shows one of its panels at a time; a chart takes the width its panel has once it is on show.
+    var stats = root.querySelectorAll('.ex-stat-tabs button');
+    Array.prototype.forEach.call(stats, function (button) {
+      button.addEventListener('click', function () {
+        Array.prototype.forEach.call(stats, function (b) { b.setAttribute('aria-selected', b === button ? 'true' : 'false'); });
+        Array.prototype.forEach.call(root.querySelectorAll('.ex-stat'), function (panel) { panel.hidden = panel.dataset.stat !== button.dataset.stat; });
+        if (result) paintCharts();
+      });
+    });
 
     // ------------------------------------------------------------------------------------- weights
     var sliders = {};
@@ -599,7 +609,7 @@ window.ArkExistenceUI = (function () {
       q('.ex-survey-wrap').hidden = false;
       var setups = [{ rules: 'bounded', arrivals: true }, { rules: 'coded', arrivals: false }, { rules: 'coded', arrivals: true }];
       (function next() {
-        if (index >= data.regions.length) { surveying = false; q('.ex-survey-status').textContent = 'Surveyed with the size, zone, start, span and weights above.'; return; }
+        if (index >= data.regions.length) { surveying = false; q('.ex-survey-status').textContent = 'Surveyed with the size, zone, start, span and weights set on this page.'; return; }
         var r = data.regions[index++], tr = el('tr');
         q('.ex-survey-status').textContent = 'Living through ' + r.name + '...';
         tr.appendChild(el('th', '', r.name));

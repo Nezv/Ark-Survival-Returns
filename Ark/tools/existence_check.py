@@ -1,6 +1,6 @@
 """Lives the sample regions of the existence model through and prints the verdict of each, without the game.
 
-The same model as the showcase's Behaviour page (tools/existence_model.js, run with Node) on the same data
+The same model as the showcase's Existence Model page (tools/existence_model.js, run with Node) on the same data
 (tools/showcase_existence.py): the wildlife register of one biome region beyond the loaded land, under the proposed
 bounded model and under the rules the game runs today. For each run it says whether the register stays bounded,
 keeps every class it has room for and settles, how many animals it starts and ends with, the pressure on what each
