@@ -2,7 +2,8 @@
 
 Everything is read from the live project, so rebuilding keeps the page honest:
 creature facts (design/showcase/species.json) and the behaviour models with their transition matrices
-(design/showcase/behavior.json), both exported by runData, the tech tree (tree.json, one strip over the three ages), the
+(design/showcase/behavior.json), both exported by runData, the existence model and its simulator beside them
+(showcase_existence.py, run by existence_model.js), the tech tree (tree.json, one strip over the three ages), the
 biome pictures with their spawns beside the danger map (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
 screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
@@ -205,7 +206,10 @@ def state_name(state):
 
 
 def tier_cards(data):
-    """The distance tiers as one ruler from the player outwards, with what runs in each stretch under it."""
+    """
+    The distance tiers as one ruler from the player outwards, with what runs in each stretch under it. Past the
+    last tier the chunk unloads and the animal is its record alone: the stretch the existence machine takes over.
+    """
     scale, cards, inner = [], [], 0
     for tier in data['tiers']:
         title, color = TIER_STYLE[tier['id']]
@@ -215,7 +219,11 @@ def tier_cards(data):
         cards.append(f'<div class="lod-col"><h4><i style="background:{color}"></i>{e(title)}</h4>'
                      f'<b class="range">{span}</b><p>{e(tier["summary"])}</p></div>')
         inner = tier['radius']
-    return (f'<div class="lod-scale" aria-hidden="true"><em>Player</em>{"".join(scale)}<em>blocks</em></div>'
+    cards.append('<div class="lod-col"><h4><i class="lod-beyond"></i>Record only</h4><b class="range">Chunk not loaded</b>'
+                 '<p>No body. The animal is its line on the wildlife register, and the existence machine lives it on '
+                 'by rounds: it feeds, is hunted, breeds, ages.</p></div>')
+    return (f'<div class="lod-scale" aria-hidden="true"><em>Player</em>{"".join(scale)}<em>blocks</em>'
+            f'<span class="lod-beyond"><b>Record only</b></span></div>'
             f'<div class="lod-cols">{"".join(cards)}</div>')
 
 
@@ -650,6 +658,7 @@ def build():
         'CREATURES': creatures_section(species), 'SPECIES_COUNT': len(species),
         **__import__('showcase_biomes').section(species, e, RANK_COLORS, RANK_NAMES, HABITATS),
         **behavior_section(names, species),
+        **__import__('showcase_existence').section(e),
         **tree_section(),
         **__import__('showcase_recipes').section(uri, e),
         'JOURNAL': journal_section(),

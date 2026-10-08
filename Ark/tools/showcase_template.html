@@ -323,6 +323,111 @@
   .lap .nest { fill: var(--moss); }
   .lap figcaption { font-size: 14px; display: grid; }
   .lap figcaption small { color: var(--muted); font-size: 12px; }
+  /* the two machines share a row: the body's on the left, the record's on the right */
+  .machines > .part { container-type: inline-size; }
+  @container (max-width: 860px) {
+    .machine { grid-template-columns: minmax(0, 1fr); }
+    .matrix-wrap { justify-self: start; }
+    .cell-info { max-height: 320px; }
+    .lod-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @container (max-width: 420px) { .lod-cols { grid-template-columns: minmax(0, 1fr); } }
+  h4.sub { font: 700 19px/1.25 var(--display); margin-top: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+  h3 + .lede + h4.sub, .ex > h4.sub:first-child { margin-top: 2px; }
+  .lod-scale span:nth-last-of-type(2) { border-radius: 0 6px 6px 0; }
+  .lod-scale span.lod-beyond { flex: 0 0 auto; margin-left: 8px; border-radius: 6px; background: transparent; border: 1px dashed var(--muted); color: var(--muted); }
+  .lod-col h4 i.lod-beyond { background: transparent; border: 1px dashed var(--muted); }
+  @media (max-width: 640px) { .lod-scale span.lod-beyond { display: none; } }
+
+  /* existence: the simulator of the wildlife register */
+  .ex { display: grid; gap: 14px; min-width: 0; --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .ex { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; }
+  }
+  :root[data-theme="dark"] .ex { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; }
+  .ex-bar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px 14px; font-size: 14px; }
+  .ex-bar label { display: grid; gap: 3px; font: 600 11px/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .ex-bar select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 5px 8px;
+                   font: 14px var(--body); letter-spacing: 0; text-transform: none; cursor: pointer; max-width: 100%; }
+  .ex-bar output { font: 600 12px var(--mono); color: var(--ink); letter-spacing: 0; }
+  .ex-bar input[type="range"] { width: 130px; accent-color: var(--ember); }
+  .ex-bar .ws-seg { padding-bottom: 1px; }
+  .ex-status { font-size: 13px; }
+  .ex.busy .ex-verdict, .ex.busy .ex-live { opacity: .55; }
+  .ex-verdict { display: grid; gap: 8px; background: var(--raised); border: 1px solid var(--line); border-left: 3px solid var(--ember); border-radius: 10px;
+                padding: 12px 16px; min-height: 120px; }
+  .ex-verdict-row { display: grid; grid-template-columns: 156px minmax(0, 1fr); gap: 4px 12px; align-items: baseline; font-size: 14px; }
+  .ex-verdict-row .chip { justify-self: start; font-size: 13px; padding: 5px 10px; white-space: normal; }
+  @container (max-width: 520px) { .ex-verdict-row { grid-template-columns: minmax(0, 1fr); } }
+  .ex-live { display: grid; gap: 12px; }
+  .ex-live h5 { margin: 0; font: 600 15px/1.3 var(--display); }
+  .ex-live h5 small { font: 400 13px var(--body); color: var(--muted); margin-left: 6px; }
+  .ex-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--muted); }
+  .ex-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .ex-legend i { width: 16px; height: 3px; border-radius: 2px; }
+  .ex-chart { position: relative; min-width: 0; }
+  .ex-chart svg { display: block; max-width: 100%; height: auto; border-radius: 6px; }
+  .ex-grid { stroke: var(--line); stroke-width: 1; }
+  .ex-axis { stroke: var(--muted); stroke-width: 1; opacity: .7; }
+  .ex-bound { stroke: var(--ink); stroke-width: 1; opacity: .6; }
+  .ex-tick { font: 12px var(--body); fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .ex-line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .ex-band { opacity: .12; }
+  .ex-lead, .ex-hair { stroke: var(--muted); stroke-width: 1; }
+  .ex-end { font: 13px var(--body); fill: var(--muted); }
+  .ex-end-value { fill: var(--ink); font-weight: 600; }
+  .ex-dot { stroke: var(--surface); stroke-width: 2; }
+  .ex-tip { position: absolute; top: 4px; z-index: 2; pointer-events: none; background: var(--raised); border: 1px solid var(--line); border-radius: 8px;
+            padding: 8px 10px; display: grid; gap: 3px; font-size: 13px; box-shadow: 0 6px 18px rgba(0, 0, 0, .18); max-width: 250px; }
+  .ex-tip[hidden] { display: none; }
+  .ex-tip-row { display: grid; grid-template-columns: 14px auto minmax(0, 1fr); gap: 6px; align-items: baseline; color: var(--muted); }
+  .ex-tip-row i { height: 3px; border-radius: 2px; align-self: center; }
+  .ex-tip-row strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ex-diagram { overflow-x: auto; }
+  .ex-diagram svg { display: block; width: 100%; min-width: 600px; height: auto; }
+  .ex-frame { fill: var(--raised); stroke: var(--line); }
+  .ex-frame-label { font: 600 10.5px var(--body); letter-spacing: .1em; fill: var(--muted); }
+  .ex-state { fill: var(--surface); stroke: var(--muted); stroke-width: 1.25; }
+  .ex-state-name { font: 700 16px var(--display); fill: var(--ink); }
+  .ex-state-share { font: 12px var(--body); fill: var(--muted); }
+  .ex-pill { fill: var(--chip); }
+  .ex-pill.end { fill: transparent; stroke: var(--muted); }
+  .ex-pill-text { font: 600 13px var(--body); fill: var(--ink); }
+  .ex-edge line { stroke: var(--muted); }
+  .ex-edge polygon { fill: var(--muted); }
+  .ex-edge.off { opacity: .3; }
+  .ex-weight { font: 600 12.5px var(--body); fill: var(--ink); font-variant-numeric: tabular-nums; }
+  .ex-caption { font: 11.5px var(--body); fill: var(--muted); }
+  .ex-edges { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+  .ex-edges b { color: var(--ink); font-weight: 600; }
+  .ex-diagram-note, .ex-table-note { font-size: 13px; }
+  .ex-table { font-size: 13px; }
+  .ex-table th, .ex-table td { padding: 6px 12px; text-align: right; font-variant-numeric: tabular-nums; vertical-align: baseline; white-space: nowrap; }
+  .ex-table th:first-child, .ex-table td.text, .ex-table.ex-species td:nth-child(2), .ex-table.ex-pressures td:nth-child(2) { text-align: left; }
+  .ex-table tbody th { font: 600 13px var(--body); letter-spacing: 0; text-transform: none; color: var(--ink); background: transparent; white-space: nowrap; }
+  .ex-table.ex-survey td { text-align: left; min-width: 190px; white-space: normal; }
+  .ex-table.ex-survey small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.35; }
+  .ex-table.ex-coded td:nth-child(2), .ex-table.ex-coded th:nth-child(2), .ex-table.ex-survey th { text-align: left; }
+  .ex-lost { color: var(--todo); font-weight: 600; }
+  .ex-math { margin: 0; gap: 12px; font-size: 14px; }
+  .ex-math > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 4px 14px; align-items: baseline; }
+  .ex-math dt { font: 600 14px var(--display); }
+  .ex-math dd { margin: 0; color: var(--muted); }
+  .ex-math code, .ex-bounds code { white-space: nowrap; }
+  @container (max-width: 520px) { .ex-math > div { grid-template-columns: minmax(0, 1fr); } }
+  .ex-bounds { font-size: 14px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .ex-sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px 22px; }
+  .ex-group { display: grid; gap: 12px; align-content: start; }
+  .ex-weight-row { display: grid; gap: 2px; font-size: 14px; cursor: pointer; }
+  .ex-weight-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; }
+  .ex-weight-head output { font: 600 14px var(--mono); margin-left: auto; }
+  .ex-weight-head small { flex-basis: 100%; font-size: 12px; }
+  .ex-weight-row input { width: 100%; accent-color: var(--ember); margin: 2px 0; }
+  .ex-weight-row.changed b, .ex-weight-row.changed output { color: var(--ember); }
+  .ex-weight-note { font-size: 12px; line-height: 1.35; }
+  .ex-weights.idle .ex-sliders, .ex-weights.idle .ex-balance { opacity: .45; }
+  .ex-balance { list-style: none; padding: 14px 0 0; border-top: 1px solid var(--line); }
+  .ex-survey-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 14px; }
 
   /* tree */
   .tree-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; }
@@ -582,7 +687,7 @@
   <div class="index" id="index">
     <a href="#creatures"><span class="eyebrow">Wildlife</span><b>Creatures</b><span>%%SPECIES_COUNT%% ARK creatures, their stats, taming and first danger rank.</span></a>
     <a href="#world"><span class="eyebrow">World</span><b>Danger map and biomes</b><span>The hidden danger zones beside the %%BIOMES_COUNT%% biomes and what spawns in each.</span></a>
-    <a href="#behavior"><span class="eyebrow">Behaviour</span><b>State machines</b><span>Distance tiers, the daily schedule and every transition by model.</span></a>
+    <a href="#behavior"><span class="eyebrow">Behaviour</span><b>State machines</b><span>The body near a player and the record beyond the loaded land: every transition by model, and a simulator of the wildlife register.</span></a>
     <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle, three ages in one strip, and the survival journal.</span></a>
     <a href="#recipes"><span class="eyebrow">Recipes</span><b>Workstations</b><span>The crafting rework: every station is a graph of what it makes, starting with the Armoury.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
@@ -652,36 +757,128 @@
 
   <section id="behavior">
     <header class="page-head">
-    <div><div class="eyebrow">Behaviour</div><h2>Animals that pace themselves</h2></div>
+    <div><div class="eyebrow">Behaviour</div><h2>One animal, two state machines</h2></div>
     <div class="ledes">
-    <p class="lede">Every creature runs a two-level state machine: an intent (roam, hunt, flee, sleep, drink...) and the animation-timed action that carries it out (notice, roar, chase, look around...). How much of it runs depends on the distance to the nearest player, so a valley of herds costs little until you walk into it, and herd mates react with their own delays instead of moving like one machine.</p>
+    <p class="lede">A wild animal is a body while a player is near and a record on the wildlife register the rest of the time. The body runs the behaviour machine: what it does from one half second to the next, as much of it as the distance to the player pays for. The record runs the existence machine: whether it fed, bred, was hunted or died while its chunk was not loaded. One hands the animal to the other as the chunk loads and unloads, hunger included.</p>
     </div>
     </header>
 
-    <div class="cols">
+    <div class="cols machines">
       <div class="part">
-    <h3>Detail by distance</h3>
-    <p class="lede">The nearer the player, the more of the machine runs.</p>
+    <h3>Behaviour state machine</h3>
+    <p class="lede">The animal as you meet it. A two-level machine: an intent (roam, hunt, flee, sleep, drink...) and the animation-timed action that carries it out (notice, roar, chase, look around...). Herd mates react with their own delays instead of moving like one machine.</p>
+
+    <h4 class="sub">Detail by distance</h4>
+    <p class="muted">The nearer the player, the more of the machine runs, so a valley of herds costs little until you walk into it.</p>
     <div class="panel">
       %%BEHAVIORTIERS%%
       <p class="lod-note">Each tier border has a margin of %%BEHAVIORMARGIN%%, so a creature on the line does not flicker between tiers. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
     </div>
-      </div>
-      <div class="part">
-    <h3>The day of a land animal</h3>
-    <p class="lede">Each animal shifts its own clock by up to half a minute, so a herd dozes off and wakes one by one.</p>
-    %%SCHEDULE%%
-      </div>
-    </div>
 
-    <h3>State machines by model</h3>
-    <p class="lede">Pick a model, then a distance tier. In the matrix, rows are the current state and columns the next one; a filled cell is a transition the real decision code produced in seeded encounters. Pick a state's name for everything it can lead to, or a cell for the rules behind that one change.</p>
+    <h4 class="sub">The day of a land animal</h4>
+    <p class="muted">Each animal shifts its own clock by up to half a minute, so a herd dozes off and wakes one by one.</p>
+    %%SCHEDULE%%
+
+    <h4 class="sub">State machines by model</h4>
+    <p class="muted">Pick a model, then a distance tier. In the matrix, rows are the current state and columns the next one; a filled cell is a transition the real decision code produced in seeded encounters. Pick a state's name for everything it can lead to, or a cell for the rules behind that one change.</p>
     <div class="tabs model-tabs" role="tablist" aria-label="Behaviour model">%%MODELTABS%%</div>
     %%MODELS%%
 
-    <h3>Action vocabulary</h3>
-    <p class="lede">The second level: what the body is doing inside a state, grouped by how it may move. Actions marked "+ clip" start with a one-shot reaction clip when the rig has one; turning in place steps with the rig's own turn clip.</p>
+    <h4 class="sub">Action vocabulary</h4>
+    <p class="muted">The second level: what the body is doing inside a state, grouped by how it may move. Actions marked "+ clip" start with a one-shot reaction clip when the rig has one; turning in place steps with the rig's own turn clip.</p>
     <div class="actions panel">%%ACTIONS%%</div>
+      </div>
+
+      <div class="part">
+    <h3>Existence state machine</h3>
+    <p class="lede">The animal while nobody is near. It has no body and takes no server time: the register of its biome region is lived on by rounds, once a game day. Here those rounds run without the game, years in a second, to see whether a region keeps within its bounds, keeps every kind of animal and settles, and to tune the weights until it does.</p>
+
+    <div class="ex" id="ex">
+    <h4 class="sub">A region and its years</h4>
+    <p class="muted">A biome region is a connected patch of one biome inside a tile of 32 by 32 chunks. Who lives in each sample biome is read from the spawn tags the game uses; the run is repeated from different draws, and the verdict speaks for all of them.</p>
+    <div class="ex-bar" role="group" aria-label="Region">
+      <label>Region<select data-ex="region"></select></label>
+      <label>Size<select data-ex="cells"><option value="64">64 chunks</option><option value="128">128 chunks</option><option value="256" selected>256 chunks</option><option value="512">512 chunks</option><option value="1024">1024 chunks, a whole tile</option></select></label>
+      <label>Danger zone<select data-ex="zone"><option value="1">1 Easy</option><option value="2">2 Dangerous</option><option value="3" selected>3 Deadly</option></select></label>
+      <label>Water<select data-ex="water"><option value="1">Surface water</option><option value="0">None</option></select></label>
+      <label><span>Fertility <output data-ex="fertility"></output></span><input type="range" data-ex="fertility" min="0.1" max="1.3" step="0.05"></label>
+    </div>
+    <div class="ex-bar" role="group" aria-label="Run">
+      <label>Start<select data-ex="start"><option value="settled" selected>Settled by the budget</option><option value="empty">Empty</option><option value="crowded">Twice its quota</option><option value="no_hunters">No hunters</option><option value="hunters">Hunters only</option></select></label>
+      <label>Span<select data-ex="days"><option value="180">180 days, 60 h of play</option><option value="360">360 days, 120 h</option><option value="720" selected>720 days, 240 h</option><option value="1440">1440 days, 480 h</option><option value="2880">2880 days, 960 h</option></select></label>
+      <label>Pace<select data-ex="pace"><option value="1" selected>A round a day</option><option value="4">Four a day, lived in</option></select></label>
+      <div class="ws-seg" data-ex-seg="rules" role="group" aria-label="Rules"><span>Rules</span><button type="button" data-value="bounded" aria-pressed="true">Bounded model</button><button type="button" data-value="coded" aria-pressed="false">As coded today</button></div>
+      <div class="ws-seg" data-ex-seg="arrivals" role="group" aria-label="Arrivals"><span>Arrivals</span><button type="button" data-value="1" aria-pressed="true">On</button><button type="button" data-value="0" aria-pressed="false">Off</button></div>
+      <button type="button" class="ws-reset" data-ex="draw">Another draw</button>
+    </div>
+    <p class="muted ex-idle" hidden>As coded: the rounds of <code>SilentLife</code> as they stood at commit <code>%%EXISTENCE_COMMIT%%</code>, with their own constants (listed under the weights). The game takes new groups in only where a player is near, so Arrivals starts off: this is the land nobody visits. Switch it on for land a player keeps coming back to.</p>
+    <div class="ex-verdict" aria-live="polite"><span class="muted">The region is lived through when this page opens.</span></div>
+    <p class="muted ex-status" aria-live="polite"></p>
+
+    <h4 class="sub">The life of a record</h4>
+    <p class="muted">Between two rounds a record is fed, hungry or starving: the hunger its body will have when the chunk loads. It comes to the region with its group or is born there, and it ends hunted, of age or starved. Each connection carries its weight: how often it was taken in the runs above, and under it what sets it.</p>
+    <div class="tabs ex-focus" role="tablist" aria-label="Class"></div>
+    <div class="panel ex-live">
+      <div class="ex-diagram"></div>
+      <p class="muted ex-diagram-note"></p>
+      <ul class="ex-edges"></ul>
+    </div>
+
+    <h4 class="sub">Who lives in the region</h4>
+    <div class="panel ex-live">
+      <h5>Animals by class<small>the mean of the runs, and the band eight runs in ten stay in</small></h5>
+      <div class="ex-legend" data-legend="animals"></div>
+      <div class="ex-chart" data-chart="animals"></div>
+      <details class="fold"><summary>The classes as a table</summary>
+        <div class="table-wrap"><table class="ex-table ex-classes"><thead><tr><th>Class</th><th>Quota, groups</th><th>Start</th><th>Last third</th><th>Groups</th><th>There</th><th>Eight runs in ten</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </div>
+    <div class="panel ex-live">
+      <h5>Pressure on food<small>appetite over food for each kind of eater; at 1 all of it is taken</small></h5>
+      <p class="muted ex-yardstick" hidden>The coded rules do not count food: this is the bounded model's yardstick laid on their register.</p>
+      <div class="ex-legend" data-legend="pressure"></div>
+      <div class="ex-chart" data-chart="pressure"></div>
+      <div class="table-wrap"><table class="ex-table ex-pressures"><thead><tr><th>Eater</th><th>Eats</th><th>Appetite</th><th>Food</th><th>Pressure</th><th>Room</th><th>Meal</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="ex-live">
+      <div class="table-wrap"><table class="ex-table ex-species"><thead><tr><th>Species</th><th>Class</th><th>Start</th><th>Last third</th><th>Groups</th><th>There</th><th>Gone by</th></tr></thead><tbody></tbody></table></div>
+      <p class="muted ex-table-note">Start and last third are animals in the mean run; There is the share of the last third's days with at least one alive, marked where it is under one day in twenty; Gone by is the day the median run that lost the species saw its last.</p>
+    </div>
+
+    <h4 class="sub">The bounded functions</h4>
+    <p class="muted">The proposal. Each round the region counts its register and reduces it to one number for each kind of eater, its pressure. Every daily odd is a straight line through that number, clamped to 0..1, so the same few weights decide every connection of the diagram.</p>
+    <dl class="panel ex-math">
+      <div><dt>Appetite</dt><dd><code>(HP / 50) ^ 0.75</code> for each animal: a 50 HP animal eats 1 a day, a Brontosaurus 2.2, a Pegomastax 0.5.</dd></div>
+      <div><dt>Food</dt><dd>Plant eaters: <code>chunks &times; supply &times; fertility</code>, times <code>dry</code> without surface water. Hunters: <code>carry &times; appetite of their prey</code>. Flyers and the animals of the sea take fixed shares of the supply.</dd></div>
+      <div><dt>Pressure</dt><dd><code>p = appetite &divide; food</code>.</dd></div>
+      <div><dt>Room</dt><dd><code>clamp(1 &minus; p)</code>. A fed animal with a mate in the region has a young with daily odds <code>fecundity &divide; span &times; room</code>, where the land can feed it too; it joins a group of its kind that has room, or founds one.</dd></div>
+      <div><dt>Meal</dt><dd><code>clamp(2 &minus; p)</code>: the odds that the day's meal is found. Found, the record steps towards fed; missed, towards starving, where it dies with daily odds <code>starve</code>.</dd></div>
+      <div><dt>Hunted</dt><dd>Daily odds <code>kill &times; tempo &times; &Sigma; clamp(p of its hunters)</code>, with <code>tempo = 1 &divide; (0.5 + HP / 100)</code>: the more hunters their prey has to carry, the more often it is taken, and giants less often than the small.</dd></div>
+      <div><dt>Age</dt><dd>As coded: the span of a species is <code>60 &times; (0.5 + HP / 100)</code> game days, and an animal dies a quarter to five quarters of it after it appeared.</dd></div>
+      <div><dt>Arrivals</dt><dd>A class below its quota of groups is allowed the quota in <code>refill</code> days; at its quota it still meets wanderers, the quota in <code>wander</code> days. Of a group only as many come as keep <code>p &le; 1</code>. The quota is the game's, times fertility.</dd></div>
+      <p class="ex-bounds">Two bounds hold whatever the weights. No young is born and no animal arrives that would take <code>p</code> above 1, so plant eaters never outgrow what the land grows, and hunters never outgrow what their prey carries. A kind passes its food only when the food itself shrinks (its prey is eaten, the water is gone); then meals are missed and it starves back under.</p>
+    </dl>
+
+    <h4 class="sub">Weights</h4>
+    <p class="muted">Move one and the region is lived through again. What is changed here stays in this browser; Save weights writes the file the next build of this page starts from.</p>
+    <div class="panel ex-weights">
+      <div class="rv-bar"><span class="muted ex-changed"></span>
+        <div class="rv-actions"><button type="button" class="rv-save ex-save">Save weights</button><button type="button" class="ex-copy">Copy JSON</button><button type="button" class="ex-reset">Reset</button></div></div>
+      <div class="ex-sliders"></div>
+      <ul class="ex-edges ex-balance" aria-label="What the weights imply"></ul>
+      <p class="muted ex-saved" aria-live="polite"></p>
+      <details class="fold"><summary>The constants of the coded rules</summary>
+        <div class="table-wrap"><table class="ex-table ex-coded"><thead><tr><th>Constant</th><th>Where</th><th>Value</th></tr></thead><tbody>%%EXISTENCE_CODED%%</tbody></table></div>
+      </details>
+    </div>
+
+    <h4 class="sub">Every sample region</h4>
+    <p class="muted">The same three questions for each of the %%EXISTENCE_REGIONS%% sample regions, under the bounded model and under the coded rules, with the size, zone, start, span and weights chosen above.</p>
+    <div class="ex-survey-bar"><button type="button" class="ws-reset ex-survey-run">Survey every sample region</button><span class="muted ex-survey-status" aria-live="polite"></span></div>
+    <div class="table-wrap ex-survey-wrap" hidden><table class="ex-table ex-survey"><thead><tr><th>Region</th><th>Bounded model</th><th>As coded, nobody near</th><th>As coded, players near</th></tr></thead><tbody></tbody></table></div>
+    </div>
+      </div>
+    </div>
   </section>
 
   <section id="progression">
@@ -932,6 +1129,10 @@
       .then(text => render(text, 'the live file next to this page')).catch(() => {});
   }
 })();
+</script>
+<script type="application/json" id="existence-data">%%EXISTENCE_DATA%%</script>
+<script>
+%%EXISTENCE_JS%%
 </script>
 <script type="application/json" id="ws-data">%%RECIPES_DATA%%</script>
 <script>
@@ -1250,6 +1451,9 @@ window.arkModels = (function () {
   window.arkRecipes = window.ArkWorkstationUI.mount(document.getElementById('ws'), recipeData);
   window.arkReview = window.ArkRecipeReview.mount(document.getElementById('rv'), recipeData, window.arkRecipes.icon);
 
+  // Existence: the simulator of the wildlife register (tools/existence_ui.js), run when its page is first opened.
+  window.arkExistence = window.ArkExistenceUI.mount(document.getElementById('ex'), JSON.parse(document.getElementById('existence-data').textContent));
+
   // Behaviour models: one tab per model and per distance tier; a filled matrix cell explains its transition.
   var models = Array.prototype.slice.call(document.querySelectorAll('#behavior .model'));
   function select(buttons, key, value) {
@@ -1409,6 +1613,7 @@ window.arkModels = (function () {
     if (current && current.id === 'behavior') renderDiagrams();
     window.arkModels.show(!!current && current.id === 'models');
     window.arkRecipes.show(!!current && current.id === 'recipes');
+    window.arkExistence.show(!!current && current.id === 'behavior');
   }
   window.addEventListener('hashchange', route);
   route();

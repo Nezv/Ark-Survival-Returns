@@ -1,0 +1,292 @@
+{
+  "about": "The existence model: how the wildlife register of one biome region lives beyond the loaded land. 'weights' are the proposal the Behaviour page of the showcase simulates (tools/existence_model.js, tools/existence_check.py); the game does not read this file yet. 'coded' holds the constants of SilentLife, LandRegister, WildClass, DangerTier and Config as they were read at the commit named, for the comparison run; tools/showcase_existence.py warns when the sources have moved on.",
+  "weights": [
+    {
+      "id": "supply",
+      "value": 0.24,
+      "min": 0.05,
+      "max": 0.6,
+      "step": 0.01,
+      "group": "land",
+      "label": "Supply",
+      "unit": "appetites per chunk",
+      "note": "Appetites a chunk of the richest land feeds a day. An appetite is what a 50 HP animal eats; an animal of other size eats (HP / 50) ^ 0.75."
+    },
+    {
+      "id": "dry",
+      "value": 0.5,
+      "min": 0.1,
+      "max": 1,
+      "step": 0.05,
+      "group": "land",
+      "label": "Dry land",
+      "unit": "of the supply",
+      "note": "What is left of the supply in a region with no surface water."
+    },
+    {
+      "id": "fecundity",
+      "value": 4,
+      "min": 1,
+      "max": 10,
+      "step": 0.25,
+      "group": "life",
+      "label": "Fecundity",
+      "unit": "young per span",
+      "note": "Young a fed animal with a mate in the region and all the room would have over its species' span."
+    },
+    {
+      "id": "starve",
+      "value": 0.25,
+      "min": 0.02,
+      "max": 1,
+      "step": 0.01,
+      "group": "life",
+      "label": "Starvation",
+      "unit": "odds a day",
+      "note": "Daily odds that a starving animal dies."
+    },
+    {
+      "id": "kill",
+      "value": 0.02,
+      "min": 0,
+      "max": 0.1,
+      "step": 0.002,
+      "group": "hunt",
+      "label": "Kill",
+      "unit": "odds a day",
+      "note": "Daily odds that a lone 50 HP animal is hunted when its hunters are at the limit of what their prey carries. Scaled by the tempo of the species: giants are hunted less often."
+    },
+    {
+      "id": "carryHunter",
+      "value": 0.21,
+      "min": 0.02,
+      "max": 0.6,
+      "step": 0.01,
+      "group": "hunt",
+      "label": "Prey per hunter",
+      "unit": "appetites per appetite",
+      "note": "Appetites of hunters one appetite of plant eaters carries."
+    },
+    {
+      "id": "carryApex",
+      "value": 0.12,
+      "min": 0.01,
+      "max": 0.3,
+      "step": 0.005,
+      "group": "hunt",
+      "label": "Prey per giant",
+      "unit": "appetites per appetite",
+      "note": "Appetites of hunting giants one appetite of their prey carries: plant eaters and lesser hunters."
+    },
+    {
+      "id": "refill",
+      "value": 4,
+      "min": 1,
+      "max": 120,
+      "step": 1,
+      "group": "land",
+      "label": "Arrivals",
+      "unit": "days",
+      "note": "Game days in which a region is allowed back its whole quota of groups, class by class, never more than it is short of (populationRefillDays). A group comes only where the land can feed it."
+    },
+    {
+      "id": "wander",
+      "value": 240,
+      "min": 0,
+      "max": 720,
+      "step": 10,
+      "group": "land",
+      "label": "Wanderers",
+      "unit": "days",
+      "note": "Game days in which a region at its quota still meets as many passing groups as its quota holds, so a species it has lost comes back; 0 turns them off. Of a group only as many stay as the land can feed."
+    }
+  ],
+  "fixed": {
+    "sizeExponent": 0.75,
+    "snow": 0.5,
+    "flyerShare": 0.07,
+    "sea": {
+      "grazer": 0.05,
+      "hunter": 0.5,
+      "apex": 0.12
+    }
+  },
+  "fertility": {
+    "GRASSLAND": 1.0,
+    "FOREST": 1.0,
+    "JUNGLE": 1.2,
+    "WETLAND": 1.1,
+    "SAVANNA": 0.85,
+    "TAIGA": 0.8,
+    "RIVER": 0.8,
+    "SHRUBLAND": 0.6,
+    "COAST": 0.6,
+    "MOUNTAIN": 0.5,
+    "TUNDRA": 0.5,
+    "BADLANDS": 0.4,
+    "GEOTHERMAL": 0.4,
+    "DESERT": 0.35,
+    "VOLCANIC": 0.3,
+    "OCEAN": 1.0
+  },
+  "regions": [
+    {
+      "id": "plains",
+      "biome": "minecraft:plains",
+      "name": "Plains",
+      "type": "GRASSLAND",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "savanna",
+      "biome": "minecraft:savanna",
+      "name": "Savanna",
+      "type": "SAVANNA",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "forest",
+      "biome": "minecraft:forest",
+      "name": "Forest",
+      "type": "FOREST",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "jungle",
+      "biome": "minecraft:jungle",
+      "name": "Jungle",
+      "type": "JUNGLE",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "swamp",
+      "biome": "minecraft:swamp",
+      "name": "Swamp",
+      "type": "WETLAND",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "taiga",
+      "biome": "minecraft:taiga",
+      "name": "Taiga",
+      "type": "TAIGA",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "desert",
+      "biome": "minecraft:desert",
+      "name": "Desert",
+      "type": "DESERT",
+      "snowy": false,
+      "water": false
+    },
+    {
+      "id": "badlands",
+      "biome": "minecraft:badlands",
+      "name": "Badlands",
+      "type": "BADLANDS",
+      "snowy": false,
+      "water": false
+    },
+    {
+      "id": "hills",
+      "biome": "minecraft:windswept_hills",
+      "name": "Windswept hills",
+      "type": "MOUNTAIN",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "snowy_plains",
+      "biome": "minecraft:snowy_plains",
+      "name": "Snowy plains",
+      "type": "GRASSLAND",
+      "snowy": true,
+      "water": true
+    },
+    {
+      "id": "snowy_taiga",
+      "biome": "minecraft:snowy_taiga",
+      "name": "Snowy taiga",
+      "type": "TAIGA",
+      "snowy": true,
+      "water": true
+    },
+    {
+      "id": "peaks",
+      "biome": "minecraft:jagged_peaks",
+      "name": "Jagged peaks",
+      "type": "MOUNTAIN",
+      "snowy": true,
+      "water": false
+    },
+    {
+      "id": "beach",
+      "biome": "minecraft:beach",
+      "name": "Beach",
+      "type": "COAST",
+      "snowy": false,
+      "water": true
+    },
+    {
+      "id": "ocean",
+      "biome": "minecraft:ocean",
+      "name": "Ocean",
+      "type": "OCEAN",
+      "snowy": false,
+      "water": true
+    }
+  ],
+  "coded": {
+    "commit": "95a003ed",
+    "silent": {
+      "GRAZED": 0.2,
+      "FED": 0.05,
+      "APPETITE": 0.3,
+      "HUNTS_FROM": 0.6,
+      "BREEDS_BELOW": 0.5,
+      "BIRTH": 0.25,
+      "DRY": 0.5,
+      "STARVES": 0.25,
+      "STRIKES_BACK": 0.3
+    },
+    "share": {
+      "GRAZER": 0.65,
+      "HUNTER": 0.2,
+      "APEX": 0.05,
+      "FLYER": 0.1,
+      "SEA": 1.0
+    },
+    "levels": {
+      "1": [
+        1,
+        12
+      ],
+      "2": [
+        8,
+        50
+      ],
+      "3": [
+        32,
+        80
+      ]
+    },
+    "config": {
+      "silentRoundDays": 1.0,
+      "silentLivedInRounds": 4,
+      "wildLifespanDays": 60.0,
+      "populationRefillDays": 4.0,
+      "wildGroupsPerPlayer": 10,
+      "populationRadius": 128,
+      "healthGrowth": 0.1,
+      "damageGrowth": 0.14
+    },
+    "hunger": 0.55
+  }
+}
