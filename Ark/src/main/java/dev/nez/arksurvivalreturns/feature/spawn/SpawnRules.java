@@ -70,6 +70,17 @@ public final class SpawnRules {
             BlockPos pos, RandomSource random) {
         return placement(type, world, pos) == Placement.OK;
     }
+    /**
+     * Whether the body of a land species can stand here, whatever may be born here: loaded, inside the world, dry,
+     * supported and clear. An animal that already lives ({@link SilentLife}) asks for no more.
+     */
+    public static boolean stands(ServerLevelAccessor world, Species species, BlockPos pos) {
+        var level = world.getLevel();
+        var box = bounds(species, pos);
+        return loaded(world, box.inflate(1)) && level.getWorldBorder().isWithinBounds(box) && pos.getY() >= level.getMinY() + 1
+                && box.maxY < level.getMaxY() && world.getFluidState(pos).isEmpty() && groundFits(world, species, pos, box)
+                && clearForBody(world, species, box);
+    }
     /** Why a land placement was accepted or refused; also the diagnostic vocabulary of {@code /arkwildlife}. */
     public enum Placement { OK, CONFIG, LOADED, BOUNDS, FLUID, DANGER, FOOTPRINT, CLEARANCE }
     /**

@@ -32,7 +32,8 @@ import org.jspecify.annotations.Nullable;
  * carries what its chunks showed when they loaded (how many hold open ground, how many water, how high they
  * lie), which of them were given their first animals, and how many groups of each {@link WildClass} it has
  * room for. The population budget counts the {@link WildlifeRegister} against these quotas; a region below one
- * is allowed arrivals at the pace of days, not seconds.
+ * is allowed arrivals at the pace of days, not seconds. A region also keeps how long players have stayed in it and
+ * the day its animals beyond the loaded land last lived a round of their rules ({@link SilentLife}).
  */
 public final class LandRegister extends SavedData {
     /** Biomes are read well above the ground, where the world's layout gives the surface biome and no cave. */
@@ -55,7 +56,9 @@ public final class LandRegister extends SavedData {
                 Codec.INT.fieldOf("water").forGetter(region -> region.water),
                 Codec.LONG.fieldOf("height").forGetter(region -> region.height),
                 Codec.DOUBLE.listOf().fieldOf("arrivals").forGetter(region -> java.util.Arrays.stream(region.arrivals).boxed().toList()),
-                Codec.DOUBLE.fieldOf("day").forGetter(region -> region.day)
+                Codec.DOUBLE.fieldOf("day").forGetter(region -> region.day),
+                Codec.DOUBLE.optionalFieldOf("stayed", 0.0).forGetter(region -> region.stayed),
+                Codec.DOUBLE.optionalFieldOf("lived", NEVER).forGetter(region -> region.lived)
         ).apply(i, Region::new));
 
         public final String biome;
@@ -67,13 +70,18 @@ public final class LandRegister extends SavedData {
         final double[] arrivals = new double[WildClass.values().length];
         /** The game day the arrivals were last grown to; NEVER before the first time. */
         double day;
+        /** Game days players have spent in the region, all of them together. */
+        double stayed;
+        /** The game day its animals beyond the loaded land last lived a round; NEVER before the first time. */
+        double lived;
         private transient @Nullable BiomeProfile profile;
 
         Region(String biome, int cells) {
-            this(biome, cells, 0, 0, 0, 0L, List.of(), NEVER);
+            this(biome, cells, 0, 0, 0, 0L, List.of(), NEVER, 0.0, NEVER);
         }
 
-        private Region(String biome, int cells, int surveyed, int ground, int water, long height, List<Double> arrivals, double day) {
+        private Region(String biome, int cells, int surveyed, int ground, int water, long height, List<Double> arrivals, double day,
+                       double stayed, double lived) {
             this.biome = biome;
             this.cells = cells;
             this.surveyed = surveyed;
@@ -82,9 +90,13 @@ public final class LandRegister extends SavedData {
             this.height = height;
             for (int i = 0; i < Math.min(arrivals.size(), this.arrivals.length); i++) this.arrivals[i] = arrivals.get(i);
             this.day = day;
+            this.stayed = stayed;
+            this.lived = lived;
         }
 
         public int surveyed() { return surveyed; }
+        public double stayed() { return stayed; }
+        public double lived() { return lived; }
         public boolean hasWater() { return water > 0; }
         /** The share of its surveyed chunks that hold water at the surface. */
         public double waterShare() { return surveyed == 0 ? 0.0 : (double) water / surveyed; }
@@ -261,11 +273,38 @@ public final class LandRegister extends SavedData {
         region.arrivals[kind.ordinal()] = Math.min(region.arrivals[kind.ordinal()], 1.0);
     }
 
+    /** A player has spent this much of a day in the region. */
+    public void stay(Region region, double days) {
+        region.stayed = Math.max(0.0, region.stayed + days);
+        setDirty();
+    }
+
+    /**
+     * The rounds of silent life the region is due, one every so many days and never more than a few at once: what a
+     * region fell further behind is not made up. Its first look only starts the clock.
+     */
+    public int due(Region region, double today, double every, int most) {
+        if (region.lived <= NEVER || today < region.lived) {
+            region.lived = today;
+            setDirty();
+            return 0;
+        }
+        int due = (int) Math.min(most, Math.floor((today - region.lived) / every));
+        if (due > 0) {
+            region.lived = due == most ? today : region.lived + due * every;
+            setDirty();
+        }
+        return due;
+    }
+
     /** Forgets what the region was allowed; for the tests. */
     public void empty(Region region) { java.util.Arrays.fill(region.arrivals, 0.0); }
 
-    /** Puts the region's clock back, as if this many days had passed without anyone looking; for the tests. */
-    public void age(Region region, double days) { if (region.day > NEVER) region.day -= days; }
+    /** Puts the region's clocks back, as if this many days had passed without anyone looking; for the tests. */
+    public void age(Region region, double days) {
+        if (region.day > NEVER) region.day -= days;
+        if (region.lived > NEVER) region.lived -= days;
+    }
 
     /** The groups (packs) of each class living in each region, from the register: loaded or not. */
     public Map<Region, int[]> count(ServerLevel level, WildlifeRegister register) {

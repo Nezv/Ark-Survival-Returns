@@ -11,6 +11,7 @@ import dev.nez.arksurvivalreturns.feature.spawn.LedgerModel;
 import dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations;
 import dev.nez.arksurvivalreturns.feature.spawn.PlainSight;
 import dev.nez.arksurvivalreturns.feature.spawn.RegionalLedger;
+import dev.nez.arksurvivalreturns.feature.spawn.SilentLife;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
 import dev.nez.arksurvivalreturns.feature.spawn.WildClass;
 import dev.nez.arksurvivalreturns.feature.spawn.WildlifeRegister;
@@ -530,6 +531,134 @@ public final class SpawnerGameTests {
             for (var creature : animals) if (!creature.isRemoved()) creature.discard();
         }
         h.succeed();
+    }
+
+    /**
+     * Beyond the loaded land an animal lives on as its record. A round of the rules ends a life past its span of
+     * age, gives a fed group below its size a young, shifts a group without taking an animal out of its chunk, and
+     * lets a hungry pack kill by its odds and be fed. A region players have stayed a day in gets its rounds more
+     * often. As a chunk loads, the body of a record that died stays out, a record without a body gets one, and a
+     * body whose record lived on is brought to it.
+     */
+    public static void silent(GameTestHelper h) {
+        for (int x = 0; x < 24; x++) for (int z = 0; z < 24; z++) h.setBlock(x, 1, z, Blocks.GRASS_BLOCK);
+        var world = h.getLevel();
+        var register = WildlifeRegister.get(world);
+        var land = LandRegister.get(world);
+        var floor = h.absolutePos(new BlockPos(12, 2, 12));
+        // Land no chunk of which is loaded and no other test stands on: its records are these and no others.
+        var far = floor.offset(160000, 0, 0);
+        var region = land.regionAt(world, far.getX(), far.getZ());
+        double today = world.getServer().overworld().getGameTime() / 24000.0;
+        var packs = new java.util.HashSet<java.util.UUID>();
+        var bodies = new java.util.ArrayList<CreatureEntity>();
+        boolean stayed = false;
+        try {
+            // Age: far past any span, each of a group dies of it, and its saved body is not to come back.
+            var elders = java.util.UUID.randomUUID();
+            packs.add(elders);
+            var old = new java.util.ArrayList<WildlifeRegister.Life>();
+            for (int i = 0; i < 3; i++) old.add(record(register, Species.PARASAUR, elders, 5, far, today - 100000.0, 0.2, true));
+            SilentLife.round(world, region);
+            for (var life : old) {
+                var end = register.end(life.id());
+                h.assertTrue(register.life(life.id()) == null && end != null && end.cause().equals(SilentLife.AGE) && end.silent(),
+                        "An animal far past its span did not die of age: " + end);
+                h.assertTrue(register.gone(life.id()), "The body of an animal that died as a record may still come back");
+            }
+            var ghost = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.NATURAL);
+            ghost.setUUID(old.getFirst().id());
+            ghost.snapTo(Vec3.atBottomCenterOf(floor), 0, 0);
+            ghost.finalizeSpawn(world, world.getCurrentDifficultyAt(floor), EntitySpawnReason.NATURAL, null);
+            var refused = new net.neoforged.neoforge.event.entity.EntityJoinLevelEvent(ghost, world, true);
+            WildlifeRegister.joined(refused);
+            h.assertTrue(refused.isCanceled() && !register.gone(ghost.getUUID()), "The saved body of an animal that died as a record was let back into the world");
+
+            // A fed pair below the size of its group gains a young, a record without a body; the group shifts, and nobody leaves the chunk.
+            var herd = java.util.UUID.randomUUID();
+            packs.add(herd);
+            for (int i = 0; i < 2; i++) record(register, Species.PARASAUR, herd, 1, far, today, 0.2, true);
+            java.util.function.Supplier<List<WildlifeRegister.Life>> members = () -> register.living().stream().filter(life -> life.pack().equals(herd)).toList();
+            boolean shifted = false;
+            for (int round = 0; round < 200 && (round < 20 || members.get().size() < 3); round++) {
+                SilentLife.round(world, region);
+                for (var life : members.get()) {
+                    h.assertTrue(life.x() >> 4 == far.getX() >> 4 && life.z() >> 4 == far.getZ() >> 4, "A record left the chunk it was left in: " + life);
+                    if (life.x() != far.getX() || life.z() != far.getZ()) shifted = true;
+                }
+            }
+            var grown = members.get();
+            h.assertTrue(grown.size() >= 3 && grown.size() <= Species.PARASAUR.maxGroup, "A fed pair did not grow to a group of its species: " + grown.size());
+            h.assertTrue(grown.stream().anyMatch(life -> !life.body() && life.silent()), "The young is not a record without a body: " + grown);
+            h.assertTrue(shifted, "The group never shifted");
+
+            // A hungry giant against that herd: by its odds it kills, the death is entered under its species, and it is fed.
+            var hunters = java.util.UUID.randomUUID();
+            packs.add(hunters);
+            var rex = record(register, Species.TYRANNOSAURUS, hunters, 100, far, today, 0.5, true);
+            boolean killed = false;
+            for (int round = 0; round < 40 && !killed; round++) {
+                var before = members.get();
+                SilentLife.round(world, region);
+                for (var life : before) {
+                    var end = register.end(life.id());
+                    if (register.life(life.id()) == null && end != null && end.cause().equals(Species.TYRANNOSAURUS.id) && end.silent()) killed = true;
+                }
+            }
+            var fed = register.life(rex.id());
+            h.assertTrue(killed, "A giant among a herd of the weakest made no kill in 40 rounds");
+            h.assertTrue(fed != null && fed.hunger() <= SilentLife.FED + 1.0e-9 && fed.silent(), "The pack that killed is not fed: " + fed);
+
+            // Where players have stayed a day the rounds come more often, and only the rounds that are due are lived.
+            double slow = SilentLife.every(region);
+            land.stay(region, SilentLife.STAY_DAYS);
+            stayed = true;
+            h.assertTrue(Math.abs(SilentLife.every(region) * Config.SILENT_LIVED_IN_ROUNDS.get() - slow) < 1.0e-9 && SilentLife.every(region) < slow,
+                    "A region players have stayed a day in does not get its rounds more often: " + SilentLife.every(region) + " against " + slow);
+            land.due(region, today, slow, 4);
+            land.age(region, slow * 2.5);
+            int due = (int) Math.min(4, Math.floor((today - region.lived()) / slow));
+            h.assertTrue(due >= 2 && land.due(region, today, slow, 4) == due && land.due(region, today, slow, 4) == 0,
+                    "Two and a half intervals behind, the region was not due its rounds once: " + due);
+
+            // As its chunk loads a record without a body gets one: its species, level, group and hunger.
+            var lone = java.util.UUID.randomUUID();
+            packs.add(lone);
+            var born = record(register, Species.PARASAUR, lone, 7, floor, today, 0.3, false);
+            SilentLife.embody(world, List.of());
+            h.assertTrue(world.getEntity(born.id()) instanceof CreatureEntity, "A record without a body in a loaded chunk got none");
+            var creature = (CreatureEntity) world.getEntity(born.id());
+            bodies.add(creature);
+            var kept = register.life(born.id());
+            h.assertTrue(creature.species() == Species.PARASAUR && creature.creatureLevel() == 7 && creature.packId().equals(lone) && creature.isNaturalWildlife()
+                    && Math.abs(creature.wildlife().mind().hunger() - 0.3) < 1.0e-6, "The body is not the animal of its record: " + creature);
+            h.assertTrue(kept != null && kept.body() && !kept.silent() && kept.appeared() == born.appeared(), "The record does not know its body: " + kept);
+
+            // A body back from the save whose record lived on is brought to it: the place and the hunger.
+            var moved = floor.offset(4, 0, 3);
+            register.put(kept.after(moved.getX(), moved.getZ(), 0.9));
+            var back = new net.neoforged.neoforge.event.entity.EntityJoinLevelEvent(creature, world, true);
+            WildlifeRegister.joined(back);
+            h.assertTrue(!back.isCanceled() && register.returning().contains(creature), "A body whose record lived on does not wait to be brought to it");
+            SilentLife.welcome(world, register);
+            h.assertTrue(creature.getBlockX() == moved.getX() && creature.getBlockZ() == moved.getZ(), "The body was not brought to where its record is: "
+                    + creature.blockPosition() + " for " + moved);
+            h.assertTrue(Math.abs(creature.wildlife().mind().hunger() - 0.9) < 1.0e-6 && !register.life(born.id()).silent(), "The body did not take its record's hunger");
+        } finally {
+            if (stayed) land.stay(region, -SilentLife.STAY_DAYS);
+            for (var creature : bodies) if (!creature.isRemoved()) creature.discard();
+            for (var life : List.copyOf(register.living())) if (packs.contains(life.pack())) register.end(world, life, WildlifeRegister.REMOVED);
+        }
+        h.succeed();
+    }
+
+    /** A record with no animal in the world: one left in an unloaded chunk, or, without a body, one born out there. */
+    private static WildlifeRegister.Life record(WildlifeRegister register, Species species, java.util.UUID pack, int level, BlockPos at,
+                                                double appeared, double hunger, boolean body) {
+        var life = new WildlifeRegister.Life(java.util.UUID.randomUUID(), species.id, pack, level, at.getX(), at.getY(), at.getZ(), appeared, appeared,
+                false, hunger, body, false, false);
+        register.put(life);
+        return life;
     }
 
     private static boolean seen(ServerLevel world, net.minecraft.world.entity.player.Player player, Vec3 feet, float width, float height) {

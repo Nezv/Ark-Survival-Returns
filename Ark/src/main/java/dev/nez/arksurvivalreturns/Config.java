@@ -29,6 +29,9 @@ public final class Config {
     public static final ModConfigSpec.IntValue POPULATION_TARGET, POPULATION_RADIUS, POPULATION_GLOBAL_CAP,
             POPULATION_INTERVAL, POPULATION_ATTEMPTS, POPULATION_CULL_MARGIN, POPULATION_MIN_DISTANCE, POPULATION_GROUPS;
     public static final ModConfigSpec.DoubleValue POPULATION_REFILL_DAYS;
+    public static final ModConfigSpec.BooleanValue SILENT_LIFE;
+    public static final ModConfigSpec.DoubleValue SILENT_ROUND_DAYS, WILD_LIFESPAN_DAYS;
+    public static final ModConfigSpec.IntValue SILENT_LIVED_IN_ROUNDS;
     public static final ModConfigSpec.EnumValue<dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model> POPULATION_MODEL;
     public static final ModConfigSpec.DoubleValue POPULATION_CULL_FRACTION, LEDGER_CYCLE_DAYS;
     public static final ModConfigSpec.IntValue POPULATION_GROUPS_PER_PASS, POPULATION_CAP_PER_PLAYER, POPULATION_HARD_CAP, LEDGER_REGION_SIZE;
@@ -161,6 +164,19 @@ public final class Config {
                 .defineEnum("populationModel", dev.nez.arksurvivalreturns.feature.spawn.NaturalPopulations.Model.BIOME);
         POPULATION_REFILL_DAYS = b.comment("BIOME: game days in which an emptied biome region is allowed back its whole quota of groups.")
                 .defineInRange("populationRefillDays", 4.0, 0.25, 120.0);
+        SILENT_LIFE = b.comment("BIOME: the animals beyond the loaded land live on as records, by rounds of cheap rules for each biome",
+                        "region: a group shifts within its chunks and feeds, hunters are matched against a group of the region by",
+                        "the odds of their strength, a fed group below its size may gain a young, and an animal past its span dies",
+                        "of age. As a chunk loads its animals are where and as their records are. False: they stand still.")
+                .define("silentLife", true);
+        SILENT_ROUND_DAYS = b.comment("BIOME: game days between two rounds of those rules in a biome region.")
+                .defineInRange("silentRoundDays", 1.0, 0.05, 30.0);
+        SILENT_LIVED_IN_ROUNDS = b.comment("BIOME: the rounds come this many times as often in a region where players have stayed a game day in all.")
+                .defineInRange("silentLivedInRounds", 4, 1, 24);
+        WILD_LIFESPAN_DAYS = b.comment("BIOME: game days a wild animal of 50 base HP lives; a species lives half of them plus a hundredth for",
+                        "each point of its base HP, and each animal a quarter to five quarters of that after it appeared. Age ends",
+                        "a life only beyond the loaded land.")
+                .defineInRange("wildLifespanDays", 60.0, 1.0, 10000.0);
         POPULATION_GROUPS = b.comment("LEDGER: wild groups (a herd, a pack, a pair or a lone animal) kept within populationRadius of each",
                         "player while the ledger is balanced; the ledger swings it a quarter either way. 10 within 128 blocks is a",
                         "group every 70 blocks or so, about 23 animals: what vanilla livestock amounts to on open ground.")

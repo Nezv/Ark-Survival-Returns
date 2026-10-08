@@ -32,7 +32,8 @@ public final class WildlifeCommand {
                 .executes(context -> report(context.getSource(), 64))
                 .then(Commands.literal("register")
                         .executes(context -> {
-                            WildlifeRegister.get(context.getSource().getLevel()).report(12).forEach(line -> send(context.getSource(), line));
+                            var level = context.getSource().getServer().overworld();
+                            WildlifeRegister.get(level).report(level, 12).forEach(line -> send(context.getSource(), line));
                             return 1;
                         }))
                 .then(Commands.literal("land")
@@ -47,7 +48,10 @@ public final class WildlifeCommand {
                                 IntegerArgumentType.getInteger(context, "radius")))));
     }
 
-    /** The biome region the player stands in: what its chunks showed, and its groups against its quotas, class by class. */
+    /**
+     * The biome region the player stands in: what its chunks showed, its groups against its quotas, class by class, and
+     * how its animals beyond the loaded land live.
+     */
     private static int landReport(CommandSourceStack source) {
         if (!(source.getEntity() instanceof net.minecraft.server.level.ServerPlayer player)) {
             source.sendFailure(Component.literal("Run this as a player: the report is for the region you stand in."));
@@ -64,6 +68,9 @@ public final class WildlifeCommand {
             text.append(String.format(java.util.Locale.ROOT, "  %s %d/%d (+%.1f)", kind.name().toLowerCase(java.util.Locale.ROOT),
                     count[kind.ordinal()], land.quota(level, region, kind), region.arrivals(kind)));
         send(source, text.toString());
+        send(source, String.format(java.util.Locale.ROOT, "beyond the loaded land: %s, players stayed %.2f days here (%s), a round every %.2f days, the last on day %.2f",
+                Config.SILENT_LIFE.get() ? "lives on" : "stands still", region.stayed(),
+                region.stayed() >= SilentLife.STAY_DAYS ? "lived in" : "passed through", SilentLife.every(region), Math.max(0.0, region.lived())));
         return 1;
     }
 

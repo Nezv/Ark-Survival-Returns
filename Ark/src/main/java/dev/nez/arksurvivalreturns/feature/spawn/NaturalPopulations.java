@@ -52,7 +52,8 @@ import org.jspecify.annotations.Nullable;
  * <p>Nothing appears or vanishes while somebody watches: an animal is placed, and a spare group removed, only
  * where no player has it in plain sight ({@link PlainSight}): behind them, behind a hill or a wood, or so far
  * off that it is a speck. And an animal the server has sent to a client is never removed at all: it is in the
- * {@link WildlifeRegister} and lives until it dies. Above its targets the budget only stops placing.
+ * {@link WildlifeRegister} and lives until it dies. Above its targets the budget only stops placing. Beyond the
+ * loaded land the animals live on as records ({@link SilentLife}), which the BIOME model's pass also moves on.
  */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class NaturalPopulations {
@@ -184,6 +185,7 @@ public final class NaturalPopulations {
      * there, and nothing is removed: what lives is in the {@link WildlifeRegister} until it dies.
      */
     private static void settle(ServerLevel level, List<? extends Player> players, List<CreatureEntity> wilds) {
+        SilentLife.pass(level, players);
         var land = LandRegister.get(level);
         var counts = land.count(level, WildlifeRegister.get(level));
         var groups = new ArrayList<>(groups(wilds));
@@ -444,19 +446,24 @@ public final class NaturalPopulations {
      * know it, so it stays until it dies. The list may be stale after an earlier cull.
      */
     public static boolean cullable(CreatureEntity c) {
-        if (c.isRemoved() || c.isPersistenceRequired() || c.isPassenger() || c.isVehicle() || c.isLeashed() || c.shown()) return false;
-        if (TorporService.restricted(c) || !c.tamingInventory().isEmpty()) return false;
-        if (!TamingService.tracked(c)) return true;
-        var taming = TamingService.of(c);
-        return taming.claimant() == null && taming.progress() <= 0f;
+        return !c.isRemoved() && !c.isPersistenceRequired() && !c.shown() && !inUse(c);
     }
 
-    private static boolean seen(ServerLevel level, List<? extends Player> players, CreatureEntity creature) {
+    /** Somebody rides, leads or is taming this animal; the rules beyond the loaded land leave it alone as well ({@link SilentLife}). */
+    public static boolean inUse(CreatureEntity c) {
+        if (c.isPassenger() || c.isVehicle() || c.isLeashed()) return true;
+        if (TorporService.restricted(c) || !c.tamingInventory().isEmpty()) return true;
+        if (!TamingService.tracked(c)) return false;
+        var taming = TamingService.of(c);
+        return taming.claimant() != null || taming.progress() > 0f;
+    }
+
+    static boolean seen(ServerLevel level, List<? extends Player> players, CreatureEntity creature) {
         return seen(level, players, creature.getX(), creature.getY(), creature.getZ(), creature.getBbWidth(), creature.getBbHeight());
     }
 
     /** Whether a player would watch an animal of this size appear or vanish with its feet here (spawning.populationOutOfSight). */
-    private static boolean seen(ServerLevel level, List<? extends Player> players, double x, double y, double z, float width, float height) {
+    static boolean seen(ServerLevel level, List<? extends Player> players, double x, double y, double z, float width, float height) {
         return Config.POPULATION_OUT_OF_SIGHT.get() && PlainSight.seen(level, players, x, y, z, width, height);
     }
 
