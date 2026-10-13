@@ -146,13 +146,11 @@ def beyond(config):
     """
     every, lived = config['silentRoundDays'], config['silentLivedInRounds']
     cards = [
-        ('Record only', 'Chunk not loaded', 'No body. The animal is its line on the wildlife register of its biome region, '
-                                            'and nothing of it runs between two rounds.'),
+        ('Record only', 'Chunk not loaded', 'No body: the animal is its line on the wildlife register, and nothing of it runs between rounds.'),
         ('Rounds', 'A round a game day' if every == 1 else f'A round every {every:g} game days',
-         f'The existence model lives the region on: its animals feed, are hunted, breed and age. {lived:g} times as often '
+         f'The region is lived on: its animals feed, are hunted, breed and age; {lived:g} times as often '
          'where players have stayed a day.'),
-        ('Hand-over', 'As the chunk loads', 'Each animal gets its body where and as its record is, hunger included: a young '
-                                            'born meanwhile has one, an animal that died has none.'),
+        ('Hand-over', 'As the chunk loads', 'Each animal gets its body where and as its record is, hunger included.'),
     ]
     return ('<div class="lod-scale" aria-hidden="true"><em>Past the last tier</em><span class="lod-beyond"><b>Record only</b>'
             '<small>any distance</small></span></div><div class="lod-cols">'

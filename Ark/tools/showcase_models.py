@@ -18,9 +18,9 @@ import model_mesh as M
 
 ARK = Path(__file__).resolve().parents[1]
 ASSETS = ARK / 'src/main/resources/assets/arksurvivalreturns'
-MACHINES = [('mechanical_press', 'Mechanical Press', 'Presses metal sheets. The ram slams down 6 px, holds, then eases back; the cog on top always turns while heated.'),
-            ('milling_machine', 'Milling Machine', 'Mills pipes. The spindle idles slowly and spins four times faster while the quill plunges into the workpiece.'),
-            ('cutting_machine', 'Cutting Machine', 'Cuts screws. A guarded blade spins nonstop while heated and the hinged arm swings down to cut.')]
+MACHINES = [('mechanical_press', 'Mechanical Press', 'Presses metal sheets: the ram slams down, holds, then eases back.'),
+            ('milling_machine', 'Milling Machine', 'Mills pipes: the spindle spins four times faster while the quill plunges.'),
+            ('cutting_machine', 'Cutting Machine', 'Cuts screws: a guarded blade spins while heated and the arm swings down.')]
 WEAPONS = [('bronze_longsword', 'Bronze Longsword', 'Faceted pommel, wrapped grip, rolled crossguard and a fullered blade with bright edges.'),
            ('bronze_hammer', 'Bronze Hammer', 'A wrapped haft, socket langets and a flared two-faced head.'),
            ('keratin_spear', 'Keratin Spear', 'A leaf-shaped keratin head on a mid-ridge, a fiber binding and an ochre-dyed grip.')]
@@ -229,14 +229,11 @@ def section(uri, e):
         assets['stations'].append(station(ident, title, note, uri))
     steel = authored_set('steel')
     if steel:
-        assets['armour'].append(armour('steel_armour', 'Steel armour', 'The Iron Age knight: a great helm, keeled '
-                                       'breastplate, lamed pauldrons, tassets, knee cops and sabatons.',
+        assets['armour'].append(armour('steel_armour', 'Steel armour', 'The Iron Age knight: great helm, keeled breastplate, lamed pauldrons.',
                                        'Iron Age (planned)', steel, uri))
-    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'A red-crested bronze helmet with long '
-                                   'cheek guards, a russet cuirass and diagonal baldric, segmented golden shoulders, red undercloth and tall greaves.',
+    assets['armour'].append(armour('bronze_armour', 'Bronze armour', 'A red-crested bronze helmet, a russet cuirass with baldric, golden shoulders and tall greaves.',
                                    '3D design', authored_set('bronze'), uri))
-    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'A hooded prehistoric hide suit: a '
-                                   'ribbed keratin face guard, broad carapace shoulder scales, horn-bound bracers and enclosed boots. No feathers.',
+    assets['armour'].append(armour('keratin_armour', 'Keratin armour', 'A hooded prehistoric hide suit: keratin face guard, carapace shoulder scales, horn-bound bracers.',
                                    '3D design', authored_set('keratin'), uri))
     for ident, title, note in WEAPONS:
         assets['weapons'].append(weapon(ident, title, note, uri))

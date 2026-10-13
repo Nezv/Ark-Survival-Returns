@@ -95,8 +95,7 @@ def section(species, e, rank_colors, rank_names, habitats):
     options = ''.join(f'<option value="{s["id"]}">{e(s["name"])}</option>' for s in sorted(species, key=lambda s: s['name']))
     ranks = ''.join(f'<span><i style="background:{color}"></i>{i + 1} {e(rank_names[i])}</span>' for i, color in enumerate(rank_colors))
     licences = listed([f'the {e(site)} ({e(licence)})' for site, licence in credits.items()])
-    note = (f'<p class="muted">Pictures: {licences}, fetched {e(atlas["fetched"])}; each one links to its source. They show the biome '
-            f'as those wikis photographed it, on vanilla terrain.</p>') if credits else ''
+    note = (f'<p class="muted">Pictures: {licences}, fetched {e(atlas["fetched"])}; each one links to its source, on vanilla terrain.</p>') if credits else ''
     # Which biomes the spawn tags leave out, said from the data so the sentence cannot go stale.
     parts = [f'the {counts["underground"]} underground biomes'] if counts['underground'] else []
     if bare:

@@ -167,13 +167,25 @@
   .dino dt { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
   .dino dd { margin: 0; font-variant-numeric: tabular-nums; text-transform: capitalize; }
 
-  /* world: the danger map, square, stays beside the biomes while they scroll */
+  /* world: the left part (title, text, map) is pinned and always whole on the screen; only the biomes scroll */
   .world { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px 32px; align-items: start; }
-  .world-map { position: sticky; top: 72px; }
+  .world-side { position: sticky; top: 72px; height: calc(100vh - 88px); min-height: 420px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  /* the pinned part starts where it stays and the page ends with the biomes (the pager and the footer close their column), so it is never moved or cut */
+  @media (min-width: 901px) { #world { margin-top: -24px; } main.pinned { padding-bottom: 16px; } }
+  .world-biomes .pager { margin-top: 14px; }
+  .world-biomes footer { max-width: none; margin: 0; padding: 14px 0 0; }
+  .world-head { display: grid; gap: 6px; }
+  .world-head h2 { font-size: clamp(26px, 2.6vw, 34px); margin: 0; }
+  .world-head .lede { font-size: 16px; margin-top: 4px; }
   .world-biomes { display: grid; gap: 14px; min-width: 0; }
-  @media (max-width: 900px) { .world { grid-template-columns: minmax(0, 1fr); } .world-map { position: static; } }
-  .map-wrap { width: min(100%, max(280px, calc(100vh - 230px))); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  #danger { display: block; width: 100%; height: auto; aspect-ratio: 1; cursor: grab; touch-action: none; }
+  @media (max-width: 900px) {
+    .world { grid-template-columns: minmax(0, 1fr); }
+    .world-side { position: static; height: auto; min-height: 0; }
+    .map-view { flex: none; aspect-ratio: 1; }
+  }
+  .map-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .map-view { flex: 1; min-height: 0; position: relative; }
+  #danger { position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
   #danger:active { cursor: grabbing; }
   .map-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 14px; }
   .legend { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -721,7 +733,7 @@
     <header class="page-head">
     <div><div class="eyebrow">Wildlife</div><h2>%%SPECIES_COUNT%% creatures, built from ARK skeletons</h2></div>
     <div class="ledes">
-    <p class="lede">Every creature keeps its original ARK bone hierarchy and animation clips, rebuilt as Minecraft cuboids and rendered with GeckoLib. Five coloured skin variants each, herds, hunters, nests, sea creatures and cold-climate species. The pips show the first danger rank where each one appears. Each is pictured under the saddle drawn for it: the item is stitched at the Saddlery and fits that species only, but the game does not draw it on the animal yet.</p>
+    <p class="lede">Each creature keeps its original ARK bones and animation clips, rebuilt as Minecraft cuboids and rendered with GeckoLib, in five skin variants. The pips show the first danger rank where it appears. Each is pictured under its own saddle; the game does not draw saddles on the animal yet.</p>
     </div>
     </header>
     <div class="filters" role="group" aria-label="Filter creatures">
@@ -738,17 +750,15 @@
   </section>
 
   <section id="world">
-    <header class="page-head">
-    <div><div class="eyebrow">World</div><h2>Hidden danger over %%BIOMES_COUNT%% biomes</h2></div>
-    <div class="ledes">
-    <p class="lede">The Overworld repeats three danger zones in a symmetric grid: the easy zone around the spawn holds a fifth of the land, the dangerous and the deadly zone two fifths each, and curved borders make the pattern feel random on foot. The zone decides which species may appear and how strong they are; the biome decides who lives there. Players only see the zones through the Xaero map overlay, and that overlay can be locked until the tribe tames a creature from the deadly zone.</p>
-    <p class="lede">The map runs the same formula as the mod: drag to pan, scroll to zoom. Beside it is every biome the pack generates, Minecraft's own and the ones Terralith adds, with what spawns there, counted by community; open a card for the names. The dot beside a name is the danger rank where that creature first appears.%%BIOMES_EMPTY%% The Nether and the End are closed in this pack.</p>
-    </div>
-    </header>
     <div class="world">
-      <div class="world-map">
+      <div class="world-side">
+        <header class="world-head">
+          <div class="eyebrow">World</div>
+          <h2>Hidden danger over %%BIOMES_COUNT%% biomes</h2>
+          <p class="lede">Three danger zones repeat around the spawn: easy, dangerous, deadly. The zone sets which species appear and how strong; the biome sets who lives there. Drag the map, scroll to zoom.</p>
+        </header>
         <div class="map-wrap">
-          <canvas id="danger" aria-label="Interactive danger zone map"></canvas>
+          <div class="map-view"><canvas id="danger" aria-label="Interactive danger zone map"></canvas></div>
           <div class="map-bar">
             <div class="legend" id="legend"></div>
             <div class="map-controls">
@@ -779,7 +789,7 @@
     <header class="page-head">
     <div><div class="eyebrow">Existence Model</div><h2>One animal, rendered and unrendered</h2></div>
     <div class="ledes">
-    <p class="lede">A wild animal is a body while a player is near and a record on the wildlife register the rest of the time. Rendered, it runs the behavior model: what it does from one half second to the next, as much of it as the distance to the player pays for. Unrendered, it runs the existence model: whether it fed, bred, was hunted or died while its chunk was not loaded. One hands the animal to the other as the chunk loads and unloads, hunger included. The two columns take the same five steps, each beside its counterpart.</p>
+    <p class="lede">A wild animal is a body while a player is near and a record on the wildlife register otherwise. Rendered, it runs the behavior model; unrendered, the existence model, which settles whether it fed, bred, was hunted or died. The two columns take the same five steps, side by side.</p>
     </div>
     </header>
 
@@ -788,11 +798,11 @@
         <header class="twin-head">
           <div class="eyebrow">Rendered creatures</div>
           <h3>Behavior Model</h3>
-          <p class="lede">The animal as you meet it: a body in a loaded chunk. A two-level machine: an intent (roam, hunt, flee, sleep, drink...) and the animation-timed action that carries it out (notice, roar, chase, look around...). Herd mates react with their own delays instead of moving like one machine.</p>
+          <p class="lede">The animal as you meet it: an intent (roam, hunt, flee, sleep...) and the animation-timed action that carries it out. Herd mates react with their own delays.</p>
         </header>
         <div class="panel twin-tiers">
           %%BEHAVIORTIERS%%
-          <p class="lod-note">The nearer the player, the more of the model runs, so a valley of herds costs little until you walk into it. Each tier border has a margin of %%BEHAVIORMARGIN%%; a hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
+          <p class="lod-note">The nearer the player, the more of the model runs; each tier border has a margin of %%BEHAVIORMARGIN%%. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
         </div>
         <div class="panel twin-pick">
           <div class="pick"><span class="label">Model</span><div class="tabs model-tabs" role="tablist" aria-label="Behavior model">%%MODELTABS%%</div></div>
@@ -802,31 +812,31 @@
 
         <div class="step">
           <h4><i>1</i>Routine<small>the day of a land animal</small></h4>
-          <p class="muted">The 24 game hours of a carnivore and of a herbivore. Each animal shifts its own clock by up to half a minute, so a herd dozes off and wakes one by one.</p>
+          <p class="muted">The 24 game hours of a carnivore and of a herbivore; each animal shifts its own clock, so a herd wakes one by one.</p>
           %%SCHEDULE%%
         </div>
 
         <div class="step">
           <h4><i>2</i>State machine<small>every transition of the model picked</small></h4>
-          <p class="muted">Rows are the current state and columns the next one; a filled cell is a transition the real decision code produced in seeded encounters. Pick a state's name for everything it can lead to, or a cell for the rules behind that one change.</p>
+          <p class="muted">Rows are the current state, columns the next; a filled cell is a transition seen in seeded encounters. Pick a state or a cell for the rules behind it.</p>
           %%MACHINES%%
         </div>
 
         <div class="step">
           <h4><i>3</i>Bridges<small>the actions inside a change of state</small></h4>
-          <p class="muted">Every change of state first plays a short bridge timed to the rig's own clips (lengths are the named species'). A hit or a threat at the body is a reflex and skips the display.</p>
+          <p class="muted">Every change of state first plays a short bridge timed to the rig's own clips; a hit or a threat at the body skips it.</p>
           %%BRIDGES%%
         </div>
 
         <div class="step">
           <h4><i>4</i>Model<small>the same transitions as a diagram</small></h4>
-          <p class="muted">The state machine of the model and the distance picked, drawn. A dashed "Any state" stands for a rule that fires from most states; the matrix lists every source.</p>
+          <p class="muted">The state machine and the distance picked, drawn; a dashed "Any state" stands for a rule that fires from most states.</p>
           %%DIAGRAMS%%
         </div>
 
         <div class="step">
           <h4><i>5</i>States<small>the action vocabulary</small></h4>
-          <p class="muted">The second level: what the body is doing inside a state, grouped by how it may move. Actions marked "+ clip" start with a one-shot reaction clip when the rig has one; turning in place steps with the rig's own turn clip.</p>
+          <p class="muted">What the body does inside a state, grouped by how it may move; "+ clip" actions start with a one-shot reaction clip when the rig has one.</p>
           <div class="actions panel">%%ACTIONS%%</div>
         </div>
       </div>
@@ -835,7 +845,7 @@
         <header class="twin-head">
           <div class="eyebrow">Unrendered creatures</div>
           <h3>Existence Model</h3>
-          <p class="lede">The animal while nobody is near: a record with no body, taking no server time between two rounds. Here those rounds run without the game, years in a second, to see whether a region keeps within its bounds, keeps every kind of animal and settles, and to tune the weights until it does.</p>
+          <p class="lede">The animal while nobody is near: a record with no body, costing no server time between rounds. Here the rounds run without the game, years in a second, to tune the weights until a region keeps within its bounds.</p>
         </header>
         <div class="panel twin-tiers">
           %%EXISTENCE_BEYOND%%
@@ -863,10 +873,10 @@
 
         <div class="step">
           <h4><i>1</i>Populational stability<small>a region and its years</small></h4>
-          <p class="muted">A biome region is a connected patch of one biome inside a tile of 32 by 32 chunks. Who lives in each sample biome is read from the spawn tags the game uses; the run is repeated from different draws, and the verdict speaks for all of them.</p>
+          <p class="muted">A biome region is a connected patch of one biome inside a tile of 32 by 32 chunks; who lives there is read from the game's spawn tags, and the verdict holds across repeated draws.</p>
           <div class="ex-verdict" aria-live="polite"><span class="muted">The region is lived through when this page opens.</span></div>
           <details class="fold"><summary>Every sample region</summary>
-            <p class="muted">The same three questions for each of the %%EXISTENCE_REGIONS%% sample regions, under the bounded model and under the first rules, with the size, zone, start, span and weights set on this page.</p>
+            <p class="muted">The same three questions for each of the %%EXISTENCE_REGIONS%% sample regions, under the bounded model and under the first rules, with the settings on this page.</p>
             <div class="ex-survey-bar"><button type="button" class="ws-reset ex-survey-run">Survey every sample region</button><span class="muted ex-survey-status" aria-live="polite"></span></div>
             <div class="table-wrap ex-survey-wrap" hidden><table class="ex-table ex-survey"><thead><tr><th>Region</th><th>Bounded model</th><th>First rules, nobody near</th><th>First rules, players near</th></tr></thead><tbody></tbody></table></div>
           </details>
@@ -874,7 +884,7 @@
 
         <div class="step">
           <h4><i>2</i>Population history<small>the life of a record</small></h4>
-          <p class="muted">Between two rounds a record is fed, hungry or starving: the hunger its body will have when the chunk loads. It comes to the region with its group or is born there, and it ends hunted, of age or starved. Each connection carries its weight: how often it was taken in the runs, and under it what sets it.</p>
+          <p class="muted">Between two rounds a record is fed, hungry or starving. It comes to the region with its group or is born there, and ends hunted, of age or starved. Each connection carries its weight: how often it was taken in the runs.</p>
           <div class="tabs ex-focus" role="tablist" aria-label="Class"></div>
           <div class="panel ex-live">
             <div class="ex-diagram"></div>
@@ -885,7 +895,7 @@
 
         <div class="step">
           <h4><i>3</i>Statistics<small>who lives in the region</small></h4>
-          <p class="muted">The mean of the runs: the animals of each class over the days, the pressure of each kind of eater on its food, and every species of the region.</p>
+          <p class="muted">The mean of the runs: animals per class over the days, the pressure on each food, and every species of the region.</p>
           <div class="tabs ex-stat-tabs" role="tablist" aria-label="Statistics"><button type="button" role="tab" data-stat="animals" aria-selected="true">Animals by class</button><button type="button" role="tab" data-stat="pressure" aria-selected="false">Pressure on food</button><button type="button" role="tab" data-stat="species" aria-selected="false">Species</button></div>
           <div class="panel ex-live ex-stat" data-stat="animals" role="tabpanel">
             <h5>Animals by class<small>the mean of the runs, and the band eight runs in ten stay in</small></h5>
@@ -909,7 +919,7 @@
 
         <div class="step">
           <h4><i>4</i>Model<small>the bounded functions</small></h4>
-          <p class="muted">What the game runs beyond the loaded land (<code>spawning.silentRules = BOUNDED</code>, <code>BoundedLife.java</code>). Each round the region counts its register and reduces it to one number for each kind of eater, its pressure. Every daily odd is a straight line through that number, clamped to 0..1, so the same few weights decide every connection of the diagram.</p>
+          <p class="muted">What the game runs beyond the loaded land (<code>spawning.silentRules = BOUNDED</code>, <code>BoundedLife.java</code>). Each round the region reduces its register to one pressure per kind of eater, and every daily odd is a straight line through it, clamped to 0..1.</p>
           <dl class="panel ex-math">
             <div><dt>Appetite</dt><dd><code>(HP / 50) ^ 0.75</code> for each animal: a 50 HP animal eats 1 a day, a Brontosaurus 2.2, a Pegomastax 0.5.</dd></div>
             <div><dt>Food</dt><dd>Plant eaters: <code>chunks &times; supply &times; fertility</code>, times <code>dry</code> without surface water; in the game the chunks are those of the region that were seen loaded and showed open ground. Hunters: <code>carry &times; appetite of their prey</code>. Flyers and the animals of the sea take fixed shares of the supply.</dd></div>
@@ -925,7 +935,7 @@
 
         <div class="step">
           <h4><i>5</i>Parameters<small>the weights</small></h4>
-          <p class="muted">Move one and the region is lived through again. What is changed here stays in this browser; Save weights writes the file the next build of this page starts from. The game reads its own: <code>spawning.boundedLife</code> in the server config, whose defaults these are. Recorded runs are set against this model by <code>tools/session_inspect.py</code> (<code>design/existence/inspector.html</code>).</p>
+          <p class="muted">Move one and the region is lived through again. Changes stay in this browser; Save weights writes the file the next build of this page starts from. The game reads <code>spawning.boundedLife</code> in the server config, whose defaults these are.</p>
           <div class="panel ex-weights">
             <div class="rv-bar"><span class="muted ex-changed"></span>
               <div class="rv-actions"><button type="button" class="rv-save ex-save">Save weights</button><button type="button" class="ex-copy">Copy JSON</button><button type="button" class="ex-reset">Reset</button></div></div>
@@ -945,7 +955,7 @@
     <header class="page-head">
     <div><div class="eyebrow">Progression</div><h2>From a loose rock to the Iron Age</h2></div>
     <div class="ledes">
-    <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds %%TREE_COUNT%% technologies over three ages, drawn here as the game draws them: one strip, left to right. Each age opens at a gate, splits into %%TREE_LANES%% lanes and closes at a finale that needs every lane and opens the next age; one secret bonus food hides in each. Progress is shared by your FTB team. Hover a node for its objective; drag the strip, or pick an age, to move along it, and <b>Whole tree</b> fits the three ages on the screen.</p>
+    <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds %%TREE_COUNT%% technologies over three ages, drawn as the game draws them in one strip. Each age opens at a gate, splits into %%TREE_LANES%% lanes and closes at a finale that needs every lane; one secret bonus food hides in each. Progress is shared by your FTB team. Hover a node for its objective.</p>
     </div>
     </header>
     <div class="tree-bar">
@@ -960,7 +970,7 @@
     <div class="node-info" id="node-info" aria-live="polite"><b>Pick a node</b><span class="muted">The objective and how it completes appear here.</span></div>
 
     <h3>Survival Journal</h3>
-    <p class="lede">The FTB Quests book (press <code>J</code>) teaches each system with short chapters, shared by the tribe.</p>
+    <p class="lede">The FTB Quests book (press <code>J</code>) teaches each system in short chapters, shared by the tribe.</p>
     <div class="grid-5">%%JOURNAL%%</div>
   </section>
 
@@ -968,8 +978,8 @@
     <header class="page-head">
     <div><div class="eyebrow">Recipes</div><h2>Workstations you read like a map</h2></div>
     <div class="ledes">
-    <p class="lede">The crafting rework (P14): no bench keeps the 3&times;3 grid. Each one opens a graph of what it makes over half the screen, set in a carved baroque frame with the bench's sigil in its cartouche, and a recipe can ask for more than nine items, so no vanilla table can make it. Six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the Campfire, the Forge, the Stonecutter and the machine line are designed here and not built yet.</p>
-    <p class="lede">Every recipe is made where it would really be made, so twelve benches share the %%RECIPES_FAMILIES%% recipe families: the Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand (carpentry, textiles, camp gear, accessories, redstone), the Saddlery stitches a saddle for each of the 41 species, unlocked at a level that grows with the animal, the Campfire cooks, the Stonecutter cuts stone, the Mortar &amp; Pestle grinds, the Primitive Forge smelts ore and fires clay and glass, the Medicine Bench makes remedies, the Smithing Table hammers metal goods and trims, and the Iron Age machine line works the steel: the Mechanical Press (which also makes paper and books and packs blocks) rolls sheet and wire, the Milling Machine pipes and engines, the Cutting Machine screws and sawn planks.</p>
+    <p class="lede">The crafting rework (P14): no bench keeps the 3&times;3 grid. Each opens a graph of what it makes in a carved baroque frame, and a recipe can ask for more than nine items. Six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet.</p>
+    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over twelve benches. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
     </div>
     </header>
     <div class="ws-split">
@@ -989,9 +999,9 @@
       <div class="ws-inv" aria-live="polite"></div>
     </div>
     <div class="ws-notes">
-      <div class="card"><h4>The graph</h4><p class="muted">Materials float like notes in Obsidian, dimmed until the player's permanent level unlocks them. Click one and what it makes grows out of it and pushes the rest aside; a double ring is a group that opens the same way. Click a recipe and its ingredients grow beside it, each marked with the amount it needs, red while short. Names show only on hover; drag any node, click empty space or press Escape to step back.</p></div>
-      <div class="card"><h4>Crafting</h4><p class="muted">Click the selected recipe again, or Craft: the result goes straight into the inventory. Shift makes as many as the inventory pays for, and the amount box multiplies the cost. A node with dots under it holds variants (wood types, colours, stone kinds): scroll over it, or use the arrows in the bar, to switch.</p></div>
-      <div class="card"><h4>One source for page and mod</h4><p class="muted">The benches live in <code>Ark/design/workstations</code>: one design file per bench, <code>graph_style.json</code> for the look, frames from <code>tools/build_workstation_crests.py</code>. <code>tools/workstation_plan.py</code> places every recipe, the furnace and stonecutter ones too, and lists any that no bench would show; the page runs the same deterministic graph code as the mod (<code>tools/workstation_graph.js</code>, <code>WorkstationGraph.java</code>), in the same units, font and icons.</p></div>
+      <div class="card"><h4>The graph</h4><p class="muted">Materials float like notes in Obsidian, dimmed until the player's level unlocks them. Click one and what it makes grows out of it; a double ring is a group. Click a recipe and its ingredients grow beside it, red while short. Drag any node; click empty space or press Escape to step back.</p></div>
+      <div class="card"><h4>Crafting</h4><p class="muted">Click the selected recipe again, or Craft: the result goes into the inventory. Shift makes as many as the inventory pays for. A node with dots under it holds variants: scroll over it to switch.</p></div>
+      <div class="card"><h4>One source for page and mod</h4><p class="muted">The benches live in <code>Ark/design/workstations</code>, one design file each. The page runs the same deterministic graph code as the mod (<code>tools/workstation_graph.js</code>, <code>WorkstationGraph.java</code>).</p></div>
     </div>
     </div>
     <details class="ws-recipes"><summary>All %%RECIPES_COUNT%% Armoury recipes</summary>
@@ -999,7 +1009,7 @@
     </details>
 
     <h3>Every vanilla recipe: go, stay or change</h3>
-    <p class="lede">All %%RECIPES_VANILLA%% vanilla recipes with the plan for each, %%RECIPES_DECIDE%% still to decide. <b>Go</b> removes it, <b>Stay</b> keeps its grid cost at the bench shown, <b>Change</b> keeps it with a new cost, <b>?</b> leaves it to decide. The plan comes from rules (the theme policy, closed dimensions, what each bench is for), the bench designs and your saved decisions; a row that folds variants opens into its recipes. Change a fate, a bench or a note here, then <b>Save decisions</b> and put the file at <code>Ark/design/workstations/vanilla_fates.json</code>: the next build applies it.</p>
+    <p class="lede">All %%RECIPES_VANILLA%% vanilla recipes with the plan for each, %%RECIPES_DECIDE%% still to decide. <b>Go</b> removes it, <b>Stay</b> keeps its grid cost at the bench shown, <b>Change</b> keeps it with a new cost, <b>?</b> leaves it to decide. <b>Save decisions</b> writes the file to put at <code>Ark/design/workstations/vanilla_fates.json</code>; the next build applies it.</p>
     <div class="rv" id="rv">
       <div class="rv-bar">
         <div class="rv-summary" aria-live="polite"></div>
@@ -1019,7 +1029,7 @@
     </div>
 
     <h3>Item sprites</h3>
-    <p class="muted">The Ark items' own 32 px sprites; dinosaur meats are drawn larger in hand and on the ground than normal Minecraft meat.</p>
+    <p class="muted">The Ark items' own 32 px sprites; dinosaur meats are drawn larger than Minecraft's.</p>
     %%ITEMS%%
   </section>
 
@@ -1027,14 +1037,14 @@
     <header class="page-head">
     <div><div class="eyebrow">Accessories</div><h2>Gear worn on the body</h2></div>
     <div class="ledes">
-    <p class="lede">Every Curios slot is in use: two head slots, necklace, back, body, two bracelets, hands, two rings, belt, legs, two feet, a charm and the universal curio slot. Each accessory is a small model hung on the player's own bones, so it walks, sneaks, swims and rides with the wearer, spreads over armour, and shows on the first-person arms. Renders below come from the shipped models.</p>
+    <p class="lede">Every Curios slot is in use. Each accessory is a small model hung on the player's own bones, so it walks, sneaks, swims and rides with the wearer and shows on the first-person arms. Renders come from the shipped models.</p>
     </div>
     </header>
     <h3>Primitive gadgets</h3>
-    <p class="muted">What prehistoric people actually wore, made from creature parts and camp materials: slit goggles, Ötzi's pack frame, snowshoes, bone skates, a Beaker-culture wristguard, the Ishango tally bone. The stalker set (hood, ghillie wrap, moccasins) hides each sense the creatures use: scent, sight and hearing.</p>
+    <p class="muted">What prehistoric people actually wore, made from creature parts and camp materials. The stalker set (hood, ghillie wrap, moccasins) hides each sense the creatures use: scent, sight and hearing.</p>
     <div class="dinos accessory-grid">%%ACC_PRIMITIVE%%</div>
     <h3>Relics and totems</h3>
-    <p class="muted">The mystical set, bound with red ochre: amber that refuses death, an alicorn against poison, the feathered-serpent mantle, the Guardian's crown, rings and creature totems.</p>
+    <p class="muted">The mystical set, bound with red ochre: amber, an alicorn, the feathered-serpent mantle, the Guardian's crown, rings and creature totems.</p>
     <div class="dinos accessory-grid">%%ACC_RELIC%%</div>
     <h3>Creature parts</h3>
     <p class="muted">A player kill rolls the creature's part on top of its carcass (meat, hide, bone). The Tally Bone adds a Looting level against creatures.</p>
@@ -1045,7 +1055,7 @@
     <header class="page-head">
     <div><div class="eyebrow">Models</div><h2>Every block and authored 3D model</h2></div>
     <div class="ledes">
-    <p class="lede">Built from Minecraft cuboids, with no custom rendering library, and drawn here from the files the mod ships. The blocks are still renders, each with the same camera and light. The machines, the Saddlery, the armour and the weapons are live in three.js, with the same elements, UVs and textures: machines run their real animation rules, armour turns on a walking player, weapons turn in place, and a drag turns any of them. Offline, each live card shows a still render instead.</p>
+    <p class="lede">Built from Minecraft cuboids and drawn from the files the mod ships. Blocks are still renders; machines, the Saddlery, armour and weapons are live in three.js with the same elements, UVs and textures, and a drag turns any of them. Offline, a live card shows a still render.</p>
     </div>
     </header>
     <h3>Blocks</h3>
@@ -1053,22 +1063,22 @@
     <div class="dinos">%%BLOCKS%%</div>
     <div class="model-row">
       <div class="part"><h3>Machines</h3>
-      <p class="muted">The Iron Age line (planned): press, mill and cutter share one 1&times;2 chassis with a belt that hands items from machine to machine. Heat at the back sets the speed, like Create's tiers: cold stops the line, superheated doubles it. Pick the heat under each machine.</p></div>
+      <p class="muted">The Iron Age line (planned): press, mill and cutter share one 1&times;2 chassis with a belt between machines. Heat at the back sets the speed: cold stops the line, superheated doubles it.</p></div>
       %%MODELS_MACHINES%%
     </div>
     <div class="model-row">
       <div class="part"><h3>Workstations</h3>
-      <p class="muted">The benches that stand two blocks tall. The Saddlery shows the saddle concept on its horse: the bronze blanket with its gold edge, the steel one over the rail and the hide one rolled under the bench.</p></div>
+      <p class="muted">The benches that stand two blocks tall; the Saddlery shows the saddle concept on its horse.</p></div>
       %%MODELS_STATIONS%%
     </div>
     <div class="model-row">
       <div class="part"><h3>Armour</h3>
-      <p class="muted">One authored silhouette per age: prehistoric horn and hide, early bronze-age hammered metal and hide, then a medieval steel knight. These 3D armour designs are previewed here; custom in-game rendering is pending.</p></div>
+      <p class="muted">One silhouette per age: prehistoric horn and hide, bronze-age hammered metal, medieval steel. Previewed here; custom in-game rendering is pending.</p></div>
       %%MODELS_ARMOUR%%
     </div>
     <div class="model-row">
       <div class="part"><h3>Authored weapons</h3>
-      <p class="muted">In the inventory these keep their sprites; in the hands they are these models, laid on the same diagonal as the sprite so the vanilla grip poses still fit.</p></div>
+      <p class="muted">In the inventory these keep their sprites; in the hands they are these models.</p></div>
       %%MODELS_WEAPONS%%
     </div>
   </section>
@@ -1077,14 +1087,14 @@
     <header class="page-head">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
     <div class="ledes">
-    <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page, so shaders and the menus share one look. Containers become light limestone, so vanilla's dark titles stay readable. Buttons, the hotbar and tooltips become dark basalt with moss and ember accents. Every slot stays exactly where vanilla puts it, so other mods' screens still line up. A baroque restyle (P16, in production) is replacing this look with dark carved panels: its hotbar, buttons, sliders and tabs are already in the pack, and the pictures below still show the first pass.</p>
+    <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page: containers become light limestone, buttons, hotbar and tooltips dark basalt with moss and ember accents. Every slot stays where vanilla puts it, so other mods' screens still line up. A baroque restyle (P16, in production) is replacing this look; the pictures below show the first pass.</p>
     </div>
     </header>
 
     <div class="cols lead">
       <div class="part">
     <h3>Title screen</h3>
-    <figure class="wide-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, two log barracks around a campfire, drawn live by two GLSL layers, with the T-Rex model idling and looking around between them. Lightning flashes the sky, the ferns and the creature together, and thunder follows; the buttons stand in a column on the left.</figcaption></figure>
+    <figure class="wide-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, drawn live by two GLSL layers, with the T-Rex idling between them. Lightning flashes the sky, the ferns and the creature together; the buttons stand in a column on the left.</figcaption></figure>
 
       </div>
       <div class="part">
@@ -1106,10 +1116,10 @@
     <h3>Screens and widgets</h3>
     <div class="shots">
       <div>
-        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons (normal, hover, disabled) and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
+        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
         <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
       </div>
-      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player. Left: crown and hat, necklace and shirt, belt and pants, socks and shoes beside the armour column. Right: back and gloves, two bracelets, two rings, then shield, charm and the universal curio slot; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
+      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
     </div>
   </section>
 
@@ -1117,7 +1127,7 @@
     <header class="page-head">
     <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
     <div class="ledes">
-    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name" with the Ark icon and a credit line; the original license and mod id stay intact. Where Ark needs code changes, the mod is built from its own source with Ark patches (<code>Ark/pack/patches</code>). <code>python Ark/tools/build_pack.py</code> assembles everything into a Modrinth pack. The Ark inventory the Curios fork draws is on the <a href="#interface">Interface</a> page.</p>
+    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface">Interface</a> page.</p>
     </div>
     </header>
     <div class="integrations">%%INTEGRATIONS%%</div>
@@ -1645,6 +1655,10 @@ window.arkModels = (function () {
     sections.forEach(function (s, i) { if (s.id === id) at = i; });
     var current = at >= 0 ? sections[at] : null;
     hero.hidden = !!current; index.hidden = !!current; pager.hidden = !current;
+    var onWorld = !!current && current.id === 'world', page = document.querySelector('main');
+    page.classList.toggle('pinned', onWorld);
+    if (onWorld) { document.getElementById('biomes').append(pager, document.querySelector('footer')); }
+    else { page.appendChild(pager); page.insertAdjacentElement('afterend', document.querySelector('footer')); }
     sections.forEach(function (s) { s.hidden = s !== current; });
     links.forEach(function (a) {
       var on = !!current && a.getAttribute('href') === '#' + current.id;
