@@ -18,7 +18,7 @@ CREATURES = ROOT.parent / 'Creatures'
 OUT = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui/title'
 FONT = ROOT / 'tools/fonts/Bitter.ttf'
 W, H = 1920, 1080
-RANKS = [(75, 174, 102), (168, 202, 83), (228, 198, 83), (233, 134, 70), (153, 78, 179)]  # XaeroDangerOverlay
+RANKS = [(75, 174, 102), (228, 198, 83), (153, 78, 179)]  # the three zones of XaeroDangerOverlay (P17)
 PREVIEW_BG = (19, 30, 39)
 
 
@@ -35,7 +35,8 @@ def level(x, z, width=256):
     dx = abs((u + radius) % period - radius)
     dz = abs((v + radius) % period - radius)
     fraction = max(dx, dz) / radius
-    return 1 + int(min(4, math.floor(5 * fraction * fraction)))
+    # Five rings of a fifth of the land each: the first is zone 1, then two rings to each of zones 2 and 3.
+    return 1 + (int(min(4, math.floor(5 * fraction * fraction))) + 1) // 2
 
 
 def silhouette(folder, view='side.png'):
