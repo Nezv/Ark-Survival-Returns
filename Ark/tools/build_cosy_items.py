@@ -158,20 +158,33 @@ def nest_egg(rows, shell, marks):
     return over(sprite(rows, {'h': h, 'l': l, 'b': b, 'd': d, **STRAW}), marks)
 
 
+SLATE, RUST, OLIVE, CREAM = (112, 120, 136), (160, 88, 50), (124, 132, 98), (240, 230, 186)
+EMBER, SOOT = (252, 190, 80), (84, 20, 28)
+# Each nesting species' shell, lit to shaded, and the colours of its marks; build_nest_blocks.py paints the egg lying
+# in the nest from the same.
+NEST_SHELLS = {
+    'archaeopteryx': (((255, 248, 226), (246, 228, 192), (232, 206, 160), (198, 166, 120)), (RUST,)),
+    'argentavis': (((255, 255, 250), (246, 242, 232), (232, 226, 212), (196, 186, 170)), (SLATE,)),
+    'pteranodon': (((244, 234, 204), (226, 210, 168), (206, 186, 140), (168, 146, 104)), (OLIVE,)),
+    'quetzal': (((196, 240, 228), (124, 208, 194), (72, 172, 162), (44, 126, 126)), (CREAM,)),
+    'dragon': (((240, 124, 86), (192, 64, 50), (150, 40, 36), (98, 24, 30)), (SOOT, EMBER)),
+}
+
+
 def nest_eggs():
-    slate, rust, olive, cream = (112, 120, 136), (160, 88, 50), (124, 132, 98), (240, 230, 186)
-    ember, soot = (252, 190, 80), (84, 20, 28)
+    shell = {name: value[0] for name, value in NEST_SHELLS.items()}
+    slate, rust, olive, cream, ember, soot = SLATE, RUST, OLIVE, CREAM, EMBER, SOOT
     return {
-        'archaeopteryx_egg': nest_egg(SMALL_NEST, ((255, 248, 226), (246, 228, 192), (232, 206, 160), (198, 166, 120)),
+        'archaeopteryx_egg': nest_egg(SMALL_NEST, shell['archaeopteryx'],
                                       {(4, 6): rust, (5, 8): rust, (6, 7): rust, (10, 6): rust, (11, 8): rust, (12, 7): rust}),
-        'argentavis_egg': nest_egg(NEST, ((255, 255, 250), (246, 242, 232), (232, 226, 212), (196, 186, 170)),
+        'argentavis_egg': nest_egg(NEST, shell['argentavis'],
                                    {(6, 4): slate, (7, 4): slate, (9, 6): slate, (10, 6): slate, (9, 7): slate,
                                     (5, 8): slate, (6, 8): slate, (8, 9): slate, (10, 9): slate}),
-        'pteranodon_egg': nest_egg(TALL_NEST, ((244, 234, 204), (226, 210, 168), (206, 186, 140), (168, 146, 104)),
+        'pteranodon_egg': nest_egg(TALL_NEST, shell['pteranodon'],
                                    {(7, 3): olive, (8, 5): olive, (6, 6): olive, (9, 7): olive, (7, 8): olive, (8, 10): olive}),
-        'quetzal_egg': nest_egg(NEST, ((196, 240, 228), (124, 208, 194), (72, 172, 162), (44, 126, 126)),
+        'quetzal_egg': nest_egg(NEST, shell['quetzal'],
                                 {(7, 4): cream, (9, 5): cream, (6, 6): cream, (9, 8): cream, (7, 8): cream, (10, 7): cream}),
-        'dragon_egg': nest_egg(NEST, ((240, 124, 86), (192, 64, 50), (150, 40, 36), (98, 24, 30)),
+        'dragon_egg': nest_egg(NEST, shell['dragon'],
                                {(8, 3): soot, (6, 5): soot, (9, 5): soot, (5, 7): soot, (8, 7): soot, (10, 7): soot,
                                 (6, 9): soot, (9, 9): soot, (7, 4): ember, (8, 6): ember, (7, 8): ember, (10, 8): ember}),
     }

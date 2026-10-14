@@ -62,6 +62,9 @@ PALETTE = {
     'saddle_roll': ((180, 152, 104), 'bedroll'),
     'saddle_bronze': ((204, 140, 62), 'metal'),
     'saddle_thread': ((196, 72, 58), 'thread'),
+    # The Armoury's dummy: keratin plates (P13's Keratin armour).
+    'keratin': ((210, 194, 154), 'rivets'),
+    'keratin_dark': ((172, 154, 116), 'leather'),
 }
 
 
@@ -185,18 +188,39 @@ def legs(tex, inset=1, top=12, size=2.5):
 # ------------------------------------------------------------------------------------ working station
 
 def armoury():
-    """Phase A placeholder: a freestanding log weapon rack with three bound tools."""
-    e = [box([1, 0, 1], [15, 2, 15], 'planks_dark', 'rack feet')]
-    for x in (2, 12):
-        e.append(box([x, 2, 9], [x + 2, 24, 11], 'log', 'upright'))
-    for y in (6, 19):
-        e.append(box([2, y, 8], [14, y + 2, 12], 'planks', 'crossbar'))
-    for x in (4, 8, 11):
-        e.append(box([x, 3, 7], [x + 1, 21, 8], 'log', 'weapon haft'))
-        e.append(box([x - .4, 16, 6.6], [x + 1.4, 17.5, 8.4], 'rope', 'fiber binding'))
-    e.append(box([3, 19, 6.5], [6.5, 22, 8.5], 'stone', 'rock axe head'))
-    e.append(box([7.4, 20, 6.8], [9.6, 24, 8.2], 'stone', 'spear point'))
-    e.append(box([10.5, 18, 6.6], [12.5, 23, 8.4], 'iron', 'blade'))
+    """An armour dummy and a weapon rack on one plank floor. The dummy, a post with a cross-arm, wears a hide cuirass
+    under a riveted keratin breastplate, pauldrons, tassets and a horned helm; the rack holds a bound spear, a bronze
+    longsword and a round hide shield with an iron boss leaning against its foot. The front faces north."""
+    e = [box([1, 0, 1], [15, 1.5, 15], 'planks_dark', 'floor')]
+    # The dummy, left.
+    e.append(box([4.25, 1.5, 9], [5.75, 21, 10.5], 'log', 'post'))
+    e.append(box([1.5, 17, 9], [8.5, 18.5, 10.5], 'log', 'cross-arm'))
+    e.append(box([2, 9.5, 7], [8, 17, 10], 'saddle_leather', 'cuirass'))
+    e.append(box([2.5, 11.5, 6.5], [7.5, 16.5, 7], 'keratin', 'breastplate'))
+    e.append(box([1.8, 9.5, 6.8], [8.2, 10.75, 10.2], 'saddle_strap', 'belt'))
+    e.append(box([2.2, 6.5, 6.6], [4.8, 9.5, 8], 'keratin', 'left tasset'))
+    e.append(box([5.2, 6.5, 6.6], [7.8, 9.5, 8], 'keratin', 'right tasset'))
+    e.append(box([1, 15.5, 6.5], [3, 18, 10.5], 'keratin', 'left pauldron'))
+    e.append(box([7, 15.5, 6.5], [9, 18, 10.5], 'keratin', 'right pauldron'))
+    e.append(box([2.5, 17, 8.5], [7.5, 18, 10.6], 'saddle_fur', 'fur mantle'))
+    e.append(box([3, 18.5, 7], [7, 22, 10.5], 'keratin_dark', 'helm'))
+    e.append(box([3.4, 19.5, 6.6], [6.6, 20.25, 7], 'iron_dark', 'visor slit'))
+    e.append(box([2.2, 20, 8.25], [3, 22.5, 9.25], 'keratin', 'left horn'))
+    e.append(box([7, 20, 8.25], [7.8, 22.5, 9.25], 'keratin', 'right horn'))
+    # The rack, right.
+    for x in (10, 13.5):
+        e.append(box([x, 1.5, 11], [x + 1.5, 18, 12.5], 'log', 'upright'))
+    for y in (6, 14):
+        e.append(box([9.5, y, 10.5], [15.5, y + 1.5, 13], 'planks', 'crossbar'))
+    e.append(box([11.9, 1.5, 9.6], [12.7, 22, 10.4], 'log', 'spear haft'))
+    e.append(box([11.6, 20.5, 9.3], [13, 21.5, 10.7], 'rope', 'fiber binding'))
+    e.append(box([11.8, 21.5, 9.5], [12.8, 24.5, 10.5], 'stone', 'spear point'))
+    e.append(box([14.1, 1.5, 9.7], [14.9, 2.25, 10.3], 'saddle_bronze', 'pommel'))
+    e.append(box([14.2, 2.25, 9.8], [14.8, 5, 10.2], 'saddle_strap', 'grip'))
+    e.append(box([13.4, 5, 9.5], [15.6, 6, 10.5], 'saddle_bronze', 'guard'))
+    e.append(box([14, 6, 9.75], [15, 18, 10.25], 'saddle_bronze', 'longsword blade'))
+    e.append(box([9.5, 1.5, 8.5], [15, 8, 9.25], 'saddle_hide', 'round shield'))
+    e.append(box([11.5, 3.75, 8], [13, 5.25, 8.5], 'iron', 'shield boss'))
     save('armoury', e, 'log')
 
 

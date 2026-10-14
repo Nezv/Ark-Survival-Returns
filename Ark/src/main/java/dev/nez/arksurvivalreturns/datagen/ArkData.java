@@ -655,7 +655,9 @@ public final class ArkData implements DataProvider {
         put("assets/minecraft/lang/en_us", Map.of("item.minecraft.stick", "Twig", "item.minecraft.leather", "Hide",
                 "item.minecraft.leather_helmet", "Hide Cap", "item.minecraft.leather_chestplate", "Hide Tunic",
                 "item.minecraft.leather_leggings", "Hide Pants", "item.minecraft.leather_boots", "Hide Boots",
-                "item.minecraft.leather_horse_armor", "Hide Horse Armor"));
+                "item.minecraft.leather_horse_armor", "Hide Horse Armor",
+                // No advancement tab is loaded (C04): the pause menu's button and the L key open the Tribe Chronicle.
+                "gui.advancements", "Tribe Chronicle", "key.advancements", "Tribe Chronicle"));
     }
 
     /** The downed state's two hidden discovery advancements. */
@@ -759,27 +761,50 @@ public final class ArkData implements DataProvider {
         for (String side : List.of("north", "south", "east", "west", "up", "down")) faces.put(side, Map.of("texture", "#"+texture));
         return Map.of("from", List.of(x,y,z), "to", List.of(xx,yy,zz), "faces", faces);
     }
-    private static String nestRim(Species species) {
+
+    /** A twig tilted about its own middle, one end resting on the rim. */
+    private static Map<String, Object> nestStick(double x, double y, double z, double xx, double yy, double zz, String axis, double angle) {
+        var stick = new LinkedHashMap<>(nestBox(x, y, z, xx, yy, zz, "rim"));
+        stick.put("rotation", Map.of("origin", List.of((x + xx) / 2, (y + yy) / 2, (z + zz) / 2), "axis", axis, "angle", angle));
+        return stick;
+    }
+
+    /** An egg standing in the lining: a narrow foot, a body of the given height, a shoulder and a crown. */
+    private static List<Map<String, Object>> nestEgg(double cx, double cz, double width, double body) {
+        double r = width / 2;
+        return List.of(nestBox(cx - r + 0.5, 1, cz - r + 0.5, cx + r - 0.5, 1.75, cz + r - 0.5, "egg"),
+                nestBox(cx - r, 1.75, cz - r, cx + r, 1.75 + body, cz + r, "egg"),
+                nestBox(cx - r + 0.5, 1.75 + body, cz - r + 0.5, cx + r - 0.5, 2.75 + body, cz + r - 0.5, "egg"),
+                nestBox(cx - r + 1, 2.75 + body, cz - r + 1, cx + r - 1, 3.25 + body, cz + r - 1, "egg"));
+    }
+    /** The twigs a species builds with (tools/build_nest_blocks.py NEST_WOOD keeps the same table). */
+    private static String nestWood(Species species) {
         return switch (species) {
-            case PTERANODON -> "minecraft:block/sand";
-            case ARGENTAVIS -> "minecraft:block/spruce_planks";
-            case QUETZAL -> "minecraft:block/oak_planks";
-            case ARCHAEOPTERYX -> "minecraft:block/moss_block";
-            case DRAGON -> "minecraft:block/polished_blackstone";
-            default -> "minecraft:block/oak_planks";
+            case PTERANODON -> "drift";
+            case ARGENTAVIS -> "spruce";
+            case ARCHAEOPTERYX -> "mossy";
+            case DRAGON -> "charred";
+            default -> "oak";
         };
     }
     private void flying() {
         for (var species : Species.values()) {
             if (!species.flyer()) continue;
             String id = species.id + "_nest";
-            String rim = nestRim(species);
-            var textures = Map.of("rim", rim, "leaf", "minecraft:block/moss_block", "egg", "minecraft:block/turtle_egg", "particle", rim);
+            // Own twig, lining and shell textures (tools/build_nest_blocks.py, F21).
+            String rim = NS + ":block/nest/twigs_" + nestWood(species);
+            var textures = Map.of("rim", rim, "lining", NS + ":block/nest/" + (species == Species.DRAGON ? "lining_ash" : "lining"),
+                    "leaf", "minecraft:block/moss_block", "egg", NS + ":block/nest/egg_" + species.id, "particle", rim);
             var bowl = new ArrayList<Map<String,Object>>();
-            bowl.add(nestBox(2,0,2,14,1,14,"rim"));
-            bowl.add(nestBox(1,0,1,15,3,3,"rim")); bowl.add(nestBox(1,0,13,15,3,15,"rim"));
-            bowl.add(nestBox(1,0,3,3,3,13,"rim")); bowl.add(nestBox(13,0,3,15,3,13,"rim"));
-            if (species != Species.PTERANODON) {
+            bowl.add(nestBox(2,0,2,14,1,14,"lining"));
+            bowl.add(nestBox(1,0,1,15,2.5,3,"rim")); bowl.add(nestBox(1,0,13,15,2.5,15,"rim"));
+            bowl.add(nestBox(1,0,3,3,2.5,13,"rim")); bowl.add(nestBox(13,0,3,15,2.5,13,"rim"));
+            // An uneven top, and a loose stick laid aslant along each side.
+            bowl.add(nestBox(2,2.5,1,8,3.5,3,"rim")); bowl.add(nestBox(9,2.5,13,14,3.25,15,"rim"));
+            bowl.add(nestBox(1,2.5,4,3,3.25,10,"rim")); bowl.add(nestBox(13,2.5,6,15,3.5,12,"rim"));
+            bowl.add(nestStick(3,2.75,1.6,13,3.5,2.4,"z",22.5)); bowl.add(nestStick(3,2.5,13.6,13,3.25,14.4,"z",-22.5));
+            bowl.add(nestStick(1.6,2.5,3,2.4,3.25,13,"x",-22.5)); bowl.add(nestStick(13.6,2.75,3,14.4,3.5,13,"x",22.5));
+            if (species != Species.PTERANODON && species != Species.DRAGON) {
                 // Short staggered fronds over a twig ring; all geometry remains within its block.
                 for (int i=0;i<3;i++) {
                     bowl.add(nestBox(2+i*3,2,1,4+i*3,3.5,4,"leaf"));
@@ -788,7 +813,9 @@ public final class ArkData implements DataProvider {
             }
             put("assets/"+NS+"/models/block/"+id+"_empty", Map.of("textures",textures,"elements",bowl));
             var full = new ArrayList<>(bowl);
-            full.add(nestBox(6,1,6,10,4,10,"egg"));full.add(nestBox(7,4,7,9,5,9,"egg"));
+            if (species == Species.ARCHAEOPTERYX) { full.addAll(nestEgg(6.5, 7.5, 3, 1)); full.addAll(nestEgg(9.5, 8.5, 3, 1)); }
+            else if (species == Species.DRAGON) full.addAll(nestEgg(8, 8, 5, 3));
+            else full.addAll(nestEgg(8, 8, 4, species == Species.PTERANODON ? 3.5 : 2.5));
             put("assets/"+NS+"/models/block/"+id, Map.of("textures",textures,"elements",full));
             put("assets/"+NS+"/blockstates/"+id, Map.of("variants",Map.of("egg=true",Map.of("model",NS+":block/"+id),"egg=false",Map.of("model",NS+":block/"+id+"_empty"))));
             put("assets/"+NS+"/models/item/"+species.id+"_egg",Map.of("parent","minecraft:item/generated","textures",Map.of("layer0",NS+":item/"+species.id+"_egg")));

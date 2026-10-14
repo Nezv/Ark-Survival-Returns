@@ -5,11 +5,13 @@ import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.tech.TechPayload;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 /** A normal Controls entry: remapping mods can discover it without a custom integration. */
@@ -27,6 +29,10 @@ public final class TechClient {
         event.register(TechPayload.TYPE, (payload, context) -> {
             if (Minecraft.getInstance().screen instanceof TechScreen screen) screen.accept(payload);
         });
+    }
+    /** No advancement tab is loaded (C04): the pause menu's Advancements button and the L key open the Chronicle. */
+    @SubscribeEvent public static void opening(ScreenEvent.Opening event) {
+        if (event.getNewScreen() instanceof AdvancementsScreen) event.setNewScreen(new TechScreen());
     }
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
         var mc = Minecraft.getInstance();
