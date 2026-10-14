@@ -96,8 +96,14 @@ public final class AccessoryEffects {
             player.removeEffect(MobEffects.DARKNESS);
         }
         if (Worn.has(player, Accessory.ALICORN_PENDANT)) {
+            boolean cleansed = false;
             for (Holder<MobEffect> effect : java.util.List.of(MobEffects.POISON, MobEffects.WITHER, MobEffects.NAUSEA, MobEffects.HUNGER))
-                player.removeEffect(effect);
+                cleansed |= player.removeEffect(effect);
+            // The horn draws the taint out in a white glitter and a soft chime.
+            if (cleansed) {
+                sparkle(player, ParticleTypes.END_ROD, 10, 0.05);
+                player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.4f);
+            }
         }
         if (Worn.has(player, Accessory.AMBER_RING)) nightEye(player);
         if (Worn.has(player, Accessory.MEGALODON_TOTEM) && player.isEyeInFluid(net.minecraft.tags.FluidTags.WATER)) {
@@ -106,7 +112,19 @@ public final class AccessoryEffects {
         if (Worn.has(player, Accessory.HERBAL_POUCH) && player.getHealth() < player.getMaxHealth() / 3) herbs(player);
         if (age % 40 == 0 && Worn.has(player, Accessory.GUARDIAN_CROWN)) chieftain(player);
         if (age % 60 == 0 && Worn.has(player, Accessory.KINSHIP_BRACELET)) {
-            for (CreatureEntity tame : tamesNear(player, 24)) if (tame.getHealth() < tame.getMaxHealth()) tame.heal(1.0f);
+            for (CreatureEntity tame : tamesNear(player, 24)) {
+                if (tame.getHealth() >= tame.getMaxHealth()) continue;
+                tame.heal(1.0f);
+                sparkle(tame, ParticleTypes.HEART, 1, 0);             // a heart over each tame the bond mends
+            }
+        }
+    }
+
+    /** Relic feedback: particles round an entity's upper body, sent from the server to everyone near. */
+    private static void sparkle(LivingEntity entity, net.minecraft.core.particles.ParticleOptions particle, int count, double speed) {
+        if (entity.level() instanceof ServerLevel level) {
+            double spread = entity.getBbWidth() * 0.4;
+            level.sendParticles(particle, entity.getX(), entity.getY(0.75), entity.getZ(), count, spread, entity.getBbHeight() * 0.25, spread, speed);
         }
     }
 
@@ -169,6 +187,7 @@ public final class AccessoryEffects {
         for (CreatureEntity tame : tamesNear(player, 24)) {
             tame.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 100, 0, true, false, true));
             tame.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0, true, false, true));
+            sparkle(tame, ParticleTypes.WAX_ON, 3, 0.02);              // the chieftain's gold on the tribe's beasts
         }
         for (Player other : player.level().getEntitiesOfClass(Player.class, player.getBoundingBox().inflate(24),
                 p -> p != player && p.isAlive() && TribeService.sameTribe(p.getUUID(), player.getUUID()))) {
@@ -261,6 +280,7 @@ public final class AccessoryEffects {
         if (event.getSource().getDirectEntity() instanceof Player attacker && Worn.has(attacker, Accessory.SERPENT_RING)
                 && event.getHealthDamage() > 0 && event.getEntity() != attacker) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 80, 0), attacker);
+            sparkle(event.getEntity(), ParticleTypes.ITEM_SLIME, 6, 0.08);   // venom spattered from the wound
         }
     }
 
