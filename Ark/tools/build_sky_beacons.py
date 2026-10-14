@@ -218,7 +218,48 @@ def blocks(variant):
             props = ','.join(f'{name}={str(name in held).lower()}' for name in sorted(SIDES))
             out[q] = f'minecraft:vine[{props},up={str((x, q[1] + 1, z) in full).lower()}]'
             faces = held
+    climb(out, spec)
     return out
+
+
+# The climb (P05): the pillar overhangs all the way up, so its outside cannot be climbed. A shaft hung with vines runs
+# up its core instead: from the vines trailing under the tip, up the middle to a landing, then beside the nest's
+# clearing up into the eye. Its walls are made whole wherever the plates leave a gap, and the variant's lamp lights it.
+LANDING = 20            # the step-over from the column under the tip to the column beside the nest
+LOWER = (C, C)          # (x, z) of the column under the tip
+UPPER = (C, C + 3)      # (x, z) of the column that opens into the eye's floor
+SOFT = ('vine', 'carpet', 'short_grass', 'fern', 'leaves', 'storage_crate', 'dragon_nest')
+
+
+def climb(out, spec):
+    def vine(face):
+        return 'minecraft:vine[' + ','.join(f'{n}={str(n == face).lower()}' for n in sorted(SIDES)) + ',up=false]'
+
+    def wall(p, lamp=False):
+        if lamp: out[p] = 'minecraft:' + spec['lamp']
+        elif p not in out or any(s in out[p] for s in SOFT): out[p] = 'minecraft:stone_bricks'
+
+    def column(x, z, low, high, face, open_side=None, open_from=None):
+        for y in range(low, high + 1):
+            out[(x, y, z)] = vine(face)
+            if y < BASE: continue                      # under the tip the vines hang from the ones above
+            for name, (ox, oz) in SIDES.items():
+                if name == open_side and y >= open_from[0] and y <= open_from[1]: continue
+                wall((x + ox, y, z + oz), lamp=name == 'east' and (y - BASE) % 10 == 6)
+    ny = NEST[1]
+    column(*LOWER, 0, LANDING + 1, 'north', 'south', (LANDING, LANDING + 1))
+    wall((LOWER[0], LANDING + 2, LOWER[1]))
+    # The landing: a two-high passage over to the upper column.
+    x = LOWER[0]
+    for z in range(LOWER[1] + 1, UPPER[1]):
+        for y in (LANDING, LANDING + 1):
+            out.pop((x, y, z), None)
+        wall((x, LANDING - 1, z)); wall((x, LANDING + 2, z)); wall((x - 1, LANDING, z)); wall((x + 1, LANDING, z))
+        wall((x - 1, LANDING + 1, z)); wall((x + 1, LANDING + 1, z))
+    column(*UPPER, LANDING, ny - 1, 'south', 'north', (LANDING, LANDING + 1))
+    wall((UPPER[0], LANDING - 1, UPPER[1]))
+    # Out into the eye: nothing growing on the floor where the shaft opens.
+    out.pop((UPPER[0], ny, UPPER[1]), None)
 
 
 def state(text):

@@ -30,7 +30,11 @@ builds are not retrofitted; beacons generated before this design keep their old 
 of earth, moss and old bones, and a **Loot Crate** against the wall. The crate is a Storage Crate with
 the loot table arksurvivalreturns:chests/sky_beacon, rolled when first opened: 3-5 stacks of medicine,
 taming supplies and rations, and 2-4 stacks of materials (keratin, pelts, fangs, amber, raw tin, raw
-copper, sulphur, wing membrane). Nothing leads up to the eye: climb, build or fly.
+copper, sulphur, wing membrane).
+
+**The climb.** The pillar overhangs all the way up, so a shaft hung with vines climbs its core instead: its
+vines trail from under the tip down to the ground, it steps over at a landing 20 blocks up, and it opens in the
+eye's floor beside the nest. The variant's lamp lights it every ten blocks. Building or flying up works too.
 
 The template holds no dragon, only a marker entity on the nest that stands for it. Once a second the
 game looks for such a mark beside each living, non-spectator player; when the player is in the core
