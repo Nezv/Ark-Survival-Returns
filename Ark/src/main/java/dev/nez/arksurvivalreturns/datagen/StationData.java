@@ -142,29 +142,18 @@ final class StationData {
                         NS + ":medium_sulphur_bud", NS + ":large_sulphur_bud", NS + ":sulphur_cluster")));
     }
 
-    static void messages(Map<String, String> en, Map<String, String> pt) {
+    static void messages(Map<String, String> en) {
         en.put("block." + NS + ".armoury", "Armoury");
-        pt.put("block." + NS + ".armoury", "Arsenal");
         en.put("block." + NS + ".saddlery", "Saddlery");
-        pt.put("block." + NS + ".saddlery", "Selaria");
         en.put("block." + NS + ".working_station", "Working Station");
-        pt.put("block." + NS + ".working_station", "Estação de trabalho");
         en.put("block." + NS + ".storage_crate", "Storage Crate");
-        pt.put("block." + NS + ".storage_crate", "Caixote de armazenamento");
         en.put("block." + NS + ".smithing_table", "Smithing Table");
-        pt.put("block." + NS + ".smithing_table", "Mesa de ferraria");
         en.put("block." + NS + ".medicine_bench", "Medicine Bench");
-        pt.put("block." + NS + ".medicine_bench", "Bancada de medicina");
         en.put("block." + NS + ".mortar_and_pestle", "Mortar & Pestle");
-        pt.put("block." + NS + ".mortar_and_pestle", "Pilão");
         en.put("block." + NS + ".crusher", "Crusher");
-        pt.put("block." + NS + ".crusher", "Triturador");
         en.put("item." + NS + ".herbal_bandage", "Herbal Bandage");
-        pt.put("item." + NS + ".herbal_bandage", "Bandagem de ervas");
         en.put("item." + NS + ".healing_mixture", "Healing Mixture");
-        pt.put("item." + NS + ".healing_mixture", "Mistura curativa");
         en.put("item." + NS + ".vitamins", "Vitamins");
-        pt.put("item." + NS + ".vitamins", "Vitaminas");
     }
 
     static void itemModels(BiConsumer<String, Object> put) {

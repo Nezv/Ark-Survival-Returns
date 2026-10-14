@@ -43,7 +43,8 @@
   "quest.0000000000000105.quest_subtitle": "The first tame solves a problem.",
   "quest.0000000000000105.quest_desc": [
     "Feed a willing creature until it trusts you.",
-    "A tame stays yours. Your tribe can be granted riding, cargo and order permissions with /arktribe."
+    "A tame stays yours. Hold Z, the command wheel, to whistle it an order: follow, stay, wander, work, call or pet. Aim at nothing and every tame of yours within earshot answers.",
+    "Your tribe can be granted riding, cargo and order permissions with /arktribe."
   ],
   "task.00000000000001A8.title": "Tame your first creature"
 }

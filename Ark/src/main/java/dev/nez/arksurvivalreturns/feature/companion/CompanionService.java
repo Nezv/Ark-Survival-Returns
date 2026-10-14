@@ -27,6 +27,19 @@ public final class CompanionService {
         creature.companionHold();
     }
 
+    /**
+     * CALL from the command wheel: the tame keeps its order and its anchor moves to the given spot, so a staying tame
+     * walks over and stays there, a wandering one wanders there and a worker works there. FOLLOW has no anchor.
+     */
+    public static void call(CreatureEntity creature, BlockPos spot) {
+        if (creature.level().isClientSide()) return;
+        CompanionOrder order = of(creature).order();
+        if (order == CompanionOrder.FOLLOW) return;
+        of(creature).setOrder(order, spot);
+        creature.syncData(TamingAttachments.COMPANION);
+        creature.companionHold();
+    }
+
     /** Cycles the order and reports it on the action bar. Server-side only. */
     public static void orderCommand(CreatureEntity creature, Player player) {
         boolean workCapable = WorkProfiles.of(creature.species()).job() != WorkProfiles.Job.NONE;

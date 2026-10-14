@@ -375,43 +375,40 @@ final class PrimitiveData {
 
     // ---------------------------------------------------------------------------------------- lang
 
-    static void lang(Map<String, String> en, Map<String, String> pt) {
-        name(en, pt, "item", "rock", "Rock", "Pedra");
-        name(en, pt, "block", "loose_rock", "Loose Rock", "Pedra solta");
-        name(en, pt, "item", "stone_hatchet", "Rock Axe", "Machado de pedra");
-        name(en, pt, "item", "rock_pickaxe", "Rock Pickaxe", "Picareta de pedra");
-        name(en, pt, "item", "rock_sword", "Rock Sword", "Espada de pedra");
-        name(en, pt, "item", "rock_shovel", "Rock Shovel", "Pá de pedra");
-        name(en, pt, "item", "rock_hoe", "Rock Hoe", "Enxada de pedra");
-        name(en, pt, "item", "fire_starter", "Fire Starter", "Acendedor de fogo");
-        name(en, pt, "item", "sharp_rock", "Sharp Rock", "Pedra afiada");
-        name(en, pt, "item", "keratin", "Keratin", "Queratina");
-        name(en, pt, "item", "keratin_spear", "Keratin Spear", "Lança de queratina");
-        name(en, pt, "item", "keratin_helmet", "Keratin Helmet", "Elmo de queratina");
-        name(en, pt, "item", "keratin_chestplate", "Keratin Chestplate", "Peitoral de queratina");
-        name(en, pt, "item", "keratin_leggings", "Keratin Leggings", "Perneiras de queratina");
-        name(en, pt, "item", "keratin_boots", "Keratin Boots", "Botas de queratina");
-        name(en, pt, "block", "stone_fire", "Stone Fire", "Fogueira de pedras");
-        name(en, pt, "item", "stone_fire", "Stone Fire", "Fogueira de pedras");
-        name(en, pt, "block", "primitive_forge", "Primitive Forge", "Forja primitiva");
-        name(en, pt, "item", "primitive_forge", "Primitive Forge", "Forja primitiva");
-        name(en, pt, "item", "dried_meat", "Dried Meat", "Carne seca");
+    static void lang(Map<String, String> en) {
+        name(en, "item", "rock", "Rock");
+        name(en, "block", "loose_rock", "Loose Rock");
+        name(en, "item", "stone_hatchet", "Rock Axe");
+        name(en, "item", "rock_pickaxe", "Rock Pickaxe");
+        name(en, "item", "rock_sword", "Rock Sword");
+        name(en, "item", "rock_shovel", "Rock Shovel");
+        name(en, "item", "rock_hoe", "Rock Hoe");
+        name(en, "item", "fire_starter", "Fire Starter");
+        name(en, "item", "sharp_rock", "Sharp Rock");
+        name(en, "item", "keratin", "Keratin");
+        name(en, "item", "keratin_spear", "Keratin Spear");
+        name(en, "item", "keratin_helmet", "Keratin Helmet");
+        name(en, "item", "keratin_chestplate", "Keratin Chestplate");
+        name(en, "item", "keratin_leggings", "Keratin Leggings");
+        name(en, "item", "keratin_boots", "Keratin Boots");
+        name(en, "block", "stone_fire", "Stone Fire");
+        name(en, "item", "stone_fire", "Stone Fire");
+        name(en, "block", "primitive_forge", "Primitive Forge");
+        name(en, "item", "primitive_forge", "Primitive Forge");
+        name(en, "item", "dried_meat", "Dried Meat");
         en.put("item." + NS + ".dried_meat.tier", "%s %s");
-        pt.put("item." + NS + ".dried_meat.tier", "%s %s");
         String[][] meats = {
-                {"herbivore", "Herbivore", "de herbívoro"}, {"carnivore", "Carnivore", "de carnívoro"},
-                {"prime", "Prime", "nobre"}, {"bird", "Bird", "de ave"}, {"reptile", "Reptile", "de réptil"},
-                {"game", "Game", "de caça"}, {"marine", "Marine", "marinha"}};
+                {"herbivore", "Herbivore"}, {"carnivore", "Carnivore"},
+                {"prime", "Prime"}, {"bird", "Bird"}, {"reptile", "Reptile"},
+                {"game", "Game"}, {"marine", "Marine"}};
         for (String[] meat : meats) {
-            name(en, pt, "item", "raw_" + meat[0] + "_meat", "Raw " + meat[1] + " Meat", "Carne " + meat[2] + " crua");
-            name(en, pt, "item", "cooked_" + meat[0] + "_meat", "Cooked " + meat[1] + " Meat", "Carne " + meat[2] + " cozida");
+            name(en, "item", "raw_" + meat[0] + "_meat", "Raw " + meat[1] + " Meat");
+            name(en, "item", "cooked_" + meat[0] + "_meat", "Cooked " + meat[1] + " Meat");
         }
         en.put("primitive." + NS + ".furnace_replaced", "Furnaces are cold here. Cook food on a Stone Fire; smelt in a Primitive Forge.");
-        pt.put("primitive." + NS + ".furnace_replaced", "Fornalhas não funcionam aqui. Cozinhe na Fogueira de pedras; funda na Forja primitiva.");
     }
 
-    private static void name(Map<String, String> en, Map<String, String> pt, String kind, String id, String english, String portuguese) {
+    private static void name(Map<String, String> en, String kind, String id, String english) {
         en.put(kind + "." + NS + "." + id, english);
-        pt.put(kind + "." + NS + "." + id, portuguese);
     }
 }

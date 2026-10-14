@@ -117,7 +117,7 @@ def main():
         except Exception as error:
             fail(f'{identifier}: unexpected {error!r}')
     # Item definitions are checked against what names them, not against a count: a spawn egg per species here,
-    # the nest eggs with the nests, and every definition against the item and block names of both locales below.
+    # the nest eggs with the nests, and every definition against the item and block names of the English locale below.
     definitions = sorted((generated/'assets/arksurvivalreturns/items').glob('*.json'))
     defined = {definition.stem for definition in definitions}
     for _, identifier, *_ in SPECIES:
@@ -179,7 +179,7 @@ def main():
     surfaces = json.loads((generated/'data/arksurvivalreturns/tags/block/spawn_surfaces.json').read_text())['values']
     check({'minecraft:grass_block', 'minecraft:podzol', 'minecraft:mycelium'} <= set(surfaces),
           'Spawn surfaces tag is incomplete')
-    for locale in ['en_us', 'pt_br']:
+    for locale in ['en_us']:
         lang = json.loads((generated/f'assets/arksurvivalreturns/lang/{locale}.json').read_text(encoding='utf-8'))
         check(lang['chat.arksurvivalreturns.biome'].count('%s') == 4, f'{locale}: biome message placeholders')
         check('chat.arksurvivalreturns.biome_unrated' in lang, f'{locale}: missing unrated biome message')

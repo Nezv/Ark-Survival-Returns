@@ -25,7 +25,7 @@ The launcher also loads the pinned gameplay stack — FTB Quests, FTB Teams, FTB
 - Replenished natural groups across Overworld biomes, solitary large creatures, terrain checks, population limits and spacing.
 - Three recurring danger zones, persistent random creature levels, independently scaled HP/damage and biome-entry chat messages.
 - Look at a creature within 32 blocks for its name, level and current/max HP in a boss-style bar. Walls block targeting. Players have independent bars; predators are red and other creatures green.
-- Four complete berry items, textures, inventory models, English/Portuguese names and grass loot integration; forty-one matching spawn eggs in the Ark creative tab.
+- Four complete berry items, textures, inventory models, names and grass loot integration; forty-one matching spawn eggs in the Ark creative tab.
 - Ten additional land creatures share existing behavior families, including timid small-herbivore herds. See [the expansion mapping and limitations](docs/creature-expansion.md).
 - Twenty-two collection creatures add water, swamp, cold and flying realms: saved home pools for six water species, semi-aquatic shorelines that switch to swim clips, snow-supported hydration for the cold six, three more nest colonies and a solo apex flyer that guards its roost. See [the collection ecosystem](docs/collection-ecosystem.md).
 

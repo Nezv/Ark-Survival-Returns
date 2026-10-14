@@ -6,31 +6,29 @@ import java.util.Map;
 final class TitleData {
     private static final String KEY = "arksurvivalreturns.fancymenu.creature";
 
-    static void messages(Map<String, String> en, Map<String, String> pt) {
-        label(en, pt, "", "Ark Creature", "Criatura Ark");
-        label(en, pt, ".desc", "An Ark creature standing in the menu scene: its idle animation, a head that looks around, lit by the scene's lightning.",
-                "Uma criatura Ark na cena do menu: animação de repouso, cabeça que olha em volta, iluminada pelos relâmpagos da cena.");
-        label(en, pt, ".menu", "Creature", "Criatura");
-        label(en, pt, ".species", "Species ID", "ID da espécie");
-        label(en, pt, ".texture_variant", "Skin", "Pele");
-        label(en, pt, ".idle_clip", "Idle Animation", "Animação de repouso");
-        label(en, pt, ".scene_x", "Scene X (screen heights from the centre)", "Cena X (alturas de tela a partir do centro)");
-        label(en, pt, ".scene_ground", "Ground Line (screen heights from the bottom)", "Linha do chão (alturas de tela a partir da base)");
-        label(en, pt, ".scene_height", "Height (screen heights)", "Altura (alturas de tela)");
-        label(en, pt, ".body_yaw", "Body Yaw (0 faces you, 90 faces right)", "Rotação do corpo (0 de frente, 90 para a direita)");
-        label(en, pt, ".camera_pitch", "Camera Pitch (positive looks down on it)", "Inclinação da câmera (positivo olha de cima)");
-        label(en, pt, ".look_around", "Look Around: %s", "Olhar em volta: %s");
-        label(en, pt, ".look_range", "Look Range (degrees)", "Alcance do olhar (graus)");
-        label(en, pt, ".tint", "Night Tint [HEX]", "Tom noturno [HEX]");
-        label(en, pt, ".lightning_boost", "Lightning Brightness", "Brilho dos relâmpagos");
-        label(en, pt, ".thunder", "Thunder: %s", "Trovão: %s");
-        label(en, pt, ".thunder_volume", "Thunder Volume", "Volume do trovão");
-        label(en, pt, ".parallax", "Parallax (screen heights)", "Paralaxe (alturas de tela)");
+    static void messages(Map<String, String> en) {
+        label(en, "", "Ark Creature");
+        label(en, ".desc", "An Ark creature standing in the menu scene: its idle animation, a head that looks around, lit by the scene's lightning.");
+        label(en, ".menu", "Creature");
+        label(en, ".species", "Species ID");
+        label(en, ".texture_variant", "Skin");
+        label(en, ".idle_clip", "Idle Animation");
+        label(en, ".scene_x", "Scene X (screen heights from the centre)");
+        label(en, ".scene_ground", "Ground Line (screen heights from the bottom)");
+        label(en, ".scene_height", "Height (screen heights)");
+        label(en, ".body_yaw", "Body Yaw (0 faces you, 90 faces right)");
+        label(en, ".camera_pitch", "Camera Pitch (positive looks down on it)");
+        label(en, ".look_around", "Look Around: %s");
+        label(en, ".look_range", "Look Range (degrees)");
+        label(en, ".tint", "Night Tint [HEX]");
+        label(en, ".lightning_boost", "Lightning Brightness");
+        label(en, ".thunder", "Thunder: %s");
+        label(en, ".thunder_volume", "Thunder Volume");
+        label(en, ".parallax", "Parallax (screen heights)");
     }
 
-    private static void label(Map<String, String> en, Map<String, String> pt, String suffix, String english, String portuguese) {
+    private static void label(Map<String, String> en, String suffix, String english) {
         en.put(KEY + suffix, english);
-        pt.put(KEY + suffix, portuguese);
     }
 
     private TitleData() {}

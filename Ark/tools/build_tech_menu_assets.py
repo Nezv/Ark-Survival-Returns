@@ -78,63 +78,6 @@ def art():
         im.save(GUI/('node_'+name+'.png'))
 
 
-# Portuguese (pt_br) title/task for every shipped node; the FTB mirror is the only place these strings are
-# localized (the native TechScreen renders the tree's own text directly, English only, as raw data).
-PT_TITLE={'monkeys':'Macacos','dried':'Carne Seca III','rock':'A pedra','berries':'Frutinhas!','london':'Londres',
-    'lasting':'Longa duração','fight':'Devíamos lutar com eles','ride':'Devíamos montar neles',
-    'companions':'Companheiros','scavenge':'Batedor','mattress':'Boa noite, enfim','warmth':'Prometeu',
-    'dish':'Delicioso','narcotics':'Narcotráfico','sharp':'Pensamento afiado','horn':'Duro como chifre',
-    'pointy':'Ponta afiada','armoured':'Pele grossa','forge':'Forja Infernal',
-    'shiny':'Brilhante','golden':'Carne Dourada de Raptor','home':'Lar, doce lar','feed':'Alimente a fera',
-    'theri':'Canivete suíço','slavery':'Escravidão','coal':'Ouro negro','ironsmelt':'Feito para durar',
-    'minerals':'Segredos da Terra','sparklers':'Fogos de artifício','glass':'Invisível',
-    'ambulance':'Chame a ambulância','bandage':'Mas não para mim','vitamins':'Tome suas vitaminas',
-    'knight':'Cavaleiro do Reino','tools':'Ferramentas do ofício','tincan':'Lata de conserva','colossus':'Colosso',
-    'kaboom':'Cabum!',
-    'steel':'Juntos é melhor','cocaine':'Cocaína','subdue':'Dome a natureza',
-    'cartography':'Eles vão falhar','radar':'Poder soviético supremo','target':'Alvo adquirido',
-    'completionist':'Completista','wires':'Aterrem-se','generator':'Eletrodos prontos',
-    'circuit':'Fechando o circuito','shock':'Iniciando a terapia de choque','steel_set':'Mais duro',
-    'backpack':'Melhor','boots':'Mais rápido','rifle':'Mais forte','engine':'Engenharia demais',
-    'sheet':'Meganewtons','pipe':'Quase lá','screw':'Metalurgia'}
-PT_TASK={'monkeys':'Pegue uma pedra solta.',
-    'dried':'Coma Carne Seca III: carne curada no varal por três dias do jogo.',
-    'rock':'Amarre uma pedra a um graveto: crie um Machado de Pedra.',
-    'berries':'Colete as quatro frutas: Amora, Framboesa, Amarelinha e Mirtilo.',
-    'london':'Crie seu primeiro equipamento: uma ferramenta de pedra ou a faca de sílex.',
-    'lasting':'Seque carne em um varal.','fight':'Cause dano a um dinossauro.',
-    'ride':'Crie uma Selaria: nela se fazem selas, cordas de guia e arneses.','companions':'Domestique qualquer dinossauro.',
-    'scavenge':'Tenha um dinossauro coletando recursos.','mattress':'Crie um Colchão.',
-    'warmth':'Acenda uma fogueira de pedra.','dish':'Cozinhe qualquer prato em uma panela de barro.',
-    'narcotics':'Produza narcóticos: moa Amoras no Pilão.',
-    'sharp':'Crie uma Faca de Sílex: sílex, graveto e fibra. Carcaças abatidas com ela dão três queratinas a mais.',
-    'horn':'Retire queratina de uma criatura com chifres, placas ou bico.',
-    'pointy':'Crie uma Lança de Queratina.',
-    'armoured':'Possua o conjunto completo de armadura de queratina: capacete, peitoral, calças e botas.',
-    'forge':'Crie uma Forja Primitiva.',
-    'shiny':'Funda Bronze: retire um Lingote de Bronze da Forja Primitiva.',
-    'golden':'Crie Carne Dourada de Raptor.','home':'Crie um Saco de Dormir.',
-    'feed':'Deixe seu tamed comer em uma cocheira.','theri':'Domestique um Therizinosaurus.',
-    'slavery':'Tenha um tamed voltando de uma caçada e outro voltando com uma carga de recursos.',
-    'coal':'Consiga carvão: minere minério de carvão ou produza carvão vegetal.',
-    'ironsmelt':'Funda ferro: retire um Lingote de Ferro da Forja Primitiva.',
-    'minerals':'Consiga enxofre.','sparklers':'Crie pólvora na Britadeira.','glass':'Consiga vidro.',
-    'ambulance':'Coloque uma Bancada de Medicina.','bandage':'Consiga uma Atadura de Ervas.',
-    'vitamins':'Crie vitaminas.','knight':'Consiga uma Espada Longa de Bronze ou um Martelo de Bronze.',
-    'tools':'Crie qualquer ferramenta de bronze.','tincan':'Crie qualquer peça de armadura de bronze.',
-    'colossus':'Possua o conjunto completo de armadura de bronze: capacete, peitoral, calças e botas.',
-    'kaboom':'Crie Flechas Explosivas.',
-    'steel':'Forje aço.','cocaine':'Pólvora + narcóticos + fruta amarela.','subdue':'Crie munição.',
-    'cartography':'Crie um mapa.','radar':'Crie um radar.','target':'Encontre uma certa espécie.',
-    'completionist':'Tenha abatido todas as espécies de dinossauro.','wires':'Crie fio de cobre.',
-    'generator':'Crie um gerador.','circuit':'Crie um Taco Elétrico.',
-    'shock':'Mate um carnívoro com o Taco Elétrico.',
-    'steel_set':'Vista o conjunto completo de armadura de aço: capacete, peitoral, calças e botas.',
-    'backpack':'Vista uma mochila.','boots':'Calce botas especializadas.','rifle':'Crie um rifle.',
-    'engine':'Crie um motor.','sheet':'Crie uma chapa de metal.','pipe':'Crie um cano de metal.',
-    'screw':'Crie um parafuso de metal.'}
-
-
 def export():
     for deleted in DELETED_ICON_IDS:
         stale=GUI/'icons'/(deleted+'.png')
@@ -178,7 +121,6 @@ def export():
         chapter_id=f'{0x4152FFFF00000100+index:016X}'
         filename='ark_tech_'+age['id'];quests=[]
         lang={f'chapter.{chapter_id}.title':age['title']+' - Chronicle'}
-        lang_pt={f'chapter.{chapter_id}.title':age['title']+' - Crônica'}
         for n in nodes:
             if n['age']!=age['id']:continue
             qid=ftbmap[n['id']];tid=f'{quest_id(n["id"])+1:016X}'
@@ -189,13 +131,9 @@ def export():
             # Never duplicate secret objectives into FTB's client-side quest description.
             lang[f'quest.{qid}.quest_desc']=['???' if n['kind']=='side' else n['task']]
             lang[f'task.{tid}.title']='Chronicle objective'
-            lang_pt[f'quest.{qid}.title']=PT_TITLE.get(n['id'],n['title'])
-            lang_pt[f'quest.{qid}.quest_desc']=['???' if n['kind']=='side' else PT_TASK.get(n['id'],n['task'])]
-            lang_pt[f'task.{tid}.title']='Objetivo da crônica'
         chapter=dict(id=chapter_id,filename=filename,group='',order_index=20+index,always_invisible=True,quests=quests)
         write(ROOT/'config/ftbquests/quests/chapters'/(filename+'.json5'),chapter)
         write(ROOT/'config/ftbquests/quests/lang/en_us'/(filename+'.json5'),lang)
-        write(ROOT/'config/ftbquests/quests/lang/pt_br'/(filename+'.json5'),lang_pt)
     return tree
 
 

@@ -70,9 +70,11 @@ movement curve, the HUD denominator and the automation stop:
 
 ## Work orders
 
-The standing orders are FOLLOW → STAY → WANDER → **WORK**; WORK is offered only to species with a work
-profile. The whistle item is gone: orders will be given from the item-less command wheel (Dashboard F22),
-and until it ships no survival input issues them.
+The standing orders are FOLLOW, STAY, WANDER and **WORK**; WORK is offered only to species with a work
+profile. They are whistled from the item-less command wheel (Dashboard F22): hold Z, point at an order and
+let go (or tap Z and click). Aimed at a tame within `companion.whistleRange` (32 blocks) the order goes to
+it, aimed at nothing to every own tame in range; the wheel also has Call (the tames come to the caller and
+keep their orders there) and Pet. The server checks ownership and the tribe's COMMANDS and WORK permissions.
 
 - **Triceratops (forage):** grazes grass in place, cuts tufts and ferns (destroyed, no vanilla drops)
   and resets ripe sweet-berry bushes. Yields plant fiber every action and a chance at a mod berry,

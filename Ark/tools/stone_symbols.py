@@ -8,8 +8,8 @@ import math
 from PIL import Image, ImageDraw
 
 
-def symbol_mask(name):
-    scale = 4
+def symbol_mask(name, size=16):
+    scale = 4 if size <= 16 else 8
     mask = Image.new('L', (16*scale, 16*scale))
     d = ImageDraw.Draw(mask)
 
@@ -104,21 +104,65 @@ def symbol_mask(name):
         line([(5, 4), (5, 12)], 1.4)
         line([(11, 4), (11, 12)], 1.4)
         line([(3, 8), (13, 8)], 1.25)
+    # The six companion orders of the command wheel (F22, tools/build_command_wheel.py).
+    elif name == 'follow':
+        # Two three-toed tracks, one stride ahead of the other.
+        for cx, cy in ((5, 11.6), (11, 5.2)):
+            ellipse((cx-1.7, cy-0.6, cx+1.7, cy+2.6))
+            for tx, ty in ((-2.6, -2.7), (0, -3.6), (2.6, -2.7)):
+                line([(cx, cy), (cx+tx, cy+ty)], 1.25)
+    elif name == 'stay':
+        # A stake driven into the ground, a tether ring round it.
+        ellipse((3.6, 4.4, 12.4, 9.4))
+        ellipse((5.3, 5.7, 10.7, 8.1), 0)
+        line([(8, 1.5), (8, 12.6)], 2.1)
+        polygon([(6.9, 12.4), (9.1, 12.4), (8, 14.4)])
+        line([(1.5, 14.6), (5.6, 14.6)], 1.2)
+        line([(10.4, 14.6), (14.5, 14.6)], 1.2)
+    elif name == 'wander':
+        # A loose, looping trail of dashes that ends in an arrowhead.
+        trail = [(2.4 + 9.4*t + 1.9*math.sin(t*math.tau), 13.2 - 9.0*t + 1.9*math.sin(t*math.tau))
+                 for t in [k/50 for k in range(51)]]
+        for k in (0, 16, 32):
+            line(trail[k:k+11], 1.5)
+        (ax, ay), (bx, by) = trail[-6], trail[-1]
+        run = math.hypot(bx-ax, by-ay)
+        ux, uy = (bx-ax)/run, (by-ay)/run
+        polygon([(bx+ux*2.2, by+uy*2.2), (bx-ux*1.6-uy*2.4, by-uy*1.6+ux*2.4), (bx-ux*1.6+uy*2.4, by-uy*1.6-ux*2.4)])
+    elif name == 'work':
+        # A pick: a curved head across the top of a diagonal haft.
+        line([(2.6, 14), (10.2, 5.6)], 1.7)
+        line([(4.6, 2.6), (7.8, 2.9), (10.6, 4.1), (12.4, 6.2), (13.4, 9.4), (13.2, 12.2)], 1.8)
+        polygon([(9.0, 4.2), (11.8, 4.6), (12.2, 7.4), (10.4, 7.0)])
+    elif name == 'call':
+        # A horn with two arcs of sound off its bell.
+        polygon([(1.2, 8.2), (2.6, 7.7), (6.2, 7.0), (8.8, 5.0), (10.2, 4.3), (10.2, 12.7), (8.8, 12.0), (6.2, 10.0),
+                 (2.6, 9.3), (1.2, 8.8)])
+        line([(12.1, 6.0), (12.9, 8.5), (12.1, 11.0)], 1.15)
+        line([(14.0, 4.2), (15.2, 8.5), (14.0, 12.8)], 1.15)
+    elif name == 'pet':
+        # A heart.
+        ellipse((2.0, 3.0, 8.6, 9.6))
+        ellipse((7.4, 3.0, 14.0, 9.6))
+        polygon([(2.4, 7.6), (13.6, 7.6), (8, 14.2)])
+        line([(5.0, 5.0), (4.2, 6.2)], 0.9, 0)
     else:
         raise ValueError(f'Unknown stone symbol: {name}')
-    return mask.resize((16, 16), Image.Resampling.BOX)
+    return mask.resize((size, size), Image.Resampling.BOX)
 
 
-def engraved(name, tones, light):
-    """Transparent 16px carving overlay; the circular stone ground is drawn by seal()."""
-    mask = symbol_mask(name)
+def engraved(name, tones, light, size=16):
+    """Transparent carving overlay, 16 px (or `size`, cut as deep per stone unit); the circular stone ground is drawn
+    by seal()."""
+    mask = symbol_mask(name, size)
     pixels = mask.load()
+    cut = 2.3*size/16
     def depth(x, y):
-        return -2.3*pixels[x, y]/255 if 0 <= x < 16 and 0 <= y < 16 else 0
-    image = Image.new('RGBA', (16, 16))
+        return -cut*pixels[x, y]/255 if 0 <= x < size and 0 <= y < size else 0
+    image = Image.new('RGBA', (size, size))
     palette = [tuple(bytes.fromhex(c[1:]))+(255,) for c in tones]
-    for y in range(16):
-        for x in range(16):
+    for y in range(size):
+        for x in range(size):
             v = depth(x, y)
             gx = (depth(x+1, y)-depth(x-1, y))/2
             gy = (depth(x, y+1)-depth(x, y-1))/2
@@ -126,6 +170,6 @@ def engraved(name, tones, light):
                 continue
             n = math.sqrt(gx*gx+gy*gy+1)
             diffuse = (-gx*light[0]-gy*light[1]+light[2])/n
-            tone = round(6+(diffuse-light[2])*16+v*.6)
+            tone = round(6+(diffuse-light[2])*16+v*.6*16/size)
             image.putpixel((x, y), palette[max(0, min(len(palette)-1, tone))])
     return image

@@ -24,6 +24,7 @@ NeoForge 26.1.2, Java 25, Gradle wrapper 9.2.1, GeckoLib 5.5.2.
 - Run `./gradlew build` and `./gradlew runGameTestServer` for gameplay changes.
 - Do not launch `runClient`; the user does interactive visual testing.
 - Keep common/server code free of client imports.
+- Player-facing text is English only (`en_us`); write no other locale.
 - Import runtime assets from `../Creatures` with `python tools/import_creatures.py`. Python asset scripts belong in `tools/`.
 - Spawning must never force chunk loads; respect biome tags, collision, population caps and game rules.
 

@@ -20,6 +20,7 @@ public final class ArkSurvivalReturns {
         dev.nez.arksurvivalreturns.feature.guardian.SkyBeaconStructure.TYPES.register(bus);
         dev.nez.arksurvivalreturns.feature.guardian.SkyBeaconStructure.PIECES.register(bus);
         dev.nez.arksurvivalreturns.feature.creature.CreatureSounds.register(bus);
+        dev.nez.arksurvivalreturns.feature.companion.CompanionWhistle.register(bus);
         ModContent.ITEMS.register(bus);
         ModContent.BLOCKS.register(bus);
         ModContent.TABS.register(bus);

@@ -192,21 +192,19 @@ final class SulphurData {
 
     // ---------------------------------------------------------------------------------------- lang
 
-    static void lang(Map<String, String> en, Map<String, String> pt) {
-        name(en, pt, "item", "sulphur", "Sulphur", "Enxofre");
-        name(en, pt, "block", "sulphur_block", "Sulphur Block", "Bloco de enxofre");
-        name(en, pt, "block", "budding_sulphur", "Budding Sulphur", "Enxofre germinante");
-        name(en, pt, "block", "small_sulphur_bud", "Small Sulphur Bud", "Broto pequeno de enxofre");
-        name(en, pt, "block", "medium_sulphur_bud", "Medium Sulphur Bud", "Broto médio de enxofre");
-        name(en, pt, "block", "large_sulphur_bud", "Large Sulphur Bud", "Broto grande de enxofre");
-        name(en, pt, "block", "sulphur_cluster", "Sulphur Cluster", "Aglomerado de enxofre");
-        name(en, pt, "item", "explosive_arrow", "Explosive Arrow", "Flecha explosiva");
+    static void lang(Map<String, String> en) {
+        name(en, "item", "sulphur", "Sulphur");
+        name(en, "block", "sulphur_block", "Sulphur Block");
+        name(en, "block", "budding_sulphur", "Budding Sulphur");
+        name(en, "block", "small_sulphur_bud", "Small Sulphur Bud");
+        name(en, "block", "medium_sulphur_bud", "Medium Sulphur Bud");
+        name(en, "block", "large_sulphur_bud", "Large Sulphur Bud");
+        name(en, "block", "sulphur_cluster", "Sulphur Cluster");
+        name(en, "item", "explosive_arrow", "Explosive Arrow");
         en.put("entity." + NS + ".explosive_arrow", "Explosive Arrow");
-        pt.put("entity." + NS + ".explosive_arrow", "Flecha explosiva");
     }
 
-    private static void name(Map<String, String> en, Map<String, String> pt, String kind, String id, String english, String portuguese) {
+    private static void name(Map<String, String> en, String kind, String id, String english) {
         en.put(kind + "." + NS + "." + id, english);
-        pt.put(kind + "." + NS + "." + id, portuguese);
     }
 }

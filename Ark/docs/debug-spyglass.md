@@ -4,7 +4,7 @@ Give yourself `/give @s arksurvivalreturns:debug_spyglass`, or find **Debug Spyg
 
 Hold the use button in first person and aim at an Ark dinosaur. A dark green terminal panel shows live server values; scroll the mouse wheel while scoped to browse pages. Either hand works. Releasing use, changing worlds, losing the target or disconnecting clears the data. The ordinary Spyglass is unaffected.
 
-The first page contains species, level, current/max health, behavior, night activity, position, velocity and combat target. Further pages expose current attribute values, the mod's creature/AI/flight fields (including private timers and needs), species configuration and recursively listed saved entity data. Technical variable paths stay in English; item names and overlay instructions support English and Brazilian Portuguese. Flying creatures' preserved land needs are inactive, as in the existing flight implementation.
+The first page contains species, level, current/max health, behavior, night activity, position, velocity and combat target. Further pages expose current attribute values, the mod's creature/AI/flight fields (including private timers and needs), species configuration and recursively listed saved entity data. Flying creatures' preserved land needs are inactive, as in the existing flight implementation.
 
 `DinoDebugSnapshot.capture` is the extension point for additional computed values. Mod-owned runtime fields are discovered automatically, but the taming and torpor state lives in NeoForge data attachments rather than in creature fields, so it is not shown as readable rows: it can appear only indirectly and unformatted among the recursively listed saved-data lines, and only when the attachment exists. `TamingService.summary`, the readable taming line, is used by `/arktaming inspect` and is not called by the snapshot. Entity references are shown as UUID/type rather than traversed. This is a read-only inspector, not a variable editor. It does not expose every private Minecraft/GeckoLib engine field or animation-cache internals.
 
@@ -26,4 +26,4 @@ Interactive checklist (the project reserves client launches for the user):
 2. Scroll through runtime and saved-data pages. Test window sizes and GUI scales; check text and page instructions are legible.
 3. Release use, switch items, look away/behind walls, change dimensions and reconnect. Confirm old values disappear.
 4. Repeat with two players inspecting different dinosaurs/pages; change health and confirm each viewer sees the correct update.
-5. Check the Portuguese language, offhand use, third person and hidden HUD.
+5. Check offhand use, third person and hidden HUD.

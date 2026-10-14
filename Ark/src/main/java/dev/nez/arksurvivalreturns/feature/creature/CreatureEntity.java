@@ -342,8 +342,8 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
-    /** Waits for the command wheel (Dashboard F22). A short affectionate response: hearts, a call and attention, on a cooldown to avoid spam. */
-    private void pet(Player player) {
+    /** The command wheel's Pet (F22): hearts, a call and attention, on a cooldown to avoid spam. */
+    public void pet(Player player) {
         if (petCooldown > 0) return;
         petCooldown = Config.COMPANION_PET_COOLDOWN_TICKS.get();
         TamingFeedback.hearts(this);

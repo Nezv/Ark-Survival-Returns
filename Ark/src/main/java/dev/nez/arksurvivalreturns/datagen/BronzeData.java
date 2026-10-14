@@ -224,30 +224,29 @@ final class BronzeData {
 
     // -------------------------------------------------------------------------------------- lang
 
-    static void lang(Map<String, String> en, Map<String, String> pt) {
-        name(en, pt, "block", "tin_ore", "Tin Ore", "Minério de estanho");
-        name(en, pt, "item", "tin_ore", "Tin Ore", "Minério de estanho");
-        name(en, pt, "block", "deepslate_tin_ore", "Deepslate Tin Ore", "Minério de estanho em ardósia profunda");
-        name(en, pt, "item", "deepslate_tin_ore", "Deepslate Tin Ore", "Minério de estanho em ardósia profunda");
-        name(en, pt, "item", "raw_tin", "Raw Tin", "Estanho bruto");
-        name(en, pt, "item", "tin_ingot", "Tin Ingot", "Lingote de estanho");
-        name(en, pt, "item", "bronze_blend", "Bronze Blend", "Mistura de bronze");
-        name(en, pt, "item", "bronze_ingot", "Bronze Ingot", "Lingote de bronze");
-        name(en, pt, "item", "bronze_pickaxe", "Bronze Pickaxe", "Picareta de bronze");
-        name(en, pt, "item", "bronze_axe", "Bronze Axe", "Machado de bronze");
-        name(en, pt, "item", "bronze_shovel", "Bronze Shovel", "Pá de bronze");
-        name(en, pt, "item", "bronze_hoe", "Bronze Hoe", "Enxada de bronze");
-        name(en, pt, "item", "bronze_longsword", "Bronze Longsword", "Espadão de bronze");
-        name(en, pt, "item", "bronze_hammer", "Bronze Hammer", "Martelo de bronze");
-        name(en, pt, "item", "bronze_helmet", "Bronze Helmet", "Elmo de bronze");
-        name(en, pt, "item", "bronze_chestplate", "Bronze Chestplate", "Peitoral de bronze");
-        name(en, pt, "item", "bronze_leggings", "Bronze Leggings", "Perneiras de bronze");
-        name(en, pt, "item", "bronze_boots", "Bronze Boots", "Botas de bronze");
+    static void lang(Map<String, String> en) {
+        name(en, "block", "tin_ore", "Tin Ore");
+        name(en, "item", "tin_ore", "Tin Ore");
+        name(en, "block", "deepslate_tin_ore", "Deepslate Tin Ore");
+        name(en, "item", "deepslate_tin_ore", "Deepslate Tin Ore");
+        name(en, "item", "raw_tin", "Raw Tin");
+        name(en, "item", "tin_ingot", "Tin Ingot");
+        name(en, "item", "bronze_blend", "Bronze Blend");
+        name(en, "item", "bronze_ingot", "Bronze Ingot");
+        name(en, "item", "bronze_pickaxe", "Bronze Pickaxe");
+        name(en, "item", "bronze_axe", "Bronze Axe");
+        name(en, "item", "bronze_shovel", "Bronze Shovel");
+        name(en, "item", "bronze_hoe", "Bronze Hoe");
+        name(en, "item", "bronze_longsword", "Bronze Longsword");
+        name(en, "item", "bronze_hammer", "Bronze Hammer");
+        name(en, "item", "bronze_helmet", "Bronze Helmet");
+        name(en, "item", "bronze_chestplate", "Bronze Chestplate");
+        name(en, "item", "bronze_leggings", "Bronze Leggings");
+        name(en, "item", "bronze_boots", "Bronze Boots");
     }
 
-    private static void name(Map<String, String> en, Map<String, String> pt, String kind, String id, String english, String portuguese) {
+    private static void name(Map<String, String> en, String kind, String id, String english) {
         en.put(kind + "." + NS + "." + id, english);
-        pt.put(kind + "." + NS + "." + id, portuguese);
     }
 
 }

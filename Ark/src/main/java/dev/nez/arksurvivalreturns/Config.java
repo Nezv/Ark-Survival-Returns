@@ -110,7 +110,7 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue COMBAT_HIT_FRACTION, COMBAT_RECOVERY_FRACTION;
     // ------------------------------------------------------------------------ companion
     public static final ModConfigSpec.IntValue COMPANION_FOLLOW_DISTANCE, COMPANION_WANDER_RADIUS,
-            COMPANION_PET_COOLDOWN_TICKS;
+            COMPANION_PET_COOLDOWN_TICKS, COMPANION_WHISTLE_RANGE;
     // ----------------------------------------------------------------------------- camp
     public static final ModConfigSpec.BooleanValue CAMP_STARTER_KIT, CAMP_BEDROLL_SETS_SPAWN, CAMP_BEDROLL_PICKUP;
     public static final ModConfigSpec.DoubleValue CAMP_BANDAGE_HEAL;
@@ -273,6 +273,9 @@ public final class Config {
                 .defineInRange("wanderRadius", 20, 4, 64);
         COMPANION_PET_COOLDOWN_TICKS = b.comment("Ticks between pet responses for one creature (40 = two seconds).")
                 .defineInRange("petCooldownTicks", 40, 10, 200);
+        COMPANION_WHISTLE_RANGE = b.comment("Command wheel: how far, in blocks, a whistle reaches the tame under the "
+                        + "crosshair, and the player's own tames when no tame is aimed at.")
+                .defineInRange("whistleRange", 32, 8, 96);
         b.pop().push("camp");
         CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (bedroll, bandages, fiber and a flint knife) "
                         + "on their first join in a world.")

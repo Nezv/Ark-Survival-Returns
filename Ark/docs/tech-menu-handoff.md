@@ -26,7 +26,7 @@ The three food extras display `???` until complete. Their hover shows only the n
 | `feature/tech/TechFtbBridge.java` | FTB completion authority and grant/reset synchronization. |
 | `config/ftbquests/quests/chapters/ark_tech_*.json5` | Three dedicated, invisible mirror chapters containing CustomTasks. |
 | `design/tech-menu/quest-id-map.json` | Exact node-to-FTB quest ID mapping. Task IDs are quest ID + 1. |
-| `datagen/ArkData.java` | English/Portuguese menu strings and existing GameTest definitions. |
+| `datagen/ArkData.java` | English menu strings and existing GameTest definitions. |
 
 Java paths in the table are relative to `src/main/java/dev/nez/arksurvivalreturns/`.
 

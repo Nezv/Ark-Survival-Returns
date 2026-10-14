@@ -114,25 +114,19 @@ public final class ArkData implements DataProvider {
         tag("block/work/mineral", "#c:ores", "#c:stones");
     }
     private void models() {
-        Map<String, String> en = new TreeMap<>(), pt = new TreeMap<>();
+        Map<String, String> en = new TreeMap<>();
         en.put("item." + NS + ".debug_spyglass", "Debug Spyglass");
-        pt.put("item." + NS + ".debug_spyglass", "Luneta de depura\u00e7\u00e3o");
         String[] debugKeys = {"title", "searching", "aim", "page", "range"};
         String[] debugEn = {"ARK // DINO INSPECTOR", "SCANNING...", "Aim at a dinosaur to read its state.", "PAGE %s/%s | Mouse wheel to browse", "RANGE %s blocks | Hold use to scan"};
-        String[] debugPt = {"ARK // INSPETOR DE DINOS", "BUSCANDO...", "Mire em um dinossauro para ler seu estado.", "P\u00c1GINA %s/%s | Role para navegar", "ALCANCE %s blocos | Segure usar"};
         for (int i = 0; i < debugKeys.length; i++) {
             en.put("debug." + NS + "." + debugKeys[i], debugEn[i]);
-            pt.put("debug." + NS + "." + debugKeys[i], debugPt[i]);
         }
         // BetterF3 looks its module and line names up under its own keys (client/betterf3/ArkModule).
         String[] f3Keys = {"zone", "creatures", "wildlife", "nearby", "threads", "target", "mass", "level", "shaders"};
         String[] f3En = {"Danger zone", "Creatures", "Wildlife", "Nearby", "Threads", "Aimed at", "Load", "Ark level", "Shaders"};
-        String[] f3Pt = {"Zona de perigo", "Criaturas", "Vida selvagem", "Por perto", "Threads", "Na mira", "Carga", "Nível Ark", "Shaders"};
         en.put("text.betterf3.module.ark", "Ark");
-        pt.put("text.betterf3.module.ark", "Ark");
         for (int i = 0; i < f3Keys.length; i++) {
             en.put("text.betterf3.line.ark_" + f3Keys[i], f3En[i]);
-            pt.put("text.betterf3.line.ark_" + f3Keys[i], f3Pt[i]);
         }
         // The inventory icon is the Ark sprite (tools/build_cosy_items.py); in hand it stays the vanilla scope.
         put("assets/" + NS + "/models/item/debug_spyglass", Map.of("parent", "minecraft:item/generated",
@@ -141,67 +135,61 @@ public final class ArkData implements DataProvider {
                 "property", "minecraft:display_context", "cases", List.of(Map.of("when", List.of("gui", "ground", "fixed", "on_shelf"),
                         "model", Map.of("type", "minecraft:model", "model", NS + ":item/debug_spyglass"))),
                 "fallback", Map.of("type", "minecraft:model", "model", "minecraft:item/spyglass_in_hand"))));
-        en.put("itemGroup." + NS, "Ark Survival Returns"); pt.put("itemGroup." + NS, "Ark Survival Returns");
-        en.put("itemGroup." + NS + ".eggs", "Ark Creature Eggs"); pt.put("itemGroup." + NS + ".eggs", "Ovos de Criaturas Ark");
+        en.put("itemGroup." + NS, "Ark Survival Returns");
+        en.put("itemGroup." + NS + ".eggs", "Ark Creature Eggs");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
-        pt.put("map." + NS + ".filter_on", "Dificuldade: ligada"); pt.put("map." + NS + ".filter_off", "Dificuldade: desligada");
         String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};
         String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-3 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/3", "1 - Easy", "2 - Dangerous", "3 - Deadly"};
-        String[] mapPt = {"[ARK] Mapa bloqueado. Requer domar uma criatura de uma regi\u00e3o de perigo 3.", "Bloqueado", "Desbloqueado", "%s: mapa %s", "Dificuldade regional", "Dimens\u00e3o sem classifica\u00e7\u00e3o", "No cursor: %s/3", "1 - F\u00e1cil", "2 - Perigosa", "3 - Mortal"};
         for (int i = 0; i < mapKeys.length; i++) {
-            en.put("map." + NS + "." + mapKeys[i], mapEn[i]); pt.put("map." + NS + "." + mapKeys[i], mapPt[i]);
+            en.put("map." + NS + "." + mapKeys[i], mapEn[i]);
         }
-        en.put("hud." + NS + ".creature", "%s | Lv. %s | %s / %s HP"); pt.put("hud." + NS + ".creature", "%s | Nv. %s | %s / %s PV");
-        en.put("screen." + NS + ".taming", "Taming %s"); pt.put("screen." + NS + ".taming", "Domestica\u00e7\u00e3o %s");
-        en.put("screen." + NS + ".hunger", "Hunger %s"); pt.put("screen." + NS + ".hunger", "Fome %s");
-        en.put("screen." + NS + ".torpor", "Torpor %s/%s"); pt.put("screen." + NS + ".torpor", "Torpor %s/%s");
+        en.put("hud." + NS + ".creature", "%s | Lv. %s | %s / %s HP");
+        en.put("screen." + NS + ".taming", "Taming %s");
+        en.put("screen." + NS + ".hunger", "Hunger %s");
+        en.put("screen." + NS + ".torpor", "Torpor %s/%s");
         en.put("chat." + NS + ".biome", "[ARK] %s | Danger %s/3 | Wild levels %s-%s");
-        pt.put("chat." + NS + ".biome", "[ARK] %s | Perigo %s/3 | N\u00edveis selvagens %s-%s");
         en.put("chat." + NS + ".biome_unrated", "[ARK] %s | Outside Overworld danger zones");
         String[] states = {"roam", "forage", "drink", "rest", "alert", "investigate", "threaten", "hunt", "defend", "flee", "return_home", "feed"};
         String[] stateEn = {"Roaming", "Foraging", "Drinking", "Resting", "Alert", "Investigating", "Warning", "Hunting", "Defending", "Fleeing", "Returning home", "Feeding"};
-        String[] statePt = {"Vagando", "Pastando", "Bebendo", "Descansando", "Alerta", "Investigando", "Amea\u00e7ando", "Ca\u00e7ando", "Defendendo", "Fugindo", "Voltando para casa", "Comendo"};
         for (int i = 0; i < states.length; i++) {
-            en.put("behavior." + NS + "." + states[i], stateEn[i]); pt.put("behavior." + NS + "." + states[i], statePt[i]);
+            en.put("behavior." + NS + "." + states[i], stateEn[i]);
         }
-        en.put("behavior." + NS + ".seek_water", "Seeking water"); pt.put("behavior." + NS + ".seek_water", "Procurando \u00e1gua");
-        en.put("behavior." + NS + ".sleep", "Sleeping"); pt.put("behavior." + NS + ".sleep", "Dormindo");
-        en.put("behavior." + NS + ".search", "Searching for prey"); pt.put("behavior." + NS + ".search", "Procurando presas");
-        en.put("behavior." + NS + ".regroup", "Regrouping"); pt.put("behavior." + NS + ".regroup", "Reagrupando");
+        en.put("behavior." + NS + ".seek_water", "Seeking water");
+        en.put("behavior." + NS + ".sleep", "Sleeping");
+        en.put("behavior." + NS + ".search", "Searching for prey");
+        en.put("behavior." + NS + ".regroup", "Regrouping");
         // Body actions follow the state on the target bar ("Hunting / Stalking"); a missing label fails datagen.
-        var actions = new EnumMap<BehaviorAction, String[]>(BehaviorAction.class);
-        actions.put(BehaviorAction.IDLE, new String[]{"Standing", "Parado"});
-        actions.put(BehaviorAction.WALK, new String[]{"Walking", "Andando"});
-        actions.put(BehaviorAction.RUN, new String[]{"Running", "Correndo"});
-        actions.put(BehaviorAction.TURN, new String[]{"Turning", "Virando"});
-        actions.put(BehaviorAction.LOOK, new String[]{"Looking around", "Olhando em volta"});
-        actions.put(BehaviorAction.SNIFF, new String[]{"Sniffing", "Farejando"});
-        actions.put(BehaviorAction.POOP, new String[]{"Pooping", "Fazendo coc\u00f4"});
-        actions.put(BehaviorAction.GRAZE, new String[]{"Grazing", "Pastando"});
-        actions.put(BehaviorAction.DRINK, new String[]{"Drinking", "Bebendo"});
-        actions.put(BehaviorAction.NOTICE, new String[]{"Noticing", "Percebendo"});
-        actions.put(BehaviorAction.ROAR, new String[]{"Roaring", "Rugindo"});
-        actions.put(BehaviorAction.THREAT, new String[]{"Threat display", "Intimidando"});
-        actions.put(BehaviorAction.STARTLE, new String[]{"Startled", "Assustado"});
-        actions.put(BehaviorAction.STALK, new String[]{"Stalking", "Espreitando"});
-        actions.put(BehaviorAction.CHASE, new String[]{"Chasing", "Perseguindo"});
-        actions.put(BehaviorAction.BOLT, new String[]{"Bolting", "Em disparada"});
-        actions.put(BehaviorAction.FEED, new String[]{"Eating", "Comendo"});
-        actions.put(BehaviorAction.SETTLE, new String[]{"Settling down", "Deitando"});
-        actions.put(BehaviorAction.SLEEP, new String[]{"Asleep", "Dormindo"});
-        actions.put(BehaviorAction.WAKE, new String[]{"Waking up", "Acordando"});
-        actions.put(BehaviorAction.REST, new String[]{"Resting", "Descansando"});
+        var actions = new EnumMap<BehaviorAction, String>(BehaviorAction.class);
+        actions.put(BehaviorAction.IDLE, "Standing");
+        actions.put(BehaviorAction.WALK, "Walking");
+        actions.put(BehaviorAction.RUN, "Running");
+        actions.put(BehaviorAction.TURN, "Turning");
+        actions.put(BehaviorAction.LOOK, "Looking around");
+        actions.put(BehaviorAction.SNIFF, "Sniffing");
+        actions.put(BehaviorAction.POOP, "Pooping");
+        actions.put(BehaviorAction.GRAZE, "Grazing");
+        actions.put(BehaviorAction.DRINK, "Drinking");
+        actions.put(BehaviorAction.NOTICE, "Noticing");
+        actions.put(BehaviorAction.ROAR, "Roaring");
+        actions.put(BehaviorAction.THREAT, "Threat display");
+        actions.put(BehaviorAction.STARTLE, "Startled");
+        actions.put(BehaviorAction.STALK, "Stalking");
+        actions.put(BehaviorAction.CHASE, "Chasing");
+        actions.put(BehaviorAction.BOLT, "Bolting");
+        actions.put(BehaviorAction.FEED, "Eating");
+        actions.put(BehaviorAction.SETTLE, "Settling down");
+        actions.put(BehaviorAction.SLEEP, "Asleep");
+        actions.put(BehaviorAction.WAKE, "Waking up");
+        actions.put(BehaviorAction.REST, "Resting");
         for (var action : BehaviorAction.values()) {
             var label = Objects.requireNonNull(actions.get(action), () -> "Missing action label: " + action);
-            en.put(action.key(), label[0]); pt.put(action.key(), label[1]);
+            en.put(action.key(), label);
         }
-        pt.put("chat." + NS + ".biome_unrated", "[ARK] %s | Fora das zonas de perigo do mundo normal");
         String[] ids = {"tintoberry", "amarberry", "azulberry", "narcoberry"};
         // Old ids, new names (recipe gates Q5): existing worlds keep their berries.
         String[] names = {"Redberry", "Yellowberry", "Blueberry", "Blackberry"};
-        String[] portuguese = {"Baga vermelha", "Baga amarela", "Baga azul", "Baga preta"};
         for (int i = 0; i < ids.length; i++) {
-            model(ids[i]); en.put("item." + NS + "." + ids[i], names[i]); pt.put("item." + NS + "." + ids[i], portuguese[i]);
+            model(ids[i]); en.put("item." + NS + "." + ids[i], names[i]);
         }
         // Tranquilizer arrow: the vanilla arrow with a narcotic head (tools/build_cosy_items.py).
         put("assets/" + NS + "/models/item/tranquilizer_arrow", Map.of("parent", "minecraft:item/generated",
@@ -209,116 +197,81 @@ public final class ArkData implements DataProvider {
         put("assets/" + NS + "/items/tranquilizer_arrow", Map.of("model", Map.of("type", "minecraft:model",
                 "model", NS + ":item/tranquilizer_arrow")));
         en.put("item." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
-        pt.put("item." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
         en.put("companion." + NS + ".order.follow", "Your companion follows you");
-        pt.put("companion." + NS + ".order.follow", "Seu companheiro segue voc\u00ea");
         en.put("companion." + NS + ".order.stay", "Your companion stays here");
-        pt.put("companion." + NS + ".order.stay", "Seu companheiro fica aqui");
         en.put("companion." + NS + ".order.wander", "Your companion wanders nearby");
-        pt.put("companion." + NS + ".order.wander", "Seu companheiro vaga por perto");
+        commandWheel(en);
         en.put("item." + NS + ".plant_fiber", "Plant Fiber");
-        pt.put("item." + NS + ".plant_fiber", "Fibra vegetal");
         en.put("item." + NS + ".pack_harness", "Pack Harness");
-        pt.put("item." + NS + ".pack_harness", "Arn\u00eas de carga");
         en.put("item." + NS + ".reinforced_harness", "Reinforced Harness");
-        pt.put("item." + NS + ".reinforced_harness", "Arn\u00eas refor\u00e7ado");
         en.put("screen." + NS + ".cargo", "Cargo %s / %s");
-        pt.put("screen." + NS + ".cargo", "Carga %s / %s");
         en.put("screen." + NS + ".unload", "Unload");
-        pt.put("screen." + NS + ".unload", "Descarregar");
         en.put("screen." + NS + ".load", "Load");
-        pt.put("screen." + NS + ".load", "Carregar");
         en.put("cargo." + NS + ".moved", "[ARK] Moved %s items.");
-        pt.put("cargo." + NS + ".moved", "[ARK] %s itens movidos.");
         en.put("cargo." + NS + ".none", "[ARK] No nearby storage accepted the transfer.");
-        pt.put("cargo." + NS + ".none", "[ARK] Nenhum armazenamento pr\u00f3ximo aceitou a transfer\u00eancia.");
         en.put("item." + NS + ".fiber_bandage", "Fiber Bandage");
-        pt.put("item." + NS + ".fiber_bandage", "Bandagem de fibra");
         en.put("item." + NS + ".flint_knife", "Flint Knife");
-        pt.put("item." + NS + ".flint_knife", "Faca de s\u00edlex");
         en.put("block." + NS + ".mattress", "Mattress");
-        pt.put("block." + NS + ".mattress", "Colchão");
         en.put("item." + NS + ".mattress", "Mattress");
-        pt.put("item." + NS + ".mattress", "Colchão");
         en.put("block." + NS + ".bedroll", "Bedroll");
-        pt.put("block." + NS + ".bedroll", "Saco de dormir");
         en.put("item." + NS + ".bedroll", "Bedroll");
-        pt.put("item." + NS + ".bedroll", "Saco de dormir");
         en.put("key." + NS + ".journal", "Open Journal");
-        pt.put("key." + NS + ".journal", "Abrir di\u00e1rio");
         en.put("key.category." + NS + ".keys", "Ark Survival Returns");
-        pt.put("key.category." + NS + ".keys", "Ark Survival Returns");
         // The tech-tree key (P) has its own Controls category (TechClient).
         en.put("key.category." + NS + ".progression", "Ark Survival Returns: Progression");
-        pt.put("key.category." + NS + ".progression", "Ark Survival Returns: Progressão");
         // The session recorder's marker key (SessionRecorderClient).
         en.put("key." + NS + ".session_mark", "Mark Recorded Moment");
-        pt.put("key." + NS + ".session_mark", "Marcar momento da gravação");
         en.put("key.category." + NS + ".debug", "Ark Survival Returns: Debug");
-        pt.put("key.category." + NS + ".debug", "Ark Survival Returns: Depuração");
         // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
         en.put("entity." + NS + ".guardian_dragon", "Beacon Guardian");
-        pt.put("entity." + NS + ".guardian_dragon", "Guardião do Farol");
         en.put("container." + NS + ".loot_crate", "Loot Crate");
-        pt.put("container." + NS + ".loot_crate", "Caixa de Saque");
         en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
-        pt.put("entity." + NS + ".guardian_giganotosaurus", "Giganotossauro Guardião");
         en.put("entity." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
-        pt.put("entity." + NS + ".tranquilizer_arrow", "Flecha tranquilizante");
-        tamingMessages(en, pt);
-        tribeMessages(en, pt);
-        campMessages(en, pt);
-        StationData.messages(en, pt);
-        DropData.messages(en, pt);
-        TitleData.messages(en, pt);
-        downedMessages(en, pt);
-        massMessages(en, pt);
-        workMessages(en, pt);
-        farmMessages(en, pt);
-        kitchenMessages(en, pt);
-        guardianMessages(en, pt);
-        techMessages(en, pt);
+        tamingMessages(en);
+        tribeMessages(en);
+        campMessages(en);
+        StationData.messages(en);
+        DropData.messages(en);
+        TitleData.messages(en);
+        downedMessages(en);
+        massMessages(en);
+        workMessages(en);
+        farmMessages(en);
+        kitchenMessages(en);
+        guardianMessages(en);
+        techMessages(en);
         en.put("levels." + NS + ".up", "[ARK] Level up! Ark level %s");
-        pt.put("levels." + NS + ".up", "[ARK] Subiu de nível! Nível Ark %s");
         en.put("levels." + NS + ".status", "[ARK] %s: level %s, XP %s/%s");
-        pt.put("levels." + NS + ".status", "[ARK] %s: nível %s, XP %s/%s");
         en.put("levels." + NS + ".cap", "[ARK] The maximum Ark level is %s.");
-        pt.put("levels." + NS + ".cap", "[ARK] O nível máximo Ark é %s.");
         for (Species s : Species.values()) {
             model(s.id + "_spawn_egg");
-            en.put("entity." + NS + "." + s.id, s.displayName); pt.put("entity." + NS + "." + s.id, s.displayName);
+            en.put("entity." + NS + "." + s.id, s.displayName);
             en.put("item." + NS + "." + s.id + "_spawn_egg", s.displayName + " Spawn Egg");
-            pt.put("item." + NS + "." + s.id + "_spawn_egg", "Ovo gerador de " + s.displayName);
             // The sprites come from tools/build_saddle_items.py, by the tier and seat of the concept saddle (F28).
             model(s.id + "_saddle");
             en.put("item." + NS + "." + s.id + "_saddle", s.displayName + " Saddle");
-            pt.put("item." + NS + "." + s.id + "_saddle", "Sela de " + s.displayName);
         }
         en.put("map."+NS+".land_on", "Land habitats: on"); en.put("map."+NS+".land_off", "Land habitats: off");
-        pt.put("map."+NS+".land_on", "Habitats: ligados"); pt.put("map."+NS+".land_off", "Habitats: desligados");
-        en.put("map."+NS+".land_label", "%s | %s, %s, %s | %s"); pt.put("map."+NS+".land_label", "%s | %s, %s, %s | %s");
-        en.put("map."+NS+".land_occupied", "Occupied"); pt.put("map."+NS+".land_occupied", "Ocupado");
-        en.put("map."+NS+".land_vacant", "Recovering"); pt.put("map."+NS+".land_vacant", "Em recupera\u00e7\u00e3o");
-        en.put("map."+NS+".land_invalid", "Seeking water"); pt.put("map."+NS+".land_invalid", "Buscando \u00e1gua");
-        en.put("map."+NS+".land_more", "+%s habitats"); pt.put("map."+NS+".land_more", "+%s habitats");
+        en.put("map."+NS+".land_label", "%s | %s, %s, %s | %s");
+        en.put("map."+NS+".land_occupied", "Occupied");
+        en.put("map."+NS+".land_vacant", "Recovering");
+        en.put("map."+NS+".land_invalid", "Seeking water");
+        en.put("map."+NS+".land_more", "+%s habitats");
         en.put("map." + NS + ".nests_on", "Nests: on"); en.put("map." + NS + ".nests_off", "Nests: off");
-        pt.put("map." + NS + ".nests_on", "Ninhos: ligados"); pt.put("map." + NS + ".nests_off", "Ninhos: desligados");
-        en.put("map." + NS + ".nest_label", "%s habitat | %s, %s, %s"); pt.put("map." + NS + ".nest_label", "Habitat de %s | %s, %s, %s");
+        en.put("map." + NS + ".nest_label", "%s habitat | %s, %s, %s");
         for (var bird : Species.values()) {
             if (!bird.flyer()) continue;
             en.put("block." + NS + "." + bird.id + "_nest", bird.displayName + " Nest");
-            pt.put("block." + NS + "." + bird.id + "_nest", "Ninho de " + bird.displayName);
             en.put("item." + NS + "." + bird.id + "_egg", bird.displayName + " Egg");
-            pt.put("item." + NS + "." + bird.id + "_egg", "Ovo de " + bird.displayName);
         }
         model("allosaur_heart");
         model("workshop_schematic");
         model("guardian_trophy");
-        PrimitiveData.lang(en, pt);
-        BronzeData.lang(en, pt);
-        AccessoryData.lang(en, pt);
-        SulphurData.lang(en, pt);
-        put("assets/" + NS + "/lang/en_us", en); put("assets/" + NS + "/lang/pt_br", pt);
+        PrimitiveData.lang(en);
+        BronzeData.lang(en);
+        AccessoryData.lang(en);
+        SulphurData.lang(en);
+        put("assets/" + NS + "/lang/en_us", en);
     }
     private void model(String id) {
         put("assets/" + NS + "/models/item/" + id, Map.of("parent", "minecraft:item/generated", "textures", Map.of("layer0", NS + ":item/" + id)));
@@ -371,8 +324,62 @@ public final class ArkData implements DataProvider {
                 """);
     }
 
-    /** Player-facing taming and sedation text, in both shipped locales. */
-    private void tamingMessages(Map<String, String> en, Map<String, String> pt) {
+    /** The command wheel (F22): its key, wedges, hints and the whistle's answers on the action bar. */
+    private void commandWheel(Map<String, String> en) {
+        String c = "companion." + NS + ".command.", w = "wheel." + NS + ".";
+        String[][] text = {
+                {"key." + NS + ".command_wheel", "Command Wheel"},
+                {"subtitles." + NS + ".whistle", "Whistle"},
+                {c + "follow", "%s follows you"},
+                {c + "stay", "%s stays here"},
+                {c + "wander", "%s wanders around here"},
+                {c + "work", "%s starts working here"},
+                {c + "call", "%s comes to you"},
+                {c + "group.follow", "%s tames follow you"},
+                {c + "group.stay", "%s tames stay where they are"},
+                {c + "group.wander", "%s tames wander around where they are"},
+                {c + "group.work", "%s tames start working"},
+                {c + "group.call", "%s tames come to you"},
+                {c + "cannot_work", "%s has no work to do"},
+                {c + "group.cannot_work", "None of these tames can work"},
+                {c + "none", "No tame of yours within %s blocks hears you"},
+                {c + "far", "%s is too far away to hear you"},
+                {c + "unconscious", "%s is unconscious and cannot hear you"},
+                {c + "pet_far", "Come closer to pet %s"},
+                {w + "order.follow", "Follow"},
+                {w + "order.stay", "Stay"},
+                {w + "order.wander", "Wander"},
+                {w + "order.work", "Work"},
+                {w + "order.pet", "Pet"},
+                {w + "order.call", "Call"},
+                {w + "hint.follow", "Walks after you wherever you go"},
+                {w + "hint.stay", "Holds its ground where it stands"},
+                {w + "hint.wander", "Roams freely around where it stands"},
+                {w + "hint.work", "Works the land around where it stands"},
+                {w + "hint.pet", "Shows it some affection"},
+                {w + "hint.call", "Comes to you and keeps its order there"},
+                {w + "why.unconscious", "It is unconscious"},
+                {w + "why.pet_far", "Come closer to pet it"},
+                {w + "why.pet_group", "Aim at one tame to pet it"},
+                {w + "why.none", "No tame of yours within %s blocks"},
+                {w + "status", "Level %s · %s"},
+                {w + "state.follow", "following"},
+                {w + "state.stay", "staying"},
+                {w + "state.wander", "wandering"},
+                {w + "state.work", "working"},
+                {w + "state.unconscious", "unconscious"},
+                {w + "group", "Your tames"},
+                {w + "group.count", "%s within %s blocks"},
+                {w + "tames", "tames"},
+                {w + "help.hold", "Release %s to give the order · Esc to cancel"},
+                {w + "help.click", "Click an order or press 1 to 6 · Esc to cancel"}};
+        for (String[] line : text) {
+            en.put(line[0], line[1]);
+        }
+    }
+
+    /** Player-facing taming and sedation text. */
+    private void tamingMessages(Map<String, String> en) {
         String[] keys = {"knockout", "wake", "fed", "fed_favourite", "denied", "denied_access", "claim",
                 "truce", "tamed", "unconscious", "accepted", "wrong_food", "not_hungry", "cooldown",
                 "wrong_state", "not_claimant", "already_tamed", "excluded", "denied.attack", "denied.interact",
@@ -391,38 +398,20 @@ public final class ArkData implements DataProvider {
                 "there is no room to mount here", "your tribe has not granted you riding permission for %s",
                 "your tribe has not granted you cargo access to %s",
                 "your tribe has not granted you order permission for %s"};
-        String[] portuguese = {"%s foi nocauteado.", "%s est\u00e1 acordando.", "%s come. Progresso de domestica\u00e7\u00e3o %s%%.",
-                "%s adora a comida favorita. Progresso de domestica\u00e7\u00e3o %s%%.", "%s recusa: %s",
-                "Voc\u00ea n\u00e3o consegue alcan\u00e7ar %s agora.", "Voc\u00ea reivindicou %s.",
-                "%s vai tolerar voc\u00ea por um momento.", "%s confia em voc\u00ea agora.", "Voc\u00ea est\u00e1 inconsciente: %s",
-                "aceito", "comida errada", "fome insuficiente", "ainda digerindo a \u00faltima refei\u00e7\u00e3o",
-                "n\u00e3o est\u00e1 inconsciente", "outro jogador det\u00e9m esta tentativa", "j\u00e1 domesticado", "alvo inv\u00e1lido",
-                "voc\u00ea n\u00e3o pode atacar", "voc\u00ea n\u00e3o pode interagir", "voc\u00ea n\u00e3o pode usar itens", "voc\u00ea n\u00e3o pode andar",
-                "voc\u00ea n\u00e3o pode montar", "a criatura est\u00e1 inconsciente", "voc\u00ea precisa domar primeiro",
-                "voc\u00ea n\u00e3o \u00e9 o dono desta criatura", "precisa da sela da própria espécie", "algu\u00e9m j\u00e1 est\u00e1 montado",
-                "n\u00e3o h\u00e1 espa\u00e7o para montar aqui", "sua tribo n\u00e3o lhe deu permiss\u00e3o de montaria em %s",
-                "sua tribo n\u00e3o lhe deu acesso \u00e0 carga de %s",
-                "sua tribo n\u00e3o lhe deu permiss\u00e3o de ordens para %s"};
         for (int i = 0; i < keys.length; i++) {
             en.put("taming." + NS + "." + keys[i], english[i]);
-            pt.put("taming." + NS + "." + keys[i], portuguese[i]);
         }
     }
-    /** Player-facing tribe permission text, in both shipped locales. */
-    private void tribeMessages(Map<String, String> en, Map<String, String> pt) {
+    /** Player-facing tribe permission text. */
+    private void tribeMessages(Map<String, String> en) {
         String[] keys = {"status_solo", "status_party", "flag", "permission_set", "permission_cleared",
                 "permission_denied", "unknown", "on", "off"};
         String[] english = {"No tribe yet for %s. Create one with /ftbteams party create, then invite your partner.",
                 "Tribe %s | %s member(s)", "%s: %s", "%s for %s set to %s.",
                 "Tribe permissions for %s reset to defaults.",
                 "Only a tribe owner or a gamemaster may change tribe permissions.", "Unknown option: %s", "on", "off"};
-        String[] portuguese = {"Ainda sem tribo para %s. Crie uma com /ftbteams party create e convide seu parceiro.",
-                "Tribo %s | %s membro(s)", "%s: %s", "%s de %s definida como %s.",
-                "Permiss\u00f5es de tribo de %s restauradas ao padr\u00e3o.",
-                "Somente o dono da tribo ou um gamemaster pode mudar permiss\u00f5es.", "Op\u00e7\u00e3o desconhecida: %s", "ligada", "desligada"};
         for (int i = 0; i < keys.length; i++) {
             en.put("tribe." + NS + "." + keys[i], english[i]);
-            pt.put("tribe." + NS + "." + keys[i], portuguese[i]);
         }
     }
 
@@ -667,10 +656,6 @@ public final class ArkData implements DataProvider {
                 "item.minecraft.leather_helmet", "Hide Cap", "item.minecraft.leather_chestplate", "Hide Tunic",
                 "item.minecraft.leather_leggings", "Hide Pants", "item.minecraft.leather_boots", "Hide Boots",
                 "item.minecraft.leather_horse_armor", "Hide Horse Armor"));
-        put("assets/minecraft/lang/pt_br", Map.of("item.minecraft.stick", "Graveto", "item.minecraft.leather", "Pele",
-                "item.minecraft.leather_helmet", "Capuz de pele", "item.minecraft.leather_chestplate", "T\u00fanica de pele",
-                "item.minecraft.leather_leggings", "Cal\u00e7as de pele", "item.minecraft.leather_boots", "Botas de pele",
-                "item.minecraft.leather_horse_armor", "Armadura de pele para cavalo"));
     }
 
     /** The downed state's two hidden discovery advancements. */
@@ -692,127 +677,81 @@ public final class ArkData implements DataProvider {
                 "model", NS + ":item/" + id)));
     }
 
-    private void campMessages(Map<String, String> en, Map<String, String> pt) {
+    private void campMessages(Map<String, String> en) {
         en.put("camp." + NS + ".starter_kit", "A survivor's kit: a bedroll, fiber bandages, plant fiber and a flint knife.");
-        pt.put("camp." + NS + ".starter_kit", "Um kit de sobrevivente: rolo de dormir, bandagens de fibra, fibra vegetal e uma faca de s\u00edlex.");
         en.put("camp." + NS + ".bedroll_set", "Respawn point set. It stays here even if the bedroll is destroyed.");
-        pt.put("camp." + NS + ".bedroll_set", "Ponto de renascimento definido. Ele permanece mesmo se o rolo for destru\u00eddo.");
         en.put("camp." + NS + ".rolled_up", "%s rolled up.");
-        pt.put("camp." + NS + ".rolled_up", "%s enrolado.");
         en.put("camp." + NS + ".bedroll_disabled", "Setting respawn with a bedroll is disabled on this server.");
-        pt.put("camp." + NS + ".bedroll_disabled", "Definir o renascimento com um rolo de dormir est\u00e1 desativado neste servidor.");
         en.put("camp." + NS + ".bandaged", "Bandaged +%s health.");
-        pt.put("camp." + NS + ".bandaged", "Bandagem recuperou +%s de vida.");
     }
 
 
-    private void downedMessages(Map<String, String> en, Map<String, String> pt) {
+    private void downedMessages(Map<String, String> en) {
         en.put("downed." + NS + ".downed", "You are down! %s seconds until you bleed out; a tribe member can revive you with a fiber bandage.");
-        pt.put("downed." + NS + ".downed", "Voc\u00ea caiu! %s segundos at\u00e9 sangrar; um membro da tribo pode reanimar voc\u00ea com uma bandagem de fibra.");
         en.put("downed." + NS + ".tribe_down", "%s is down at %s, %s, %s with %s seconds left.");
-        pt.put("downed." + NS + ".tribe_down", "%s caiu em %s, %s, %s com %s segundos restantes.");
         en.put("downed." + NS + ".revived", "%s pulled you back up.");
-        pt.put("downed." + NS + ".revived", "%s levantou voc\u00ea de volta.");
         en.put("downed." + NS + ".revived_self", "You revived %s.");
-        pt.put("downed." + NS + ".revived_self", "Voc\u00ea reanimou %s.");
         en.put("downed." + NS + ".not_tribe", "Only a tribe member can revive them.");
-        pt.put("downed." + NS + ".not_tribe", "S\u00f3 um membro da tribo pode reanimar.");
         en.put("downed." + NS + ".denied", "You cannot do that while down.");
-        pt.put("downed." + NS + ".denied", "Voc\u00ea n\u00e3o pode fazer isso ca\u00eddo.");
         en.put("hud.downed." + NS + ".title", "DOWNED");
-        pt.put("hud.downed." + NS + ".title", "CA\u00cdDO");
         en.put("hud.downed." + NS + ".hint", "A tribe member must use a fiber bandage");
-        pt.put("hud.downed." + NS + ".hint", "Um membro da tribo precisa usar uma bandagem de fibra");
         en.put("hud.downed." + NS + ".seconds", "%ss");
-        pt.put("hud.downed." + NS + ".seconds", "%ss");
     }
 
     /** Carried-mass gauge and the warning/overload messages; the warning band itself has no penalty. */
-    private void massMessages(Map<String, String> en, Map<String, String> pt) {
+    private void massMessages(Map<String, String> en) {
         en.put("hud." + NS + ".mass", "Load %s / %s");
-        pt.put("hud." + NS + ".mass", "Carga %s / %s");
         en.put("hud." + NS + ".mass.mount", "Mount %s / %s");
-        pt.put("hud." + NS + ".mass.mount", "Montaria %s / %s");
         en.put("hud." + NS + ".mass.warn", "[ARK] Heavy load: %s / %s");
-        pt.put("hud." + NS + ".mass.warn", "[ARK] Carga pesada: %s / %s");
         en.put("hud." + NS + ".mass.overload", "[ARK] Overburdened: sprint disabled and movement slowing.");
-        pt.put("hud." + NS + ".mass.overload", "[ARK] Sobrecarregado: corrida desativada e movimento mais lento.");
         en.put("hud." + NS + ".mass.heavy", "[ARK] Severely overburdened: movement heavily slowed.");
-        pt.put("hud." + NS + ".mass.heavy", "[ARK] Muito sobrecarregado: movimento fortemente reduzido.");
         en.put("hud." + NS + ".mass.eased", "[ARK] Load eased.");
-        pt.put("hud." + NS + ".mass.eased", "[ARK] Carga aliviada.");
         en.put("hud." + NS + ".overload.takeoff", "[ARK] The load is too heavy for takeoff.");
-        pt.put("hud." + NS + ".overload.takeoff", "[ARK] A carga \u00e9 pesada demais para decolar.");
         en.put("hud." + NS + ".overload.descent", "[ARK] Overloaded: descending under control.");
-        pt.put("hud." + NS + ".overload.descent", "[ARK] Sobrecarregado: descendo sob controle.");
         en.put("hud." + NS + ".overload.dive", "[ARK] Overloaded: this mount will not dive.");
-        pt.put("hud." + NS + ".overload.dive", "[ARK] Sobrecarregado: esta montaria n\u00e3o mergulha.");
         en.put("hud." + NS + ".overload.surface", "[ARK] Surfacing before the rider runs out of air.");
-        pt.put("hud." + NS + ".overload.surface", "[ARK] Subindo \u00e0 superf\u00edcie antes que o ar acabe.");
     }
 
     /** Work orders: the extra companion order, its permission denial and the job feedback. */
-    private void workMessages(Map<String, String> en, Map<String, String> pt) {
+    private void workMessages(Map<String, String> en) {
         en.put("companion." + NS + ".order.work", "Your companion starts working here");
-        pt.put("companion." + NS + ".order.work", "Seu companheiro come\u00e7a a trabalhar aqui");
         en.put("taming." + NS + ".denied.work", "[ARK] Your tribe has not granted you work access to %s");
-        pt.put("taming." + NS + ".denied.work", "[ARK] Sua tribo n\u00e3o concedeu acesso de trabalho a %s");
         en.put("work." + NS + ".full", "[ARK] %s's hold is full.");
-        pt.put("work." + NS + ".full", "[ARK] O compartimento de %s est\u00e1 cheio.");
         en.put("work." + NS + ".blocked", "[ARK] %s pauses: a permitted survivor must stay nearby.");
-        pt.put("work." + NS + ".blocked", "[ARK] %s pausa: um sobrevivente autorizado precisa ficar perto.");
     }
 
     /** Homestead station and crop names. */
-    private void farmMessages(Map<String, String> en, Map<String, String> pt) {
+    private void farmMessages(Map<String, String> en) {
         en.put("block." + NS + ".trough", "Oak Feeding Trough");
-        pt.put("block." + NS + ".trough", "Cocho de alimenta\u00e7\u00e3o");
         en.put("item." + NS + ".trough", "Oak Feeding Trough");
-        pt.put("item." + NS + ".trough", "Cocho de alimenta\u00e7\u00e3o");
-        String[][] troughNames = {{"spruce", "Spruce", "pinheiro"}, {"birch", "Birch", "bétula"},
-                {"jungle", "Jungle", "selva"}, {"acacia", "Acacia", "acácia"}, {"dark_oak", "Dark Oak", "carvalho escuro"},
-                {"mangrove", "Mangrove", "mangue"}, {"cherry", "Cherry", "cerejeira"}, {"pale_oak", "Pale Oak", "carvalho pálido"},
-                {"bamboo", "Bamboo", "bambu"}};
+        String[][] troughNames = {{"spruce", "Spruce"}, {"birch", "Birch"},
+                {"jungle", "Jungle"}, {"acacia", "Acacia"}, {"dark_oak", "Dark Oak"},
+                {"mangrove", "Mangrove"}, {"cherry", "Cherry"}, {"pale_oak", "Pale Oak"},
+                {"bamboo", "Bamboo"}};
         for (String[] wood : troughNames) {
             for (String kind : List.of("block.", "item.")) {
                 en.put(kind + NS + "." + wood[0] + "_trough", wood[1] + " Feeding Trough");
-                pt.put(kind + NS + "." + wood[0] + "_trough", "Cocho de " + wood[2]);
             }
         }
         en.put("kitchen." + NS + ".heated", "Fire lit");
-        pt.put("kitchen." + NS + ".heated", "Fogo aceso");
         en.put("kitchen." + NS + ".needs_fire", "Needs a lit fire below");
-        pt.put("kitchen." + NS + ".needs_fire", "Acenda o fogo abaixo");
         en.put("block." + NS + ".drying_rack", "Drying Rack");
-        pt.put("block." + NS + ".drying_rack", "Varal de secagem");
         en.put("item." + NS + ".drying_rack", "Drying Rack");
-        pt.put("item." + NS + ".drying_rack", "Varal de secagem");
         en.put("item." + NS + ".dried_ration", "Dried Ration");
-        pt.put("item." + NS + ".dried_ration", "Ra\u00e7\u00e3o seca");
         en.put("block." + NS + ".tintoberry_bush", "Redberry Bush");
-        pt.put("block." + NS + ".tintoberry_bush", "Arbusto de baga vermelha");
         en.put("block." + NS + ".amarberry_bush", "Yellowberry Bush");
-        pt.put("block." + NS + ".amarberry_bush", "Arbusto de baga amarela");
         en.put("block." + NS + ".azulberry_bush", "Blueberry Bush");
-        pt.put("block." + NS + ".azulberry_bush", "Arbusto de baga azul");
         en.put("block." + NS + ".narcoberry_bush", "Blackberry Bush");
-        pt.put("block." + NS + ".narcoberry_bush", "Arbusto de baga preta");
         en.put("item." + NS + ".narcotics", "Narcotics");
-        pt.put("item." + NS + ".narcotics", "Narcóticos");
         en.put("item." + NS + ".improved_tranquilizer_arrow", "Improved Tranquilizer Arrow");
-        pt.put("item." + NS + ".improved_tranquilizer_arrow", "Flecha tranquilizante melhorada");
     }
 
     /** Kitchen names: the pot and the two prepared meals. */
-    private void kitchenMessages(Map<String, String> en, Map<String, String> pt) {
+    private void kitchenMessages(Map<String, String> en) {
         en.put("block." + NS + ".cooking_pot", "Cooking Pot");
-        pt.put("block." + NS + ".cooking_pot", "Panela de cozinha");
         en.put("item." + NS + ".cooking_pot", "Cooking Pot");
-        pt.put("item." + NS + ".cooking_pot", "Panela de cozinha");
         en.put("item." + NS + ".hearty_stew", "Hearty Stew");
-        pt.put("item." + NS + ".hearty_stew", "Ensopado refor\u00e7ado");
         en.put("item." + NS + ".trail_mix", "Trail Mix");
-        pt.put("item." + NS + ".trail_mix", "Mistura de trilha");
     }
 
     private static Map<String, Object> nestBox(double x, double y, double z, double xx, double yy, double zz, String texture) {
@@ -867,27 +806,17 @@ public final class ArkData implements DataProvider {
      * runtime placement predicate still applies the danger/level gate.
      */
     /** First Guardian encounter text: the item names, the bar and every activation outcome. */
-    private void guardianMessages(Map<String, String> en, Map<String, String> pt) {
+    private void guardianMessages(Map<String, String> en) {
         en.put("item." + NS + ".allosaur_heart", "Allosaur Heart");
-        pt.put("item." + NS + ".allosaur_heart", "Cora\u00e7\u00e3o de Alossauro");
         en.put("item." + NS + ".workshop_schematic", "Workshop Schematic");
-        pt.put("item." + NS + ".workshop_schematic", "Esquema da Oficina");
         en.put("item." + NS + ".guardian_trophy", "Guardian Trophy");
-        pt.put("item." + NS + ".guardian_trophy", "Trofeu do Guardi\u00e3o");
         en.put("tooltip." + NS + ".allosaur_heart",
                 "Encounter key. Offer it at a block beneath an Ancient Remnants monolith to summon the First Guardian.");
-        pt.put("tooltip." + NS + ".allosaur_heart",
-                "Chave do ritual. Ofere\u00e7a-a em um bloco sob um mon\u00f3lito de Ancient Remnants para invocar o Primeiro Guardi\u00e3o.");
         en.put("tooltip." + NS + ".workshop_schematic",
                 "Proof of the First Guardian's defeat. The tribe's workshop research is already recorded; this is a memento.");
-        pt.put("tooltip." + NS + ".workshop_schematic",
-                "Prova da derrota do Primeiro Guardi\u00e3o. A pesquisa da tribo j\u00e1 est\u00e1 registrada; isto \u00e9 uma lembran\u00e7a.");
         en.put("tooltip." + NS + ".guardian_trophy", "Trophy taken from a Beacon Guardian.");
-        pt.put("tooltip." + NS + ".guardian_trophy", "Trofeu tomado de um Guardi\u00e3o do Farol.");
         en.put("guardian." + NS + ".name", "Guardian Giganotosaurus");
-        pt.put("guardian." + NS + ".name", "Giganotossauro Guardi\u00e3o");
         en.put("guardian." + NS + ".bar", "%s | %s/%s");
-        pt.put("guardian." + NS + ".bar", "%s | %s/%s");
         String[] keys = {"requires_mod", "no_monolith", "active", "resetting", "downed", "chunks", "no_room",
                 "failed", "awakened", "reawakened", "retreated", "victory", "status_line", "status_health",
                 "status_none", "command.reset", "command.clear", "command.grant", "claimed"};
@@ -911,68 +840,31 @@ public final class ArkData implements DataProvider {
                 "[ARK] The nearest encounter record was removed.",
                 "[ARK] Granted the Workshop Schematic to %s.",
                 "[ARK] Another tribe paid for this rite. Only they can wake the Guardian again."};
-        String[] portuguese = {
-                "[ARK] O Primeiro Guardi\u00e3o dorme dentro dos mon\u00f3litos de Ancient Remnants. Instale o mod para continuar esta ca\u00e7ada.",
-                "[ARK] Ofere\u00e7a o cora\u00e7\u00e3o em um bloco logo abaixo do mon\u00f3lito.",
-                "[ARK] Um Guardi\u00e3o j\u00e1 domina este mon\u00f3lito.",
-                "[ARK] O mon\u00f3lito ainda est\u00e1 se acalmando. O ritual recome\u00e7a em instantes.",
-                "[ARK] Voc\u00ea n\u00e3o pode realizar o ritual ca\u00eddo.",
-                "[ARK] A arena ainda n\u00e3o est\u00e1 totalmente carregada.",
-                "[ARK] N\u00e3o h\u00e1 terreno livre para o Guardi\u00e3o surgir aqui.",
-                "[ARK] O ritual falhou; seu cora\u00e7\u00e3o est\u00e1 intacto.",
-                "[ARK] O Cora\u00e7\u00e3o de Alossauro se consome. O Guardi\u00e3o desperta!",
-                "[ARK] O ritual brilha de novo. O Guardi\u00e3o retorna!",
-                "[ARK] O Guardi\u00e3o perde o interesse e volta a dormir. O ritual continua desbloqueado.",
-                "[ARK] O Primeiro Guardi\u00e3o cai. A tribo conquista o Esquema da Oficina.",
-                "[ARK] Guardi\u00e3o %s em %s, %s, %s",
-                "| %s/%s de vida",
-                "[ARK] Nenhum encontro de guardi\u00e3o est\u00e1 registrado para sua tribo.",
-                "[ARK] O encontro mais pr\u00f3ximo foi reiniciado para uma nova tentativa gratuita.",
-                "[ARK] O registro do encontro mais pr\u00f3ximo foi removido.",
-                "[ARK] Esquema da Oficina concedido a %s.",
-                "[ARK] Outra tribo pagou por este ritual. Só ela pode despertar o Guardião de novo."};
         for (int i = 0; i < keys.length; i++) {
             en.put("guardian." + NS + "." + keys[i], english[i]);
-            pt.put("guardian." + NS + "." + keys[i], portuguese[i]);
         }
     }
 
     /** Technology tree text: completion and gate announcements plus the /arktech feedback. */
-    private void techMessages(Map<String, String> en, Map<String, String> pt) {
+    private void techMessages(Map<String, String> en) {
         en.put("key." + NS + ".tech_tree", "Open Tribe Chronicle");
-        pt.put("key." + NS + ".tech_tree", "Abrir crônica da tribo");
         en.put("key.categories." + NS + ".progression", "Ark Progression");
-        pt.put("key.categories." + NS + ".progression", "Progressão Ark");
         String[] uiKeys = {"title", "pan", "quests", "loading", "unavailable", "locked", "available", "complete", "shared", "local"};
         String[] uiEn = {"TRIBE CHRONICLE", "Wheel / drag / arrows", "Quest book", "Opening the chronicle...", "The chronicle is unavailable.",
                 "Complete the earlier steps", "Ready to pursue", "Complete", "Shared journal", "Quest link unavailable"};
-        String[] uiPt = {"CRÔNICA DA TRIBO", "Roda / arraste / setas", "Missões", "Abrindo a crônica...", "A crônica está indisponível.",
-                "Conclua as etapas anteriores", "Pronto para começar", "Concluído", "Diário da tribo", "Missões desconectadas"};
         for (int i = 0; i < uiKeys.length; i++) {
             en.put("tech.gui." + uiKeys[i], uiEn[i]);
-            pt.put("tech.gui." + uiKeys[i], uiPt[i]);
         }
         en.put("tech." + NS + ".completed", "[ARK] Technology unlocked: %s");
-        pt.put("tech." + NS + ".completed", "[ARK] Tecnologia desbloqueada: %s");
         en.put("tech." + NS + ".gate", "[ARK] The gate %s opens a new age.");
-        pt.put("tech." + NS + ".gate", "[ARK] O port\u00e3o %s abre uma nova era.");
         en.put("tech." + NS + ".unavailable", "[ARK] The technology tree is not loaded.");
-        pt.put("tech." + NS + ".unavailable", "[ARK] A \u00e1rvore de tecnologia n\u00e3o foi carregada.");
         en.put("tech." + NS + ".status_total", "[ARK] Technology: %s/%s nodes complete.");
-        pt.put("tech." + NS + ".status_total", "[ARK] Tecnologia: %s/%s n\u00f3s conclu\u00eddos.");
         en.put("tech." + NS + ".status_age", "[ARK] %s: %s/%s");
-        pt.put("tech." + NS + ".status_age", "[ARK] %s: %s/%s");
         en.put("tech." + NS + ".status_available", "[ARK] Available: %s - %s");
-        pt.put("tech." + NS + ".status_available", "[ARK] Dispon\u00edvel: %s - %s");
         en.put("tech." + NS + ".command.unknown", "[ARK] Unknown technology node: %s");
-        pt.put("tech." + NS + ".command.unknown", "[ARK] N\u00f3 de tecnologia desconhecido: %s");
         en.put("tech." + NS + ".command.unlock", "[ARK] Unlocked technology node %s.");
-        pt.put("tech." + NS + ".command.unlock", "[ARK] N\u00f3 de tecnologia desbloqueado: %s.");
         en.put("tech." + NS + ".command.reset", "[ARK] Technology progress reset for your tribe.");
-        pt.put("tech." + NS + ".command.reset", "[ARK] O progresso de tecnologia da sua tribo foi reiniciado.");
         en.put("tech." + NS + ".command.reset_empty", "[ARK] Your tribe has no technology progress to reset.");
-        pt.put("tech." + NS + ".command.reset_empty",
-                "[ARK] Sua tribo n\u00e3o tem progresso de tecnologia para reiniciar.");
     }
 
     /**

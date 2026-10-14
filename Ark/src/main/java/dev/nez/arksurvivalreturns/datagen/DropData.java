@@ -66,15 +66,11 @@ final class DropData {
         return entry;
     }
 
-    static void messages(Map<String, String> en, Map<String, String> pt) {
+    static void messages(Map<String, String> en) {
         en.put("block." + NS + ".loot_crate", "Loot Crate");
-        pt.put("block." + NS + ".loot_crate", "Caixa de Saque");
         en.put("entity." + NS + ".supply_drop", "Supply Drop");
-        pt.put("entity." + NS + ".supply_drop", "Suprimentos");
         en.put("drop." + NS + ".incoming", "A %s supply drop is coming down at %s.");
-        pt.put("drop." + NS + ".incoming", "Suprimentos (%s) descendo em %s.");
         en.put("drop." + NS + ".no_place", "No loaded ground near you for a supply drop.");
-        pt.put("drop." + NS + ".no_place", "Não há terreno carregado por perto para os suprimentos.");
         var names = Map.of(SupplyTier.WHITE, List.of("white", "White", "branco", "branca"),
                 SupplyTier.GREEN, List.of("green", "Green", "verde", "verde"),
                 SupplyTier.BLUE, List.of("blue", "Blue", "azul", "azul"),
@@ -82,9 +78,7 @@ final class DropData {
         for (SupplyTier tier : SupplyTier.values()) {
             var name = names.get(tier);
             en.put("drop." + NS + ".tier." + tier.id, name.get(0));
-            pt.put("drop." + NS + ".tier." + tier.id, name.get(2));
             en.put("container." + NS + ".loot_crate." + tier.id, name.get(1) + " Loot Crate");
-            pt.put("container." + NS + ".loot_crate." + tier.id, "Caixa de Saque " + name.get(3));
         }
     }
 

@@ -3639,7 +3639,7 @@ Patch,P14,Crafting rework (workstation graphs),Claude Opus 5.5,"In production: p
 Feature,F19,Permanent levelling system,Codex,Implemented; unverified in client (HUD).
 Patch,P15,Redstone removal,Claude Opus 5.5,"Postponed (user, 2026-10-01)."
 Feature,F20,Creature tiers and item quality,Not started,Under discussion.
-Feature,F22,Command wheel (item-less whistle),Not started,"To be done. It blocks survival progression: nothing gives a tame an order, so WORK, Scavenger, Hell Forge and the Bronze Age wait for it."
+Feature,F22,Command wheel (item-less whistle),Claude Opus 5.5,"Implemented; unverified in client (compiled and data regenerated; the wheel looked at in its offline preview, Ark/design/ui-rework/baroque/command-wheel.png)."
 Patch,P16,Baroque UI,Codex,"In production: first asset pass (hotbar, buttons, sliders, tabs, Storage Crate and Tom's Storage panels, workstation sigils), unverified in client."
 Backlog,B07,Three-minute creature session recorder,"Codex (plan), Claude Opus 5.5","Implemented; in use for B08, B09, B10, P00, P21, C05 and F34."
 Backlog,B08,"Land AI: return-home loop, airborne first decision, chase that stops short","Codex, Claude Opus 5.5",Implemented; measured in recorded client sessions on flat plains.
@@ -3669,6 +3669,7 @@ Change,C05,Wildlife that lasts: every creature traced from its appearance to its
 Change,C06,Build and GameTests only when shipping or fixing a bug,Claude Opus 5.5,Implemented.
 Feature,F33,Existence model and simulator,Claude Opus 5.5,"Implemented; the model is in the game (C05) and recorded runs are set against it (F34). It stays bounded, alive and settled in the 14 sample regions (256 chunks, zones 1 to 3, from settled, empty and crowded starts, a round a day or four) and its balance matches 1 - 4 / (3 x fecundity)."
 Feature,F34,Existence inspector and run ledger,Claude Opus 5.5,"Implemented; six runs are in the ledger, the last two a pair flown under the first and the bounded rules (C05). Looked at in a headless browser at 1320 px dark and 520 px light."
+Change,C07,English only,Claude Opus 5.5,Implemented; datagen compiles and runData writes no pt_br file.
 </script>
 <script>
 // Roadmap: Dashboard.csv parsed here. Served over http, the live file next to the page wins; opened from disk the
