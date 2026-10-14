@@ -15,6 +15,7 @@ public final class NighttimeClientConfig {
     public static final ModConfigSpec.DoubleValue CREATURE_SMALLEST_BOX;
     public static final ModConfigSpec.BooleanValue CREATURE_SHADER_VERTICES;
     public static final ModConfigSpec.BooleanValue CREATURE_FAST_ANIMATION;
+    public static final ModConfigSpec.BooleanValue CREATURE_INFO;
     static {
         var builder = new ModConfigSpec.Builder();
         EYE_GLOW = builder.comment("Brightness of the red eyes of hunting big carnivores and raptors. Zero disables the visual; does not change server behavior.")
@@ -47,6 +48,9 @@ public final class NighttimeClientConfig {
         CREATURE_FAST_ANIMATION = builder.comment("The keys of an animation are read directly where they are plain linear or catmull-rom keys, "
                         + "as all of Ark's are, instead of through GeckoLib's easing objects; the values are the same. Set false for GeckoLib's own reading.")
                 .define("creatureFastAnimation", true);
+        CREATURE_INFO = builder.comment("A small plate under the crosshair names the creature you look at (within 24 blocks): its level, "
+                        + "health, and a tame's order or an unconscious creature's state. Set false to hide it.")
+                .define("creatureInfo", true);
         SPEC = builder.build();
     }
     private NighttimeClientConfig() {}

@@ -143,7 +143,10 @@ public final class ArkData implements DataProvider {
         for (int i = 0; i < mapKeys.length; i++) {
             en.put("map." + NS + "." + mapKeys[i], mapEn[i]);
         }
-        en.put("hud." + NS + ".creature", "%s | Lv. %s | %s / %s HP");
+        // The plate under the crosshair for the creature looked at (client/CreatureInfoHud).
+        en.put("hud." + NS + ".creature.level", "Lv %s");
+        en.put("hud." + NS + ".creature.tame", "Tame · %s");
+        en.put("hud." + NS + ".creature.unconscious", "Unconscious");
         en.put("screen." + NS + ".taming", "Taming %s");
         en.put("screen." + NS + ".hunger", "Hunger %s");
         en.put("screen." + NS + ".torpor", "Torpor %s/%s");

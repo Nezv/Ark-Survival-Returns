@@ -41,16 +41,20 @@ public final class CommandWheelClient {
 
     /** The tame the player looks at, walls stopping the look, within whistle range; never the player's own mount. */
     private static @Nullable CreatureEntity aimedTame(Minecraft mc) {
+        return aimedCreature(mc, CompanionWhistle.range(), CreatureEntity::isTamed);
+    }
+
+    /** The living creature the player looks at within range, walls stopping the look; never the player's own mount. */
+    static @Nullable CreatureEntity aimedCreature(Minecraft mc, double range, java.util.function.Predicate<CreatureEntity> filter) {
         var player = mc.player;
         if (player == null || mc.level == null) return null;
-        double range = CompanionWhistle.range();
         Vec3 eye = player.getEyePosition();
         Vec3 look = player.getViewVector(1f);
         Vec3 end = eye.add(look.scale(range));
         var blocks = mc.level.clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
         if (blocks.getType() != HitResult.Type.MISS) end = blocks.getLocation();
         var hit = ProjectileUtil.getEntityHitResult(player, eye, end, player.getBoundingBox().expandTowards(look.scale(range)).inflate(1),
-                entity -> entity instanceof CreatureEntity creature && creature.isAlive() && creature.isTamed()
+                entity -> entity instanceof CreatureEntity creature && creature.isAlive() && filter.test(creature)
                         && entity != player.getVehicle(), eye.distanceToSqr(end));
         return hit != null && hit.getEntity() instanceof CreatureEntity creature ? creature : null;
     }
