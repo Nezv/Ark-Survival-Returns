@@ -177,7 +177,7 @@ def creature_mesh(species, clip, time, look=(0.0, 0.0), texture=None):
     tris, colors = [], []
     for name, b in bones.items():
         m = transform(name)
-        hidden = name.startswith('ark_eye_alert') or name.startswith('ark_eyeball_alert')
+        hidden = name.startswith(('ark_eye_alert', 'ark_eyeball_alert', 'ark_eyeball_hunt'))
         if hidden:
             continue
         for cube in b.get('cubes', []):

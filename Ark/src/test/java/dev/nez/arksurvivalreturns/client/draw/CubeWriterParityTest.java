@@ -618,7 +618,10 @@ class CubeWriterParityTest {
         assertEquals(mesh.cubes, opaque.opaqueCount());
         assertEquals(0, opaque.emptyCount());
         assertEquals(0, clear.opaqueCount());
-        assertEquals(mesh.cubes * 6, clear.emptyCount());
+        // Every face there is: the designed eyes leave out the sides nothing sees (an eyeball's back, a slit's edges).
+        int faces = 0;
+        for (int cube = 0; cube < mesh.cubes; cube++) faces += Integer.bitCount(mesh.present[cube]);
+        assertEquals(faces, clear.emptyCount());
         assertEquals(0L, holed.opaqueCubes[0] & 1L, "the cube with the hole is not opaque");
         assertTrue(holed.opaqueCount() >= mesh.cubes - 8 && holed.opaqueCount() < mesh.cubes, "only the cubes sharing that texel: " + holed.opaqueCount());
         assertEquals(0, holed.emptyCount());

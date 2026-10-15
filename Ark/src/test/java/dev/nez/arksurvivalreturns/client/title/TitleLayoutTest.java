@@ -83,6 +83,26 @@ class TitleLayoutTest {
         }
     }
 
+    /**
+     * Options and Mods show the scene from the title screen, but Options also opens from the pause menu: the
+     * scene layout is left out while a world is loaded (FancyMenu's is-world-loaded requirement, mode if_not),
+     * so a world in play keeps its own background and draws no scene, rain or thunder.
+     */
+    @Test void sceneStaysOutOfAWorld() throws Exception {
+        String text = Files.readString(Path.of("config/fancymenu/customizablemenus.txt")).replace("\r\n", "\n");
+        Set<String> screens = new TreeSet<>();
+        for (Container c : parse(text)) screens.add(c.type());
+        assertTrue(screens.contains("net.minecraft.client.gui.screens.options.OptionsScreen"), "Options shows the scene");
+        assertTrue(screens.contains("net.neoforged.neoforge.client.gui.ModListScreen"), "Mods shows the scene");
+        Container meta = meta(scene());
+        String requirement = meta.values().keySet().stream().filter(key -> key.startsWith("[loading_requirement:")).findFirst()
+                .orElseThrow(() -> new AssertionError("the scene layout has no requirement"));
+        assertTrue(requirement.startsWith("[loading_requirement:fancymenu_loading_requirement_is_world_loaded]"), requirement);
+        assertTrue(requirement.contains("[requirement_mode:if_not]"), "only out of a world: " + requirement);
+        assertTrue(requirement.contains("[req_id:"), "FancyMenu drops an instance without an id: " + requirement);
+        assertEquals("", meta.get(requirement), "the requirement takes no value");
+    }
+
     @Test void sceneLayoutIsUniversalWithTheShaderBackground() throws Exception {
         List<Container> containers = scene();
         assertEquals("%fancymenu:universal_layout%", meta(containers).get("identifier"), "one scene for every menu");

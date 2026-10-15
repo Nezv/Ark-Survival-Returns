@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
 public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, EntityRenderState> {
     private final Species species;
+    /** The designed eyes of each big carnivore drawn lately; render thread only. */
+    private final java.util.Map<CreatureEntity, CreatureEyes> eyes = new java.util.WeakHashMap<>();
     @SuppressWarnings({"rawtypes", "unchecked"}) // EntityRenderState implements GeoRenderState through GeckoLib's mixin.
     public CreatureRenderer(EntityRendererProvider.Context context, Species species) {
         super(context, new CreatureModel(species));
@@ -28,13 +30,23 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
                         ? dragon.beaconVariant() : Math.floorMod(creature.getUUID().hashCode(), species == Species.DRAGON ? 3 : 5));
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
                 CreatureModel.EYE_ALERT, creature.behavior().alarm() || creature.isAggressive());
+        if (species.designedEyes()) {
+            CreatureEyes look = eyes.computeIfAbsent(creature, entity -> new CreatureEyes(entity.getUUID().getLeastSignificantBits()));
+            look.update(creature, partialTick);
+            ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(CreatureModel.EYES, look);
+        }
     }
 
-    /** One eye set at a time: calm (predatory for carnivores) or alert. */
+    /** Designed eyes move (CreatureEyes); the generated sets show one at a time, calm (predatory for carnivores) or alert. */
     @Override
     @SuppressWarnings({"rawtypes", "unchecked"})
     public void adjustModelBonesForRender(RenderPassInfo pass, BoneSnapshots snapshots) {
         super.adjustModelBonesForRender(pass, snapshots);
+        CreatureEyes look = (CreatureEyes) pass.getGeckolibData(CreatureModel.EYES);
+        if (look != null && CreatureEyes.designed(pass.model())) {
+            look.apply(pass.model(), snapshots);
+            return;
+        }
         boolean alert = Boolean.TRUE.equals(pass.getOrDefaultGeckolibData(CreatureModel.EYE_ALERT, false));
         snapshots.ifPresent(Species.EYES_CALM, bone -> bone.skipRender(alert).skipChildrenRender(alert));
         snapshots.ifPresent(Species.EYES_ALERT, bone -> bone.skipRender(!alert).skipChildrenRender(!alert));

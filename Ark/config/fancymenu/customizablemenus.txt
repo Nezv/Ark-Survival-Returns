@@ -21,3 +21,9 @@ net.minecraft.client.gui.screens.DirectJoinServerScreen {
 net.minecraft.client.gui.screens.ManageServerScreen {
 }
 
+net.minecraft.client.gui.screens.options.OptionsScreen {
+}
+
+net.neoforged.neoforge.client.gui.ModListScreen {
+}
+

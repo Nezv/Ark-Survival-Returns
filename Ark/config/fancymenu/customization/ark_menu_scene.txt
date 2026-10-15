@@ -9,6 +9,8 @@ layout-meta {
   randomgroup = 1
   randomonlyfirsttime = false
   layout_index = 0
+  [loading_requirement_container_meta:ark_out_of_world] = [groups:][instances:ark_no_world;]
+  [loading_requirement:fancymenu_loading_requirement_is_world_loaded][requirement_mode:if_not][req_id:ark_no_world] = 
 }
 
 menu_background {

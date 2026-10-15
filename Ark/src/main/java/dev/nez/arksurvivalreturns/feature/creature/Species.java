@@ -355,8 +355,16 @@ public enum Species {
      */
     public String[] eyeBones(boolean alert) {
         if (NO_EYES.contains(id)) return new String[0];
-        String state = alert ? "alert" : "calm";
+        String state = !alert ? "calm" : designedEyes() ? "hunt" : "alert";
         return new String[]{"ark_eyeball_" + state + "_l", "ark_eyeball_" + state + "_r"};
+    }
+
+    /**
+     * Big carnivores have eyes designed one by one (build_creature_eyes.DESIGNS), with lids, a brow and a slit
+     * the client moves (client/CreatureEyes); the alert set is their red one.
+     */
+    public boolean designedEyes() {
+        return realm == Realm.LAND && family() == LandFamily.BIG_CARNIVORE;
     }
 
     public String[] eyeBones() { return eyeBones(false); }

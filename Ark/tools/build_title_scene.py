@@ -438,16 +438,24 @@ BUTTONS = [
 # Language and accessibility stay reachable through Options.
 HIDDEN = ['mc_titlescreen_language_button', 'mc_titlescreen_accessibility_button', 'mc_titlescreen_realms_button',
           'minecraft_logo_widget', 'minecraft_splash_widget', 'minecraft_realms_notification_icons_widget']
-# The screens that show the scene, all of them out of a world. On the world list, the server list and the
-# new-world screen, client/title/MenuColumn moves the list, the tabs and the buttons to the title's button
-# column; the small dialogs stay centred.
+# The screens that show the scene. On the world list, the server list and the new-world screen,
+# client/title/MenuColumn moves the list, the tabs and the buttons to the title's button column; the small
+# dialogs, Options and Mods stay centred. Options also opens from the pause menu: the scene layout requires
+# that no world is loaded (OUT_OF_WORLD), so a world in play keeps its own background and no scene renders.
 MENUS = ['net.minecraft.client.gui.screens.TitleScreen',
          'net.minecraft.client.gui.screens.worldselection.SelectWorldScreen',
          'net.minecraft.client.gui.screens.worldselection.CreateWorldScreen',
          'net.minecraft.client.gui.screens.worldselection.EditWorldScreen',
          'net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen',
          'net.minecraft.client.gui.screens.DirectJoinServerScreen',
-         'net.minecraft.client.gui.screens.ManageServerScreen']
+         'net.minecraft.client.gui.screens.ManageServerScreen',
+         'net.minecraft.client.gui.screens.options.OptionsScreen',
+         'net.neoforged.neoforge.client.gui.ModListScreen']
+# A layout-wide requirement (RequirementContainer/RequirementInstance serialization): FancyMenu leaves the
+# whole layout out while a world is loaded (IsWorldLoadedRequirement, mode if_not).
+OUT_OF_WORLD = [('[loading_requirement_container_meta:ark_out_of_world]', '[groups:][instances:ark_no_world;]'),
+                ('[loading_requirement:fancymenu_loading_requirement_is_world_loaded][requirement_mode:if_not]'
+                 '[req_id:ark_no_world]', '')]
 
 
 def shader(name):
@@ -489,9 +497,10 @@ def layout_meta(identifier, index):
 
 
 def scene_containers():
-    """The universal layout: FancyMenu stacks it under the own layout of every screen in MENUS."""
+    """The universal layout: FancyMenu stacks it under the own layout of every screen in MENUS, out of a world."""
+    meta, properties = layout_meta(UNIVERSAL, 0)
     return [
-        layout_meta(UNIVERSAL, 0),
+        (meta, properties + OUT_OF_WORLD),
         ('menu_background', [('background_type', 'glsl'), ('instance_identifier', 'ark_night_scene'),
                              ('show_background', 'true'), ('enable_blending', 'false')] + shader_properties('background')),
         ('customization', [('action', 'backgroundoptions'), ('keepaspectratio', 'false')]),

@@ -12,6 +12,8 @@ final class CreatureModel extends GeoModel<CreatureEntity> {
     static final DataTicket<Integer> TEXTURE_VARIANT = DataTicket.create("arksurvivalreturns:texture_variant", Integer.class);
     /** Alert eyes: attacking, defending, threatening or fleeing (the synced behaviour state). */
     static final DataTicket<Boolean> EYE_ALERT = DataTicket.create("arksurvivalreturns:eye_alert", Boolean.class);
+    /** The designed eyes of a big carnivore, as CreatureEyes left them this frame. */
+    static final DataTicket<CreatureEyes> EYES = DataTicket.create("arksurvivalreturns:eyes", CreatureEyes.class);
     private static final String[] VARIANTS = {"ivory", "darken", "emerald", "midnight", "burgundy"};
     private static final String[] DRAGONS = {"red", "white", "black"};
     private final Species species;
