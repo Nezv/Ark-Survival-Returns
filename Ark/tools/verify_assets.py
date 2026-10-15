@@ -6,8 +6,8 @@ from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
 from verify_camp_assets import verify_camp_assets
-from build_creature_eyes import NO_EYES, HUNTING_EYES, DESIGNS
-from import_creatures import ROOT, ASSETS, SPECIES, source_files, with_behavior_clips
+from build_creature_eyes import NO_EYES, HUNTING_EYES, DESIGNS, design_of
+from import_creatures import ROOT, ASSETS, SPECIES, PREDATORS, WATER, source_files, with_behavior_clips
 
 # Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
 # variant textures chosen from its UUID, so every <species>_<variant>.png must match the geometry's
@@ -17,10 +17,10 @@ VARIANTS = ('ivory', 'darken', 'emerald', 'midnight', 'burgundy')
 PALETTE_SIZE = (64, 8)
 
 # Generated eyes (build_creature_eyes.py), mirroring Species.eyeBones(): two eyeballs per set, calm and
-# alert, under their own groups. Rigs without an eye anchor get none. The designed eyes of the big carnivores
-# have a calm and a hunting eyeball per side, and the slit, lids and brow client/CreatureEyes moves.
+# alert, under their own groups. Rigs without an eye anchor get none. The designed eyes (the predators, the sea
+# animals and the flyers, mirroring Species.designedEyes()) have a calm eyeball per side, a hunting one for a
+# predator, and the pupil, lids and brow client/CreatureEyes moves, as far as a design has them.
 NO_EYE_GEOMETRY = set(NO_EYES)
-DESIGNED_PARTS = ('ark_eye_{}', 'ark_eye_pupil_{}', 'ark_eye_lid_upper_{}', 'ark_eye_lid_lower_{}', 'ark_eye_brow_{}')
 # Item sprite contract: 32 px (a 16 px grid doubled, build_bronze_age_art.py), except the accessory icons and
 # the creature-part trophies, which build_accessories.py authors at 16 px.
 ITEM_SPRITE_SIZE = 32
@@ -28,11 +28,21 @@ ITEM_SPRITE_SIZES = {'item/accessory': 16, 'item/trophy': 16}
 FLYERS = ['pteranodon', 'argentavis'] + [entry['id'] for entry in COLLECTION if entry['realm'] == 'AIR']
 
 
+def designed_parts(identifier):
+    """The bones a designed species must have, from its design."""
+    design = design_of(identifier)
+    parts = ['ark_eye_{}', 'ark_eyeball_calm_{}'] + ['ark_eyeball_hunt_{}'] * bool(design['iris']['hunt'])
+    parts += ['ark_eye_pupil_{}'] * bool(design['pupil']) + ['ark_eye_brow_{}'] * bool(design['brow'])
+    parts += [f'ark_eye_lid_{lid}_{{}}' for lid in design['lids']] + ['ark_eye_crest_{}'] * bool(design['crest'])
+    return tuple(part.format(side) for part in parts for side in ('l', 'r'))
+
+
 def eye_bones(identifier):
     if identifier in NO_EYE_GEOMETRY:
         return ()
-    states = ('calm', 'hunt') if identifier in DESIGNS else ('calm', 'alert')
-    return tuple(f'ark_eyeball_{state}_{side}' for state in states for side in ('l', 'r'))
+    if identifier in DESIGNS:
+        return designed_parts(identifier)
+    return tuple(f'ark_eyeball_{state}_{side}' for state in ('calm', 'alert') for side in ('l', 'r'))
 
 
 def check_creature(folder, identifier, height, clips, report, check, fail):
@@ -58,13 +68,9 @@ def check_creature(folder, identifier, height, clips, report, check, fail):
         eye = next((b for b in geo['bones'] if b['name'] == name), None)
         check(eye is not None, f'Missing eye geometry: {identifier}/{name}')
         if eye is not None:
-            check(eye.get('cubes'), f'Eye bone has no geometry: {identifier}/{name}')
+            check(eye.get('cubes') or name in ('ark_eye_l', 'ark_eye_r'), f'Eye bone has no geometry: {identifier}/{name}')
     if identifier in DESIGNS:
-        for part in DESIGNED_PARTS:
-            for side in ('l', 'r'):
-                found = next((b for b in geo['bones'] if b['name'] == part.format(side)), None)
-                check(found is not None and (part == 'ark_eye_{}' or found.get('cubes')),
-                      f'{identifier}: missing the designed eye part {part.format(side)}')
+        check(not {'ark_eye_calm', 'ark_eye_alert'} & bones, f'{identifier}: a designed model has no generated eye sets')
     elif eye_bones(identifier):
         check({'ark_eye_calm', 'ark_eye_alert'} <= bones, f'{identifier}: missing the calm/alert eye groups')
     expected = (geo['description']['texture_width'], geo['description']['texture_height'])
@@ -205,6 +211,10 @@ def main():
         check(defined <= named['item'] | named['block'],
               f'{locale}: item definitions without a name: {sorted(defined - named["item"] - named["block"])}')
         check(named['item'] <= defined, f'{locale}: item names without a definition: {sorted(named["item"] - defined)}')
+    # The designed eyes are the predators', the sea animals' and the flyers' (Species.designedEyes()).
+    expected = (set(PREDATORS) | set(WATER) | set(FLYERS)) - NO_EYE_GEOMETRY
+    check(set(DESIGNS) == expected, f'Designed eyes do not match the species that have them: missing {sorted(expected - set(DESIGNS))}, '
+                                    f'extra {sorted(set(DESIGNS) - expected)}')
     try:
         verify_camp_assets()
     except Exception as error:

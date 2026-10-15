@@ -12,43 +12,48 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 
 /**
- * The designed eyes of a big carnivore (tools/build_creature_eyes.py, DESIGNS) brought to life: lids that blink,
- * and close in sleep, torpor and death; a brow that drops and tilts into a frown; a slit that narrows on prey
- * and widens in the dark; and the yellow eyes turning red, behind a blink, for a hunt or a fight. One per
- * creature, eased every frame towards the look of its synced state; the renderer sets the bones from it.
+ * The designed eyes (tools/build_creature_eyes.py, DESIGNS) of the predators, the sea animals and the flyers,
+ * brought to life: lids that blink, and close in sleep, torpor and death; a brow that drops and tilts into a
+ * frown; a pupil that narrows on prey and widens in the dark; and the calm eyes turning to their hunting
+ * colour, behind a blink, for a hunt or a fight. One per creature, eased every frame towards the look of its
+ * synced state; the renderer sets the bones from it. How wide a species' lids lie open, what shape its pupil
+ * is and whether it has hunting eyes at all is read off its model ({@link #layout}), so a new design needs no
+ * code here.
  */
 public final class CreatureEyes {
-    /** The lid contract of build_creature_eyes.LID_REST and LID_TUCK: the cover at scale 1, the reach past the opening. */
-    static final float UPPER_REST = .30f, UPPER_TUCK = .25f, LOWER_REST = .12f, LOWER_TUCK = .15f;
+    /** How far a lid reaches past the opening, in eye heights (build_creature_eyes.LID_TUCK), and how much of it covers a shut eye. */
+    static final float UPPER_TUCK = .25f, LOWER_TUCK = .15f, UPPER_SHUT = .70f, LOWER_SHUT = .44f;
     /** Seconds a blink takes: shutting, held shut, opening. */
     private static final float SHUT = .07f, HELD = .03f, OPEN = .12f, BLINK = SHUT + HELD + OPEN;
-    private static final String[] UPPER = bones("ark_eye_lid_upper_"), LOWER = bones("ark_eye_lid_lower_"),
+    private static final String[] FRAME = bones("ark_eye_"), UPPER = bones("ark_eye_lid_upper_"), LOWER = bones("ark_eye_lid_lower_"),
             BROW = bones("ark_eye_brow_"), PUPIL = bones("ark_eye_pupil_"), CALM = bones("ark_eyeball_calm_"),
             HUNT = bones("ark_eyeball_hunt_");
-    private static final Map<BakedGeoModel, Float> HEIGHTS = new WeakHashMap<>();
+    private static final Map<BakedGeoModel, Layout> LAYOUTS = new WeakHashMap<>();
 
     /**
-     * Lid cover (shares of the eye's height), brow drop (eye heights) and tilt (degrees, front end down), slit
-     * width (a scale of the model's). The same numbers as tools/preview_creature_eyes.py STATES.
+     * A look: how shut the lids are (0 is the species' own lids, 1 a shut eye, below 0 wider than its own, to -1
+     * for no lid at all), the brow's drop (eye heights) and tilt (degrees, front end down), and the pupil's
+     * width (a scale). The same numbers as tools/preview_creature_eyes.py STATES.
      */
     public enum Look {
-        CALM(.30f, .12f, 0f, 0f, 1f), ALERT(.22f, .10f, .06f, 6f, .7f), HUNT(.40f, .20f, .12f, 8f, .45f),
-        DROWSY(.50f, .20f, .04f, 0f, 1f), CLOSED(.70f, .44f, .06f, 0f, 1f), FLEE(.10f, .04f, -.10f, -4f, 1.3f),
-        WINCE(.62f, .40f, .14f, 10f, .8f);
+        CALM(0f, 0f, 0f, 1f), ALERT(-.27f, .06f, 6f, .7f), HUNT(.28f, .12f, 8f, .45f), DROWSY(.5f, .04f, 0f, 1f),
+        CLOSED(1f, .06f, 0f, 1f), FLEE(-.67f, -.10f, -4f, 1.3f), WINCE(.8f, .14f, 10f, .8f);
 
-        final float upper, lower, drop, tilt, slit;
+        final float closure, drop, tilt, slit;
 
-        Look(float upper, float lower, float drop, float tilt, float slit) {
-            this.upper = upper;
-            this.lower = lower;
+        Look(float closure, float drop, float tilt, float slit) {
+            this.closure = closure;
             this.drop = drop;
             this.tilt = tilt;
             this.slit = slit;
         }
     }
 
-    private float upper = UPPER_REST, lower = LOWER_REST, drop, tilt, slit = 1f;
-    private float shownUpper = UPPER_REST, shownLower = LOWER_REST, shownDrop;
+    /** What a model's eye bones say about its design. */
+    private record Layout(float height, float restUpper, float restLower, boolean roundPupil, boolean hunt) {}
+
+    private float closure, drop, tilt, slit = 1f;
+    private float shownUpper, shownLower, shownDrop;
     private boolean red;
     private float clock = Float.NaN, blinkStart = -10f, nextBlink = Float.NaN;
     private long seed;
@@ -67,7 +72,7 @@ public final class CreatureEyes {
                 : Look.CALM;
         float slitScale = 1f;
         if (look == Look.CALM || look == Look.DROWSY) {
-            // A calm slit opens in the dark and closes in bright light.
+            // A calm pupil opens in the dark and closes in bright light.
             int light = creature.level().getMaxLocalRawBrightness(BlockPos.containing(creature.getEyePosition(partialTick)));
             slitScale = Mth.lerp((15 - light) / 15f, .85f, 1.45f);
         }
@@ -89,20 +94,19 @@ public final class CreatureEyes {
         float shutBy = blink(now - blinkStart);
         if (red != redLook && (!open || shutBy > .85f)) red = redLook;
         float lids = 1f - (float) Math.exp(-16f * dt), brow = 1f - (float) Math.exp(-8f * dt), iris = 1f - (float) Math.exp(-4f * dt);
-        upper += (look.upper - upper) * lids;
-        lower += (look.lower - lower) * lids;
+        closure += (look.closure - closure) * lids;
         drop += (look.drop - drop) * brow;
         tilt += (look.tilt - tilt) * brow;
         slit += (look.slit * slitScale - slit) * iris;
-        shownUpper = Mth.lerp(shutBy, upper, Look.CLOSED.upper);
-        shownLower = Mth.lerp(shutBy * .85f, lower, Look.CLOSED.lower);
+        shownUpper = closure + shutBy * (1f - closure);
+        shownLower = closure + shutBy * .85f * (1f - closure);
         shownDrop = drop + .03f * shutBy;
     }
 
     boolean red() { return red; }
 
-    /** How much of the eye the lids cover this frame, as the bones show it. */
-    float covered() { return shownUpper + shownLower; }
+    /** How shut the upper lid is this frame, 0 to 1, as the bones show it. */
+    float shut() { return shownUpper; }
 
     /** How shut a blink started that long ago holds the eye, 0 to 1. */
     private static float blink(float since) {
@@ -117,28 +121,50 @@ public final class CreatureEyes {
         return (int) (seed >>> 24) / (float) (1 << 24);
     }
 
-    /** Sets the eye bones of one pass; eye heights (for the brow's drop) are read off the model's eyeball. */
+    /** The share of the eye a lid covers at a closure: its own rest, towards a shut eye, or less (build_creature_eyes.lid_cover). */
+    static float cover(float closure, float rest, float shut) {
+        return closure >= 0f ? rest + closure * (shut - rest) : rest * (1f + closure);
+    }
+
+    /** Sets the eye bones of one pass. */
     public void apply(BakedGeoModel model, BoneSnapshots snapshots) {
-        float height = HEIGHTS.computeIfAbsent(model, CreatureEyes::eyeHeight);
-        float upperScale = (shownUpper + UPPER_TUCK) / (UPPER_REST + UPPER_TUCK);
-        float lowerScale = (shownLower + LOWER_TUCK) / (LOWER_REST + LOWER_TUCK);
-        float browY = -shownDrop * height, browTurn = tilt * Mth.DEG_TO_RAD;
+        Layout layout = LAYOUTS.computeIfAbsent(model, CreatureEyes::layout);
+        float upperScale = (cover(shownUpper, layout.restUpper, UPPER_SHUT) + UPPER_TUCK) / (layout.restUpper + UPPER_TUCK);
+        float lowerScale = (cover(shownLower, layout.restLower, LOWER_SHUT) + LOWER_TUCK) / (layout.restLower + LOWER_TUCK);
+        float browY = -shownDrop * layout.height, browTurn = tilt * Mth.DEG_TO_RAD;
+        // A slit narrows across; a round pupil opens and closes all round, over a smaller range.
+        float across = layout.roundPupil ? 1f + (slit - 1f) * .5f : slit, along = layout.roundPupil ? across : 1f;
+        boolean hunting = red && layout.hunt;
         for (int side = 0; side < 2; side++) {
             snapshots.ifPresent(UPPER[side], bone -> bone.setScaleY(upperScale));
             snapshots.ifPresent(LOWER[side], bone -> bone.setScaleY(lowerScale));
             snapshots.ifPresent(BROW[side], bone -> bone.setTranslateY(browY).setRotX(browTurn));
-            snapshots.ifPresent(PUPIL[side], bone -> bone.setScaleZ(slit));
-            snapshots.ifPresent(CALM[side], bone -> bone.skipRender(red));
-            snapshots.ifPresent(HUNT[side], bone -> bone.skipRender(!red));
+            snapshots.ifPresent(PUPIL[side], bone -> bone.setScaleZ(across).setScaleY(along));
+            snapshots.ifPresent(CALM[side], bone -> bone.skipRender(hunting));
+            snapshots.ifPresent(HUNT[side], bone -> bone.skipRender(!hunting));
         }
     }
 
     /** Whether a model carries designed eyes. */
-    public static boolean designed(BakedGeoModel model) { return model.getBone(UPPER[0]).isPresent(); }
+    public static boolean designed(BakedGeoModel model) { return model.getBone(FRAME[0]).isPresent(); }
 
-    private static float eyeHeight(BakedGeoModel model) {
-        return model.getBone(CALM[0]).filter(bone -> bone instanceof CuboidGeoBone cuboid && cuboid.cubes.length > 0)
-                .map(bone -> (float) ((CuboidGeoBone) bone).cubes[0].size().y()).orElse(0f);
+    private static Layout layout(BakedGeoModel model) {
+        float height = size(model, CALM[0], 1);
+        float upper = size(model, UPPER[0], 1), lower = size(model, LOWER[0], 1);
+        float tall = size(model, PUPIL[0], 1), wide = size(model, PUPIL[0], 2);
+        // A lid is built (rest + tuck) eye heights long: its own length says how far open it lies.
+        return new Layout(height, height > 0f && upper > 0f ? Math.max(0f, upper / height - UPPER_TUCK) : 0f,
+                height > 0f && lower > 0f ? Math.max(0f, lower / height - LOWER_TUCK) : 0f, tall > 0f && tall < 1.5f * wide,
+                model.getBone(HUNT[0]).isPresent());
+    }
+
+    /** The first cube of a bone, along one axis (0 x, 1 y, 2 z) in model units; 0 for a bone that is not there. */
+    private static float size(BakedGeoModel model, String bone, int axis) {
+        return model.getBone(bone).filter(candidate -> candidate instanceof CuboidGeoBone cuboid && cuboid.cubes.length > 0)
+                .map(candidate -> {
+                    var size = ((CuboidGeoBone) candidate).cubes[0].size();
+                    return (float) (axis == 0 ? size.x() : axis == 1 ? size.y() : size.z());
+                }).orElse(0f);
     }
 
     private static String[] bones(String prefix) { return new String[]{prefix + "l", prefix + "r"}; }

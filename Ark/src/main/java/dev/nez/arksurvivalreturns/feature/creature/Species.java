@@ -360,11 +360,12 @@ public enum Species {
     }
 
     /**
-     * Big carnivores have eyes designed one by one (build_creature_eyes.DESIGNS), with lids, a brow and a slit
-     * the client moves (client/CreatureEyes); the alert set is their red one.
+     * The predators, the sea animals and the flyers have eyes designed one by one (build_creature_eyes.DESIGNS):
+     * lids, a pupil, often a brow, and for a predator a hunting colour, all moved by the client (client/CreatureEyes).
+     * The herbivores keep the generated eye sets.
      */
     public boolean designedEyes() {
-        return realm == Realm.LAND && family() == LandFamily.BIG_CARNIVORE;
+        return !NO_EYES.contains(id) && (predator || flyer() || aquatic());
     }
 
     public String[] eyeBones() { return eyeBones(false); }

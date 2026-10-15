@@ -449,12 +449,13 @@ def add_eyes(identifier, geometry, atlases, predator):
 
 
 # ------------------------------------------------------------------------------------ designed eyes
-# The lid contract shared with client/CreatureEyes.java: how much of the eye's height each lid covers at
-# scale 1, and how far it reaches past the opening (above for the upper lid, below for the lower), both in
-# eye heights. A lid pivots on that far edge, so scaled by s it covers s * (REST + TUCK) - TUCK.
-LID_REST = {'upper': 0.30, 'lower': 0.12}
+# The lid contract shared with client/CreatureEyes.java. A lid is built (rest + tuck) eye heights long, hinged
+# on the edge it tucks away past the opening (above for the upper lid, below for the lower); the client reads
+# the species' own rest off that length and scales the lid from its hinge, so a lid at closure c covers
+# lid_cover(c, rest): the rest at 0, the whole shut cover at 1, less than the rest below 0.
 LID_TUCK = {'upper': 0.25, 'lower': 0.15}
-PUPIL_GAP = 0.12        # units the slit stands in front of the iris: clear of depth fighting at range
+LID_SHUT = {'upper': 0.70, 'lower': 0.44}
+PUPIL_GAP = 0.12        # units the pupil stands in front of the iris: clear of depth fighting at range
 SOCKET_WET, SOCKET_DEEP = '#2a1510', '#100806'
 # Iris colours from the pupil out to the rim, per species: the calm yellow and the red of a hunt or a fight.
 REX_GOLD = [(0.00, '#fff4b8'), (0.16, '#ffd95a'), (0.42, '#f9b62c'), (0.70, '#ec8c1e'), (0.88, '#a8520f'), (1.0, '#3c1c06')]
@@ -470,19 +471,58 @@ ACRO_RED = [(0.00, '#ffd4a4'), (0.16, '#ff8e54'), (0.42, '#ea4a2c'), (0.70, '#ba
 CARNO_FIRE = [(0.00, '#fffac4'), (0.16, '#ffe44c'), (0.42, '#ffb82c'), (0.70, '#ff7c1e'), (0.88, '#ba380e'), (1.0, '#3c0c04')]
 CARNO_RED = [(0.00, '#fff6b4'), (0.16, '#ffc444'), (0.42, '#ff6c1c'), (0.70, '#f02c12'), (0.88, '#9c0e08'), (1.0, '#300404')]
 
-# One design per big carnivore, each looked at in previews (tools/preview_creature_eyes.py):
+def _hex(code):
+    return np.array([int(code[i:i + 2], 16) for i in (1, 3, 5)], float)
+
+
+def palette(light, mid, deep, rim):
+    """Iris colours from the pupil out to the rim from four colours: the light round the pupil, the body of the
+    iris, its deep outer part and the dark limbal ring."""
+    a, b, c, d = (_hex(code) for code in (light, mid, deep, rim))
+
+    def code(colour):
+        return '#%02x%02x%02x' % tuple(int(round(v)) for v in np.clip(colour, 0, 255))
+
+    return [(0.00, code(a)), (0.16, code(a * .6 + b * .4)), (0.42, code(b)), (0.70, code(b * .5 + c * .5)), (0.88, code(c)), (1.0, code(d))]
+
+
+# One design per predator, sea animal and flyer, each looked at in previews (tools/preview_creature_eyes.py):
 #   skull, centre     the skull bone, and the eye's height and place along the head (y, z in rest-pose units)
 #   level             the head's pitch in its idle clip against the rest pose, so that level means the idle's
 #   size, gap         length and height of the opening (units); the face stands gap above the skin it covers
 #   yaw, pitch, roll  the eye turned towards the snout and up (degrees), its long axis tilted front corner down
-#   almond            the opening's curve: lower is rounder, higher has sharper corners
-#   px, iris          iris texels per unit; the iris colours, its radius in opening lengths, and its pattern:
-#                     fibres along the radius, a crocodile's dark net, or flecks (with fibres), and how much
-#   pupil             slit width and height at scale 1 (shares of the opening), and its taper (higher is sharper)
-#   lids              protrusion out of the face (eye heights) and slant (degrees, front end down), upper, lower
+#   almond            the opening's curve: 0.5 is an ellipse, higher has sharper corners
+#   px, iris          iris texels per unit; colours (calm, and hunt: none for an eye that never turns), radius
+#                     in opening lengths, and the pattern: fibres along the radius, a crocodile's dark net,
+#                     flecks (with fibres), or glass (a shark's black eye); amount of it; sclera, the colour the
+#                     opening shows past the iris (none: the dark socket); glint, the size of the highlight
+#   pupil             a slit (width and height at scale 1 as shares of the opening, and its taper: higher is
+#                     sharper), a round pupil (its share of the iris' diameter) or none
+#   rest, lids        how far each lid lies over the eye at rest, in eye heights; and for each lid that there is
+#                     (none: no lid, as a snake has none), its protrusion out of the face (eye heights) and
+#                     slant (degrees, front end down)
 #   brow, crest       boxes (z from the eye centre in lengths, y above the opening in heights, x out of the face in
-#                     heights): the brow ridge, which moves, with its slant (degrees, front end down); the crest,
-#                     bone that stays (a boss, a ridge, or pale horns when horn is set)
+#                     heights): the brow ridge, which moves, with its slant (degrees, front end down), or none;
+#                     the crest, bone that stays (a boss, a ridge, or pale horns when horn is set)
+#   skip, skin        a bone-name pattern the skin under the eye is not measured on (a frill in the way), and a
+#                     skin position (x) to take instead of measuring
+DESIGN_DEFAULTS = dict(level=0, gap=0.22, almond=0.7, yaw=4, pitch=5, roll=3, rest=dict(upper=0.30, lower=0.12),
+                       lids=dict(upper=(0.07, 6), lower=(0.05, -3)), brow=None, crest=(), horn=False, skip=None, skin=None)
+IRIS_DEFAULTS = dict(hunt=None, pattern='fibres', amount=1.0, sclera=None, glint=1.0)
+
+
+def design_of(identifier):
+    """A species' design with the defaults filled in."""
+    design = {**DESIGN_DEFAULTS, **DESIGNS[identifier]}
+    design['iris'] = {**IRIS_DEFAULTS, **design['iris']}
+    return design
+
+
+def lid_cover(closure, rest, shut):
+    """The share of the eye's height a lid covers at a closure (client/CreatureEyes.cover)."""
+    return rest + closure * (shut - rest) if closure >= 0 else rest * (1 + closure)
+
+
 DESIGNS = {
     # The king: deep gold under a heavy brow, a rugose boss behind it.
     'tyrannosaurus': dict(
@@ -533,11 +573,141 @@ DESIGNS = {
         pupil=(0.12, 0.90, 0.85), lids=dict(upper=(0.08, 9), lower=(0.06, -4)),
         brow=dict(slant=9, boxes=[((-0.80, 0.62), (-0.02, 0.42), (-0.9, 0.22)), ((-0.72, 0.40), (0.38, 0.56), (-0.9, 0.11))]),
         crest=[((-0.56, 0.0), (0.20, 0.95), (-0.6, 0.40)), ((-0.46, -0.10), (0.48, 0.86), (0.40, 0.92))], horn=True),
+
+    # ---------------------------------------------------------------- the other predators
+    # The pack hunter: a bright amber stare under a thin brow, a small ridge before the eye.
+    'velociraptor': dict(
+        skull='Cnt_Head_JNT_SKL', centre=(43.9, 22.9), level=5, size=(3.0, 2.0), gap=0.18,
+        yaw=6, pitch=4, roll=3, almond=0.75, px=9,
+        iris=dict(calm=palette('#fff4b0', '#f7b22a', '#b8620f', '#3a1a06'), hunt=palette('#ffd890', '#ff4a22', '#8a0c0c', '#2a0404'),
+                  radius=0.47, pattern='fibres', amount=1.0),
+        pupil=(0.12, 0.90, 0.9), brow=dict(slant=6, boxes=[((-0.80, 0.60), (-0.02, 0.30), (-0.9, 0.16))]),
+        crest=[((0.10, 0.50), (0.14, 0.50), (-0.9, 0.10))]),
+    # The spitter: a venomous green-yellow stare, a knobbed brow.
+    'dilophosaur': dict(
+        skull='c_head', centre=(27.5, 25.3), level=-5.4, size=(2.2, 1.5), gap=0.16,
+        yaw=8, pitch=4, roll=3, almond=0.75, px=12,
+        iris=dict(calm=palette('#f6ffb4', '#b8de2e', '#4e7c12', '#14260a'), hunt=palette('#ffd890', '#ff6a1e', '#a02608', '#2a0804'),
+                  radius=0.47, pattern='fibres', amount=1.0),
+        pupil=(0.10, 0.90, 0.9), brow=dict(slant=6, boxes=[((-0.80, 0.60), (-0.02, 0.32), (-0.9, 0.18))]), crest=[]),
+    # The cousin: copper, two bony hornlets before a ridge.
+    'allosaurus': dict(
+        skull='c_head', centre=(85.8, 83.1), level=-1.7, size=(7.0, 4.6), gap=0.22,
+        yaw=5, pitch=5, roll=3, almond=0.7, px=5,
+        iris=dict(calm=palette('#ffe4a8', '#e8902a', '#9a4a14', '#321404'), hunt=palette('#ffc890', '#ff5a20', '#8e1408', '#2a0604'),
+                  radius=0.47, pattern='fibres', amount=1.1),
+        pupil=(0.13, 0.88, 0.8), brow=dict(slant=6, boxes=[((-0.80, 0.62), (-0.02, 0.34), (-0.9, 0.18))]),
+        crest=[((0.15, 0.45), (0.30, 0.75), (-0.9, 0.10)), ((-0.45, -0.05), (0.30, 0.62), (-0.9, 0.10))], horn=True),
+    # The boar-faced crocodile: amber and net, high on the skull.
+    'kaprosuchus': dict(
+        skull='c_neck3', centre=(18.8, 33.6), level=0, size=(2.6, 1.7), gap=0.16,
+        yaw=3, pitch=8, roll=2, almond=0.8, px=11,
+        iris=dict(calm=palette('#fff6a8', '#d8b82c', '#7a6a14', '#241e06'), hunt=palette('#ffd090', '#ee5a1e', '#7e1208', '#240404'),
+                  radius=0.47, pattern='net', amount=1.0),
+        pupil=(0.09, 0.94, 1.0), lids=dict(upper=(0.12, 4), lower=(0.05, -2)),
+        brow=dict(slant=3, boxes=[((-0.70, 0.55), (-0.02, 0.34), (-0.9, 0.20))]), crest=[((-0.60, -0.10), (0.20, 0.55), (-0.9, 0.12))]),
+    'sarco': dict(
+        skull='c_neck3', centre=(27.6, 57.1), level=-3.9, size=(3.6, 2.3), gap=0.18,
+        yaw=3, pitch=8, roll=2, almond=0.8, px=8,
+        iris=dict(calm=palette('#f4f0a0', '#c2b03a', '#6c5c1a', '#1e1806'), hunt=palette('#ffcc94', '#e63a20', '#7a1010', '#200303'),
+                  radius=0.47, pattern='net', amount=1.0),
+        pupil=(0.09, 0.94, 1.0), lids=dict(upper=(0.12, 4), lower=(0.05, -2)),
+        brow=dict(slant=3, boxes=[((-0.70, 0.55), (-0.02, 0.34), (-0.9, 0.20))]), crest=[((-0.65, -0.05), (0.20, 0.55), (-0.9, 0.12))]),
+    'deinosuchus': dict(
+        skull='Head', centre=(44.3, 56.8), level=-1.6, size=(3.8, 2.4), gap=0.18,
+        yaw=3, pitch=8, roll=2, almond=0.8, px=12,
+        iris=dict(calm=palette('#f2e0a0', '#cf9a34', '#80521a', '#2a1a08'), hunt=palette('#ffc890', '#e04a1e', '#781410', '#220404'),
+                  radius=0.47, pattern='net', amount=1.0),
+        pupil=(0.09, 0.94, 1.0), lids=dict(upper=(0.12, 4), lower=(0.05, -2)),
+        brow=dict(slant=3, boxes=[((-0.70, 0.55), (-0.02, 0.34), (-0.9, 0.20))]), crest=[((-0.65, -0.05), (0.20, 0.55), (-0.9, 0.12))]),
+    # The constrictor: a gold razor stare under a scaly brow, no lids.
+    'titanoboa': dict(
+        skull='c_head', centre=(12.1, 97.1), level=0, size=(1.5, 1.0), gap=0.12,
+        yaw=6, pitch=10, roll=0, almond=0.6, px=18,
+        iris=dict(calm=palette('#fff4b0', '#ffc42e', '#c47012', '#3a1a06'), hunt=palette('#ffd890', '#ff5a1e', '#a02608', '#2a0804'),
+                  radius=0.5, pattern='fibres', amount=1.0),
+        pupil=(0.09, 0.95, 1.0), lids={}, crest=[((-0.50, 0.50), (0.08, 0.30), (-0.9, 0.10))]),
+    # ---------------------------------------------------------------- mammals: a round pupil and a frown
+    'direwolf': dict(
+        skull='c_head', centre=(21.2, 20.7), level=0, size=(1.9, 1.5), gap=0.16,
+        yaw=12, pitch=4, roll=3, almond=0.5, px=15,
+        iris=dict(calm=palette('#fff2bc', '#e2aa30', '#8c5c16', '#2c1c08'), hunt=palette('#ffd8a0', '#ff6a24', '#9c2008', '#2a0804'),
+                  radius=0.34, pattern='fibres', amount=1.0, sclera='#2c1e16'),
+        pupil=0.42, brow=dict(slant=4, boxes=[((-0.70, 0.60), (0.00, 0.40), (-0.9, 0.20))]), crest=[]),
+    'sabertooth': dict(
+        skull='c_head', centre=(18.6, 20.6), level=0, size=(2.1, 1.7), gap=0.16,
+        yaw=12, pitch=4, roll=3, almond=0.5, px=14,
+        iris=dict(calm=palette('#f6f8b6', '#d4cc3a', '#7c7a18', '#22240a'), hunt=palette('#ffd8a0', '#ff6a24', '#9c2008', '#2a0804'),
+                  radius=0.36, pattern='fibres', amount=1.0, sclera='#2a2018'),
+        pupil=0.44, brow=dict(slant=5, boxes=[((-0.75, 0.65), (0.00, 0.44), (-0.9, 0.22))]), crest=[]),
+    'ravager': dict(
+        skull='Head', centre=(19.9, 26.6), level=-2.8, size=(1.9, 1.5), gap=0.16,
+        yaw=12, pitch=4, roll=3, almond=0.5, px=15,
+        iris=dict(calm=palette('#fff8c4', '#e6de50', '#8a8820', '#2a2a0a'), hunt=palette('#ffd8a0', '#ff5a1e', '#940c08', '#2a0604'),
+                  radius=0.34, pattern='flecks', amount=1.0, sclera='#2a1e18'),
+        pupil=0.40, brow=dict(slant=5, boxes=[((-0.70, 0.60), (0.00, 0.40), (-0.9, 0.20))]), crest=[]),
+    'megapithecus': dict(
+        skull='c_head', centre=(45.8, 20.6), level=0, size=(3.4, 2.7), gap=0.2,
+        yaw=6, pitch=2, roll=2, almond=0.5, px=9,
+        iris=dict(calm=palette('#f0c080', '#8e5c2c', '#4c2e16', '#1a0e06'), hunt=palette('#ffd89a', '#e8501c', '#7a1408', '#240804'),
+                  radius=0.3, pattern='fibres', amount=0.8, sclera='#3c2c24'),
+        pupil=0.40, brow=dict(slant=3, boxes=[((-0.90, 0.80), (0.00, 0.55), (-0.9, 0.30))]),
+        crest=[((-1.10, 1.00), (0.40, 0.95), (-0.9, 0.40))]),
+    # ---------------------------------------------------------------- the terror bird
+    'terrorbird': dict(
+        skull='c_head', centre=(28.1, 21.5), level=7.3, size=(1.3, 1.2), gap=0.12,
+        yaw=6, pitch=2, roll=0, almond=0.5, px=22, rest=dict(upper=0.12, lower=0.22),
+        iris=dict(calm=palette('#fff6a8', '#f0c82a', '#c27014', '#3a1c06'), hunt=palette('#ffd890', '#ff5a1e', '#a02608', '#2a0804'),
+                  radius=0.40, pattern='fibres', amount=0.5),
+        pupil=0.40, lids=dict(upper=(0.05, 4), lower=(0.07, -4)), crest=[((-0.70, 0.60), (0.12, 0.40), (-0.9, 0.14))]),
+    # ---------------------------------------------------------------- the sea
+    'plesiosaur': dict(
+        skull='c_neck8', centre=(35.1, 205.1), level=1.2, size=(5.2, 4.4), gap=0.2,
+        yaw=4, pitch=4, roll=0, almond=0.5, px=7, rest=dict(upper=0.18, lower=0.10),
+        iris=dict(calm=palette('#f4e8a0', '#a88a2c', '#4a3c12', '#14100a'), hunt=palette('#ffc890', '#c82a18', '#6a0c0c', '#200404'),
+                  radius=0.40, pattern='fibres', amount=0.8),
+        pupil=0.5, lids=dict(upper=(0.05, 3), lower=(0.04, -2))),
+    'megalodon': dict(
+        skull='c_head', centre=(23.2, 52.2), level=0, size=(4.2, 3.6), gap=0.2,
+        yaw=4, pitch=4, roll=0, almond=0.5, px=9,
+        iris=dict(calm=palette('#46505c', '#222c38', '#0e141c', '#05080c'), radius=0.5, pattern='glass', amount=1.0),
+        pupil=None, lids={}),
+    'liopleurodon': dict(
+        skull='c_neck8', centre=(31.3, 39.8), level=0, size=(3.8, 2.9), gap=0.18,
+        yaw=4, pitch=4, roll=0, almond=0.6, px=8, rest=dict(upper=0.18, lower=0.10),
+        iris=dict(calm=palette('#f4eea0', '#c6b43a', '#6a5c18', '#1e1a08'), hunt=palette('#ffc890', '#d82a18', '#700c0c', '#200404'),
+                  radius=0.45, pattern='fibres', amount=1.0),
+        pupil=(0.16, 0.88, 0.6), lids=dict(upper=(0.05, 3), lower=(0.04, -2)),
+        brow=dict(slant=3, boxes=[((-0.70, 0.55), (-0.02, 0.28), (-0.9, 0.14))])),
+    'mosasaurus': dict(
+        skull='c_head', centre=(53.1, 79.2), level=0, size=(4.0, 3.0), gap=0.2,
+        yaw=4, pitch=4, roll=0, almond=0.55, px=8, rest=dict(upper=0.2, lower=0.10),
+        iris=dict(calm=palette('#f6f4a4', '#c8d04c', '#6c7a1a', '#1c2406'), hunt=palette('#ffc890', '#d82a18', '#700c0c', '#200404'),
+                  radius=0.42, pattern='fibres', amount=1.0),
+        pupil=0.40, lids=dict(upper=(0.06, 4), lower=(0.05, -2)),
+        brow=dict(slant=4, boxes=[((-0.70, 0.55), (-0.02, 0.30), (-0.9, 0.16))])),
+    # ---------------------------------------------------------------- the flyers: round pupils, lids that close from below
+    'pteranodon': dict(
+        skull='c_head', centre=(19.3, 18.6), level=21.8, size=(3.8, 3.4), gap=0.15, skip='wing',
+        yaw=6, pitch=2, roll=0, almond=0.5, px=8, rest=dict(upper=0.12, lower=0.22),
+        iris=dict(calm=palette('#ffeaa4', '#f6a232', '#b0580e', '#301606'), radius=0.40, pattern='fibres', amount=0.6),
+        pupil=0.40, lids=dict(upper=(0.05, 4), lower=(0.07, -4)), crest=[((-0.80, 0.50), (0.12, 0.40), (-0.9, 0.12))]),
+    'quetzal': dict(
+        skull='c_head', centre=(57.9, 92.8), level=21.8, size=(6.2, 5.4), gap=0.18, skip='wing',
+        yaw=6, pitch=2, roll=0, almond=0.5, px=5, rest=dict(upper=0.12, lower=0.22),
+        iris=dict(calm=palette('#fff2b4', '#eab232', '#a06414', '#301a06'), radius=0.40, pattern='fibres', amount=0.6),
+        pupil=0.40, lids=dict(upper=(0.05, 4), lower=(0.07, -4)), crest=[((-0.80, 0.50), (0.12, 0.40), (-0.9, 0.12))]),
+    'argentavis': dict(
+        skull='c_Head', centre=(42.4, 26.9), level=12.3, size=(3.0, 2.7), gap=0.14,
+        yaw=8, pitch=2, roll=0, almond=0.5, px=10, rest=dict(upper=0.14, lower=0.22),
+        iris=dict(calm=palette('#f6d680', '#b87c2c', '#6a3c14', '#20120a'), radius=0.40, pattern='fibres', amount=0.6),
+        pupil=0.40, lids=dict(upper=(0.05, 4), lower=(0.07, -4)), crest=[((-1.00, 0.90), (0.20, 0.70), (-0.9, 0.34))]),
+    'archaeopteryx': dict(
+        skull='Head_Top', centre=(7.2, 5.1), level=2.1, size=(0.65, 0.6), gap=0.05,
+        yaw=6, pitch=2, roll=0, almond=0.5, px=36, rest=dict(upper=0.14, lower=0.22),
+        iris=dict(calm=palette('#ffe49a', '#f08c2a', '#a2420e', '#301004'), radius=0.40, pattern='fibres', amount=0.4),
+        pupil=0.45, lids=dict(upper=(0.05, 4), lower=(0.06, -4))),
 }
-
-
-def _hex(code):
-    return np.array([int(code[i:i + 2], 16) for i in (1, 3, 5)], float)
 
 
 def smoothstep(edge0, edge1, x):
@@ -572,10 +742,10 @@ def almond(w, h, shape):
     return outside <= 0, outside
 
 
-def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7, pattern='fibres', amount=1.0):
+def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7, pattern='fibres', amount=1.0, sclera=None, glint=1.0):
     """The eye's face, front corner on the left: an almond opening (corners pointed, skin round it, a dark line
     along its edge) holding a round iris (radius in texels) with a dark rim, fibres along the radius, a ruffled
-    ring round the pupil, the lid's shadow along the top and a glint; in the corners past the iris, the wet
+    ring round the pupil, the lid's shadow along the top and a glint; past the iris, the sclera or the wet
     socket. glow: the same iris as an eyes-layer sheet (RGBA, unshaded, no glint)."""
     y, x = np.mgrid[0:h, 0:w] + 0.5
     cx, cy = centre
@@ -584,8 +754,9 @@ def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7
     opening, outside = almond(w, h, shape)
     rng = np.random.default_rng(seed)
     colour = ramp(r, stops)
+    glass = pattern == 'glass'
     fibres = np.zeros_like(r)
-    for k in range(int((12 + 1.6 * radius) * amount)):
+    for k in range(0 if glass else int((12 + 1.6 * radius) * amount)):
         at, start, end = rng.uniform(-np.pi, np.pi), rng.uniform(.16, .36), rng.uniform(.6, .95)
         strength = rng.uniform(.10, .22) * (1 if k % 3 == 0 else -1)
         width = .6 / np.maximum(r * radius, 1.0)
@@ -595,7 +766,7 @@ def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7
     annulus = (r > .3) & (r < .97)
     if pattern == 'net':
         # A crocodile's iris: a dark net of cells round the pupil.
-        count = int(14 + .9 * radius)
+        count = int(np.clip(.3 * radius * radius, 16, 90))
         spread, spin = rng.uniform(.2, 1.05, count) * radius, rng.uniform(-np.pi, np.pi, count)
         seeds_x, seeds_y = cx + spread * np.cos(spin), cy + spread * np.sin(spin)
         distance = np.sort(np.hypot(x[..., None] - seeds_x, y[..., None] - seeds_y), -1)
@@ -606,8 +777,9 @@ def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7
         colour[spots] *= .5
         glints = annulus & (rng.random(r.shape) < .02 * amount)
         colour[glints] = colour[glints] * .6 + 255 * .4
-    ruffle = .33 + .035 * np.sin(angle * 9 + rng.uniform(0, 6))
-    colour *= (1 - .18 * np.exp(-((r - ruffle) / .045) ** 2))[..., None]
+    if not glass:
+        ruffle = .33 + .035 * np.sin(angle * 9 + rng.uniform(0, 6))
+        colour *= (1 - .18 * np.exp(-((r - ruffle) / .045) ** 2))[..., None]
     colour *= (1 + rng.normal(0, .02, r.shape))[..., None]
     iris = (r <= 1.0) & opening
     if glow:
@@ -617,14 +789,21 @@ def iris_art(w, h, stops, radius, centre, seed, glow=False, skin=None, shape=0.7
         return rgba.astype(np.uint8)
     top = y / h
     colour *= (1 - .26 * (1 - smoothstep(.10, .44, top)) - .10 * smoothstep(.82, 1.0, top))[..., None]
-    socket = _hex(SOCKET_WET) * (1 - smoothstep(1.0, 1.45, r))[..., None] + _hex(SOCKET_DEEP) * smoothstep(1.0, 1.45, r)[..., None]
+    if sclera is not None:
+        # A sclera is lit evenly and darkens towards the corners of the opening.
+        edge = np.clip(np.hypot((x - w / 2) / (w / 2), (y - h / 2) / (h / 2)), 0, 1)
+        socket = _hex(sclera) * (1 - .45 * smoothstep(.45, 1.0, edge))[..., None]
+    else:
+        socket = _hex(SOCKET_WET) * (1 - smoothstep(1.0, 1.45, r))[..., None] + _hex(SOCKET_DEEP) * smoothstep(1.0, 1.45, r)[..., None]
     out = np.where(iris[..., None], colour, socket)
     # The wet line just inside the edge, darker towards the corners.
     rim = opening & (outside > -1.2)
     out[rim] = out[rim] * .45 + _hex(SOCKET_DEEP) * .55
-    for gx, gy, rx_, ry_, alpha in ((cx - .40 * radius, .41 * h, .15 * radius, .09 * radius, .88),
-                                    (cx + .46 * radius, .68 * h, .06 * radius, .045 * radius, .35)):
-        spot = (((x - gx) / rx_) ** 2 + ((y - gy) / ry_) ** 2 <= 1) & opening & (outside < -1.2)
+    spots = ((cx - .40 * radius, .41 * h, .15 * radius, .09 * radius, .88), (cx + .46 * radius, .68 * h, .06 * radius, .045 * radius, .35))
+    if glass:
+        spots = ((cx - .38 * radius, .36 * h, .22 * radius, .13 * radius, .75), (cx + .30 * radius, .66 * h, .09 * radius, .06 * radius, .30))
+    for gx, gy, rx_, ry_, alpha in spots:
+        spot = (((x - gx) / (rx_ * glint)) ** 2 + ((y - gy) / (ry_ * glint)) ** 2 <= 1) & opening & (outside < -1.2)
         out[spot] = out[spot] * (1 - alpha) + _hex('#fff8e8') * alpha
     if skin is not None:
         rng = np.random.default_rng(seed + 17)
@@ -647,6 +826,16 @@ def pupil_art(w, h, taper=0.8):
     rgba = np.zeros((h, w, 4), np.uint8)
     rgba[inside] = (7, 5, 5, 255)
     rgba[edge] = (40, 13, 9, 255)
+    return rgba
+
+
+def round_pupil_art(d):
+    """A round pupil: black with a dark red edge; clear round it."""
+    y, x = np.mgrid[0:d, 0:d] + 0.5
+    r = np.hypot(x - d / 2, y - d / 2) / (d / 2)
+    rgba = np.zeros((d, d, 4), np.uint8)
+    rgba[r <= 1.0] = (7, 5, 5, 255)
+    rgba[(r <= 1.0) & (r * d / 2 > d / 2 - 1.0)] = (40, 13, 9, 255)
     return rgba
 
 
@@ -684,8 +873,10 @@ def _rays(faces, starts, direction):
 
 
 def add_designed_eyes(identifier, geometry, atlases):
-    """The designed eyes of one big carnivore (DESIGNS): bones, the eye strip under each atlas, the hunting sheet."""
-    design = DESIGNS[identifier]
+    """The designed eyes of one species (DESIGNS): bones, the eye strip under each atlas, and for the hunters
+    of HUNTING_EYES the sheet of their glowing irises, under the name 'eyes'."""
+    design = design_of(identifier)
+    iris_design = design['iris']
     model = geometry['minecraft:geometry'][0]
     bones = model['bones']
     bones[:] = [b for b in bones if not b['name'].startswith('ark_eye')]
@@ -700,14 +891,24 @@ def add_designed_eyes(identifier, geometry, atlases):
     frame = eye_frame(design)
     out, up, forward = frame.T
     mirror = np.diag([-1.0, 1.0, 1.0])
+    states = ('calm', 'hunt') if iris_design['hunt'] else ('calm',)
+    # The pupil stands clear of the iris, but behind the lids, so a shut eye hides it.
+    lid_out = [out_by * height for out_by, _ in design['lids'].values()]
+    pupil_gap = float(np.clip(.5 * min(lid_out), .04, PUPIL_GAP)) if lid_out else PUPIL_GAP
 
     # Where the skin is: the face stands gap above the highest skin under the opening, measured on both sides.
     head = {'bones': [b for b in bones], 'description': model['description']}
-    faces = [q for q in geckolib_mesh.quads(head) if q[3] != 'ark_eyes']
+    skipped = re.compile(design['skip']) if design['skip'] else None
+    faces = [q for q in geckolib_mesh.quads(head) if q[3] != 'ark_eyes' and not (skipped and skipped.search(q[3]))]
     y0, z0 = design['centre']
     footprint = [(a * height, b * length) for a in np.linspace(-.55, .55, 5) for b in np.linspace(-.55, .55, 5)]
-    lateral = _rays(faces, [np.array([60.0, y0, z0])], np.array([-1.0, 0, 0]))[0]
-    skin_x = 60.0 - lateral[0] if lateral else 0.0
+    if design['skin'] is not None:
+        skin_x = design['skin']
+    else:
+        lateral = _rays(faces, [np.array([90.0, y0, z0])], np.array([-1.0, 0, 0]))[0]
+        if lateral is None:
+            raise ValueError(f'{identifier}: no skin at the eye centre {design["centre"]}')
+        skin_x = 90.0 - lateral[0]
     rises = []
     for sign in (1, -1):
         flip = np.diag([sign, 1.0, 1.0])
@@ -723,16 +924,24 @@ def add_designed_eyes(identifier, geometry, atlases):
     depth = (rise - sink) + design['gap'] + .6 * height
     PLACEMENT[identifier] = (skull_name, np.round(centre, 2).tolist(), round(height, 2), round(float(centre[0]), 2))
 
-    # The strip under the atlas: four irises, the slit, the skins.
+    # The strip under the atlas: the irises, the pupil, the skins.
     desc = model['description']
     width = desc['texture_width']
     base = next(iter(atlases.values())).height
     px = design['px']
+    iris_r = iris_design['radius'] * length
     sw, sh = int(round(length * px)), int(round(height * px))
-    pw, ph, _ = design['pupil']
-    slit_w, slit_h = max(4, int(round(pw * length * px * 2))), int(round(ph * height * px * 2))
+    pupil = design['pupil']
+    if isinstance(pupil, tuple):
+        pw, ph, taper = pupil
+        pupil_size = (pw * length, ph * height)
+    elif pupil:
+        pupil_size = (pupil * 2 * iris_r,) * 2
+    else:
+        pupil_size = None
+    pupil_px = (max(4, int(round(pupil_size[0] * px * 2))), max(4, int(round(pupil_size[1] * px * 2)))) if pupil_size else (0, 0)
     rects, x, row = {}, 2, base + 2
-    tallest = max(sh, slit_h, 16)
+    tallest = max(sh, pupil_px[1], 16)
 
     def place(key, w, h):
         nonlocal x, row
@@ -741,12 +950,17 @@ def add_designed_eyes(identifier, geometry, atlases):
         rects[key] = (x, row, w, h)
         x += w + 2
 
-    for state in ('calm', 'hunt'):
+    for state in states:
         for side in ('l', 'r'):
             place(('iris', state, side), sw, sh)
-    place('slit', slit_w, slit_h)
-    for key in ('lid_upper', 'lid_lower', 'brow', 'crest'):
-        place(key, 16, 16)
+    if pupil_size:
+        place('pupil', *pupil_px)
+    for lid in design['lids']:
+        place(f'lid_{lid}', 16, 16)
+    if design['brow']:
+        place('brow', 16, 16)
+    if design['crest']:
+        place('crest', 16, 16)
     place('socket', 4, 4)
     place('margin', 4, 4)
     strip = row + tallest + 2 - base
@@ -764,11 +978,10 @@ def add_designed_eyes(identifier, geometry, atlases):
 
     tree = [{'name': 'ark_eyes', 'parent': skull_name, 'pivot': bedrock(pivot_model), 'rotation': to_bedrock(matrices[skull].T)}]
     half_w, half_h = length / 2, height / 2
-    iris_r = design['iris']['radius'] * length
     for side, sign in (('l', 1), ('r', -1)):
         rotation = frame if sign == 1 else mirror @ frame @ mirror
         q = local(np.diag([sign, 1.0, 1.0]) @ centre)
-        outward, inward = ('east', 'west') if sign == 1 else ('west', 'east')
+        outward = 'east' if sign == 1 else 'west'
 
         def cube(lo, hi, uv):
             """A box in the eye's frame: x out of the head, y up, z towards the snout."""
@@ -781,35 +994,35 @@ def add_designed_eyes(identifier, geometry, atlases):
         name = f'ark_eye_{side}'
         tree.append({'name': name, 'parent': 'ark_eyes', 'pivot': bedrock(q), 'rotation': to_bedrock(rotation)})
         socket = face_uv(rects['socket'])
-        for state in ('calm', 'hunt'):
+        for state in states:
             tree.append({'name': f'ark_eyeball_{state}_{side}', 'parent': name, 'pivot': bedrock(q),
                          'cubes': [cube((-depth, -half_h, -half_w), (0.0, half_h, half_w),
                                         {outward: face_uv(rects['iris', state, side]), 'up': socket, 'down': socket,
                                          'north': socket, 'south': socket})]})
-        slit_len, slit_tall = pw * length, ph * height
-        tree.append({'name': f'ark_eye_pupil_{side}', 'parent': name, 'pivot': at((PUPIL_GAP, 0.0, 0.0)),
-                     'cubes': [cube((PUPIL_GAP - .05, -slit_tall / 2, -slit_len / 2), (PUPIL_GAP, slit_tall / 2, slit_len / 2),
-                                    {outward: face_uv(rects['slit'])})]})
+        if pupil_size:
+            tree.append({'name': f'ark_eye_pupil_{side}', 'parent': name, 'pivot': at((pupil_gap, 0.0, 0.0)),
+                         'cubes': [cube((pupil_gap - .05, -pupil_size[1] / 2, -pupil_size[0] / 2),
+                                        (pupil_gap, pupil_size[1] / 2, pupil_size[0] / 2), {outward: face_uv(rects['pupil'])})]})
         margin = face_uv(rects['margin'])
-        for lid, edge in (('upper', 1), ('lower', -1)):
-            out_by, slant = design['lids'][lid]
+        for lid, (out_by, slant) in design['lids'].items():
+            edge = 1 if lid == 'upper' else -1
             far = edge * (half_h + LID_TUCK[lid] * height)
-            near = edge * (half_h - LID_REST[lid] * height)
+            near = edge * (half_h - design['rest'][lid] * height)
             skin = face_uv(rects[f'lid_{lid}'])
             lip = 'down' if lid == 'upper' else 'up'
             uv = {outward: skin, 'north': skin, 'south': skin, lip: margin, ('up' if lid == 'upper' else 'down'): skin}
             tree.append({'name': f'ark_eye_lid_{lid}_{side}', 'parent': name, 'pivot': at((0.0, far, 0.0)),
                          'rotation': to_bedrock(geckolib_mesh.rx(math.radians(slant))),
-                         'cubes': [cube((-.6 * depth, min(far, near), -half_w * 1.14), (out_by * height, max(far, near), half_w * 1.14), uv)]})
-        brow = face_uv(rects['brow'])
-        brow_uv = {outward: brow, 'north': brow, 'south': brow, 'up': brow, 'down': brow}
-        boxes = []
-        for (za, zb), (ya, yb), (xa, xb) in design['brow']['boxes']:
-            boxes.append(cube((xa * height, half_h + ya * height, za * length), (xb * height, half_h + yb * height, zb * length), brow_uv))
-        back = min(za for (za, _), _, _ in design['brow']['boxes']) * length
-        tree.append({'name': f'ark_eye_brow_{side}', 'parent': name, 'pivot': at((0.0, half_h, back)),
-                     'rotation': to_bedrock(geckolib_mesh.rx(math.radians(design['brow']['slant']))), 'cubes': boxes})
-        if design.get('crest'):
+                         'cubes': [cube((-.6 * depth, min(far, near), -half_w * 1.14), (max(out_by * height, 1.6 * pupil_gap), max(far, near), half_w * 1.14), uv)]})
+        if design['brow']:
+            brow = face_uv(rects['brow'])
+            brow_uv = {outward: brow, 'north': brow, 'south': brow, 'up': brow, 'down': brow}
+            boxes = [cube((xa * height, half_h + ya * height, za * length), (xb * height, half_h + yb * height, zb * length), brow_uv)
+                     for (za, zb), (ya, yb), (xa, xb) in design['brow']['boxes']]
+            back = min(za for (za, _), _, _ in design['brow']['boxes']) * length
+            tree.append({'name': f'ark_eye_brow_{side}', 'parent': name, 'pivot': at((0.0, half_h, back)),
+                         'rotation': to_bedrock(geckolib_mesh.rx(math.radians(design['brow']['slant']))), 'cubes': boxes})
+        if design['crest']:
             crest = face_uv(rects['crest'])
             crest_uv = {outward: crest, 'north': crest, 'south': crest, 'up': crest, 'down': crest}
             tree.append({'name': f'ark_eye_crest_{side}', 'parent': name, 'pivot': bedrock(q),
@@ -839,15 +1052,16 @@ def add_designed_eyes(identifier, geometry, atlases):
             u, v, w, h = rect
             if key[0] == 'iris':
                 _, state, side = key
-                art = iris_art(w, h, design['iris'][state], iris_r * px, centre_px, seed + (state == 'hunt'),
-                               skin=lids['base'], shape=design['almond'], pattern=design['iris']['pattern'],
-                               amount=design['iris']['amount'])
+                art = iris_art(w, h, iris_design[state], iris_r * px, centre_px, seed + (state == 'hunt'),
+                               skin=(lids if design['lids'] else tone)['base'], shape=design['almond'], pattern=iris_design['pattern'],
+                               amount=iris_design['amount'], sclera=iris_design['sclera'], glint=iris_design['glint'])
                 if side == 'r':
                     art = art[:, ::-1]
-            elif key == 'slit':
-                art = pupil_art(w, h, design['pupil'][2])
+            elif key == 'pupil':
+                art = pupil_art(w, h, taper) if isinstance(pupil, tuple) else round_pupil_art(w)
             elif key == 'socket':
-                art = np.tile(np.array([*_hex(SOCKET_DEEP), 255], np.uint8), (h, w, 1))
+                # The walls the eye sits in: the head's own shadow, nearly black.
+                art = np.tile(np.array([*np.clip(tone['dark'] * .42 + _hex(SOCKET_DEEP) * .35, 0, 255), 255], np.uint8), (h, w, 1))
             elif key == 'margin':
                 art = np.tile(np.array([*np.clip(tone['dark'] * .45, 0, 255), 255], np.uint8), (h, w, 1))
             elif key == 'brow':
@@ -860,13 +1074,15 @@ def add_designed_eyes(identifier, geometry, atlases):
                 art = skin_art(w, h, lids, seed + (1 if key == 'lid_upper' else 2), margin='bottom' if key == 'lid_upper' else 'top')
             pixels[v:v + h, u:u + w] = art
         result[variant] = Image.fromarray(pixels)
-    sheet = np.zeros((base + strip, width, 4), np.uint8)
-    for side in ('l', 'r'):
-        u, v, w, h = rects['iris', 'hunt', side]
-        art = iris_art(w, h, design['iris']['hunt'], iris_r * px, centre_px, seed + 1, glow=True, shape=design['almond'],
-                       pattern=design['iris']['pattern'], amount=design['iris']['amount'])
-        sheet[v:v + h, u:u + w] = art[:, ::-1] if side == 'r' else art
-    result['eyes'] = Image.fromarray(sheet)
+    if identifier in HUNTING_EYES:
+        assert iris_design['hunt'], f'{identifier} is a hunter of HUNTING_EYES and needs hunting eyes'
+        sheet = np.zeros((base + strip, width, 4), np.uint8)
+        for side in ('l', 'r'):
+            u, v, w, h = rects['iris', 'hunt', side]
+            art = iris_art(w, h, iris_design['hunt'], iris_r * px, centre_px, seed + 1, glow=True, shape=design['almond'],
+                           pattern=iris_design['pattern'], amount=iris_design['amount'])
+            sheet[v:v + h, u:u + w] = art[:, ::-1] if side == 'r' else art
+        result['eyes'] = Image.fromarray(sheet)
     return result
 
 
