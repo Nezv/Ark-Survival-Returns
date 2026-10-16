@@ -491,11 +491,20 @@
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
 
-  /* recipes: the age's recipe tree (tools/spine.js, tools/spine.css), mapped onto this page's palette */
-  .spine-box { --sp-ink: var(--ink); --sp-ink2: var(--muted); --sp-rule: var(--line); --sp-wire: var(--moss); --sp-chip: var(--surface);
-               --sp-sheet: var(--surface); --sp-gate: var(--raised); --sp-out: var(--moss); --sp-level: var(--ember);
-               --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
-               min-width: 0; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 10px; margin-bottom: 28px; }
+  /* recipes: the age's recipe tree (tools/spine.js, tools/spine.css), mapped onto this page's palette. The text stays
+     on the left while the tree scrolls on the right. */
+  .tree-split { --sp-ink: var(--ink); --sp-ink2: var(--muted); --sp-rule: var(--line); --sp-wire: var(--moss); --sp-chip: var(--surface);
+                --sp-sheet: var(--surface); --sp-gate: var(--raised); --sp-out: var(--moss); --sp-level: var(--ember); --sp-bg: var(--raised);
+                --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
+                display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 20px 40px; align-items: start; }
+  .tree-text { display: grid; gap: 14px; position: sticky; top: 84px; }
+  .tree-text h2 { margin: 0; }
+  .tree-text h3 { margin: 6px 0 -4px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .tree-text .lede { font-size: 16px; }
+  .spine-box { min-width: 0; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 12px 8px 12px 12px; }
+  .spine-box .sp-scroll { max-height: calc(100vh - 120px); min-height: 480px; }
+  @media (max-width: 1080px) { .tree-split { grid-template-columns: minmax(0, 1fr); } .tree-text { position: static; }
+                               .spine-box .sp-scroll { max-height: 75vh; } }
 %%TREE_CSS%%
   /* recipes: the workstation screen preview (tools/workstation_ui.js); the game frame stays dark in both themes */
   .ws-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 20px; align-items: start; }
@@ -981,20 +990,19 @@
   </section>
 
   <section id="recipes">
-    <header class="page-head">
-    <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
-    <div class="ledes">
-    <p class="lede">The crafting rework (P14): no crafting grid is left. Each bench opens a graph of what it makes in a carved baroque frame, and so does the inventory, whose Craft button sits where its 2&times;2 grid was. A recipe can ask for more than nine items, so costs follow Ark: thirty fiber or forty cobblestone where the thing is worth it. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet.</p>
-    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
-    </div>
-    </header>
-    <h3>The Prehistoric sequence</h3>
-    <p class="lede">Every station of the age, left to right in the order it opens: Hands (what is gathered in the world, and with which tool) and the Inventory first, then the benches, up to the Primitive Forge that ends the age. Each recipe is a column: its inputs and their counts above the line, what it makes below; a level marks the player level that unlocks it. The %%TREE_ROWS%% recipes over %%TREE_STATIONS%% stations are the game's own numbers, read from the bench designs and the loot tables. Hover an item to see where it is gathered or made and where it is used; a label that points back is made by another column.</p>
-    <div class="spine-box">
-      <p class="sp-trace" aria-live="polite"></p>
-      <div class="sp-scroll"><div id="recipe-tree"></div></div>
+    <div class="tree-split">
+      <div class="tree-text part">
+        <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
+        <p class="lede" data-toc-after>No crafting grid is left (P14): every bench opens a graph of what it makes, and so does the inventory. A recipe can ask for more than nine items, so costs follow Ark: thirty fiber or forty cobblestone where the thing is worth it.</p>
+        <h3>The Prehistoric sequence</h3>
+        <p class="lede">The age's stations from top to bottom in the order they open: Hands (what is gathered in the world, and with which tool) and the Inventory first, then the benches, down to the Primitive Forge that ends it. Each row is a recipe, its inputs and their counts, the operation and the level that unlocks it, and what it makes. The %%TREE_ROWS%% recipes over %%TREE_STATIONS%% stations are the game's own numbers, read from the bench designs and the loot tables.</p>
+        <nav class="sp-jump" aria-label="Jump to a station"></nav>
+        <p class="sp-trace" aria-live="polite"></p>
+      </div>
+      <div class="spine-box"><div class="sp-scroll" id="recipe-tree" tabindex="0" aria-label="Prehistoric recipe tree"></div></div>
     </div>
     <h3>The workstation screens</h3>
+    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
     <div class="ws-split">
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
@@ -1132,7 +1140,7 @@
         <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
         <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
       </div>
-      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory (Curios fork): every Curios slot around the player; crafting sits apart. Offline render of the texture and slot icons.</figcaption></figure>
+      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory: the worn gear and every Curios slot around a tall player, the crafting graph beside them, and storage eleven columns wide (the side pockets left and right of the nine) over the hotbar. Offline render of the texture and slot icons; the game draws the graph in the dark panel.</figcaption></figure>
     </div>
   </section>
 
@@ -1533,16 +1541,15 @@ window.arkModels = (function () {
     });
   });
 
-  // Recipes: the age's recipe tree (tools/spine.js), drawn the first time its page opens, once the fonts are in.
+  // Recipes: the age's recipe tree (tools/spine.js), drawn the first time its page opens.
   window.arkTree = (function () {
     var drawn = false, host = document.getElementById('recipe-tree');
     return { show: function (on) {
       if (!on || drawn) return;
       drawn = true;
       var data = JSON.parse(document.getElementById('tree-data').textContent);
-      (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
-        window.renderSpine(host, host.closest('.spine-box').querySelector('.sp-trace'), data);
-      });
+      var text = document.querySelector('.tree-text');
+      window.renderSpine(host, text.querySelector('.sp-trace'), text.querySelector('.sp-jump'), data);
     } };
   })();
 
@@ -1667,7 +1674,7 @@ window.arkModels = (function () {
       b.addEventListener('click', function () { h.scrollIntoView({ block: 'start' }); });
       toc.appendChild(b);
     });
-    var anchor = section.querySelector(':scope > .lede') || section.firstElementChild;
+    var anchor = section.querySelector('[data-toc-after]') || section.querySelector(':scope > .lede') || section.firstElementChild;
     while (anchor.nextElementSibling && anchor.nextElementSibling.classList.contains('lede')) anchor = anchor.nextElementSibling;
     anchor.insertAdjacentElement('afterend', toc);
   });

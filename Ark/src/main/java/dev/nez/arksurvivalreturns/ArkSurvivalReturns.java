@@ -36,6 +36,7 @@ public final class ArkSurvivalReturns {
         dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.register(bus);
         dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.register(bus);
         dev.nez.arksurvivalreturns.feature.levels.LevelAttachments.register(bus);
+        dev.nez.arksurvivalreturns.feature.inventory.InventoryContent.register(bus);
         dev.nez.arksurvivalreturns.gametest.ArkGameTests.FUNCTIONS.register(bus);
         bus.addListener(ModContent::attributes);
         bus.addListener(SpawnRules::placements);

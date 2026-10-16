@@ -9,9 +9,10 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 
 /**
- * The inventory crafts like a bench: its 2x2 grid is gone, and the Craft button in its place opens the inventory's own
- * workstation graph (design/workstations/inventory.json), carried by the player instead of bound to a block. It makes
- * the field crafts and, until their benches are built, the small recipes of the benches without a screen.
+ * The inventory crafts like a bench: no 2x2 grid is left (the vanilla and Curios menus keep theirs hidden), and the Ark
+ * inventory draws the inventory's own workstation graph (design/workstations/inventory.json) in its top band; its
+ * corner button opens the same graph full size, a menu carried by the player instead of bound to a block. It makes the
+ * field crafts and, until their benches are built, the small recipes of the benches without a screen.
  */
 public final class InventoryCrafting {
     public static final String STATION = "arksurvivalreturns:inventory";

@@ -316,23 +316,107 @@ def ark_inventory():
     panel = remap(panel, LIGHT, grain=(190, 205), seed=7)
     CURIO_OVERLAY.parent.mkdir(parents=True, exist_ok=True)
     panel.save(CURIO_OVERLAY)
-    # Review sheet with the slot icons the game draws on empty slots.
+    return 1
+
+
+def curio_icons():
+    """The empty-slot icons the game draws on the Curios slots, by slot type."""
     import glob
-    preview = panel.crop((0, 0, ARK_WIDTH, 166)).copy()
-    curios_jar = sorted(glob.glob(str(ROOT / 'shared-mods/curios-neoforge-*.jar')))
     icons = {}
+    curios_jar = sorted(glob.glob(str(ROOT / 'shared-mods/curios-neoforge-*.jar')))
     if curios_jar:
         with zipfile.ZipFile(curios_jar[-1]) as jar:
             for name in ('head', 'necklace', 'body', 'belt', 'feet', 'charm', 'back', 'hands', 'bracelet', 'ring', 'curio'):
                 icons[name] = Image.open(io.BytesIO(jar.read(f'assets/curios/textures/slot/empty_{name}_slot.png'))).convert('RGBA')
     icons['legs'] = Image.open(ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/slot/empty_legs_slot.png').convert('RGBA')
-    for (x, y), name in zip(ARK_CURIOS, ARK_CURIO_NAMES):
+    return icons
+
+
+# The Ark inventory screen (F38): must match ArkInventoryLayout.java. Gear and a tall player in the top band with the
+# crafting graph on its right, the eleven-column storage (side pockets left and right of the nine) over the hotbar.
+SCREEN_W, SCREEN_H = 388, 248
+SCREEN_TEXTURE = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/gui/ark_inventory.png'
+GEAR_Y = 45
+SCREEN_CURIOS = [((8, GEAR_Y), 'head'), ((26, GEAR_Y), 'head'), ((8, GEAR_Y + 18), 'necklace'), ((26, GEAR_Y + 18), 'body'),
+                 ((8, GEAR_Y + 36), 'belt'), ((26, GEAR_Y + 36), 'legs'), ((8, GEAR_Y + 54), 'feet'), ((26, GEAR_Y + 54), 'feet'),
+                 ((116, GEAR_Y), 'back'), ((134, GEAR_Y), 'hands'), ((116, GEAR_Y + 18), 'bracelet'), ((134, GEAR_Y + 18), 'bracelet'),
+                 ((116, GEAR_Y + 36), 'ring'), ((134, GEAR_Y + 36), 'ring'), ((134, GEAR_Y + 54), 'charm'), ((152, GEAR_Y + 54), 'curio')]
+SCREEN_ARMOR = [(44, GEAR_Y + i * 18) for i in range(4)]
+SCREEN_OFFHAND = (116, GEAR_Y + 54)
+SCREEN_PLAYER = (62, 8, 114, 154)
+SCREEN_CRAFT = (174, 6, 208, 150)
+STORAGE_X, STORAGE_Y, HOTBAR_Y = 113, 164, 222
+SCREEN_STORAGE = [(STORAGE_X + c * 18, STORAGE_Y + r * 18) for r in range(3) for c in range(9)]
+SCREEN_POCKETS = [(STORAGE_X - 18, STORAGE_Y + r * 18) for r in range(3)] + [(STORAGE_X + 9 * 18, STORAGE_Y + r * 18) for r in range(3)]
+SCREEN_HOTBAR = [(STORAGE_X + c * 18, HOTBAR_Y) for c in range(9)]
+
+
+def ark_inventory_screen():
+    """The Ark inventory panel: the vanilla border stretched round 388 x 248, vanilla slot frames at the layout's places,
+    a tall player box, a sunk frame round the crafting graph (the screen draws the graph's own dark panel in it), and a
+    pocket frame of a warmer tone so the side pockets read as the two added columns."""
+    vanilla_inv = vanilla('container/inventory.png')
+    face = vanilla_inv.getpixel((90, 5))
+    body = Image.new('RGBA', (SCREEN_W, SCREEN_H), face)
+    b = 4
+    for x in range(b, SCREEN_W - b):
+        body.paste(vanilla_inv.crop((10, 0, 11, b)), (x, 0))
+        body.paste(vanilla_inv.crop((10, 166 - b, 11, 166)), (x, SCREEN_H - b))
+    for y in range(b, SCREEN_H - b):
+        body.paste(vanilla_inv.crop((0, 10, b, 11)), (0, y))
+        body.paste(vanilla_inv.crop((176 - b, 10, 176, 11)), (SCREEN_W - b, y))
+    body.paste(vanilla_inv.crop((0, 0, b, b)), (0, 0))
+    body.paste(vanilla_inv.crop((176 - b, 0, 176, b)), (SCREEN_W - b, 0))
+    body.paste(vanilla_inv.crop((0, 166 - b, b, 166)), (0, SCREEN_H - b))
+    body.paste(vanilla_inv.crop((176 - b, 166 - b, 176, 166)), (SCREEN_W - b, SCREEN_H - b))
+    frame = vanilla_inv.crop((7, 83, 25, 101))
+    slots = [xy for xy, _ in SCREEN_CURIOS] + SCREEN_ARMOR + [SCREEN_OFFHAND] + SCREEN_STORAGE + SCREEN_HOTBAR + SCREEN_POCKETS
+    for x, y in slots:
+        body.paste(frame, (x - 1, y - 1))
+    # The player box: the vanilla one's dark face and bevel, stretched to the band's height.
+    x0, y0, x1, y1 = SCREEN_PLAYER
+    dark, light, shadow = vanilla_inv.getpixel((50, 40)), vanilla_inv.getpixel((77, 78)), vanilla_inv.getpixel((25, 7))
+    for y in range(y0, y1):
+        for x in range(x0, x1):
+            edge = x == x0 or y == y0
+            far = x == x1 - 1 or y == y1 - 1
+            body.putpixel((x, y), shadow if edge else light if far else dark)
+    # The crafting graph's well: a sunk bevel one pixel outside the graph panel.
+    cx, cy, cw, ch = SCREEN_CRAFT
+    for x in range(cx - 1, cx + cw + 1):
+        body.putpixel((x, cy - 1), shadow); body.putpixel((x, cy + ch), light)
+    for y in range(cy - 1, cy + ch + 1):
+        body.putpixel((cx - 1, y), shadow); body.putpixel((cx + cw, y), light)
+    panel = Image.new('RGBA', (512, 256))
+    panel.paste(body, (0, 0))
+    panel = remap(panel, LIGHT, grain=(190, 205), seed=11)
+    # Side pockets: the frame's face warmed toward hide, so the added columns stand apart.
+    px = panel.load()
+    for x, y in SCREEN_POCKETS:
+        for yy in range(y, y + 16):
+            for xx in range(x, x + 16):
+                r, g, bb, a = px[xx, yy]
+                px[xx, yy] = (min(255, r + 14), min(255, g + 4), max(0, bb - 8), a)
+    SCREEN_TEXTURE.parent.mkdir(parents=True, exist_ok=True)
+    panel.save(SCREEN_TEXTURE)
+    # Review sheet: slot icons as the game draws them, and the graph panel's dark face where the screen draws it.
+    preview = panel.crop((0, 0, SCREEN_W, SCREEN_H)).copy()
+    icons = curio_icons()
+    for (x, y), name in SCREEN_CURIOS:
         if name in icons:
             preview.alpha_composite(icons[name].resize((16, 16)), (x, y))
-    for (x, y), name in zip(ARK_ARMOR, ('helmet', 'chestplate', 'leggings', 'boots')):
+    for (x, y), name in zip(SCREEN_ARMOR, ('helmet', 'chestplate', 'leggings', 'boots')):
         preview.alpha_composite(vanilla(f'sprites/container/slot/{name}.png'), (x, y))
-    preview.alpha_composite(vanilla('sprites/container/slot/shield.png'), ARK_OFFHAND)
-    preview.resize((ARK_WIDTH * 3, 166 * 3), Image.Resampling.NEAREST).save(PREVIEW / 'ark-inventory.png')
+    preview.alpha_composite(vanilla('sprites/container/slot/shield.png'), SCREEN_OFFHAND)
+    style = json.loads((ROOT / 'design/workstations/graph_style.json').read_text(encoding='utf-8'))['palette']
+    def rgb(key):
+        h = style[key].lstrip('#')[-6:]
+        return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) + (255,)
+    graph = Image.new('RGBA', (cw, ch), rgb('face'))
+    well = Image.new('RGBA', (cw - 8, ch - 15 - 30 - 4), rgb('well'))
+    graph.paste(well, (4, 15))
+    preview.alpha_composite(graph, (cx, cy))
+    preview.resize((SCREEN_W * 3, SCREEN_H * 3), Image.Resampling.NEAREST).save(PREVIEW / 'ark-inventory.png')
     return 1
 
 
@@ -401,7 +485,7 @@ def preview():
 def main():
     pack_meta()
     legs_icon()
-    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + cooking_pot() + mod_models()
+    count = containers() + widgets() + hud() + tooltips() + mod_screens() + ark_inventory() + ark_inventory_screen() + cooking_pot() + mod_models()
     preview()
     # P16's first approved scope overrides only HUD/controls; other panels remain F08.
     from build_baroque_ui import build as build_baroque

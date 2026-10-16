@@ -16,8 +16,11 @@ import net.neoforged.neoforge.event.EventHooks;
 
 public final class WorkstationCrafting {
     public static boolean craft(ServerPlayer player, WorkstationPayload.Craft packet) {
-        if (!(player.containerMenu instanceof WorkstationMenu menu) || menu.containerId != packet.containerId()
-                || !menu.station.equals(packet.station()) || !menu.stillValid(player)) return false;
+        // A bench's own menu, or the Ark inventory for the inventory's graph drawn inside it.
+        var menu = player.containerMenu;
+        boolean open = menu instanceof WorkstationMenu bench ? bench.station.equals(packet.station())
+                : menu instanceof dev.nez.arksurvivalreturns.feature.inventory.ArkInventoryMenu && InventoryCrafting.STATION.equals(packet.station());
+        if (!open || menu.containerId != packet.containerId() || !menu.stillValid(player)) return false;
         if (packet.times() != -1 && (packet.times() <= 0 || packet.times() > 65536)) return false;
         var station = WorkstationCatalog.get(packet.station()); if (station == null) return false;
         WorkstationDefinition.Craft chosen = null;
@@ -30,7 +33,7 @@ public final class WorkstationCrafting {
         }
         if (chosen == null || Config.WORKSTATION_LEVEL_GATE.get() && !ArkLevels.requires(player, chosen.level())) return false;
         var variant = chosen.variant();
-        var inventory = WorkstationInventory.read(player.getInventory(), variant.cost());
+        var inventory = WorkstationInventory.read(player, variant.cost());
         int times = packet.times() == -1 ? inventory.maxCrafts() : packet.times();
         var plan = inventory.plan(times); if (plan == null) return false;
         List<ItemStack> outputs = new ArrayList<>();
@@ -65,7 +68,7 @@ public final class WorkstationCrafting {
         Identifier recipe = variant.recipe() != null ? Identifier.parse(variant.recipe())
                 : ArkSurvivalReturns.id("workstation/" + packet.station().replace(':', '/') + "/" + packet.key().substring(2)
                         + "/" + variant.item().replace(':', '/') + (variant.apply() ? "/apply" : ""));
-        if (!inventory.consume(player.getInventory(), plan)) return false;
+        if (!inventory.consume(player, plan)) return false;
         SimpleContainer ingredients = new SimpleContainer(inventory.stacks().toArray(ItemStack[]::new));
         for (ItemStack output : outputs) {
             ItemStack eventStack = output.copy();

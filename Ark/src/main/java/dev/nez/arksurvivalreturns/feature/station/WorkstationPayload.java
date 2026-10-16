@@ -22,7 +22,7 @@ public final class WorkstationPayload {
                 b -> new Craft(b.readUtf(128), b.readUtf(256), b.readVarInt(), b.readUtf(512), b.readVarInt(), b.readVarInt()));
         @Override public Type<Craft> type() { return TYPE; }
     }
-    /** The inventory's Craft button: open the inventory's own crafting graph. */
+    /** The corner button of the inventory's crafting graph: open that graph full size. */
     public record OpenInventory() implements CustomPacketPayload {
         public static final Type<OpenInventory> TYPE = new Type<>(ArkSurvivalReturns.id("workstation_open_inventory"));
         public static final StreamCodec<RegistryFriendlyByteBuf, OpenInventory> STREAM_CODEC = StreamCodec.unit(new OpenInventory());

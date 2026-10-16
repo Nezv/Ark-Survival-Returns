@@ -227,7 +227,7 @@
         }
       ],
       "uses": "Accessory slots in one Ark inventory: crown and hat (head), necklace, shirt (body), belt, pants (legs, added by Ark), socks and shoes (feet), and a charm.",
-      "changed": "Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): the inventory key opens a 212 px screen with the curio slots beside the armour column, the shield and charm under the player and, on the right where the 2x2 grid was, the Craft button of the inventory's crafting graph (F36). The separate Curios button is off. Ark's data pack defines the slot set. GameTest integration_curios checks all nine slot positions.",
+      "changed": "Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): its layout screen places the curio slots beside the armour column; the inventory key now opens the Ark inventory (F38) instead, which places the same slots itself beside the crafting graph. The separate Curios button is off. Ark's data pack defines the slot set. GameTest integration_curios checks all nine slot positions.",
       "next": "In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. The F13 accessories fill the slots."
     },
     {

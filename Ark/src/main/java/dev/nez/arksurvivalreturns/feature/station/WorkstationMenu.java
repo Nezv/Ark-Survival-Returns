@@ -23,6 +23,9 @@ public final class WorkstationMenu extends AbstractContainerMenu {
         super(ModContent.WORKSTATION_MENU.get(), id);
         this.position = position.immutable(); this.station = station; owner = inventory.player;
         for (int slot = 0; slot < inventory.getNonEquipmentItems().size(); slot++) addSlot(new Slot(inventory, slot, -10000, -10000));
+        // The side pockets pay for crafts too, so the client sees what is in them.
+        var pockets = dev.nez.arksurvivalreturns.feature.inventory.SidePockets.of(owner);
+        for (int slot = 0; slot < pockets.size(); slot++) addSlot(new net.neoforged.neoforge.transfer.item.ResourceHandlerSlot(pockets, pockets::set, slot, -10000, -10000));
         addDataSlot(new DataSlot() {
             @Override public int get() { return playerLevel(owner); }
             @Override public void set(int value) { level = value; }

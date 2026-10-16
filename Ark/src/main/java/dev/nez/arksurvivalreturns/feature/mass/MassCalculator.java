@@ -42,6 +42,7 @@ public final class MassCalculator {
         double total = 0.0;
         Inventory inventory = player.getInventory();
         for (ItemStack stack : inventory.getNonEquipmentItems()) total += massOf(stack);
+        for (ItemStack stack : dev.nez.arksurvivalreturns.feature.inventory.SidePockets.of(player).stacks()) total += massOf(stack);
         for (EquipmentSlot slot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) total += massOf(player.getItemBySlot(slot));
         return total;
     }

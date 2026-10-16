@@ -1,14 +1,14 @@
-"""Recipe tree (F12): an age's recipe sequence as one horizontal chart, station by station, for the showcase.
+"""Recipe tree (F37): an age's recipe sequence as one chart, station by station, for the showcase.
 
 design/recipe-tree/<age>.json says which stations the age has, in the order they open, and which of their items belong
 to it. Hands and the Inventory are stations like the benches: what is gathered in the world (and with which tool), and
 what the inventory's own crafting graph makes. Every number comes from the game's sources: costs, counts and levels
 from the bench designs (tools/workstation_plan.py compiles them), gathering rates from the loot tables and the config.
-tools/spine.js draws the chart: stations left to right, each recipe a column on its station, inputs above the line and
-outputs below; hovering an item lights where it is made and used.
+tools/spine.js draws the chart: stations top to bottom on one spine, each recipe a row on its station (inputs, the
+operation and its level, what it makes); hovering an item lights where it is made and used.
 
 Run from Ark/: python tools/recipe_tree.py [age] checks craftability: every input must be gathered or made somewhere in
-the sequence, and is listed when it is not, or when only a station further right makes it.
+the sequence, and is listed when it is not, or when only a station further down makes it.
 """
 import base64
 import io
@@ -113,7 +113,7 @@ def loot_rate(sources, table, item, members=None):
         amount = str(n[0]) if n[0] == n[1] else f'{n[0]}–{n[1]}'
         ripe = any('block_state_property' in c.get('condition', '') for c in pool.get('conditions', []))
         rate = f'{round(p * 100)}%' if p < 0.999 else ''
-        text = ' · '.join(part for part in (rate, '' if rate and amount == '1' else amount) if part)
+        text = ' · '.join(part for part in (rate, '' if amount == '1' else amount) if part)
         return text + (' when ripe' if ripe else '')
     return ''
 
@@ -219,7 +219,7 @@ def build(age='prehistoric'):
     used = {c['id'] for _, _, c, _ in chips if c['id'].startswith('#')}
     for _, _, chip, _ in chips:
         chip['k'] = sorted({chip['id']} | (sources.tags_of(chip['id'], used) if not chip['id'].startswith('#') else set()))
-    # An input nothing makes is a gap in the age; one first made further right is a loop back (a held tool is one).
+    # An input nothing makes is a gap in the age; one first made further down is a loop back (a held tool is one).
     problems, later = [], []
     order = {s['id']: i for i, s in enumerate(stations)}
     for station, row, chip, side in chips:
@@ -229,7 +229,7 @@ def build(age='prehistoric'):
         if not makers:
             problems.append(f"{station['name']}: nothing in the sequence makes {chip['id']}")
         elif min(order[s['id']] for s in makers) > order[station['id']] and not chip.get('tool'):
-            later.append(f"{station['name']}: {chip['id']} is first made further right, at {makers[0]['name']}")
+            later.append(f"{station['name']}: {chip['id']} is first made further down, at {makers[0]['name']}")
     return sequence, sources, stations, problems, later
 
 
@@ -277,4 +277,4 @@ if __name__ == '__main__':
         print(f"{station['name']}: {len(station['rows'])} rows")
     print('\n'.join(issues) if issues else 'Every input is gathered or made somewhere in the sequence.')
     if loops:
-        print('Made further right (labels that point back):\n' + '\n'.join(loops))
+        print('Made further down:\n' + '\n'.join(loops))

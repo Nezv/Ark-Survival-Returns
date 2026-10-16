@@ -143,6 +143,37 @@ final class WorkstationGameTests {
                 "i:" + hatchet.category().id() + "/" + hatchet.entry().family(), 0, 82)), "The inventory must make the stone hatchet");
         h.assertTrue(inventory.countItem(PrimitiveContent.STONE_HATCHET.get()) == 1 && inventory.countItem(PrimitiveContent.ROCK.get()) == 0,
                 "Hatchet output missing, or its rocks were not spent");
+        sidePockets(h, player, hatchet);
+    }
+    /** The Ark inventory: eleven-column storage (side pockets beside the nine), pickups overflow into the pockets, crafts
+     * from its own graph pay from them, they weigh, and they drop with the inventory on death. */
+    private static void sidePockets(GameTestHelper h, net.minecraft.server.level.ServerPlayer player, WorkstationDefinition.Craft hatchet) {
+        var inventory = player.getInventory();
+        var pockets = dev.nez.arksurvivalreturns.feature.inventory.SidePockets.of(player);
+        var ark = new dev.nez.arksurvivalreturns.feature.inventory.ArkInventoryMenu(83, inventory);
+        player.containerMenu = ark;
+        h.assertTrue(ark.slots.size() >= dev.nez.arksurvivalreturns.feature.inventory.ArkInventoryMenu.CURIOS,
+                "The Ark inventory must hold armour, offhand, 36 inventory slots and 6 pockets");
+        inventory.clearContent();
+        for (int slot = 0; slot < 36; slot++) inventory.setItem(slot, new ItemStack(Items.COBBLESTONE, 64));
+        double mass = dev.nez.arksurvivalreturns.feature.mass.MassCalculator.playerMass(player);
+        h.assertTrue(inventory.add(new ItemStack(PrimitiveContent.ROCK.get(), 10))
+                && pockets.stacks().stream().mapToInt(st -> st.is(PrimitiveContent.ROCK.get()) ? st.getCount() : 0).sum() == 10,
+                "A pickup the full inventory cannot take must go into the side pockets");
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.mass.MassCalculator.playerMass(player) > mass, "Pocket contents must weigh");
+        // The hatchet's rocks come from the pockets; its twigs and fiber from the inventory.
+        inventory.clearContent();
+        for (var cost : hatchet.variant().cost().entrySet())
+            if (!cost.getKey().equals("arksurvivalreturns:rock")) inventory.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
+                    net.minecraft.resources.Identifier.parse(cost.getKey())), cost.getValue()));
+        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(InventoryCrafting.STATION, hatchet.variant().item(), 1,
+                "i:" + hatchet.category().id() + "/" + hatchet.entry().family(), 0, 83)), "The Ark inventory's graph must craft, paying from the pockets");
+        h.assertTrue(inventory.countItem(PrimitiveContent.STONE_HATCHET.get()) == 1
+                && pockets.stacks().stream().mapToInt(st -> st.is(PrimitiveContent.ROCK.get()) ? st.getCount() : 0).sum() == 10 - hatchet.variant().cost().get("arksurvivalreturns:rock"),
+                "The craft took the wrong rocks from the pockets");
+        inventory.dropAll();
+        h.assertTrue(pockets.stacks().stream().allMatch(ItemStack::isEmpty), "The pockets must drop with the inventory on death");
+        player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(4)).forEach(ItemEntity::discard);
     }
     /** Two blocks tall: the graph is bound to the lower half, tack moved here, and the halves fall together. */
     private static void saddlery(GameTestHelper h, net.minecraft.server.level.ServerPlayer player, BlockPos rel, BlockPos pos) {
