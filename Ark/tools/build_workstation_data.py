@@ -1,4 +1,4 @@
-"""Build only rule-added families and the phase A grid removal list. Designs stay in design/.
+"""Build only rule-added families and the grid removal list of the benches in the game. Designs stay in design/.
 
 processResources copies the authored documents verbatim and packages these generated additions.
 The complete trees in fixtures/ are also the Node oracle inputs for the Java golden tests.
@@ -12,11 +12,8 @@ from pathlib import Path
 import workstation_plan as wp
 from PIL import Image
 
-PHASE_A = ('armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery')
-FIELD = {f'{wp.NS}:{name}' for name in
-         ('stone_hatchet', 'flint_knife', 'sharp_rock', 'fiber_bandage', 'working_station')}
-# Recipe families that stay in the hand grid as well as on their bench: the Working Station itself costs planks.
-FIELD_FAMILIES = {'planks'}
+# The benches whose graph is in the game, the inventory's own among them: no crafting grid is left to the player.
+PHASE_A = wp.SHIPPED
 
 
 def build(output):
@@ -61,10 +58,10 @@ def build(output):
                     e['items'] = [f for f in e['items'] if f.get('variants')]
             cat['items'] = [e for e in cat['items'] if e.get('variants') or e.get('items')]
         (rules_dir / f'{bench}.json').write_text(json.dumps(extras), encoding='utf-8')
-    # Remove every original recipe assigned to phase A, including changed/deleted and special grid
-    # recipes (banner copying etc.). Phase B recipes keep their existing implementation this phase.
-    removed = sorted({r['id'] for r in records if r.get('bench') in PHASE_A and r['result'] not in FIELD
-                      and r.get('family') not in FIELD_FAMILIES})
+    # Remove every original recipe assigned to a bench in the game, including changed/deleted and special grid
+    # recipes (banner copying etc.); the inventory's graph took the field crafts and the planks over from the 2x2
+    # grid. Phase B recipes stay loaded: the inventory's Bench work makes the small ones until their bench is built.
+    removed = sorted({r['id'] for r in records if r.get('bench') in PHASE_A})
     (data / 'workstation_grid_removals.json').write_text(json.dumps(removed, indent=2) + '\n', encoding='utf-8')
     # Exact raster mask of workstation_ui.js shape(). White texels take the runtime palette tint.
     shapes = output / 'resources/assets' / wp.NS / 'textures/gui/workstation/shapes'
@@ -103,7 +100,7 @@ def build(output):
     tags = {tag: {'name': display.item_name(tag, labels, source),
                   'item': display.representative(tag, source)} for tag in sorted(selectors)}
     (assets / 'tags.json').write_text(json.dumps(tags), encoding='utf-8')
-    print(f'Phase A: {len(removed)} grid recipes removed; {len(PHASE_A)} rule supplements generated')
+    print(f'{len(PHASE_A)} benches in the game: {len(removed)} grid recipes removed, rule supplements generated')
 
 
 if __name__ == '__main__':

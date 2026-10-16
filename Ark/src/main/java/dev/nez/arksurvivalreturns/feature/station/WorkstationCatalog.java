@@ -15,7 +15,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 
 /** An atomic server snapshot. Client state is held separately so integrated servers never share it. */
 public final class WorkstationCatalog extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
-    public static final Set<String> PHASE_A = Set.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery");
+    /** The graphs in the game: six benches and the inventory's own, which replaced the 2x2 grid. */
+    public static final Set<String> PHASE_A = Set.of("inventory", "armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery");
     private static volatile Map<String, WorkstationDefinition> stations = Map.of();
     public static Map<String, WorkstationDefinition> all() { return stations; }
     public static WorkstationDefinition get(String station) { return stations.get(station); }
@@ -52,6 +53,6 @@ public final class WorkstationCatalog extends SimplePreparableReloadListener<Map
             if (next.put(definition.station(), resolved) != null) throw new IllegalArgumentException("Duplicate workstation " + definition.station());
         }
         stations = java.util.Collections.unmodifiableMap(next);
-        ArkSurvivalReturns.LOGGER.info("Loaded {} phase A workstation graphs ({} recipes)", next.size(), next.values().stream().mapToInt(s -> s.crafts().size()).sum());
+        ArkSurvivalReturns.LOGGER.info("Loaded {} workstation graphs ({} recipes)", next.size(), next.values().stream().mapToInt(s -> s.crafts().size()).sum());
     }
 }

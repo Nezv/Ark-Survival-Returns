@@ -14,7 +14,8 @@ place where the thing is really made (see the rules). Three layers decide, the l
    recipe id, or "family:<name>" for every recipe of a family.
 
 compile_benches() turns the plan into one explicit tree per bench: what the showcase draws and, once shipped, what the
-mod's workstation data will hold. Run from Ark/: python tools/workstation_plan.py prints the totals and every kept
+mod's workstation data will hold. The inventory is a bench too (its own graph replaced the 2x2 grid): besides its field
+crafts it makes every small grid recipe whose bench has no screen yet (waiting()), in its Bench work groups. Run from Ark/: python tools/workstation_plan.py prints the totals and every kept
 recipe that no bench shows (a place its design does not have).
 """
 import json
@@ -31,8 +32,13 @@ POLICY = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePoli
 PRIMITIVE = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/PrimitiveEvents.java'
 NS = 'arksurvivalreturns'
 
-BENCHES = ['armoury', 'working_station', 'saddlery', 'campfire', 'stonecutter', 'mortar_and_pestle', 'primitive_forge',
-           'medicine_bench', 'smithing_table', 'mechanical_press', 'milling_machine', 'cutting_machine']
+BENCHES = ['inventory', 'armoury', 'working_station', 'saddlery', 'campfire', 'stonecutter', 'mortar_and_pestle',
+           'primitive_forge', 'medicine_bench', 'smithing_table', 'mechanical_press', 'milling_machine', 'cutting_machine']
+# The benches whose graph screen is in the game (WorkstationCatalog.PHASE_A); their grid recipes are removed.
+SHIPPED = ('inventory', 'armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery')
+# Where a small grid recipe of a bench without a screen waits: the inventory's Bench work group.
+WAITING = {'primitive_forge': 'forge', 'mechanical_press': 'press', 'milling_machine': 'press', 'stonecutter': 'mason',
+           'cutting_machine': 'mason', 'campfire': 'kitchen'}
 TIMED = ('smelting', 'campfire_cooking')  # recipes that take time over the fire; the variant carries it in seconds
 FATES = ('go', 'stay', 'change', 'decide')
 # The Ark blocks that replace vanilla ones; recipes that use a vanilla one take the Ark block (StationEvents).
@@ -210,7 +216,12 @@ class Source:
         if kind == 'smithing_trim':
             item, count = data['template'], 1
         path = short(rid)
-        return {'id': rid, 'source': source, 'type': kind,
+        # Fits the old 2x2 inventory grid: the only place such a recipe was made when its bench has no screen.
+        pattern = data.get('pattern') or []
+        fits2 = kind.startswith('crafting') and (bool(pattern) and len(pattern) <= 2 and max(map(len, pattern)) <= 2
+                                                 or 'ingredients' in data and len(data['ingredients']) <= 4
+                                                 or kind in ('crafting_transmute', 'crafting_dye'))
+        return {'id': rid, 'source': source, 'type': kind, 'fits2': fits2,
                 'special': 'special' in kind or kind in ('crafting_dye', 'crafting_decorated_pot', 'crafting_imbue'),
                 'result': item, 'count': count, 'cost': dict(cost),
                 'family': data.get('group') or short(item) or path, 'book': data.get('category', ''),
@@ -291,6 +302,8 @@ def propose(recipe, source):
     for ingredient in cost:
         if ingredient in removed:
             return decision('go', note=f'needs {short(ingredient).replace("_", " ")}, removed by the theme')
+    if path.endswith('horse_armor') and 'horse' in source.removed_entities:
+        return decision('go', note='horses are removed: horse armour fits nothing')
     if fam in ('harness', 'harness_dye') or path == 'dried_ghast':
         return decision('go', note='the happy ghast is removed')
     if 'copper_golem_statue' in path:
@@ -781,9 +794,34 @@ def variant_key(item):
     return (3, 0 if 'waxed' not in path else 1, path)
 
 
+def place_level(bench_data, where):
+    """The level that unlocks a place (category or category/group) of a bench design."""
+    category, _, group = where.partition('/')
+    for c in bench_data['categories']:
+        if c['id'] == category:
+            entry = next((e for e in c.get('items', []) if e.get('group') == group), {}) if group else {}
+            return max(c.get('level', 0), entry.get('level', 0))
+    return 0
+
+
+def waiting(records, designs):
+    """Small grid recipes whose bench has no screen yet. The 2x2 grid was the only place they were made, so the
+    inventory makes them (Bench work) at their future place's level until their bench is built."""
+    out = []
+    for r in records:
+        if r['fate'] not in ('stay', 'change') or r['special'] or not r.get('fits2') or r['bench'] not in WAITING:
+            continue
+        out.append({**r, 'bench': 'inventory', 'place': 'bench/' + WAITING[r['bench']], 'by': 'rule',
+                    'cost': r.get('newCost') or r['cost'], 'count': r.get('newCount') or r['count'],
+                    'level': place_level(designs[r['bench']], r['place']) if r['bench'] in designs else 0})
+    return out
+
+
 def compile_benches(records, designs):
     """One explicit tree per bench: categories, groups and families of variants, only the kept recipes."""
     kept = [r for r in records if r['fate'] in ('stay', 'change') and r['bench'] in BENCHES and not r['special']]
+    if 'inventory' in designs:
+        kept += waiting(records, designs)
     out = {}
     for bench, data in designs.items():
         tree = {k: v for k, v in data.items() if k != 'categories'}

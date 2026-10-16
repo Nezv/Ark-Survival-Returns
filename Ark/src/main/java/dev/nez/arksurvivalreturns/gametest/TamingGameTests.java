@@ -140,8 +140,8 @@ final class TamingGameTests {
         var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
         h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:tranquilizer_arrow")
                 && c.variant().count() == 4 && c.variant().cost().equals(java.util.Map.of("minecraft:arrow", 4,
-                        "arksurvivalreturns:narcotics", 1, "minecraft:bone", 1))),
-                "The Armoury must tip four arrows with Narcotics and bone");
+                        "arksurvivalreturns:narcotics", 2))),
+                "The Armoury must tip four arrows with two Narcotics");
         h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:improved_tranquilizer_arrow")
                 && c.variant().count() == 1 && c.variant().cost().equals(java.util.Map.of("minecraft:arrow", 1,
                         "arksurvivalreturns:narcotics", 3, "minecraft:bone", 1))),

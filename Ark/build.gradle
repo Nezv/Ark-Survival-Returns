@@ -164,7 +164,7 @@ dependencies {
 tasks.named('test') { useJUnitPlatform() }
 
 // The reviewed showcase designs are the only authored workstation data and frame assets.
-def phaseABenches = ['armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery']
+def phaseABenches = ['inventory', 'armoury', 'working_station', 'mortar_and_pestle', 'medicine_bench', 'smithing_table', 'saddlery']
 def workstationBuild = layout.buildDirectory.dir('workstations')
 tasks.register('generateWorkstationData', Exec) {
     dependsOn 'createMinecraftArtifacts'
@@ -188,7 +188,8 @@ tasks.named('processResources') {
         into 'assets/arksurvivalreturns/workstation'
     }
     from('design/workstations/crests') {
-        include phaseABenches.collect { it + '.png' }
+        // The inventory's sigil is also its Craft button in the inventory screen.
+        include phaseABenches.collect { it + '.png' } + ['inventory_sigil.png']
         into 'assets/arksurvivalreturns/textures/gui/workstation'
     }
     from(workstationBuild.map { it.dir('resources') })

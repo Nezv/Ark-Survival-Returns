@@ -21,14 +21,23 @@
       "items": [
         {"group": "stations", "title": "Stations", "icon": "arksurvivalreturns:working_station", "items": [
           {"item": "minecraft:stonecutter", "cost": {"arksurvivalreturns:rock": 4, "minecraft:flint": 2, "#minecraft:planks": 2}},
-          {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "arksurvivalreturns:rock": 4, "arksurvivalreturns:plant_fiber": 3}},
-          {"item": "arksurvivalreturns:saddlery", "cost": {"#minecraft:logs": 2, "#minecraft:planks": 4, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 4}},
+          {"item": "arksurvivalreturns:armoury", "planned": true, "cost": {"#minecraft:logs": 6, "#minecraft:planks": 16, "arksurvivalreturns:rock": 6, "arksurvivalreturns:plant_fiber": 12}},
+          {"item": "arksurvivalreturns:stone_fire", "cost": {"arksurvivalreturns:rock": 8, "minecraft:stick": 6, "arksurvivalreturns:plant_fiber": 4}},
+          {"item": "arksurvivalreturns:drying_rack", "cost": {"minecraft:stick": 12, "#minecraft:logs": 2, "arksurvivalreturns:plant_fiber": 8}},
+          {"item": "arksurvivalreturns:cooking_pot", "cost": {"minecraft:clay_ball": 12, "minecraft:cobblestone": 8, "arksurvivalreturns:plant_fiber": 6}},
+          {"item": "arksurvivalreturns:mortar_and_pestle", "cost": {"minecraft:cobblestone": 20, "arksurvivalreturns:rock": 2, "minecraft:leather": 2}},
+          {"item": "arksurvivalreturns:saddlery", "cost": {"#minecraft:logs": 4, "#minecraft:planks": 12, "minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 16}},
+          {"item": "arksurvivalreturns:primitive_forge", "cost": {"arksurvivalreturns:stone_fire": 1, "minecraft:cobblestone": 40, "minecraft:clay_ball": 16, "minecraft:leather": 3}},
           {"item": "arksurvivalreturns:mechanical_press", "planned": true, "level": 12, "cost": {"arksurvivalreturns:bronze_ingot": 4, "#minecraft:logs": 4, "minecraft:smooth_stone": 2, "minecraft:copper_ingot": 2}},
           {"item": "arksurvivalreturns:cutting_machine", "planned": true, "level": 25, "cost": {"arksurvivalreturns:steel_ingot": 3, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "#minecraft:planks": 4}},
           {"item": "arksurvivalreturns:milling_machine", "planned": true, "level": 26, "cost": {"arksurvivalreturns:steel_ingot": 4, "arksurvivalreturns:metal_sheet": 2, "minecraft:copper_ingot": 2, "minecraft:smooth_stone": 2}},
           {"item": "arksurvivalreturns:generator", "title": "Generator", "planned": true, "level": 28, "cost": {"arksurvivalreturns:engine": 1, "arksurvivalreturns:copper_wire": 8, "arksurvivalreturns:metal_sheet": 4, "minecraft:redstone": 4}}
         ]},
-        {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress"}
+        {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress", "items": [
+          {"item": "arksurvivalreturns:mattress", "cost": {"arksurvivalreturns:plant_fiber": 24, "minecraft:stick": 4}},
+          {"item": "arksurvivalreturns:bedroll", "cost": {"arksurvivalreturns:mattress": 1, "minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 8}},
+          {"item": "arksurvivalreturns:storage_crate", "cost": {"#minecraft:planks": 16, "arksurvivalreturns:plant_fiber": 6}}
+        ]}
       ]
     },
     {

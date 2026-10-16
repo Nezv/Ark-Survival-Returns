@@ -9,48 +9,47 @@
     {
       "id": "wood", "title": "Wood", "icon": "minecraft:oak_log", "color": "#a0763f", "level": 0,
       "items": [
-        {"item": "minecraft:wooden_spear", "cost": {"minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "minecraft:bow", "level": 3, "cost": {"minecraft:stick": 3, "minecraft:string": 3, "arksurvivalreturns:plant_fiber": 2}},
+        {"item": "minecraft:wooden_spear", "cost": {"minecraft:stick": 6, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "minecraft:bow", "level": 3, "cost": {"minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 20}},
         {"item": "minecraft:crossbow", "level": 12, "cost": {"minecraft:stick": 3, "minecraft:iron_ingot": 1, "minecraft:string": 2, "minecraft:tripwire_hook": 1}},
-        {"item": "minecraft:shield", "level": 4, "cost": {"#minecraft:planks": 6, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "minecraft:arrow", "count": 4, "level": 3, "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 1, "minecraft:feather": 1}},
-        {"item": "arksurvivalreturns:tranquilizer_arrow", "count": 4, "level": 8, "cost": {"minecraft:arrow": 4, "arksurvivalreturns:narcotics": 1, "minecraft:bone": 1}},
+        {"item": "minecraft:shield", "level": 4, "cost": {"#minecraft:planks": 8, "minecraft:leather": 3, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "minecraft:arrow", "count": 4, "level": 3, "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:tranquilizer_arrow", "count": 4, "level": 8, "cost": {"minecraft:arrow": 4, "arksurvivalreturns:narcotics": 2}},
         {"item": "arksurvivalreturns:improved_tranquilizer_arrow", "level": 12, "cost": {"minecraft:arrow": 1, "arksurvivalreturns:narcotics": 3, "minecraft:bone": 1}},
         {"item": "arksurvivalreturns:explosive_arrow", "count": 4, "level": 16, "cost": {"minecraft:arrow": 4, "minecraft:gunpowder": 1}},
-        {"item": "minecraft:fishing_rod", "level": 2, "cost": {"minecraft:stick": 3, "minecraft:string": 2, "minecraft:bone": 1}},
-        {"item": "arksurvivalreturns:fire_starter", "cost": {"minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 2}}
+        {"item": "minecraft:fishing_rod", "level": 2, "cost": {"minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 6, "minecraft:bone": 1}},
+        {"item": "arksurvivalreturns:fire_starter", "cost": {"minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 6}}
       ]
     },
     {
       "id": "rock", "title": "Rock", "icon": "arksurvivalreturns:rock", "color": "#9a9d93", "level": 0, "after": "wood",
       "items": [
-        {"item": "arksurvivalreturns:flint_knife", "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:rock_sword", "level": 1, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:rock_pickaxe", "level": 1, "cost": {"arksurvivalreturns:rock": 3, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:stone_hatchet", "cost": {"arksurvivalreturns:rock": 1, "minecraft:stick": 1, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:rock_shovel", "level": 1, "cost": {"arksurvivalreturns:rock": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:rock_hoe", "level": 2, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
+        {"item": "arksurvivalreturns:flint_knife", "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:rock_sword", "level": 1, "cost": {"arksurvivalreturns:rock": 4, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:rock_pickaxe", "level": 1, "cost": {"arksurvivalreturns:rock": 4, "minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 10}},
+        {"item": "arksurvivalreturns:stone_hatchet", "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:rock_shovel", "level": 1, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "arksurvivalreturns:rock_hoe", "level": 2, "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 6}},
         {"item": "minecraft:flint_and_steel", "level": 3, "cost": {"minecraft:iron_ingot": 1, "minecraft:flint": 1}}
       ]
     },
     {
       "id": "leather", "title": "Hide", "icon": "minecraft:leather", "color": "#9c6b45", "level": 2, "after": "rock",
       "items": [
-        {"item": "minecraft:leather_helmet", "cost": {"minecraft:leather": 5, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "minecraft:leather_chestplate", "level": 4, "cost": {"minecraft:leather": 8, "arksurvivalreturns:plant_fiber": 4}},
-        {"item": "minecraft:leather_leggings", "level": 3, "cost": {"minecraft:leather": 7, "arksurvivalreturns:plant_fiber": 3}},
-        {"item": "minecraft:leather_boots", "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "minecraft:leather_horse_armor", "level": 4, "cost": {"minecraft:leather": 7}}
+        {"item": "minecraft:leather_helmet", "cost": {"minecraft:leather": 5, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "minecraft:leather_chestplate", "level": 4, "cost": {"minecraft:leather": 8, "arksurvivalreturns:plant_fiber": 10}},
+        {"item": "minecraft:leather_leggings", "level": 3, "cost": {"minecraft:leather": 7, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "minecraft:leather_boots", "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 5}}
       ]
     },
     {
       "id": "keratin", "title": "Keratin", "icon": "arksurvivalreturns:keratin", "color": "#d9cfa8", "level": 5, "after": "leather",
       "items": [
-        {"item": "arksurvivalreturns:keratin_spear", "cost": {"arksurvivalreturns:keratin": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 1}},
-        {"item": "arksurvivalreturns:keratin_helmet", "level": 6, "cost": {"arksurvivalreturns:keratin": 5, "minecraft:leather": 1, "arksurvivalreturns:plant_fiber": 2}},
-        {"item": "arksurvivalreturns:keratin_chestplate", "level": 8, "cost": {"arksurvivalreturns:keratin": 8, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 4}},
-        {"item": "arksurvivalreturns:keratin_leggings", "level": 7, "cost": {"arksurvivalreturns:keratin": 7, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 3}},
-        {"item": "arksurvivalreturns:keratin_boots", "cost": {"arksurvivalreturns:keratin": 4, "minecraft:leather": 1, "arksurvivalreturns:plant_fiber": 2}}
+        {"item": "arksurvivalreturns:keratin_spear", "cost": {"arksurvivalreturns:keratin": 2, "minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "arksurvivalreturns:keratin_helmet", "level": 6, "cost": {"arksurvivalreturns:keratin": 5, "minecraft:leather": 1, "arksurvivalreturns:plant_fiber": 4}},
+        {"item": "arksurvivalreturns:keratin_chestplate", "level": 8, "cost": {"arksurvivalreturns:keratin": 8, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "arksurvivalreturns:keratin_leggings", "level": 7, "cost": {"arksurvivalreturns:keratin": 7, "minecraft:leather": 2, "arksurvivalreturns:plant_fiber": 5}},
+        {"item": "arksurvivalreturns:keratin_boots", "cost": {"arksurvivalreturns:keratin": 4, "minecraft:leather": 1, "arksurvivalreturns:plant_fiber": 4}}
       ]
     },
     {

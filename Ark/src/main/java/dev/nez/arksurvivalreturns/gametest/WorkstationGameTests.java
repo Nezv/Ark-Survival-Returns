@@ -31,8 +31,8 @@ final class WorkstationGameTests {
         player.containerMenu = menu;
         var inventory = player.getInventory(); inventory.clearContent();
         inventory.setItem(0, new ItemStack(PrimitiveContent.SHARP_ROCK.get(), 5));
-        inventory.setItem(1, new ItemStack(Items.STICK, 7));
-        inventory.setItem(2, new ItemStack(Items.FEATHER, 3));
+        inventory.setItem(1, new ItemStack(Items.STICK, 14));
+        inventory.setItem(2, new ItemStack(ModContent.PLANT_FIBER.get(), 12));
         var allArrows = new WorkstationPayload.Craft(menu.station, "minecraft:arrow", -1, "i:wood/arrow", 0, 77);
         ArkLevels.setLevel(player, 0); player.experienceLevel = 0;
         boolean levelGate = Config.WORKSTATION_LEVEL_GATE.get();
@@ -48,8 +48,8 @@ final class WorkstationGameTests {
         } finally { Config.WORKSTATION_LEVEL_GATE.set(levelGate); }
         inventory.clearContent();
         inventory.setItem(0, new ItemStack(PrimitiveContent.SHARP_ROCK.get(), 5));
-        inventory.setItem(1, new ItemStack(Items.STICK, 7));
-        inventory.setItem(2, new ItemStack(Items.FEATHER, 3));
+        inventory.setItem(1, new ItemStack(Items.STICK, 14));
+        inventory.setItem(2, new ItemStack(ModContent.PLANT_FIBER.get(), 12));
         ArkLevels.setLevel(player, 50); player.experienceLevel = 50;
         player.setPos(pos.getX() + 20, pos.getY(), pos.getZ());
         h.assertFalse(WorkstationCrafting.craft(player, allArrows), "A remote packet must not craft");
@@ -58,12 +58,12 @@ final class WorkstationGameTests {
         h.assertFalse(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "minecraft:diamond", 1, "i:wood/arrow", 0, 77)), "Forged output must be refused");
         h.assertFalse(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "minecraft:arrow", Integer.MAX_VALUE, "i:wood/arrow", 0, 77)), "Overflow craft must be refused");
         h.assertTrue(WorkstationCrafting.craft(player, allArrows), "Shift must craft the affordable maximum");
-        h.assertTrue(inventory.countItem(Items.ARROW) == 12 && inventory.countItem(Items.FEATHER) == 0
-                && inventory.countItem(PrimitiveContent.SHARP_ROCK.get()) == 2 && inventory.countItem(Items.STICK) == 4, "Shift paid the wrong cost or output");
+        h.assertTrue(inventory.countItem(Items.ARROW) == 12 && inventory.countItem(ModContent.PLANT_FIBER.get()) == 0
+                && inventory.countItem(PrimitiveContent.SHARP_ROCK.get()) == 2 && inventory.countItem(Items.STICK) == 2, "Shift paid the wrong cost or output");
         // With every slot occupied and ingredients only partly consumed, output must drop.
         for (int s = 0; s < inventory.getNonEquipmentItems().size(); s++) inventory.setItem(s, new ItemStack(Items.COBBLESTONE, 64));
         inventory.setItem(0, new ItemStack(PrimitiveContent.SHARP_ROCK.get(), 64));
-        inventory.setItem(1, new ItemStack(Items.STICK, 64)); inventory.setItem(2, new ItemStack(Items.FEATHER, 64));
+        inventory.setItem(1, new ItemStack(Items.STICK, 64)); inventory.setItem(2, new ItemStack(ModContent.PLANT_FIBER.get(), 64));
         h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "minecraft:arrow", 1, "i:wood/arrow", 0, 77)), "Full inventory must still craft");
         var dropped = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(4), e -> e.getItem().is(Items.ARROW));
         h.assertTrue(dropped.stream().mapToInt(e -> e.getItem().getCount()).sum() == 4, "Overflow did not drop four arrows");
@@ -71,9 +71,9 @@ final class WorkstationGameTests {
         // Mixed wood pays the two tags in the proposed Armoury recipe.
         h.setBlock(rel, StationContent.WORKING_STATION.get().defaultBlockState());
         menu = new WorkstationMenu(78, inventory, pos, "arksurvivalreturns:working_station"); player.containerMenu = menu;
-        inventory.clearContent(); inventory.setItem(0, new ItemStack(Items.OAK_LOG)); inventory.setItem(1, new ItemStack(Items.SPRUCE_LOG));
-        inventory.setItem(2, new ItemStack(Items.OAK_PLANKS, 2)); inventory.setItem(3, new ItemStack(Items.BIRCH_PLANKS, 2));
-        inventory.setItem(4, new ItemStack(PrimitiveContent.ROCK.get(), 4)); inventory.setItem(5, new ItemStack(ModContent.PLANT_FIBER.get(), 3));
+        inventory.clearContent(); inventory.setItem(0, new ItemStack(Items.OAK_LOG, 3)); inventory.setItem(1, new ItemStack(Items.SPRUCE_LOG, 3));
+        inventory.setItem(2, new ItemStack(Items.OAK_PLANKS, 8)); inventory.setItem(3, new ItemStack(Items.BIRCH_PLANKS, 8));
+        inventory.setItem(4, new ItemStack(PrimitiveContent.ROCK.get(), 6)); inventory.setItem(5, new ItemStack(ModContent.PLANT_FIBER.get(), 12));
         h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, "arksurvivalreturns:armoury", 1, "i:camp/stations/armoury", 0, 78)),
                 "Registered planned Armoury must craft at its proposed mixed-tag cost");
         h.assertTrue(inventory.countItem(StationContent.ARMOURY_ITEM.get()) == 1, "Armoury output missing");
@@ -121,7 +121,28 @@ final class WorkstationGameTests {
         h.setBlock(rel, StationContent.MEDICINE_BENCH.get().defaultBlockState());
         h.assertTrue(WorkstationCrafting.craft(player, tonicPacket), "The same funded request must work with the bench restored");
         saddlery(h, player, rel, pos);
+        inventoryGraph(h, player);
         player.containerMenu = player.inventoryMenu; inventory.clearContent();
+    }
+    /** The inventory's own graph replaced its 2x2 grid: the grid is hidden, the graph stays open anywhere and knaps tools. */
+    private static void inventoryGraph(GameTestHelper h, net.minecraft.server.level.ServerPlayer player) {
+        var inventory = player.getInventory();
+        h.assertTrue(player.inventoryMenu.slots.stream().filter(InventoryCrafting::handGrid).count() == 5
+                && player.inventoryMenu.slots.stream().filter(InventoryCrafting::handGrid).noneMatch(s -> s.isActive()),
+                "The inventory's 2x2 grid and its result must be hidden");
+        var menu = new WorkstationMenu(82, inventory, player.blockPosition(), InventoryCrafting.STATION); player.containerMenu = menu;
+        player.setPos(player.getX() + 200, player.getY(), player.getZ());
+        h.assertTrue(menu.stillValid(player), "The inventory's graph must stay open wherever its owner goes");
+        var hatchet = WorkstationCatalog.get(InventoryCrafting.STATION).crafts().stream()
+                .filter(c -> c.variant().item().equals("arksurvivalreturns:stone_hatchet")).findFirst().orElseThrow();
+        inventory.clearContent();
+        for (var cost : hatchet.variant().cost().entrySet())
+            inventory.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
+                    net.minecraft.resources.Identifier.parse(cost.getKey())), cost.getValue()));
+        h.assertTrue(WorkstationCrafting.craft(player, new WorkstationPayload.Craft(menu.station, hatchet.variant().item(), 1,
+                "i:" + hatchet.category().id() + "/" + hatchet.entry().family(), 0, 82)), "The inventory must make the stone hatchet");
+        h.assertTrue(inventory.countItem(PrimitiveContent.STONE_HATCHET.get()) == 1 && inventory.countItem(PrimitiveContent.ROCK.get()) == 0,
+                "Hatchet output missing, or its rocks were not spent");
     }
     /** Two blocks tall: the graph is bound to the lower half, tack moved here, and the halves fall together. */
     private static void saddlery(GameTestHelper h, net.minecraft.server.level.ServerPlayer player, BlockPos rel, BlockPos pos) {

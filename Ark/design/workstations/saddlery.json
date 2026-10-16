@@ -1,13 +1,20 @@
 {
   "station": "arksurvivalreturns:saddlery",
   "title": "Saddlery",
-  "about": "P14 design data (see armoury.json). Tack for tames: the lead to walk them, the harnesses that let them carry, and a saddle for every species, which fits no other. The leads and harnesses came from the Working Station at the cost they had and are placed by the rules; tools/build_saddle_items.py writes the five saddle categories from the roster, the level growing with the animal.",
+  "about": "P14 design data (see armoury.json). Tack for tames: the lead to walk them, the harnesses that let them carry, and a saddle for every species, which fits no other. The leads and harnesses came from the Working Station (the lead is braided from fiber alone); tools/build_saddle_items.py writes the five saddle categories from the roster, the level growing with the animal.",
   "verb": "Stitch",
   "accent": "#c9894f",
   "sigil": "saddle",
   "well": "stitches",
   "categories": [
-    {"id": "tack", "title": "Leads and Harnesses", "icon": "arksurvivalreturns:pack_harness", "color": "#b5895a", "level": 0},
+    {
+      "id": "tack", "title": "Leads and Harnesses", "icon": "arksurvivalreturns:pack_harness", "color": "#b5895a", "level": 0,
+      "items": [
+        {"item": "minecraft:lead", "cost": {"arksurvivalreturns:plant_fiber": 10}},
+        {"item": "arksurvivalreturns:pack_harness", "cost": {"minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 8, "minecraft:stick": 4}},
+        {"item": "arksurvivalreturns:reinforced_harness", "cost": {"arksurvivalreturns:pack_harness": 1, "minecraft:leather": 4, "minecraft:flint": 2, "arksurvivalreturns:plant_fiber": 6}}
+      ]
+    },
     {
       "id": "herbivores", "title": "Land Herbivores", "icon": "arksurvivalreturns:triceratops_spawn_egg", "color": "#8fb07f", "level": 5, "after": "tack",
       "items": [

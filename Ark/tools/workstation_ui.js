@@ -805,7 +805,7 @@ window.ArkWorkstationUI = (function () {
 
     function table() {
       if (!tableEl) return;
-      var rows = [], armoury = payload.stations[0].data;
+      var rows = [], armoury = payload.stations.filter(function (s) { return s.id === 'armoury'; })[0].data;
       armoury.categories.forEach(function (c) {
         rows.push('<tr class="ws-cat"><th colspan="4">' + esc(c.title) + ' <span class="muted">level ' + c.level +
                   (c.planned ? ', planned' : '') + '</span></th></tr>');

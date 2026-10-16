@@ -5,8 +5,9 @@ creature facts (design/showcase/species.json) and the behaviour models with thei
 (design/showcase/behavior.json), both exported by runData, the existence model and its simulator beside them
 (showcase_existence.py, run by existence_model.js), the tech tree (tree.json, one strip over the three ages), the
 biome pictures with their spawns beside the danger map (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
-journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the workstation
-screens of the crafting rework (showcase_recipes.py, drawn by workstation_ui.js), the live 3D models
+journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the Prehistoric
+recipe tree (recipe_tree.py, drawn by spine.js), the workstation screens of the crafting rework (showcase_recipes.py,
+drawn by workstation_ui.js), the live 3D models
 (showcase_models.py, drawn by three.js) and the Ark UI previews.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
@@ -656,6 +657,7 @@ def build():
         **__import__('showcase_existence').section(e),
         **tree_section(),
         **__import__('showcase_recipes').section(uri, e),
+        **__import__('recipe_tree').section(uri, e),
         'JOURNAL': journal_section(),
         'BLOCKS': blocks, 'BLOCKS_COUNT': block_count,
         'ITEMS': items_section(names),

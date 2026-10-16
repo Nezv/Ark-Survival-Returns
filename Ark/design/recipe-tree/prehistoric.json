@@ -1,0 +1,99 @@
+{
+  "about": "The Prehistoric recipe sequence, drawn as the horizontal recipe tree on the showcase's Recipes page by tools/recipe_tree.py and tools/spine.js. Stations run left to right in the order they open, from bare hands to the Primitive Forge; Hands and the Inventory are stations like the benches. This file only says which station belongs to the age, in what order, and which of its items: costs, counts and levels come from the bench designs (design/workstations, compiled by tools/workstation_plan.py), gathering rates from the loot tables and the config. A bench item may rename its ids for the chart ('as'), never its numbers; \"levels\": false drops the levels of a station whose block does not gate them (the Cooking Pot reads its meals from the Campfire design). Rows of the stations without a graph (the Stone Fire, the Drying Rack, the Cooking Pot) are written here as the blocks work.",
+  "title": "Prehistoric",
+  "next": "Bronze Age",
+  "stations": [
+    {
+      "id": "hands", "title": "Hands", "sub": "gathered in the world", "sigil": "hand",
+      "rows": [
+        {"op": "pick up", "from": "Loose rock", "icon": "arksurvivalreturns:rock", "outs": [{"id": "arksurvivalreturns:rock", "loot": "arksurvivalreturns:blocks/loose_rock"}]},
+        {"op": "break", "from": "Grass", "icon": "minecraft:short_grass", "outs": [
+          {"id": "arksurvivalreturns:plant_fiber", "loot": "arksurvivalreturns:gameplay/grass_fiber"},
+          {"id": "#arksurvivalreturns:berries", "loot": "arksurvivalreturns:gameplay/grass_berries"}]},
+        {"op": "harvest, ripe", "from": "Berry bush", "icon": "arksurvivalreturns:narcoberry", "outs": [
+          {"id": "arksurvivalreturns:narcoberry", "loot": "arksurvivalreturns:blocks/narcoberry_bush"},
+          {"id": "arksurvivalreturns:tintoberry", "loot": "arksurvivalreturns:blocks/tintoberry_bush"},
+          {"id": "arksurvivalreturns:amarberry", "loot": "arksurvivalreturns:blocks/amarberry_bush"},
+          {"id": "arksurvivalreturns:azulberry", "loot": "arksurvivalreturns:blocks/azulberry_bush"}]},
+        {"op": "break", "from": "Leaves", "icon": "minecraft:oak_leaves", "outs": [{"id": "minecraft:stick", "config": "leafStickChance"}]},
+        {"op": "dig", "from": "Gravel", "icon": "minecraft:gravel", "outs": [{"id": "minecraft:flint", "loot": "minecraft:blocks/gravel"}]},
+        {"op": "dig", "from": "Clay", "icon": "minecraft:clay", "outs": [{"id": "minecraft:clay_ball", "loot": "minecraft:blocks/clay"}]},
+        {"op": "harvest", "from": "Village farm", "icon": "minecraft:carrot", "outs": [{"id": "minecraft:carrot", "val": "villages only, then planted"}]},
+        {"op": "chop", "from": "Tree", "icon": "minecraft:oak_log", "tool": "arksurvivalreturns:stone_hatchet", "outs": [{"id": "#minecraft:logs", "val": "logs drop only to an axe"}]},
+        {"op": "mine", "from": "Stone", "icon": "minecraft:stone", "tool": "arksurvivalreturns:rock_pickaxe", "outs": [{"id": "minecraft:cobblestone"}]},
+        {"op": "mine", "from": "Coal ore", "icon": "minecraft:coal_ore", "tool": "arksurvivalreturns:rock_pickaxe", "outs": [{"id": "minecraft:coal"}]},
+        {"op": "hunt", "from": "Creatures", "icon": "arksurvivalreturns:parasaur_spawn_egg", "outs": [
+          {"id": "#minecraft:meat", "kills": ["arksurvivalreturns:raw_herbivore_meat", "arksurvivalreturns:raw_carnivore_meat"]},
+          {"id": "minecraft:leather", "kills": ["minecraft:leather"]},
+          {"id": "minecraft:bone", "kills": ["minecraft:bone"]}]},
+        {"op": "hunt", "from": "Horned, plated, beaked", "icon": "arksurvivalreturns:triceratops_spawn_egg", "outs": [
+          {"id": "arksurvivalreturns:keratin", "kills": ["arksurvivalreturns:keratin"]}]}
+      ]
+    },
+    {
+      "id": "inventory", "bench": "inventory", "sub": "its Craft button",
+      "items": [
+        "arksurvivalreturns:sharp_rock", "arksurvivalreturns:stone_hatchet", "arksurvivalreturns:flint_knife",
+        "arksurvivalreturns:fire_starter", "arksurvivalreturns:fiber_bandage",
+        {"item": "minecraft:oak_planks", "as": {"#minecraft:oak_logs": "#minecraft:logs", "minecraft:oak_planks": "#minecraft:planks"}, "val": "any wood"},
+        "arksurvivalreturns:working_station"
+      ]
+    },
+    {
+      "id": "working_station", "bench": "working_station",
+      "items": [
+        "minecraft:stick",
+        "arksurvivalreturns:armoury", "arksurvivalreturns:mattress", "arksurvivalreturns:stone_fire",
+        "arksurvivalreturns:drying_rack", "arksurvivalreturns:storage_crate",
+        {"item": "minecraft:torch", "as": {"#minecraft:coals": "minecraft:coal", "#minecraft:furnace_minecart_fuel": "minecraft:coal"}},
+        "arksurvivalreturns:cooking_pot", "arksurvivalreturns:mortar_and_pestle", "arksurvivalreturns:saddlery",
+        "arksurvivalreturns:bedroll", "arksurvivalreturns:primitive_forge"
+      ]
+    },
+    {
+      "id": "armoury", "bench": "armoury",
+      "items": [
+        "arksurvivalreturns:rock_pickaxe", "arksurvivalreturns:rock_sword", "arksurvivalreturns:rock_shovel",
+        "arksurvivalreturns:rock_hoe", "minecraft:wooden_spear", "minecraft:fishing_rod", "minecraft:bow", "minecraft:arrow",
+        "minecraft:leather_helmet", "minecraft:leather_chestplate", "minecraft:leather_leggings", "minecraft:leather_boots",
+        "minecraft:shield", "arksurvivalreturns:keratin_spear", "arksurvivalreturns:keratin_helmet",
+        "arksurvivalreturns:keratin_chestplate", "arksurvivalreturns:keratin_leggings", "arksurvivalreturns:keratin_boots",
+        "arksurvivalreturns:tranquilizer_arrow"
+      ]
+    },
+    {
+      "id": "stone_fire", "title": "Stone Fire", "sub": "lit with a Fire Starter", "sigil": "campfire",
+      "rows": [
+        {"op": "spit, 4 at once", "ins": [{"id": "arksurvivalreturns:raw_herbivore_meat", "n": 1, "name": "Raw meat"}],
+         "outs": [{"id": "arksurvivalreturns:cooked_herbivore_meat", "n": 1, "name": "Cooked meat", "val": "every meat and fish"}]}
+      ]
+    },
+    {
+      "id": "drying_rack", "title": "Drying Rack", "sub": "hang and wait", "icon": "arksurvivalreturns:drying_rack",
+      "rows": [
+        {"op": "dry", "ins": [{"id": "#minecraft:meat", "n": 1}], "outs": [{"id": "arksurvivalreturns:dried_meat", "n": 1, "name": "Dried Meat I", "val": "II after a day, III after three"}]},
+        {"op": "dry", "ins": [{"id": "#arksurvivalreturns:berries", "n": 1}], "outs": [{"id": "arksurvivalreturns:dried_ration", "n": 1}]}
+      ]
+    },
+    {
+      "id": "cooking_pot", "title": "Cooking Pot", "sub": "on a lit Stone Fire", "icon": "arksurvivalreturns:cooking_pot", "bench": "campfire", "levels": false,
+      "items": ["arksurvivalreturns:trail_mix", "arksurvivalreturns:hearty_stew"]
+    },
+    {
+      "id": "mortar_and_pestle", "bench": "mortar_and_pestle",
+      "items": ["arksurvivalreturns:narcotics", "minecraft:bone_meal"]
+    },
+    {
+      "id": "saddlery", "bench": "saddlery",
+      "items": [
+        "minecraft:lead", "arksurvivalreturns:pack_harness", "arksurvivalreturns:reinforced_harness",
+        "arksurvivalreturns:pegomastax_saddle", "arksurvivalreturns:lystrosaurus_saddle", "arksurvivalreturns:dilophosaur_saddle",
+        "arksurvivalreturns:pteranodon_saddle", "arksurvivalreturns:velociraptor_saddle"
+      ]
+    },
+    {
+      "id": "primitive_forge", "title": "Primitive Forge", "sub": "Hell Forge: the age's finale", "sigil": "bloomery", "gate": true,
+      "rows": []
+    }
+  ]
+}

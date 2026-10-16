@@ -10,7 +10,7 @@
     {
       "id": "berries", "title": "Berries", "icon": "arksurvivalreturns:narcoberry", "color": "#8a5cc0", "level": 0,
       "items": [
-        {"item": "arksurvivalreturns:narcotics", "count": 4, "cost": {"arksurvivalreturns:narcoberry": 4}},
+        {"item": "arksurvivalreturns:narcotics", "count": 2, "cost": {"arksurvivalreturns:narcoberry": 5}},
         {"item": "arksurvivalreturns:healing_mixture", "level": 6, "cost": {"minecraft:glass_bottle": 1, "arksurvivalreturns:azulberry": 2, "arksurvivalreturns:tintoberry": 1, "arksurvivalreturns:plant_fiber": 1}}
       ]
     },

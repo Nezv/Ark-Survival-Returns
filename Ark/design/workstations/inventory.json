@@ -1,0 +1,52 @@
+{
+  "station": "arksurvivalreturns:inventory",
+  "title": "Inventory",
+  "about": "P14 design data (see armoury.json). The player's own crafting: the inventory has no 2x2 grid any more, and its Craft button opens this graph anywhere, a bench without a block. It holds the field crafts made before any bench: knapping, the first tools, fire, bandages, planks and the Working Station itself. Bench work holds every small grid recipe whose bench has no screen yet (the Primitive Forge, the Mechanical Press, the Stonecutter, the Campfire): tools/workstation_plan.py fills its groups from the plan at their future bench's level, and each recipe leaves for its bench once that bench is built.",
+  "accent": "#d9c08a",
+  "sigil": "pouch",
+  "well": "dots",
+  "categories": [
+    {
+      "id": "rock", "title": "Rock", "icon": "arksurvivalreturns:rock", "color": "#9a9d93", "level": 0,
+      "items": [
+        {"item": "arksurvivalreturns:sharp_rock", "cost": {"arksurvivalreturns:rock": 2}},
+        {"item": "arksurvivalreturns:stone_hatchet", "cost": {"arksurvivalreturns:rock": 2, "minecraft:stick": 3, "arksurvivalreturns:plant_fiber": 8}},
+        {"item": "arksurvivalreturns:flint_knife", "cost": {"arksurvivalreturns:sharp_rock": 1, "minecraft:stick": 2, "arksurvivalreturns:plant_fiber": 4}}
+      ]
+    },
+    {
+      "id": "fiber", "title": "Fiber and twigs", "icon": "arksurvivalreturns:plant_fiber", "color": "#8fb07f", "level": 0, "after": "rock",
+      "items": [
+        {"item": "arksurvivalreturns:fire_starter", "cost": {"minecraft:stick": 4, "arksurvivalreturns:plant_fiber": 6}},
+        {"item": "arksurvivalreturns:fiber_bandage", "count": 2, "cost": {"arksurvivalreturns:plant_fiber": 8}}
+      ]
+    },
+    {
+      "id": "wood", "title": "Wood", "icon": "minecraft:oak_log", "color": "#a0763f", "level": 0, "after": "rock",
+      "items": [
+        {"family": "planks", "title": "Planks", "variants": [
+          {"item": "minecraft:oak_planks", "count": 4, "cost": {"#minecraft:oak_logs": 1}},
+          {"item": "minecraft:spruce_planks", "count": 4, "cost": {"#minecraft:spruce_logs": 1}},
+          {"item": "minecraft:birch_planks", "count": 4, "cost": {"#minecraft:birch_logs": 1}},
+          {"item": "minecraft:jungle_planks", "count": 4, "cost": {"#minecraft:jungle_logs": 1}},
+          {"item": "minecraft:acacia_planks", "count": 4, "cost": {"#minecraft:acacia_logs": 1}},
+          {"item": "minecraft:dark_oak_planks", "count": 4, "cost": {"#minecraft:dark_oak_logs": 1}},
+          {"item": "minecraft:mangrove_planks", "count": 4, "cost": {"#minecraft:mangrove_logs": 1}},
+          {"item": "minecraft:cherry_planks", "count": 4, "cost": {"#minecraft:cherry_logs": 1}},
+          {"item": "minecraft:pale_oak_planks", "count": 4, "cost": {"#minecraft:pale_oak_logs": 1}},
+          {"item": "minecraft:bamboo_planks", "count": 2, "cost": {"#minecraft:bamboo_blocks": 1}}
+        ]},
+        {"item": "arksurvivalreturns:working_station", "cost": {"#minecraft:logs": 4, "#minecraft:planks": 12, "arksurvivalreturns:plant_fiber": 10}}
+      ]
+    },
+    {
+      "id": "bench", "title": "Bench work", "icon": "arksurvivalreturns:bronze_blend", "color": "#8a96a3", "level": 0, "after": "wood",
+      "items": [
+        {"group": "forge", "title": "Forge work", "icon": "minecraft:iron_nugget"},
+        {"group": "press", "title": "Press work", "icon": "minecraft:book"},
+        {"group": "mason", "title": "Mason work", "icon": "minecraft:sandstone"},
+        {"group": "kitchen", "title": "Kitchen", "icon": "minecraft:mushroom_stew"}
+      ]
+    }
+  ]
+}

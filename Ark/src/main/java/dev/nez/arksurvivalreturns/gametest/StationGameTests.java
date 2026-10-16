@@ -48,19 +48,24 @@ final class StationGameTests {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
         WorkstationGameTests.run(h);
-        for (String id : List.of("working_station")) {
-            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing field craft " + id);
+        // No grid is left to the player: the inventory's own graph makes the field crafts, the planks and the Working Station.
+        var hands = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:inventory");
+        for (String id : List.of("working_station", "stone_hatchet", "sharp_rock", "flint_knife", "fire_starter", "fiber_bandage")) {
+            h.assertTrue(hands.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:" + id)), "The inventory must make " + id);
+            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "A field craft survived in the grid: " + id);
         }
-        // Planks stay in the hand grid as well as on the bench: the Working Station itself costs planks.
         for (String wood : List.of("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "bamboo")) {
-            h.assertTrue(recipes.byKey(recipe("minecraft:" + wood + "_planks")).isPresent(), "Planks must stay craftable by hand: " + wood);
+            h.assertTrue(hands.crafts().stream().anyMatch(c -> c.variant().item().equals("minecraft:" + wood + "_planks")), "The inventory must make planks: " + wood);
         }
+        // A small grid recipe of a bench without a screen waits in the inventory's Bench work.
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:bronze_blend")).isPresent()
+                && hands.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:bronze_blend")), "Bronze Blend must wait in the inventory");
         for (String id : List.of("medicine_bench", "storage_crate", "smithing_table", "crusher", "mortar_and_pestle",
                 "herbal_bandage", "healing_mixture", "narcotics", "vitamins")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Phase A grid recipe survived: " + id);
         }
-        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().size() == 6, "All phase A designs must load");
-        for (String id : List.of("armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery")) {
+        h.assertTrue(dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.all().size() == 7, "All phase A designs must load");
+        for (String id : List.of("inventory", "armoury", "working_station", "mortar_and_pestle", "medicine_bench", "smithing_table", "saddlery")) {
             var definition = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:" + id);
             h.assertTrue(definition != null && !definition.crafts().isEmpty(), "Missing graph recipes for " + id);
         }

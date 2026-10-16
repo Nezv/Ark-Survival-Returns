@@ -127,7 +127,7 @@ final class LevelGameTests {
             player.getInventory().clearContent();
 
             var recipe = world.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,
-                    ArkSurvivalReturns.id("fiber_bandage"))).orElseThrow();
+                    ArkSurvivalReturns.id("cooked_carnivore_meat_from_campfire_cooking"))).orElseThrow();
             player.triggerRecipeCrafted(recipe, List.of());
             h.assertTrue(total(player) - before == Config.PLAYER_XP_FIRST_CRAFT.get(), "Actual recipe callback did not award XP");
             before = total(player);

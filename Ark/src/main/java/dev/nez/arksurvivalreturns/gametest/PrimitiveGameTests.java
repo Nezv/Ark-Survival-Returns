@@ -257,9 +257,8 @@ final class PrimitiveGameTests {
         for (String id : List.of("minecraft:iron_ingot_from_smelting_iron_ore", "minecraft:cooked_cod", "arksurvivalreturns:cooked_carnivore_meat")) {
             h.assertTrue(recipes.byKey(recipe(id)).isPresent(), "A smelting recipe was lost: " + id);
         }
-        for (String id : List.of("stone_hatchet", "cooked_carnivore_meat_from_campfire_cooking")) {
-            h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isPresent(), "Missing recipe " + id);
-        }
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:cooked_carnivore_meat_from_campfire_cooking")).isPresent(), "Missing campfire recipe");
+        WorkstationGameTests.assertCraftable(h, "arksurvivalreturns:stone_hatchet");
 
         BlockPos spot = h.absolutePos(new BlockPos(8, 3, 8));
         CreatureEntity parasaur = ModContent.CREATURES.get(Species.PARASAUR).get().create(level, EntitySpawnReason.COMMAND);
@@ -291,8 +290,8 @@ final class PrimitiveGameTests {
         h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:rock_pickaxe")).isEmpty(), "The pickaxe moved to the Armoury");
         var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
         h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:rock_pickaxe")
-                && c.variant().cost().equals(java.util.Map.of("arksurvivalreturns:rock", 3, "minecraft:stick", 2, "arksurvivalreturns:plant_fiber", 1))),
-                "The Armoury pickaxe must retain three rocks, two twigs and one fiber");
+                && c.variant().cost().equals(java.util.Map.of("arksurvivalreturns:rock", 4, "minecraft:stick", 3, "arksurvivalreturns:plant_fiber", 10))),
+                "The Armoury pickaxe must cost four rocks, three twigs and ten fiber");
         // Wooden stats, stone tier: iron ore drops for the rock pickaxe, diamond ore does not.
         ItemStack pickaxe = new ItemStack(PrimitiveContent.ROCK_PICKAXE.get());
         h.assertTrue(pickaxe.isCorrectToolForDrops(Blocks.IRON_ORE.defaultBlockState()), "The rock pickaxe must mine iron ore");
@@ -300,7 +299,7 @@ final class PrimitiveGameTests {
         h.assertTrue(pickaxe.getMaxDamage() == 59, "Rock tools keep wooden durability");
         var working = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:working_station");
         h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:mattress")
-                && c.variant().cost().getOrDefault("arksurvivalreturns:plant_fiber", 0) == 9), "The Working Station must make the nine-fiber mattress");
+                && c.variant().cost().getOrDefault("arksurvivalreturns:plant_fiber", 0) == 24), "The Working Station must make the 24-fiber mattress");
         h.assertTrue(working.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:bedroll")), "The Working Station must make the bedroll");
         h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:mattress")).isEmpty(), "A grid must not make the mattress");
         // Retired vanilla recipes; the improved arrow is an Armoury craft, never a grid recipe.
@@ -315,10 +314,10 @@ final class PrimitiveGameTests {
         var narcotics = recipes.getRecipeFor(RecipeType.CRAFTING, grind, level);
         h.assertTrue(narcotics.isEmpty(), "Narcotics must not match the 2x2 grid");
         var mortar = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:mortar_and_pestle");
-        h.assertTrue(mortar.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:narcotics") && c.variant().count() == 4),
-                "The Mortar & Pestle must grind four Narcotics");
+        h.assertTrue(mortar.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:narcotics") && c.variant().count() == 2
+                && c.variant().cost().getOrDefault("arksurvivalreturns:narcoberry", 0) == 5), "The Mortar & Pestle must grind five Narcoberries into two Narcotics");
         h.assertTrue(armoury.crafts().stream().anyMatch(c -> c.variant().item().equals("arksurvivalreturns:tranquilizer_arrow")
-                && c.variant().cost().getOrDefault("arksurvivalreturns:narcotics", 0) == 1), "Narcotics must tip tranquilizer arrows at the Armoury");
+                && c.variant().cost().getOrDefault("arksurvivalreturns:narcotics", 0) == 2), "Narcotics must tip tranquilizer arrows at the Armoury");
         // The Blueberry is food: one hunger point.
         var food = new ItemStack(ModContent.BERRIES.get("azulberry").get()).get(DataComponents.FOOD);
         h.assertTrue(food != null && food.nutrition() == 1, "The blueberry must satiate one hunger point");
@@ -346,7 +345,8 @@ final class PrimitiveGameTests {
     static void keratin(GameTestHelper h) {
         ServerLevel level = h.getLevel();
         var recipes = level.getServer().getRecipeManager();
-        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:sharp_rock")).isPresent(), "Sharp rock stays a field craft");
+        h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:sharp_rock")).isEmpty(), "No grid knaps the sharp rock any more");
+        WorkstationGameTests.assertCraftable(h, "arksurvivalreturns:sharp_rock");
         var armoury = dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog.get("arksurvivalreturns:armoury");
         for (String id : List.of("keratin_spear", "keratin_helmet", "keratin_chestplate", "keratin_leggings", "keratin_boots")) {
             h.assertTrue(recipes.byKey(recipe("arksurvivalreturns:" + id)).isEmpty(), "Keratin grid recipe survived: " + id);

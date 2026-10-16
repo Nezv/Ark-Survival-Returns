@@ -89,7 +89,7 @@ final class PrimitiveData {
         for (String tool : List.of("stone_hatchet", "rock_pickaxe", "rock_sword", "rock_shovel", "rock_hoe"))
             flatItem(tool, NS + ":item/" + tool, true);
         flatItem("fire_starter", NS + ":item/fire_starter", true);
-        // The Rock Axe fits the 2x2 grid: logs need an axe, and the Working Station needs logs.
+        // The Rock Axe, the first tool (logs need an axe): the inventory's graph makes it at its design cost (P14).
         shapeless("stone_hatchet", NS + ":stone_hatchet", 1, NS + ":rock", "minecraft:stick", NS + ":plant_fiber");
         // The rest is the vanilla tool pattern with one Plant Fiber in any free slot (BoundShapedRecipe).
         bound("rock_pickaxe", List.of("RRR", " S ", " S "));

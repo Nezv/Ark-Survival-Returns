@@ -22,6 +22,12 @@ public final class WorkstationPayload {
                 b -> new Craft(b.readUtf(128), b.readUtf(256), b.readVarInt(), b.readUtf(512), b.readVarInt(), b.readVarInt()));
         @Override public Type<Craft> type() { return TYPE; }
     }
+    /** The inventory's Craft button: open the inventory's own crafting graph. */
+    public record OpenInventory() implements CustomPacketPayload {
+        public static final Type<OpenInventory> TYPE = new Type<>(ArkSurvivalReturns.id("workstation_open_inventory"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, OpenInventory> STREAM_CODEC = StreamCodec.unit(new OpenInventory());
+        @Override public Type<OpenInventory> type() { return TYPE; }
+    }
     public record Result(int containerId, String item, int count, boolean apply) implements CustomPacketPayload {
         public static final Type<Result> TYPE = new Type<>(ArkSurvivalReturns.id("workstation_result"));
         public static final StreamCodec<RegistryFriendlyByteBuf, Result> STREAM_CODEC = StreamCodec.of(

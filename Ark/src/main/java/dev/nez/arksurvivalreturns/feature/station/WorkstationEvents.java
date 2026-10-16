@@ -26,6 +26,9 @@ public final class WorkstationEvents {
         registrar.playToServer(WorkstationPayload.Craft.TYPE, WorkstationPayload.Craft.STREAM_CODEC, (packet, context) -> {
             if (context.player() instanceof net.minecraft.server.level.ServerPlayer player) WorkstationCrafting.craft(player, packet);
         });
+        registrar.playToServer(WorkstationPayload.OpenInventory.TYPE, WorkstationPayload.OpenInventory.STREAM_CODEC, (packet, context) -> {
+            if (context.player() instanceof net.minecraft.server.level.ServerPlayer player) InventoryCrafting.open(player);
+        });
     }
     @SubscribeEvent public static void sync(OnDatapackSyncEvent event) {
         event.getRelevantPlayers().forEach(player -> {
@@ -50,7 +53,7 @@ public final class WorkstationEvents {
     @SubscribeEvent public static void recipes(ModifyRecipeJsonsEvent event) {
         int before = event.getRecipeJsons().size();
         event.getRecipeJsons().keySet().removeAll(Removed.IDS);
-        ArkSurvivalReturns.LOGGER.info("Phase A removed {} original grid recipes", before - event.getRecipeJsons().size());
+        ArkSurvivalReturns.LOGGER.info("Workstation graphs removed {} original grid recipes", before - event.getRecipeJsons().size());
     }
     private WorkstationEvents() {}
 }

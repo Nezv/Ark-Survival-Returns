@@ -491,6 +491,12 @@
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
 
+  /* recipes: the age's recipe tree (tools/spine.js, tools/spine.css), mapped onto this page's palette */
+  .spine-box { --sp-ink: var(--ink); --sp-ink2: var(--muted); --sp-rule: var(--line); --sp-wire: var(--moss); --sp-chip: var(--surface);
+               --sp-sheet: var(--surface); --sp-gate: var(--raised); --sp-out: var(--moss); --sp-level: var(--ember);
+               --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
+               min-width: 0; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 10px; margin-bottom: 28px; }
+%%TREE_CSS%%
   /* recipes: the workstation screen preview (tools/workstation_ui.js); the game frame stays dark in both themes */
   .ws-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 20px; align-items: start; }
   .ws-notes { display: grid; gap: 14px; }
@@ -721,7 +727,7 @@
     <a href="#world"><span class="eyebrow">World</span><b>Danger map and biomes</b><span>The hidden danger zones beside the %%BIOMES_COUNT%% biomes and what spawns in each.</span></a>
     <a href="#existence"><span class="eyebrow">Existence Model</span><b>Rendered and unrendered</b><span>The behavior model of an animal with a body beside the existence model of its record: routine, state machine, model and parameters of each, with a simulator of the wildlife register.</span></a>
     <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle, three ages in one strip, and the survival journal.</span></a>
-    <a href="#recipes"><span class="eyebrow">Recipes</span><b>Workstations</b><span>The crafting rework: every station is a graph of what it makes, starting with the Armoury.</span></a>
+    <a href="#recipes"><span class="eyebrow">Recipes</span><b>Recipe tree and workstations</b><span>The Prehistoric sequence from bare hands to the forge, and every station's graph, the inventory's too.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
     <a href="#models"><span class="eyebrow">Models</span><b>Blocks and 3D models</b><span>%%BLOCKS_COUNT%% blocks from the in-game models, and %%MODELS_COUNT%% machines, benches, armour sets and weapons turning in the browser.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
@@ -976,12 +982,19 @@
 
   <section id="recipes">
     <header class="page-head">
-    <div><div class="eyebrow">Recipes</div><h2>Workstations you read like a map</h2></div>
+    <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
     <div class="ledes">
-    <p class="lede">The crafting rework (P14): no bench keeps the 3&times;3 grid. Each opens a graph of what it makes in a carved baroque frame, and a recipe can ask for more than nine items. Six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet.</p>
-    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over twelve benches. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
+    <p class="lede">The crafting rework (P14): no crafting grid is left. Each bench opens a graph of what it makes in a carved baroque frame, and so does the inventory, whose Craft button sits where its 2&times;2 grid was. A recipe can ask for more than nine items, so costs follow Ark: thirty fiber or forty cobblestone where the thing is worth it. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet.</p>
+    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
     </div>
     </header>
+    <h3>The Prehistoric sequence</h3>
+    <p class="lede">Every station of the age, left to right in the order it opens: Hands (what is gathered in the world, and with which tool) and the Inventory first, then the benches, up to the Primitive Forge that ends the age. Each recipe is a column: its inputs and their counts above the line, what it makes below; a level marks the player level that unlocks it. The %%TREE_ROWS%% recipes over %%TREE_STATIONS%% stations are the game's own numbers, read from the bench designs and the loot tables. Hover an item to see where it is gathered or made and where it is used; a label that points back is made by another column.</p>
+    <div class="spine-box">
+      <p class="sp-trace" aria-live="polite"></p>
+      <div class="sp-scroll"><div id="recipe-tree"></div></div>
+    </div>
+    <h3>The workstation screens</h3>
     <div class="ws-split">
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
@@ -1203,6 +1216,10 @@
 <script type="application/json" id="existence-data">%%EXISTENCE_DATA%%</script>
 <script>
 %%EXISTENCE_JS%%
+</script>
+<script type="application/json" id="tree-data">%%TREE_DATA%%</script>
+<script>
+%%TREE_JS%%
 </script>
 <script type="application/json" id="ws-data">%%RECIPES_DATA%%</script>
 <script>
@@ -1516,6 +1533,19 @@ window.arkModels = (function () {
     });
   });
 
+  // Recipes: the age's recipe tree (tools/spine.js), drawn the first time its page opens, once the fonts are in.
+  window.arkTree = (function () {
+    var drawn = false, host = document.getElementById('recipe-tree');
+    return { show: function (on) {
+      if (!on || drawn) return;
+      drawn = true;
+      var data = JSON.parse(document.getElementById('tree-data').textContent);
+      (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+        window.renderSpine(host, host.closest('.spine-box').querySelector('.sp-trace'), data);
+      });
+    } };
+  })();
+
   // Recipes: the workstation screen preview (tools/workstation_ui.js), running only while its page is open.
   var recipeData = JSON.parse(document.getElementById('ws-data').textContent);
   window.arkRecipes = window.ArkWorkstationUI.mount(document.getElementById('ws'), recipeData);
@@ -1678,6 +1708,7 @@ window.arkModels = (function () {
     if (current && current.id === 'existence') renderDiagrams();
     window.arkModels.show(!!current && current.id === 'models');
     window.arkRecipes.show(!!current && current.id === 'recipes');
+    window.arkTree.show(!!current && current.id === 'recipes');
     window.arkExistence.show(!!current && current.id === 'existence');
   }
   window.addEventListener('hashchange', route);

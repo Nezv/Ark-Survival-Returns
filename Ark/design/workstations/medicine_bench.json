@@ -1,7 +1,7 @@
 {
   "station": "arksurvivalreturns:medicine_bench",
   "title": "Medicine Bench",
-  "about": "P14 design data (see armoury.json). Bronze Age medicine: bandages, remedies, the glass bottles they are kept in and the suspicious stews, which become tonics here (the flower picks the effect). The fiber bandage stays a field craft as well.",
+  "about": "P14 design data (see armoury.json). Bronze Age medicine: bandages, remedies, the glass bottles they are kept in and the suspicious stews, which become tonics here (the flower picks the effect). The fiber bandage is a field craft in the inventory as well.",
   "verb": "Mix",
   "accent": "#7fc88a",
   "sigil": "flask",
@@ -10,7 +10,7 @@
     {
       "id": "bandages", "title": "Bandages", "icon": "arksurvivalreturns:herbal_bandage", "color": "#e3d8b8", "level": 12,
       "items": [
-        {"item": "arksurvivalreturns:fiber_bandage", "count": 2, "cost": {"arksurvivalreturns:plant_fiber": 3, "minecraft:string": 1}},
+        {"item": "arksurvivalreturns:fiber_bandage", "count": 2, "cost": {"arksurvivalreturns:plant_fiber": 8}},
         {"item": "arksurvivalreturns:herbal_bandage", "count": 2, "cost": {"arksurvivalreturns:amarberry": 1, "arksurvivalreturns:narcoberry": 1, "minecraft:short_grass": 1}}
       ]
     },
