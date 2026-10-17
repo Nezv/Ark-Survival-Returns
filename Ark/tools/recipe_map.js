@@ -49,7 +49,8 @@ window.renderRecipeMap = function (box, D) {
     if (!W || !H) return;
     const gutter = W >= 900 ? 132 : 40, head = 22;
     const f = fit(W - gutter, H - head);
-    const s = Math.max(MIN, Math.min(MAX, Math.floor(f.s))), g = Math.round(s * GAP);
+    // The gap rounds down, so a map that fits stays inside its box.
+    const s = Math.max(MIN, Math.min(MAX, Math.floor(f.s))), g = Math.floor(s * GAP);
     // Space left over widens the lanes between steps and the bands, so the map always fills its box.
     const padX = Math.max(PAD_X * s, PAD_X * s + (W - gutter - f.uw * s) / steps);
     const padY = Math.max(PAD_Y * s, PAD_Y * s + (H - head - f.uh * s) / bands.length);
@@ -57,7 +58,9 @@ window.renderRecipeMap = function (box, D) {
     let x = gutter, y = head;
     f.cols.forEach((c, d) => { colX[d] = x; colW[d] = c * s + (c - 1) * g + padX; x += colW[d]; });
     f.rows.forEach((r, b) => { bandY[b] = y; bandH[b] = r * s + (r - 1) * g + padY; y += bandH[b]; });
-    map.style.overflow = x > W + 1 || y > H + 1 ? 'auto' : 'hidden';
+    // Only a map that cannot fit at the smallest icons scrolls: a scrollbar that came and went with the map's own size
+    // would shrink the box, redraw it to fit, drop the scrollbar and grow it again, without end.
+    map.style.overflow = f.s < MIN ? 'auto' : 'hidden';
 
     const at = [];
     cells.forEach((list, key) => {
