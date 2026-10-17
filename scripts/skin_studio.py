@@ -951,6 +951,8 @@ def render(cubes, texture, cam, size, textured=True, focus=None, zoom=1.0, margi
                 continue
             screen = np.column_stack([quad[:, 2], -quad[:, 1]])
             shade = 0.62 + 0.38 * float(np.clip(normal @ LIGHT, 0, 1))
+            if key not in cube["faces"]:
+                continue  # a face the geo leaves out is not drawn, as in GeckoLib
             faces.append((screen, quad[:, 0], face_uvs(cube, key), shade, index * 6 + slot))
     points = np.concatenate(points)
     screen_all = np.column_stack([points[:, 2], -points[:, 1]])

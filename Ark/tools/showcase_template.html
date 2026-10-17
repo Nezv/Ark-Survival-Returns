@@ -29,7 +29,7 @@
     --display: "Bitter", Georgia, serif;
     --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
     --mono: "JetBrains Mono", Consolas, monospace;
-    --page: 1560px;
+    --page: 1840px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -45,7 +45,8 @@
     --ember: #e2763f; --moss: #8fb07f; --chip: #2a2e27; --ok: #8fb07f; --check: #e0b458; --idea: #a9abd6; --todo: #e59a74;
     --blue: #7ea8ff; --red: #ff7163;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--muted) 45%, transparent) transparent; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; scroll-padding-top: 88px; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -59,7 +60,7 @@
   .nav-inner { position: relative; max-width: var(--page); margin: 0 auto; padding-inline: 24px; height: 56px; display: flex; align-items: center; gap: 18px; }
   .brand { font: 800 18px/1 var(--display); letter-spacing: .04em; color: var(--ink); text-decoration: none; white-space: nowrap; }
   .brand span { color: var(--ember); }
-  .nav-links { display: flex; justify-content: center; gap: clamp(14px, 2.2vw, 34px); flex: 1; min-width: 0; }
+  .nav-links { display: flex; justify-content: center; gap: clamp(12px, 1.6vw, 30px); flex: 1; min-width: 0; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; white-space: nowrap; padding-block: 4px; border-bottom: 2px solid transparent; }
   .nav-links a:hover, .nav-links a.active { color: var(--ink); border-bottom-color: var(--ember); }
   .theme, .menu { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 12px;
@@ -67,7 +68,7 @@
   .menu { display: none; font-weight: 600; font-size: 14px; padding: 6px 14px; }
   .menu::after { content: "▾"; margin-left: 6px; color: var(--muted); }
   /* below the width that fits every link, the links become a panel under the bar, opened by the menu button */
-  @media (max-width: 1079px) {
+  @media (max-width: 1199px) {
     .menu { display: inline-block; margin-left: auto; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--bg); border-bottom: 1px solid var(--line);
                  padding: 10px 16px 16px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 8px;
@@ -78,57 +79,61 @@
   }
   @media (max-width: 480px) { .theme span { display: none; } .theme { text-transform: capitalize; } }
 
-  /* hero */
-  .hero { position: relative; min-height: min(520px, 80vh); display: grid; place-items: center; overflow: hidden; background: #161814; color: #e6e8e1; }
+  /* home: the title picture fills the screen under the bar, the pages' index along its foot */
+  .hero { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; overflow: hidden; background: #161814; color: #e6e8e1; }
   .hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 70%; }
-  .hero-inner { position: relative; text-align: center; padding: 56px 24px 64px; display: grid; gap: 22px; justify-items: center; max-width: 900px; }
-  .hero-inner img.logo { width: min(520px, 86vw); }
+  .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+                 background: linear-gradient(180deg, rgba(16, 18, 15, 0) 40%, rgba(16, 18, 15, .88) 100%); }
+  .hero > :not(.bg) { position: relative; z-index: 1; }
+  .hero-inner { place-self: center; text-align: center; padding: clamp(20px, 5vh, 56px) 24px 20px; display: grid; gap: clamp(12px, 2.4vh, 22px);
+                justify-items: center; max-width: 900px; min-height: 0; }
+  .hero-inner img.logo { width: min(520px, 86vw, 62vh); }
   .hero-inner p { margin: 0; max-width: 60ch; font-size: 18px; color: #cfd3c8; text-wrap: balance; }
   .stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-  .stat { background: rgba(22, 24, 20, .72); border: 1px solid rgba(143, 176, 127, .35); border-radius: 10px; padding: 10px 16px; min-width: 120px; }
+  .stat { background: rgba(22, 24, 20, .72); border: 1px solid rgba(143, 176, 127, .35); border-radius: 10px; padding: 8px 16px; min-width: 120px; }
   .stat b { display: block; font: 700 26px/1.1 var(--display); color: #e6e8e1; font-variant-numeric: tabular-nums; }
   .stat span { font-size: 13px; color: #a8b3a0; letter-spacing: .04em; }
+  .built { width: 100%; max-width: var(--page); margin: 0 auto; padding: 2px 24px 12px; font-size: 12px; color: #8d9487; }
+  .built code { background: rgba(255, 255, 255, .08); }
 
   /* layout */
-  main { max-width: var(--page); margin: 0 auto; padding-inline: 24px; padding-block: 40px 80px; display: grid; gap: 72px; }
-  section { display: grid; gap: 22px; }
+  main { width: 100%; max-width: var(--page); margin: 0 auto; padding-inline: 24px; padding-block: 28px 56px; display: grid; gap: 48px; }
+  section { display: grid; gap: 18px; }
   .eyebrow { font: 600 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
-  h2 { font: 700 clamp(28px, 3.4vw, 38px)/1.12 var(--display); margin: 6px 0 0; text-wrap: balance; }
+  h2 { font: 700 clamp(24px, 2.3vw, 32px)/1.12 var(--display); margin: 6px 0 0; text-wrap: balance; }
   h3 { font: 700 22px/1.25 var(--display); margin: 0; }
   h4 { font: 600 16px/1.3 var(--display); margin: 0; display: flex; align-items: center; gap: 8px; }
   p { margin: 0; }
-  /* a page is a run of parts: each h3 opens one under a rule, and the "on this page" row jumps between them */
-  main > section > h3, .cols, .model-row { margin-top: 16px; padding-top: 28px; border-top: 1px solid var(--line); }
   /* parts that share a row on a wide screen instead of following each other down the page */
   .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 36px; align-items: start; }
   .cols.lead { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
   .part { display: grid; gap: 14px; align-content: start; min-width: 0; }
   @media (max-width: 1080px) { .cols, .cols.lead { grid-template-columns: minmax(0, 1fr); } }
-  .lede { color: var(--muted); font-size: 17px; max-width: 72ch; }
-  .lede + .lede { margin-top: -10px; }
-  /* a page opens with its title beside its introduction */
-  .page-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 14px 48px; align-items: start; }
-  .ledes { display: grid; gap: 12px; padding-top: 20px; }
-  .ledes .lede { max-width: 84ch; }
-  .ledes .lede + .lede { margin-top: 0; }
-  @media (max-width: 1080px) { .page-head { grid-template-columns: minmax(0, 1fr); } .ledes { padding-top: 0; } }
+  .lede { color: var(--muted); font-size: 16px; max-width: 80ch; }
+  /* a page opens with its title beside its introduction, then the tabs of its parts (panes), one on show at a time */
+  .page-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px 40px; align-items: end; }
+  .page-head .lede { font-size: 15px; max-width: 96ch; }
+  @media (max-width: 1080px) { .page-head { grid-template-columns: minmax(0, 1fr); } }
+  .pane-tabs { display: flex; flex-wrap: wrap; gap: 4px 6px; border-bottom: 1px solid var(--line); }
+  .pane-tabs button { border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; color: var(--muted);
+                      padding: 6px 12px 8px; font: 600 14px var(--body); cursor: pointer; }
+  .pane-tabs button:hover { color: var(--ink); }
+  .pane-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ember); }
+  .pane { display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .pane > .muted:first-child, .pane > .lede:first-child { max-width: 110ch; }
   .muted { color: var(--muted); }
   .label { font: 600 11px/1.3 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 8px; align-content: start; }
   .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 16px; align-content: start; min-width: 0; }
   .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px; }
   .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 14px; }
-  .toc { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; }
-  .toc button { border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 12px;
-                font: 600 13px var(--body); cursor: pointer; }
-  .toc button:hover { border-color: var(--ember); color: var(--ember); }
   details.fold { border: 1px solid var(--line); border-radius: 10px; background: var(--raised); }
   details.fold > summary { cursor: pointer; padding: 10px 14px; font: 600 14px var(--body); }
   details.fold[open] > summary { border-bottom: 1px solid var(--line); }
   details.fold > :not(summary) { margin: 12px 14px; }
   @media (max-width: 640px) {
     .nav-inner { padding-inline: 16px; gap: 10px; }
-    main { padding-inline: 16px; padding-block: 28px 56px; gap: 48px; }
+    main { padding-inline: 16px; padding-block: 20px 48px; gap: 40px; }
     section { gap: 18px; }
     .lede { font-size: 16px; }
     .panel, .card { padding: 14px; }
@@ -142,18 +147,57 @@
   .chip.ok { color: var(--ok); } .chip.check { color: var(--check); } .chip.idea { color: var(--idea); } .chip.todo { color: var(--todo); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
-  /* creatures */
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-  .filters button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px;
-                    font: 600 14px var(--body); cursor: pointer; }
-  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .dinos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
-  @media (max-width: 1239px) { .dinos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  @media (max-width: 1000px) { .dinos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 720px) { .dinos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 460px) { .dinos { grid-template-columns: minmax(0, 1fr); } }
+  /* creatures: the picked animal's 1:1 portrait and its facts, beside a picker of four columns */
+  .cr { display: grid; gap: 18px; }
+  .cr-portrait { position: relative; margin: 0; width: min(100%, 640px); aspect-ratio: 1; border-radius: 14px; overflow: hidden; display: grid;
+                 place-items: center; border: 1px solid var(--line);
+                 background: radial-gradient(85% 60% at 50% 66%, #313d2b 0%, #1c2119 60%, #121410 100%); }
+  .cr-portrait::after { content: ""; position: absolute; left: 14%; right: 14%; bottom: 17%; height: 7%; border-radius: 50%;
+                        background: radial-gradient(closest-side, rgba(0, 0, 0, .42), transparent); }
+  .cr-portrait img { position: relative; z-index: 1; width: 94%; max-height: 72%; object-fit: contain; margin-top: 6%; }
+  .cr-portrait span { position: absolute; z-index: 2; top: 14px; font: 600 12px/1 var(--body); padding: 6px 10px; border-radius: 999px;
+                      color: #dfe7d8; background: rgba(22, 24, 20, .66); border: 1px solid rgba(143, 176, 127, .3); }
+  .cr-portrait .cr-rank { left: 14px; } .cr-portrait .cr-tag { right: 14px; }
+  .cr-portrait .cr-tag:empty { display: none; }
+  .cr-facts { min-width: 0; }
+  .cr-fact { display: grid; gap: 14px; align-content: start; }
+  .cr-fact h3 { font: 800 clamp(28px, 2.5vw, 40px)/1.05 var(--display); margin-top: -6px; overflow-wrap: anywhere; }
+  .cr-zone { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+  .cr-fact .chip { text-transform: capitalize; }
+  .cr-bars { margin: 0; display: grid; gap: 8px; }
+  .cr-bar { display: grid; grid-template-columns: 64px 36px minmax(0, 1fr); align-items: center; gap: 10px; }
+  .cr-bar dt, .cr-stats dt { font: 600 11px/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .cr-bar dd { display: contents; }
+  .cr-bar b { font: 700 18px/1 var(--display); font-variant-numeric: tabular-nums; text-align: right; }
+  .cr-bar span { height: 8px; border-radius: 999px; background: var(--chip); overflow: hidden; }
+  .cr-bar i { display: block; height: 100%; border-radius: inherit; background: var(--ember); }
+  .cr-stats { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .cr-stats dd { margin: 2px 0 0; font-size: 15px; }
+  .cr-stats .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; }
+  .cr-fact h4 { border-top: 1px solid var(--line); padding-top: 14px; font-size: 15px; }
+  .cr-biomes { display: flex; flex-wrap: wrap; gap: 5px; }
+  .cr-biomes span { font: 600 12px/1 var(--body); padding: 5px 9px; border-radius: 999px; background: var(--chip); }
+  .cr-pick { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: max-content; gap: 8px 12px; align-content: start; }
+  /* the columns share their two rows (head, list) so a head that wraps keeps the lists level */
+  .cr-col { --col: var(--ember); display: grid; grid-row: span 2; grid-template-rows: subgrid; gap: 8px; min-width: 0; }
+  .cr-col[data-group="herbivore"] { --col: var(--moss); } .cr-col[data-group="aquatic"] { --col: var(--blue); } .cr-col[data-group="flyer"] { --col: var(--check); }
+  .cr-col h3 { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; gap: 6px;
+               padding: 2px 2px 7px; background: var(--bg); border-bottom: 2px solid var(--col); font: 700 14px/1.2 var(--display); }
+  .cr-col h3 small { font: 600 12px var(--body); color: var(--muted); }
+  .cr-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cr-item { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 5px 7px 7px 5px;
+             border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; text-align: left;
+             font: 600 13px/1.2 var(--body); }
+  .cr-item:hover { border-color: var(--col); }
+  .cr-item[aria-pressed="true"] { border-color: var(--col); box-shadow: inset 0 0 0 1px var(--col); background: color-mix(in srgb, var(--col) 10%, var(--surface)); }
+  .cr-thumb { grid-column: 1 / -1; aspect-ratio: 2 / 1; border-radius: 6px; display: grid; place-items: center; overflow: hidden;
+              background: radial-gradient(100% 80% at 50% 70%, #2b3526 0%, #1b1f18 65%, #161814 100%); }
+  .cr-thumb img { width: 92%; height: 88%; object-fit: contain; }
+  .cr-name { padding-left: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cr-item .pips { gap: 2px; } .cr-item .pips i { width: 7px; height: 7px; }
+  @media (max-width: 1080px) { .cr-portrait { justify-self: center; } }
+  .dinos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 14px; }
   .dino { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
-  .dino[hidden] { display: none; }
   .dino-art { position: relative; height: 170px; display: grid; place-items: center; padding: 10px;
               background: radial-gradient(120% 90% at 50% 100%, #2b3526 0%, #1b1f18 60%, #161814 100%); }
   .dino-art img { max-height: 150px; object-fit: contain; }
@@ -167,20 +211,16 @@
   .dino dt { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
   .dino dd { margin: 0; font-variant-numeric: tabular-nums; text-transform: capitalize; }
 
-  /* world: the left part (title, text, map) is pinned and always whole on the screen; only the biomes scroll */
-  .world { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px 32px; align-items: start; }
-  .world-side { position: sticky; top: 72px; height: calc(100vh - 88px); min-height: 420px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-  /* the pinned part starts where it stays and the page ends with the biomes (the pager and the footer close their column), so it is never moved or cut */
-  @media (min-width: 901px) { #world { margin-top: -24px; } main.pinned { padding-bottom: 16px; } }
-  .world-biomes .pager { margin-top: 14px; }
-  .world-biomes footer { max-width: none; margin: 0; padding: 14px 0 0; }
+  /* world: title, text and map on the left, whole on the screen; only the biome list beside them scrolls */
+  .world { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px 28px; align-items: start; }
+  .world-side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
   .world-head { display: grid; gap: 6px; }
-  .world-head h2 { font-size: clamp(26px, 2.6vw, 34px); margin: 0; }
-  .world-head .lede { font-size: 16px; margin-top: 4px; }
-  .world-biomes { display: grid; gap: 14px; min-width: 0; }
-  @media (max-width: 900px) {
+  .world-head h2 { margin: 0; }
+  .world-head .lede { font-size: 15px; margin-top: 4px; }
+  .world-biomes { display: grid; gap: 12px; min-width: 0; }
+  .world-biomes > .muted { font-size: 12px; }
+  @media (max-width: 1080px) {
     .world { grid-template-columns: minmax(0, 1fr); }
-    .world-side { position: static; height: auto; min-height: 0; }
     .map-view { flex: none; aspect-ratio: 1; }
   }
   .map-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
@@ -206,22 +246,21 @@
   .biome-pick { font-size: 14px; color: var(--muted); }
   .biome-pick select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 5px 10px;
                        font: 600 14px var(--body); cursor: pointer; }
-  .biomes { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; align-items: start; }
+  .biomes { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); grid-auto-rows: max-content; gap: 12px; align-items: start; align-content: start; }
   @media (max-width: 640px) { .biomes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .biome { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  .biome[hidden] { display: none; }
+  .biome { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   .biome-shot { margin: 0; aspect-ratio: 16 / 9; background: #161814; display: grid; place-items: center; }
   .biome-shot a { display: block; width: 100%; height: 100%; }
   .biome-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .biome-shot span { color: #a8b3a0; font-size: 13px; }
-  .biome-body { padding: 10px 12px 12px; display: grid; gap: 6px; }
-  .biome-body h3 { font-size: 16px; line-height: 1.2; overflow-wrap: anywhere; }
-  .biome-source { font: 600 11px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .biome-body > p { font-size: 13px; }
-  .spawns { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: 13px; }
+  .biome-shot span { color: #a8b3a0; font-size: 12px; }
+  .biome-body { padding: 8px 10px 10px; display: grid; gap: 5px; }
+  .biome-body h3 { font-size: 14px; line-height: 1.2; overflow-wrap: anywhere; }
+  .biome-source { font: 600 10px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .biome-body > p { font-size: 12px; }
+  .spawns { display: flex; flex-wrap: wrap; gap: 2px 8px; font-size: 12px; }
   .spawns span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .spawns i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
-  .biome details { font-size: 13px; }
+  .spawns i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+  .biome details { font-size: 12px; }
   .biome summary { cursor: pointer; font-weight: 600; }
   .res-list { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 6px; }
   .res { display: inline-flex; align-items: center; gap: 4px; font: 600 11px/1 var(--body); padding: 3px 7px; border-radius: 999px;
@@ -336,26 +375,35 @@
   .lap .nest { fill: var(--moss); }
   .lap figcaption { font-size: 14px; display: grid; }
   .lap figcaption small { color: var(--muted); font-size: 12px; }
-  /* existence model: the rendered animal's column beside the unrendered one's, each step of one on the row of the
-     same step of the other (the columns share their rows through subgrid) */
+  /* existence model: the rendered animal's column beside the unrendered one's. The tabs above them pick a step, and
+     each column shows its own step of that number (the columns share their rows through subgrid) */
+  .ex-steps { display: flex; flex-wrap: wrap; gap: 4px 6px; border-bottom: 1px solid var(--line); }
+  .ex-steps button { display: inline-flex; align-items: center; gap: 8px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+                     background: none; color: var(--muted); padding: 6px 12px 8px; font: 600 14px var(--body); cursor: pointer; }
+  .ex-steps button:hover { color: var(--ink); }
+  .ex-steps button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ember); }
+  .ex-steps b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--chip); color: var(--muted); font: 700 11px/1 var(--body); }
+  .ex-steps [aria-selected="true"] b { background: var(--moss); color: var(--bg); }
+  .ex-steps small { font: 400 13px var(--body); color: var(--muted); }
   .twin { column-gap: 0; }
-  .twin > .part { row-gap: 22px; padding-right: 28px; }
-  .twin > .part + .part { padding: 0 0 0 28px; border-left: 1px solid var(--line); }
-  @supports (grid-template-rows: subgrid) { .twin > .part { grid-row: span 8; grid-template-rows: subgrid; } }
+  .twin > .part { row-gap: 14px; padding-right: 24px; }
+  .twin > .part + .part { padding: 0 0 0 24px; border-left: 1px solid var(--line); }
+  @supports (grid-template-rows: subgrid) { .twin > .part { grid-row: span 2; grid-template-rows: subgrid; } }
   .twin > .part > * { container-type: inline-size; min-width: 0; }
-  .twin [data-model][hidden], .twin [data-tier][hidden], .twin [data-stat][hidden] { display: none; }
+  .twin-top { display: grid; grid-template-rows: auto 1fr; gap: 12px; }
+  .twin-steps > .step { border-top: 0; padding-top: 0; }
   @media (max-width: 1080px) {
     .twin > .part { padding: 0; }
     .twin > .part + .part { padding: 28px 0 0; border-left: 0; border-top: 1px solid var(--line); }
   }
-  .twin-head { display: grid; gap: 8px; align-content: start; }
-  .twin-head h3 { font-size: 26px; }
-  .twin-head .lede { font-size: 16px; margin-top: 4px; }
+  .twin-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .twin-head h3 { font-size: 22px; }
   .twin-tiers { grid-template-rows: auto 1fr auto; align-content: stretch; }
-  .twin-pick { gap: 12px; }
+  .twin-pick { gap: 10px; padding: 14px 16px; }
   .twin-pick .tabs button:not([aria-selected="true"]), .twin-pick .ex-bar select { background: var(--raised); }
   .pick { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 6px 12px; align-items: center; }
   .model-about { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; font-size: 15px; }
+  .panel > .model-about { border-top: 0; padding-top: 0; }
   .model-cell { display: grid; gap: 14px; min-width: 0; }
   .step { display: grid; gap: 14px; align-content: start; border-top: 1px solid var(--line); padding-top: 18px; }
   .step > h4 { font: 700 20px/1.25 var(--display); flex-wrap: wrap; gap: 4px 10px; }
@@ -475,6 +523,16 @@
   .tree-scroll.panning { cursor: grabbing; user-select: none; }
   .tree-scroll svg { display: block; height: clamp(400px, 58vh, 580px); width: auto; max-width: none; }
   .tree-scroll.fit svg { width: 100%; height: auto; }
+  /* progression: the text, the age jumps, the key and the node read-out on a narrow column; the strip fills the rest */
+  .prog { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px 22px; }
+  .prog-side { display: grid; gap: 14px; align-content: start; min-width: 0; }
+  .prog-side h2 { font-size: clamp(22px, 1.6vw, 28px); }
+  .prog-side .lede { font-size: 14px; }
+  .prog-side .tree-jumps { flex-direction: column; align-items: stretch; }
+  .prog-side .tree-jumps button { text-align: left; }
+  .prog-side .legend-key { flex-direction: column; gap: 6px; font-size: 13px; }
+  .prog-side .node-info { padding: 10px 12px; font-size: 14px; }
+  @media (min-width: 1081px) { .prog { grid-template-columns: minmax(190px, 1fr) minmax(0, 7fr); } }
   .age-title { font: 700 15px var(--display); fill: var(--ink); }
   .edge { fill: none; stroke: var(--muted); stroke-width: 1.4; opacity: .55; }
   .lane { font: 600 9px var(--body); letter-spacing: .12em; fill: var(--muted); }
@@ -491,12 +549,8 @@
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
 
-  /* recipes: the age's recipe map (tools/recipe_map.js, tools/recipe_map.css), mapped onto this page's palette. The
-     heading and the map fill the screen under the bar together, so nothing scrolls. */
-  .rm-screen { height: calc(100vh - 56px - 40px - 16px); min-height: 560px; display: flex; flex-direction: column; gap: 14px; }
-  .rm-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 6px 48px; align-items: end; }
-  .rm-head h2 { margin: 0; }
-  .rm-head .lede { margin: 0; font-size: 15px; }
+  /* recipes: the age's recipe map (tools/recipe_map.js, tools/recipe_map.css), mapped onto this page's palette. It
+     fills its pane, so nothing scrolls. */
   .rm-box { --rm-ink: var(--ink); --rm-ink2: var(--muted); --rm-rule: var(--line); --rm-wire: var(--moss); --rm-chip: var(--surface);
             --rm-stripe: color-mix(in srgb, var(--ink) 3%, transparent); --rm-level: var(--ember);
             --rm-display: var(--display); --rm-body: var(--body); --rm-mono: var(--mono);
@@ -511,7 +565,7 @@
   .rm-bar i.fin { border: 0; background: var(--ember); clip-path: polygon(28% 0, 72% 0, 100% 28%, 100% 72%, 72% 100%, 28% 100%, 0 72%, 0 28%); }
   .rm-bar svg { vertical-align: middle; margin-right: 6px; }
   .rm-full { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 3px 12px; font: 13px var(--body); cursor: pointer; }
-  @media (max-width: 1080px) { .rm-head { grid-template-columns: minmax(0, 1fr); } .rm-screen { height: auto; } .rm-box { height: 80vh; flex: none; } }
+  @media (max-width: 1080px), (max-height: 559px) { .rm-box { height: 80vh; flex: none; } }
 %%TREE_CSS%%
   /* recipes: the workstation screen preview (tools/workstation_ui.js); the game frame stays dark in both themes */
   .ws-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 20px; align-items: start; }
@@ -601,6 +655,7 @@
   .rv-by { font: 600 11px var(--mono); color: var(--muted); text-align: right; }
   .rv-by.user { color: var(--ok); } .rv-by.design { color: var(--blue); } .rv-by.edited { color: var(--ember); }
   .rv-more { justify-self: center; }
+  .rv-scroll { display: grid; gap: 10px; align-content: start; }
   @media (max-width: 980px) {
     .rv-row { grid-template-columns: 22px minmax(0, 1fr) auto; }
     .rv-cost, .rv-where, .rv-note, .rv-by { grid-column: 2 / -1; }
@@ -621,10 +676,7 @@
   .accessory-card .dino-body > p { font-size: 14px; margin: 0; }
   .accessory-card .bonuses { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ok); }
   .accessory-card dl { grid-template-columns: 1fr; }
-  .model-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; align-items: start; }
-  .model-row > .part { grid-column: span 2; padding-right: 16px; }
-  @media (max-width: 1239px) { .model-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } .model-row > .part { grid-column: 1 / -1; } }
-  @media (max-width: 720px) { .model-row { grid-template-columns: minmax(0, 1fr); } }
+  .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 14px; align-items: start; }
   .model-view { position: relative; height: 280px;
                 background: radial-gradient(120% 90% at 50% 100%, #2b3526 0%, #1b1f18 60%, #161814 100%); }
   .model-view img, .model-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
@@ -696,22 +748,61 @@
     #roadmap td:nth-child(4) { grid-column: 3; grid-row: 2; }
     #roadmap td:nth-child(1), #roadmap td:nth-child(4) { font-size: 13px; color: var(--muted); }
   }
-  /* pages: one section at a time, the hero and the index on the home page */
-  main > section[hidden], .hero[hidden], #index[hidden], .pager[hidden] { display: none; }
-  .index { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
-  .index a { display: grid; gap: 6px; align-content: start; text-decoration: none; color: var(--ink); background: var(--surface);
-             border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; transition: border-color .15s, transform .15s; }
-  .index a:hover, .index a:focus-visible { border-color: var(--ember); transform: translateY(-2px); }
-  .index b { font: 700 19px/1.2 var(--display); }
-  .index span:last-child { color: var(--muted); font-size: 14px; }
-  .pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
-  .pager a { display: grid; gap: 2px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface);
-             border-radius: 10px; padding: 10px 16px; min-width: min(180px, 45%); }
-  .pager a:hover, .pager a:focus-visible { border-color: var(--ember); }
-  .pager a small { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-  .pager a.next { text-align: right; margin-left: auto; }
+  /* pages: one section at a time; the home page is the hero with the index of the pages at its foot */
+  .index { width: 100%; max-width: var(--page); margin: 0 auto; padding: 0 24px 10px; display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 12px; }
+  @media (min-width: 1240px) { .index { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .index a { display: grid; gap: 5px; align-content: start; text-decoration: none; color: #e6e8e1; background: rgba(22, 24, 20, .74);
+             border: 1px solid rgba(143, 176, 127, .26); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(6px);
+             transition: border-color .15s, transform .15s; }
+  .index a:hover, .index a:focus-visible { border-color: #e2763f; transform: translateY(-2px); }
+  .index .eyebrow { color: #8fb07f; }
+  .index b { font: 700 18px/1.2 var(--display); }
+  .index span:last-child { color: #b4bbad; font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
   @media (prefers-reduced-motion: reduce) { .index a { transition: none; } }
-  footer { max-width: var(--page); margin: 0 auto; padding: 24px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+  /* the app shell: on a desktop screen the window itself never scrolls. The bar and the page fill it, and only the
+     lists inside a page scroll (a pane, the creature picker, the biomes, a table). A narrow or very short window
+     reads the pages as one long column instead. */
+  @media (min-width: 1081px) and (min-height: 560px) {
+    html, body { height: 100%; overflow: hidden; }
+    body { display: flex; flex-direction: column; }
+    .nav { position: relative; flex: none; }
+    .hero { flex: 1; min-height: 0; }
+    main { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-block: 16px 18px; }
+    main > section { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; }
+    .panes { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .pane { flex: 1; min-height: 0; overflow: auto; container-type: size; scrollbar-gutter: stable; grid-auto-rows: max-content; }
+    .pane.fill { overflow: hidden; display: flex; flex-direction: column; gap: 12px; scrollbar-gutter: auto; }
+    .fill > .scroll, .fill > * > .scroll { flex: 1; min-height: 0; overflow: auto; }
+    /* creatures: the portrait as tall as the page allows, the facts and the picker scrolling on their own */
+    .cr { flex: 1; min-height: 0; grid-template-columns: min(100cqh, 44cqw) minmax(250px, 1fr) minmax(0, 1.6fr); grid-template-rows: minmax(0, 1fr); }
+    .cr-portrait { width: 100%; align-self: start; }
+    .cr-facts, .cr-pick { overflow: auto; height: 100%; scrollbar-gutter: stable; }
+    .cr-facts { padding-right: 6px; }
+    .cr-pick { grid-template-columns: repeat(4, minmax(0, 1fr)); padding-right: 4px; }
+    /* world: the side column is the page's height, the biomes scroll under their tools */
+    .world { flex: 1; min-height: 0; grid-template-rows: minmax(0, 1fr); align-items: stretch; }
+    .world-side { min-height: 0; }
+    .world-biomes { display: flex; flex-direction: column; min-height: 0; }
+    .world-biomes > .biomes { flex: 1; min-height: 0; overflow: auto; scrollbar-gutter: stable; padding-right: 4px; }
+    /* existence: the heads and pickers stay, each column's step scrolls */
+    .twin { flex: 1; min-height: 0; grid-template-rows: auto minmax(0, 1fr); align-items: stretch; }
+    .twin-steps { overflow: auto; min-height: 0; scrollbar-gutter: stable; padding-right: 6px; }
+    .twin-steps .matrix-wrap, .twin-steps .cell-info { max-height: none; }
+    /* progression: the side column and the strip are the page's height; only the strip scrolls, sideways */
+    .prog { flex: 1; min-height: 0; grid-template-rows: minmax(0, 1fr); }
+    .prog-side { overflow: auto; scrollbar-gutter: stable; padding-right: 4px; }
+    .prog > .tree-scroll { min-height: 0; overflow-y: hidden; }
+    .tree-scroll svg { height: 100%; }
+    .tree-scroll.fit svg { width: 100%; height: 100%; }
+    /* recipes: the map fills its pane; the workstation frame fits the pane's height */
+    .fill > .rm-box { flex: 1; }
+    .ws-frame { width: min(100%, (100cqh - 150px) * 16 / 9); }
+    .rv { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .interface-shot img { max-height: calc(100cqh - 90px); width: auto; max-width: 100%; margin: 0 auto; }
+    .table-wrap.scroll thead th { position: sticky; top: 0; z-index: 1; }
+  }
 </style>
 </head>
 <body>
@@ -721,7 +812,7 @@
     <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="nav-links">Sections</button>
     <nav class="nav-links" id="nav-links" aria-label="Sections">
       <a href="#creatures">Creatures</a><a href="#world">World</a><a href="#existence">Existence Model</a><a href="#progression">Progression</a>
-      <a href="#recipes">Recipes</a><a href="#accessories">Accessories</a>
+      <a href="#recipes">Recipes</a><a href="#ui">UI</a><a href="#control">Control</a><a href="#accessories">Accessories</a>
       <a href="#models">Models</a><a href="#interface">Interface</a><a href="#integrations">Integrations</a><a href="#roadmap">Roadmap</a>
     </nav>
     <button class="theme" id="theme" type="button" aria-label="Colour theme"><span>Theme: </span><b>system</b></button>
@@ -735,40 +826,36 @@
     <p>An ARK-style survival overhaul for Minecraft 26.1.2 on NeoForge: tame and ride real ARK creatures, survive a world split into hidden danger zones, and climb from a loose rock to the Iron Age with your tribe.</p>
     <div class="stats">%%STATS%%</div>
   </div>
-</div>
-
-<main>
-  <div class="index" id="index">
+  <nav class="index" id="index" aria-label="Pages">
     <a href="#creatures"><span class="eyebrow">Wildlife</span><b>Creatures</b><span>%%SPECIES_COUNT%% ARK creatures, their stats, taming and first danger rank.</span></a>
     <a href="#world"><span class="eyebrow">World</span><b>Danger map and biomes</b><span>The hidden danger zones beside the %%BIOMES_COUNT%% biomes and what spawns in each.</span></a>
     <a href="#existence"><span class="eyebrow">Existence Model</span><b>Rendered and unrendered</b><span>The behavior model of an animal with a body beside the existence model of its record: routine, state machine, model and parameters of each, with a simulator of the wildlife register.</span></a>
     <a href="#progression"><span class="eyebrow">Progression</span><b>Progression Tree</b><span>The Tribe Chronicle, three ages in one strip, and the survival journal.</span></a>
-    <a href="#recipes"><span class="eyebrow">Recipes</span><b>Recipe tree and workstations</b><span>The Prehistoric sequence from bare hands to the forge, and every station's graph, the inventory's too.</span></a>
+    <a href="#recipes"><span class="eyebrow">Recipes</span><b>Recipe map</b><span>The Prehistoric sequence from bare hands to the forge, a row per station.</span></a>
+    <a href="#ui"><span class="eyebrow">UI</span><b>Workstation screens</b><span>Every bench's graph screen, the inventory's too, running in the browser.</span></a>
+    <a href="#control"><span class="eyebrow">Control</span><b>Recipe control</b><span>Every recipe in the game with its fate: go, stay or change, saved for the build.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
     <a href="#models"><span class="eyebrow">Models</span><b>Blocks and 3D models</b><span>%%BLOCKS_COUNT%% blocks from the in-game models, and %%MODELS_COUNT%% machines, benches, armour sets and weapons turning in the browser.</span></a>
     <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
     <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
-  </div>
+  </nav>
+  <p class="built">Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots; biome pictures come from the wikis credited on their page. Private project; ARK assets belong to their owners.</p>
+</div>
 
+<main>
   <section id="creatures">
     <header class="page-head">
     <div><div class="eyebrow">Wildlife</div><h2>%%SPECIES_COUNT%% creatures, built from ARK skeletons</h2></div>
-    <div class="ledes">
-    <p class="lede">Each creature keeps its original ARK bones and animation clips, rebuilt as Minecraft cuboids and rendered with GeckoLib, in five skin variants. The pips show the first danger rank where it appears. Each is pictured under its own saddle; the game does not draw saddles on the animal yet.</p>
-    </div>
+    <p class="lede">Each keeps its original ARK bones and animation clips, rebuilt as Minecraft cuboids and rendered with GeckoLib in five skin variants, and is pictured under its own saddle (the game does not draw saddles yet). Pick one on the right; the pips are the first danger zone it appears in.</p>
     </header>
-    <div class="filters" role="group" aria-label="Filter creatures">
-      <button type="button" data-filter="all" aria-pressed="true">All</button>
-      <button type="button" data-filter="land" aria-pressed="false">Land</button>
-      <button type="button" data-filter="air" aria-pressed="false">Air</button>
-      <button type="button" data-filter="water" aria-pressed="false">Sea</button>
-      <button type="button" data-filter="amphibious" aria-pressed="false">Swamp and shore</button>
-      <button type="button" data-filter="predator" aria-pressed="false">Predators</button>
-      <button type="button" data-filter="apex" aria-pressed="false">Apex</button>
-      <button type="button" data-filter="cold" aria-pressed="false">Cold</button>
-    </div>
-    <div class="dinos">%%CREATURES%%</div>
+    <div class="panes"><div class="pane fill">
+      <div class="cr">
+        <figure class="cr-portrait"><img alt=""><span class="cr-rank"></span><span class="cr-tag"></span></figure>
+        <div class="cr-facts" aria-live="polite">%%CREATURE_FACTS%%</div>
+        <nav class="cr-pick" aria-label="Pick a creature">%%CREATURE_PICK%%</nav>
+      </div>
+    </div></div>
   </section>
 
   <section id="world">
@@ -777,7 +864,7 @@
         <header class="world-head">
           <div class="eyebrow">World</div>
           <h2>Hidden danger over %%BIOMES_COUNT%% biomes</h2>
-          <p class="lede">Three danger zones repeat around the spawn: easy, dangerous, deadly. The zone sets which species appear and how strong; the biome sets who lives there. Drag the map, scroll to zoom.</p>
+          <p class="lede">Three danger zones repeat around the spawn: easy, dangerous, deadly. The zone sets which species appear and how strong; the biome sets who lives there. Drag the map, scroll to zoom; the biomes scroll beside it.</p>
         </header>
         <div class="map-wrap">
           <div class="map-view"><canvas id="danger" aria-label="Interactive danger zone map"></canvas></div>
@@ -810,70 +897,70 @@
   <section id="existence">
     <header class="page-head">
     <div><div class="eyebrow">Existence Model</div><h2>One animal, rendered and unrendered</h2></div>
-    <div class="ledes">
     <p class="lede">A wild animal is a body while a player is near and a record on the wildlife register otherwise. Rendered, it runs the behavior model; unrendered, the existence model, which settles whether it fed, bred, was hunted or died. The two columns take the same five steps, side by side.</p>
-    </div>
     </header>
-
+    <div class="ex-steps" role="tablist" aria-label="Step, the behavior model's beside the existence model's"><button type="button" role="tab" data-step="0" aria-selected="true"><b>0</b>Overview</button><button type="button" role="tab" data-step="1" aria-selected="false"><b>1</b>Routine<small>&middot; stability</small></button><button type="button" role="tab" data-step="2" aria-selected="false"><b>2</b>State machine<small>&middot; population history</small></button><button type="button" role="tab" data-step="3" aria-selected="false"><b>3</b>Bridges<small>&middot; statistics</small></button><button type="button" role="tab" data-step="4" aria-selected="false"><b>4</b>Model<small>&middot; the bounded functions</small></button><button type="button" role="tab" data-step="5" aria-selected="false"><b>5</b>States<small>&middot; parameters</small></button></div>
     <div class="cols twin">
       <div class="part" id="bm">
-        <header class="twin-head">
+        <div class="twin-top">
+          <header class="twin-head">
           <div class="eyebrow">Rendered creatures</div>
           <h3>Behavior Model</h3>
-          <p class="lede">The animal as you meet it: an intent (roam, hunt, flee, sleep...) and the animation-timed action that carries it out. Herd mates react with their own delays.</p>
         </header>
-        <div class="panel twin-tiers">
+          <div class="panel twin-pick">
+          <div class="pick"><span class="label">Model</span><div class="tabs model-tabs" role="tablist" aria-label="Behavior model">%%MODELTABS%%</div></div>
+          <div class="pick"><span class="label">Distance</span><div class="tabs tier-tabs" role="tablist" aria-label="Distance tier">%%TIERTABS%%</div></div>
+        </div>
+        </div>
+        <div class="twin-steps">
+        <div class="step" data-step="0">
+          <p class="lede">The animal as you meet it: an intent (roam, hunt, flee, sleep...) and the animation-timed action that carries it out. Herd mates react with their own delays.</p>
+          <div class="panel twin-tiers">
           %%BEHAVIORTIERS%%
           <p class="lod-note">The nearer the player, the more of the model runs; each tier border has a margin of %%BEHAVIORMARGIN%%. A hit, an alarm, a target, a rider, a tame or torpor always runs full detail, and hunger and thirst only change there.</p>
         </div>
-        <div class="panel twin-pick">
-          <div class="pick"><span class="label">Model</span><div class="tabs model-tabs" role="tablist" aria-label="Behavior model">%%MODELTABS%%</div></div>
-          <div class="pick"><span class="label">Distance</span><div class="tabs tier-tabs" role="tablist" aria-label="Distance tier">%%TIERTABS%%</div></div>
-          %%MODELABOUT%%
+          <div class="panel">%%MODELABOUT%%</div>
         </div>
 
-        <div class="step">
+        <div class="step" data-step="1" hidden>
           <h4><i>1</i>Routine<small>the day of a land animal</small></h4>
           <p class="muted">The 24 game hours of a carnivore and of a herbivore; each animal shifts its own clock, so a herd wakes one by one.</p>
           %%SCHEDULE%%
         </div>
 
-        <div class="step">
+        <div class="step" data-step="2" hidden>
           <h4><i>2</i>State machine<small>every transition of the model picked</small></h4>
           <p class="muted">Rows are the current state, columns the next; a filled cell is a transition seen in seeded encounters. Pick a state or a cell for the rules behind it.</p>
           %%MACHINES%%
         </div>
 
-        <div class="step">
+        <div class="step" data-step="3" hidden>
           <h4><i>3</i>Bridges<small>the actions inside a change of state</small></h4>
           <p class="muted">Every change of state first plays a short bridge timed to the rig's own clips; a hit or a threat at the body skips it.</p>
           %%BRIDGES%%
         </div>
 
-        <div class="step">
+        <div class="step" data-step="4" hidden>
           <h4><i>4</i>Model<small>the same transitions as a diagram</small></h4>
           <p class="muted">The state machine and the distance picked, drawn; a dashed "Any state" stands for a rule that fires from most states.</p>
           %%DIAGRAMS%%
         </div>
 
-        <div class="step">
+        <div class="step" data-step="5" hidden>
           <h4><i>5</i>States<small>the action vocabulary</small></h4>
           <p class="muted">What the body does inside a state, grouped by how it may move; "+ clip" actions start with a one-shot reaction clip when the rig has one.</p>
           <div class="actions panel">%%ACTIONS%%</div>
         </div>
+        </div>
       </div>
 
       <div class="part ex" id="ex">
-        <header class="twin-head">
+        <div class="twin-top">
+          <header class="twin-head">
           <div class="eyebrow">Unrendered creatures</div>
           <h3>Existence Model</h3>
-          <p class="lede">The animal while nobody is near: a record with no body, costing no server time between rounds. Here the rounds run without the game, years in a second, to tune the weights until a region keeps within its bounds.</p>
         </header>
-        <div class="panel twin-tiers">
-          %%EXISTENCE_BEYOND%%
-          <p class="lod-note">No record is dropped: an animal a client was sent stays on the register until an end on record (hunted, of age, starved, tamed or removed), and none despawns the vanilla way.</p>
-        </div>
-        <div class="panel twin-pick">
+          <div class="panel twin-pick">
           <div class="ex-bar" role="group" aria-label="Region">
             <label>Region<select data-ex="region"></select></label>
             <label>Size<select data-ex="cells"><option value="64">64 chunks</option><option value="128">128 chunks</option><option value="256" selected>256 chunks</option><option value="512">512 chunks</option><option value="1024">1024 chunks, a whole tile</option></select></label>
@@ -892,8 +979,17 @@
           <p class="muted ex-idle" hidden>The first rules: the rounds of <code>SilentLife</code> the game ran before the bounded model (commit <code>%%EXISTENCE_COMMIT%%</code>), kept as <code>silentRules = ODDS</code> with their own constants (listed under Parameters). Under them the game takes new groups in only where a player is near, so Arrivals starts off: this is the land nobody visits. Switch it on for land a player keeps coming back to.</p>
           <p class="muted ex-status" aria-live="polite"></p>
         </div>
+        </div>
+        <div class="twin-steps">
+        <div class="step" data-step="0">
+          <p class="lede">The animal while nobody is near: a record with no body, costing no server time between rounds. Here the rounds run without the game, years in a second, to tune the weights until a region keeps within its bounds.</p>
+          <div class="panel twin-tiers">
+          %%EXISTENCE_BEYOND%%
+          <p class="lod-note">No record is dropped: an animal a client was sent stays on the register until an end on record (hunted, of age, starved, tamed or removed), and none despawns the vanilla way.</p>
+        </div>
+        </div>
 
-        <div class="step">
+        <div class="step" data-step="1" hidden>
           <h4><i>1</i>Populational stability<small>a region and its years</small></h4>
           <p class="muted">A biome region is a connected patch of one biome inside a tile of 32 by 32 chunks; who lives there is read from the game's spawn tags, and the verdict holds across repeated draws.</p>
           <div class="ex-verdict" aria-live="polite"><span class="muted">The region is lived through when this page opens.</span></div>
@@ -904,7 +1000,7 @@
           </details>
         </div>
 
-        <div class="step">
+        <div class="step" data-step="2" hidden>
           <h4><i>2</i>Population history<small>the life of a record</small></h4>
           <p class="muted">Between two rounds a record is fed, hungry or starving. It comes to the region with its group or is born there, and ends hunted, of age or starved. Each connection carries its weight: how often it was taken in the runs.</p>
           <div class="tabs ex-focus" role="tablist" aria-label="Class"></div>
@@ -915,7 +1011,7 @@
           </div>
         </div>
 
-        <div class="step">
+        <div class="step" data-step="3" hidden>
           <h4><i>3</i>Statistics<small>who lives in the region</small></h4>
           <p class="muted">The mean of the runs: animals per class over the days, the pressure on each food, and every species of the region.</p>
           <div class="tabs ex-stat-tabs" role="tablist" aria-label="Statistics"><button type="button" role="tab" data-stat="animals" aria-selected="true">Animals by class</button><button type="button" role="tab" data-stat="pressure" aria-selected="false">Pressure on food</button><button type="button" role="tab" data-stat="species" aria-selected="false">Species</button></div>
@@ -939,7 +1035,7 @@
           </div>
         </div>
 
-        <div class="step">
+        <div class="step" data-step="4" hidden>
           <h4><i>4</i>Model<small>the bounded functions</small></h4>
           <p class="muted">What the game runs beyond the loaded land (<code>spawning.silentRules = BOUNDED</code>, <code>BoundedLife.java</code>). Each round the region reduces its register to one pressure per kind of eater, and every daily odd is a straight line through it, clamped to 0..1.</p>
           <dl class="panel ex-math">
@@ -955,7 +1051,7 @@
           </dl>
         </div>
 
-        <div class="step">
+        <div class="step" data-step="5" hidden>
           <h4><i>5</i>Parameters<small>the weights</small></h4>
           <p class="muted">Move one and the region is lived through again. Changes stay in this browser; Save weights writes the file the next build of this page starts from. The game reads <code>spawning.boundedLife</code> in the server config, whose defaults these are.</p>
           <div class="panel ex-weights">
@@ -969,39 +1065,35 @@
             </details>
           </div>
         </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="progression">
-    <header class="page-head">
-    <div><div class="eyebrow">Progression</div><h2>From a loose rock to the Iron Age</h2></div>
-    <div class="ledes">
-    <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds %%TREE_COUNT%% technologies over three ages, drawn as the game draws them in one strip. Each age opens at a gate, splits into %%TREE_LANES%% lanes and closes at a finale that needs every lane; one secret bonus food hides in each. Progress is shared by your FTB team. Hover a node for its objective.</p>
-    </div>
-    </header>
-    <div class="tree-bar">
-      <div class="tree-jumps" role="group" aria-label="Jump to an age">%%TREE_JUMPS%%<button type="button" id="tree-fit" aria-pressed="false">Whole tree</button></div>
-      <div class="legend-key">
+    <div class="prog">
+      <aside class="prog-side">
+        <header><div class="eyebrow">Progression</div><h2>From a loose rock to the Iron Age</h2></header>
+        <p class="lede">The Tribe Chronicle (press <code>P</code> in game) holds %%TREE_COUNT%% technologies over three ages, drawn as the game draws them in one strip. Each age opens at a gate, splits into %%TREE_LANES%% lanes and closes at a finale that needs every lane; one secret bonus food hides in each. Progress is shared by your FTB team.</p>
+        <div class="tree-jumps" role="group" aria-label="Jump to an age">%%TREE_JUMPS%%<button type="button" id="tree-fit" aria-pressed="false">Whole tree</button></div>
+  <div class="legend-key">
         <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#e2763f" stroke-width="4"/></svg> Wired: completes from real gameplay</span>
         <span><svg width="22" height="22" viewBox="0 0 60 60"><path d="%%STARPATH%%" fill="none" stroke="#8a8f86" stroke-width="4" stroke-dasharray="6 4"/></svg> Planned: objective written, trigger pending</span>
         <span>??? Secret bonus food</span>
       </div>
+        <div class="node-info" id="node-info" aria-live="polite"><b>Pick a node</b><span class="muted">Hover a node: its objective and how it completes appear here.</span></div>
+      </aside>
+      <div class="tree-scroll" id="tree-strip">%%TREE%%</div>
     </div>
-    <div class="tree-scroll" id="tree-strip">%%TREE%%</div>
-    <div class="node-info" id="node-info" aria-live="polite"><b>Pick a node</b><span class="muted">The objective and how it completes appear here.</span></div>
-
-    <h3>Survival Journal</h3>
-    <p class="lede">The FTB Quests book (press <code>J</code>) teaches each system in short chapters, shared by the tribe.</p>
-    <div class="grid-5">%%JOURNAL%%</div>
   </section>
 
   <section id="recipes">
-    <div class="rm-screen">
-      <div class="rm-head">
-        <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
-        <p class="lede" data-toc-after>No crafting grid is left (P14): every bench opens a graph of what it makes, and so does the inventory, and costs follow Ark. The map holds the %%TREE_ITEMS%% things the Prehistoric age makes: a row per station, a column per step from bare hands, read from the game's own recipes. Hover an item for its name and recipe.</p>
-      </div>
+    <header class="page-head">
+      <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
+      <p class="lede">No crafting grid is left (P14): every bench opens a graph of what it makes, and so does the inventory, and costs follow Ark. The map holds the %%TREE_ITEMS%% things the Prehistoric age makes: a row per station, a column per step from bare hands, read from the game's own recipes. Hover an item for its name and recipe.</p>
+    </header>
+    <div class="panes">
+    <div class="pane fill" data-pane="Recipe map">
       <div class="rm-box" id="recipe-map">
         <div class="rm-map" tabindex="-1" aria-label="Prehistoric recipe map"></div>
         <div class="rm-bar">
@@ -1015,8 +1107,20 @@
         </div>
       </div>
     </div>
-    <h3>The workstation screens</h3>
-    <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
+
+    <div class="pane" data-pane="Item sprites" hidden>
+    <p class="muted">The Ark items' own 32 px sprites; dinosaur meats are drawn larger than Minecraft's.</p>
+    %%ITEMS%%
+    </div>
+    </div>
+  </section>
+
+  <section id="ui">
+    <header class="page-head">
+      <div><div class="eyebrow">UI</div><h2>The workstation screens</h2></div>
+  <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
+    </header>
+    <div class="panes"><div class="pane">
     <div class="ws-split">
     <div class="ws" id="ws">
       <div class="ws-tabs" role="tablist" aria-label="Workstation"></div>
@@ -1042,9 +1146,15 @@
     <details class="ws-recipes"><summary>All %%RECIPES_COUNT%% Armoury recipes</summary>
       <div class="table-wrap"><table class="ws-table"><thead><tr><th>Item</th><th>Level</th><th>Cost</th><th>Items</th></tr></thead><tbody></tbody></table></div>
     </details>
+    </div></div>
+  </section>
 
-    <h3>Every vanilla recipe: go, stay or change</h3>
-    <p class="lede">All %%RECIPES_VANILLA%% vanilla recipes with the plan for each, %%RECIPES_DECIDE%% still to decide. <b>Go</b> removes it, <b>Stay</b> keeps its grid cost at the bench shown, <b>Change</b> keeps it with a new cost, <b>?</b> leaves it to decide. <b>Save decisions</b> writes the file to put at <code>Ark/design/workstations/vanilla_fates.json</code>; the next build applies it.</p>
+  <section id="control">
+    <header class="page-head">
+      <div><div class="eyebrow">Control</div><h2>Every recipe: go, stay or change</h2></div>
+  <p class="lede">All %%RECIPES_VANILLA%% vanilla recipes with the plan for each, %%RECIPES_DECIDE%% still to decide. <b>Go</b> removes it, <b>Stay</b> keeps its grid cost at the bench shown, <b>Change</b> keeps it with a new cost, <b>?</b> leaves it to decide. <b>Save decisions</b> writes the file to put at <code>Ark/design/workstations/vanilla_fates.json</code>; the next build applies it.</p>
+    </header>
+    <div class="panes"><div class="pane fill">
     <div class="rv" id="rv">
       <div class="rv-bar">
         <div class="rv-summary" aria-live="polite"></div>
@@ -1059,132 +1169,120 @@
         <button type="button" class="rv-toggle" data-filter="edited" aria-pressed="false">Only changed here</button>
       </div>
       <p class="rv-status muted" aria-live="polite"></p>
-      <div class="rv-list"></div>
-      <button type="button" class="rv-more" hidden></button>
+      <div class="scroll rv-scroll"><div class="rv-list"></div>
+      <button type="button" class="rv-more" hidden></button></div>
     </div>
-
-    <h3>Item sprites</h3>
-    <p class="muted">The Ark items' own 32 px sprites; dinosaur meats are drawn larger than Minecraft's.</p>
-    %%ITEMS%%
+    </div></div>
   </section>
 
   <section id="accessories">
     <header class="page-head">
     <div><div class="eyebrow">Accessories</div><h2>Gear worn on the body</h2></div>
-    <div class="ledes">
     <p class="lede">Every Curios slot is in use. Each accessory is a small model hung on the player's own bones, so it walks, sneaks, swims and rides with the wearer and shows on the first-person arms. Renders come from the shipped models.</p>
-    </div>
     </header>
-    <h3>Primitive gadgets</h3>
+    <div class="panes">
+    <div class="pane" data-pane="Primitive gadgets">
     <p class="muted">What prehistoric people actually wore, made from creature parts and camp materials. The stalker set (hood, ghillie wrap, moccasins) hides each sense the creatures use: scent, sight and hearing.</p>
     <div class="dinos accessory-grid">%%ACC_PRIMITIVE%%</div>
-    <h3>Relics and totems</h3>
+    </div>
+    <div class="pane" data-pane="Relics and totems" hidden>
     <p class="muted">The mystical set, bound with red ochre: amber, an alicorn, the feathered-serpent mantle, the Guardian's crown, rings and creature totems.</p>
     <div class="dinos accessory-grid">%%ACC_RELIC%%</div>
-    <h3>Creature parts</h3>
+    </div>
+    <div class="pane fill" data-pane="Creature parts" hidden>
     <p class="muted">A player kill rolls the creature's part on top of its carcass (meat, hide, bone). The Tally Bone adds a Looting level against creatures.</p>
-    <div class="table-wrap"><table class="parts"><thead><tr><th>Part</th><th>From</th></tr></thead><tbody>%%ACC_TROPHIES%%</tbody></table></div>
+    <div class="table-wrap scroll"><table class="parts"><thead><tr><th>Part</th><th>From</th></tr></thead><tbody>%%ACC_TROPHIES%%</tbody></table></div>
+    </div>
+    </div>
   </section>
 
   <section id="models">
     <header class="page-head">
     <div><div class="eyebrow">Models</div><h2>Every block and authored 3D model</h2></div>
-    <div class="ledes">
     <p class="lede">Built from Minecraft cuboids and drawn from the files the mod ships. Blocks are still renders; machines, the Saddlery, armour and weapons are live in three.js with the same elements, UVs and textures, and a drag turns any of them. Offline, a live card shows a still render.</p>
-    </div>
     </header>
-    <h3>Blocks</h3>
+    <div class="panes">
+    <div class="pane" data-pane="Blocks">
     <p class="muted">The camp, the benches and the Bronze Age minerals. Stations only work in loaded chunks, so being away never produces a windfall.</p>
     <div class="dinos">%%BLOCKS%%</div>
-    <div class="model-row">
-      <div class="part"><h3>Machines</h3>
-      <p class="muted">The Iron Age line (planned): press, mill and cutter share one 1&times;2 chassis with a belt between machines. Heat at the back sets the speed: cold stops the line, superheated doubles it.</p></div>
-      %%MODELS_MACHINES%%
     </div>
-    <div class="model-row">
-      <div class="part"><h3>Workstations</h3>
-      <p class="muted">The benches that stand two blocks tall; the Saddlery shows the saddle concept on its horse.</p></div>
-      %%MODELS_STATIONS%%
+    <div class="pane" data-pane="Machines" hidden>
+    <p class="muted">The Iron Age line (planned): press, mill and cutter share one 1&times;2 chassis with a belt between machines. Heat at the back sets the speed: cold stops the line, superheated doubles it.</p>
+    <div class="model-grid">%%MODELS_MACHINES%%</div>
     </div>
-    <div class="model-row">
-      <div class="part"><h3>Armour</h3>
-      <p class="muted">One silhouette per age: prehistoric horn and hide, bronze-age hammered metal, medieval steel. Previewed here; custom in-game rendering is pending.</p></div>
-      %%MODELS_ARMOUR%%
+    <div class="pane" data-pane="Workstations" hidden>
+    <p class="muted">The benches that stand two blocks tall; the Saddlery shows the saddle concept on its horse.</p>
+    <div class="model-grid">%%MODELS_STATIONS%%</div>
     </div>
-    <div class="model-row">
-      <div class="part"><h3>Authored weapons</h3>
-      <p class="muted">In the inventory these keep their sprites; in the hands they are these models.</p></div>
-      %%MODELS_WEAPONS%%
+    <div class="pane" data-pane="Armour" hidden>
+    <p class="muted">One silhouette per age: prehistoric horn and hide, bronze-age hammered metal, medieval steel. Previewed here; custom in-game rendering is pending.</p>
+    <div class="model-grid">%%MODELS_ARMOUR%%</div>
+    </div>
+    <div class="pane" data-pane="Weapons" hidden>
+    <p class="muted">In the inventory these keep their sprites; in the hands they are these models.</p>
+    <div class="model-grid">%%MODELS_WEAPONS%%</div>
+    </div>
     </div>
   </section>
 
   <section id="interface">
     <header class="page-head">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
-    <div class="ledes">
-    <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page: containers become light limestone, buttons, hotbar and tooltips dark basalt with moss and ember accents. Every slot stays where vanilla puts it, so other mods' screens still line up. A baroque restyle (P16, in production) is replacing this look; the pictures below show the first pass.</p>
-    </div>
+    <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page: containers become light limestone, buttons, hotbar and tooltips dark basalt with moss and ember accents. Every slot stays where vanilla puts it, so other mods' screens still line up. A baroque restyle (P16, in production) is replacing this look; the pictures show the first pass.</p>
     </header>
-
+    <div class="panes">
+    <div class="pane" data-pane="Title screen">
     <div class="cols lead">
-      <div class="part">
-    <h3>Title screen</h3>
-    <figure class="wide-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, drawn live by two GLSL layers, with the T-Rex idling between them. Lightning flashes the sky, the ferns and the creature together; the buttons stand in a column on the left.</figcaption></figure>
-
-      </div>
-      <div class="part">
-    <h3>What changes</h3>
-    <dl class="changes">
-      <div><dt class="label">Containers</dt><dd>All 26 vanilla container screens, the recipe book and container sprites</dd></div>
-      <div><dt class="label">Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd></div>
-      <div><dt class="label">HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd></div>
-      <div><dt class="label">Tooltips</dt><dd>Basalt panel with a moss frame</dd></div>
-      <div><dt class="label">Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd></div>
-      <div><dt class="label">Menus</dt><dd>FancyMenu scene on the title, world and server menus: night rain, the live T-Rex (Ark Creature element) and the Ark logo</dd></div>
-      <div><dt class="label">Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd></div>
-      <div><dt class="label">Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd></div>
-      <div><dt class="label">Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd></div>
-    </dl>
-      </div>
+      <figure class="wide-shot interface-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, drawn live by two GLSL layers, with the T-Rex idling between them. Lightning flashes the sky, the ferns and the creature together; the buttons stand in a column on the left.</figcaption></figure>
+      <dl class="changes">
+        <div><dt class="label">Containers</dt><dd>All 26 vanilla container screens, the recipe book and container sprites</dd></div>
+        <div><dt class="label">Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd></div>
+        <div><dt class="label">HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd></div>
+        <div><dt class="label">Tooltips</dt><dd>Basalt panel with a moss frame</dd></div>
+        <div><dt class="label">Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd></div>
+        <div><dt class="label">Menus</dt><dd>FancyMenu scene on the title, world and server menus: night rain, the live T-Rex (Ark Creature element) and the Ark logo</dd></div>
+        <div><dt class="label">Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd></div>
+        <div><dt class="label">Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd></div>
+        <div><dt class="label">Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd></div>
+      </dl>
     </div>
-
-    <h3>Screens and widgets</h3>
+    </div>
+    <div class="pane" data-pane="Ark inventory" hidden>
+      <figure class="wide-shot interface-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory in carved stone: the gear in seven rows beside the player's niche, the crafting graph beside them, and under the band a narrower block of storage eleven columns wide (the side pockets left and right of the nine) over the hotbar, its bottom corners cut away round carved consoles. Offline render of the texture and slot icons; the game draws the graph in the dark panel.</figcaption></figure>
+    </div>
+    <div class="pane" data-pane="Screens and widgets" hidden>
     <div class="shots">
-      <div>
-        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
-        <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
-      </div>
-      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory in carved stone: the gear in seven rows beside the player's niche, the crafting graph beside them, and under the band a narrower block of storage eleven columns wide (the side pockets left and right of the nine) over the hotbar, its bottom corners cut away round carved consoles. Offline render of the texture and slot icons; the game draws the graph in the dark panel.</figcaption></figure>
+      <figure class="wide-shot interface-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
+      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
+    </div>
+    </div>
     </div>
   </section>
 
   <section id="integrations">
     <header class="page-head">
     <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
-    <div class="ledes">
-    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface">Interface</a> page.</p>
-    </div>
+    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface/ark-inventory">Interface</a> page.</p>
     </header>
+    <div class="panes"><div class="pane">
     <div class="integrations">%%INTEGRATIONS%%</div>
+    </div></div>
   </section>
 
   <section id="roadmap">
     <header class="page-head">
     <div><div class="eyebrow">Roadmap</div><h2>Where the project stands</h2></div>
-    <div class="ledes">
     <p class="lede">The management dashboard (<code>Dashboard.csv</code>), parsed by this page: <span id="roadmap-source">the copy embedded at the last commit</span>. Only rows written as verified show as done.</p>
-    </div>
     </header>
-    <div class="table-wrap"><table>
+    <div class="panes"><div class="pane fill">
+    <div class="table-wrap scroll"><table>
       <thead><tr><th>Type</th><th>ID</th><th>Item</th><th>By</th><th>Status</th></tr></thead>
       <tbody id="roadmap-rows"></tbody>
     </table></div>
+    </div></div>
   </section>
-
-  <nav class="pager" id="pager" aria-label="Previous and next section"></nav>
 </main>
 
-<footer>Built %%DATE%% from the mod sources by <code>python Ark/tools/build_showcase.py</code>. Creature facts come from the live species enum; renders are offline previews, not in-game screenshots; biome pictures come from the wikis credited on their page. Private project; ARK assets belong to their owners.</footer>
 
 <script type="text/csv" id="dashboard-csv">%%DASHBOARD%%</script>
 <script>
@@ -1423,17 +1521,49 @@ window.arkModels = (function () {
   apply(stored());
   button.addEventListener('click', function () { apply(modes[(modes.indexOf(stored()) + 1) % modes.length]); });
 
-  // Creature filters.
-  var filterButtons = document.querySelectorAll('.filters button');
-  filterButtons.forEach(function (b) {
-    b.addEventListener('click', function () {
-      filterButtons.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
-      var f = b.dataset.filter;
-      document.querySelectorAll('#creatures .dino').forEach(function (card) {
-        card.hidden = f !== 'all' && card.dataset.tags.split(' ').indexOf(f) < 0;
-      });
+  // A page's own part of the hash (#page/part): what each page does with it when it opens.
+  var subs = {};
+
+  // Creatures: the picked card fills the portrait and shows its facts; the pick is kept in the hash.
+  var crItems = Array.prototype.slice.call(document.querySelectorAll('.cr-item'));
+  var crFacts = Array.prototype.slice.call(document.querySelectorAll('.cr-fact'));
+  var portrait = document.querySelector('.cr-portrait');
+  function pickCreature(id, how) {
+    var item = crItems.filter(function (b) { return b.dataset.id === id; })[0]
+      || crItems.filter(function (b) { return b.dataset.id === 'tyrannosaurus'; })[0] || crItems[0];
+    if (!item) return;
+    crItems.forEach(function (b) { b.setAttribute('aria-pressed', b === item ? 'true' : 'false'); });
+    crFacts.forEach(function (f) { f.hidden = f.dataset.id !== item.dataset.id; });
+    var thumb = item.querySelector('img'), img = portrait.querySelector('img');
+    img.src = thumb ? thumb.src : '';
+    img.alt = item.querySelector('.cr-name').textContent + ' under its saddle';
+    portrait.querySelector('.cr-rank').textContent = item.dataset.rank;
+    portrait.querySelector('.cr-tag').textContent = item.dataset.tag;
+    if (how && how !== 'click') {  // bring it into the picker's view, scrolling nothing else
+      var list = item.closest('.cr-pick'), top = item.offsetTop, h = item.offsetHeight;
+      if (top < list.scrollTop + 40 || top + h > list.scrollTop + list.clientHeight) list.scrollTop = top - 40;
+    }
+    if (how) history.replaceState(null, '', '#creatures/' + item.dataset.id);
+  }
+  crItems.forEach(function (b, i) {
+    b.addEventListener('click', function () { pickCreature(b.dataset.id, 'click'); });
+    // The arrows walk the picker: up and down within a column, left and right to the same row of the next column.
+    b.addEventListener('keydown', function (ev) {
+      var col = b.closest('ul'), mine = Array.prototype.slice.call(col.querySelectorAll('.cr-item')), at = mine.indexOf(b), to = null;
+      var cols = Array.prototype.slice.call(document.querySelectorAll('.cr-col ul')), c = cols.indexOf(col);
+      if (ev.key === 'ArrowDown') to = mine[at + 1];
+      else if (ev.key === 'ArrowUp') to = mine[at - 1];
+      else if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
+        var next = cols[c + (ev.key === 'ArrowRight' ? 1 : -1)];
+        if (next) { var there = next.querySelectorAll('.cr-item'); to = there[Math.min(at, there.length - 1)]; }
+      }
+      if (!to) return;
+      ev.preventDefault();
+      to.focus();
+      pickCreature(to.dataset.id, 'key');
     });
   });
+  subs.creatures = function (sub) { pickCreature(sub, sub ? 'hash' : ''); };
 
   // Biomes: one filter and one creature at a time; a card shows when it passes both. Names open per card or all at once.
   var biomeCards = Array.prototype.slice.call(document.querySelectorAll('.biome'));
@@ -1485,6 +1615,7 @@ window.arkModels = (function () {
   }
   function draw() {
     var w = canvas.clientWidth, h = canvas.clientHeight, step = 2;
+    if (!w || !h) return;  // its page is not on show
     canvas.width = w; canvas.height = h;
     var img = ctx.createImageData(w, h), d = img.data;
     for (var y = 0; y < h; y += step) {
@@ -1648,7 +1779,7 @@ window.arkModels = (function () {
       themeVariables: { fontFamily: 'Source Sans 3, Segoe UI, sans-serif', fontSize: '14px', lineColor: d ? '#8f958a' : '#6d7268',
         primaryTextColor: '#22251f', textColor: d ? '#e6e8e1' : '#22251f', edgeLabelBackground: d ? '#1f221d' : '#ffffff', background: 'transparent' } });
     bm.querySelectorAll('.diagram').forEach(function (box) {
-      if (bm.closest('section').hidden || box.hidden || box.closest('[data-model]').hidden) return;
+      if (bm.closest('section').hidden || box.hidden || box.closest('[data-model]').hidden || box.closest('[data-step]').hidden) return;
       var target = box.querySelector('.diagram-svg');
       if (target.dataset.theme === key) return;
       target.dataset.theme = key;
@@ -1662,52 +1793,63 @@ window.arkModels = (function () {
   document.head.appendChild(script);
   window.addEventListener('ark-theme', function () { renderDiagrams(); draw(); });
 
-  // Pages: the nav, the index and the pager switch sections like a website; the hash keeps each page linkable.
+  // Existence: the step tabs show the same step in both columns; each column scrolls on its own.
+  var stepTabs = Array.prototype.slice.call(document.querySelectorAll('.ex-steps button'));
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.twin-steps > [data-step]'));
+  function showStep(n, push) {
+    stepTabs.forEach(function (b) { b.setAttribute('aria-selected', b.dataset.step === n ? 'true' : 'false'); });
+    steps.forEach(function (el) { el.hidden = el.dataset.step !== n; });
+    document.querySelectorAll('.twin-steps').forEach(function (col) { col.scrollTop = 0; });
+    window.dispatchEvent(new Event('resize'));  // the charts of a step drawn while hidden take their width now
+    renderDiagrams();
+    if (push) history.replaceState(null, '', '#existence/' + n);
+  }
+  stepTabs.forEach(function (b) { b.addEventListener('click', function () { showStep(b.dataset.step, true); }); });
+  subs.existence = function (sub) { showStep(/^[0-5]$/.test(sub) ? sub : '0'); };
+
+  // Pages: the nav and the home index switch sections like a website; the hash keeps each page (and its part) linkable.
   var sections = Array.prototype.slice.call(document.querySelectorAll('main > section'));
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
-  var hero = document.getElementById('top'), index = document.getElementById('index'), pager = document.getElementById('pager');
+  var hero = document.getElementById('top'), main = document.querySelector('main');
   var nav = document.querySelector('.nav'), menu = document.getElementById('menu');
   function openMenu(open) { nav.classList.toggle('open', open); menu.setAttribute('aria-expanded', open ? 'true' : 'false'); }
   menu.addEventListener('click', function () { openMenu(!nav.classList.contains('open')); });
   links.forEach(function (a) { a.addEventListener('click', function () { openMenu(false); }); });
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') openMenu(false); });
   document.addEventListener('click', function (ev) { if (!nav.contains(ev.target)) openMenu(false); });
-  // A page with several parts gets a row of jumps to them under its introduction (the hash belongs to the pages).
-  // A part's heading sits in the section itself, or in a .part (or its head) when it shares a row with another.
+  // A page of several parts (panes) shows one at a time under a row of tabs; the part picked is the hash's second half.
+  function slug(text) { return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   sections.forEach(function (section) {
-    var parts = Array.prototype.filter.call(section.querySelectorAll('h3'), function (el) {
-      return el.parentElement === section || el.parentElement.classList.contains('part') || el.parentElement.classList.contains('twin-head');
+    var holder = section.querySelector(':scope > .panes');
+    var panes = holder ? Array.prototype.filter.call(holder.children, function (p) { return p.classList.contains('pane'); }) : [];
+    if (panes.length < 2) return;
+    var bar = document.createElement('div');
+    bar.className = 'pane-tabs'; bar.setAttribute('role', 'tablist'); bar.setAttribute('aria-label', 'Parts of this page');
+    function show(at) {
+      panes.forEach(function (p, i) { p.hidden = i !== at; });
+      buttons.forEach(function (b, i) { b.setAttribute('aria-selected', i === at ? 'true' : 'false'); });
+      panes[at].scrollTop = 0;
+      window.dispatchEvent(new Event('resize'));  // canvases and charts in the pane take its size
+    }
+    var buttons = panes.map(function (pane, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = pane.dataset.pane;
+      b.addEventListener('click', function () { show(i); history.replaceState(null, '', '#' + section.id + '/' + slug(pane.dataset.pane)); });
+      bar.appendChild(b);
+      return b;
     });
-    if (parts.length < 2) return;
-    var toc = document.createElement('nav'); toc.className = 'toc'; toc.setAttribute('aria-label', 'On this page');
-    var label = document.createElement('span'); label.className = 'label'; label.textContent = 'On this page'; toc.appendChild(label);
-    parts.forEach(function (h) {
-      var b = document.createElement('button'); b.type = 'button'; b.textContent = h.textContent;
-      b.addEventListener('click', function () { h.scrollIntoView({ block: 'start' }); });
-      toc.appendChild(b);
-    });
-    var anchor = section.querySelector('[data-toc-after]') || section.querySelector(':scope > .lede') || section.firstElementChild;
-    while (anchor.nextElementSibling && anchor.nextElementSibling.classList.contains('lede')) anchor = anchor.nextElementSibling;
-    anchor.insertAdjacentElement('afterend', toc);
+    holder.insertAdjacentElement('beforebegin', bar);
+    subs[section.id] = function (sub) {
+      var at = panes.map(function (p) { return slug(p.dataset.pane); }).indexOf(sub);
+      show(at < 0 ? 0 : at);
+    };
   });
   function titleOf(section) { return section.querySelector('.eyebrow').textContent; }
-  function pagerLink(section, cls, label) {
-    var a = document.createElement('a'); a.className = cls; a.href = section ? '#' + section.id : '#top';
-    var small = document.createElement('small'); small.textContent = label;
-    var b = document.createElement('b'); b.textContent = section ? titleOf(section) : 'Home';
-    a.appendChild(small); a.appendChild(b); return a;
-  }
   var MOVED = { biomes: 'world', blocks: 'models', behavior: 'existence' };  // pages merged into another keep their old links
   function route() {
-    var id = location.hash.slice(1), at = -1;
-    id = MOVED[id] || id;
-    sections.forEach(function (s, i) { if (s.id === id) at = i; });
-    var current = at >= 0 ? sections[at] : null;
-    hero.hidden = !!current; index.hidden = !!current; pager.hidden = !current;
-    var onWorld = !!current && current.id === 'world', page = document.querySelector('main');
-    page.classList.toggle('pinned', onWorld);
-    if (onWorld) { document.getElementById('biomes').append(pager, document.querySelector('footer')); }
-    else { page.appendChild(pager); page.insertAdjacentElement('afterend', document.querySelector('footer')); }
+    var hash = location.hash.slice(1).split('/'), id = MOVED[hash[0]] || hash[0];
+    var current = sections.filter(function (s) { return s.id === id; })[0] || null;
+    hero.hidden = !!current; main.hidden = !current;
     sections.forEach(function (s) { s.hidden = s !== current; });
     links.forEach(function (a) {
       var on = !!current && a.getAttribute('href') === '#' + current.id;
@@ -1716,17 +1858,13 @@ window.arkModels = (function () {
     });
     if (!current) menu.textContent = 'Sections';
     openMenu(false);
-    pager.innerHTML = '';
-    if (current) {
-      pager.appendChild(pagerLink(sections[at - 1] || null, 'prev', 'Previous'));
-      if (sections[at + 1]) pager.appendChild(pagerLink(sections[at + 1], 'next', 'Next'));
-    }
+    if (current && subs[current.id]) subs[current.id](hash[1] || '');
     document.title = current ? titleOf(current) + ' · Ark Survival Returns' : 'Ark Survival Returns';
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (current && current.id === 'world') draw();
     if (current && current.id === 'existence') renderDiagrams();
     window.arkModels.show(!!current && current.id === 'models');
-    window.arkRecipes.show(!!current && current.id === 'recipes');
+    window.arkRecipes.show(!!current && current.id === 'ui');
     window.arkTree.show(!!current && current.id === 'recipes');
     window.arkExistence.show(!!current && current.id === 'existence');
   }

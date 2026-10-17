@@ -111,8 +111,8 @@ SADDLE_TAGS = {'straddle': 'straddle saddle', 'chair': 'chair saddle', 'platform
 def creature_image(species_id, saddles):
     """The card picture and its tag: the animal under its concept saddle (tools/preview_saddles.py), else bare."""
     saddled = SADDLES / f'{species_id}.webp'
-    if saddled.is_file() and species_id in saddles:
-        return uri(saddled, quality=82), SADDLE_TAGS[saddles[species_id]['seat']]
+    if saddled.is_file() and species_id in saddles:  # already WebP: embedded as written, not encoded again
+        return 'data:image/webp;base64,' + base64.b64encode(saddled.read_bytes()).decode(), SADDLE_TAGS[saddles[species_id]['seat']]
     folder = REPO / 'Creatures' / FOLDERS.get(species_id, species_id.capitalize())
     for candidate in (folder / 'skin/previews/three_quarter.png', folder / 'textures/previews/three_quarter.png',
                       folder / 'previews/model.png'):
@@ -167,26 +167,86 @@ def refresh_roadmap(staged=False):
 
 # ---------------------------------------------------------------------------------------- sections
 
+# The creature page's four picker columns: flyers and the giants share one, the sea and the swamp another.
+CREATURE_GROUPS = [('carnivore', 'Carnivores', 'Carnivore'), ('herbivore', 'Herbivores', 'Herbivore'),
+                   ('aquatic', 'Aquatic and swamp', 'Aquatic and swamp'), ('flyer', 'Flyers and giants', 'Flyer')]
+SEAT_NAMES = {'straddle': 'Straddle saddle', 'chair': 'Chair saddle', 'platform': 'Deck saddle', 'sail': 'Saddle of its own',
+              'none': 'No saddle: too small for a seat'}
+
+
+def creature_group(s):
+    if s['realm'] == 'air' or s['size'] == 'giant':
+        return 'flyer'
+    if s['realm'] in ('water', 'amphibious') or s['habitat'] in ('sea', 'wetland'):
+        return 'aquatic'
+    return 'carnivore' if s['predator'] else 'herbivore'
+
+
+def creature_biomes(species):
+    """The names of the biomes each species spawns in, read from the spawn tags the spawner uses."""
+    import showcase_biomes
+    if not showcase_biomes.INDEX.is_file():
+        return {s['id']: [] for s in species}
+    removed = (showcase_biomes.members('theme/removed')
+               if (showcase_biomes.TAGS / 'theme/removed.json').is_file() else set())
+    names = {b['biome']: b['name'] for b in load_json(showcase_biomes.INDEX)['biomes'] if b['biome'] not in removed}
+    return {s['id']: sorted(names[b] for b in showcase_biomes.members(f'spawns/{s["id"]}') if b in names) for s in species}
+
+
 def creatures_section(species):
-    cards = []
+    """
+    The creature page: a picker of four columns (CREATURE_GROUPS) of small cards, and for each species the full
+    facts the large portrait beside them shows. The portrait reuses the picked card's picture.
+    """
     manifest = SADDLES.parent / 'saddles.json'
     saddles = load_json(manifest)['species'] if manifest.is_file() else {}
+    models = load_json(ARK / 'design/showcase/behavior.json')['models']
+    biomes = creature_biomes(species)
+    habitats = {key: (title, color) for key, title, color in HABITATS}
+    top = {key: max(s[key] for s in species) for key in ('health', 'damage')}
+    columns = {key: [] for key, _, _ in CREATURE_GROUPS}
+    facts = []
     for s in sorted(species, key=lambda s: (s['danger'], s['name'])):
+        group = creature_group(s)
         image, tag = creature_image(s['id'], saddles)
         pips = ''.join(f'<i style="background:{RANK_COLORS[i] if i < s["danger"] else "var(--line)"}"></i>' for i in range(len(RANK_COLORS)))
-        group = f'{s["groupMin"]}' if s['groupMin'] == s['groupMax'] else f'{s["groupMin"]}-{s["groupMax"]}'
-        tags = [s['realm']] + (['predator'] if s['predator'] else ['herbivore']) + (['apex'] if s['apex'] else []) + (['cold'] if s['cold'] else [])
-        filters = ' '.join(tags)
-        cards.append(f'''<article class="dino" data-tags="{filters}">
-  <div class="dino-art">{f'<img loading="lazy" src="{image}" alt="{e(s["name"])} model">' if image else ''}{f'<span class="art-tag">{tag}</span>' if tag else ''}</div>
-  <div class="dino-body">
-    <div class="dino-head"><h3>{e(s["name"])}</h3><span class="pips" title="Appears from danger rank {s["danger"]}">{pips}</span></div>
-    <div class="chips">{''.join(f'<span class="chip">{t}</span>' for t in tags)}</div>
-    <dl><div><dt>Health</dt><dd>{s["health"]:g}</dd></div><div><dt>Damage</dt><dd>{s["damage"]:g}</dd></div>
-    <div><dt>Group</dt><dd>{group}</dd></div><div><dt>Taming</dt><dd>{s["taming"]}</dd></div><div><dt>Meat</dt><dd>{s["meat"]}</dd></div></dl>
-  </div>
+        rank = f'Zone {s["danger"]}, {RANK_NAMES[s["danger"] - 1]}'
+        thumb = f'<img loading="lazy" src="{image}" alt="">' if image else ''
+        kind = 'Giant' if group == 'flyer' and s['realm'] != 'air' else next(one for key, _, one in CREATURE_GROUPS if key == group)
+        columns[group].append(
+            f'<li><button type="button" class="cr-item" data-id="{s["id"]}" data-tag="{e(tag)}" data-rank="{e(rank)}" '
+            f'aria-pressed="false"><span class="cr-thumb">{thumb}</span>'
+            f'<span class="cr-name">{e(s["name"])}</span><span class="pips" title="From danger zone {s["danger"]}">{pips}</span></button></li>')
+        crowd = f'{s["groupMin"]}' if s['groupMin'] == s['groupMax'] else f'{s["groupMin"]} to {s["groupMax"]}'
+        chips = [s['realm'], 'predator' if s['predator'] else 'herbivore'] + (['apex'] if s['apex'] else []) + (['cold'] if s['cold'] else [])
+        fitting = [m for m in models if s['realm'] in m['realms'].split()]
+        model = next((m for m in fitting if m['predator'] == s['predator']), fitting[0] if fitting else None)
+        saddle = saddles.get(s['id'])
+        seat = SEAT_NAMES.get(saddle['seat'], saddle['seat']) if saddle else 'Not drawn yet'
+        if saddle and saddle['seat'] != 'none':
+            seat += f', {saddle["tier"]}' + (f', {saddle["harness"]} harness' if saddle.get('harness') else '')
+        habitat, colour = habitats.get(s['habitat'], (s['habitat'].title(), 'var(--muted)'))
+        bars = ''.join(f'<div class="cr-bar"><dt>{label}</dt><dd><b>{s[key]:g}</b><span><i style="width:{100 * s[key] / top[key]:.0f}%"></i></span></dd></div>'
+                       for key, label in (('health', 'Health'), ('damage', 'Damage')))
+        rows = [('Group', crowd), ('Size', f'{s["size"].capitalize()}, {s["width"]:.3g} &times; {s["height"]:.3g} blocks'),
+                ('Taming', s['taming'].capitalize()), ('Meat', s['meat'].capitalize()), ('Saddle', e(seat)),
+                ('Behavior', e(model['title']) if model else '-'),
+                ('Habitat', f'<i class="dot" style="background:{colour}"></i>{e(habitat)}')]
+        where = biomes[s['id']]
+        places = (f'<h4>Spawns in {len(where)} biome{"s" if len(where) != 1 else ""}</h4>'
+                  f'<div class="cr-biomes">{"".join(f"<span>{e(b)}</span>" for b in where)}</div>') if where else '<h4>Spawns in no biome yet</h4>'
+        facts.append(f'''<article class="cr-fact" data-id="{s["id"]}" hidden>
+  <div class="eyebrow">{e(kind)}</div>
+  <h3>{e(s["name"])}</h3>
+  <p class="cr-zone"><span class="pips">{pips}</span>Appears from danger zone {s["danger"]}, {RANK_NAMES[s["danger"] - 1].lower()}</p>
+  <div class="chips">{''.join(f'<span class="chip">{c}</span>' for c in chips)}</div>
+  <dl class="cr-bars">{bars}</dl>
+  <dl class="cr-stats">{''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)}</dl>
+  {places}
 </article>''')
-    return '\n'.join(cards)
+    pick = ''.join(f'<div class="cr-col" data-group="{key}"><h3>{e(title)}<small>{len(columns[key])}</small></h3>'
+                   f'<ul>{"".join(columns[key])}</ul></div>' for key, title, _ in CREATURE_GROUPS)
+    return {'CREATURE_PICK': pick, 'CREATURE_FACTS': '\n'.join(facts)}
 
 
 HABITATS = [('temperate', 'Temperate land', '#6f9a4f'), ('wetland', 'Wetlands', '#3f8f80'),
@@ -651,7 +711,7 @@ def build():
     replacements = {
         'HERO': hero, 'LOGO': logo,
         'STATS': ''.join(f'<div class="stat"><b>{n}</b><span>{e(label)}</span></div>' for n, label in stats),
-        'CREATURES': creatures_section(species), 'SPECIES_COUNT': len(species),
+        **creatures_section(species), 'SPECIES_COUNT': len(species),
         **__import__('showcase_biomes').section(species, e, RANK_COLORS, RANK_NAMES, HABITATS),
         **behavior_section(names, species),
         **__import__('showcase_existence').section(e),

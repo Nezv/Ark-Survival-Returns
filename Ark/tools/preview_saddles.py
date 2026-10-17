@@ -994,7 +994,7 @@ def card(sid):
     solid = np.abs(np.asarray(white, int) - (19, 30, 39)).sum(2) > 120
     picture = Image.fromarray(np.dstack([np.asarray(image), np.where(solid, 255, 0).astype(np.uint8)]), "RGBA")
     picture = picture.crop(picture.getbbox())
-    picture.thumbnail((520, 310), Image.Resampling.LANCZOS)
+    picture.thumbnail((880, 600), Image.Resampling.LANCZOS)  # the creature page's 1:1 portrait
     CARDS.mkdir(parents=True, exist_ok=True)
     picture.save(CARDS / f"{sid}.webp", quality=84, method=6)
     return dict(seat=info["kind"], tier=info["tier"], harness=info["cargo"])
