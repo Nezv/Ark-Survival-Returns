@@ -49,18 +49,6 @@
       "source": "https://www.curseforge.com/minecraft/mc-mods/ftb-xmod-compat"
     },
     {
-      "project": "jei",
-      "version": "29.34.0.90",
-      "versionId": "AisPQmQz",
-      "filename": "jei-26.1.2-neoforge-29.34.0.90.jar",
-      "url": "https://cdn.modrinth.com/data/u6dRKJwZ/versions/AisPQmQz/jei-26.1.2-neoforge-29.34.0.90.jar",
-      "sha512": "dac4fcb7fe5b19d223c2138e14b84808f1e3afbfaf66247f131ce39d2ce8de5736a95b1c415554ecc5a81244708cb131788ab8dccd26cb3a9bda7a1daf481b18",
-      "size": 1828696,
-      "kind": "shared",
-      "license": "MIT",
-      "source": "https://modrinth.com/mod/jei"
-    },
-    {
       "project": "toms-storage",
       "version": "26.1-2.10.2",
       "versionId": "4gfSOCkU",

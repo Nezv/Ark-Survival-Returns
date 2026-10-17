@@ -42,7 +42,6 @@ public final class SessionProfile {
         OWNERS.put("xaero.", "Xaero");
         OWNERS.put("dev.ftb.", "FTB");
         OWNERS.put("de.keksuccino.", "FancyMenu");
-        OWNERS.put("mezz.jei.", "JEI");
         OWNERS.put("com.sonicether.", "Sound Physics");
         OWNERS.put("team.creative.", "AmbientSounds");
         OWNERS.put("net.bettercombat.", "Better Combat");

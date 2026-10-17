@@ -92,17 +92,10 @@
           "license": "All Rights Reserved (FTB)",
           "source": "https://github.com/FTBTeam/FTB-XMod-Compat",
           "build": "release"
-        },
-        {
-          "project": "jei",
-          "arkName": "Ark - JEI",
-          "license": "MIT",
-          "source": "https://github.com/mezz/JustEnoughItems",
-          "build": "release"
         }
       ],
-      "uses": "An FTB Teams party is the tribe: it shares tame permissions, the journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.",
-      "changed": "No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
+      "uses": "An FTB Teams party is the tribe: it shares tame permissions, the journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the tech nodes, and FTB is the authority for completion. Ark has no recipe viewer (no JEI): the P14 bench screens show every recipe.",
+      "changed": "No code changes to FTB. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.",
       "next": "In-client check of the journal, tribe permissions and tech-tree mirror."
     },
     {
@@ -228,7 +221,7 @@
       ],
       "uses": "Accessory slots in one Ark inventory: crown and hat (head), necklace, shirt (body), belt, pants (legs, added by Ark), socks and shoes (feet), and a charm.",
       "changed": "Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): its layout screen places the curio slots beside the armour column; the inventory key now opens the Ark inventory (F38) instead, which places the same slots itself beside the crafting graph. The separate Curios button is off. Ark's data pack defines the slot set. GameTest integration_curios checks all nine slot positions.",
-      "next": "In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. The F13 accessories fill the slots."
+      "next": "In-client check: the screen at every GUI scale and the recipe book. The F13 accessories fill the slots."
     },
     {
       "id": "I08",

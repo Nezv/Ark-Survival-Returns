@@ -93,7 +93,7 @@ These ship inside the Ark jar with their licenses retained under `Ark/third_part
 ## 5. Third-party mods and their assets (downloaded or built, never distributed in the Ark jar)
 
 - **Journal and tribe stack** — FTB Quests, FTB Library, FTB Teams, FTB XMod Compat (CurseForge, All
-  Rights Reserved) and JEI. Pins and SHA-512 hashes: `Ark/config/shared-mods.lock.json`; installer:
+  Rights Reserved). Pins and SHA-512 hashes: `Ark/config/shared-mods.lock.json`; installer:
   `Install-Ark-Extras.ps1`. All art and code belong to their authors.
 - **Client presentation pack** — Xaero's World Map and its bridge, Sodium, Iris, Complementary
   Reimagined shader, AmbientSounds, CreativeCore, Sound Physics Remastered and Presence Footsteps.

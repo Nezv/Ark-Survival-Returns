@@ -640,7 +640,7 @@ def blocks_section():
 
 
 def ui_section():
-    """The Interface page's screens as tools/ui_screens.py took them from the real client (shader pack on, no JEI)."""
+    """The Interface page's screens as tools/ui_screens.py took them from the real client (shader pack on)."""
     return {'SCREEN_' + name.upper(): uri(ARK / f'design/ui-rework/screens/{name}.jpg', quality=80, width=1600)
             for name in ('title', 'new_game', 'game', 'inventory', 'options')}
 

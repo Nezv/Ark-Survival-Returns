@@ -24,7 +24,7 @@ a clean checkout with JDK 25: Icy's in ~40 s once dependencies are cached, Ancie
 
 ## Runtime dependency closure
 
-In addition to Ark, the shared FTB/JEI stack and the client pack, an integrated instance needs:
+In addition to Ark, the shared FTB stack and the client pack, an integrated instance needs:
 
 | Dependency | Version for 26.1.2 | Source |
 |---|---|---|

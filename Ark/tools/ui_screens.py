@@ -1,12 +1,11 @@
 """Takes the showcase's Interface screens from the real client: the title screen, the new-world screen, the Ark
-inventory and the options, with the shader pack on, without JEI and without FancyMenu's editor bar.
+inventory and the options, with the shader pack on and without FancyMenu's editor bar.
 
     python tools/ui_screens.py [--gui-scale 4]
 
 Plays a disposable copy of run/saves/ArkBenchmark (python tools/session_bench.py --prepare makes it) full screen with
-the shader pack, launched with -ParkNoJei so JEI's item list is not drawn beside the inventory. client/ScreenTour
-stands the player at the world spawn in survival on a clear morning, takes the pictures and closes the game. They go
-to design/ui-rework/screens as JPEG, where build_showcase.py reads them. The Game screen there is a picked shader
+the shader pack. client/ScreenTour stands the player at the world spawn in survival on a clear morning, takes the
+pictures and closes the game. They go to design/ui-rework/screens as JPEG, where build_showcase.py reads them. The Game screen there is a picked shader
 screenshot (game.jpg); the tour's own view of the benchmark plains stays in the run folder as screenshots/game.png.
 The user's files are put back afterwards, also when the run fails. About three minutes; the game window is kept in front, so leave the machine alone meanwhile.
 """
@@ -84,7 +83,7 @@ def main() -> int:
                                      menus.read_bytes()))
         run.copy_world(bench.WORLD, bench.near_start(bench.world_start(kept)))
         print(f"screens -> {folder}", flush=True)
-        launch(folder, [f"-ParkWorld={run.COPY}", f"-ParkScreens={folder.as_posix()}", "-ParkNoJei=true"])
+        launch(folder, [f"-ParkWorld={run.COPY}", f"-ParkScreens={folder.as_posix()}"])
     finally:
         run.give_back()
         run.drop_copy()

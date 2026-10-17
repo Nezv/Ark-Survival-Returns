@@ -123,13 +123,12 @@ if (useArkPack && !file('pack/out/mods').isDirectory()) {
 def installedPack = useArkPack
     ? fileTree(dir: 'pack/out/client-mods', include: ['*.jar'])
     : fileTree(dir: 'client-mods', include: ['*.jar'], exclude: integratedStandaloneJars)
-// Client and server gameplay mods (survival journal stack). Loaded on every dev run.
+// Client and server gameplay mods (survival journal stack). Loaded on every dev run: only the jars
+// config/shared-mods.lock.json pins, so a dropped mod left behind in shared-mods/ never loads.
+def sharedPins = new groovy.json.JsonSlurper().parse(file('config/shared-mods.lock.json')).entries.collect { it.filename }
 def sharedPack = useArkPack
     ? fileTree(dir: 'pack/out/mods', include: ['Ark-*.jar'])
-    : fileTree(dir: 'shared-mods', include: ['*.jar'])
-// -ParkNoJei leaves JEI out of the run (pictures of the screens without its item list); Ark's JEI plugin still compiles.
-def jeiJar = { File jar -> jar.name.toLowerCase().contains('jei') }
-def sharedRun = project.hasProperty('arkNoJei') ? sharedPack.filter { !jeiJar(it) } : sharedPack
+    : fileTree(dir: 'shared-mods', include: sharedPins)
 // Sodium 0.9.2 (client-mods.lock.json) keeps its classes in a nested jar; the bulk vertex writer of
 // client/draw/sodium is compiled against that one. Sodium stays optional at run time.
 configurations { sodiumBundle { transitive = false } }
@@ -151,8 +150,7 @@ dependencies {
     compileOnly 'maven.modrinth:iris:qE5Y7GrZ'
     testImplementation 'maven.modrinth:iris:qE5Y7GrZ'
     implementation "maven.modrinth:geckolib:${geckolib_version}"
-    implementation sharedRun
-    if (project.hasProperty('arkNoJei')) compileOnly sharedPack.filter(jeiJar)
+    implementation sharedPack
     compileOnly 'maven.modrinth:xaero-world-map-bridge:xvbOh80a'
     compileOnly 'maven.modrinth:xaeros-world-map:pKatKnls'
     // FancyMenu 3.9.12 and Konkrete 1.10.1 (client-mods.lock.json): the title screen's Ark creature element.
@@ -209,7 +207,7 @@ def serverPackClasspath = neoForge.runs.gameTestServer.sourceSet.get().runtimeCl
 tasks.register('verifyClientPack') {
     group = 'verification'
     description = 'Checks that presentation mods load only with the client and shared gameplay mods load on both sides.'
-    inputs.files(clientPackClasspath, serverPackClasspath, installedPack, sharedRun)
+    inputs.files(clientPackClasspath, serverPackClasspath, installedPack, sharedPack)
     doLast {
         def clientFiles = clientPackClasspath.files
         def serverFiles = serverPackClasspath.files
@@ -217,11 +215,11 @@ tasks.register('verifyClientPack') {
             if (!clientFiles.contains(artifact)) throw new GradleException("Missing client dependency: ${artifact.name}")
             if (serverFiles.contains(artifact)) throw new GradleException("Client dependency leaked into server: ${artifact.name}")
         }
-        sharedRun.files.each { artifact ->
+        sharedPack.files.each { artifact ->
             if (!clientFiles.contains(artifact)) throw new GradleException("Missing shared dependency on client: ${artifact.name}")
             if (!serverFiles.contains(artifact)) throw new GradleException("Missing shared dependency on server: ${artifact.name}")
         }
-        logger.lifecycle("Verified ${installedPack.files.size()} presentation mods on client classpath only and ${sharedRun.files.size()} shared mods on both sides.")
+        logger.lifecycle("Verified ${installedPack.files.size()} presentation mods on client classpath only and ${sharedPack.files.size()} shared mods on both sides.")
     }
 }
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {

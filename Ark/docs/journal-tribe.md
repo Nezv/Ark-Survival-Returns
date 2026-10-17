@@ -12,8 +12,7 @@ permission flags for tames, discovery advancements and the authored quest pack.
 | FTB Quests | 26.1.2.8 | Client and server | Quest book, team progress, per-player rewards |
 | FTB Teams | 26.1.2.4 | Client and server | Party identity, invitations, team chat |
 | FTB Library | 26.1.2.8 | Client and server | Shared FTB UI and config library |
-| FTB XMod Compat | 26.1.2.4 | Client and server | Links quest tasks to JEI recipes |
-| JEI | 29.34.0.90 | Client and server | Recipe lookup, required on both sides for sync |
+| FTB XMod Compat | 26.1.2.4 | Client and server | Cross-mod quest compat; its optional JEI links stay unused |
 
 Exact files, URLs and SHA-512 hashes are in `config/shared-mods.lock.json`; the installer downloads
 them into `shared-mods/`, which loads on every dev run. FTB publishes under an All Rights Reserved

@@ -3619,7 +3619,7 @@
   <section id="interface">
     <header class="page-head">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
-    <p class="lede">The game's screens one at a time, as the real client draws them at GUI scale 4 with the Photon shader pack and without JEI (<code>python Ark/tools/ui_screens.py</code> takes them). Step through with <b>&lsaquo;</b> and <b>&rsaquo;</b> or the arrow keys; Workbenches is the live preview of the <a href="#ui">UI</a> page.</p>
+    <p class="lede">The game's screens one at a time, as the real client draws them at GUI scale 4 with the Photon shader pack (<code>python Ark/tools/ui_screens.py</code> takes them). Step through with <b>&lsaquo;</b> and <b>&rsaquo;</b> or the arrow keys; Workbenches is the live preview of the <a href="#ui">UI</a> page.</p>
     </header>
     <div class="panes"><div class="pane fill">
     <div class="screens" id="screens">
@@ -3640,7 +3640,7 @@
       <p class="screen-caption" data-screen="Title screen">The FancyMenu title scene: a rainy night at a primitive camp drawn live by two GLSL layers, the T-Rex idling between them, lightning flashing the sky, the ferns and the creature together. The buttons stand in a column on the left.</p>
       <p class="screen-caption" data-screen="New game" hidden>Create New World over the same scene, which carries on from menu to menu with its rain and its T-Rex; the tabs and buttons are carved basalt.</p>
       <p class="screen-caption" data-screen="Game" hidden>In play with the Photon shader pack: creatures on the river bank under a ruin, the Load gauge of the carried weight at the top left, the hotbar with its ember selection.</p>
-      <p class="screen-caption" data-screen="Inventory" hidden>The Ark inventory in carved stone: the worn keratin and the Curios slots in seven rows beside the player's niche, the inventory's crafting graph in the top band, the storage eleven columns wide over the hotbar. No JEI item list beside it: recipes are made in the graphs.</p>
+      <p class="screen-caption" data-screen="Inventory" hidden>The Ark inventory in carved stone: the worn keratin and the Curios slots in seven rows beside the player's niche, the inventory's crafting graph in the top band, the storage eleven columns wide over the hotbar. Ark has no recipe viewer: recipes are made in the graphs.</p>
       <p class="screen-caption" data-screen="Workbenches" hidden>The UI page's live workstation preview on this screen: pick a bench below, click a material, then a recipe, then the recipe again to craft. Player level and inventory are set on the <a href="#ui">UI</a> page.</p>
       <p class="screen-caption" data-screen="Options" hidden>Options in a world: the vanilla list with the physics settings on top, over the blurred game. Out of a world it opens over the title scene.</p>
     </div>
@@ -3653,7 +3653,7 @@
     <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface/inventory">Interface</a> page.</p>
     </header>
     <div class="panes"><div class="pane">
-    <div class="integrations"><div class="counts"><div class="count "><b>12</b><span>integrations</span></div><div class="count "><b>31</b><span>mods and shader packs</span></div><div class="count ok"><b>9</b><span>integrated</span></div><div class="count check"><b>2</b><span>configured</span></div><div class="count todo"><b>1</b><span>blocked</span></div></div><div class="chips"><span class="chip">22 &times; official release, ark-branded</span><span class="chip">3 &times; embedded in the ark jar</span><span class="chip">3 &times; shader pack, unmodified</span><span class="chip">2 &times; built from source, ark fork</span><span class="chip">1 &times; no 26.1 build yet</span></div>
+    <div class="integrations"><div class="counts"><div class="count "><b>12</b><span>integrations</span></div><div class="count "><b>30</b><span>mods and shader packs</span></div><div class="count ok"><b>9</b><span>integrated</span></div><div class="count check"><b>2</b><span>configured</span></div><div class="count todo"><b>1</b><span>blocked</span></div></div><div class="chips"><span class="chip">21 &times; official release, ark-branded</span><span class="chip">3 &times; embedded in the ark jar</span><span class="chip">3 &times; shader pack, unmodified</span><span class="chip">2 &times; built from source, ark fork</span><span class="chip">1 &times; no 26.1 build yet</span></div>
 <article class="integration panel">
   <header class="integration-head"><code>I01</code><h3>World map and danger telemetry</h3>
     <span class="chip ok">Integrated</span><span class="chip">Client only</span></header>
@@ -3678,9 +3678,9 @@
   <header class="integration-head"><code>I03</code><h3>Tribe, journal and tech-tree backend</h3>
     <span class="chip ok">Integrated</span><span class="chip">Client and server</span></header>
   <div class="integration-body">
-    <div><div class="label">5 mods</div><ul class="mods"><li><b>Ark - FTB Quests</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Quests" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB Teams</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Teams" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB Library</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Library" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB XMod Compat</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-XMod-Compat" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - JEI</b><span>Official release, Ark-branded</span><span class="muted">MIT &middot; <a href="https://github.com/mezz/JustEnoughItems" rel="noopener" target="_blank">source</a></span></li></ul></div>
-    <dl class="facts"><div><dt class="label">Ark uses it for</dt><dd>An FTB Teams party is the tribe: it shares tame permissions, the journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the tech nodes, and FTB is the authority for completion. JEI is the recipe viewer.</dd></div>
-    <div><dt class="label">What Ark changes</dt><dd>No code changes to FTB or JEI. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.</dd></div>
+    <div><div class="label">4 mods</div><ul class="mods"><li><b>Ark - FTB Quests</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Quests" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB Teams</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Teams" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB Library</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-Library" rel="noopener" target="_blank">source</a></span></li><li><b>Ark - FTB XMod Compat</b><span>Official release, Ark-branded</span><span class="muted">All Rights Reserved (FTB) &middot; <a href="https://github.com/FTBTeam/FTB-XMod-Compat" rel="noopener" target="_blank">source</a></span></li></ul></div>
+    <dl class="facts"><div><dt class="label">Ark uses it for</dt><dd>An FTB Teams party is the tribe: it shares tame permissions, the journal chapters and the Tribe Chronicle. Invisible FTB chapters mirror the tech nodes, and FTB is the authority for completion. Ark has no recipe viewer (no JEI): the P14 bench screens show every recipe.</dd></div>
+    <div><dt class="label">What Ark changes</dt><dd>No code changes to FTB. Ark ships the quest pack (config/ftbquests) and the bridge (feature/tech/TechFtbBridge.java). Jars are only rebranded.</dd></div>
     <div class="next"><dt class="label">Next</dt><dd>In-client check of the journal, tribe permissions and tech-tree mirror.</dd></div></dl>
   </div>
 </article>
@@ -3721,7 +3721,7 @@
     <div><div class="label">1 mod</div><ul class="mods"><li><b>Ark - Curios API</b><span>Built from source, Ark fork</span><span class="muted">LGPL-3.0 &middot; <a href="https://github.com/TheIllusiveC4/Curios" rel="noopener" target="_blank">source</a></span></li></ul></div>
     <dl class="facts"><div><dt class="label">Ark uses it for</dt><dd>Accessory slots in one Ark inventory: crown and hat (head), necklace, shirt (body), belt, pants (legs, added by Ark), socks and shoes (feet), and a charm.</dd></div>
     <div><dt class="label">What Ark changes</dt><dd>Built from source (branch 26.1.2) with an Ark patch (Ark/pack/patches/curios): its layout screen places the curio slots beside the armour column; the inventory key now opens the Ark inventory (F38) instead, which places the same slots itself beside the crafting graph. The separate Curios button is off. Ark&#x27;s data pack defines the slot set. GameTest integration_curios checks all nine slot positions.</dd></div>
-    <div class="next"><dt class="label">Next</dt><dd>In-client check: the screen at every GUI scale, the recipe book and the JEI overlay. The F13 accessories fill the slots.</dd></div></dl>
+    <div class="next"><dt class="label">Next</dt><dd>In-client check: the screen at every GUI scale and the recipe book. The F13 accessories fill the slots.</dd></div></dl>
   </div>
 </article>
 <article class="integration panel">
@@ -3815,7 +3815,7 @@ Patch,P22,Farm animal removal,Claude Opus 5.5,"Implemented; seen in recorded cli
 Integration,I02,SFX setup,Deepseek v4.1,Implemented; unverified in client (footstep cadence and loudness by ear).
 Integration,I01,World Map,Astra 6,Implemented; unverified in client.
 Backlog,B01,Tech node trigger wiring,Claude Opus 5.5 (Prehistoric and Bronze),Implemented for Prehistoric and Bronze; unverified in client.
-Integration,I03,FTB Mods Integration,Partially done through P01 and F01,Implemented; unverified in client. Remaining scope is not defined.
+Integration,I03,FTB Mods Integration,Partially done through P01 and F01,Implemented; unverified in client.
 Change,C01,Change game version from 26.2 to 26.1,Deepseek v4.1,Implemented; unverified.
 Integration,I04,Tom's Storage Mod integration,Claude Opus 5.5,Implemented; unverified in client.
 Feature,F02,Loose rocks and stone tools,Claude Opus 5.5,"Implemented; GameTest primitive_rocks covers grass, canopy, water bed and every biome; unverified in client (rock density, look on each ground)."
@@ -3824,7 +3824,7 @@ Feature,F04,Dried meat tiers,Claude Opus 5.5,Implemented; unverified in client.
 Feature,F05,Dinosaur meats and carcass loot,Claude Opus 5.5,Implemented; unverified in client.
 Feature,F06,Prehistoric gate flowchart,Claude Opus 5.5,Deprecated: superseded by the F37 recipe map and the P14 workstation screens (showcase UI page).
 Backlog,B02,Mortar and pestle (Narcotraffic),Claude Opus 5.5,Implemented; unverified in client.
-Backlog,B03,Recipe viewer for Stone Fire and Forge,Not started,Deprecated: no JEI is planned; the P14 bench screens show these recipes.
+Backlog,B03,Recipe viewer for Stone Fire and Forge,Not started,Deprecated: Ark ships no recipe viewer (JEI removed in I03); the P14 bench screens show these recipes.
 Backlog,B04,Prehistoric art gaps,Claude Opus 5.5,Implemented; unverified in client.
 Backlog,B05,tech_flow GameTest failing,Codex,Verified 2026-10-01 by three consecutive full GameTest runs.
 Backlog,B06,GameTest validity and coverage gaps,Codex,Verified 2026-10-01 by three consecutive full runs with the shipped pack.
