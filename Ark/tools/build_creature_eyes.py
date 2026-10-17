@@ -1052,7 +1052,12 @@ def add_designed_eyes(identifier, geometry, atlases):
             u, v, w, h = rect
             if key[0] == 'iris':
                 _, state, side = key
-                art = iris_art(w, h, iris_design[state], iris_r * px, centre_px, seed + (state == 'hunt'),
+                stops = iris_design[state]
+                if state == 'hunt' and identifier not in HUNTING_EYES:
+                    # No glow lights these by night or day: the iris itself burns brighter, all but its rim.
+                    stops = [(at, '#%02x%02x%02x' % tuple(int(v) for v in np.clip(_hex(code) * (1.0 if at == 1.0 else 1.3) + 8, 0, 255)))
+                             for at, code in stops]
+                art = iris_art(w, h, stops, iris_r * px, centre_px, seed + (state == 'hunt'),
                                skin=(lids if design['lids'] else tone)['base'], shape=design['almond'], pattern=iris_design['pattern'],
                                amount=iris_design['amount'], sclera=iris_design['sclera'], glint=iris_design['glint'])
                 if side == 'r':
