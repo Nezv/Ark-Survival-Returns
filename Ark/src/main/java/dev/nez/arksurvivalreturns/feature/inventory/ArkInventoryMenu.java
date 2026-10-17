@@ -34,7 +34,7 @@ public final class ArkInventoryMenu extends AbstractContainerMenu {
     public ArkInventoryMenu(int id, Inventory inventory) {
         super(InventoryContent.MENU.get(), id);
         owner = inventory.player;
-        for (int i = 0; i < 4; i++) addSlot(new Armor(inventory, owner, ARMOR_SLOTS[i], 39 - i, ARMOR_X, GEAR_Y + i * 18, ARMOR_ICONS[i]));
+        for (int i = 0; i < 4; i++) addSlot(new Armor(inventory, owner, ARMOR_SLOTS[i], 39 - i, ARMOR_X, row(ARMOR_ROWS[i]), ARMOR_ICONS[i]));
         addSlot(new Slot(inventory, Inventory.SLOT_OFFHAND, OFFHAND_X, OFFHAND_Y) {
             @Override public void setByPlayer(ItemStack stack, ItemStack previous) {
                 owner.onEquipItem(EquipmentSlot.OFFHAND, previous, stack);

@@ -75,7 +75,7 @@ public final class ArkInventoryScreen extends AbstractContainerScreen<ArkInvento
     @Override public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
         super.extractBackground(g, mouseX, mouseY, a);
         int x = leftPos, y = topPos;
-        g.blit(RenderPipelines.GUI_TEXTURED, PANEL, x, y, 0f, 0f, imageWidth, imageHeight, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        g.blit(RenderPipelines.GUI_TEXTURED, PANEL, x - FRAME_X, y - FRAME_TOP, 0f, 0f, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT);
         InventoryScreen.extractEntityInInventoryFollowsMouse(g, x + PLAYER_X0, y + PLAYER_Y0, x + PLAYER_X1, y + PLAYER_Y1,
                 PLAYER_SIZE, 0.0625F, xMouse, yMouse, minecraft.player);
         if (view == null) return;
@@ -83,6 +83,10 @@ public final class ArkInventoryScreen extends AbstractContainerScreen<ArkInvento
         g.pose().pushMatrix(); g.pose().translate(x + CRAFT_X, y + CRAFT_Y);
         view.render(g, viewX(mouseX), viewY(mouseY));
         g.pose().popMatrix();
+    }
+    /** The bottom corners are cut away: a click there is outside, so a carried stack drops. */
+    @Override protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top) {
+        return !inside(mouseX - left, mouseY - top);
     }
     /** No titles: the slots speak for themselves and the graph names itself. */
     @Override protected void extractLabels(GuiGraphicsExtractor g, int mouseX, int mouseY) {}
