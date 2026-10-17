@@ -16,10 +16,10 @@ from import_creatures import ROOT, ASSETS, SPECIES, PREDATORS, WATER, source_fil
 VARIANTS = ('ivory', 'darken', 'emerald', 'midnight', 'burgundy')
 PALETTE_SIZE = (64, 8)
 
-# Generated eyes (build_creature_eyes.py), mirroring Species.eyeBones(): two eyeballs per set, calm and
-# alert, under their own groups. Rigs without an eye anchor get none. The designed eyes (the predators, the sea
-# animals and the flyers, mirroring Species.designedEyes()) have a calm eyeball per side, a hunting one for a
-# predator, and the pupil, lids and brow client/CreatureEyes moves, as far as a design has them.
+# Eyes (build_creature_eyes.py): every species with an eye anchor has designed eyes (Species.designedEyes()), a
+# calm eyeball per side, a hunting one for a predator, and the pupil, lids and brow client/CreatureEyes moves, as
+# far as a design has them. Rigs without an eye anchor get none. A newly imported rig without a design gets the
+# generated calm and alert sets until it has one, which the check on DESIGNS below reports.
 NO_EYE_GEOMETRY = set(NO_EYES)
 # Item sprite contract: 32 px (a 16 px grid doubled, build_bronze_age_art.py), except the accessory icons and
 # the creature-part trophies, which build_accessories.py authors at 16 px.
@@ -211,8 +211,8 @@ def main():
         check(defined <= named['item'] | named['block'],
               f'{locale}: item definitions without a name: {sorted(defined - named["item"] - named["block"])}')
         check(named['item'] <= defined, f'{locale}: item names without a definition: {sorted(named["item"] - defined)}')
-    # The designed eyes are the predators', the sea animals' and the flyers' (Species.designedEyes()).
-    expected = (set(PREDATORS) | set(WATER) | set(FLYERS)) - NO_EYE_GEOMETRY
+    # Every species with eyes has them designed (Species.designedEyes()).
+    expected = {identifier for _, identifier, *_ in SPECIES} - NO_EYE_GEOMETRY
     check(set(DESIGNS) == expected, f'Designed eyes do not match the species that have them: missing {sorted(expected - set(DESIGNS))}, '
                                     f'extra {sorted(set(DESIGNS) - expected)}')
     try:

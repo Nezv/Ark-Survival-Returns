@@ -95,6 +95,6 @@ class CreatureEyesTest {
                 assertFalse(model.contains("\"name\":\"ark_eye_calm\""), species.id + ": the generated sets stay out of a designed model");
             }
         }
-        assertTrue(designed >= 26, "designed species: " + designed);
+        assertTrue(designed >= 38, "designed species: " + designed);
     }
 }

@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 import geckolib_mesh as gm
-from build_creature_eyes import DESIGNS, LID_SHUT, LID_TUCK, design_of, lid_cover
+from build_creature_eyes import DESIGNS, LID_SHUT, LID_TUCK, design_of, lid_cover, pupil_kind
 from import_creatures import SPECIES
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,8 +39,10 @@ def eye_pose(design, state):
     """Bone snapshot values of one expression, as CreatureRenderer applies them."""
     e = STATES[state]
     height = design['size'][1]
-    round_pupil = not isinstance(design['pupil'], tuple)
-    across = 1 + (e['slit'] - 1) * .5 if round_pupil else e['slit']
+    # A slit narrows across, a round pupil all round over a smaller range, a grazer's bar mostly in height.
+    kind = pupil_kind(design)
+    across = {'slit': e['slit'], 'round': 1 + (e['slit'] - 1) * .5, 'bar': 1 + (e['slit'] - 1) * .25}.get(kind, 1)
+    along = {'round': across, 'bar': 1 + (e['slit'] - 1) * .8}.get(kind, 1)
     red = e['red'] and design['iris']['hunt'] is not None
     pose = {}
     for side in ('l', 'r'):
@@ -49,7 +51,7 @@ def eye_pose(design, state):
             scale = (lid_cover(e['closure'], rest, LID_SHUT[lid]) + LID_TUCK[lid]) / (rest + LID_TUCK[lid])
             pose[f'ark_eye_lid_{lid}_{side}'] = {'scale': (1, scale, 1)}
         pose[f'ark_eye_brow_{side}'] = {'pos': (0, -e['drop'] * height, 0), 'rot': (math.radians(e['tilt']), 0, 0)}
-        pose[f'ark_eye_pupil_{side}'] = {'scale': (1, across if round_pupil else 1, across)}
+        pose[f'ark_eye_pupil_{side}'] = {'scale': (1, along, across)}
         pose[f'ark_eyeball_calm_{side}'] = {'hide': red}
         pose[f'ark_eyeball_hunt_{side}'] = {'hide': not red}
     return pose

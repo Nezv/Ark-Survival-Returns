@@ -12,10 +12,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 
 /**
- * The designed eyes (tools/build_creature_eyes.py, DESIGNS) of the predators, the sea animals and the flyers,
- * brought to life: lids that blink, and close in sleep, torpor and death; a brow that drops and tilts into a
- * frown; a pupil that narrows on prey and widens in the dark; and the calm eyes turning to their hunting
- * colour, behind a blink, for a hunt or a fight. One per creature, eased every frame towards the look of its
+ * The designed eyes (tools/build_creature_eyes.py, DESIGNS) of every creature, brought to life: lids that blink,
+ * and close in sleep, torpor and death; a brow that drops and tilts into a frown; a pupil that narrows on prey or
+ * in a fight and widens in fear and in the dark; and a predator's calm eyes turning to their hunting colour,
+ * behind a blink, for a hunt or a fight. One per creature, eased every frame towards the look of its
  * synced state; the renderer sets the bones from it. How wide a species' lids lie open, what shape its pupil
  * is and whether it has hunting eyes at all is read off its model ({@link #layout}), so a new design needs no
  * code here.
@@ -49,8 +49,11 @@ public final class CreatureEyes {
         }
     }
 
+    /** A pupil's shape, read off its bone: a vertical slit, round, or a grazer's horizontal bar. */
+    private enum Pupil { SLIT, ROUND, BAR }
+
     /** What a model's eye bones say about its design. */
-    private record Layout(float height, float restUpper, float restLower, boolean roundPupil, boolean hunt) {}
+    private record Layout(float height, float restUpper, float restLower, Pupil pupil, boolean hunt) {}
 
     private float closure, drop, tilt, slit = 1f;
     private float shownUpper, shownLower, shownDrop;
@@ -132,8 +135,17 @@ public final class CreatureEyes {
         float upperScale = (cover(shownUpper, layout.restUpper, UPPER_SHUT) + UPPER_TUCK) / (layout.restUpper + UPPER_TUCK);
         float lowerScale = (cover(shownLower, layout.restLower, LOWER_SHUT) + LOWER_TUCK) / (layout.restLower + LOWER_TUCK);
         float browY = -shownDrop * layout.height, browTurn = tilt * Mth.DEG_TO_RAD;
-        // A slit narrows across; a round pupil opens and closes all round, over a smaller range.
-        float across = layout.roundPupil ? 1f + (slit - 1f) * .5f : slit, along = layout.roundPupil ? across : 1f;
+        // A slit narrows across; a round pupil opens and closes all round, over a smaller range; a bar mostly in height.
+        float across = switch (layout.pupil) {
+            case SLIT -> slit;
+            case ROUND -> 1f + (slit - 1f) * .5f;
+            case BAR -> 1f + (slit - 1f) * .25f;
+        };
+        float along = switch (layout.pupil) {
+            case SLIT -> 1f;
+            case ROUND -> across;
+            case BAR -> 1f + (slit - 1f) * .8f;
+        };
         boolean hunting = red && layout.hunt;
         for (int side = 0; side < 2; side++) {
             snapshots.ifPresent(UPPER[side], bone -> bone.setScaleY(upperScale));
@@ -153,9 +165,9 @@ public final class CreatureEyes {
         float upper = size(model, UPPER[0], 1), lower = size(model, LOWER[0], 1);
         float tall = size(model, PUPIL[0], 1), wide = size(model, PUPIL[0], 2);
         // A lid is built (rest + tuck) eye heights long: its own length says how far open it lies.
+        Pupil pupil = tall >= 1.5f * wide ? Pupil.SLIT : tall < .75f * wide ? Pupil.BAR : Pupil.ROUND;
         return new Layout(height, height > 0f && upper > 0f ? Math.max(0f, upper / height - UPPER_TUCK) : 0f,
-                height > 0f && lower > 0f ? Math.max(0f, lower / height - LOWER_TUCK) : 0f, tall > 0f && tall < 1.5f * wide,
-                model.getBone(HUNT[0]).isPresent());
+                height > 0f && lower > 0f ? Math.max(0f, lower / height - LOWER_TUCK) : 0f, pupil, model.getBone(HUNT[0]).isPresent());
     }
 
     /** The first cube of a bone, along one axis (0 x, 1 y, 2 z) in model units; 0 for a bone that is not there. */

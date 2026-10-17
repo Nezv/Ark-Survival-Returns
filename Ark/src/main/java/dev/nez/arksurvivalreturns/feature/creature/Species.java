@@ -360,12 +360,11 @@ public enum Species {
     }
 
     /**
-     * The predators, the sea animals and the flyers have eyes designed one by one (build_creature_eyes.DESIGNS):
-     * lids, a pupil, often a brow, and for a predator a hunting colour, all moved by the client (client/CreatureEyes).
-     * The herbivores keep the generated eye sets.
+     * Every species with eyes has them designed one by one (build_creature_eyes.DESIGNS): lids, a pupil, often a
+     * brow, and for a predator a hunting colour, all moved by the client (client/CreatureEyes).
      */
     public boolean designedEyes() {
-        return !NO_EYES.contains(id) && (predator || flyer() || aquatic());
+        return !NO_EYES.contains(id);
     }
 
     public String[] eyeBones() { return eyeBones(false); }
