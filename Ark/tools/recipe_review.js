@@ -108,9 +108,9 @@ window.ArkRecipeReview = (function () {
     /** The cost cell: the cost as it is and, for a change, the new one, or a call for it; an editor button beside. */
     function costCell(r, e, key) {
       if (r.sp) return costHtml(r.c, r.n || 1, r.r);
-      var now = e.fate === 'change' ? (e.cost ? '<i class="rv-arrow">now</i>' + costHtml(e.cost, e.count, r.r)
-                                              : '<i class="rv-arrow">now</i><span class="rv-need">needs a cost</span>') : '';
-      return costHtml(r.c, r.n || 1, e.fate === 'change' ? null : r.r) + now +
+      // only the recipe as it is: the new cost once a change has one
+      var current = e.fate === 'change' && e.cost ? costHtml(e.cost, e.count, r.r) : costHtml(r.c, r.n || 1, r.r);
+      return current + (e.fate === 'change' && !e.cost ? '<span class="rv-need">needs a cost</span>' : '') +
         (e.fate === 'change' ? '<button type="button" class="rv-ed-open" data-key="' + esc(key) + '" aria-expanded="' + !!editing[key] +
                                 '" title="Edit the new cost">' + (editing[key] ? 'Done' : 'Edit cost') + '</button>' : '');
     }
