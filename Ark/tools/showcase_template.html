@@ -686,9 +686,6 @@
   .block-card dl { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
   .block-card dd { text-transform: none; }
   .block-card .dino-body > p { font-size: 14px; }
-  .wide-shot { margin: 0; background: #161814; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
-  .wide-shot img { display: block; width: 100%; }
-  .wide-shot figcaption { padding: 10px 16px; font-size: 14px; color: #a8b3a0; background: #1b1e19; }
   .accessory-card .dino-art { background: linear-gradient(180deg, var(--raised), var(--surface)); }
   .accessory-card .dino-art img:first-child { max-height: 170px; image-rendering: pixelated; }
   .accessory-card .accessory-icon { position: absolute; left: 10px; top: 10px; width: 48px; height: 48px; image-rendering: pixelated; }
@@ -715,14 +712,36 @@
   .item { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 8px; display: grid; justify-items: center; gap: 8px; text-align: center; }
   .item img { width: 48px; height: 48px; image-rendering: pixelated; }
   .item figcaption { font-size: 13px; line-height: 1.25; }
-  .wide-shot img.pixel { image-rendering: pixelated; }
-  .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
-  .shots > div { display: grid; gap: 20px; }
-  .changes { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .changes > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
-  .changes dd { margin: 0; font-size: 15px; }
-  @media (max-width: 900px) { .shots { grid-template-columns: minmax(0, 1fr); } }
-  @media (max-width: 560px) { .changes { grid-template-columns: minmax(0, 1fr); } }
+  /* interface: one game screen at a time behind < and >; the screen stays dark in both themes like the game */
+  .screens { display: grid; gap: 12px; justify-items: center; min-width: 0; }
+  .screen-stage { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+  .screen-monitor { position: relative; justify-self: center; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px;
+                    background: #0d0f0c; border: 1px solid var(--line); box-shadow: 0 16px 44px rgba(0, 0, 0, .28); }
+  .screen-slide { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; }
+  .screen-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .screen-slide .ws-frame { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border: 0; border-radius: 0; }
+  .screen-fallback { color: #e6e8e1; }
+  .screen-nav { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+                font: 400 30px/1 var(--display); padding: 0 0 4px; cursor: pointer; transition: border-color .15s, color .15s; }
+  .screen-nav:hover, .screen-nav:focus-visible { border-color: var(--ember); color: var(--ember); }
+  .screen-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 14px; }
+  .screen-count { font: 600 13px var(--mono); color: var(--muted); }
+  .screen-name { font: 700 18px var(--display); }
+  .screen-dots { display: inline-flex; gap: 7px; }
+  .screen-dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 1px solid var(--muted); background: none; cursor: pointer; }
+  .screen-dots button[aria-current="true"] { background: var(--ember); border-color: var(--ember); }
+  .screen-benches:empty { display: none; }
+  .screen-benches .ws-tabs { justify-content: center; gap: 6px; }
+  .screen-benches .ws-tabs button { padding: 4px 10px; font-size: 13px; }
+  .screen-caption { margin: 0; max-width: 110ch; text-align: center; color: var(--muted); font-size: 14px; }
+  @media (max-width: 640px) {
+    .screen-stage { position: relative; grid-template-columns: minmax(0, 1fr); }
+    .screen-nav { position: absolute; z-index: 1; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; font-size: 24px;
+                  background: rgba(22, 24, 20, .72); color: #e6e8e1; border-color: rgba(143, 176, 127, .4); }
+    .screen-nav[data-step="-1"] { left: 8px; }
+    .screen-nav[data-step="1"] { right: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .screen-nav { transition: none; } }
 
   /* integrations */
   .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
@@ -819,7 +838,10 @@
     .fill > .rm-box { flex: 1; }
     .ws-frame { width: min(100%, (100cqh - 150px) * 16 / 9); }
     .rv { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-    .interface-shot img { max-height: calc(100cqh - 90px); width: auto; max-width: 100%; margin: 0 auto; }
+    /* interface: the screen as large as the page allows under its name and caption */
+    .screens { flex: 1; min-height: 0; align-content: start; }
+    .screen-monitor { width: min(100%, (100cqh - 150px) * 16 / 9); }
+    .screens.lending .screen-monitor { width: min(100%, (100cqh - 230px) * 16 / 9); }
     .table-wrap.scroll thead th { position: sticky; top: 0; z-index: 1; }
   }
 </style>
@@ -855,7 +877,7 @@
     <a href="#control"><span class="eyebrow">Control</span><b>Recipe control</b><span>Every recipe in the game with its fate: go, stay or change, saved for the build.</span></a>
     <a href="#accessories"><span class="eyebrow">Accessories</span><b>Worn gear</b><span>%%ACC_COUNT%% gadgets and relics on every Curios slot, drawn on the player.</span></a>
     <a href="#models"><span class="eyebrow">Models</span><b>Blocks and 3D models</b><span>%%BLOCKS_COUNT%% blocks from the in-game models, and %%MODELS_COUNT%% machines, benches, armour sets and weapons turning in the browser.</span></a>
-    <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>The title screen, containers, HUD and tech tree nodes.</span></a>
+    <a href="#interface"><span class="eyebrow">Interface rework</span><b>Ark UI</b><span>Title, new game, play, inventory, workbenches and options, one screen at a time.</span></a>
     <a href="#integrations"><span class="eyebrow">Integrations</span><b>Mod pack</b><span>Every mod in the pack and what Ark changes in it.</span></a>
     <a href="#roadmap"><span class="eyebrow">Roadmap</span><b>Status</b><span>Where each feature stands, straight from the dashboard.</span></a>
   </nav>
@@ -1248,41 +1270,38 @@
   <section id="interface">
     <header class="page-head">
     <div><div class="eyebrow">Interface rework</div><h2>Carved stone, moss and ember</h2></div>
-    <p class="lede">The Ark UI resource pack re-skins the whole vanilla interface to match this page: containers become light limestone, buttons, hotbar and tooltips dark basalt with moss and ember accents. Every slot stays where vanilla puts it, so other mods' screens still line up. A baroque restyle (P16, in production) is replacing this look; the pictures show the first pass.</p>
+    <p class="lede">The game's screens one at a time, as the real client draws them at GUI scale 4 with the Photon shader pack and without JEI (<code>python Ark/tools/ui_screens.py</code> takes them). Step through with <b>&lsaquo;</b> and <b>&rsaquo;</b> or the arrow keys; Workbenches is the live preview of the <a href="#ui">UI</a> page.</p>
     </header>
-    <div class="panes">
-    <div class="pane" data-pane="Title screen">
-    <div class="cols lead">
-      <figure class="wide-shot interface-shot"><img loading="lazy" src="%%TITLESHOT%%" alt="Title screen preview"><figcaption>FancyMenu layout: a rainy night at a primitive camp, drawn live by two GLSL layers, with the T-Rex idling between them. Lightning flashes the sky, the ferns and the creature together; the buttons stand in a column on the left.</figcaption></figure>
-      <dl class="changes">
-        <div><dt class="label">Containers</dt><dd>All 26 vanilla container screens, the recipe book and container sprites</dd></div>
-        <div><dt class="label">Widgets</dt><dd>Buttons, sliders, tabs, checkboxes and scrollers</dd></div>
-        <div><dt class="label">HUD</dt><dd>Hotbar, selection, offhand slots, experience bar background</dd></div>
-        <div><dt class="label">Tooltips</dt><dd>Basalt panel with a moss frame</dd></div>
-        <div><dt class="label">Tech tree</dt><dd>Rounded eight-point star nodes that fill the screen height</dd></div>
-        <div><dt class="label">Menus</dt><dd>FancyMenu scene on the title, world and server menus: night rain, the live T-Rex (Ark Creature element) and the Ark logo</dd></div>
-        <div><dt class="label">Inventory</dt><dd>Ark layout: curio slots beside the armour, shield and charm under the player (Curios fork)</dd></div>
-        <div><dt class="label">Mod screens</dt><dd>Tom's Storage terminals and Curios screens get the same re-skin</dd></div>
-        <div><dt class="label">Toggle</dt><dd><code>arkUiPack</code> in the client config (restart to apply)</dd></div>
-      </dl>
+    <div class="panes"><div class="pane fill">
+    <div class="screens" id="screens">
+      <div class="screen-stage">
+        <button type="button" class="screen-nav" data-step="-1" aria-label="Previous screen">&lsaquo;</button>
+        <div class="screen-monitor">
+          <figure class="screen-slide" data-screen="Title screen"><img src="%%SCREEN_TITLE%%" alt="Title screen: the Ark logo and a column of buttons over the night camp scene with the T-Rex"></figure>
+          <figure class="screen-slide" data-screen="New game" hidden><img loading="lazy" src="%%SCREEN_NEW_GAME%%" alt="Create New World screen over the title scene"></figure>
+          <figure class="screen-slide" data-screen="Game" hidden><img loading="lazy" src="%%SCREEN_GAME%%" alt="The game in play with the shader pack: land, sky and the carved hotbar"></figure>
+          <figure class="screen-slide" data-screen="Inventory" hidden><img loading="lazy" src="%%SCREEN_INVENTORY%%" alt="The Ark inventory in carved stone over the game"></figure>
+          <div class="screen-slide" data-screen="Workbenches" data-borrow hidden><a class="screen-fallback" href="#ui">The workstation screens are on the UI page</a></div>
+          <figure class="screen-slide" data-screen="Options" hidden><img loading="lazy" src="%%SCREEN_OPTIONS%%" alt="Options screen"></figure>
+        </div>
+        <button type="button" class="screen-nav" data-step="1" aria-label="Next screen">&rsaquo;</button>
+      </div>
+      <div class="screen-bar"><span class="screen-count">1 / 6</span><b class="screen-name">Title screen</b><span class="screen-dots"></span></div>
+      <div class="screen-benches"></div>
+      <p class="screen-caption" data-screen="Title screen">The FancyMenu title scene: a rainy night at a primitive camp drawn live by two GLSL layers, the T-Rex idling between them, lightning flashing the sky, the ferns and the creature together. The buttons stand in a column on the left.</p>
+      <p class="screen-caption" data-screen="New game" hidden>Create New World over the same scene, which carries on from menu to menu with its rain and its T-Rex; the tabs and buttons are carved basalt.</p>
+      <p class="screen-caption" data-screen="Game" hidden>In play with the Photon shader pack: creatures on the river bank under a ruin, the Load gauge of the carried weight at the top left, the hotbar with its ember selection.</p>
+      <p class="screen-caption" data-screen="Inventory" hidden>The Ark inventory in carved stone: the worn keratin and the Curios slots in seven rows beside the player's niche, the inventory's crafting graph in the top band, the storage eleven columns wide over the hotbar. No JEI item list beside it: recipes are made in the graphs.</p>
+      <p class="screen-caption" data-screen="Workbenches" hidden>The UI page's live workstation preview on this screen: pick a bench below, click a material, then a recipe, then the recipe again to craft. Player level and inventory are set on the <a href="#ui">UI</a> page.</p>
+      <p class="screen-caption" data-screen="Options" hidden>Options in a world: the vanilla list with the physics settings on top, over the blurred game. Out of a world it opens over the title scene.</p>
     </div>
-    </div>
-    <div class="pane" data-pane="Ark inventory" hidden>
-      <figure class="wide-shot interface-shot"><img class="pixel" loading="lazy" src="%%ARKINVENTORY%%" alt="Ark inventory layout"><figcaption>Ark inventory in carved stone: the gear in seven rows beside the player's niche, the crafting graph beside them, and under the band a narrower block of storage eleven columns wide (the side pockets left and right of the nine) over the hotbar, its bottom corners cut away round carved consoles. Offline render of the texture and slot icons; the game draws the graph in the dark panel.</figcaption></figure>
-    </div>
-    <div class="pane" data-pane="Screens and widgets" hidden>
-    <div class="shots">
-      <figure class="wide-shot interface-shot"><img class="pixel" loading="lazy" src="%%UISHEET%%" alt="Inventory, chest, hotbar, buttons and tooltip"><figcaption>Inventory, chest, hotbar with the ember selection, buttons and a tooltip. Offline render at 1.5× scale.</figcaption></figure>
-      <figure class="wide-shot"><img class="pixel" loading="lazy" src="%%NODES%%" alt="Starfish node states: locked, ready, complete and hover"><figcaption>Tech tree nodes: locked, ready, complete and hover.</figcaption></figure>
-    </div>
-    </div>
-    </div>
+    </div></div>
   </section>
 
   <section id="integrations">
     <header class="page-head">
     <div><div class="eyebrow">Integrations</div><h2>Every mod in the pack, and what Ark does with it</h2></div>
-    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface/ark-inventory">Interface</a> page.</p>
+    <p class="lede">Each integration is one row in the management dashboard. Official releases are pinned by SHA-512 and rebranded "Ark - Name"; where Ark needs code changes, the mod is built from source with Ark patches. <code>python Ark/tools/build_pack.py</code> assembles the Modrinth pack. The Curios fork's inventory is on the <a href="#interface/inventory">Interface</a> page.</p>
     </header>
     <div class="panes"><div class="pane">
     <div class="integrations">%%INTEGRATIONS%%</div>
@@ -1827,6 +1846,62 @@ window.arkModels = (function () {
   stepTabs.forEach(function (b) { b.addEventListener('click', function () { showStep(b.dataset.step, true); }); });
   subs.existence = function (sub) { showStep(/^[0-5]$/.test(sub) ? sub : '0'); };
 
+  // Interface: one game screen at a time, stepped with the arrows (buttons or keys); the screen is the hash's part.
+  // Workbenches borrows the UI page's live preview, its frame and bench tabs, and gives them back when it is left.
+  var screensEl = document.getElementById('screens'), screensPage = screensEl.closest('section');
+  var screenSlides = Array.prototype.slice.call(screensEl.querySelectorAll('.screen-slide'));
+  var screenCaptions = Array.prototype.slice.call(screensEl.querySelectorAll('.screen-caption'));
+  var screenAt = 0, screenDots = screenSlides.map(function (slide, i) {
+    var d = document.createElement('button');
+    d.type = 'button'; d.title = slide.dataset.screen; d.setAttribute('aria-label', slide.dataset.screen);
+    d.addEventListener('click', function () { showScreen(i, true); });
+    screensEl.querySelector('.screen-dots').appendChild(d);
+    return d;
+  });
+  var wsRoot = document.getElementById('ws');
+  var lent = [['.ws-frame', '.screen-slide[data-borrow]'], ['.ws-tabs', '.screen-benches']].map(function (pair) {
+    var el = wsRoot && wsRoot.querySelector(pair[0]);
+    if (!el) return null;
+    var mark = document.createComment('lent to the Interface page');
+    el.parentNode.insertBefore(mark, el);
+    return { el: el, mark: mark, slot: screensEl.querySelector(pair[1]) };
+  }).filter(Boolean);
+  function syncWorkbench() {
+    var on = !screensPage.hidden && screenSlides[screenAt].hasAttribute('data-borrow'), moved = false;
+    lent.forEach(function (l) {
+      if (on && l.el.parentNode !== l.slot) { l.slot.appendChild(l.el); moved = true; }
+      if (!on && l.mark.nextSibling !== l.el) { l.mark.parentNode.insertBefore(l.el, l.mark.nextSibling); moved = true; }
+    });
+    screensEl.classList.toggle('lending', on && lent.length > 0);
+    var ui = document.getElementById('ui');
+    if (window.arkRecipes) window.arkRecipes.show(on || !!ui && !ui.hidden);
+    if (moved) window.dispatchEvent(new Event('resize'));
+  }
+  function showScreen(at, push) {
+    screenAt = (at + screenSlides.length) % screenSlides.length;
+    var name = screenSlides[screenAt].dataset.screen;
+    screenSlides.forEach(function (s, i) { s.hidden = i !== screenAt; });
+    screenCaptions.forEach(function (c) { c.hidden = c.dataset.screen !== name; });
+    screenDots.forEach(function (d, i) { d.setAttribute('aria-current', i === screenAt ? 'true' : 'false'); });
+    screensEl.querySelector('.screen-name').textContent = name;
+    screensEl.querySelector('.screen-count').textContent = (screenAt + 1) + ' / ' + screenSlides.length;
+    syncWorkbench();
+    if (push) history.replaceState(null, '', '#interface/' + slug(name));
+  }
+  screensEl.querySelectorAll('.screen-nav').forEach(function (b) {
+    b.addEventListener('click', function () { showScreen(screenAt + Number(b.dataset.step), true); });
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (screensPage.hidden || ev.altKey || ev.ctrlKey || ev.metaKey || /^(INPUT|TEXTAREA|SELECT|CANVAS)$/.test(ev.target.tagName)) return;
+    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    ev.preventDefault();
+    showScreen(screenAt + (ev.key === 'ArrowLeft' ? -1 : 1), true);
+  });
+  subs.interface = function (sub) {
+    var at = screenSlides.map(function (s) { return slug(s.dataset.screen); }).indexOf(sub);
+    showScreen(at < 0 ? 0 : at);
+  };
+
   // Pages: the nav and the home index switch sections like a website; the hash keeps each page (and its part) linkable.
   var sections = Array.prototype.slice.call(document.querySelectorAll('main > section'));
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
@@ -1884,7 +1959,7 @@ window.arkModels = (function () {
     if (current && current.id === 'world') draw();
     if (current && current.id === 'existence') renderDiagrams();
     window.arkModels.show(!!current && current.id === 'models');
-    window.arkRecipes.show(!!current && current.id === 'ui');
+    syncWorkbench();  // the workstation preview runs on the UI page and on Interface's Workbenches screen
     window.arkTree.show(!!current && current.id === 'recipes');
     window.arkExistence.show(!!current && current.id === 'existence');
   }

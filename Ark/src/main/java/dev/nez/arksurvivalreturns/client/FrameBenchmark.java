@@ -328,7 +328,7 @@ public final class FrameBenchmark {
     }
 
     /** Of the eight compass directions, the one whose next 480 blocks hold the fewest ocean and river biomes. */
-    private static float landward(ServerLevel level, BlockPos from) {
+    static float landward(ServerLevel level, BlockPos from) {
         var biomes = level.getChunkSource().getGenerator().getBiomeSource();
         var sampler = level.getChunkSource().randomState().sampler();
         float best = heading;

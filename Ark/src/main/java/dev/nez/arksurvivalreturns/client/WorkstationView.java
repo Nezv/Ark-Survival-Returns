@@ -255,7 +255,9 @@ public final class WorkstationView {
                 : n.kind.equals("category") || n.kind.equals("group") ? hex(n.cat.color())
                 : n.kind.equals("ingredient") ? color(enough(n) ? "craftable" : "missing")
                 : max(n) > 0 ? color("craftable") : mix(hex(n.cat.color()), color("nodeFill"), .4);
-        Integer emphasis = n == graph.selected ? color("select") : n == graph.open || n == graph.openGroup ? hex(n.cat.color()) : null;
+        // Boxed on both branches: with a bare int the whole conditional is an int and the null is unboxed.
+        Integer emphasis = n == graph.selected ? Integer.valueOf(color("select"))
+                : n == graph.open || n == graph.openGroup ? Integer.valueOf(hex(n.cat.color())) : null;
         if (hot && !locked) ring = mix(ring, 0xffffffff, .4);
         if (n.pulse > 0) s *= 1 - .14 * Math.sin(Math.PI * n.pulse / style.motion().pulse());
         g.pose().pushMatrix(); g.pose().translate((float) (n.x + (n.shake > 0 ? Math.sin(n.shake * 1.7) * 1.6 : 0)), (float) n.y);

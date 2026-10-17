@@ -8,7 +8,8 @@ biome pictures with their spawns beside the danger map (showcase_biomes.py, pict
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the Prehistoric
 recipe map (recipe_tree.py, drawn by recipe_map.js), the workstation screens of the crafting rework (showcase_recipes.py,
 drawn by workstation_ui.js), the live 3D models
-(showcase_models.py, drawn by three.js) and the Ark UI previews.
+(showcase_models.py, drawn by three.js) and the Interface screens (design/ui-rework/screens, taken from the real
+client by tools/ui_screens.py).
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid
 renderer load from Google Fonts / jsDelivr when online and fall back gracefully offline. Each section is its own page:
 the nav, the home index and the pager switch between them.
@@ -639,13 +640,9 @@ def blocks_section():
 
 
 def ui_section():
-    # The title screen as tools/preview_title_scene.py renders it: both GLSL layers, the creature and the layout.
-    title = Image.open(ARK / 'docs/title-scene.jpg').convert('RGB')
-    parchment = Image.new('RGBA', (4 * 150, 150), (240, 226, 196, 255))
-    for i, state in enumerate(('locked', 'ready', 'complete', 'hover')):
-        node = Image.open(ASSETS / f'textures/gui/tech/node_{state}.png').resize((128, 128), Image.Resampling.LANCZOS)
-        parchment.alpha_composite(node, (i * 150 + 11, 11))
-    return uri(title, width=1160, quality=80), uri(ARK / 'design/ui-rework/ui-preview.png', 'PNG'), uri(parchment, 'PNG')
+    """The Interface page's screens as tools/ui_screens.py took them from the real client (shader pack on, no JEI)."""
+    return {'SCREEN_' + name.upper(): uri(ARK / f'design/ui-rework/screens/{name}.jpg', quality=80, width=1600)
+            for name in ('title', 'new_game', 'game', 'inventory', 'options')}
 
 
 STATUS_LABEL = {'integrated': ('ok', 'Integrated'), 'configured': ('check', 'Configured'), 'pinned': ('check', 'Pinned, tuning later'),
@@ -700,7 +697,6 @@ def build():
     names = lang()
     hero = uri(ASSETS / 'textures/gui/title/background.png', width=1600, quality=78)
     logo = uri(ASSETS / 'textures/gui/title/logo.png', 'PNG', width=900)
-    title_shot, ui_sheet, nodes = ui_section()
     tree = load_json(ASSETS.parent.parent / 'data/arksurvivalreturns/tech_tree/tree.json')
     item_count = len([p for p in (GENERATED / 'assets/arksurvivalreturns/items').glob('*.json') if not p.stem.endswith('spawn_egg')])
     integrations, integrated = integrations_section()
@@ -723,9 +719,8 @@ def build():
         'ITEMS': items_section(names),
         **__import__('showcase_accessories').section(names, uri, e),
         **__import__('showcase_models').section(uri, e),
-        'TITLESHOT': title_shot, 'UISHEET': ui_sheet, 'NODES': nodes,
+        **ui_section(),
         'INTEGRATIONS': integrations,
-        'ARKINVENTORY': uri(ARK / 'design/ui-rework/ark-inventory.png', 'PNG'),
         'DATE': datetime.date.today().isoformat(),
         'RANKCOLORS': json.dumps(RANK_COLORS), 'RANKNAMES': json.dumps(RANK_NAMES),
         'STARPATH': starfish_path(30, 30, 27),
