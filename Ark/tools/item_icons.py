@@ -4,7 +4,8 @@ Flat items stack their layer textures, tinted where the game tints them (undyed 
 Block items are rendered from their block model with the model's own gui display rotation and scale, Minecraft's
 face shading (top 1.0, north/south 0.8, east/west 0.6, bottom 0.5) and nearest sampling. The special renderers get
 close stand-ins: beds and chests become boxes of their material, banners a cloth on a pole, the shield its face.
-Sources: the vanilla jar and the mod's assets (main, generated, and the design pack for planned blocks).
+Sources: the vanilla jar, the mod's assets (main, generated, and the design pack for planned blocks) and the jars of
+the pack's other mods (Ark/shared-mods) for their own items.
 
     icons = Icons(); image = icons.icon('minecraft:oak_stairs')
 """
@@ -41,6 +42,7 @@ class Icons:
         self.jar = zipfile.ZipFile(JAR) if JAR.is_file() else None
         self.overrides = overrides or {}
         self.cache, self.models, self.textures = {}, {}, {}
+        self.mods = None  # the pack's mod jars by namespace, opened on the first item of theirs
 
     # ---------------------------------------------------------------------------------- file access
 
@@ -52,6 +54,14 @@ class Icons:
                 return override.read_bytes()
             try:
                 return self.jar.read(f'assets/minecraft/{path}') if self.jar else None
+            except KeyError:
+                return None
+        if namespace != 'arksurvivalreturns':
+            if self.mods is None:
+                import workstation_plan
+                self.mods = workstation_plan.mod_jars()
+            try:
+                return self.mods[namespace].read(f'assets/{namespace}/{path}') if namespace in self.mods else None
             except KeyError:
                 return None
         for root in ARK_ROOTS:

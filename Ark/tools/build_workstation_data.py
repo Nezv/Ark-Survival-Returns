@@ -21,11 +21,8 @@ def build(output):
         raise FileNotFoundError(f'Workstation plan needs the Minecraft recipe jar: {wp.JAR}')
     records, designs, _ = wp.plan()
     source = wp.Source()
-    def recipe_json(recipe_id):
-        namespace, name = recipe_id.split(':', 1)
-        if namespace == 'minecraft':
-            return json.loads(source.jar.read(f'data/minecraft/recipe/{name}.json'))
-        return json.loads((wp.ARK_DATA / 'recipe' / f'{name}.json').read_text(encoding='utf-8'))
+    def recipe_json(recipe_id):  # vanilla, Ark or one of the pack's mods
+        return source.recipe_json(recipe_id) or {}
     trees = wp.compile_benches(records, designs)
     data = output / 'resources/data' / wp.NS
     fixtures = output / 'fixtures'

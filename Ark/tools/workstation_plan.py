@@ -1,8 +1,10 @@
 """Crafting rework plan (P14): where every recipe goes once the 3x3 grid is gone.
 
-Reads every recipe of the vanilla jar and of the mod's generated data and gives each one a fate (go, stay, change or
-decide), a bench, and a place in that bench's graph: material / group, plus a family that folds variants such as the
-twelve wood types into one node. Every recipe type lands on a bench, the furnace and stonecutter ones too, at the
+Reads every recipe of the vanilla jar, of the mod's generated data and of the pack's other mods (Ark/shared-mods) and
+gives each one a fate (go, stay, change or decide), a bench, and a place in that bench's graph: material / group, plus a
+family that folds variants such as the twelve wood types into one node. A mod's recipe waits to be decided, on no bench,
+until the user gives it one. designed_records() adds the recipes a bench design writes out with no recipe file behind
+them (the saddles, the Armoury's own weapons), so the review lists every recipe in the game. Every recipe type lands on a bench, the furnace and stonecutter ones too, at the
 place where the thing is really made (see the rules). Three layers decide, the last one winning:
 
 1. The rules in propose(): proposals from the theme policy, the recipe gates and what each bench is for.
@@ -10,8 +12,10 @@ place where the thing is really made (see the rules). Three layers decide, the l
    change (a stay when the cost is still the old grid's). Items they list without a recipe anywhere are new, and so is
    a family a design writes out with its own variants ({"family", "title", "variants": [{"item", "count", "cost"}]}),
    which only adds recipes: the Cutting Machine's sawn planks leave the Working Station's planks where they are.
-3. design/workstations/vanilla_fates.json: the user's decisions, which the showcase review list saves. A key is a
-   recipe id, or "family:<name>" for every recipe of a family.
+3. design/workstations/vanilla_fates.json: the user's decisions, which the showcase Control page saves. A key is a
+   recipe id, "family:<name>" for every recipe of a family, or "design:<bench>:<item>" for a recipe only a bench design
+   holds. A decision sets fate, bench, place and note, and a change its cost and count. The build applies them to the
+   ruled recipes; one on a designed item is an edit of its design file, which pending() lists (run this file).
 
 compile_benches() turns the plan into one explicit tree per bench: what the showcase draws and, once shipped, what the
 mod's workstation data will hold. The inventory is a bench too (its own graph replaced the 2x2 grid): besides its field
@@ -28,6 +32,7 @@ ARK = Path(__file__).resolve().parents[1]
 DESIGN = ARK / 'design/workstations'
 JAR = ARK / 'build/moddev/artifacts/minecraft-patched-26.1.2.109-merged.jar'
 ARK_DATA = ARK / 'src/generated/resources/data/arksurvivalreturns'
+MODS = ARK / 'shared-mods'  # the pack's mods that run on the server: the ones whose recipes are in the game
 POLICY = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/theme/ThemePolicy.java'
 PRIMITIVE = ARK / 'src/main/java/dev/nez/arksurvivalreturns/feature/primitive/PrimitiveEvents.java'
 NS = 'arksurvivalreturns'
@@ -142,16 +147,39 @@ class Source:
         self.removed_entities = set(re.findall(r'"([a-z_]+)"', entities))
         primitive = PRIMITIVE.read_text(encoding='utf-8')
         self.retired = set(re.findall(r'"(minecraft:[a-z_]+)"', primitive[primitive.index('WOODEN_TOOLS'):primitive.index('REPLACED =')]))
+        self.mods = mod_jars()
+        # NeoForge's common tags (#c:chests ...), which the mods' recipes use: for names and icons only, so the plan's
+        # own tag choices (as_tag) stay on the vanilla and Ark tags.
+        self.common = {}
+        version = JAR.name.split('-')[2]
+        for jar in Path.home().glob(f'.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/{version}/*/neoforge-{version}-universal.jar'):
+            with zipfile.ZipFile(jar) as forge:
+                for name in forge.namelist():
+                    if name.startswith('data/c/tags/item/') and name.endswith('.json'):
+                        self.common['#c:' + name[len('data/c/tags/item/'):-5]] = json.loads(forge.read(name))['values']
+            break
 
-    def members(self, tag, seen=None):
+    def recipe_json(self, rid):
+        """The recipe file behind a recipe id, or None (a recipe only a bench design holds has none)."""
+        namespace, name = rid.split(':', 1)
+        if namespace == 'minecraft':
+            return json.loads(self.jar.read(f'data/minecraft/recipe/{name}.json'))
+        if namespace == NS:
+            return json.loads((ARK_DATA / 'recipe' / f'{name}.json').read_text(encoding='utf-8'))
+        if namespace in self.mods:
+            return json.loads(self.mods[namespace].read(f'data/{namespace}/recipe/{name}.json'))
+        return None
+
+    def members(self, tag, seen=None, common=False):
+        """The items of a tag; common=True also reads NeoForge's #c: tags (for display)."""
         seen = seen or set()
         out = []
-        for value in self.tags.get(tag, []):
+        for value in self.tags.get(tag) or (self.common.get(tag, []) if common else []):
             value = value if isinstance(value, str) else value.get('id', '')
             if value.startswith('#'):
                 if value not in seen:
                     seen.add(value)
-                    out += self.members(value, seen)
+                    out += self.members(value, seen, common)
             else:
                 out.append(value)
         return out
@@ -167,6 +195,8 @@ class Source:
 
     def ingredient(self, value):
         if isinstance(value, str):
+            if ':' not in value:  # a bare id is a vanilla one, as the game reads it (FTB Quests writes "book")
+                value = '#minecraft:' + value[1:] if value.startswith('#') else 'minecraft:' + value
             return REPLACED.get(value, value)
         if isinstance(value, list):
             return self.as_tag([self.ingredient(v) for v in value]) if len(value) > 1 else self.ingredient(value[0])
@@ -237,7 +267,24 @@ class Source:
         for file in sorted((ARK_DATA / 'recipe').rglob('*.json')):
             rid = f'{NS}:' + file.relative_to(ARK_DATA / 'recipe').as_posix()[:-5]
             found.append(self.recipe(rid, json.loads(file.read_text(encoding='utf-8')), 'ark'))
+        for namespace, jar in sorted(self.mods.items()):
+            prefix = f'data/{namespace}/recipe/'
+            for name in sorted(jar.namelist()):
+                if name.startswith(prefix) and name.endswith('.json'):
+                    found.append(self.recipe(f'{namespace}:{name[len(prefix):-5]}', json.loads(jar.read(name)), 'mod'))
         return found
+
+
+def mod_jars():
+    """The pack's mods that bring recipes of their own, by namespace (a missing folder has none)."""
+    out = {}
+    for path in sorted(MODS.glob('*.jar')) if MODS.is_dir() else []:
+        jar = zipfile.ZipFile(path)
+        for name in jar.namelist():
+            parts = name.split('/')
+            if len(parts) > 3 and parts[0] == 'data' and parts[2] == 'recipe' and parts[1] not in ('minecraft', NS):
+                out.setdefault(parts[1], jar)
+    return out
 
 
 # --------------------------------------------------------------------------------------------- the rules
@@ -751,6 +798,11 @@ def plan(source=None):
     for recipe in recipes:
         proposal = propose(recipe, source)
         rule_bench = proposal.get('bench')
+        if recipe['source'] == 'mod':  # no rule moves a mod's recipe: it stays in the game as it is until decided
+            where = designs.get(rule_bench, {}).get('title') if proposal.get('fate') in ('stay', 'change') else None
+            proposal = decision('decide', note=f'from the {recipe["id"].split(":")[0]} mod' +
+                                (f'; the rules would make it at the {where}' if where else ''))
+            rule_bench = ''
         by = 'rule'
         crafting = recipe['type'].startswith('crafting') or recipe['type'] == 'bound_shaped'
         hit = designed.get(recipe['result']) if crafting and not recipe['special'] else None
@@ -761,12 +813,17 @@ def plan(source=None):
                                 'same cost as the grid' if same else 'new cost in the bench design')
             if not same:
                 proposal['newCost'], proposal['newCount'] = entry['cost'], entry.get('count', 1)
+            proposal['designedAt'] = bench
             by = 'design'
         family = proposal.get('family') or recipe['family']
         for key in dict.fromkeys((f"family:{recipe['family']}", f'family:{family}', recipe['id'])):
             if key in decisions:
                 user = decisions[key]
                 proposal = {**proposal, **{k: v for k, v in user.items() if k in ('fate', 'bench', 'place', 'note')}}
+                if 'cost' in user or 'count' in user:  # the user's cost for a change wins over the design's
+                    proposal['newCost'] = user.get('cost') or proposal.get('newCost') or recipe['cost']
+                    proposal['newCount'] = user.get('count') or proposal.get('newCount') or recipe['count']
+                    proposal['userCost'] = True
                 if 'bench' in user and 'place' not in user and user['bench'] != (hit[0] if hit else rule_bench):
                     # A recipe moved to another bench without a place: its rule place when the rules agree, else the
                     # bench's first material, where the user can see it and move it on.
@@ -777,6 +834,35 @@ def plan(source=None):
         records.append({**recipe, **proposal, 'family': proposal.get('family') or recipe['family'], 'by': by})
     # Ark recipes an Ark design replaces are designed too (the Ark arrow replaces the vanilla one).
     return records, designs, decisions
+
+
+def designed_records(records, designs, decisions):
+    """
+    The recipes only a bench design holds (no recipe file makes the item: the saddles, the Armoury's own arrows), one
+    record each under the key design:<bench>:<item>, with the user's decision on it applied.
+    """
+    made = {r['result'] for r in records}
+    out = []
+    for bench, data in designs.items():
+        for where, entry in design_entries(data):
+            if 'item' not in entry or entry['item'] in made:
+                continue
+            rid = f"design:{bench}:{entry['item']}"
+            record = {'id': rid, 'source': 'ark', 'type': 'bench', 'fits2': False, 'special': False, 'result': entry['item'],
+                      'count': entry.get('count', 1), 'cost': entry['cost'], 'family': short(entry['item']), 'book': '',
+                      'fate': 'stay', 'bench': bench, 'place': where, 'level': entry.get('level'), 'by': 'design', 'designedAt': bench,
+                      'note': 'planned item, not in the game yet' if entry.get('planned') else 'made only at this bench'}
+            user = decisions.get(rid)
+            if user:
+                record.update({k: v for k, v in user.items() if k in ('fate', 'bench', 'place', 'note')})
+                if record['bench'] != bench and 'place' not in user and record['bench'] in designs:
+                    record['place'] = designs[record['bench']]['categories'][0]['id']
+                if 'cost' in user or 'count' in user:
+                    record.update(newCost=user.get('cost') or entry['cost'], newCount=user.get('count') or record['count'],
+                                  userCost=True)
+                record['by'] = 'user'
+            out.append(record)
+    return out
 
 
 def variant_key(item):
@@ -818,7 +904,10 @@ def waiting(records, designs):
 
 
 def compile_benches(records, designs):
-    """One explicit tree per bench: categories, groups and families of variants, only the kept recipes."""
+    """
+    One explicit tree per bench: categories, groups and families of variants, only the kept recipes. A designed item is
+    drawn as its design file writes it, as the game reads that file: a decision on it waits for the file (pending()).
+    """
     kept = [r for r in records if r['fate'] in ('stay', 'change') and r['bench'] in BENCHES and not r['special']]
     if 'inventory' in designs:
         kept += waiting(records, designs)
@@ -869,7 +958,9 @@ def entries(bench, where, designed, kept, parent):
             if (r['result'], json.dumps(r['cost'], sort_keys=True)) in seen:
                 continue
             seen.add((r['result'], json.dumps(r['cost'], sort_keys=True)))
-            variant = {'item': r['result'], 'count': r['count'], 'cost': r['cost'], 'recipe': r['id']}
+            new = r['fate'] == 'change' and r.get('userCost')  # the user's new cost reaches the game with the rules
+            variant = {'item': r['result'], 'count': r['newCount'] if new else r['count'], 'cost': r['newCost'] if new else r['cost'],
+                       'recipe': r['id']}
             if r.get('time'):
                 variant['time'] = r['time']
             if r['type'] == 'smithing_trim':
@@ -894,9 +985,40 @@ def unshown(records, designs):
             and r['place'] not in known.get(r['bench'], ())]
 
 
+def pending(records, designs, decisions):
+    """
+    The decisions the game does not take on its own, as the edits that apply them. A designed item is read from its
+    bench's design file, so a go, a move or a new cost on it is an edit of that file; a recipe on a bench whose screen
+    is not in the game yet (SHIPPED) waits for that bench.
+    """
+    found = {}
+    for bench, data in designs.items():
+        for where, entry in design_entries(data):
+            if 'item' in entry:
+                found.setdefault(entry['item'], (bench, entry))
+    out = []
+    for r in records + designed_records(records, designs, decisions):
+        if r['by'] != 'user':
+            continue
+        if r.get('designedAt') and r['result'] in found:
+            bench, entry = found[r['result']]
+            design = f'design/workstations/{bench}.json'
+            if r['fate'] == 'go':
+                out.append(f"{r['id']}: take {r['result']} out of {design}")
+            elif r['bench'] != bench:
+                out.append(f"{r['id']}: move {r['result']} from {design} to the {r['bench'] or '(no bench)'} design")
+            elif r['fate'] == 'change' and r.get('userCost') and (r['newCost'], r['newCount']) != (entry['cost'], entry.get('count', 1)):
+                out.append(f"{r['id']}: set {r['result']} in {design} to cost {json.dumps(r['newCost'])}, count {r['newCount']}")
+            elif r['fate'] == 'stay' and r['type'] != 'bench' and (r['cost'], r['count']) != (entry['cost'], entry.get('count', 1)):
+                out.append(f"{r['id']}: set {r['result']} in {design} back to the grid's cost {json.dumps(r['cost'])}, count {r['count']}")
+        elif r['fate'] in ('stay', 'change') and r['bench'] and r['bench'] not in SHIPPED:
+            out.append(f"{r['id']}: waits for the {r['bench']} screen (phase B)")
+    return out
+
+
 def summary(records):
     counts = Counter((r['source'], r['fate']) for r in records)
-    return {source: {fate: counts[(source, fate)] for fate in FATES} for source in ('vanilla', 'ark')}
+    return {source: {fate: counts[(source, fate)] for fate in FATES} for source in ('vanilla', 'ark', 'mod')}
 
 
 if __name__ == '__main__':
@@ -908,3 +1030,5 @@ if __name__ == '__main__':
         print(bench, len(tree['categories']), 'materials', families, 'families')
     for r in unshown(records, designs):
         print('not shown:', r['id'], r['bench'] or '(no bench)', r['place'] or '(no place)')
+    for line in pending(records, designs, decisions):
+        print('decision to apply by hand:', line)

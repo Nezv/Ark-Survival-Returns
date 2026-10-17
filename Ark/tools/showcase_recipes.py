@@ -2,7 +2,9 @@
 
 tools/workstation_plan.py decides where every vanilla and Ark recipe goes and compiles each bench; the page draws the
 benches with tools/workstation_ui.js on the shared graph core tools/workstation_graph.js, and lists every recipe with
-tools/recipe_review.js, where the user marks what goes, stays or changes and saves design/workstations/vanilla_fates.json.
+tools/recipe_review.js (the Control page), where the user marks what goes, stays or changes, with a new cost for a change,
+for every recipe in the game (vanilla, Ark, the benches' own designs and the pack's mods) and saves
+design/workstations/vanilla_fates.json.
 This module gathers what the page needs: item names (vanilla and Ark lang, with Ark's renames of vanilla items), one
 icon atlas for every item the page shows (tools/item_icons.py), the frames (tools/build_workstation_crests.py), the
 vanilla bitmap font as a small glyph atlas, and the inventory presets of the preview. build_showcase.py calls section().
@@ -55,6 +57,11 @@ def load(path):
 
 def names(jar):
     table = json.loads(jar.read('assets/minecraft/lang/en_us.json')) if jar else {}
+    for namespace, mod in wp.mod_jars().items():  # the pack's mods name their own items
+        try:
+            table.update(json.loads(mod.read(f'assets/{namespace}/lang/en_us.json')))
+        except KeyError:
+            pass
     table.update(load(GENERATED / 'assets/minecraft/lang/en_us.json'))  # Ark's renames: Stick is the Twig
     table.update(load(GENERATED / 'assets/arksurvivalreturns/lang/en_us.json'))
     return table
@@ -66,7 +73,7 @@ def item_name(item_id, table, source):
     if item_id.startswith('#'):
         if item_id in TAG_NAMES:
             return TAG_NAMES[item_id]
-        members = source.members(item_id)
+        members = source.members(item_id, common=True)
         if len(members) == 1:
             return item_name(members[0], table, source)
         base = item_id.split(':', 1)[1].split('/')[-1].replace('_', ' ')
@@ -95,7 +102,7 @@ def representative(item_id, source):
         return item_id
     if item_id in TAG_ITEMS:
         return TAG_ITEMS[item_id]
-    members = source.members(item_id)
+    members = source.members(item_id, common=True)
     return members[0] if members else None
 
 
@@ -222,6 +229,7 @@ def section(uri, e):
     source = wp.Source()
     records, designs, decisions = wp.plan(source)
     trees = wp.compile_benches(records, designs)
+    records = records + wp.designed_records(records, designs, decisions)  # the review lists every recipe in the game
     for tree in trees.values():  # a trim is named after its pattern, not its template
         for category in tree['categories']:
             for entry in category['items']:
@@ -280,6 +288,6 @@ def section(uri, e):
         'RECIPES_COUNT': sum(len(c['items']) for c in armoury['categories']),
         'RECIPES_MATERIALS': len(armoury['categories']),
         'RECIPES_FAMILIES': families,
-        'RECIPES_VANILLA': counts['vanilla']['go'] + counts['vanilla']['stay'] + counts['vanilla']['change'] + counts['vanilla']['decide'],
-        'RECIPES_DECIDE': counts['vanilla']['decide'],
+        'RECIPES_ALL': len(records),
+        'RECIPES_DECIDE': sum(n['decide'] for n in counts.values()),
     }
