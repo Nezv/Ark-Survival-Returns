@@ -491,20 +491,27 @@
   .legend-key { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); }
   .legend-key svg { vertical-align: middle; }
 
-  /* recipes: the age's recipe tree (tools/spine.js, tools/spine.css), mapped onto this page's palette. The text stays
-     on the left while the tree scrolls on the right. */
-  .tree-split { --sp-ink: var(--ink); --sp-ink2: var(--muted); --sp-rule: var(--line); --sp-wire: var(--moss); --sp-chip: var(--surface);
-                --sp-sheet: var(--surface); --sp-gate: var(--raised); --sp-out: var(--moss); --sp-level: var(--ember); --sp-bg: var(--raised);
-                --sp-display: var(--display); --sp-body: var(--body); --sp-mono: var(--mono);
-                display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 20px 40px; align-items: start; }
-  .tree-text { display: grid; gap: 14px; position: sticky; top: 84px; }
-  .tree-text h2 { margin: 0; }
-  .tree-text h3 { margin: 6px 0 -4px; padding-top: 16px; border-top: 1px solid var(--line); }
-  .tree-text .lede { font-size: 16px; }
-  .spine-box { min-width: 0; background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 12px 8px 12px 12px; }
-  .spine-box .sp-scroll { max-height: calc(100vh - 120px); min-height: 480px; }
-  @media (max-width: 1080px) { .tree-split { grid-template-columns: minmax(0, 1fr); } .tree-text { position: static; }
-                               .spine-box .sp-scroll { max-height: 75vh; } }
+  /* recipes: the age's recipe map (tools/recipe_map.js, tools/recipe_map.css), mapped onto this page's palette. The
+     heading and the map fill the screen under the bar together, so nothing scrolls. */
+  .rm-screen { height: calc(100vh - 56px - 40px - 16px); min-height: 560px; display: flex; flex-direction: column; gap: 14px; }
+  .rm-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 6px 48px; align-items: end; }
+  .rm-head h2 { margin: 0; }
+  .rm-head .lede { margin: 0; font-size: 15px; }
+  .rm-box { --rm-ink: var(--ink); --rm-ink2: var(--muted); --rm-rule: var(--line); --rm-wire: var(--moss); --rm-chip: var(--surface);
+            --rm-stripe: color-mix(in srgb, var(--ink) 3%, transparent); --rm-level: var(--ember);
+            --rm-display: var(--display); --rm-body: var(--body); --rm-mono: var(--mono);
+            flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--raised); border: 1px solid var(--line);
+            border-radius: 12px; overflow: hidden; }
+  .rm-box:fullscreen { border: 0; border-radius: 0; }
+  .rm-box .rm-map { flex: 1; }
+  .rm-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding: 8px 14px; border-top: 1px solid var(--line);
+            font-size: 13px; color: var(--muted); }
+  .rm-bar .rm-note { flex: 1; min-width: 200px; }
+  .rm-bar i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; background: var(--surface); border: 2px solid var(--ink); border-radius: 3px; }
+  .rm-bar i.fin { border: 0; background: var(--ember); clip-path: polygon(28% 0, 72% 0, 100% 28%, 100% 72%, 72% 100%, 28% 100%, 0 72%, 0 28%); }
+  .rm-bar svg { vertical-align: middle; margin-right: 6px; }
+  .rm-full { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 3px 12px; font: 13px var(--body); cursor: pointer; }
+  @media (max-width: 1080px) { .rm-head { grid-template-columns: minmax(0, 1fr); } .rm-screen { height: auto; } .rm-box { height: 80vh; flex: none; } }
 %%TREE_CSS%%
   /* recipes: the workstation screen preview (tools/workstation_ui.js); the game frame stays dark in both themes */
   .ws-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: 20px; align-items: start; }
@@ -990,16 +997,23 @@
   </section>
 
   <section id="recipes">
-    <div class="tree-split">
-      <div class="tree-text part">
+    <div class="rm-screen">
+      <div class="rm-head">
         <div><div class="eyebrow">Recipes</div><h2>From bare hands to the forge</h2></div>
-        <p class="lede" data-toc-after>No crafting grid is left (P14): every bench opens a graph of what it makes, and so does the inventory. A recipe can ask for more than nine items, so costs follow Ark: thirty fiber or forty cobblestone where the thing is worth it.</p>
-        <h3>The Prehistoric sequence</h3>
-        <p class="lede">The age's stations from top to bottom in the order they open: Hands (what is gathered in the world, and with which tool) and the Inventory first, then the benches, down to the Primitive Forge that ends it. Each row is a recipe, its inputs and their counts, the operation and the level that unlocks it, and what it makes. The %%TREE_ROWS%% recipes over %%TREE_STATIONS%% stations are the game's own numbers, read from the bench designs and the loot tables.</p>
-        <nav class="sp-jump" aria-label="Jump to a station"></nav>
-        <p class="sp-trace" aria-live="polite"></p>
+        <p class="lede" data-toc-after>No crafting grid is left (P14): every bench opens a graph of what it makes, and so does the inventory, and costs follow Ark. The map holds the %%TREE_ITEMS%% things the Prehistoric age makes: a row per station, a column per step from bare hands, read from the game's own recipes. Hover an item for its name and recipe.</p>
       </div>
-      <div class="spine-box"><div class="sp-scroll" id="recipe-tree" tabindex="0" aria-label="Prehistoric recipe tree"></div></div>
+      <div class="rm-box" id="recipe-map">
+        <div class="rm-map" tabindex="-1" aria-label="Prehistoric recipe map"></div>
+        <div class="rm-bar">
+          <span class="rm-note"></span>
+          <span><svg width="26" height="8" aria-hidden="true"><path d="M1 4H25" stroke="var(--moss)" stroke-width="1.8"/></svg>input</span>
+          <span><svg width="26" height="8" aria-hidden="true"><path d="M1 4H25" stroke="var(--moss)" stroke-width="1.8" stroke-dasharray="6 3"/></svg>held tool</span>
+          <span><svg width="26" height="8" aria-hidden="true"><path d="M1 4H25" stroke="var(--muted)" stroke-width="1.8" stroke-dasharray="2 3"/></svg>station it needs</span>
+          <span><i></i>opens a station</span>
+          <span><i class="fin"></i>ends the age</span>
+          <button type="button" class="rm-full">Full screen</button>
+        </div>
+      </div>
     </div>
     <h3>The workstation screens</h3>
     <p class="lede">Every recipe is made where it would really be made: %%RECIPES_FAMILIES%% recipe families over the inventory and twelve benches. The inventory and six benches run this screen in game (Armoury, Working Station, Saddlery, Mortar &amp; Pestle, Medicine Bench, Smithing Table); the others are designed here and not built yet. The Armoury makes every weapon, tool and armour piece (%%RECIPES_COUNT%% recipes over %%RECIPES_MATERIALS%% materials), the Working Station what is put together by hand, the Saddlery a saddle for each of the 41 species, and the Iron Age machine line works the steel.</p>
@@ -1541,15 +1555,13 @@ window.arkModels = (function () {
     });
   });
 
-  // Recipes: the age's recipe tree (tools/spine.js), drawn the first time its page opens.
+  // Recipes: the age's recipe map (tools/recipe_map.js), drawn the first time its page opens.
   window.arkTree = (function () {
-    var drawn = false, host = document.getElementById('recipe-tree');
+    var drawn = false;
     return { show: function (on) {
       if (!on || drawn) return;
       drawn = true;
-      var data = JSON.parse(document.getElementById('tree-data').textContent);
-      var text = document.querySelector('.tree-text');
-      window.renderSpine(host, text.querySelector('.sp-trace'), text.querySelector('.sp-jump'), data);
+      window.renderRecipeMap(document.getElementById('recipe-map'), JSON.parse(document.getElementById('tree-data').textContent));
     } };
   })();
 

@@ -6,7 +6,7 @@ creature facts (design/showcase/species.json) and the behaviour models with thei
 (showcase_existence.py, run by existence_model.js), the tech tree (tree.json, one strip over the three ages), the
 biome pictures with their spawns beside the danger map (showcase_biomes.py, pictures fetched by tools/biome_pictures.py), the
 journal chapters, item sprites and names, block renders (render_blocks.py, from the shipped models), the Prehistoric
-recipe tree (recipe_tree.py, drawn by spine.js), the workstation screens of the crafting rework (showcase_recipes.py,
+recipe map (recipe_tree.py, drawn by recipe_map.js), the workstation screens of the crafting rework (showcase_recipes.py,
 drawn by workstation_ui.js), the live 3D models
 (showcase_models.py, drawn by three.js) and the Ark UI previews.
 Images are embedded as data URIs, so the file opens in Chrome from anywhere. Fonts and the Mermaid

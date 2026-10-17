@@ -1,14 +1,16 @@
-"""Recipe tree (F37): an age's recipe sequence as one chart, station by station, for the showcase.
+"""Recipe map (F37): everything an age makes on one screen, for the showcase.
 
-design/recipe-tree/<age>.json says which stations the age has, in the order they open, and which of their items belong
-to it. Hands and the Inventory are stations like the benches: what is gathered in the world (and with which tool), and
-what the inventory's own crafting graph makes. Every number comes from the game's sources: costs, counts and levels
-from the bench designs (tools/workstation_plan.py compiles them), gathering rates from the loot tables and the config.
-tools/spine.js draws the chart: stations top to bottom on one spine, each recipe a row on its station (inputs, the
-operation and its level, what it makes); hovering an item lights where it is made and used.
+design/recipe-tree/<age>.json says which stations the age has and which of their items belong to it. Hands and the
+Inventory are stations like the benches: what is gathered in the world (and with which tool), and what the inventory's
+own crafting graph makes. Every number comes from the game's sources: costs, counts and levels from the bench designs
+(tools/workstation_plan.py compiles them), gathering rates from the loot tables and the config.
+Each thing made is placed by where it is made (its station) and how far it sits from bare hands: one step past the
+deepest of its inputs, the tools held to gather it and the station it needs, each input taken from its nearest maker.
+tools/recipe_map.js draws it: a row per station, a column per step, an icon per item; hovering one names it, shows its
+recipe and lights what it needs and what it makes.
 
 Run from Ark/: python tools/recipe_tree.py [age] checks craftability: every input must be gathered or made somewhere in
-the sequence, and is listed when it is not, or when only a station further down makes it.
+the age, and nothing may need itself to be made.
 """
 import base64
 import io
@@ -202,8 +204,60 @@ def hand_rows(sources, station):
 
 # ------------------------------------------------------------------------------------------------- the chart
 
+def place(stations):
+    """Every recipe output as a node at its step from bare hands, every recipe with the node each of its inputs, held
+    tools and needed stations comes from (the nearest maker), and the inputs nothing makes or that need themselves."""
+    rows, nodes, problems = [], [], []
+    for s, station in enumerate(stations):
+        for row in station['rows']:
+            outs = []
+            for chip in row['outs']:
+                outs.append(len(nodes))
+                nodes.append({'id': chip['id'], 'k': chip['k'], 'n': chip.get('n', 1), 'val': chip.get('val', ''),
+                              'name': chip.get('name', ''), 'r': len(rows), 's': s})
+            rows.append({'s': s, 'op': row['op'], 'lvl': row['lvl'], 'ins': row['ins'], 'outs': outs})
+
+    def makers(chip, r):
+        exact = [i for i, n in enumerate(nodes) if n['id'] == chip['id'] and n['r'] != r]
+        return exact or [i for i, n in enumerate(nodes) if set(n['k']) & set(chip['k']) and n['r'] != r]
+
+    wants = []
+    for r, row in enumerate(rows):
+        station = stations[row['s']]
+        found = []
+        for chip in row['ins']:
+            if not chip.get('world'):
+                found.append((chip, makers(chip, r)))
+                if not found[-1][1]:
+                    problems.append(f"{station['name']}: nothing in the age makes {chip['id']}")
+        found += [(None, makers({'id': item, 'k': [item]}, r)) for item in station['needs']]
+        wants.append([(chip, candidates) for chip, candidates in found if candidates])
+    # Steps shrink from "never" until nothing changes; a recipe still at "never" needs itself somewhere up its chain.
+    never = len(rows) + 1
+    depth = [never] * len(rows)
+    changed = True
+    while changed:
+        changed = False
+        for r, want in enumerate(wants):
+            step = 1 + max((min(depth[nodes[i]['r']] for i in candidates) for _, candidates in want), default=-1)
+            if min(step, never) < depth[r]:
+                depth[r], changed = min(step, never), True
+    for r, row in enumerate(rows):
+        if depth[r] >= never:
+            problems.append(f"{stations[row['s']]['name']}: {row['op']} needs what it makes before it can be made")
+        row['d'] = min(depth[r], max((d for d in depth if d < never), default=0) + 1)
+        row['need'] = []
+        for chip, candidates in wants[r]:
+            nearest = min(candidates, key=lambda i: depth[nodes[i]['r']])
+            if chip is None:
+                row['need'].append(nearest)
+            else:
+                chip['from'] = nearest
+    return nodes, rows, problems
+
+
 def build(age='prehistoric'):
-    """The sequence, its sources, the stations with their rows, the inputs nothing makes and the loops back."""
+    """The sequence, its sources, the stations, and the map: the nodes, the recipes and the gaps."""
     sequence = load(SEQUENCES / f'{age}.json')
     sources = Sources()
     stations = []
@@ -213,24 +267,20 @@ def build(age='prehistoric'):
         title = station.get('title') or design.get('title') or station['id'].replace('_', ' ').title()
         stations.append({'id': station['id'], 'name': title, 'sub': station.get('sub', ''),
                          'sigil': station.get('sigil') or design.get('sigil'), 'icon': station.get('icon'),
-                         'gate': station.get('gate', False), 'rows': rows})
+                         'gate': station.get('gate', False), 'needs': station.get('needs'), 'rows': rows})
     # Keys tie chips that are the same thing: an item and every tag it belongs to that the chart uses.
-    chips = [(s, r, c, side) for s in stations for r in s['rows'] for side in ('ins', 'outs') for c in r[side]]
-    used = {c['id'] for _, _, c, _ in chips if c['id'].startswith('#')}
-    for _, _, chip, _ in chips:
+    chips = [c for s in stations for r in s['rows'] for side in ('ins', 'outs') for c in r[side]]
+    used = {c['id'] for c in chips if c['id'].startswith('#')}
+    for chip in chips:
         chip['k'] = sorted({chip['id']} | (sources.tags_of(chip['id'], used) if not chip['id'].startswith('#') else set()))
-    # An input nothing makes is a gap in the age; one first made further down is a loop back (a held tool is one).
-    problems, later = [], []
-    order = {s['id']: i for i, s in enumerate(stations)}
-    for station, row, chip, side in chips:
-        if side != 'ins' or chip.get('world'):
-            continue
-        makers = [s for s, _, c, sd in chips if sd == 'outs' and set(c['k']) & set(chip['k'])]
-        if not makers:
-            problems.append(f"{station['name']}: nothing in the sequence makes {chip['id']}")
-        elif min(order[s['id']] for s in makers) > order[station['id']] and not chip.get('tool'):
-            later.append(f"{station['name']}: {chip['id']} is first made further down, at {makers[0]['name']}")
-    return sequence, sources, stations, problems, later
+    # A bench station needs its own block, when the age makes it; the sequence names any other (a fire to light).
+    made = {c['id'] for s in stations for r in s['rows'] for c in r['outs']}
+    for station in stations:
+        if station['needs'] is None:
+            own = f"arksurvivalreturns:{station['id']}"
+            station['needs'] = [own] if own in made else []
+    nodes, rows, problems = place(stations)
+    return sequence, sources, stations, nodes, rows, problems
 
 
 def icon_uri(image):
@@ -244,37 +294,42 @@ def section(uri=None, e=None, age='prehistoric'):
     from item_icons import Icons
     import showcase_recipes as display
     import build_workstation_crests as crests
-    sequence, sources, stations, problems, _ = build(age)
+    sequence, sources, stations, nodes, rows, problems = build(age)
     table = display.names(sources.jar)
     icons = Icons()
     items = {}
+    for chip in [c for row in rows for c in row['ins']] + nodes:
+        key = chip['id']
+        if key in items:
+            continue
+        rep = display.representative(key, sources.plan)
+        image = icons.icon(rep) if rep else None
+        name = NAMES.get(key) or display.item_name(key, table, sources.plan)
+        items[key] = {'name': name, 'icon': icon_uri(image) if image else ''}
     for station in stations:
-        for row in station['rows']:
-            for chip in row['ins'] + row['outs']:
-                key = chip['id']
-                if key in items:
-                    continue
-                rep = display.representative(key, sources.plan)
-                image = icons.icon(rep) if rep else None
-                name = NAMES.get(key) or display.item_name(key, table, sources.plan)
-                items[key] = {'name': name, 'icon': icon_uri(image) if image else ''}
         glyph = crests.sigil(station['sigil']).resize((32, 32)) if station['sigil'] else icons.icon(station['icon'])
         station['glyph'] = icon_uri(glyph) if glyph else ''
-    data = {'title': sequence['title'], 'next': sequence.get('next', ''), 'stations': stations, 'items': items,
-            'problems': problems}
+        del station['rows'], station['sigil'], station['icon']
+    finale = [i for i, n in enumerate(nodes) for s in stations if s['gate'] and n['id'] == f"arksurvivalreturns:{s['id']}"]
+    for node in nodes:
+        del node['k']
+    for row in rows:
+        row['ins'] = [{key: chip[key] for key in ('id', 'n', 'world', 'tool', 'name', 'from') if key in chip} for chip in row['ins']]
+    data = {'title': sequence['title'], 'next': sequence.get('next', ''), 'stations': stations, 'nodes': nodes,
+            'rows': rows, 'items': items, 'finale': finale, 'problems': problems}
     return {
         'TREE_DATA': json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/'),
-        'TREE_JS': (HERE / 'spine.js').read_text(encoding='utf-8'),
-        'TREE_CSS': (HERE / 'spine.css').read_text(encoding='utf-8'),
-        'TREE_ROWS': sum(len(s['rows']) for s in stations),
-        'TREE_STATIONS': len(stations),
+        'TREE_JS': (HERE / 'recipe_map.js').read_text(encoding='utf-8'),
+        'TREE_CSS': (HERE / 'recipe_map.css').read_text(encoding='utf-8'),
+        'TREE_ITEMS': len(nodes),
+        'TREE_STEPS': max(row['d'] for row in rows),
     }
 
 
 if __name__ == '__main__':
-    _, _, found, issues, loops = build(sys.argv[1] if len(sys.argv) > 1 else 'prehistoric')
-    for station in found:
-        print(f"{station['name']}: {len(station['rows'])} rows")
-    print('\n'.join(issues) if issues else 'Every input is gathered or made somewhere in the sequence.')
-    if loops:
-        print('Made further down:\n' + '\n'.join(loops))
+    _, _, found, made, recipes, issues = build(sys.argv[1] if len(sys.argv) > 1 else 'prehistoric')
+    for s, station in enumerate(found):
+        steps = sorted({row['d'] for row in recipes if row['s'] == s})
+        print(f"{station['name']}: {sum(row['s'] == s for row in recipes)} recipes" + (f", steps {steps}" if steps else ''))
+    print(f"{len(made)} items over {max(row['d'] for row in recipes)} steps from bare hands")
+    print('\n'.join(issues) if issues else 'Every input is gathered or made somewhere in the age, and nothing needs itself.')
