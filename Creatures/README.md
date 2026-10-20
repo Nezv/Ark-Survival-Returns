@@ -23,6 +23,16 @@ ARK/Workshop data is intended. Rebuilds overwrite generated geometry, textures,
 animations, Blockbench projects and previews, so preserve manual artwork under
 another name first.
 
+The Mammoth and the Megapithecus are hand-made: `scripts/handmade_models.py`
+builds their boxes, skins, Blockbench projects and previews from
+`scripts/handmade_<id>.py` on the unchanged rig and clips, and the workflow runs
+it again after refitting them. Rebuild and import them with:
+
+```powershell
+python scripts/handmade_models.py mammoth megapithecus
+python Ark/tools/import_creatures.py --species mammoth megapithecus
+```
+
 ## Directory contract
 
 Each species directory contains:
@@ -40,9 +50,9 @@ Keep bone names, pivots and parent links stable when editing cubes. Imported
 clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
-The models are automated cuboid approximations with generated palettes. Review
-shoulders, mouths, wing joints and other silhouettes before final art approval.
-Loop flags are inferred from clip names.
+The models are automated cuboid approximations with generated palettes, except
+the hand-made Mammoth and Megapithecus. Review shoulders, mouths, wing joints and
+other silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
 
@@ -69,10 +79,10 @@ species directory.
 | Kaprosuchus | `Kaprosuchus` | `Kaprosuchus_GeckoLib.bbmodel` | `kaprosuchus` | 78 | 275 | 37 |
 | Liopleurodon | `Liopleurodon` | `Liopleurodon_GeckoLib.bbmodel` | `liopleurodon` | 43 | 133 | 25 |
 | Lystrosaurus | `Lystrosaurus` | `Lystrosaurus_GeckoLib.bbmodel` | `lystrosaurus` | 72 | 156 | 33 |
-| Mammoth | `SK_Mammoth_new` | `Mammoth_GeckoLib.bbmodel` | `mammoth` | 93 | 373 | 41 |
+| Mammoth | `SK_Mammoth_new` | `Mammoth_GeckoLib.bbmodel` | `mammoth` | 93 | 98 | 41 |
 | Megalocerus | `Stag` | `Megalocerus_GeckoLib.bbmodel` | `megalocerus` | 59 | 397 | 36 |
 | Megalodon | `Megalodon` | `Megalodon_GeckoLib.bbmodel` | `megalodon` | 28 | 103 | 23 |
-| Megapithecus | `Gorilla` | `Megapithecus_GeckoLib.bbmodel` | `megapithecus` | 93 | 438 | 28 |
+| Megapithecus | `Gorilla` | `Megapithecus_GeckoLib.bbmodel` | `megapithecus` | 93 | 93 | 28 |
 | Mosasaurus | `Mosasaurus` | `Mosasaurus_GeckoLib.bbmodel` | `mosasaurus` | 30 | 126 | 24 |
 | Paraceratherium | `Paraceratherium` | `Paraceratherium_GeckoLib.bbmodel` | `paraceratherium` | 84 | 222 | 32 |
 | Parasaur | `Para` | `Parasaur_GeckoLib.bbmodel` | `parasaur` | 85 | 279 | 35 |
@@ -106,3 +116,15 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   `c_neck3`.
 - **Unicorn:** reduced slice counts and trimmed 5th/95th-percentile bounds make
   the body and limbs lighter. The horn and original rig remain attached.
+- **Mammoth (hand-made):** 98 boxes fitted to the ARK mesh's outline: a domed
+  skull over the neck dip, the shoulder hump, a rump sloping to the tail, hair
+  fringes with cut-out tips along the flanks, rump, chest and jaw, a trunk of seven
+  rings and tusks bent along a spline. Its skin paints strands and layered locks
+  texel by texel in world space, 1 texel per runtime unit, in the five variants.
+  `geo/mammoth.geo.json` stays the procedural fit and is only read for its rig.
+- **Megapithecus (hand-made):** 93 boxes on the knuckle-walking bind pose: the
+  back rising to the hump, deltoids, long-haired forearms, fists of curled
+  fingers, a crested head with deep-set forward-facing eyes, a broad nose and a
+  jaw designed shut as the idle holds it (its fangs show when it roars). Bare
+  face, chest, hands and feet; a feathered silver saddle on the lower back. The
+  face is painted at 2 texels per unit.

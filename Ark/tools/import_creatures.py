@@ -161,9 +161,12 @@ def with_behavior_clips(folder, identifier, clips):
     return list(clips) + [name for name in dict.fromkeys(roles.values()) if name not in clips], roles
 
 
-def main():
+def main(only=None):
+    """Import every species, or only the runtime ids in `only` (their rows of the import report are replaced)."""
     report = []
     for folder, identifier, height, *clips in SPECIES:
+        if only is not None and identifier not in only:
+            continue
         if identifier == 'dragon':
             from import_dragon_runtime import import_dragon
             import_dragon()
@@ -235,6 +238,10 @@ def main():
                        'scale': factor, 'clips': clips,
                        'source_sha256': {name: hashlib.sha256(path.read_bytes()).hexdigest()
                                          for name, path in sources.items()}})
+    if only is not None:
+        fresh = {row['id']: row for row in report}
+        report = [fresh.pop(row['id'], row) for row in json.loads((ROOT / 'docs/creature-import.json').read_text())]
+        report += list(fresh.values())
     write(ROOT / 'docs/creature-import.json', report)
     print(f'Imported {len(report)} creatures, {sum(len(row["clips"]) for row in report)} clips, and five procedural texture variants.')
 
@@ -243,5 +250,7 @@ if __name__ == '__main__':
     if '--dragon-only' in sys.argv:
         from import_dragon_runtime import import_dragon
         import_dragon()
+    elif '--species' in sys.argv:
+        main(set(sys.argv[sys.argv.index('--species') + 1:]))
     else:
         main()

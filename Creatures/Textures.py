@@ -28,6 +28,9 @@ assert spec.loader is not None
 spec.loader.exec_module(painter)
 
 VARIANTS = ("Ivory", "Darken", "Emerald", "Midnight", "Burgundy")
+# Designed box by box with their own skins (scripts/handmade_models.py writes their textures/ folder);
+# this painter skips them, so a batch run never overwrites that art.
+HAND_MADE = {"Mammoth": "scripts/handmade_mammoth.py", "Megapithecus": "scripts/handmade_megapithecus.py"}
 
 # Body plans are deliberately anatomical rather than taxonomic: they tune UV
 # density for the silhouette while the painter derives head, jaw, dorsal,
@@ -135,8 +138,15 @@ def write_table(mapping: dict[str, str]) -> None:
     ]
     treatment = "Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails"
     for anatomy, profile in ANATOMY.items():
-        creatures = ", ".join(profile["creatures"])
-        lines.append(f"| {anatomy} | {creatures} | {profile['density']:.2f} px/unit | {treatment} |")
+        creatures = ", ".join(name for name in profile["creatures"] if name not in HAND_MADE)
+        if creatures:
+            lines.append(f"| {anatomy} | {creatures} | {profile['density']:.2f} px/unit | {treatment} |")
+    lines.extend(["", "## Hand-made skins", "",
+                  "These species are designed box by box on their ARK rigs, with skins painted texel by texel from where",
+                  "each texel lies on the body (1 texel per runtime unit); this painter skips them:", ""])
+    lines.extend(f"- {name}: `{builder}`" for name, builder in HAND_MADE.items())
+    lines.extend(["", "Rebuild them with `python scripts/handmade_models.py`, then import with",
+                  "`python Ark/tools/import_creatures.py --species mammoth megapithecus`."])
     lines.extend(["", "## Generate and ship", "", "```powershell",
                   "python Creatures/Textures.py --ship-runtime", "```", "",
                   "Use `--dry-run` to validate every atlas without writing files. Use `--creatures NAME ...` or `--anatomies NAME ...` for a subset.", ""])
@@ -161,6 +171,9 @@ def main() -> None:
     failures = []
     for name in mapping:
         if name not in selected:
+            continue
+        if name in HAND_MADE:
+            print(f"{name}: hand-made, painted by {HAND_MADE[name]}")
             continue
         anatomy = mapping[name]
         try:

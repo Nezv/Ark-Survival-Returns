@@ -33,6 +33,10 @@ def main():
     for label in args.species:build(label,refresh=not args.reuse_exports)
     from validate_dinosaurs import validate
     for label in args.species:validate(label)
+    # Hand-made species keep their own boxes and skins over the refitted rig (handmade_models.py).
+    from handmade_models import HAND_MADE,rebuild
+    for label in args.species:
+        if label in HAND_MADE:print(rebuild(HAND_MADE[label]))
     if set(args.species)==set(SPECIES):
         from preview_dinosaurs import contact_sheet
         contact_sheet(ROOT,list(SPECIES))

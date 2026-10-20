@@ -655,12 +655,12 @@ DESIGNS = {
                   radius=0.34, pattern='flecks', amount=1.0, sclera='#2a1e18'),
         pupil=0.40, brow=dict(slant=5, boxes=[((-0.70, 0.60), (0.00, 0.40), (-0.9, 0.20))]), crest=[]),
     'megapithecus': dict(
-        skull='c_head', centre=(45.8, 20.6), level=0, size=(3.4, 2.7), gap=0.2,
-        yaw=6, pitch=2, roll=2, almond=0.5, px=9,
+        # forward-facing, deep under the brow ridge on the face of the hand-made head (scripts/handmade_megapithecus.py)
+        skull='c_head', centre=(46.2, 19.4), skin=2.35, level=0, size=(2.6, 2.0), gap=0.12,
+        yaw=78, pitch=2, roll=0, almond=0.5, px=12,
         iris=dict(calm=palette('#f0c080', '#8e5c2c', '#4c2e16', '#1a0e06'), hunt=palette('#ffd89a', '#e8501c', '#7a1408', '#240804'),
-                  radius=0.3, pattern='fibres', amount=0.8, sclera='#3c2c24'),
-        pupil=0.40, brow=dict(slant=3, boxes=[((-0.90, 0.80), (0.00, 0.55), (-0.9, 0.30))]),
-        crest=[((-1.10, 1.00), (0.40, 0.95), (-0.9, 0.40))]),
+                  radius=0.32, pattern='fibres', amount=0.8, sclera='#3c2c24'),
+        pupil=0.40, brow=dict(slant=3, boxes=[((-0.90, 0.80), (0.00, 0.50), (-0.9, 0.25))]), crest=[]),
     # ---------------------------------------------------------------- the terror bird
     'terrorbird': dict(
         skull='c_head', centre=(28.1, 21.5), level=7.3, size=(1.3, 1.2), gap=0.12,

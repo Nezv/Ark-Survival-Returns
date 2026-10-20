@@ -912,9 +912,9 @@ def clip_of(sid):
 def scene(sid, tier=None, cargo="default", rider=True, clip=None, time=0.0):
     """Everything the renderer needs: cubes with UVs, the joined texture, the saddle's corners, the facts."""
     body, kit, info = build(sid, tier, cargo, rider)
-    skin = Image.open(ASSETS / f"textures/entity/{sid}_{SPECIES[sid]['skin']}.png").convert("RGB")
+    skin = Image.open(ASSETS / f"textures/entity/{sid}_{SPECIES[sid]['skin']}.png").convert("RGBA")
     atlas, uvs = texture(kit, info["density"], skin.height) if kit.boxes else (np.zeros((1, 1, 3), np.uint8), [])
-    sheet = Image.new("RGB", (max(skin.width, atlas.shape[1]), skin.height + atlas.shape[0]))
+    sheet = Image.new("RGBA", (max(skin.width, atlas.shape[1]), skin.height + atlas.shape[0]))
     sheet.paste(skin, (0, 0))
     sheet.paste(Image.fromarray(atlas), (0, skin.height))
     body_corners = body.corners
@@ -989,8 +989,10 @@ def card(sid):
     decoded, sheet, _, info, _ = scene(sid, rider=False)
     size = (1100, 780)
     image = ss.render(decoded, sheet, CAMS["front"], size, margin=40)
-    # the same picture in white gives the outline, whatever the colour of the skin
-    white = ss.render(decoded, Image.new("RGB", sheet.size, (255, 255, 255)), CAMS["front"], size, margin=40)
+    # the same picture in white gives the outline, whatever the colour of the skin (its cut-outs kept)
+    blank = Image.new("RGBA", sheet.size, (255, 255, 255, 255))
+    blank.putalpha(sheet.getchannel("A"))
+    white = ss.render(decoded, blank, CAMS["front"], size, margin=40)
     solid = np.abs(np.asarray(white, int) - (19, 30, 39)).sum(2) > 120
     picture = Image.fromarray(np.dstack([np.asarray(image), np.where(solid, 255, 0).astype(np.uint8)]), "RGBA")
     picture = picture.crop(picture.getbbox())

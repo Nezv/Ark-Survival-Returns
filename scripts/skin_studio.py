@@ -898,7 +898,7 @@ def posed_corners(cubes, skeleton, clip_bones, time):
     return posed
 
 
-def _fill(zbuf, tu, tv, fid, screen, depth, uv, fid_value, width, height):
+def _fill(zbuf, tu, tv, fid, screen, depth, uv, fid_value, width, height, alpha=None):
     area = ((screen[1, 0] - screen[0, 0]) * (screen[2, 1] - screen[0, 1])
             - (screen[2, 0] - screen[0, 0]) * (screen[1, 1] - screen[0, 1]))
     if abs(area) < 1e-12:
@@ -926,9 +926,16 @@ def _fill(zbuf, tu, tv, fid, screen, depth, uv, fid_value, width, height):
     upd = inside & (z < zblock)
     if not upd.any():
         return
+    u = w0 * uv[0, 0] + w1 * uv[1, 0] + w2 * uv[2, 0]
+    v = w0 * uv[0, 1] + w1 * uv[1, 1] + w2 * uv[2, 1]
+    if alpha is not None:  # the entity cutout: a texel below half alpha leaves the pixel to what lies behind
+        th, tw = alpha.shape
+        upd &= alpha[np.clip(np.round(v).astype(int), 0, th - 1), np.clip(np.round(u).astype(int), 0, tw - 1)] >= 128
+        if not upd.any():
+            return
     zblock[upd] = z[upd]
-    tu[y0:y1 + 1, x0:x1 + 1][upd] = (w0 * uv[0, 0] + w1 * uv[1, 0] + w2 * uv[2, 0])[upd]
-    tv[y0:y1 + 1, x0:x1 + 1][upd] = (w0 * uv[0, 1] + w1 * uv[1, 1] + w2 * uv[2, 1])[upd]
+    tu[y0:y1 + 1, x0:x1 + 1][upd] = u[upd]
+    tv[y0:y1 + 1, x0:x1 + 1][upd] = v[upd]
     fid[y0:y1 + 1, x0:x1 + 1][upd] = fid_value
 
 
@@ -936,6 +943,10 @@ def render(cubes, texture, cam, size, textured=True, focus=None, zoom=1.0, margi
     width, height = size
     points = []
     faces = []
+    # A skin with cut-out texels is drawn as GeckoLib's entityCutoutNoCull draws it: both sides, holes open.
+    alpha = np.asarray(texture.getchannel("A")) if textured and texture.mode == "RGBA" else None
+    if alpha is not None and alpha.min() >= 128:
+        alpha = None
     for index, cube in enumerate(cubes):
         rotated = cube["corners"] @ cam.T
         points.append(rotated)
@@ -947,8 +958,10 @@ def render(cubes, texture, cam, size, textured=True, focus=None, zoom=1.0, margi
             if length < 1e-9:
                 continue
             normal = normal / length
-            if normal[0] > -1e-6:
+            if normal[0] > -1e-6 and alpha is None:
                 continue
+            if normal[0] > -1e-6:
+                normal = -normal
             screen = np.column_stack([quad[:, 2], -quad[:, 1]])
             shade = 0.62 + 0.38 * float(np.clip(normal @ LIGHT, 0, 1))
             if key not in cube["faces"]:
@@ -976,7 +989,7 @@ def render(cubes, texture, cam, size, textured=True, focus=None, zoom=1.0, margi
         pixel = (screen - center) * scale + [width / 2, height / 2]
         shades[fid_value] = shade
         for tri in ([0, 1, 2], [0, 2, 3]):
-            _fill(zbuf, tu, tv, fid, pixel[tri], depth[tri], uv[tri], fid_value, width, height)
+            _fill(zbuf, tu, tv, fid, pixel[tri], depth[tri], uv[tri], fid_value, width, height, alpha)
 
     canvas = np.zeros((height, width, 3), np.float32)
     canvas[:] = (19, 30, 39)

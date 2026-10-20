@@ -16,9 +16,19 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 | Shark | Megalodon | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Cephalopod | Tusoteuthis | 1.45 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Cnidarian | Cnidaria | 1.10 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Quadrupedal mammal | Direwolf, Mammoth, Megalocerus, Paraceratherium, Ravager, Sabertooth, Unicorn | 1.60 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Primate | Megapithecus | 1.15 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Quadrupedal mammal | Direwolf, Megalocerus, Paraceratherium, Ravager, Sabertooth, Unicorn | 1.60 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Small biped | Pegomastax | 1.80 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+
+## Hand-made skins
+
+These species are designed box by box on their ARK rigs, with skins painted texel by texel from where
+each texel lies on the body (1 texel per runtime unit); this painter skips them:
+
+- Mammoth: `scripts/handmade_mammoth.py`
+- Megapithecus: `scripts/handmade_megapithecus.py`
+
+Rebuild them with `python scripts/handmade_models.py`, then import with
+`python Ark/tools/import_creatures.py --species mammoth megapithecus`.
 
 ## Generate and ship
 

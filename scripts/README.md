@@ -37,6 +37,12 @@ the same extraction, build, validation and reporting path.
   `creature_mesh_details.py` are reusable conversion primitives.
 - `model_catalog.py`, `model_batch.py`, `build_skins.py`, and `skin_studio.py`
   are catalog or appearance utilities.
+- `handmade_models.py` builds hand-designed species (`handmade_<id>.py`: the
+  Mammoth and the Megapithecus) on their unchanged rigs: boxes placed in the
+  bind pose, a per-face UV atlas, skins painted texel by texel in world space,
+  the Blockbench project and the previews. `--preview <folder>` writes review
+  sheets only (`--outline` adds the ARK mesh's outline over the design).
+  `workflow.py` runs it again after refitting those species.
 - `depth_preview.py`, `refine_unicorn.py`, and `restore_batch_fitting.py` are
   specialized repair/inspection tools.  Keep them until their last known
   outputs and use cases are explicitly retired; they are not part of every
