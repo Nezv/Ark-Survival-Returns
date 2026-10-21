@@ -5,8 +5,8 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 
 | Anatomy | Creatures | UV density | Procedural treatment |
 |---|---|---:|---|
-| Bipedal theropod | Acrochantosaur, Allosaurus, Carnotaurus, Ceratosaurus, Dilophosaur, Giganotosaur, Spinosaurus, Terrorbird, Therezinosaur, Tyranosaur, Velociraptor | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Armored or horned quadruped | Lystrosaurus, Parasaur, Triceratops | 1.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Bipedal theropod | Acrochantosaur, Allosaurus, Carnotaurus, Ceratosaurus, Dilophosaur, Giganotosaur, Spinosaurus, Terrorbird, Therezinosaur, Velociraptor | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Armored or horned quadruped | Lystrosaurus, Parasaur | 1.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged dragon | Dragon | 0.85 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
@@ -28,9 +28,11 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Megapithecus: `scripts/handmade_megapithecus.py`
 - Sabertooth: `scripts/handmade_sabertooth.py`
 - Ankylosaurus: `scripts/handmade_ankylosaurus.py`
+- Tyranosaur: `scripts/handmade_tyrannosaurus.py`
+- Triceratops: `scripts/handmade_triceratops.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops`.
 
 ## Generate and ship
 

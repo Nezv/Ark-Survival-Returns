@@ -23,15 +23,16 @@ ARK/Workshop data is intended. Rebuilds overwrite generated geometry, textures,
 animations, Blockbench projects and previews, so preserve manual artwork under
 another name first.
 
-The Mammoth, the Megapithecus, the Sabertooth and the Ankylosaurus are
-hand-made: `scripts/handmade_models.py` builds their boxes, skins, Blockbench
+The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
+Tyrannosaurus and the Triceratops are hand-made: `scripts/handmade_models.py`
+builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops
 ```
 
 ## Directory contract
@@ -52,7 +53,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the four hand-made species above. Review shoulders, mouths, wing joints and other
+the six hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -99,9 +100,9 @@ species directory.
 | Therezinosaur | `Therizinosaurus` | `Therezinosaur_GeckoLib.bbmodel` | `therezinosaur` | 88 | 302 | 37 |
 | Titanoboa | `BoaFrill` | `Titanoboa_GeckoLib.bbmodel` | `titanoboa` | 55 | 198 | 21 |
 | Titanosaur | `Titanosaur` | `Titanosaur_GeckoLib.bbmodel` | `titanosaur` | 66 | 319 | 35 |
-| Triceratops | `Trike` | `Triceratops_GeckoLib.bbmodel` | `triceratops` | 96 | 258 | 41 |
+| Triceratops | `Trike` | `Triceratops_GeckoLib.bbmodel` | `triceratops` | 96 | 211 | 41 |
 | Tusoteuthis | `Tusoteuthis` | `Tusoteuthis_GeckoLib.bbmodel` | `tusoteuthis` | 79 | 295 | 29 |
-| Tyranosaur | `Rex` | `Rex_Ravager_GeckoLib.bbmodel` | `rex_ravager` | 75 | 232 | 34 |
+| Tyranosaur | `Rex` | `Rex_Ravager_GeckoLib.bbmodel` | `rex_ravager` | 75 | 209 | 34 |
 | Unicorn | `Equus` | `Unicorn_GeckoLib.bbmodel` | `unicorn` | 77 | 148 | 42 |
 | Velociraptor | `Raptor` | `Velociraptor_GeckoLib.bbmodel` | `velociraptor` | 79 | 226 | 35 |
 
@@ -143,3 +144,27 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   spikes, the saw along the tail and the horned lobes of the club. The beaked
   head carries its horns and the two spikes that hang from the jaw, designed shut
   as the idle holds it.
+- **Tyrannosaurus (hand-made):** 209 boxes, 1 texel per runtime unit: a trunk of
+  five tiers per segment measured on the ARK mesh's cross-sections, a neck of
+  sloped slabs laid along its back and throat lines, drumstick thighs, long shins
+  and three-toed feet, two-fingered arms and a tail tapering in two segments per
+  bone. The skull is broad over the jaw muscles, with a brow ledge and horned
+  brows over the eye, a cheek below it and a snout narrowing to its ridge; the
+  teeth are cut-out rows hanging from the lip outside the narrower lower jaw,
+  which is designed shut as the idle holds it. A ridge of scutes runs from the
+  crown to the hips and small spikes line the end of the tail. Its skin: pebbled
+  scales, a dark back lightening down the flanks, tiger bands drawn as pixel runs
+  that sweep back down the flanks and ring the tail, paired osteoderms along the
+  spine, a pale underside with belly scutes and throat folds, lip scales, a dark
+  band back from the eye and the nostrils.
+- **Triceratops (hand-made):** 211 boxes: a five-tier barrel of a body, columnar
+  legs bowed at the elbows with hoofed toes, and a tapering tail. The frill is a
+  fan of radial plates laid in its dished surface, its rim carrying the ARK
+  mesh's spikes; the brow, nose and frill horns follow the mesh's measured centre
+  lines in tapering spans. The face, frill and horns are painted at 2 texels per
+  unit; the hooked beak narrows in steps and is designed shut in the idle (the
+  ARK idle holds it a little open). Its skin: big pebbled scales with broad
+  plates along the spine, dark saddles as pixel runs, pale flank speckles, a
+  wrinkled pale underside, ringed legs; the frill coloured per variant with a
+  light rib down every plate, a row of ringed spots and a dark rim; horns ridged
+  and dark at the base, pale to the tip.

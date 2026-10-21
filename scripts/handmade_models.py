@@ -17,7 +17,7 @@ Outputs, read by Ark/tools/import_creatures.py: Creatures/<Folder>/textures/<ste
 variant skins textures/<Variant>/skin.png and the natural base textures/skin.png. Creatures/Textures.py
 leaves these species alone (HAND_MADE there).
 
-    python scripts/handmade_models.py [mammoth megapithecus sabertooth ankylosaurus] [--preview <folder> [--outline]]
+    python scripts/handmade_models.py [mammoth ... triceratops] [--preview <folder> [--outline]]
 """
 from __future__ import annotations
 
@@ -41,11 +41,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))   # the design modules,
 import geckolib_mesh as gm  # noqa: E402
 
 VARIANTS = ('Ivory', 'Darken', 'Emerald', 'Midnight', 'Burgundy')
-DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus')
+DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
-             'Ankylosaurus': 'ankylosaurus'}
+             'Ankylosaurus': 'ankylosaurus', 'Tyranosaur': 'tyrannosaurus', 'Triceratops': 'triceratops'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -77,7 +77,7 @@ def euler_zyx(m):
 
 
 def swap_side(name):
-    for a, b in (('l_', 'r_'), ('r_', 'l_')):
+    for a, b in (('l_', 'r_'), ('r_', 'l_'), ('Lft_', 'Rht_'), ('Rht_', 'Lft_')):
         if name.startswith(a):
             return b + name[len(a):]
     return name
@@ -600,7 +600,7 @@ def write(module, doc, skins, design, faces):
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f'{module.STEM}.geo.json').write_text(json.dumps(doc, indent=1) + '\n', encoding='utf-8')
     width, height = skins[VARIANTS[0]].size
-    report = {'creature': module.FOLDER, 'builder': f'scripts/handmade_{module.STEM}.py', 'atlas_size': [width, height],
+    report = {'creature': module.FOLDER, 'builder': f'scripts/{module.__name__}.py', 'atlas_size': [width, height],
               'boxes': len(design.boxes), 'faces': len(faces), 'hidden_faces': sum(f.hidden for f in faces),
               'texels_per_runtime_unit': module.DENSITY}
     for variant in VARIANTS:
@@ -775,9 +775,27 @@ def preview(module, doc, skins, out, clips=(), size=(900, 640)):
     sheet.save(out)
 
 
-def outline(module, doc, skin, out, size=(900, 680), fov=20.0):
+def skinned(skeleton, rig, pose):
+    """The ARK mesh's vertices skinned (linear blend, the mesh's own weights) by the rig in a pose."""
+    posed, _ = gm.bone_matrices(rig.bare, pose)
+    v = np.c_[skeleton.source_vertices, np.ones(len(skeleton.source_vertices))]
+    out, total = np.zeros_like(skeleton.source_vertices), np.zeros(len(v))
+    for weight, vertex, bone in skeleton.weights:
+        name = skeleton.source_bone_names[bone]
+        if name in rig.world:
+            out[vertex] += weight * ((posed[name] @ np.linalg.inv(rig.world[name])) @ v[vertex])[:3]
+            total[vertex] += weight
+    moved = total > 1e-6
+    out[moved] /= total[moved, None]
+    out[~moved] = skeleton.source_vertices[~moved]
+    return out
+
+
+def outline(module, doc, skin, out, rig=None, size=(900, 680), fov=20.0):
     """The design in its bind pose with the outline of the ARK mesh it is fitted to drawn over it in red, from the
-    side, the front, above and three-quarters: where boxes stand out of or fall short of the original silhouette."""
+    side, the front, above and three-quarters: where boxes stand out of or fall short of the original silhouette.
+    A jaw designed in another frame (the module's JAW_POSE: clip, time and the bones it moves) is shown there, the
+    ARK mesh posed alike, its jaw at JAW_REFERENCE degrees where the ARK clip does not shut it."""
     from PIL import ImageDraw, ImageFilter
     from ark_geometry import Skeleton
     skeleton = Skeleton(module.ASSET, ROOT / 'Creatures' / module.FOLDER / 'source')
@@ -785,7 +803,15 @@ def outline(module, doc, skin, out, size=(900, 680), fov=20.0):
     skip = getattr(module, 'OUTLINE_SKIP', None)  # bones of the mesh left out (the mammoth's second tusk set)
     if skip:
         triangles = triangles[[not any(word in skeleton.names[b] for word in skip) for b in skeleton.face_bone]]
-    quads = gm.quads(doc['minecraft:geometry'][0])
+    pose = None
+    if rig is not None and getattr(module, 'JAW_POSE', None):
+        clip, time, moved = module.JAW_POSE
+        pose = {k: v for k, v in gm.clip_pose(rig.animations[clip], time).items() if any(w in k for w in moved)}
+        reference = {k: dict(v) for k, v in pose.items()}
+        for bone, degrees in getattr(module, 'JAW_REFERENCE', {}).items():
+            reference.setdefault(bone, {})['rot'] = np.radians([degrees, 0.0, 0.0]) * [-1, -1, 1]
+        vertices = skinned(skeleton, rig, reference)
+    quads = gm.quads(doc['minecraft:geometry'][0], pose)
     shots = []
     for direction, label in (((1, 1e-4, 1e-4), 'side'), ((1e-4, 1e-4, 1), 'front'), ((1e-4, 1, 0.02), 'top'),
                              ((0.85, 0.4, 0.8), 'three-quarter')):
@@ -834,7 +860,7 @@ def main():
             preview(module, doc, skins, args.preview / f'{name}.png', clips)
             skins[module.PREVIEW_VARIANT].save(args.preview / f'{name}_atlas.png')
             if args.outline:
-                outline(module, doc, skins[module.PREVIEW_VARIANT], args.preview / f'{name}_outline.png')
+                outline(module, doc, skins[module.PREVIEW_VARIANT], args.preview / f'{name}_outline.png', rig)
         else:
             write(module, doc, skins, design, faces)
 
