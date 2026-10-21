@@ -23,14 +23,15 @@ ARK/Workshop data is intended. Rebuilds overwrite generated geometry, textures,
 animations, Blockbench projects and previews, so preserve manual artwork under
 another name first.
 
-The Mammoth and the Megapithecus are hand-made: `scripts/handmade_models.py`
-builds their boxes, skins, Blockbench projects and previews from
-`scripts/handmade_<id>.py` on the unchanged rig and clips, and the workflow runs
-it again after refitting them. Rebuild and import them with:
+The Mammoth, the Megapithecus, the Sabertooth and the Ankylosaurus are
+hand-made: `scripts/handmade_models.py` builds their boxes, skins, Blockbench
+projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
+clips, and the workflow runs it again after refitting them. Rebuild and import
+them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus
-python Ark/tools/import_creatures.py --species mammoth megapithecus
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus
 ```
 
 ## Directory contract
@@ -51,8 +52,8 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the hand-made Mammoth and Megapithecus. Review shoulders, mouths, wing joints and
-other silhouettes before final art approval. Loop flags are inferred from clip names.
+the four hand-made species above. Review shoulders, mouths, wing joints and other
+silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
 
@@ -64,7 +65,7 @@ species directory.
 | --- | --- | --- | --- | ---: | ---: | ---: |
 | Acrochantosaur | `Acro_Mesh` | `Acrochantosaur_GeckoLib.bbmodel` | `acrochantosaur` | 306 | 418 | 44 |
 | Allosaurus | `Allosaurus` | `Allosaurus_GeckoLib.bbmodel` | `allosaurus` | 79 | 167 | 32 |
-| Ankylosaurus | `Ankylo` | `Ankylosaurus_GeckoLib.bbmodel` | `ankylosaurus` | 76 | 220 | 33 |
+| Ankylosaurus | `Ankylo` | `Ankylosaurus_GeckoLib.bbmodel` | `ankylosaurus` | 76 | 396 | 33 |
 | Archaeopteryx | `Archaeopteryx` | `Archaeopteryx_GeckoLib.bbmodel` | `archaeopteryx` | 135 | 494 | 35 |
 | Argentavis | `Argentavis` | `Argentavis_GeckoLib.bbmodel` | `argentavis` | 131 | 421 | 36 |
 | Brontosaur | `Sauropod` | `Brontosaur_GeckoLib.bbmodel` | `brontosaur` | 65 | 301 | 35 |
@@ -91,7 +92,7 @@ species directory.
 | Plesiosaur | `Plesiosaur` | `Plesiosaur_GeckoLib.bbmodel` | `plesiosaur` | 42 | 163 | 22 |
 | Quetzal | `Quetzalcoatlus` | `Quetzal_GeckoLib.bbmodel` | `quetzal` | 133 | 355 | 34 |
 | Ravager | `CaveWolf` | `Ravager_GeckoLib.bbmodel` | `ravager` | 93 | 274 | 73 |
-| Sabertooth | `Saber` | `Sabertooth_GeckoLib.bbmodel` | `sabertooth` | 91 | 242 | 35 |
+| Sabertooth | `Saber` | `Sabertooth_GeckoLib.bbmodel` | `sabertooth` | 91 | 71 | 35 |
 | Sarco | `Sarco-New` | `Sarco_GeckoLib.bbmodel` | `sarco` | 74 | 191 | 41 |
 | Spinosaurus | `Spino` | `Spinosaurus_GeckoLib.bbmodel` | `spinosaurus` | 91 | 258 | 49 |
 | Terrorbird | `TerrorBird` | `Terrorbird_GeckoLib.bbmodel` | `terrorbird` | 59 | 317 | 33 |
@@ -128,3 +129,17 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   jaw designed shut as the idle holds it (its fangs show when it roars). Bare
   face, chest, hands and feet; a feathered silver saddle on the lower back. The
   face is painted at 2 texels per unit.
+- **Sabertooth (hand-made):** 71 boxes: a deep chest, high withers and a waist
+  tucking up to heavy haunches, a shaggy mane in cut-out fringes from the cheeks
+  over the shoulders whose hem takes the coat's colour, a long ringed tail with a
+  dark tip. The face, painted at 2 texels per unit, has forward-facing eyes beside
+  a narrow nose bridge, whisker pads, a pink-brown nose and rounded ears; the two
+  sabers hang from the upper jaw past a narrow chin, the jaw designed shut as the
+  idle holds it. Stripes, forehead and cheek marks are drawn as pixel runs.
+- **Ankylosaurus (hand-made):** 396 boxes: a shell of five tiers per segment
+  (dome, body, flaring rim, lower body, belly) in bands of osteoderms, and every
+  spike of the ARK mesh measured and rebuilt as a tapering stack: the median row
+  fanning back and forward, the rows beside it and along the rim, the long neck
+  spikes, the saw along the tail and the horned lobes of the club. The beaked
+  head carries its horns and the two spikes that hang from the jaw, designed shut
+  as the idle holds it.

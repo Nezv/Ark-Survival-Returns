@@ -38,7 +38,8 @@ the same extraction, build, validation and reporting path.
 - `model_catalog.py`, `model_batch.py`, `build_skins.py`, and `skin_studio.py`
   are catalog or appearance utilities.
 - `handmade_models.py` builds hand-designed species (`handmade_<id>.py`: the
-  Mammoth and the Megapithecus) on their unchanged rigs: boxes placed in the
+  Mammoth, the Megapithecus, the Sabertooth and the Ankylosaurus) on their
+  unchanged rigs: boxes placed in the
   bind pose, a per-face UV atlas, skins painted texel by texel in world space,
   the Blockbench project and the previews. `--preview <folder>` writes review
   sheets only (`--outline` adds the ARK mesh's outline over the design).

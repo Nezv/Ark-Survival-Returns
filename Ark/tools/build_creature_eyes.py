@@ -643,11 +643,12 @@ DESIGNS = {
                   radius=0.34, pattern='fibres', amount=1.0, sclera='#2c1e16'),
         pupil=0.42, brow=dict(slant=4, boxes=[((-0.70, 0.60), (0.00, 0.40), (-0.9, 0.20))]), crest=[]),
     'sabertooth': dict(
-        skull='c_head', centre=(18.6, 20.6), level=0, size=(2.1, 1.7), gap=0.16,
-        yaw=12, pitch=4, roll=3, almond=0.5, px=14,
+        # forward-facing, set into the hand-made skull's front beside the nose bridge (scripts/handmade_sabertooth.py)
+        skull='c_head', centre=(18.6, 20.1), skin=1.775, level=0, size=(1.85, 1.4), gap=0.06,
+        yaw=75, pitch=4, roll=3, almond=0.5, px=14,
         iris=dict(calm=palette('#f6f8b6', '#d4cc3a', '#7c7a18', '#22240a'), hunt=palette('#ffd8a0', '#ff6a24', '#9c2008', '#2a0804'),
                   radius=0.36, pattern='fibres', amount=1.0, sclera='#2a2018'),
-        pupil=0.44, brow=dict(slant=5, boxes=[((-0.75, 0.65), (0.00, 0.44), (-0.9, 0.22))]), crest=[]),
+        pupil=0.44, brow=dict(slant=4, boxes=[((-0.65, 0.6), (0.00, 0.26), (-0.9, 0.1))]), crest=[]),
     'ravager': dict(
         skull='Head', centre=(19.9, 26.6), level=-2.8, size=(1.9, 1.5), gap=0.16,
         yaw=12, pitch=4, roll=3, almond=0.5, px=15,
