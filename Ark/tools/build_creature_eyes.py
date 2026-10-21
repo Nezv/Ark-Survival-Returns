@@ -637,8 +637,9 @@ DESIGNS = {
         pupil=(0.09, 0.95, 1.0), lids={}, crest=[((-0.50, 0.50), (0.08, 0.30), (-0.9, 0.10))]),
     # ---------------------------------------------------------------- mammals: a round pupil and a frown
     'direwolf': dict(
-        skull='c_head', centre=(21.2, 20.7), level=0, size=(1.9, 1.5), gap=0.16,
-        yaw=12, pitch=4, roll=3, almond=0.5, px=15,
+        # forward-facing, set into the hand-made skull's front beside the muzzle's bridge (scripts/handmade_direwolf.py)
+        skull='c_head', centre=(21.16, 20.87), skin=2.0, level=0, size=(1.45, 1.1), gap=0.06,
+        yaw=62, pitch=4, roll=3, almond=0.5, px=15,
         iris=dict(calm=palette('#fff2bc', '#e2aa30', '#8c5c16', '#2c1c08'), hunt=palette('#ffd8a0', '#ff6a24', '#9c2008', '#2a0804'),
                   radius=0.34, pattern='fibres', amount=1.0, sclera='#2c1e16'),
         pupil=0.42, brow=dict(slant=4, boxes=[((-0.70, 0.60), (0.00, 0.40), (-0.9, 0.20))]), crest=[]),

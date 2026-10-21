@@ -24,15 +24,15 @@ animations, Blockbench projects and previews, so preserve manual artwork under
 another name first.
 
 The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
-Tyrannosaurus and the Triceratops are hand-made: `scripts/handmade_models.py`
-builds their boxes, skins, Blockbench
+Tyrannosaurus, the Triceratops, the Direwolf and the Parasaur are hand-made:
+`scripts/handmade_models.py` builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur
 ```
 
 ## Directory contract
@@ -53,7 +53,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the six hand-made species above. Review shoulders, mouths, wing joints and other
+the eight hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -75,7 +75,7 @@ species directory.
 | Cnidaria | `Cnidaria` | `Cnidaria_GeckoLib.bbmodel` | `cnidaria` | 85 | 292 | 5 |
 | Deinosuchus | `Deinosuchus_TLC_Rig` | `Deinosuchus_GeckoLib.bbmodel` | `deinosuchus` | 63 | 190 | 46 |
 | Dilophosaur | `Dilo` | `Dilophosaur_GeckoLib.bbmodel` | `dilophosaur` | 105 | 275 | 31 |
-| Direwolf | `Direwolf_New` | `Direwolf_GeckoLib.bbmodel` | `direwolf` | 89 | 298 | 34 |
+| Direwolf | `Direwolf_New` | `Direwolf_GeckoLib.bbmodel` | `direwolf` | 89 | 79 | 34 |
 | Dragon | `Dragon` | `Dragon_GeckoLib.bbmodel` | `dragon` | 149 | 412 | 30 |
 | Giganotosaur | `Giganotosaurus` | `Giganotosaur_GeckoLib.bbmodel` | `giganotosaur` | 90 | 247 | 31 |
 | Kaprosuchus | `Kaprosuchus` | `Kaprosuchus_GeckoLib.bbmodel` | `kaprosuchus` | 78 | 275 | 37 |
@@ -87,7 +87,7 @@ species directory.
 | Megapithecus | `Gorilla` | `Megapithecus_GeckoLib.bbmodel` | `megapithecus` | 93 | 93 | 28 |
 | Mosasaurus | `Mosasaurus` | `Mosasaurus_GeckoLib.bbmodel` | `mosasaurus` | 30 | 126 | 24 |
 | Paraceratherium | `Paraceratherium` | `Paraceratherium_GeckoLib.bbmodel` | `paraceratherium` | 84 | 222 | 32 |
-| Parasaur | `Para` | `Parasaur_GeckoLib.bbmodel` | `parasaur` | 85 | 279 | 35 |
+| Parasaur | `Para` | `Parasaur_GeckoLib.bbmodel` | `parasaur` | 85 | 161 | 35 |
 | Pegomastax | `Pegomastax` | `Pegomastax_GeckoLib.bbmodel` | `pegomastax` | 87 | 261 | 42 |
 | Piterodon | `Ptero` | `Piterodon_GeckoLib.bbmodel` | `piterodon` | 133 | 287 | 57 |
 | Plesiosaur | `Plesiosaur` | `Plesiosaur_GeckoLib.bbmodel` | `plesiosaur` | 42 | 163 | 22 |
@@ -168,3 +168,29 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   wrinkled pale underside, ringed legs; the frill coloured per variant with a
   light rib down every plate, a row of ringed spots and a dark rim; horns ridged
   and dark at the base, pale to the tip.
+- **Direwolf (hand-made):** 79 boxes, 1 texel per runtime unit, fitted to the
+  ARK mesh's fur coat: a solid core per spine segment under a cape that hangs
+  over the upper flank and a fringe under the belly, both cut into ragged locks
+  at their hems, so the dark guard hairs fall over the grey flank and the buff
+  belly fur hangs below it. The coat rises over the withers into a mane and wraps
+  the back of the head as a hood, its crest standing up behind the ears and a
+  ruff hanging from the throat to the chest; shaggy breeches over the thighs and
+  a bushy brush of a tail with a dark top and tip. The head, painted at 2 texels
+  per unit, has forward-facing eyes beside a narrow bridge over the broader upper
+  lip, a black nose, pale brows and cheek tufts, stepped ears pale inside and two
+  fangs over the narrow chin; the jaw is designed shut as the idle holds it.
+- **Parasaur (hand-made):** 161 boxes: a trunk of five and six tiers per segment
+  measured on the ARK mesh's cross-sections, a tail tapering in two segments per
+  bone, a neck that runs forward from the chest and turns up into the back of the
+  skull, thick thighs over long shins, three-toed hoofed feet with a heel spur,
+  and arms with two spurs, a mitten hand and four fingers. The head, crest and
+  ridge are painted at 2 texels per unit: a skull broad over the cheeks and
+  narrower at the eyes, a snout stepping down to the duck bill, a lower bill shut
+  as the idle holds it with two keratin points, and the crest swept back along
+  the ARK mesh's centre line. The dorsal ridge is a cut-out card per bone from the
+  neck to the tail tip, with half as many blades as the mesh's spikes so it stays
+  crisp at game scale, and spikes pointing back up the nape. Its skin: pebbled
+  scales over a dark back lightening down the flanks, dark bands drawn as pixel
+  runs, pale flank spots, a pale underside with belly scales, a dark stripe back
+  through the eye; the crest and ridge in an accent per variant (orange-red,
+  coral, crimson, gold, teal, bone) with a pale line along the crest's groove.

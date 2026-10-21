@@ -32,7 +32,8 @@ VARIANTS = ("Ivory", "Darken", "Emerald", "Midnight", "Burgundy")
 # this painter skips them, so a batch run never overwrites that art.
 HAND_MADE = {"Mammoth": "scripts/handmade_mammoth.py", "Megapithecus": "scripts/handmade_megapithecus.py",
              "Sabertooth": "scripts/handmade_sabertooth.py", "Ankylosaurus": "scripts/handmade_ankylosaurus.py",
-             "Tyranosaur": "scripts/handmade_tyrannosaurus.py", "Triceratops": "scripts/handmade_triceratops.py"}
+             "Tyranosaur": "scripts/handmade_tyrannosaurus.py", "Triceratops": "scripts/handmade_triceratops.py",
+             "Direwolf": "scripts/handmade_direwolf.py", "Parasaur": "scripts/handmade_parasaur.py"}
 
 # Body plans are deliberately anatomical rather than taxonomic: they tune UV
 # density for the silhouette while the painter derives head, jaw, dorsal,
@@ -149,7 +150,7 @@ def write_table(mapping: dict[str, str]) -> None:
     lines.extend(f"- {name}: `{builder}`" for name, builder in HAND_MADE.items())
     lines.extend(["", "Rebuild them with `python scripts/handmade_models.py`, then import with",
                   "`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus "
-                  "tyrannosaurus triceratops`."])
+                  "tyrannosaurus triceratops direwolf parasaur`."])
     lines.extend(["", "## Generate and ship", "", "```powershell",
                   "python Creatures/Textures.py --ship-runtime", "```", "",
                   "Use `--dry-run` to validate every atlas without writing files. Use `--creatures NAME ...` or `--anatomies NAME ...` for a subset.", ""])
