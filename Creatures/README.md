@@ -25,16 +25,16 @@ another name first.
 
 The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
 Tyrannosaurus, the Triceratops, the Direwolf, the Parasaur, the Velociraptor,
-the Spinosaurus, the Allosaurus, the Carnotaurus, the Giganotosaur and the
-Ceratosaurus are hand-made:
+the Spinosaurus, the Allosaurus, the Carnotaurus, the Giganotosaur, the
+Ceratosaurus, the Acrocanthosaurus and the Dilophosaur are hand-made:
 `scripts/handmade_models.py` builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur
 ```
 
 ## Directory contract
@@ -55,7 +55,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the fourteen hand-made species above. Review shoulders, mouths, wing joints and other
+the sixteen hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -226,3 +226,20 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   holds them, short arms with four small fingers. Tall bone-coloured spikes run
   along the midline from the nape to the tail tip and a row stands out of each
   side of the tail. Its skin: olive (or umber, rust, charcoal) with narrow bands.
+- **Acrocanthosaurus (hand-made):** 268 boxes: a trunk of six tiers per segment
+  rising into the tall narrow ridge over the hips and shoulders, a tail of four
+  tiers per bone tapering from it, a steep neck, heavy thighs, thick calves, long
+  feet with a dewclaw and three-clawed arms. The long skull has rugose brow
+  ridges, cut-out rows of teeth and a lower jaw (the rig's `lowerLipJoint0_M`,
+  pivoted at the chin) shut as the idle holds it. Tall thin spines stand along
+  the nape and smaller ones along the end of the tail. Its skin: umber (or
+  olive, rust, slate) under broad dark bands down the ridge and flanks.
+- **Dilophosaur (hand-made):** 185 boxes: a short trunk on long slim legs, a
+  thin level tail, an S-curved neck and a narrow head designed symmetric in its
+  own frame (the bind pose holds it turned 4 degrees and shifted). The head,
+  crests and frill are painted at 3 texels per unit: twin crests cut to their
+  profile, cut-out teeth, a jaw shut as the idle holds it. The frill is cut-out
+  membrane cards on each side's own rib bones (frill A to D), trimmed to a
+  scalloped disc round the neck with a spine at each rib's end, so it folds and
+  spreads with the clips; quills run down the back. Its skin: green (or olive,
+  umber, sand), the frill red to yellow (blue on the sand variant).

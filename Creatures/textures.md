@@ -5,7 +5,7 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 
 | Anatomy | Creatures | UV density | Procedural treatment |
 |---|---|---:|---|
-| Bipedal theropod | Acrochantosaur, Dilophosaur, Terrorbird, Therezinosaur | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Bipedal theropod | Terrorbird, Therezinosaur | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Armored or horned quadruped | Lystrosaurus | 1.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
@@ -38,9 +38,11 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Carnotaurus: `scripts/handmade_carnotaurus.py`
 - Giganotosaur: `scripts/handmade_giganotosaurus.py`
 - Ceratosaurus: `scripts/handmade_ceratosaurus.py`
+- Acrochantosaur: `scripts/handmade_acrocanthosaurus.py`
+- Dilophosaur: `scripts/handmade_dilophosaur.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur`.
 
 ## Generate and ship
 
