@@ -5,9 +5,9 @@
     256,
     160
   ],
-  "boxes": 87,
-  "faces": 522,
-  "hidden_faces": 43,
+  "boxes": 88,
+  "faces": 528,
+  "hidden_faces": 44,
   "texels_per_runtime_unit": 2.0,
   "variant": "umber"
 }

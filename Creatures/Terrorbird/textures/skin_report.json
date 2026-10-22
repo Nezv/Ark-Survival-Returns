@@ -5,8 +5,8 @@
     512,
     96
   ],
-  "boxes": 98,
-  "faces": 588,
+  "boxes": 97,
+  "faces": 582,
   "hidden_faces": 43,
   "texels_per_runtime_unit": 2.0,
   "variant": "Natural"

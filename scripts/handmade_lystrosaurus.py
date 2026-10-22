@@ -70,12 +70,14 @@ def design(d):
     # the face round the eye: one flat side where the eye is set (build_creature_eyes footprint), a brow above it
     d.span(HEAD, (-0.62, 2.45, 3.35), (0.62, 3.25, 3.85), 'head', part='temple')
     d.span(HEAD, (-0.45, 3.2, 3.37), (0.45, 3.38, 3.84), 'head', part='brow')
-    d.span(HEAD, (-0.42, 2.1, 3.8), (0.42, 3.1, 4.1), 'beak', part='beak', along=(0.2, 0.6))
-    d.span(HEAD, (-0.2, 2.0, 4.05), (0.2, 2.75, 4.27), 'beak', part='beak', along=(0.5, 1.0))
-    d.seg(HEAD, (0.42, 2.4, 3.72), (0.45, 1.72, 3.88), 0.11, 0.13, 'tusk', ext=(0.05, 0.0), mirror=True, part='tusk',
+    # the snout falls steeply from the brow to a downturned beak: a slab along its ridge, the beak's front, the lip
+    d.slab(HEAD, (3.32, 3.4), (2.62, 4.12), 0.52, 0.6, 'muzzle', part='ridge')
+    d.slab(HEAD, (2.75, 4.08), (1.9, 4.21), 0.4, 0.35, 'muzzle', part='beak')
+    d.span(HEAD, (-0.48, 2.05, 3.8), (0.48, 2.95, 4.13), 'muzzle', part='lip')
+    d.seg(HEAD, (0.42, 2.25, 3.92), (0.44, 1.76, 3.98), 0.1, 0.12, 'tusk', ext=(0.04, 0.0), mirror=True, part='tusk',
           along=(0.2, 1.0))
     d.span(JAW, (-0.7, 1.82, 2.95), (0.7, 2.5, 3.85), 'head', part='jaw')
-    d.span(JAW, (-0.36, 1.9, 3.8), (0.36, 2.45, 4.08), 'beak', part='lower', along=(0.3, 0.8))
+    d.span(JAW, (-0.36, 1.86, 3.8), (0.36, 2.1, 4.1), 'muzzle', part='lower')
 
     # ---------------------------------------------------------------- the sprawling legs and broad feet
     elbow, wrist = P('l_eblow'), P('l_wrist')
@@ -338,6 +340,37 @@ def keratin(tx, ramp):
     return shade(ramp, v, tx.x, tx.y, dither=0.0)
 
 
+def muzzle(tx, pal):
+    """The snout and the beak, painted in each box's own frame: wrinkled skin over the snout's ridge, two nostrils
+    high on its front, the horn of the beak round the mouth with a dark rim where the skin ends, the gape dark."""
+    p, n = tx.points, tx.normal
+    box = tx.box
+    part = box.tag.get('part')
+    x, y, z = p[..., 0], p[..., 1], p[..., 2]
+    local = (p - box.center) @ box.axes
+    rows = box.size[1] / tx.texel
+    from_bottom = (local[..., 1] / box.size[1] + 0.5) * rows
+    facing = float(n @ box.axes[:, 1])
+    mottle = fbm(p, 0.5, seed=81, octaves=2) - 0.5
+    wrinkle = (np.floor((y + 0.3 * z) / tx.texel) % 3 == 0)
+    colour = shade(pal['hide'], 0.55 + 0.15 * mottle - 0.08 * wrinkle + 0.08 * (facing > 0.5), tx.x, tx.y,
+                   dither=0.0)
+    horn = (y < 2.38 + 0.06 * np.sin(x * 9.0)) | (part == 'lower')
+    hv = 0.7 - 0.25 * np.clip((2.38 - y) / 0.5, 0, 1) + 0.06 * mottle
+    colour = np.where(horn[..., None], shade(pal['horn'], hv, tx.x, tx.y, dither=0.0), colour)
+    rim = horn & (y > 2.38 - tx.texel * 1.1) & (part != 'lower')
+    colour = np.where(rim[..., None], shade(pal['horn'], 0.1, tx.x, tx.y, dither=0.0), colour)
+    if part == 'beak' and abs(n[2]) > 0.3:
+        nostril = (np.abs(np.abs(x) - 0.17) < tx.texel * 0.5) & (np.abs(y - 2.47) < tx.texel * 0.5)
+        colour = np.where(nostril[..., None], shade(pal['stripe'], 0.35, tx.x, tx.y, dither=0.0), colour)
+    if part == 'lip':
+        gape = from_bottom < 1.2
+        colour = np.where(gape[..., None], shade(pal['stripe'], 0.1, tx.x, tx.y, dither=0.0), colour)
+    if part == 'lower' and facing > 0.5:
+        colour = shade(pal['mouth'], 0.35, tx.x, tx.y, dither=0.0)
+    return colour
+
+
 def painter(tx, variant):
     pal = PALETTES[variant]
     mat = tx.box.mat
@@ -350,8 +383,8 @@ def painter(tx, variant):
         return limb(tx, pal), None
     if mat == 'head':
         return head(tx, pal), None
-    if mat == 'beak':
-        return keratin(tx, pal['horn']), None
+    if mat == 'muzzle':
+        return muzzle(tx, pal), None
     if mat == 'tusk':
         return keratin(tx, TOOTH_RAMP), None
     if mat == 'scute':

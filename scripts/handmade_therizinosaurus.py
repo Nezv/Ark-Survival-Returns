@@ -108,12 +108,13 @@ def design(d):
     # the face round the eye: one flat side where the eye is set (build_creature_eyes footprint)
     d.span(HEAD, (-1.8, 26.6, 17.95), (1.8, 29.7, 19.4), 'face', part='face', **f)
     d.span(HEAD, (-1.3, 29.6, 18.0), (1.3, 30.4, 19.2), 'coat', part='crown', **f)
-    d.span(HEAD, (-1.25, 26.5, 19.35), (1.25, 28.7, 20.3), 'face', part='snout', **f)
-    d.span(HEAD, (-0.9, 26.4, 20.25), (0.9, 28.0, 21.2), 'beak', part='beak', **f)
-    d.span(HEAD, (-0.55, 26.5, 21.15), (0.55, 27.5, 21.85), 'beak', part='beak', **f)
+    # the snout slopes from the brow to the beak: a slab along its ridge, one along the mouth, the beak's tip
+    d.slab(HEAD, (29.2, 18.6), (27.35, 20.95), 1.32, 1.26, 'snout', part='ridge', **f)
+    d.slab(HEAD, (26.72, 19.3), (26.05, 21.3), 1.12, 0.9, 'snout', top=False, part='lip', **f)
+    d.slab(HEAD, (27.5, 20.85), (26.05, 21.55), 0.6, 0.7, 'snout', part='tip', **f)
+    # the lower jaw: broad under the head, then a thin slab along the mouth to the lower beak
     d.span(JAW, (-1.9, 25.0, 15.8), (1.9, 26.9, 19.37), 'face', part='jaw', **f)
-    d.span(JAW, (-1.15, 25.0, 19.3), (1.15, 26.65, 20.4), 'face', part='jaw', **f)
-    d.span(JAW, (-0.75, 25.4, 20.32), (0.75, 26.56, 21.6), 'beak', part='lower', **f)
+    d.slab(JAW, (26.68, 19.3), (26.0, 21.3), 0.92, 0.55, 'snout', part='lower', **f)
     d.span('c_tongue2', (-0.6, 26.62, 17.5), (0.6, 26.78, 20.0), 'mouth', part='tongue', **f)
 
     # ---------------------------------------------------------------- arms: feathered, three great scythe claws
@@ -240,6 +241,15 @@ def face(tx, pal):
     z, y = p[..., 2], p[..., 1]
     v = 0.55 + 0.1 * (fbm(p, 0.8, seed=61, octaves=2) - 0.5) + 0.12 * (cells(p, tx.texel * 1.01, seed=62) - 0.5)
     colour = shade(pal['face'], v, tx.x, tx.y, dither=0.0)
+    if part == 'face':                       # feathers over the crown and the cheek, bare skin round the eye
+        bare = (((z - EYE[0]) / 0.8) ** 2 + ((y - EYE[1]) / 0.62) ** 2 < 1) | (z > 19.15 + 0.15 * np.sin(y * 6.0))
+        plumed = ~bare | (abs(n[2]) > 0.5) | (n[1] > 0.5)
+        colour = np.where(plumed[..., None], feathers(tx, 0.45 + 0.08 * (fbm(p, 2.0, seed=63) - 0.5), pal['coat'],
+                                                      seed=9), colour)
+    if part == 'jaw':                        # the feathered throat under the jaw, bare skin only along the lip
+        plumed = (z < 18.7 + 0.2 * np.sin(y * 6.0)) | (y < 26.2)
+        colour = np.where(plumed[..., None], feathers(tx, 0.55 + 0.08 * (fbm(p, 2.0, seed=64) - 0.5), pal['pale'],
+                                                      seed=11), colour)
     if abs(n[0]) > 0.5:
         ring = ((z - EYE[0]) ** 2 + (y - EYE[1]) ** 2) < 0.8 ** 2
         colour = np.where(ring[..., None], shade(pal['face'], 0.2, tx.x, tx.y, dither=0.0), colour)
@@ -252,16 +262,42 @@ def face(tx, pal):
     return colour
 
 
-def beak(tx, pal):
-    """The beak: dark horn, lighter at its cutting edge and tip, the nostril high on its side."""
+def snout(tx, pal):
+    """The snout and the beak, painted in each box's own frame: the face's fine scales back to where the horn of
+    the beak begins with a dark rim, the beak darkening to its tip with a pale cutting edge and the nostril on its
+    side, the gape a dark line between the jaws, the mouth inside."""
     p, n = tx.points, tx.normal
+    box = tx.box
+    part = box.tag.get('part')
     z, y = p[..., 2], p[..., 1]
-    v = 0.4 + 0.35 * np.clip((z - 20.2) / 1.6, 0, 1) + 0.08 * (fbm(p, 0.4, seed=71) - 0.5) + 0.05 * max(n[1], 0)
-    colour = shade(pal['beak'], v, tx.x, tx.y, dither=0.0)
+    local = (p - box.center) @ box.axes
+    rows = box.size[1] / tx.texel
+    from_bottom = (local[..., 1] / box.size[1] + 0.5) * rows
+    from_top = rows - from_bottom
+    facing = float(n @ box.axes[:, 1])
+    v = 0.55 + 0.1 * (fbm(p, 0.8, seed=61, octaves=2) - 0.5) + 0.12 * (cells(p, tx.texel * 1.01, seed=62) - 0.5)
+    colour = shade(pal['face'], v + 0.08 * (facing > 0.5), tx.x, tx.y, dither=0.0)
+    edge = 20.3 + 0.18 * np.sin(y * 5.0) - 0.25 * (part == 'lower')            # where the horn begins
+    horn = z > edge
+    t = np.clip((z - 20.3) / 1.3, 0, 1)
+    hv = 0.85 - 0.35 * t + 0.06 * (fbm(p, 0.4, seed=71) - 0.5) + 0.1 * (facing > 0.5)
+    colour = np.where(horn[..., None], shade(pal['leg'], hv, tx.x, tx.y, dither=0.0), colour)
+    rim = horn & (z < edge + tx.texel * 1.2)
+    colour = np.where(rim[..., None], shade(pal['leg'], 0.1, tx.x, tx.y, dither=0.0), colour)
     if abs(n[0]) > 0.5:
-        nostril = (np.abs(z - 20.55) < 0.18) & (np.abs(y - 27.55) < 0.1)
-        colour = np.where(nostril[..., None], shade(pal['beak'], 0.0, tx.x, tx.y, dither=0.0), colour)
-    if n[1] > 0.5 and tx.box.tag.get('part') == 'lower':
+        if part == 'lip':
+            cut = from_bottom < 1.2
+            colour = np.where((cut & horn)[..., None], shade(pal['leg'], 0.95, tx.x, tx.y, dither=0.0), colour)
+            colour = np.where((cut & ~horn)[..., None], shade(pal['face'], 0.15, tx.x, tx.y, dither=0.0), colour)
+        if part == 'lower':
+            cut = from_top < 1.2
+            colour = np.where(cut[..., None], shade(pal['face'], 0.15, tx.x, tx.y, dither=0.0), colour)
+        nostril = ((z - 20.65) / 0.22) ** 2 + ((y - 27.45) / 0.1) ** 2 < 1
+        colour = np.where((nostril & (part == 'ridge'))[..., None], shade(pal['beak'], 0.0, tx.x, tx.y, dither=0.0),
+                          colour)
+    if part == 'lower' and facing > 0.5:
+        colour = shade(pal['mouth'], 0.35, tx.x, tx.y, dither=0.0)
+    if part == 'lip' and facing < -0.5:
         colour = shade(pal['mouth'], 0.3, tx.x, tx.y, dither=0.0)
     return colour
 
@@ -292,8 +328,8 @@ def painter(tx, variant):
         return vane(tx, pal)
     if mat == 'face':
         return face(tx, pal), None
-    if mat == 'beak':
-        return beak(tx, pal), None
+    if mat == 'snout':
+        return snout(tx, pal), None
     if mat == 'leg':
         return leg(tx, pal), None
     if mat == 'claw':
