@@ -39,7 +39,8 @@ the same extraction, build, validation and reporting path.
   are catalog or appearance utilities.
 - `handmade_models.py` builds hand-designed species (`handmade_<id>.py`: the
   Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the Tyrannosaurus,
-  the Triceratops, the Direwolf and the Parasaur) on their
+  the Triceratops, the Direwolf, the Parasaur, the Velociraptor, the Spinosaurus,
+  the Allosaurus and the Carnotaurus) on their
   unchanged rigs: boxes placed in the
   bind pose, a per-face UV atlas, skins painted texel by texel in world space,
   the Blockbench project and the previews. `--preview <folder>` writes review

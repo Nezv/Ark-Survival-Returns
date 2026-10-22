@@ -24,15 +24,16 @@ animations, Blockbench projects and previews, so preserve manual artwork under
 another name first.
 
 The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
-Tyrannosaurus, the Triceratops, the Direwolf and the Parasaur are hand-made:
+Tyrannosaurus, the Triceratops, the Direwolf, the Parasaur, the Velociraptor,
+the Spinosaurus, the Allosaurus and the Carnotaurus are hand-made:
 `scripts/handmade_models.py` builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus
 ```
 
 ## Directory contract
@@ -53,7 +54,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the eight hand-made species above. Review shoulders, mouths, wing joints and other
+the twelve hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -194,3 +195,20 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   runs, pale flank spots, a pale underside with belly scales, a dark stripe back
   through the eye; the crest and ridge in an accent per variant (orange-red,
   coral, crimson, gold, teal, bone) with a pale line along the crest's groove.
+- **Allosaurus (hand-made):** 233 boxes: a trunk of five tiers per segment and a
+  tail of three measured on the ARK mesh's cross-sections, an S-curved neck of
+  sloped slabs, heavy thighs over long shins and three-toed feet, and long arms
+  with three hooked claws. The head is painted at 2 texels per unit: a long
+  narrow skull, a red blade of a horn before each eye over a ledged brow,
+  knobbed nasal ridges, cut-out rows of teeth and a jaw shut as the idle holds
+  it. Paired rows of scutes run from the crown to the hips. Its skin: pebbled
+  scales, narrow dark bands drawn as pixel runs, a pale underside and throat,
+  a dark stripe back through the eye.
+- **Carnotaurus (hand-made):** 197 boxes: a barrel trunk of five tiers per
+  segment, a thin tapering tail, a short steep neck, slim thighs on the twist
+  bone over long shins, and stub arms with tiny claws. The head is painted at 2
+  texels per unit: short, deep and narrow, a thick horn sweeping out and up over
+  each eye, cut-out rows of teeth and a jaw shut as the idle holds it. Low
+  scutes run in pairs along the back and a row of bosses down each flank. Its
+  skin: red-brown (or umber, tan, charcoal) scales with short dark bands, a pale
+  underside and throat.
