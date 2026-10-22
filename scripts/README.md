@@ -41,7 +41,8 @@ the same extraction, build, validation and reporting path.
   Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the Tyrannosaurus,
   the Triceratops, the Direwolf, the Parasaur, the Velociraptor, the Spinosaurus,
   the Allosaurus, the Carnotaurus, the Giganotosaur, the Ceratosaurus, the
-  Acrocanthosaurus and the Dilophosaur) on their
+  Acrocanthosaurus, the Dilophosaur, the Terror Bird, the Therizinosaurus, the
+  Pegomastax and the Lystrosaurus) on their
   unchanged rigs: boxes placed in the
   bind pose, a per-face UV atlas, skins painted texel by texel in world space,
   the Blockbench project and the previews. `--preview <folder>` writes review

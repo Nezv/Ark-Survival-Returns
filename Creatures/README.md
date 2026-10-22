@@ -26,15 +26,16 @@ another name first.
 The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
 Tyrannosaurus, the Triceratops, the Direwolf, the Parasaur, the Velociraptor,
 the Spinosaurus, the Allosaurus, the Carnotaurus, the Giganotosaur, the
-Ceratosaurus, the Acrocanthosaurus and the Dilophosaur are hand-made:
+Ceratosaurus, the Acrocanthosaurus, the Dilophosaur, the Terror Bird, the
+Therizinosaurus, the Pegomastax and the Lystrosaurus are hand-made:
 `scripts/handmade_models.py` builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus
 ```
 
 ## Directory contract
@@ -55,7 +56,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the sixteen hand-made species above. Review shoulders, mouths, wing joints and other
+the twenty hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -243,3 +244,21 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   scalloped disc round the neck with a spine at each rib's end, so it folds and
   spreads with the clips; quills run down the back. Its skin: green (or olive,
   umber, sand), the frill red to yellow (blue on the sand variant).
+- **Terror Bird (hand-made):** 98 boxes, 2 texels per unit: an egg-shaped body of
+  feathers ending in a drooping tuft, small wings whose fans are cut-out cards,
+  feathered thighs and drumsticks over bare scaly shanks, three toes and a hind
+  claw, a bare neck with a shaggy mane down its nape and a crowned head with a
+  tall hooked beak shut as the idle holds it. The coat is painted feather by
+  feather: rows of rounded tips with dark edges, a paler belly.
+- **Therizinosaurus (hand-made):** 134 boxes: a deep feathered body tilted up to
+  the shoulders, every segment pitched along the body's slope, a feathered tail,
+  a long neck, a small head with bare face and a toothless beak, stout legs on
+  four-toed feet, and long feathered arms with barred trailing feathers (a
+  cut-out card) and the three great scythe claws.
+- **Pegomastax (hand-made):** 113 boxes, 2 texels per unit: a small round body,
+  a long thin tail, a parrot's beak, and bristles all down the back and the tail
+  and on the crown, cut out of cards (a middle row and a splayed row each side)
+  bristle by bristle.
+- **Lystrosaurus (hand-made):** 87 boxes, 2 texels per unit: a barrel body, a
+  short pointed tail, sprawling legs on broad five-clawed feet, and a blunt
+  head with a horny beak and a tusk at each corner of the mouth.

@@ -45,7 +45,8 @@ import geckolib_mesh as gm  # noqa: E402
 VARIANTS = json.loads((ROOT / 'Creatures' / 'variants.json').read_text(encoding='utf-8'))['species']
 DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops', 'direwolf',
            'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus',
-           'giganotosaurus', 'ceratosaurus', 'acrocanthosaurus', 'dilophosaur')
+           'giganotosaurus', 'ceratosaurus', 'acrocanthosaurus', 'dilophosaur',
+           'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
@@ -53,7 +54,9 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Direwolf': 'direwolf', 'Parasaur': 'parasaur', 'Velociraptor': 'velociraptor',
              'Spinosaurus': 'spinosaurus', 'Allosaurus': 'allosaurus', 'Carnotaurus': 'carnotaurus',
              'Giganotosaur': 'giganotosaurus', 'Ceratosaurus': 'ceratosaurus',
-             'Acrochantosaur': 'acrocanthosaurus', 'Dilophosaur': 'dilophosaur'}
+             'Acrochantosaur': 'acrocanthosaurus', 'Dilophosaur': 'dilophosaur',
+             'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
+             'Lystrosaurus': 'lystrosaurus'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -543,6 +546,24 @@ def coplanar_overlaps(faces, tolerance=0.01):
             if hit:
                 found.append((a, b))
     return found
+
+
+def separate(design, density, step=0.025, rounds=30):
+    """Grow, by step across the shared plane, the later box of every pair of coplanar overlapping faces until none
+    is left: for small animals, where the checker's tolerance is large next to the boxes. Cut-out cards are left
+    alone."""
+    for _ in range(rounds):
+        faces = faces_of(design, density)
+        mark_hidden(faces, design)
+        pairs = coplanar_overlaps(faces)
+        if not pairs:
+            return
+        for a, b in pairs:
+            if a.box.tag.get('cutout') or b.box.tag.get('cutout'):     # cards are kept apart by their designs
+                continue
+            box = b.box if b.index > a.index else a.box
+            k = int(np.argmax(np.abs(box.axes.T @ b.normal)))
+            box.size[k] += step
 
 
 # ------------------------------------------------------------------------------------ build

@@ -5,8 +5,6 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 
 | Anatomy | Creatures | UV density | Procedural treatment |
 |---|---|---:|---|
-| Bipedal theropod | Terrorbird, Therezinosaur | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Armored or horned quadruped | Lystrosaurus | 1.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged dragon | Dragon | 0.85 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
@@ -17,7 +15,6 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 | Cephalopod | Tusoteuthis | 1.45 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Cnidarian | Cnidaria | 1.10 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Quadrupedal mammal | Megalocerus, Paraceratherium, Ravager, Unicorn | 1.60 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Small biped | Pegomastax | 1.80 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 
 ## Hand-made skins
 
@@ -40,9 +37,13 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Ceratosaurus: `scripts/handmade_ceratosaurus.py`
 - Acrochantosaur: `scripts/handmade_acrocanthosaurus.py`
 - Dilophosaur: `scripts/handmade_dilophosaur.py`
+- Terrorbird: `scripts/handmade_terrorbird.py`
+- Therezinosaur: `scripts/handmade_therizinosaurus.py`
+- Pegomastax: `scripts/handmade_pegomastax.py`
+- Lystrosaurus: `scripts/handmade_lystrosaurus.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus`.
 
 ## Generate and ship
 

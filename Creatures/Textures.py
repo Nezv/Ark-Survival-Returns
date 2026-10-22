@@ -42,7 +42,9 @@ HAND_MADE = {"Mammoth": "scripts/handmade_mammoth.py", "Megapithecus": "scripts/
              "Velociraptor": "scripts/handmade_velociraptor.py", "Spinosaurus": "scripts/handmade_spinosaurus.py",
              "Allosaurus": "scripts/handmade_allosaurus.py", "Carnotaurus": "scripts/handmade_carnotaurus.py",
              "Giganotosaur": "scripts/handmade_giganotosaurus.py", "Ceratosaurus": "scripts/handmade_ceratosaurus.py",
-             "Acrochantosaur": "scripts/handmade_acrocanthosaurus.py", "Dilophosaur": "scripts/handmade_dilophosaur.py"}
+             "Acrochantosaur": "scripts/handmade_acrocanthosaurus.py", "Dilophosaur": "scripts/handmade_dilophosaur.py",
+             "Terrorbird": "scripts/handmade_terrorbird.py", "Therezinosaur": "scripts/handmade_therizinosaurus.py",
+             "Pegomastax": "scripts/handmade_pegomastax.py", "Lystrosaurus": "scripts/handmade_lystrosaurus.py"}
 # Authored skins this painter leaves alone too.
 AUTHORED = {"Dragon": "Ark/tools/import_dragon_runtime.py"}
 
@@ -167,7 +169,7 @@ def write_table(mapping: dict[str, str]) -> None:
     lines.extend(f"- {name}: `{builder}`" for name, builder in HAND_MADE.items())
     lines.extend(["", "Rebuild them with `python scripts/handmade_models.py`, then import with",
                   "`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus "
-                  "tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur`."])
+                  "tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus`."])
     lines.extend(["", "## Generate and ship", "", "```powershell",
                   "python Creatures/Textures.py --ship-runtime", "```", "",
                   "Use `--dry-run` to validate every atlas without writing files. Use `--creatures NAME ...` or `--anatomies NAME ...` for a subset.", ""])
