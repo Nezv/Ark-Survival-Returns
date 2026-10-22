@@ -1,0 +1,266 @@
+{
+  "creature": "Tusoteuthis",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        224,
+        159,
+        150
+      ],
+      [
+        227,
+        162,
+        153
+      ],
+      [
+        230,
+        165,
+        156
+      ],
+      [
+        233,
+        168,
+        159
+      ],
+      [
+        236,
+        171,
+        162
+      ]
+    ],
+    [
+      [
+        192,
+        100,
+        90
+      ],
+      [
+        195,
+        103,
+        93
+      ],
+      [
+        198,
+        106,
+        96
+      ],
+      [
+        201,
+        109,
+        99
+      ],
+      [
+        204,
+        112,
+        102
+      ]
+    ],
+    [
+      [
+        152,
+        60,
+        56
+      ],
+      [
+        155,
+        63,
+        59
+      ],
+      [
+        158,
+        66,
+        62
+      ],
+      [
+        161,
+        69,
+        65
+      ],
+      [
+        164,
+        72,
+        68
+      ]
+    ],
+    [
+      [
+        107,
+        34,
+        37
+      ],
+      [
+        110,
+        37,
+        40
+      ],
+      [
+        113,
+        40,
+        43
+      ],
+      [
+        116,
+        43,
+        46
+      ],
+      [
+        119,
+        46,
+        49
+      ]
+    ],
+    [
+      [
+        64,
+        17,
+        22
+      ],
+      [
+        67,
+        20,
+        25
+      ],
+      [
+        70,
+        23,
+        28
+      ],
+      [
+        73,
+        26,
+        31
+      ],
+      [
+        76,
+        29,
+        34
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#e6a59c",
+    "#c66a60",
+    "#9e423e",
+    "#71282b",
+    "#46171c"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 384,
+  "cubes": 295,
+  "faces": 1770,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 831,
+  "self_mirrored_faces": 108,
+  "unpaired_cubes": [],
+  "random_brush_cells": 2071,
+  "non_base_shade_fraction": 0.7972,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "isolated_parts": {
+    "beak": 7
+  },
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 2358,
+    "seam_delta_mean": 11.8,
+    "seam_delta_max": 66.0,
+    "palette_colors": 44
+  },
+  "anatomy": "Cephalopod",
+  "variant": "crimson"
+}

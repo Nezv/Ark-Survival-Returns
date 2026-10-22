@@ -1,0 +1,276 @@
+{
+  "creature": "Megalocerus",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        210,
+        207,
+        202
+      ],
+      [
+        213,
+        210,
+        205
+      ],
+      [
+        216,
+        213,
+        208
+      ],
+      [
+        219,
+        216,
+        211
+      ],
+      [
+        222,
+        219,
+        214
+      ]
+    ],
+    [
+      [
+        173,
+        169,
+        162
+      ],
+      [
+        176,
+        172,
+        165
+      ],
+      [
+        179,
+        175,
+        168
+      ],
+      [
+        182,
+        178,
+        171
+      ],
+      [
+        185,
+        181,
+        174
+      ]
+    ],
+    [
+      [
+        135,
+        131,
+        123
+      ],
+      [
+        138,
+        134,
+        126
+      ],
+      [
+        141,
+        137,
+        129
+      ],
+      [
+        144,
+        140,
+        132
+      ],
+      [
+        147,
+        143,
+        135
+      ]
+    ],
+    [
+      [
+        98,
+        94,
+        88
+      ],
+      [
+        101,
+        97,
+        91
+      ],
+      [
+        104,
+        100,
+        94
+      ],
+      [
+        107,
+        103,
+        97
+      ],
+      [
+        110,
+        106,
+        100
+      ]
+    ],
+    [
+      [
+        65,
+        62,
+        58
+      ],
+      [
+        68,
+        65,
+        61
+      ],
+      [
+        71,
+        68,
+        64
+      ],
+      [
+        74,
+        71,
+        67
+      ],
+      [
+        77,
+        74,
+        70
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#d8d5d0",
+    "#b3afa8",
+    "#8d8981",
+    "#68645e",
+    "#474440"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 512,
+  "cubes": 397,
+  "faces": 2382,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 1075,
+  "self_mirrored_faces": 220,
+  "unpaired_cubes": [
+    {
+      "bone": "c_back3",
+      "cube_index": 6
+    },
+    {
+      "bone": "c_jaw",
+      "cube_index": 3
+    }
+  ],
+  "random_brush_cells": 2551,
+  "non_base_shade_fraction": 0.7989,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "isolated_parts": {
+    "claw": 38,
+    "horn": 170
+  },
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 3176,
+    "seam_delta_mean": 21.14,
+    "seam_delta_max": 151.0,
+    "palette_colors": 83
+  },
+  "anatomy": "Quadrupedal mammal",
+  "variant": "grey"
+}

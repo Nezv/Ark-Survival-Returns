@@ -1,0 +1,13 @@
+{
+  "creature": "Sabertooth",
+  "builder": "scripts/handmade_sabertooth.py",
+  "atlas_size": [
+    256,
+    80
+  ],
+  "boxes": 71,
+  "faces": 426,
+  "hidden_faces": 22,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "sand"
+}

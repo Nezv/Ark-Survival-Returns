@@ -34,6 +34,8 @@ OUT = ROOT / "Scratch/saddles"
 CARDS = ROOT / "Ark/design/showcase/saddles"
 RIDER = 0.9375  # the player model is drawn at 15/16
 
+from import_creatures import SPECIES as IMPORTED, VARIANTS  # noqa: E402
+
 FAMILIES = {
     "theropods": ("bipedCarnivore", "bipedHerbivore"),
     "quadrupeds": ("quadruped", "quadrupedHerbivore", "horned", "armored"),
@@ -43,11 +45,11 @@ FAMILIES = {
 }
 # What the measurements cannot say: the animals that carry a deck, and the one with a saddle of its own.
 OVERRIDES = {
-    "tyrannosaurus": dict(skin="burgundy"),
+    "tyrannosaurus": dict(skin="rust"),
     "brontosaurus": dict(tier="bronze", kind="platform"),
     "titanosaur": dict(tier="bronze", kind="platform"),
     "quetzal": dict(tier="bronze", kind="platform"),
-    "spinosaurus": dict(skin="ivory", kind="sail"),
+    "spinosaurus": dict(skin="sand", kind="sail"),
 }
 
 TIERS = {
@@ -61,8 +63,6 @@ TIERS = {
                   strap=(50, 43, 40), stitch=(116, 108, 102), seat=(66, 50, 44), metal=(176, 186, 196),
                   metal_lo=(108, 118, 130), wood=(100, 82, 62), bag=(90, 88, 76), roll=(126, 54, 48)),
 }
-# the skin each tier reads against, also on the dark cards of the showcase
-SKINS = {"hide": ("burgundy", "burgundy"), "bronze": ("ivory", "ivory"), "steel": ("burgundy", "ivory")}
 RIDER_COLOR = (150, 162, 174)
 THIN = 2.0  # half-width under which a low crest is ignored: the saddle sits over it
 EDGES = np.array([(0, 1), (1, 2), (2, 3), (3, 0), (4, 5), (5, 6), (6, 7), (7, 4), (0, 4), (1, 5), (2, 6), (3, 7)])
@@ -87,7 +87,8 @@ def catalog():
         tier = "hide" if capacity <= 150 else "bronze" if cargo == "pack" else "steel"
         spec = dict(seat=bone, plan=BODY_PLAN[sid], tier=tier, cargo=cargo if capacity >= 200 else None)
         spec.update(OVERRIDES.get(sid, {}))
-        spec.setdefault("skin", SKINS[spec["tier"]][sum(map(ord, sid)) % 2])
+        own = [v for f, i, *_ in IMPORTED if i == sid for v in VARIANTS[f]]
+        spec.setdefault("skin", own[sum(map(ord, sid)) % len(own)])  # one of its own colour variants
         species[sid] = spec
     return species
 

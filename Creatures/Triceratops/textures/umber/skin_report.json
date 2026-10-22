@@ -1,0 +1,13 @@
+{
+  "creature": "Triceratops",
+  "builder": "scripts/handmade_triceratops.py",
+  "atlas_size": [
+    512,
+    336
+  ],
+  "boxes": 211,
+  "faces": 1266,
+  "hidden_faces": 123,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "umber"
+}

@@ -1,0 +1,13 @@
+{
+  "creature": "Mammoth",
+  "builder": "scripts/handmade_mammoth.py",
+  "atlas_size": [
+    512,
+    192
+  ],
+  "boxes": 98,
+  "faces": 588,
+  "hidden_faces": 31,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "brown"
+}

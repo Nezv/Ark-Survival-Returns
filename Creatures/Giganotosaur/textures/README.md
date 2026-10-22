@@ -6,7 +6,8 @@ This v7 replaces sparse stamps with the requested stone-style random fill.
 ## Painting algorithm
 
 1. Assign five vertical skin layers, belly to back/head.
-2. Read five base colors in that order from batch_palettes.json.
+2. Read five base colors in that order: the defaults in batch_palettes.json for the base skin, the variant's
+   named ramp in `Creatures/variants.json` for each colour variant.
 3. Build five local shades per base: RGB offsets -6, -3, 0, +3, +6.
 4. Pair fitted geometry across X=0 and resolve reflected face orientation.
 5. Divide each face into **3×3 actual texture pixels**.
@@ -32,11 +33,11 @@ From the repository root:
 # Rebuild and ship the complete roster.
 python Creatures/Textures.py --ship-runtime
 
-# Build Ivory, Darken, Emerald, Midnight, and Burgundy under skin_v7/<Variant>/.
+# Build every colour variant Creatures/variants.json lists for the creature, under textures/<variant>/.
 python Creatures/Giganotosaur/textures/build_skin_v7.py --all-variants
 
 # Build selected variants only.
-python Creatures/Giganotosaur/textures/build_skin_v7.py --variants Ivory Emerald
+python Creatures/Giganotosaur/textures/build_skin_v7.py --variants slate rust
 
 # Run named creature folders later.
 python Creatures/Giganotosaur/textures/build_skin_v7.py --creatures Giganotosaur Tyranosaur Allosaurus
@@ -64,9 +65,11 @@ animations are checked after export. UVs are rebuilt to give every face whole
 3-pixel cells with independent two-pixel gutters, including corners.
 The corrected preview sampler remains local to the script.
 
-`--all-variants` reads the five named palettes in `batch_palettes.json`. Each
-variant is written inside the selected creature's `skin_v7` folder and keeps
-the same 3-pixel brush, mirrored face layout, and native model data.
+`--all-variants` reads the creature's own variants and their ramps from
+`Creatures/variants.json` (only colourings its kind could have; see
+`Creatures/README.md`, Colour variants). Each variant is written to the
+creature's `textures/<variant>` folder and keeps the same 3-pixel brush,
+mirrored face layout, and native model data.
 
 ## Palette settings
 
@@ -120,6 +123,6 @@ scripts/skin_studio.py geometry/export helper and creature source files.
 No earlier skin-version scripts or outputs are required.
 
 Validation performed for this revision: all four brush tests pass. Texture
-generation and atlas/brush/symmetry checks passed for all 41 creatures, and all
-five named variants were imported for every runtime species. This automated
+generation and atlas/brush/symmetry checks passed for all 41 creatures, and every
+species' own colour variants were imported. This automated
 validation does not replace an in-game artistic review.

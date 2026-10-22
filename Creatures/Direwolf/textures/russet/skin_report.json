@@ -1,0 +1,13 @@
+{
+  "creature": "Direwolf",
+  "builder": "scripts/handmade_direwolf.py",
+  "atlas_size": [
+    256,
+    96
+  ],
+  "boxes": 79,
+  "faces": 474,
+  "hidden_faces": 15,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "russet"
+}

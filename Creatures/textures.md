@@ -5,7 +5,7 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 
 | Anatomy | Creatures | UV density | Procedural treatment |
 |---|---|---:|---|
-| Bipedal theropod | Acrochantosaur, Allosaurus, Carnotaurus, Ceratosaurus, Dilophosaur, Giganotosaur, Spinosaurus, Terrorbird, Therezinosaur, Velociraptor | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Bipedal theropod | Acrochantosaur, Allosaurus, Carnotaurus, Ceratosaurus, Dilophosaur, Giganotosaur, Terrorbird, Therezinosaur | 2.00 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Armored or horned quadruped | Lystrosaurus | 1.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
@@ -32,9 +32,11 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Triceratops: `scripts/handmade_triceratops.py`
 - Direwolf: `scripts/handmade_direwolf.py`
 - Parasaur: `scripts/handmade_parasaur.py`
+- Velociraptor: `scripts/handmade_velociraptor.py`
+- Spinosaurus: `scripts/handmade_spinosaurus.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus`.
 
 ## Generate and ship
 

@@ -1,0 +1,13 @@
+{
+  "creature": "Velociraptor",
+  "builder": "scripts/handmade_velociraptor.py",
+  "atlas_size": [
+    256,
+    144
+  ],
+  "boxes": 128,
+  "faces": 768,
+  "hidden_faces": 36,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "rust"
+}

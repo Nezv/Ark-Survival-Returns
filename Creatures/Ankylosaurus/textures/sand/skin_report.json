@@ -1,0 +1,13 @@
+{
+  "creature": "Ankylosaurus",
+  "builder": "scripts/handmade_ankylosaurus.py",
+  "atlas_size": [
+    512,
+    240
+  ],
+  "boxes": 396,
+  "faces": 2376,
+  "hidden_faces": 365,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "sand"
+}

@@ -411,7 +411,7 @@ EDITED = 1790467200000                          # fixed, so rebuilding does not 
 # The Ark creature element (client/title/fancymenu/CreatureElement.java): scene units as above.
 CREATURE = [
     ('creature', 'tyrannosaurus'),
-    ('texture_variant', 'midnight'),
+    ('texture_variant', 'charcoal'),
     ('idle_clip', ''),
     ('scene_x', '0.5'),
     ('scene_ground', '0.16'),

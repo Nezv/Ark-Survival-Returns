@@ -1,0 +1,13 @@
+{
+  "creature": "Parasaur",
+  "builder": "scripts/handmade_parasaur.py",
+  "atlas_size": [
+    512,
+    144
+  ],
+  "boxes": 161,
+  "faces": 966,
+  "hidden_faces": 87,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "umber"
+}

@@ -258,7 +258,7 @@ def rest_bounds(species):
 
 def draw_creature(ctx, size, element, clock_seconds, look=(0.0, 0.0)):
     species = element.get('creature', 'tyrannosaurus')
-    variant = element.get('texture_variant', 'midnight')
+    variant = element.get('texture_variant', 'charcoal')
     texture = Image.open(ASSETS / f'textures/entity/{species}_{variant}.png')
     clip = element.get('idle_clip') or 'Rex-Idle'
     tris, colors = creature_mesh(species, clip, clock_seconds, look, texture)

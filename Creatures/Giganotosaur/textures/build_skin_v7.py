@@ -27,7 +27,8 @@ DEFAULTS = {'seed':7319, 'base_colors':['#ba7b40','#965529','#6c3b26','#4d2a1b',
             'eye_landmark':False}
 THEROPODS = ['Giganotosaur','Tyranosaur','Spinosaurus','Ceratosaurus','Dilophosaur',
              'Acrochantosaur','Allosaurus','Carnotaurus','Velociraptor']
-VARIANTS = ['Ivory', 'Darken', 'Emerald', 'Midnight', 'Burgundy']
+# Each creature's own colour variants and the ramps they take (Creatures/variants.json).
+REGISTRY = json.loads((ROOT/'Creatures'/'variants.json').read_text(encoding='utf-8'))
 ORIGINAL_RENDER_SOURCE = inspect.getsource(st.render)
 
 def linear_sum_assignment(cost):
@@ -377,8 +378,8 @@ def main():
     parser.add_argument('--seed',type=int)
     parser.add_argument('--dry-run',action='store_true',help='Build and validate in memory; write nothing.')
     parser.add_argument('--no-previews',action='store_true')
-    parser.add_argument('--variants',nargs='*',metavar='NAME',help='Also build named palette variants into textures/<NAME>.')
-    parser.add_argument('--all-variants',action='store_true',help='Build Ivory, Darken, Emerald, Midnight, and Burgundy.')
+    parser.add_argument('--variants',nargs='*',metavar='NAME',help="Also build these of the creature's variants into textures/<NAME>.")
+    parser.add_argument('--all-variants',action='store_true',help='Build every variant Creatures/variants.json lists for the creature.')
     args = parser.parse_args()
     settings = json.loads(args.config.read_text()) if args.config.exists() else {}
     failures = []
@@ -398,12 +399,13 @@ def main():
                 raise ValueError('Each layer needs five distinct shades; adjust colors or offsets.')
             r = build(ROOT/'Creatures'/name,config,args.dry_run,not args.no_previews)
             print(f"{name}: {r['atlas_size']}px, {r['random_brush_cells']} brush cells, {r['non_base_shade_fraction']:.1%} non-base shades, {len(r['unpaired_cubes'])} unpaired cubes"+(' [dry run]' if args.dry_run else ''))
-            variant_names = VARIANTS if args.all_variants else (args.variants or [])
-            unknown = [variant for variant in variant_names if variant not in VARIANTS]
+            own = REGISTRY['species'].get(name, [])
+            variant_names = own if args.all_variants else (args.variants or [])
+            unknown = [variant for variant in variant_names if variant not in own or variant not in REGISTRY['ramps']]
             if unknown:
-                raise ValueError(f"Unknown variants: {', '.join(unknown)}. Choose from {', '.join(VARIANTS)}.")
+                raise ValueError(f"Unknown variants: {', '.join(unknown)}. Choose from {', '.join(own)}.")
             for variant in variant_names:
-                variant_config = {**config, **settings.get('variants',{}).get(variant,{})}
+                variant_config = {**config, 'base_colors': REGISTRY['ramps'][variant]}
                 if args.seed is not None:
                     variant_config['seed'] = args.seed
                 if len(variant_config['base_colors']) != 5:

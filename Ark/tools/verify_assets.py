@@ -2,18 +2,19 @@
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 from PIL import Image
 from collection_catalog import COLLECTION
 from verify_camp_assets import verify_camp_assets
 from build_creature_eyes import NO_EYES, HUNTING_EYES, DESIGNS, design_of
-from import_creatures import ROOT, ASSETS, SPECIES, PREDATORS, WATER, source_files, with_behavior_clips
+from import_creatures import ROOT, ASSETS, SPECIES, PREDATORS, WATER, VARIANTS, VARIANTS_JAVA, source_files, with_behavior_clips
 
-# Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of five
-# variant textures chosen from its UUID, so every <species>_<variant>.png must match the geometry's
-# declared texture size. The bare <species>.png is the offline preview palette (eight 8x8 swatches)
-# consumed by tools/preview_runtime_creatures.py, not a render texture.
-VARIANTS = ('ivory', 'darken', 'emerald', 'midnight', 'burgundy')
+# Runtime texture contract, mirroring client/CreatureModel.java: a creature renders one of its species' own colour
+# variants (../Creatures/variants.json, generated into feature/creature/CreatureVariants.java), chosen from its UUID,
+# so every <species>_<variant>.png must match the geometry's declared texture size and no other variant may linger.
+# The bare <species>.png is the offline preview palette (eight 8x8 swatches) consumed by
+# tools/preview_runtime_creatures.py, not a render texture.
 PALETTE_SIZE = (64, 8)
 
 # Eyes (build_creature_eyes.py): every species with an eye anchor has designed eyes (Species.designedEyes()), a
@@ -74,13 +75,20 @@ def check_creature(folder, identifier, height, clips, report, check, fail):
     elif eye_bones(identifier):
         check({'ark_eye_calm', 'ark_eye_alert'} <= bones, f'{identifier}: missing the calm/alert eye groups')
     expected = (geo['description']['texture_width'], geo['description']['texture_height'])
-    for variant in VARIANTS:
+    own = VARIANTS[folder]
+    check(own and len(set(own)) == len(own) and all(re.fullmatch('[a-z]+', v) for v in own),
+          f'{identifier}: its variants {own} must be distinct lowercase names')
+    for variant in own:
         path = ASSETS/f'textures/entity/{identifier}_{variant}.png'
         if not path.is_file():
             fail(f'Missing variant texture: {path.name}')
             continue
         with Image.open(path) as image:
             check(image.size == expected, f'{path.name}: {image.size}, expected {expected}')
+    for path in (ASSETS/'textures/entity').glob(f'{identifier}_*.png'):
+        suffix = path.stem[len(identifier) + 1:]
+        check(not re.fullmatch('[a-z]+', suffix) or suffix in own or suffix == 'eyes',
+              f'{path.name}: not one of the variants of {identifier}, {own}')
     # The red eyes of a hunter are drawn over the model with its UVs, so the sheet has the atlas size.
     eyes = ASSETS/f'textures/entity/{identifier}_eyes.png'
     check(eyes.is_file() == (identifier in HUNTING_EYES), f'{eyes.name}: only the hunters of build_creature_eyes get one')
@@ -122,6 +130,12 @@ def main():
         except Exception as error:
             fail(f'Invalid JSON: {path.relative_to(ROOT)}: {error!r}')
     report = json.loads((ROOT/'docs/creature-import.json').read_text())
+    # The client reads the variants from the generated registry: it must list every species as variants.json does.
+    java = VARIANTS_JAVA.read_text(encoding='utf-8')
+    for folder, identifier, *_ in SPECIES:
+        listed = ', '.join(f'"{v}"' for v in VARIANTS[folder])
+        check(f'Map.entry("{identifier}", List.of({listed}))' in java,
+              f'CreatureVariants.java is stale for {identifier}: rerun tools/import_creatures.py')
     for folder, identifier, height, *clips in SPECIES:
         try:
             if identifier == 'dragon':

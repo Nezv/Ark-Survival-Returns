@@ -1,0 +1,13 @@
+{
+  "creature": "Tyranosaur",
+  "builder": "scripts/handmade_tyrannosaurus.py",
+  "atlas_size": [
+    1024,
+    464
+  ],
+  "boxes": 209,
+  "faces": 1254,
+  "hidden_faces": 108,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "olive"
+}

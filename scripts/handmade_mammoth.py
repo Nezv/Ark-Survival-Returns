@@ -124,22 +124,15 @@ def design(d):
 PALETTES = {
     'Natural': dict(fur=hexes('#24150e', '#341f14', '#4a2c1b', '#613b23', '#7a4c2d', '#946039', '#ab7546'),
                     skin=hexes('#2a221e', '#382e28', '#473b33', '#574940', '#68594e')),
-    'Ivory': dict(fur=hexes('#5e564a', '#7a705f', '#958a75', '#ada28b', '#c3b9a1', '#d8cfb8', '#e9e2cf'),
-                  skin=hexes('#3a332d', '#4b423a', '#5d5248', '#706457', '#857768')),
-    'Darken': dict(fur=hexes('#0e0c0b', '#171412', '#201c19', '#2a2521', '#352f2a', '#423a33', '#51483f'),
-                   skin=hexes('#1a1715', '#23201d', '#2d2925', '#38332e', '#443e38')),
-    'Emerald': dict(fur=hexes('#0b150b', '#122012', '#1a2c19', '#233a20', '#2e4a29', '#3b5b33', '#4b6d3f'),
-                    skin=hexes('#181d17', '#20271f', '#2a3228', '#343e31', '#40493b')),
-    'Midnight': dict(fur=hexes('#0d131c', '#141d2a', '#1d2938', '#273647', '#334457', '#405468', '#4f657a'),
-                     skin=hexes('#181d24', '#20262f', '#29303a', '#333b46', '#3e4753')),
-    'Burgundy': dict(fur=hexes('#1e0a0c', '#2c1013', '#3d171b', '#4f1f23', '#63292c', '#783537', '#8d4442'),
-                     skin=hexes('#231818', '#2e2120', '#3a2a29', '#463433', '#543f3d')),
+    'brown': dict(fur=hexes('#24150e', '#341f14', '#4a2c1b', '#613b23', '#7a4c2d', '#946039', '#ab7546'),
+                  skin=hexes('#2a221e', '#382e28', '#473b33', '#574940', '#68594e')),
+    'umber': dict(fur=hexes('#120c09', '#1f1610', '#2d2018', '#3b2a1f', '#4a3527', '#5a4030', '#6a4c38'),
+                  skin=hexes('#1e1916', '#29231f', '#352d28', '#413832', '#4e433c')),
+    'ginger': dict(fur=hexes('#2e140a', '#4a2513', '#67381c', '#844c27', '#a06133', '#bc7740', '#d78f4e'),
+                   skin=hexes('#2c221d', '#3b2e27', '#4a3a32', '#5a473d', '#6a5448')),
+    'blond': dict(fur=hexes('#4e3d2a', '#66543d', '#7f6c51', '#988566', '#b3a07b', '#ceba91', '#ead6a8'),
+                  skin=hexes('#3a312b', '#4a3f38', '#5a4e45', '#6b5d52', '#7c6c60')),
 }
-# the darkest variants a shade lighter, so they still read under in-game light
-PALETTES['Darken'] = lift(PALETTES['Darken'], 1.2, 5)
-PALETTES['Emerald'] = lift(PALETTES['Emerald'], 1.15, 4)
-PALETTES['Midnight'] = lift(PALETTES['Midnight'], 1.15, 4)
-PALETTES['Burgundy'] = lift(PALETTES['Burgundy'], 1.15, 4)
 TUSK_RAMP = hexes('#5a4a33', '#7d6a4b', '#9f8b66', '#bfab84', '#d8c8a2', '#e9dec0', '#f6f0de')
 NAIL_RAMP = hexes('#39332c', '#544c42', '#70675a', '#8d8373', '#a89e8c')
 MOUTH_RAMP = hexes('#2a1214', '#45201f', '#6a3532', '#8c4b45', '#a86259')

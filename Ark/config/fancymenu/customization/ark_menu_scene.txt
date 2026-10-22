@@ -56,7 +56,7 @@ element {
   stretch_y = true
   stay_on_screen = false
   creature = tyrannosaurus
-  texture_variant = midnight
+  texture_variant = charcoal
   idle_clip = 
   scene_x = 0.5
   scene_ground = 0.16

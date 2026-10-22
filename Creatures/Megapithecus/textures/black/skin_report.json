@@ -1,0 +1,13 @@
+{
+  "creature": "Megapithecus",
+  "builder": "scripts/handmade_megapithecus.py",
+  "atlas_size": [
+    512,
+    112
+  ],
+  "boxes": 93,
+  "faces": 558,
+  "hidden_faces": 25,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "black"
+}

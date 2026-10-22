@@ -1,0 +1,289 @@
+{
+  "creature": "Piterodon",
+  "brush_size_pixels": 3,
+  "skin_palette": [
+    [
+      [
+        239,
+        237,
+        232
+      ],
+      [
+        242,
+        240,
+        235
+      ],
+      [
+        245,
+        243,
+        238
+      ],
+      [
+        248,
+        246,
+        241
+      ],
+      [
+        251,
+        249,
+        244
+      ]
+    ],
+    [
+      [
+        223,
+        220,
+        212
+      ],
+      [
+        226,
+        223,
+        215
+      ],
+      [
+        229,
+        226,
+        218
+      ],
+      [
+        232,
+        229,
+        221
+      ],
+      [
+        235,
+        232,
+        224
+      ]
+    ],
+    [
+      [
+        203,
+        199,
+        189
+      ],
+      [
+        206,
+        202,
+        192
+      ],
+      [
+        209,
+        205,
+        195
+      ],
+      [
+        212,
+        208,
+        198
+      ],
+      [
+        215,
+        211,
+        201
+      ]
+    ],
+    [
+      [
+        178,
+        173,
+        162
+      ],
+      [
+        181,
+        176,
+        165
+      ],
+      [
+        184,
+        179,
+        168
+      ],
+      [
+        187,
+        182,
+        171
+      ],
+      [
+        190,
+        185,
+        174
+      ]
+    ],
+    [
+      [
+        147,
+        142,
+        132
+      ],
+      [
+        150,
+        145,
+        135
+      ],
+      [
+        153,
+        148,
+        138
+      ],
+      [
+        156,
+        151,
+        141
+      ],
+      [
+        159,
+        154,
+        144
+      ]
+    ]
+  ],
+  "base_colors": [
+    "#f5f3ee",
+    "#e5e2da",
+    "#d1cdc3",
+    "#b8b3a8",
+    "#99948a"
+  ],
+  "shade_offsets": [
+    -6,
+    -3,
+    0,
+    3,
+    6
+  ],
+  "seed": 7319,
+  "atlas_size": 384,
+  "cubes": 287,
+  "faces": 1722,
+  "symmetry_axis": "X=0",
+  "mirrored_face_pairs": 762,
+  "self_mirrored_faces": 168,
+  "unpaired_cubes": [
+    {
+      "bone": "r_wrist",
+      "cube_index": 2
+    },
+    {
+      "bone": "l_bigFinger4",
+      "cube_index": 1
+    },
+    {
+      "bone": "r_bigFinger5",
+      "cube_index": 1
+    },
+    {
+      "bone": "l_frontArmWing1",
+      "cube_index": 0
+    },
+    {
+      "bone": "r_frontArmWing",
+      "cube_index": 0
+    }
+  ],
+  "random_brush_cells": 1610,
+  "non_base_shade_fraction": 0.7919,
+  "checks": {
+    "all_faces_use_uniform_3x3_brushes": true,
+    "paired_face_textures_identical_after_reflection": true,
+    "islands_disjoint": true
+  },
+  "materials": [
+    [
+      [
+        152,
+        82,
+        73
+      ],
+      [
+        160,
+        90,
+        81
+      ],
+      [
+        168,
+        98,
+        89
+      ],
+      [
+        176,
+        106,
+        97
+      ],
+      [
+        184,
+        114,
+        105
+      ]
+    ],
+    [
+      [
+        85,
+        70,
+        54
+      ],
+      [
+        93,
+        78,
+        62
+      ],
+      [
+        101,
+        86,
+        70
+      ],
+      [
+        109,
+        94,
+        78
+      ],
+      [
+        117,
+        102,
+        86
+      ]
+    ],
+    [
+      [
+        205,
+        163,
+        59
+      ],
+      [
+        213,
+        171,
+        67
+      ],
+      [
+        221,
+        179,
+        75
+      ],
+      [
+        229,
+        187,
+        83
+      ],
+      [
+        237,
+        195,
+        91
+      ]
+    ]
+  ],
+  "isolated_parts": {
+    "beak": 24,
+    "claw": 36,
+    "membrane": 43
+  },
+  "method": "Full random fill in 3x3 cells; no sparse stamps, suppression or fragment rejection.",
+  "metrics": {
+    "island_overlap_pixels": 0,
+    "shared_border_corners": 2296,
+    "seam_delta_mean": 24.99,
+    "seam_delta_max": 182.0,
+    "palette_colors": 104
+  },
+  "anatomy": "Winged vertebrate",
+  "variant": "snow"
+}

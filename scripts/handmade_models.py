@@ -13,9 +13,10 @@ design module (scripts/handmade_<id>.py) that places every box itself:
 - Every texel is painted from where it lies on the body in the bind pose: world-space noise, gradients and
   marks, so neighbouring boxes match across their seams.
 
-Outputs, read by Ark/tools/import_creatures.py: Creatures/<Folder>/textures/<stem>.geo.json, the five
-variant skins textures/<Variant>/skin.png and the natural base textures/skin.png. Creatures/Textures.py
-leaves these species alone (HAND_MADE there).
+Outputs, read by Ark/tools/import_creatures.py: Creatures/<Folder>/textures/<stem>.geo.json, a skin
+textures/<variant>/skin.png for each of the species' colour variants (Creatures/variants.json: only colourings
+its kind could have; the design module's PALETTES paints each under that name) and the natural base
+textures/skin.png. Creatures/Textures.py leaves these species alone (HAND_MADE there).
 
     python scripts/handmade_models.py [mammoth ... triceratops] [--preview <folder> [--outline]]
 """
@@ -40,14 +41,16 @@ sys.path.insert(0, str(ROOT / 'Ark/tools'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))   # the design modules, handmade_<id>.py
 import geckolib_mesh as gm  # noqa: E402
 
-VARIANTS = ('Ivory', 'Darken', 'Emerald', 'Midnight', 'Burgundy')
+# Every species' colour variants, in order (Creatures/variants.json).
+VARIANTS = json.loads((ROOT / 'Creatures' / 'variants.json').read_text(encoding='utf-8'))['species']
 DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops', 'direwolf',
-           'parasaur')
+           'parasaur', 'velociraptor', 'spinosaurus')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
              'Ankylosaurus': 'ankylosaurus', 'Tyranosaur': 'tyrannosaurus', 'Triceratops': 'triceratops',
-             'Direwolf': 'direwolf', 'Parasaur': 'parasaur'}
+             'Direwolf': 'direwolf', 'Parasaur': 'parasaur', 'Velociraptor': 'velociraptor',
+             'Spinosaurus': 'spinosaurus'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -568,8 +571,11 @@ def build(module_name, density=None, width=None):
         bone.pop('cubes', None)
         if bone['name'] in cubes:
             bone['cubes'] = [c for _, c in cubes[bone['name']]]
+    missing = [v for v in VARIANTS[folder] if v not in module.PALETTES]
+    if missing:
+        raise KeyError(f'{module_name}: no palette for its variants {missing} (Creatures/variants.json)')
     skins = {variant: paint(design, faces, width, height, module.painter, variant, density)
-             for variant in ('Natural',) + VARIANTS}
+             for variant in ['Natural', *VARIANTS[folder]]}
     return module, rig, design, doc, faces, skins
 
 
@@ -601,11 +607,11 @@ def write(module, doc, skins, design, faces):
     folder = out / 'textures'
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f'{module.STEM}.geo.json').write_text(json.dumps(doc, indent=1) + '\n', encoding='utf-8')
-    width, height = skins[VARIANTS[0]].size
+    width, height = skins['Natural'].size
     report = {'creature': module.FOLDER, 'builder': f'scripts/{module.__name__}.py', 'atlas_size': [width, height],
               'boxes': len(design.boxes), 'faces': len(faces), 'hidden_faces': sum(f.hidden for f in faces),
               'texels_per_runtime_unit': module.DENSITY}
-    for variant in VARIANTS:
+    for variant in VARIANTS[module.FOLDER]:
         (folder / variant).mkdir(exist_ok=True)
         skins[variant].save(folder / variant / 'skin.png')
         (folder / variant / 'skin_report.json').write_text(json.dumps({**report, 'variant': variant}, indent=2) + '\n',
@@ -730,7 +736,7 @@ def rebuild(name):
     if error > 1e-3:
         raise AssertionError(f'{name}: baked faces are {error} off the design')
     write(module, doc, skins, design, faces)
-    width, height = skins[VARIANTS[0]].size
+    width, height = skins['Natural'].size
     return f'{name}: {len(design.boxes)} boxes, atlas {width}x{height}'
 
 
@@ -756,7 +762,7 @@ def preview(module, doc, skins, out, clips=(), size=(900, 640)):
     for name, direction in views.items():
         eye, target = frame(faces, direction)
         shots.append((name, gm.render(faces, texture, eye, target, size=size, fov=30, ss=1)))
-    for variant in ('Natural',) + VARIANTS:
+    for variant in ['Natural', *VARIANTS[module.FOLDER]]:
         eye, target = frame(faces, views['three_quarter'])
         shots.append((variant, gm.render(faces, skins[variant], eye, target, size=size, fov=30, ss=1)))
     for clip in clips:
@@ -851,7 +857,7 @@ def main():
         module, rig, design, doc, faces, skins = build(name)
         error = verify_faces(doc, faces, rig)
         flicker = coplanar_overlaps(faces)
-        width, height = skins[VARIANTS[0]].size
+        width, height = skins['Natural'].size
         print(f'{name}: {len(design.boxes)} boxes, {len(faces)} faces ({sum(f.hidden for f in faces)} hidden), '
               f'atlas {width}x{height}, bake error {error:.2e}, coplanar overlaps {len(flicker)}')
         for a, b in flicker[:12]:

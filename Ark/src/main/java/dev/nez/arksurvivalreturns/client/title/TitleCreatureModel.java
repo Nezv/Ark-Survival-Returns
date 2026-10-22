@@ -12,7 +12,10 @@ final class TitleCreatureModel extends GeoModel<TitleCreature> {
 
     TitleCreatureModel(String species, String variant) {
         model = ArkSurvivalReturns.id("entity/" + species);
-        texture = ArkSurvivalReturns.id("textures/entity/" + species + (variant.isEmpty() ? "" : "_" + variant) + ".png");
+        // one of the species' own colour variants: the one named, or its first when the name is empty or not its own
+        java.util.List<String> own = dev.nez.arksurvivalreturns.feature.creature.CreatureVariants.of(species);
+        String skin = own.contains(variant) || own.isEmpty() ? variant : own.getFirst();
+        texture = ArkSurvivalReturns.id("textures/entity/" + species + (skin.isEmpty() ? "" : "_" + skin) + ".png");
     }
 
     @Override public Identifier getModelResource(GeoRenderState state) { return model; }

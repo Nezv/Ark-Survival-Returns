@@ -1,0 +1,13 @@
+{
+  "creature": "Spinosaurus",
+  "builder": "scripts/handmade_spinosaurus.py",
+  "atlas_size": [
+    1024,
+    464
+  ],
+  "boxes": 187,
+  "faces": 1122,
+  "hidden_faces": 66,
+  "texels_per_runtime_unit": 1.0,
+  "variant": "umber"
+}

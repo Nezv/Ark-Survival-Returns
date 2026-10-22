@@ -9,22 +9,5 @@
   },
   "creatures": {
     "Giganotosaur": {}
-  },
-  "variants": {
-    "Ivory": {
-      "base_colors": ["#d4cfc2", "#c9c4b8", "#bdb7ab", "#b0a9a0", "#9f9992"]
-    },
-    "Darken": {
-      "base_colors": ["#5c5c5c", "#454545", "#303030", "#1b1b1b", "#0a0a0a"]
-    },
-    "Emerald": {
-      "base_colors": ["#163611", "#162d0d", "#0e2408", "#081c05", "#071104"]
-    },
-    "Midnight": {
-      "base_colors": ["#4c6380", "#3b506a", "#2b3d56", "#1b2a40", "#0d1729"]
-    },
-    "Burgundy": {
-      "base_colors": ["#a65b5d", "#8d434a", "#71303a", "#541f2a", "#35121c"]
-    }
   }
 }

@@ -18,7 +18,7 @@ public class CreatureElement extends AbstractElement {
     static final String KEY = "arksurvivalreturns.fancymenu.creature.";
 
     public final Property.StringProperty creature = putProperty(Property.stringProperty("creature", "tyrannosaurus", false, false, KEY + "species"));
-    public final Property.StringProperty textureVariant = putProperty(Property.stringProperty("texture_variant", "midnight", false, false, KEY + "texture_variant"));
+    public final Property.StringProperty textureVariant = putProperty(Property.stringProperty("texture_variant", "charcoal", false, false, KEY + "texture_variant"));
     public final Property.StringProperty idleClip = putProperty(Property.stringProperty("idle_clip", "", false, false, KEY + "idle_clip"));
     public final Property.FloatProperty sceneX = putProperty(Property.floatProperty("scene_x", 0.5F, KEY + "scene_x"));
     public final Property.FloatProperty sceneGround = putProperty(Property.floatProperty("scene_ground", 0.16F, KEY + "scene_ground"));

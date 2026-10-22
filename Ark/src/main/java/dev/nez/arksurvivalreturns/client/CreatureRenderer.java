@@ -27,7 +27,7 @@ public final class CreatureRenderer extends GeoEntityRenderer<CreatureEntity, En
         super.captureDefaultRenderState(creature, unused, state, partialTick);
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
                 CreatureModel.TEXTURE_VARIANT, creature instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity dragon
-                        ? dragon.beaconVariant() : Math.floorMod(creature.getUUID().hashCode(), species == Species.DRAGON ? 3 : 5));
+                        ? dragon.beaconVariant() : dev.nez.arksurvivalreturns.feature.creature.CreatureVariants.pick(species, creature.getUUID()));
         ((com.geckolib.renderer.base.GeoRenderState) state).addGeckolibData(
                 CreatureModel.EYE_ALERT, creature.behavior().alarm() || creature.isAggressive());
         if (species.designedEyes()) {

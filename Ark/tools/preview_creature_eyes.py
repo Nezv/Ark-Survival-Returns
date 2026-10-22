@@ -17,12 +17,14 @@ from PIL import Image, ImageDraw
 
 import geckolib_mesh as gm
 from build_creature_eyes import DESIGNS, LID_SHUT, LID_TUCK, design_of, lid_cover, pupil_kind
-from import_creatures import SPECIES
+from import_creatures import SPECIES, VARIANTS
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'src/main/resources/assets/arksurvivalreturns'
 OUT = ROOT / 'design/creatures/eyes'
 IDLE = {identifier: idle for _, identifier, _, idle, *_ in SPECIES}
+# The sheets show each species in its first colour variant (../Creatures/variants.json).
+SKIN = {identifier: VARIANTS[folder][0] for folder, identifier, *_ in SPECIES}
 # The expressions of client/CreatureEyes.java: lid closure (0 the species' own lids, 1 shut, below 0 wider),
 # brow drop (eye heights) and tilt (degrees, front end down), pupil width (a scale), the hunting eyes.
 STATES = {
@@ -68,7 +70,8 @@ def eye_point(model, pose, side='l'):
     return centre, m[:3, :3] @ np.array([sign, 0.0, 0.0]), m[:3, :3] @ np.array([0, 0, 1.0])
 
 
-def sheet(identifier, variant='ivory'):
+def sheet(identifier, variant=None):
+    variant = variant or SKIN[identifier]
     design = design_of(identifier)
     model = gm.load(ASSETS / f'geckolib/models/entity/{identifier}.geo.json')
     clip = json.loads((ASSETS / f'geckolib/animations/entity/{identifier}.animation.json').read_text())['animations'][IDLE[identifier]]
