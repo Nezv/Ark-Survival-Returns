@@ -44,13 +44,15 @@ import geckolib_mesh as gm  # noqa: E402
 # Every species' colour variants, in order (Creatures/variants.json).
 VARIANTS = json.loads((ROOT / 'Creatures' / 'variants.json').read_text(encoding='utf-8'))['species']
 DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops', 'direwolf',
-           'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus')
+           'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus',
+           'giganotosaurus', 'ceratosaurus')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
              'Ankylosaurus': 'ankylosaurus', 'Tyranosaur': 'tyrannosaurus', 'Triceratops': 'triceratops',
              'Direwolf': 'direwolf', 'Parasaur': 'parasaur', 'Velociraptor': 'velociraptor',
-             'Spinosaurus': 'spinosaurus', 'Allosaurus': 'allosaurus', 'Carnotaurus': 'carnotaurus'}
+             'Spinosaurus': 'spinosaurus', 'Allosaurus': 'allosaurus', 'Carnotaurus': 'carnotaurus',
+             'Giganotosaur': 'giganotosaurus', 'Ceratosaurus': 'ceratosaurus'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -85,6 +87,9 @@ def swap_side(name):
     for a, b in (('l_', 'r_'), ('r_', 'l_'), ('Lft_', 'Rht_'), ('Rht_', 'Lft_')):
         if name.startswith(a):
             return b + name[len(a):]
+    for a, b in (('_L', '_R'), ('_R', '_L')):         # suffixed rigs (the Ceratosaurus: Shoulder_L)
+        if name.endswith(a):
+            return name[:-len(a)] + b
     return name
 
 

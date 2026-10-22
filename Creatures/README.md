@@ -25,15 +25,16 @@ another name first.
 
 The Mammoth, the Megapithecus, the Sabertooth, the Ankylosaurus, the
 Tyrannosaurus, the Triceratops, the Direwolf, the Parasaur, the Velociraptor,
-the Spinosaurus, the Allosaurus and the Carnotaurus are hand-made:
+the Spinosaurus, the Allosaurus, the Carnotaurus, the Giganotosaur and the
+Ceratosaurus are hand-made:
 `scripts/handmade_models.py` builds their boxes, skins, Blockbench
 projects and previews from `scripts/handmade_<id>.py` on the unchanged rig and
 clips, and the workflow runs it again after refitting them. Rebuild and import
 them with:
 
 ```powershell
-python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus
-python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus
+python scripts/handmade_models.py mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus
+python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus
 ```
 
 ## Directory contract
@@ -54,7 +55,7 @@ clips already target those bones. Animation-name matching does not create entity
 behavior, sounds, physics, AI, or Unreal notify handling.
 
 The models are automated cuboid approximations with generated palettes, except
-the twelve hand-made species above. Review shoulders, mouths, wing joints and other
+the fourteen hand-made species above. Review shoulders, mouths, wing joints and other
 silhouettes before final art approval. Loop flags are inferred from clip names.
 
 ## Catalog
@@ -212,3 +213,16 @@ The Acrocanthosaurus and Ceratosaurus assets originate from ARK Additions.
   scutes run in pairs along the back and a row of bosses down each flank. Its
   skin: red-brown (or umber, tan, charcoal) scales with short dark bands, a pale
   underside and throat.
+- **Giganotosaur (hand-made):** 237 boxes: a deep trunk of five tiers per
+  segment, a long tail whose segments are pitched along its fall so they meet
+  without steps, a thick neck rising to a long low skull broad at the cheeks,
+  a short horn before each eye, knobs along the snout, cut-out rows of teeth and
+  a jaw designed shut (the idle holds it a little open, JAW_REFERENCE 42 degrees).
+  A single row of spikes runs from the crown to the tail tip, tallest on the
+  neck. Its skin: slate (or umber, rust, sand) scales under broad dark saddles.
+- **Ceratosaurus (hand-made):** 211 boxes on the suffixed `_L`/`_R` rig: a deep
+  trunk, a long level tail, a short neck, a deep skull with a red blade of a
+  horn on the nose and a knob over each eye, a jaw and dewlap shut as the idle
+  holds them, short arms with four small fingers. Tall bone-coloured spikes run
+  along the midline from the nape to the tail tip and a row stands out of each
+  side of the tail. Its skin: olive (or umber, rust, charcoal) with narrow bands.
