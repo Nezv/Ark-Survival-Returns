@@ -578,6 +578,74 @@ def separate(design, density, step=0.025, rounds=30):
             box.size[k] += step
 
 
+# ------------------------------------------------------------------------------------ fans (frills)
+def fan_polar(points, centre, sign):
+    """Angle (radians: 0 straight out to the side, pi/2 straight up) and radius of points about a fan's centre
+    (x, y) in the bind pose's x-y plane, on the side `sign` (+1 left, -1 right)."""
+    x = (points[..., 0] - centre[0]) * sign
+    y = points[..., 1] - centre[1]
+    return np.arctan2(y, x), np.hypot(x, y)
+
+
+def fan_card(d, bone, a, b, centre, sign, lo, hi, r0, r1, thickness, mat, margin=0.04, **tag):
+    """A thin cut-out card in the plane of a fan's rib (along a to b, across square to z), just large enough for
+    the band of the fan it carries: angles lo..hi and radii r0..r1 about `centre` in the bind pose's x-y plane, as
+    seen from the front. The painter trims it to that band (fan_polar), so the cards of all the ribs tile one
+    membrane in the spread pose and fold over each other as the ribs close."""
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    y = unit(b - a)
+    x = unit(np.cross((0.0, 0.0, 1.0), y))
+    z = np.cross(x, y)
+    angle, radius = np.meshgrid(np.linspace(lo, hi, 17), np.linspace(r0, r1, 9))
+    px = centre[0] + sign * radius * np.cos(angle) - a[0]
+    py = centre[1] + radius * np.sin(angle) - a[1]
+    us = np.linalg.solve(np.array([[y[0], x[0]], [y[1], x[1]]]), np.stack([px.ravel(), py.ravel()]))
+    (u0, s0), (u1, s1) = us.min(1) - margin, us.max(1) + margin
+    middle = a + y * (u0 + u1) / 2 + x * (s0 + s1) / 2
+    return d.add(bone, middle, (s1 - s0, u1 - u0, thickness), np.column_stack([x, y, z]), mat,
+                 open=('up', 'down', 'east', 'west'), cutout=True, keep=True, fan=(centre[0], centre[1], sign),
+                 lo=lo, hi=hi, r0=r0, r1=r1, **tag)
+
+
+def fan_side(d, ribs, centre, sign, mat, top=math.pi / 2, bottom=0.25, root=0.7, spine=0.5, thick=(0.03, 0.06),
+             **tag):
+    """One side's frill as a single membrane: ribs are (bones, points), the points being each bone's pivot and the
+    rib's tip past the last one. Each rib carries the sector between the bisectors to its neighbours (the topmost
+    reaching `top`, where the other side's begins; the lowest `bottom` radians past its rib), one card per bone
+    for the band between its pivot and the next point; the outer card reaches `spine` past the tip for the rim's
+    spines. Every card is tagged with the side's profile (rib angles and tip radii) for fan_rim."""
+    rays = []
+    for bones, points in ribs:
+        angle, radius = fan_polar(np.array(points), centre, sign)
+        rays.append((float(angle[-1]), bones, points, radius))
+    rays.sort(key=lambda r: -r[0])
+    angles = [r[0] for r in rays]
+    profile = (tuple(angles), tuple(float(r[3][-1]) for r in rays), top, angles[-1] - bottom)
+    for n, (angle, bones, points, radius) in enumerate(rays):
+        hi = top if n == 0 else (angles[n - 1] + angle) / 2
+        lo = profile[3] if n == len(rays) - 1 else (angles[n + 1] + angle) / 2
+        for k, bone in enumerate(bones):
+            r0 = float(radius[0]) * root if k == 0 else float(radius[k])
+            last = k == len(bones) - 1
+            r1 = float(radius[-1]) + spine if last else float(radius[k + 1]) + 0.02
+            fan_card(d, bone, points[k], points[k + 1], centre, sign, lo, hi, r0, r1, thick[(n + k) % 2], mat,
+                     profile=profile, ray=angle, ring=k, rings=len(bones), outer=last, **tag)
+
+
+def fan_rim(theta, profile, sag=0.14):
+    """The membrane's edge (radius) at each angle: through the rib tips, sagging in a scallop between neighbours,
+    meeting the other side's mirror at the top and rounding off below the lowest rib."""
+    angles, radii, top, bottom = profile
+    a = [2 * top - angles[0], *angles, bottom]
+    r = [radii[0], *radii, radii[-1] * 0.55]
+    a, r = np.array(a[::-1]), np.array(r[::-1])                 # ascending for interp
+    base = np.interp(theta, a, r)
+    k = np.clip(np.searchsorted(a, theta) - 1, 0, len(a) - 2)
+    f = np.clip((theta - a[k]) / (a[k + 1] - a[k]), 0, 1)
+    edge = (k == 0)                                             # the rounded end below the lowest rib: no scallop
+    return base * (1 - np.where(edge, 0.0, sag) * np.sin(np.pi * f))
+
+
 # ------------------------------------------------------------------------------------ build
 def build(module_name, density=None, width=None):
     """Build one design: returns (rig, design, geo document, faces, {variant: atlas}, base atlas)."""

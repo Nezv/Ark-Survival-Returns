@@ -3,7 +3,7 @@
   "builder": "scripts/handmade_dilophosaur.py",
   "atlas_size": [
     256,
-    144
+    160
   ],
   "boxes": 185,
   "faces": 1110,

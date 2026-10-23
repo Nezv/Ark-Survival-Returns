@@ -3,7 +3,7 @@
   "builder": "scripts/handmade_titanoboa.py",
   "atlas_size": [
     512,
-    288
+    304
   ],
   "boxes": 170,
   "faces": 1020,

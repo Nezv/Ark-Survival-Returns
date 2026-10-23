@@ -12,7 +12,7 @@ import math
 
 import numpy as np
 
-from handmade_models import cells, fbm, hexes, lift, noise, rotation, shade, unit
+from handmade_models import cells, fan_polar, fan_rim, fan_side, fbm, hexes, lift, noise, rotation, shade, unit
 from handmade_tyrannosaurus import face_grid, grid, midline_top, scales, stripe_runs
 
 FOLDER, STEM, HEIGHT = 'Dilophosaur', 'dilophosaur', 1.9
@@ -99,19 +99,21 @@ def hspan(d, bone, lo, hi, mat, mirror=False, **tag):
         d.add(bone, world, np.abs(b - a), HEAD_TURN, mat, **tag)
 
 
-def rib(d, side, name, joints, w, tip_reach):
-    """The frill between a rib's joints, one thin cut-out card per bone, in the fan's plane; the last reaches past
-    the rib's end by tip_reach (as the rib goes on) to carry the rim and its spine."""
-    points = [d.rig.pivot(f'{side}_frill{name}{k}') for k in joints]
-    end = points[-1] + unit(points[-1] - points[-2]) * tip_reach
-    points.append(end)
-    for k, joint in enumerate(joints):
-        a, b = points[k], points[k + 1]
-        across = np.cross((0.0, 0.0, 1.0), b - a)
-        last = k == len(joints) - 1
-        d.seg(f'{side}_frill{name}{joint}', a, b, w[k], 0.03 + 0.03 * (k % 2), 'frill', ext=(0.05, 0.0), side=across,
-              open=('up', 'down', 'east', 'west'), cutout=True, keep=True, density=FACE, part='frill', rim=last,
-              ring=k, rib=name)
+def frill_fan(d, ribs, centre_y, **fan):
+    """The frill on each side's ribs as one membrane (handmade_models.fan_side): ribs are (name, joints, how far the
+    tip reaches past the last joint along the rib); the fan's centre is midway between the two sides' roots at
+    height centre_y."""
+    rig = d.rig
+    roots = [rig.pivot(f'{side}_frill{name}{joints[0]}') for side in 'lr' for name, joints, _ in ribs]
+    centre = (float(np.mean([p[0] for p in roots])), centre_y)
+    for side, sign in (('l', 1), ('r', -1)):
+        sides = []
+        for name, joints, reach in ribs:
+            points = [rig.pivot(f'{side}_frill{name}{k}') for k in joints]
+            tip = points[-1] + unit(points[-1] - points[-2] if len(points) > 1 else
+                                    rig.pivot(f'{side}_frill{name}{joints[0] + 1}') - points[0]) * reach
+            sides.append(([f'{side}_frill{name}{k}' for k in joints], [*points, tip]))
+        fan_side(d, sides, centre, sign, 'frill', **{'density': FACE, 'part': 'frill', **fan})
 
 
 def bone_at(z):
@@ -174,11 +176,7 @@ def design(d):
     hspan(d, 'c_tongue2', (-0.2, 7.14, 6.5), (0.2, 7.17, 7.9), 'mouth', part='tongue', **f)
 
     # ---------------------------------------------------------------- the frill: membrane on the ribs of each side
-    for side in ('l', 'r'):
-        rib(d, side, 'A', (1, 2), (0.85, 1.6), 0.8)
-        rib(d, side, 'B', (1, 2, 3), (0.9, 1.5, 2.1), 0.6)
-        rib(d, side, 'C', (1, 2, 3), (0.9, 1.6, 2.2), 0.45)
-        rib(d, side, 'D', (1, 2, 3), (0.9, 1.5, 2.1), 0.8)
+    frill_fan(d, FRILL_RIBS, FRILL_CENTRE_Y, spine=0.45)
 
     # ---------------------------------------------------------------- quills down the back and the tail
     body = list(d.boxes)
@@ -231,6 +229,7 @@ PALETTES = {
                     scute=hexes('#1d1f14', '#2a2d1d', '#383c27', '#474c31', '#575d3c'),
                     horn=hexes('#3a1810', '#552417', '#70321f', '#8b4229', '#a55535'),
                     frill=hexes('#5a1a12', '#7e2616', '#a3381a', '#c4531f', '#dc7628', '#eb9d36', '#f2c24c'),
+                    flash=hexes('#b0701c', '#d29a26', '#e8c03a', '#f6dc5e', '#fdf0a0'),
                     mouth=hexes('#3a1414', '#55201f', '#71302c', '#8c423b', '#a5574c', '#bb6e5e')),
 }
 PALETTES['green'] = PALETTES['Natural']
@@ -240,6 +239,7 @@ PALETTES['olive'] = dict(hide=hexes('#22231a', '#303122', '#3f402b', '#4f5034', 
                          scute=hexes('#16170f', '#202116', '#2b2c1d', '#373825', '#44452e'),
                          horn=hexes('#36190f', '#4f2416', '#69311e', '#833f27', '#9c4e31'),
                          frill=hexes('#4a1d10', '#6b2a14', '#8c3a18', '#ad4f1d', '#c86b24', '#da8e30', '#e6b343'),
+                         flash=hexes('#a8741e', '#c99828', '#e0b93c', '#efd25c', '#f8e79a'),
                          mouth=PALETTES['Natural']['mouth'])
 PALETTES['umber'] = dict(hide=hexes('#21170f', '#302217', '#402d1f', '#513928', '#634632', '#75543c', '#886347', '#9b7253'),
                          belly=hexes('#7a6650', '#8b7861', '#9c8a72', '#ad9c84', '#bdae96', '#ccbfa8'),
@@ -247,6 +247,7 @@ PALETTES['umber'] = dict(hide=hexes('#21170f', '#302217', '#402d1f', '#513928', 
                          scute=hexes('#16100b', '#211811', '#2c2017', '#38291e', '#453326'),
                          horn=hexes('#3a1a10', '#532618', '#6d3421', '#87432b', '#a15336'),
                          frill=hexes('#401614', '#5e1f1a', '#7d2a20', '#9d3826', '#bb4b2e', '#d36539', '#e48848'),
+                         flash=hexes('#a85a1e', '#c87a28', '#e09c3a', '#f0bc58', '#f9da92'),
                          mouth=PALETTES['Natural']['mouth'])
 PALETTES['sand'] = dict(hide=hexes('#5e533f', '#6f644e', '#81755d', '#94876c', '#a69a7c', '#baac8c', '#cdbf9d', '#e1d3ae'),
                         belly=hexes('#c2b69c', '#ccc1a9', '#d6ccb7', '#e0d7c4', '#eae3d2', '#f4eee0'),
@@ -254,6 +255,7 @@ PALETTES['sand'] = dict(hide=hexes('#5e533f', '#6f644e', '#81755d', '#94876c', '
                         scute=hexes('#3f3629', '#4e4434', '#5d5240', '#6d604c', '#7d6f59'),
                         horn=hexes('#5a2a18', '#763820', '#92482a', '#ad5a34', '#c56d40'),
                         frill=hexes('#2a3e52', '#344f69', '#3f6181', '#4b7499', '#5d89ae', '#76a0c0', '#93b8d0'),
+                        flash=hexes('#7aa6b8', '#9cc2d0', '#bcdae4', '#d8eef4', '#f0fafc'),
                         mouth=PALETTES['Natural']['mouth'])
 TOOTH_RAMP = hexes('#8a7f66', '#ab9f83', '#c9bf9f', '#e0d8bc', '#efe9d5', '#faf7ec')
 CLAW_RAMP = hexes('#100e0b', '#1d1914', '#2b251e', '#3b3329', '#4e4436', '#655845')
@@ -270,37 +272,63 @@ STRIPES = [(5.6, 1, 0.5), (4.6, 1, 0.7), (3.4, 1, 0.9), (2.2, 1, 1.1), (1.0, 2, 
            (-2.7, 1, 1.0), (-4.0, 1, 0.9), (-5.3, 1, 0.8), (-6.6, 1, 0.7), (-7.9, 1, 0.6), (-9.2, 1, 0.5),
            (-10.6, 1, 0.4), (-12.0, 1, 0.35), (-13.4, 1, 0.3)]
 RUNS = [stripe_runs(171 + k, w, 60) for k, (_, w, _) in enumerate(STRIPES)]
+# The frill's ribs: (rib, its joints, how far its tip reaches past the last joint), and the fan's centre height.
+FRILL_RIBS = [('A', (1, 2), 0.8), ('B', (1, 2, 3), 0.6), ('C', (1, 2, 3), 0.45), ('D', (1, 2, 3), 0.8)]
+FRILL_CENTRE_Y = 6.8
 EYE = (7.2, 7.84)       # (z, y): the eye, where the socket and the stripe through it are painted
-FRILL_CENTRE, FRILL_RADIUS = (-0.2, 6.6), 2.45                   # the fan in the bind pose (x, y)
 CREST = ([6.5, 6.85, 7.3, 7.8, 8.15, 8.5], [8.6, 8.82, 8.45, 8.5, 8.72, 8.12])   # the crest's top edge along z
 
 
-def frill(tx, pal):
-    """The frill's membrane: dark at the neck, through red and orange to a yellow rim, with dark spots and a darker
-    rib down each card's middle; the outer card is scalloped at its rim and ends in a spine along the rib."""
-    box = tx.box
-    local = (tx.points - box.center) @ box.axes
-    t = local[..., 1] / box.size[1] + 0.5                      # along the rib, 0 at the neck end of this card
-    s = local[..., 0] / (box.size[0] / 2)                      # across, -1 to 1
-    r = (box.tag['ring'] + t) / 3.0                            # out from the neck over the whole fan
-    v = 0.15 + 0.85 * np.clip(r, 0, 1) + 0.1 * (cells(tx.points, tx.texel * 2.02, seed=181) - 0.5)
-    colour = shade(pal['frill'], v, tx.x, tx.y, dither=0.0)
-    spot = cells(tx.points, tx.texel * 3.03, seed=182) > 0.86
-    colour = np.where(spot[..., None], shade(pal['frill'], v - 0.35, tx.x, tx.y, dither=0.0), colour)
-    rib_line = np.abs(s) < 0.12
-    colour = np.where(rib_line[..., None], shade(pal['frill'], v - 0.25, tx.x, tx.y, dither=0.0), colour)
-    # every card is trimmed to the fan: a disc round the neck (in the bind pose) with a scalloped rim
-    x, y = tx.points[..., 0] - FRILL_CENTRE[0], tx.points[..., 1] - FRILL_CENTRE[1]
-    radius, angle = np.hypot(x, y), np.arctan2(y, np.abs(x))
-    rim = FRILL_RADIUS - 0.13 * (1 - np.abs(np.cos(angle * 4.5)))
-    alpha = radius <= rim
-    colour = np.where((alpha & (radius > rim - 0.16))[..., None], shade(pal['frill'], 0.98, tx.x, tx.y, dither=0.0),
+def frill(tx, pal, dark='stripe', eye=0.6, veins=4.5):
+    """The frill, spread as a threat display: a dark fold at the neck, a bright collar, a blood-red membrane
+    darkening outward with veins along its rays, a false eye staring from each side, then a black band under a
+    bright serrated rim, a dark rib down to a spine past the rim at every rib's end. Painted by each texel's place
+    in the spread fan (fan_polar), so the cards of neighbouring ribs paint one pattern, and trimmed to the card's
+    own band of it."""
+    tag = tx.box.tag
+    centre, sign = tag['fan'][:2], tag['fan'][2]
+    theta, r = fan_polar(tx.points, centre, sign)
+    texel = tx.texel
+    angles, radii = tag['profile'][:2]
+    step = veins * texel / (0.6 * float(np.mean(radii)))          # the rays, veins texels apart midway out
+    rays = theta / step
+    rim = fan_rim(theta, tag['profile']) - 0.9 * texel * (1 - np.cos(2 * np.pi * rays)) / 2    # a tooth per ray
+    rho = r / rim
+    band = (theta > tag['lo']) & (theta <= tag['hi']) & (r >= tag['r0']) & (r < tag['r1'])
+    off_rib = np.abs(theta - tag['ray']) * r                       # how far across from this card's rib
+    reach = float(radii[list(angles).index(tag['ray'])]) + 0.42
+    spine = tag['outer'] & (off_rib < texel * (0.4 + 1.1 * np.clip((reach - r) / 0.6, 0, 1))) & (r < reach)
+    alpha = band & ((rho <= 1.0) | spine)
+
+    # the false eye, midway between the second and third ribs
+    a = (angles[1] + angles[2]) / 2
+    e = eye * float(fan_rim(np.array(a), tag['profile']))
+    dx = ((tx.points[..., 0] - centre[0]) * sign - e * np.cos(a)) / texel
+    dy = (tx.points[..., 1] - centre[1] - e * np.sin(a)) / texel
+    d = np.hypot(dx, dy)
+
+    grain = cells(tx.points * [1, 1, 0], texel * 1.01, seed=181) - 0.5     # square texels seen from the front
+    out = np.clip((rho - 0.4) / 0.44, 0, 1)
+    colour = shade(pal['frill'], 0.72 - 0.42 * out + 0.07 * grain, tx.x, tx.y, dither=0.0)
+    colour = np.where((rho < 0.4)[..., None], shade(pal['flash'], 0.5 + 0.25 * grain, tx.x, tx.y, dither=0.0), colour)
+    vein = (np.abs((rays + 0.5) % 1.0 - 0.5) * step * r < 0.5 * texel) & (rho > 0.46) & (rho < 0.84) & (d > 5.0)
+    colour = np.where(vein[..., None], shade(pal['frill'], 0.08, tx.x, tx.y, dither=0.0), colour)
+    colour = np.where((rho < 0.26)[..., None], shade(pal['hide'], 0.15 + 0.9 * rho, tx.x, tx.y, dither=0.0), colour)
+    colour = np.where(((rho > 0.84) & (rho <= 0.92))[..., None], shade(pal[dark], 0.1, tx.x, tx.y, dither=0.0),
                       colour)
-    if box.tag.get('rim'):                                        # the spine running on past the rim along the rib
-        spine = (np.abs(s) < 0.22 * (1.0 - t) + 0.05) & (t > 0.2)
-        colour = np.where((spine & ~alpha)[..., None], shade(pal['scute'], 0.4 + 0.5 * t, tx.x, tx.y, dither=0.0),
-                          colour)
-        alpha = alpha | spine
+    colour = np.where((rho > 0.92)[..., None], shade(pal['flash'], 0.8 + 0.2 * grain, tx.x, tx.y, dither=0.0), colour)
+    rib = (off_rib < texel * 0.6) & (rho > 0.26) & (d > 4.5)
+    colour = np.where(rib[..., None], shade(pal[dark], 0.3, tx.x, tx.y, dither=0.0), colour)
+    colour = np.where((spine & (rho > 1.0))[..., None],
+                      shade(pal[dark], 0.3 + 0.7 * np.clip((r - rim) / 0.45, 0, 1), tx.x, tx.y, dither=0.0), colour)
+    # the eye: a black ring, a bright iris shaded below, a slit pupil and a glint
+    colour = np.where((d < 4.2)[..., None], shade(pal[dark], 0.0, tx.x, tx.y, dither=0.0), colour)
+    colour = np.where((d < 3.1)[..., None], shade(pal['flash'], 0.95 - 0.35 * (dy < -0.5), tx.x, tx.y, dither=0.0),
+                      colour)
+    colour = np.where(((np.abs(dx) < 0.6) & (np.abs(dy) < 2.6))[..., None], shade(pal[dark], 0.0, tx.x, tx.y,
+                      dither=0.0), colour)
+    colour = np.where(((np.abs(dx + 1.4) < 0.5) & (np.abs(dy - 1.3) < 0.5))[..., None],
+                      shade(TOOTH_RAMP, 1.0, tx.x, tx.y, dither=0.0), colour)
     return colour, alpha
 
 

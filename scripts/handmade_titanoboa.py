@@ -10,6 +10,7 @@ saddles down the back with pale-ringed blotches along the flanks, and broad tran
 """
 import numpy as np
 
+from handmade_dilophosaur import frill, frill_fan
 from handmade_models import cells, fbm, hexes, lift, separate, shade, unit
 from handmade_tyrannosaurus import face_grid, grid
 
@@ -40,8 +41,10 @@ PIVOTS = [43.01, 39.28, 35.55, 31.82, 28.09, 24.36, 20.63, 16.89, 13.16, 9.43, 5
 SPINE = [(f'c_back{k + 1}', (PIVOTS[k + 1] if k + 1 < len(PIVOTS) else -46.62), front)
          for k, front in enumerate(PIVOTS)]
 SPINE[0] = ('c_back1', PIVOTS[1], 42.45)
-# The frill's ribs: (rib, how far its membrane reaches from the first joint, half width at the rim, at the root).
-RIBS = [('A', 3.5, 1.5, 0.3), ('B', 4.1, 1.85, 0.4), ('C', 4.6, 2.0, 0.45), ('D', 3.9, 1.7, 0.35)]
+# The frill's ribs: (rib, its joint carrying the membrane, how far the membrane reaches along it), and the fan's
+# centre height.
+FRILL_RIBS = [('A', (1,), 3.5), ('B', (1,), 4.1), ('C', (1,), 4.6), ('D', (1,), 3.9)]
+FRILL_CENTRE_Y = 1.8
 
 
 def body_at(z):
@@ -58,17 +61,6 @@ def tiers(d, bone, z0, z1, rows, mat='hide', part='trunk', nudge=0, **tag):
         lo = y0 - (0.02 if k > core else 0.0)
         hi = y1 + (0.02 if k < core else 0.0)
         d.span(bone, (-half, lo, z0 + e), (half, hi, z1 - e), mat, part=part, tier=k - core, **tag)
-
-
-def rib(d, side, name, reach, outer, inner):
-    """The frill's membrane on one rib: a thin cut-out card along it, in the fan's plane, trimmed by the painter to
-    a wedge widening from the neck to a ruffled rim."""
-    a, b = d.rig.pivot(f'{side}_frill{name}1'), d.rig.pivot(f'{side}_frill{name}2')
-    tip = a + unit(b - a) * reach
-    across = np.cross((0.0, 0.0, 1.0), b - a)
-    d.seg(f'{side}_frill{name}1', a, tip, 2 * outer, 0.04 + 0.02 * ('ABCD'.index(name) % 2), 'frill', ext=(0.1, 0.0),
-          side=across, open=('up', 'down', 'east', 'west'), cutout=True, keep=True, density=FACE, part='frill',
-          outer=outer, inner=inner)
 
 
 def design(d):
@@ -115,9 +107,7 @@ def design(d):
               0.05, 'tongue', ext=(0.04, 0.0), side=(1, 0, 0), part='tongue')
 
     # ---------------------------------------------------------------- the frill on its ribs
-    for side in ('l', 'r'):
-        for name, reach, outer, inner in RIBS:
-            rib(d, side, name, reach, outer, inner)
+    frill_fan(d, FRILL_RIBS, FRILL_CENTRE_Y, bottom=0.15, spine=0.8, density=FACE)
     separate(d, DENSITY)
 
 
@@ -127,7 +117,8 @@ PALETTES = {
                     belly=hexes('#8a8456', '#9c9666', '#ada776', '#bdb887', '#ccc798', '#d9d5aa'),
                     blot=hexes('#0d0f0a', '#14170f', '#1b1f14', '#23281a'),
                     ring=hexes('#8c8a52', '#a19f62', '#b5b273'),
-                    frill=hexes('#3a2414', '#5a3418', '#7c461c', '#9e5c22', '#bc7a2e', '#d39c42', '#e2bd62'),
+                    frill=hexes('#2a0c0a', '#4a120e', '#6e1a12', '#922414', '#b33418', '#cc4c1e', '#e06a28'),
+                    flash=hexes('#b07a1c', '#d09c28', '#e6bc3a', '#f2d65a', '#faeb98'),
                     mouth=hexes('#3a1a18', '#552622', '#70352e', '#8b463c', '#a4594c', '#ba6d5e')),
 }
 PALETTES['green'] = PALETTES['Natural']
@@ -135,19 +126,22 @@ PALETTES['olive'] = dict(hide=hexes('#22231a', '#2f3022', '#3d3e2b', '#4b4c34', 
                          belly=hexes('#8d8562', '#9e9672', '#afa783', '#bfb894', '#cec7a5', '#dbd5b6'),
                          blot=hexes('#0f0f0b', '#161610', '#1d1d15', '#25251b'),
                          ring=hexes('#8f8a62', '#a49f74', '#b8b385'),
-                         frill=hexes('#33301a', '#4a4520', '#625b28', '#7b7232', '#948a3e', '#aca24e', '#c3ba64'),
+                         frill=hexes('#2c160c', '#4a2210', '#6a3014', '#8c4018', '#aa541e', '#c26c26', '#d68832'),
+                         flash=hexes('#a88a2a', '#c4a838', '#dac44c', '#e8d868', '#f4eaa0'),
                          mouth=PALETTES['Natural']['mouth'])
 PALETTES['umber'] = dict(hide=hexes('#22180f', '#302217', '#3f2d1f', '#4f3928', '#5f4632', '#70543c', '#816247', '#937153'),
                          belly=hexes('#93805f', '#a39170', '#b2a181', '#c1b192', '#cebfa3', '#dacbb3'),
                          blot=hexes('#0f0a07', '#160f0b', '#1d150f', '#251b14'),
                          ring=hexes('#9c8a62', '#b09d74', '#c3b086'),
-                         frill=hexes('#3a1c10', '#552614', '#713218', '#8e401e', '#a95226', '#c06a34', '#d48a4a'),
+                         frill=hexes('#2a0e0a', '#44160e', '#621e12', '#822a16', '#a0381c', '#ba4c26', '#d06634'),
+                         flash=hexes('#a8641e', '#c68228', '#dca23a', '#ecc058', '#f6dc92'),
                          mouth=PALETTES['Natural']['mouth'])
 PALETTES['black'] = lift(dict(hide=hexes('#0e0f0e', '#151715', '#1c1e1c', '#242724', '#2d302d', '#363a36', '#404440', '#4a4f4a'),
                               belly=hexes('#4a4a40', '#56564b', '#636357', '#706f63', '#7d7c70', '#8a897d'),
                               blot=hexes('#050505', '#090909', '#0d0e0d', '#121312'),
                               ring=hexes('#6a6a5c', '#7c7c6c', '#8e8e7d'),
-                              frill=hexes('#2a1010', '#3e1614', '#541e18', '#6c281e', '#843426', '#9c4432', '#b25a44'),
+                              frill=hexes('#200808', '#360c0c', '#501210', '#6c1814', '#88221a', '#a22e22', '#ba3e2e'),
+                              flash=hexes('#8a8270', '#a49c88', '#bcb5a0', '#d2ccb8', '#e6e1d0'),
                               mouth=PALETTES['Natural']['mouth']), 1.2, 5)
 # the hides a shade lighter, so they still read under in-game light (side faces get half of it)
 for _pal in {id(p): p for p in PALETTES.values()}.values():
@@ -261,32 +255,6 @@ def head(tx, pal):
     return colour
 
 
-def frill(tx, pal):
-    """The frill's membrane: the hide's colour at the neck through rust to a pale rim, dark streaks along it between
-    the rays, trimmed to a wedge with a ruffled rim of spines."""
-    box = tx.box
-    local = (tx.points - box.center) @ box.axes
-    t = local[..., 1] / box.size[1] + 0.5                      # along the rib, 0 at the neck
-    s = local[..., 0]                                         # across, in units
-    outer, inner = box.tag['outer'], box.tag['inner']
-    width = inner + (outer - inner) * np.clip(t / 0.8, 0, 1)
-    ray = np.floor(s / (tx.texel * 3.0))
-    spike = np.abs((s / (tx.texel * 3.0)) % 1.0 - 0.5) < 0.2       # a spine every third texel, one texel wide
-    rim = 0.8 - 0.035 * cells(np.stack([ray, ray, ray], -1), 1.0, seed=97)
-    reach = rim + 0.16 * (cells(np.stack([ray, ray + 1, ray], -1), 1.0, seed=96) * 0.5 + 0.5)
-    alpha = (np.abs(s) <= width) & ((t <= rim) | (spike & (t <= reach)))
-    v = 0.12 + 0.8 * np.clip(t / 0.8, 0, 1) + 0.08 * (cells(tx.points, tx.texel * 1.01, seed=98) - 0.5)
-    v = v - 0.18 * spike * (t > 0.2)
-    colour = shade(pal['frill'], v, tx.x, tx.y, dither=0.0)
-    base = t < 0.2
-    colour = np.where(base[..., None], shade(pal['hide'], 0.3 + 0.8 * t, tx.x, tx.y, dither=0.0), colour)
-    tip = (t > rim - 0.03) & ~(spike & (t > rim))
-    colour = np.where(tip[..., None], shade(pal['frill'], 0.98, tx.x, tx.y, dither=0.0), colour)
-    spine = spike & (t > rim)
-    colour = np.where(spine[..., None], shade(pal['blot'], 0.6, tx.x, tx.y, dither=0.0), colour)
-    return colour, alpha
-
-
 def teeth(tx):
     """Small hooked teeth along the upper jaw, every third texel."""
     box = tx.box
@@ -301,7 +269,7 @@ def painter(tx, variant):
     pal = PALETTES[variant]
     mat = tx.box.mat
     if mat == 'frill':
-        return frill(tx, pal)
+        return frill(tx, pal, dark='blot', veins=4.0)
     if mat == 'tooth':
         return teeth(tx)
     if mat == 'head':
