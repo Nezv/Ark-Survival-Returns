@@ -1,1 +1,1 @@
-Deinosuchus_Basking_Idle
+Deinosuchus_Move_FWD

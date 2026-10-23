@@ -46,7 +46,7 @@ VARIANTS = json.loads((ROOT / 'Creatures' / 'variants.json').read_text(encoding=
 DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops', 'direwolf',
            'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus',
            'giganotosaurus', 'ceratosaurus', 'acrocanthosaurus', 'dilophosaur',
-           'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus')
+           'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus', 'sarco', 'kaprosuchus', 'deinosuchus', 'titanoboa')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
@@ -56,7 +56,8 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Giganotosaur': 'giganotosaurus', 'Ceratosaurus': 'ceratosaurus',
              'Acrochantosaur': 'acrocanthosaurus', 'Dilophosaur': 'dilophosaur',
              'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
-             'Lystrosaurus': 'lystrosaurus'}
+             'Lystrosaurus': 'lystrosaurus', 'Sarco': 'sarco',
+             'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -236,6 +237,13 @@ def locks(tx, width, height, seed=0, flow=None):
     return a - column, b - row, value
 
 
+def reference_rotation(degrees):
+    """A JAW_REFERENCE value as a BoneSnapshot rotation: degrees about x, or [x, y, z] for rigs whose jaw turns
+    about another axis (the Sarco's about y)."""
+    value = [degrees, 0.0, 0.0] if np.ndim(degrees) == 0 else list(degrees)
+    return np.radians(value) * [-1, -1, 1]
+
+
 # ------------------------------------------------------------------------------------ rig and boxes
 class Rig:
     """The bones of a source geometry in their bind pose (Java model space, source units)."""
@@ -252,11 +260,15 @@ class Rig:
         self.animations = json.loads(Path(animation_path).read_text())['animations'] if animation_path else {}
         self.placed = {}  # bone -> the frame its boxes are designed in, when not the bind pose
 
-    def design_as_in(self, bone, clip, time, anchor):
+    def design_as_in(self, bone, clip, time, anchor, reference=None):
         """Design a bone's boxes as it sits against `anchor` at `time` in `clip` (a jaw shut as in the idle,
         when the bind pose has it open): its boxes are placed in bind-pose world space but follow the bone
-        from where the clip holds it."""
-        posed, _ = gm.bone_matrices(self.bare, gm.clip_pose(self.animations[clip], time))
+        from where the clip holds it. `reference` ({bone: degrees}) overrides the clip's rotation of bones, a
+        jaw the clip leaves open set shut."""
+        pose = gm.clip_pose(self.animations[clip], time)
+        for name, degrees in (reference or {}).items():
+            pose.setdefault(name, {})['rot'] = reference_rotation(degrees)
+        posed, _ = gm.bone_matrices(self.bare, pose)
         self.placed[bone] = self.world[anchor] @ np.linalg.inv(posed[anchor]) @ posed[bone]
 
     def frame_of(self, bone):
@@ -844,7 +856,7 @@ def outline(module, doc, skin, out, rig=None, size=(900, 680), fov=20.0):
         pose = {k: v for k, v in gm.clip_pose(rig.animations[clip], time).items() if any(w in k for w in moved)}
         reference = {k: dict(v) for k, v in pose.items()}
         for bone, degrees in getattr(module, 'JAW_REFERENCE', {}).items():
-            reference.setdefault(bone, {})['rot'] = np.radians([degrees, 0.0, 0.0]) * [-1, -1, 1]
+            reference.setdefault(bone, {})['rot'] = reference_rotation(degrees)
         vertices = skinned(skeleton, rig, reference)
     quads = gm.quads(doc['minecraft:geometry'][0], pose)
     shots = []
