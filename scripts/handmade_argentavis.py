@@ -231,10 +231,11 @@ def card(tx, pal):
         flow = unit(np.array([0.0, 0.0, -1.0]))
         span = 0.0
     else:
-        span = np.clip((x - 2.0) / 13.0, 0, 1)
+        span = np.clip((x - tag.get('span0', 2.0)) / tag.get('span1', 13.0), 0, 1)
         flow = None
     # the direction the feathers point: straight back on the inner wing, swept out toward the tip
-    sweep = 0.95 * (np.clip((x - 5.5) / 8.0, 0, 1) if tag['fin'] == 'wing' else 0 * x)
+    sweep = 0.95 * (np.clip((x - tag.get('sweep0', 5.5)) / tag.get('sweep1', 8.0), 0, 1) if tag['fin'] == 'wing'
+                    else 0 * x)
     dz, dx = -np.cos(sweep), np.sin(sweep) * (side if tag['fin'] == 'wing' else 0)
     across_x, across_z = -dz, dx                                          # square to the feather, in the plane
     s = (p[..., 0] * across_x + p[..., 2] * across_z) / texel
