@@ -8,7 +8,7 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged dragon | Dragon | 0.85 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Marine flipper | Liopleurodon, Plesiosaur | 1.45 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Marine flipper | Liopleurodon | 1.45 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Cephalopod | Tusoteuthis | 1.45 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Cnidarian | Cnidaria | 1.10 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Quadrupedal mammal | Megalocerus, Paraceratherium, Ravager, Unicorn | 1.60 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
@@ -44,9 +44,10 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Titanoboa: `scripts/handmade_titanoboa.py`
 - Megalodon: `scripts/handmade_megalodon.py`
 - Mosasaurus: `scripts/handmade_mosasaurus.py`
+- Plesiosaur: `scripts/handmade_plesiosaur.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus sarco kaprosuchus deinosuchus titanoboa megalodon mosasaurus`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus sarco kaprosuchus deinosuchus titanoboa megalodon mosasaurus plesiosaur`.
 
 ## Generate and ship
 

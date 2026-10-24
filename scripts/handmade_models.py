@@ -59,6 +59,7 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
              'Lystrosaurus': 'lystrosaurus', 'Sarco': 'sarco',
              'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa',
+             'Plesiosaur': 'plesiosaur',
              'Mosasaurus': 'mosasaurus',
              'Megalodon': 'megalodon'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
