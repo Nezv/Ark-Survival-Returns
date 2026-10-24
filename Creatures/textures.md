@@ -6,7 +6,7 @@ The anatomy group controls atlas density; the shared painter derives the detaile
 | Anatomy | Creatures | UV density | Procedural treatment |
 |---|---|---:|---|
 | Sauropod | Brontosaur, Titanosaur | 0.70 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
-| Winged vertebrate | Archaeopteryx, Argentavis, Piterodon, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
+| Winged vertebrate | Archaeopteryx, Argentavis, Quetzal | 1.35 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Winged dragon | Dragon | 0.85 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 | Quadrupedal mammal | Megalocerus, Paraceratherium, Ravager, Unicorn | 1.60 px/unit | Five ventral-to-dorsal layers; five seeded 3×3 shades per layer; mirrored paired faces; separate eyes, tongue, claws, and nails |
 
@@ -45,9 +45,10 @@ each texel lies on the body (1 texel per runtime unit); this painter skips them:
 - Liopleurodon: `scripts/handmade_liopleurodon.py`
 - Tusoteuthis: `scripts/handmade_tusoteuthis.py`
 - Cnidaria: `scripts/handmade_cnidaria.py`
+- Piterodon: `scripts/handmade_pteranodon.py`
 
 Rebuild them with `python scripts/handmade_models.py`, then import with
-`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus sarco kaprosuchus deinosuchus titanoboa megalodon mosasaurus plesiosaur liopleurodon tusoteuthis cnidaria`.
+`python Ark/tools/import_creatures.py --species mammoth megapithecus sabertooth ankylosaurus tyrannosaurus triceratops direwolf parasaur velociraptor spinosaurus allosaurus carnotaurus giganotosaurus ceratosaurus acrocanthosaurus dilophosaur terrorbird therizinosaurus pegomastax lystrosaurus sarco kaprosuchus deinosuchus titanoboa megalodon mosasaurus plesiosaur liopleurodon tusoteuthis cnidaria pteranodon`.
 
 ## Generate and ship
 

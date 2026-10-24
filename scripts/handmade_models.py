@@ -47,7 +47,8 @@ DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaur
            'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus',
            'giganotosaurus', 'ceratosaurus', 'acrocanthosaurus', 'dilophosaur',
            'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus', 'sarco', 'kaprosuchus', 'deinosuchus', 'titanoboa',
-           'megalodon', 'mosasaurus', 'plesiosaur', 'liopleurodon', 'tusoteuthis', 'cnidaria')
+           'megalodon', 'mosasaurus', 'plesiosaur', 'liopleurodon', 'tusoteuthis', 'cnidaria',
+           'pteranodon', 'argentavis', 'archaeopteryx', 'quetzal')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
@@ -59,6 +60,7 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
              'Lystrosaurus': 'lystrosaurus', 'Sarco': 'sarco',
              'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa',
+             'Piterodon': 'pteranodon',
              'Cnidaria': 'cnidaria',
              'Tusoteuthis': 'tusoteuthis',
              'Liopleurodon': 'liopleurodon',
@@ -690,11 +692,14 @@ class SheetMask:
         return out
 
 
-def sheet(d, skeleton, chosen, bones, mat, thickness=0.04, res=0.2, part='fin', **tag):
+def sheet(d, skeleton, chosen, bones, mat, thickness=0.04, res=0.2, part='fin', step=None, **tag):
     """A flat part of the ARK mesh (the triangles `chosen`, a boolean per triangle) as thin cut-out cards in its
     own plane, one per bone of `bones` (base to tip), each as large as the cells its bone carries and trimmed to
     them by the painter (tag `sheet`, `owner`); triangles carried by other bones go to the first. The cards stand
-    a hair apart along the normal, so no two share a plane."""
+    a hair apart along the normal, so no two share a plane; with many cards (a wing's membrane) `step` gives each
+    its own offset, step apart, with the thickness 1.5 steps so no face meets another's."""
+    if step is not None:
+        thickness = 1.5 * step
     triangles = np.asarray(skeleton.triangles)[chosen]
     index = {name: k for k, name in enumerate(bones)}
     owners = [index.get(skeleton.names[b], 0) for b in np.asarray(skeleton.face_bone)[chosen]]
@@ -707,8 +712,10 @@ def sheet(d, skeleton, chosen, bones, mat, thickness=0.04, res=0.2, part='fin', 
             continue
         u0, u1 = mask.lo[0] + cols.min() * mask.res, mask.lo[0] + (cols.max() + 1) * mask.res
         v0, v1 = mask.lo[1] + rows.min() * mask.res, mask.lo[1] + (rows.max() + 1) * mask.res
-        middle = mask.origin + mask.u * (u0 + u1) / 2 + mask.v * (v0 + v1) / 2 + mask.n * 0.035 * (k % 3 - 1)
-        boxes.append(d.add(bone, middle, (u1 - u0, v1 - v0, thickness + 0.02 * (k % 2)), axes, mat,
+        shift = 0.035 * (k % 3 - 1) if step is None else step * (k - (len(bones) - 1) / 2)
+        middle = mask.origin + mask.u * (u0 + u1) / 2 + mask.v * (v0 + v1) / 2 + mask.n * shift
+        boxes.append(d.add(bone, middle, (u1 - u0, v1 - v0, thickness + (0.02 * (k % 2) if step is None else 0.0)),
+                           axes, mat,
                            open=('east', 'west', 'up', 'down'), cutout=True, keep=True, sheet=mask, owner=k,
                            part=part, **tag))
     return mask, boxes
