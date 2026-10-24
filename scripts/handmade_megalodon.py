@@ -58,14 +58,15 @@ def mouth_at(z):
     return tuple(float(np.interp(z, zs, [m[k] for m in MOUTH])) for k in (1, 2))
 
 
-def tiers(d, bone, z0, z1, rows, mat='hide', part='trunk', nudge=0, **tag):
+def tiers(d, bone, z0, z1, rows, mat='hide', part='trunk', nudge=0, unit=1.0, **tag):
     """Stacked boxes across a slice, each overlapping the next a little; the tiers off the core are inset a hair
-    at both ends (each slice its own hair), so no two neighbours share a plane."""
+    at both ends (each slice its own hair), so no two neighbours share a plane. `unit` scales those hairs for rigs
+    built small in source units (a bird's head is a few units long)."""
     core = max(range(len(rows)), key=lambda k: rows[k][2])
     for k, (y0, y1, half) in enumerate(rows):
-        e = 0.0 if k == core else 0.12 * abs(k - core) + 0.03 * nudge
-        lo = y0 - (0.1 if k > core else 0.0)
-        hi = y1 + (0.1 if k < core else 0.0)
+        e = 0.0 if k == core else (0.12 * abs(k - core) + 0.03 * nudge) * unit
+        lo = y0 - (0.1 * unit if k > core else 0.0)
+        hi = y1 + (0.1 * unit if k < core else 0.0)
         d.span(bone, (-half, lo, z0 + e), (half, hi, z1 - e), mat, part=part, tier=k - core, **tag)
 
 

@@ -47,6 +47,7 @@ HAND_MADE = {"Mammoth": "scripts/handmade_mammoth.py", "Megapithecus": "scripts/
              "Pegomastax": "scripts/handmade_pegomastax.py", "Lystrosaurus": "scripts/handmade_lystrosaurus.py",
              "Sarco": "scripts/handmade_sarco.py", "Kaprosuchus": "scripts/handmade_kaprosuchus.py",
              "Deinosuchus": "scripts/handmade_deinosuchus.py", "Titanoboa": "scripts/handmade_titanoboa.py",
+             "Argentavis": "scripts/handmade_argentavis.py",
              "Quetzal": "scripts/handmade_quetzal.py",
              "Piterodon": "scripts/handmade_pteranodon.py",
              "Cnidaria": "scripts/handmade_cnidaria.py",
