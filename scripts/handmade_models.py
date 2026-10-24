@@ -46,7 +46,8 @@ VARIANTS = json.loads((ROOT / 'Creatures' / 'variants.json').read_text(encoding=
 DESIGNS = ('mammoth', 'megapithecus', 'sabertooth', 'ankylosaurus', 'tyrannosaurus', 'triceratops', 'direwolf',
            'parasaur', 'velociraptor', 'spinosaurus', 'allosaurus', 'carnotaurus',
            'giganotosaurus', 'ceratosaurus', 'acrocanthosaurus', 'dilophosaur',
-           'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus', 'sarco', 'kaprosuchus', 'deinosuchus', 'titanoboa')
+           'terrorbird', 'therizinosaurus', 'pegomastax', 'lystrosaurus', 'sarco', 'kaprosuchus', 'deinosuchus', 'titanoboa',
+           'megalodon')
 # Creature folders whose art is hand-made here: Creatures/Textures.py leaves them alone, scripts/workflow.py
 # rebuilds them after refitting their rigs.
 HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth': 'sabertooth',
@@ -57,7 +58,8 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Acrochantosaur': 'acrocanthosaurus', 'Dilophosaur': 'dilophosaur',
              'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
              'Lystrosaurus': 'lystrosaurus', 'Sarco': 'sarco',
-             'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa'}
+             'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa',
+             'Megalodon': 'megalodon'}
 # GeckoLib's corner names (geckolib_mesh.FACES): B/F low/high x, l/r low/high z, t/b high/low y.
 CORNER = {'blb': (-1, -1, -1), 'brb': (-1, -1, 1), 'tlb': (-1, 1, -1), 'trb': (-1, 1, 1),
           'tlf': (1, 1, -1), 'trf': (1, 1, 1), 'blf': (1, -1, -1), 'brf': (1, -1, 1)}
@@ -644,6 +646,67 @@ def fan_rim(theta, profile, sag=0.14):
     f = np.clip((theta - a[k]) / (a[k + 1] - a[k]), 0, 1)
     edge = (k == 0)                                             # the rounded end below the lowest rib: no scallop
     return base * (1 - np.where(edge, 0.0, sag) * np.sin(np.pi * f))
+
+
+# ------------------------------------------------------------------------------------ sheets (fins, flippers)
+class SheetMask:
+    """Where a flat part of the ARK mesh (a fin, a flipper, a tail fluke) lies in its own plane: its triangles
+    drawn into a grid of `res` source units per cell, each cell holding the index of the bone that carries the
+    triangle covering it (-1 where there is none)."""
+
+    def __init__(self, vertices, triangles, owners, res=0.2):
+        from PIL import ImageDraw
+        used = vertices[np.unique(triangles)]
+        self.origin = used.mean(0)
+        _, _, axes = np.linalg.svd(used - self.origin, full_matrices=False)
+        self.u, self.v = axes[0], axes[1]
+        self.n = np.cross(self.u, self.v)
+        self.res = res
+        flat = (vertices - self.origin) @ np.stack([self.u, self.v]).T
+        self.lo = flat[np.unique(triangles)].min(0) - 2 * res
+        size = np.ceil((flat[np.unique(triangles)].max(0) + 2 * res - self.lo) / res).astype(int)
+        image = Image.new('I', (int(size[0]), int(size[1])), 0)
+        draw = ImageDraw.Draw(image)
+        cells_ = (flat - self.lo) / res
+        for triangle, owner in zip(triangles, owners):
+            draw.polygon([tuple(cells_[k]) for k in triangle], fill=int(owner) + 1)
+        self.grid = np.asarray(image, dtype=np.int64) - 1          # rows along v, columns along u
+
+    def uv(self, points):
+        return (np.asarray(points, float) - self.origin) @ np.stack([self.u, self.v]).T
+
+    def at(self, points):
+        """The owning bone's index under each point, seen square to the sheet (-1 off the sheet)."""
+        q = np.floor((self.uv(points) - self.lo) / self.res).astype(int)
+        h, w = self.grid.shape
+        inside = (q[..., 0] >= 0) & (q[..., 0] < w) & (q[..., 1] >= 0) & (q[..., 1] < h)
+        out = np.full(q.shape[:-1], -1)
+        out[inside] = self.grid[q[..., 1][inside], q[..., 0][inside]]
+        return out
+
+
+def sheet(d, skeleton, chosen, bones, mat, thickness=0.04, res=0.2, part='fin', **tag):
+    """A flat part of the ARK mesh (the triangles `chosen`, a boolean per triangle) as thin cut-out cards in its
+    own plane, one per bone of `bones` (base to tip), each as large as the cells its bone carries and trimmed to
+    them by the painter (tag `sheet`, `owner`); triangles carried by other bones go to the first. The cards stand
+    a hair apart along the normal, so no two share a plane."""
+    triangles = np.asarray(skeleton.triangles)[chosen]
+    index = {name: k for k, name in enumerate(bones)}
+    owners = [index.get(skeleton.names[b], 0) for b in np.asarray(skeleton.face_bone)[chosen]]
+    mask = SheetMask(skeleton.source_vertices, triangles, owners, res)
+    axes = np.column_stack([mask.u, mask.v, mask.n])
+    boxes = []
+    for k, bone in enumerate(bones):
+        rows, cols = np.nonzero(mask.grid == k)
+        if len(rows) == 0:
+            continue
+        u0, u1 = mask.lo[0] + cols.min() * mask.res, mask.lo[0] + (cols.max() + 1) * mask.res
+        v0, v1 = mask.lo[1] + rows.min() * mask.res, mask.lo[1] + (rows.max() + 1) * mask.res
+        middle = mask.origin + mask.u * (u0 + u1) / 2 + mask.v * (v0 + v1) / 2 + mask.n * 0.035 * (k % 3 - 1)
+        boxes.append(d.add(bone, middle, (u1 - u0, v1 - v0, thickness + 0.02 * (k % 2)), axes, mat,
+                           open=('east', 'west', 'up', 'down'), cutout=True, keep=True, sheet=mask, owner=k,
+                           part=part, **tag))
+    return mask, boxes
 
 
 # ------------------------------------------------------------------------------------ build

@@ -46,7 +46,8 @@ HAND_MADE = {"Mammoth": "scripts/handmade_mammoth.py", "Megapithecus": "scripts/
              "Terrorbird": "scripts/handmade_terrorbird.py", "Therezinosaur": "scripts/handmade_therizinosaurus.py",
              "Pegomastax": "scripts/handmade_pegomastax.py", "Lystrosaurus": "scripts/handmade_lystrosaurus.py",
              "Sarco": "scripts/handmade_sarco.py", "Kaprosuchus": "scripts/handmade_kaprosuchus.py",
-             "Deinosuchus": "scripts/handmade_deinosuchus.py", "Titanoboa": "scripts/handmade_titanoboa.py"}
+             "Deinosuchus": "scripts/handmade_deinosuchus.py", "Titanoboa": "scripts/handmade_titanoboa.py",
+             "Megalodon": "scripts/handmade_megalodon.py"}
 # Authored skins this painter leaves alone too.
 AUTHORED = {"Dragon": "Ark/tools/import_dragon_runtime.py"}
 
