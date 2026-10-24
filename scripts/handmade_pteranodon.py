@@ -263,14 +263,15 @@ def card(tx, pal):
         colour = np.where(off[..., None], shade(pal['dark'], 0.5, tx.x, tx.y, dither=0.0), colour)
         return colour, alpha
     # the membrane: fine fibres across the span, a few dark veins from the arm, darkening to the tip
-    span = np.clip((np.abs(p[..., 0]) - 4.0) / 38.0, 0, 1)
+    span = np.clip((np.abs(p[..., 0]) - tag.get('root', 4.0)) / tag.get('span', 38.0), 0, 1)
     uv = mask.uv(p) / tx.texel
     fibre = (np.floor(uv[..., 0]) % 3 == 0)
     v = 0.6 - 0.35 * span ** 1.5 + 0.06 * grain - 0.07 * fibre
     if tx.normal[1] < 0:
         v = v + 0.12
     colour = shade(pal['wing'], v, tx.x, tx.y, dither=0.0)
-    vein = (np.abs(((np.abs(p[..., 0]) * 0.55 + p[..., 2] * 0.35) % 6.0) - 3.0) < tx.texel * 0.5) & (span < 0.7)
+    vein = (np.abs(((np.abs(p[..., 0]) * 0.55 + p[..., 2] * 0.35) % tag.get('veins', 6.0)) - tag.get('veins', 6.0) / 2)
+            < tx.texel * 0.5) & (span < 0.7)
     colour = np.where(vein[..., None], shade(pal['wing'], v - 0.25, tx.x, tx.y, dither=0.0), colour)
     colour = np.where((off & alpha)[..., None], shade(pal['dark'], 0.4, tx.x, tx.y, dither=0.0), colour)
     return colour, alpha

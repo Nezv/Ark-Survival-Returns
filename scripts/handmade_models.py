@@ -60,6 +60,7 @@ HAND_MADE = {'Mammoth': 'mammoth', 'Megapithecus': 'megapithecus', 'Sabertooth':
              'Terrorbird': 'terrorbird', 'Therezinosaur': 'therizinosaurus', 'Pegomastax': 'pegomastax',
              'Lystrosaurus': 'lystrosaurus', 'Sarco': 'sarco',
              'Kaprosuchus': 'kaprosuchus', 'Deinosuchus': 'deinosuchus', 'Titanoboa': 'titanoboa',
+             'Quetzal': 'quetzal',
              'Piterodon': 'pteranodon',
              'Cnidaria': 'cnidaria',
              'Tusoteuthis': 'tusoteuthis',
