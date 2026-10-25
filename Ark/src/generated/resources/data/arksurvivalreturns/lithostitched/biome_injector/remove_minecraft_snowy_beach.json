@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "minecraft:snowy_plains",
+  "targets": "minecraft:snowy_beach"
+}

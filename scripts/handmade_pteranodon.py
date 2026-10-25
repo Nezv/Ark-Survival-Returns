@@ -13,7 +13,7 @@ import numpy as np
 
 from ark_geometry import Skeleton
 from handmade_megalodon import tiers
-from handmade_models import ROOT, cells, fbm, hexes, lift, separate, shade, sheet, unit
+from handmade_models import ROOT, cells, fbm, hexes, lift, membrane, separate, shade, sheet, unit
 from handmade_tyrannosaurus import face_grid
 
 FOLDER, STEM, HEIGHT = 'Piterodon', 'piterodon', 2.4
@@ -48,6 +48,19 @@ CULMEN = [((8.3, 7.2), (6.82, 10.2), 0.62, 1.7), ((6.85, 10.1), (5.17, 12.6), 0.
 JAWS = [(6.2, 7.8, [(2.45, 3.4, 0.95), (3.4, 4.36, 1.02)]), (7.8, 9.6, [(2.9, 3.6, 0.72), (3.6, 4.38, 0.88)]),
         (9.6, 11.4, [(3.3, 4.36, 0.72)]), (11.4, 13.0, [(3.42, 4.31, 0.55)]), (13.0, 14.6, [(3.55, 4.12, 0.3)])]
 SCARS = []
+# The bones the ARK mesh's membrane is skinned to, and the few that carry its cards: each membrane cell goes to the
+# carrier that keeps it nearest the ARK skinning through these clips (fraction of the clip, weight).
+MEMBRANE_BONES = ('shoulderTwist1', 'shoulderTwist2', 'shoulder', 'frontArmWing1', 'frontArmWing', 'frontArmWing2',
+                  'frontArmWing3', 'elbow', 'rearArmWing', 'wrist', 'mediumFinger1', 'mediumFinger2', 'mediumFinger3',
+                  'bigFinger1', 'wingA1', 'wingA2', 'wingA3', 'bigFinger2', 'wingB1', 'wingB2', 'wingB3', 'bigFinger3',
+                  'wingC1', 'wingC2', 'wingC3', 'bigFinger4', 'wingD1', 'wingD2', 'bigFinger5', 'wingE1', 'bodyWing',
+                  'bodyWing2', 'bodyWing3', 'legWing')
+CARRIERS = ('shoulder', 'elbow', 'wrist', 'mediumFinger2', 'bigFinger1', 'bigFinger2', 'bigFinger3', 'bigFinger4',
+            'bodyWing')
+WING_SPREAD = ('Ptero-Fly-Idle', 0.0)      # the pose the membrane is traced in: gliding, the wings spread
+WING_POSES = [('Ptero-Fly-Fwd', f, 2.0) for f in (0.0, 0.25, 0.5, 0.75)] +     [('Ptero-Fly-Idle', 0.3, 2.0), ('Ptero-Fly-Hover', 0.3, 1.0), ('Ptero-Ground-Idle', 0.0, 1.5),
+     ('Ptero-Ground-Move-Fwd', 0.3, 1.0), ('Ptero-Fly-Attack-Bite', 0.4, 0.5), ('Ptero-Land', 0.5, 0.5),
+     ('Ptero-Take-Off', 0.4, 0.5), ('Ptero-Torpid-Idle', 0.0, 0.5)]
 
 
 def body_at(z):
@@ -131,15 +144,11 @@ def design(d):
 
     # ---------------------------------------------------------------- the membranes, traced
     for side in ('l', 'r'):
-        bones = [f'{side}_{b}' for b in ('shoulderTwist1', 'shoulderTwist2', 'shoulder', 'frontArmWing1', 'frontArmWing',
-                                         'frontArmWing2', 'frontArmWing3', 'elbow', 'rearArmWing', 'wrist',
-                                         'mediumFinger1', 'mediumFinger2', 'mediumFinger3', 'bigFinger1', 'wingA1',
-                                         'wingA2', 'bigFinger2', 'wingB1', 'wingB2', 'bigFinger3', 'wingC1', 'wingC2',
-                                         'bigFinger4', 'wingD1', 'bigFinger5', 'bodyWing', 'bodyWing2', 'bodyWing3',
-                                         'legWing')]
-        bones = [b for b in bones if b in sk.names]
-        chosen = np.isin(names, bones) & (np.abs(centroid[:, 0]) > 2.4)
-        sheet(d, sk, chosen, bones, mat='membrane', res=0.2, fin='wing', step=0.024)
+        sign = 1.0 if side == 'l' else -1.0
+        bones = [f'{side}_{b}' for b in MEMBRANE_BONES if f'{side}_{b}' in sk.names]
+        chosen = np.isin(names, bones) & (centroid[:, 0] * sign > 2.4)
+        membrane(d, sk, chosen, [f'{side}_{b}' for b in CARRIERS], WING_POSES, WING_SPREAD, res=0.2, margin=0.6,
+                 step=0.024, fin='wing')
     separate(d, DENSITY)
 
 
@@ -245,16 +254,16 @@ def beak(tx, pal):
 
 
 def card(tx, pal):
-    """A crest or a membrane card trimmed to its bone's cells of the ARK mesh."""
+    """The crest, trimmed to the ARK blade, or a membrane card trimmed to its carrier's share of the wing."""
     tag = tx.box.tag
     mask = tag['sheet']
     p = tx.points
-    alpha = mask.at(p) == tag['owner']
-    off = np.zeros(p.shape[:-1], bool)
-    for du, dv in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-        off |= mask.at(p + (mask.u * du + mask.v * dv) * tx.texel) < 0
     grain = cells(p, tx.texel * 1.01, seed=274) - 0.5
     if tag['fin'] == 'crest':                                    # bold bands up the blade, a dark rim
+        alpha = mask.at(p) == tag['owner']
+        off = np.zeros(p.shape[:-1], bool)
+        for du, dv in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            off |= mask.at(p + (mask.u * du + mask.v * dv) * tx.texel) < 0
         z, y = p[..., 2], p[..., 1]
         along = (y * 0.6 - z * 0.8)
         band = (np.floor(along / 0.9) % 2 == 0)
@@ -262,18 +271,26 @@ def card(tx, pal):
                        tx.x, tx.y, dither=0.0)
         colour = np.where(off[..., None], shade(pal['dark'], 0.5, tx.x, tx.y, dither=0.0), colour)
         return colour, alpha
-    # the membrane: fine fibres across the span, a few dark veins from the arm, darkening to the tip
+    # the membrane, painted where the spread wing holds it: fine fibres across the span, a few dark veins from the
+    # arm, darkening to the tip, a dark rim along the trailing edge (the cards' own cut edges inside the wing stay
+    # plain, so overlapping cards read as one)
+    owner = tag['owner']
+    p = mask.local(p, owner)
+    alpha = mask.card(p, owner)
+    rim = np.zeros(p.shape[:-1], bool)
+    for du, dv in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        rim |= ~mask.whole(p + (mask.u * du + mask.v * dv) * tx.texel)
     span = np.clip((np.abs(p[..., 0]) - tag.get('root', 4.0)) / tag.get('span', 38.0), 0, 1)
     uv = mask.uv(p) / tx.texel
     fibre = (np.floor(uv[..., 0]) % 3 == 0)
-    v = 0.6 - 0.35 * span ** 1.5 + 0.06 * grain - 0.07 * fibre
-    if tx.normal[1] < 0:
+    v = 0.6 - 0.35 * span ** 1.5 + 0.04 * grain - 0.06 * fibre
+    if (mask.to_reference[owner][:3, :3] @ tx.normal)[1] < 0:
         v = v + 0.12
     colour = shade(pal['wing'], v, tx.x, tx.y, dither=0.0)
     vein = (np.abs(((np.abs(p[..., 0]) * 0.55 + p[..., 2] * 0.35) % tag.get('veins', 6.0)) - tag.get('veins', 6.0) / 2)
             < tx.texel * 0.5) & (span < 0.7)
     colour = np.where(vein[..., None], shade(pal['wing'], v - 0.25, tx.x, tx.y, dither=0.0), colour)
-    colour = np.where((off & alpha)[..., None], shade(pal['dark'], 0.4, tx.x, tx.y, dither=0.0), colour)
+    colour = np.where((rim & alpha)[..., None], shade(pal['dark'], 0.4, tx.x, tx.y, dither=0.0), colour)
     return colour, alpha
 
 

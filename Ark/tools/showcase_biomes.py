@@ -44,11 +44,14 @@ def section(species, e, rank_colors, rank_names, habitats):
         note = '<p class="muted">No biome pictures yet: run <code>python Ark/tools/biome_pictures.py</code>.</p>'
         return {**EMPTY, 'BIOMES_COUNT': 0, 'BIOMES_NOTE': note}
     atlas = json.loads(INDEX.read_text(encoding='utf-8'))
+    removed = members('theme/removed')
     spawns = {s['id']: members(f'spawns/{s["id"]}') for s in species}
     titles = {key: (title, color) for key, title, color in habitats}
     cards, counts, bare, credits = [], Counter(), [], {}
     for biome in atlas['biomes']:
         ident, name = biome['biome'], biome['name']
+        if ident in removed:
+            continue
         namespace = ident.split(':')[0]
         here = sorted((s for s in species if ident in spawns[s['id']]), key=lambda s: (s['danger'], s['name']))
         communities = [key for key, _, _ in habitats if any(s['habitat'] == key for s in here)]

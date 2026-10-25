@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:highlands",
+  "targets": "minecraft:windswept_hills"
+}

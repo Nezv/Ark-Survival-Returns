@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:rocky_jungle",
+  "targets": "minecraft:sparse_jungle"
+}

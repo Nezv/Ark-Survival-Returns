@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:savanna_slopes",
+  "targets": "minecraft:windswept_savanna"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:rocky_shrubland",
+  "targets": "minecraft:windswept_gravelly_hills"
+}

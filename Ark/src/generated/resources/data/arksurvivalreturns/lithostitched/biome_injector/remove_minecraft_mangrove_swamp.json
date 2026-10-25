@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:orchid_swamp",
+  "targets": "minecraft:mangrove_swamp"
+}

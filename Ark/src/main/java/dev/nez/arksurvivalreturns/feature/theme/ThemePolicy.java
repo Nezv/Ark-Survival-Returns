@@ -23,6 +23,36 @@ import net.minecraft.world.level.block.state.BlockState;
  * individually, including the ones the directive lists only by family.
  */
 public final class ThemePolicy {
+    /**
+     * Biomes excluded from new Overworld terrain. Keep their registry entries and habitat tags
+     * for existing chunks. Lithostitched replaces the selected biome before surface/features
+     * generate; the Skylands replacements match Terralith's own disable-Skylands overlay.
+     * Alpha Islands Winter is a separate biome and was not requested for removal.
+     */
+    public static final Map<String, String> BIOME_REPLACEMENTS = Map.ofEntries(
+            Map.entry("terralith:skylands_autumn", "minecraft:deep_ocean"),
+            Map.entry("terralith:skylands_spring", "minecraft:deep_ocean"),
+            Map.entry("terralith:skylands_summer", "minecraft:deep_lukewarm_ocean"),
+            Map.entry("terralith:skylands_winter", "minecraft:deep_cold_ocean"),
+            Map.entry("terralith:alpha_islands", "minecraft:deep_ocean"),
+            Map.entry("minecraft:windswept_hills", "terralith:highlands"),
+            Map.entry("minecraft:windswept_savanna", "terralith:savanna_slopes"),
+            Map.entry("minecraft:windswept_gravelly_hills", "terralith:rocky_shrubland"),
+            Map.entry("minecraft:windswept_forest", "terralith:forested_highlands"),
+            Map.entry("minecraft:stony_shore", "terralith:gravel_beach"),
+            Map.entry("minecraft:stony_peaks", "terralith:rocky_mountains"),
+            Map.entry("minecraft:sparse_jungle", "terralith:rocky_jungle"),
+            Map.entry("minecraft:snowy_taiga", "terralith:siberian_taiga"),
+            Map.entry("minecraft:snowy_beach", "minecraft:snowy_plains"),
+            Map.entry("minecraft:mangrove_swamp", "terralith:orchid_swamp"),
+            Map.entry("minecraft:jungle", "terralith:tropical_jungle"),
+            Map.entry("minecraft:ice_spikes", "minecraft:snowy_plains"),
+            Map.entry("minecraft:frozen_ocean", "minecraft:cold_ocean"),
+            Map.entry("minecraft:flower_forest", "terralith:blooming_valley"),
+            Map.entry("minecraft:forest", "minecraft:birch_forest"),
+            Map.entry("minecraft:dark_forest", "terralith:moonlight_grove"),
+            Map.entry("minecraft:bamboo_jungle", "terralith:amethyst_rainforest"));
+
     /** Every removed creature family, with the targeted version's variants spelled out. */
     public static final List<String> REMOVED_ENTITIES = List.of(
             // Zombies, including the horse, camel, aquatic and Nether variants.

@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "minecraft:deep_ocean",
+  "targets": "terralith:alpha_islands"
+}

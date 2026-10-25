@@ -724,6 +724,182 @@ def sheet(d, skeleton, chosen, bones, mat, thickness=0.04, res=0.2, part='fin', 
     return mask, boxes
 
 
+# ------------------------------------------------------------------------------------ membranes (pterosaur wings)
+class MembraneMask:
+    """A wing membrane of the ARK mesh in its own plane, as SheetMask lays a fin out, traced in a reference pose (the
+    wings spread as in flight): `cover` where the membrane lies, `label` the carrier bone that best follows each cell
+    through the clips, and per carrier the cells its card shows (its own cells grown into its neighbours', so the
+    cards overlap). Rows run along v, columns along u. Points are looked up in the reference pose: local() takes a
+    card's bind-pose points there."""
+
+    def __init__(self, origin, u, v, res, lo, cover, label, cards, to_reference):
+        self.origin, self.u, self.v, self.res, self.lo = origin, u, v, res, lo
+        self.n = np.cross(u, v)
+        self.cover, self.label, self.cards = cover, label, cards
+        self.to_reference = to_reference            # per carrier: bind pose to reference pose (4x4)
+
+    def local(self, points, k):
+        """Carrier k's bind-pose points where the reference pose puts them."""
+        m = self.to_reference[k]
+        return np.asarray(points, float) @ m[:3, :3].T + m[:3, 3]
+
+    def uv(self, points):
+        return (np.asarray(points, float) - self.origin) @ np.stack([self.u, self.v]).T
+
+    def _look(self, grid, points, outside):
+        q = np.floor((self.uv(points) - self.lo) / self.res).astype(int)
+        h, w = grid.shape
+        inside = (q[..., 0] >= 0) & (q[..., 0] < w) & (q[..., 1] >= 0) & (q[..., 1] < h)
+        out = np.full(q.shape[:-1], outside, dtype=grid.dtype)
+        out[inside] = grid[q[..., 1][inside], q[..., 0][inside]]
+        return out
+
+    def at(self, points):
+        """The carrier's index under each (reference pose) point, seen square to the membrane (-1 off it)."""
+        return self._look(self.label, points, -1)
+
+    def whole(self, points):
+        return self._look(self.cover, points, False)
+
+    def card(self, points, k):
+        """Whether carrier k's card shows at each (reference pose) point."""
+        return self._look(self.cards[k], points, False)
+
+
+def _skinner(skeleton, rig):
+    """A fast linear-blend skinning of the ARK mesh (as skinned()) for many poses."""
+    w = skeleton.weights
+    known = np.array([skeleton.source_bone_names[b] in rig.world for b in w['bone']])
+    weight, vertex = w['weight'][known].astype(float), w['vertex'][known]
+    names = [skeleton.source_bone_names[b] for b in w['bone'][known]]
+    bones = sorted(set(names))
+    index = np.array([bones.index(n) for n in names])
+    total = np.bincount(vertex, weight, len(skeleton.source_vertices))
+    homo = np.c_[skeleton.source_vertices, np.ones(len(skeleton.source_vertices))]
+    bind = np.stack([np.linalg.inv(rig.world[b]) for b in bones])
+
+    def skin(world):
+        m = np.stack([world[b] for b in bones]) @ bind
+        moved = np.einsum('nij,nj->ni', m[index], homo[vertex])[:, :3] * weight[:, None]
+        out = np.zeros_like(skeleton.source_vertices)
+        np.add.at(out, vertex, moved)
+        ok = total > 1e-6
+        out[ok] /= total[ok, None]
+        out[~ok] = skeleton.source_vertices[~ok]
+        return out
+    return skin
+
+
+def membrane(d, skeleton, chosen, carriers, poses, reference=None, mat='membrane', res=0.2, margin=0.6, step=0.024,
+             smooth=2, least=0.04, part='membrane', **tag):
+    """A wing membrane traced from the ARK mesh (the triangles `chosen`) as one thin cut-out card per carrier bone,
+    so the wing keeps few boxes and no seam opens as it beats and folds. The mesh is traced as skinned in the
+    `reference` pose ((clip, fraction of its length): the wings spread as they fly; the bind pose when None). Each
+    membrane vertex goes to the carrier whose rigid motion keeps it nearest the ARK skinning over `poses` ((clip,
+    fraction, weight)); the cells between follow the interpolated errors, smoothed `smooth` times, with stray
+    islands and carriers holding less than `least` of the membrane merged into their neighbours. Each card shows its
+    carrier's cells grown by `margin` (source units) into the neighbouring ones and lies in the membrane's plane,
+    `step` from the next (1.5 steps thick), trimmed by the painter (tag `sheet`: a MembraneMask, `owner`: the
+    carrier's index)."""
+    from scipy import ndimage
+    rig = d.rig
+    triangles = np.asarray(skeleton.triangles)[chosen]
+    used = np.unique(triangles)
+    skin = _skinner(skeleton, rig)
+
+    def pose_of(clip, fraction):
+        anim = rig.animations[clip]
+        return gm.bone_matrices(rig.bare, gm.clip_pose(anim, fraction * float(anim['animation_length'])))[0]
+    held = pose_of(*reference) if reference else rig.world
+    vertices = skin(held) if reference else skeleton.source_vertices
+    homo = np.c_[vertices[used], np.ones(len(used))]
+    error = np.zeros((len(used), len(carriers)))
+    total = 0.0
+    for clip, fraction, weight in poses:
+        world = pose_of(clip, fraction)
+        posed = skin(world)[used]
+        for k, bone in enumerate(carriers):
+            m = world[bone] @ np.linalg.inv(held[bone])
+            error[:, k] += weight * np.linalg.norm((homo @ m.T)[:, :3] - posed, axis=1)
+        total += weight
+    error /= total
+
+    origin = vertices[used].mean(0)
+    _, _, axes = np.linalg.svd(vertices[used] - origin, full_matrices=False)
+    u, v = axes[0], axes[1]
+    flat = (vertices - origin) @ np.stack([u, v]).T
+    lo = flat[used].min(0) - 2 * res
+    w, h = np.ceil((flat[used].max(0) + 2 * res - lo) / res).astype(int)
+    cost = np.full((h, w, len(carriers)), np.inf)
+    drawn = np.zeros((h, w), bool)
+    row = np.full(len(vertices), -1)
+    row[used] = np.arange(len(used))
+    for t in triangles:
+        p = (flat[t] - lo) / res
+        x0, y0 = np.maximum(np.floor(p.min(0)).astype(int), 0)
+        x1, y1 = np.minimum(np.ceil(p.max(0)).astype(int), (w, h))
+        gx, gy = np.meshgrid(np.arange(x0, x1) + 0.5, np.arange(y0, y1) + 0.5)
+        det = (p[1, 0] - p[0, 0]) * (p[2, 1] - p[0, 1]) - (p[2, 0] - p[0, 0]) * (p[1, 1] - p[0, 1])
+        if abs(det) < 1e-12:
+            continue
+        b1 = ((gx - p[0, 0]) * (p[2, 1] - p[0, 1]) - (p[2, 0] - p[0, 0]) * (gy - p[0, 1])) / det
+        b2 = ((p[1, 0] - p[0, 0]) * (gy - p[0, 1]) - (gx - p[0, 0]) * (p[1, 1] - p[0, 1])) / det
+        inside = (b1 >= -1e-6) & (b2 >= -1e-6) & (b1 + b2 <= 1 + 1e-6)
+        if not inside.any():
+            continue
+        b1, b2 = b1[inside][:, None], b2[inside][:, None]
+        value = (1 - b1 - b2) * error[row[t[0]]] + b1 * error[row[t[1]]] + b2 * error[row[t[2]]]
+        ys, xs = (gy[inside] - 0.5).astype(int), (gx[inside] - 0.5).astype(int)
+        cost[ys, xs] = np.minimum(cost[ys, xs], value)
+        drawn[ys, xs] = True
+    cover = ndimage.binary_fill_holes(ndimage.binary_closing(drawn, np.ones((3, 3))) | drawn)
+    label = np.full((h, w), -1)
+    label[drawn] = cost[drawn].argmin(-1)
+    _, (iy, ix) = ndimage.distance_transform_edt(~drawn, return_indices=True)
+    label[cover] = label[iy[cover], ix[cover]]
+
+    def relabel_islands():
+        for k in range(len(carriers)):
+            parts, n = ndimage.label(label == k)
+            if n == 0:
+                continue
+            sizes = ndimage.sum(np.ones_like(parts), parts, range(1, n + 1))
+            small = sizes.sum() < least * cover.sum()
+            for c in range(1, n + 1):
+                if c == 1 + int(np.argmax(sizes)) and not small:
+                    continue
+                region = parts == c
+                ring = ndimage.binary_dilation(region) & ~region & cover & (label != k)
+                if ring.any():
+                    label[region] = np.bincount(label[ring], minlength=len(carriers)).argmax()
+    for _ in range(smooth):
+        counts = np.stack([ndimage.uniform_filter(((label == k) & cover).astype(float), 5)
+                           for k in range(len(carriers))], -1)
+        label[cover] = counts[cover].argmax(-1)
+    for _ in range(4):
+        relabel_islands()
+
+    grow = int(round(margin / res))
+    disk = np.hypot(*np.mgrid[-grow:grow + 1, -grow:grow + 1]) <= grow + 0.01
+    cards = [ndimage.binary_dilation(label == k, disk) & cover for k in range(len(carriers))]
+    # each card is placed in the bind pose where its carrier takes it from the reference pose
+    to_reference = [held[bone] @ np.linalg.inv(rig.world[bone]) for bone in carriers]
+    mask = MembraneMask(origin, u, v, res, lo, cover, label, cards, to_reference)
+    present = [k for k in range(len(carriers)) if (label == k).any()]
+    frame = np.column_stack([u, v, mask.n])
+    boxes = []
+    for j, k in enumerate(present):
+        rows, cols = np.nonzero(cards[k])
+        u0, u1 = lo[0] + cols.min() * res, lo[0] + (cols.max() + 1) * res
+        v0, v1 = lo[1] + rows.min() * res, lo[1] + (rows.max() + 1) * res
+        middle = origin + u * (u0 + u1) / 2 + v * (v0 + v1) / 2 + mask.n * step * (j - (len(present) - 1) / 2)
+        back = np.linalg.inv(to_reference[k])
+        boxes.append(d.add(carriers[k], back[:3, :3] @ middle + back[:3, 3], (u1 - u0, v1 - v0, 1.5 * step),
+                           back[:3, :3] @ frame, mat, open=('east', 'west', 'up', 'down'), cutout=True, keep=True,
+                           sheet=mask, owner=k, part=part, **tag))
+    return mask, boxes
+
+
 # ------------------------------------------------------------------------------------ build
 def build(module_name, density=None, width=None):
     """Build one design: returns (rig, design, geo document, faces, {variant: atlas}, base atlas)."""

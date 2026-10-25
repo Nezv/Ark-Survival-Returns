@@ -110,7 +110,71 @@ final class IntegrationGameTests {
                 dev.nez.arksurvivalreturns.feature.creature.Species.KAPROSUCHUS, rainforest.get()), "A jungle-like Terralith biome must hold jungle animals");
         h.assertFalse(dev.nez.arksurvivalreturns.feature.spawn.SpeciesRange.lives(
                 dev.nez.arksurvivalreturns.feature.creature.Species.VELOCIRAPTOR, rainforest.get()), "Desert runners entered a rainforest");
+        BiomeRemovalProbe.check(h);
         h.succeed();
+    }
+
+    /** Exercise normal Overworld initialization; the flat GameTest generator skips biome injection. */
+    private static final class BiomeRemovalProbe {
+        static void check(GameTestHelper h) {
+            var world = h.getLevel();
+            var registries = world.registryAccess();
+            net.minecraft.world.level.dimension.LevelStem stem;
+            var ops = net.minecraft.resources.RegistryOps.create(com.mojang.serialization.JsonOps.INSTANCE, registries);
+            try (var reader = world.getServer().getResourceManager().getResourceOrThrow(
+                    Identifier.parse("minecraft:dimension/overworld.json")).openAsReader()) {
+                stem = net.minecraft.world.level.dimension.LevelStem.CODEC.parse(ops,
+                        com.google.gson.JsonParser.parseReader(reader)).getOrThrow();
+            } catch (java.io.IOException error) {
+                throw new IllegalStateException("Cannot load the pack's normal Overworld", error);
+            }
+            var dimensions = new net.minecraft.core.MappedRegistry<>(Registries.LEVEL_STEM,
+                    com.mojang.serialization.Lifecycle.stable());
+            dimensions.register(net.minecraft.world.level.dimension.LevelStem.OVERWORLD, stem,
+                    net.minecraft.core.RegistrationInfo.BUILT_IN);
+            dimensions.freeze();
+            dev.worldgen.lithostitched.impl.worldgen.biomeinjector.internal.BiomeInjectorManager
+                    .applyBiomeInjectors(registries, dimensions, world.getSeed());
+            var source = stem.generator().getBiomeSource();
+            h.assertTrue(source instanceof dev.worldgen.lithostitched.impl.worldgen.biomeinjector.internal.InjectorBiomeSource,
+                    "The Overworld did not load Lithostitched biome injectors");
+            // Only the clone's resolver changes; the live world's generator is never modified.
+            var probe = ((dev.worldgen.lithostitched.impl.worldgen.biomeinjector.internal.InjectorBiomeSource) source).clone();
+            var biomes = world.registryAccess().lookupOrThrow(Registries.BIOME);
+            var generator = (net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator) stem.generator();
+            var sampler = net.minecraft.world.level.levelgen.RandomState.create(generator.generatorSettings().value(),
+                    registries.lookupOrThrow(Registries.NOISE), world.getSeed()).sampler();
+            var replacements = dev.nez.arksurvivalreturns.feature.theme.ThemePolicy.BIOME_REPLACEMENTS;
+            h.assertTrue(replacements.size() == 22, "Expected exactly the 22 requested biome removals");
+            var removed = TagKey.create(Registries.BIOME, Identifier.parse("arksurvivalreturns:theme/removed"));
+            h.assertTrue(biomes.getOrThrow(removed).size() == 22, "Generated removal tag differs from the policy");
+            h.assertTrue(source.possibleBiomes().size() == 127, "Expected 127 remaining Overworld biomes");
+            for (int x = -512; x <= 512; x += 32) {
+                for (int z = -512; z <= 512; z += 32) {
+                    h.assertFalse(source.getNoiseBiome(x, 16, z, sampler).is(removed),
+                            "Normal climate sampling selected a removed biome");
+                }
+            }
+            replacements.forEach((target, replacement) -> {
+                var original = biomes.getOrThrow(ResourceKey.create(Registries.BIOME, Identifier.parse(target)));
+                var expected = ResourceKey.create(Registries.BIOME, Identifier.parse(replacement));
+                h.assertTrue(original.is(removed), "Removal tag omitted " + target);
+                h.assertFalse(replacements.containsKey(replacement), "Replacement is also removed: " + replacement);
+                h.assertFalse(source.possibleBiomes().contains(original), "Removed biome remains selectable: " + target);
+                probe.baseResolver = (x, y, z, climate) -> original;
+                for (int y : new int[]{-8, 16, 48}) {
+                    h.assertTrue(probe.getNoiseBiome(37, y, -71, sampler).is(expected),
+                            "Loaded worldgen failed to replace " + target + " with " + replacement);
+                }
+            });
+            for (String control : new String[]{"minecraft:plains", "minecraft:deep_frozen_ocean",
+                    "terralith:alpha_islands_winter", "terralith:tropical_jungle"}) {
+                var holder = biomes.getOrThrow(ResourceKey.create(Registries.BIOME, Identifier.parse(control)));
+                probe.baseResolver = (x, y, z, climate) -> holder;
+                h.assertTrue(probe.getNoiseBiome(37, 16, -71, sampler).equals(holder),
+                        "Unrequested biome was replaced: " + control);
+            }
+        }
     }
 
     /** Kept apart so Curios classes load only when Curios is installed. */

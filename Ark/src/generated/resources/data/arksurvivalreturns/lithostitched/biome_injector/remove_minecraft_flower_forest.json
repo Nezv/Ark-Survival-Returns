@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:blooming_valley",
+  "targets": "minecraft:flower_forest"
+}

@@ -3,16 +3,29 @@ package dev.nez.arksurvivalreturns.datagen;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import dev.nez.arksurvivalreturns.feature.theme.ThemePolicy;
 
 /**
- * Data for optional integrations (config/integrations.json). Everything here is inert when the other mod
- * is absent: Curios ignores unknown data folders, and tag entries for other mods are optional.
+ * Data for pack integrations (config/integrations.json). Biome replacements require the pack's
+ * Terralith/Lithostitched stack; Curios ignores its data folders when absent.
  */
 final class IntegrationData {
     private static final String NS = "arksurvivalreturns";
 
     static void generate(BiConsumer<String, Object> put) {
         curios(put);
+        biomes(put);
+    }
+
+    private static void biomes(BiConsumer<String, Object> put) {
+        var replacements = new java.util.TreeMap<>(ThemePolicy.BIOME_REPLACEMENTS);
+        put.accept("data/" + NS + "/tags/worldgen/biome/theme/removed", Map.of(
+                "replace", true, "values", replacements.keySet().stream()
+                        .map(id -> Map.of("id", id, "required", false)).toList()));
+        replacements.forEach((target, replacement) -> put.accept(
+                "data/" + NS + "/lithostitched/biome_injector/remove_" + target.replace(':', '_'), Map.of(
+                        "type", "lithostitched:replace_fully", "dimension", "minecraft:overworld",
+                        "targets", target, "replacement", replacement)));
     }
 
     /**

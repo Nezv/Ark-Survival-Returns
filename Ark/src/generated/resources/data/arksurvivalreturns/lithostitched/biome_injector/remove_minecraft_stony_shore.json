@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:gravel_beach",
+  "targets": "minecraft:stony_shore"
+}

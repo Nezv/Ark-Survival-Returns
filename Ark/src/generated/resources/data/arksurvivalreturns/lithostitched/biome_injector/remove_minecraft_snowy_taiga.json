@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:replace_fully",
+  "dimension": "minecraft:overworld",
+  "replacement": "terralith:siberian_taiga",
+  "targets": "minecraft:snowy_taiga"
+}
