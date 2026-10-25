@@ -142,6 +142,13 @@ def source_jar(mod, rebuild):
 def pinned_file(lock_entry):
     folder = {'shader': 'run/shaderpacks', 'shared': 'shared-mods'}.get(lock_entry['kind'], 'client-mods')
     path = ARK / folder / lock_entry['filename']
+    if not path.exists():
+        # the shipped name may differ (Iris selects shaderpacks/Ark-Photon.zip); find the pinned file by size and hash
+        same = [p for p in (ARK / folder).glob('*') if p.is_file() and p.stat().st_size == lock_entry['size']
+                and hashlib.sha512(p.read_bytes()).hexdigest() == lock_entry['sha512']]
+        if not same:
+            raise SystemExit(f'{path.name}: missing, rerun Install-Ark-Extras.bat')
+        path = same[0]
     data = path.read_bytes()
     if hashlib.sha512(data).hexdigest() != lock_entry['sha512']:
         raise SystemExit(f'{path.name}: hash mismatch, rerun Install-Ark-Extras.bat')
