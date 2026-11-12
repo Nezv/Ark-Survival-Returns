@@ -223,7 +223,7 @@ final class PrimitiveGameTests {
         h.assertTrue(best.getHoverName().getString().endsWith("III"), "The tier must show in the name");
         h.assertTrue(best.get(net.minecraft.core.component.DataComponents.FOOD).nutrition() == 8, "Tier III must eat as tier III");
 
-        var trigger = new TechTrigger.Consume(List.of(Identifier.parse("arksurvivalreturns:dried_meat")), 0, 3);
+        var trigger = new TechTrigger.Consume(List.of(Identifier.parse("arksurvivalreturns:dried_meat")), 3);
         TechTribeProgress progress = new TechTribeProgress();
         trigger.observe(new TechEvent(TechEventKind.CONSUME, null, DriedMeatItem.withTier(2), null, null, 0L), progress, "dried:");
         h.assertFalse(trigger.satisfied(progress, "dried:", null), "Dried Meat II must not count as III");

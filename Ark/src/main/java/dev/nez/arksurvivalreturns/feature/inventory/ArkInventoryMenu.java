@@ -50,7 +50,8 @@ public final class ArkInventoryMenu extends AbstractContainerMenu {
             int[] at = pocket(i);
             addSlot(new ResourceHandlerSlot(pockets, pockets::set, i, at[0], at[1]));
         }
-        CurioSlots.add(this, owner);
+        // Curios is optional in the manifest: CurioSlots loads Curios classes, so it is only touched when the mod is there.
+        if (dev.nez.arksurvivalreturns.feature.accessory.Worn.CURIOS) CurioSlots.add(this, owner);
         addDataSlot(new DataSlot() {
             @Override public int get() { return ArkLevels.get(owner).level(); }
             @Override public void set(int value) { level = value; }

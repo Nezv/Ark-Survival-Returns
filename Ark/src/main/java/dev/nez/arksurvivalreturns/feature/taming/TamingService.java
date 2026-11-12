@@ -55,7 +55,10 @@ public final class TamingService {
         if (entity instanceof CreatureEntity creature && !state.tamed()) {
             var profile = creature.profile();
             if (profile.method() == TamingMethod.KNOCKOUT) {
-                if (TorporService.feedable(creature)) autoConsume(creature, state, profile, clock);
+                if (TorporService.feedable(creature)) {
+                    keepUnder(creature, state);
+                    autoConsume(creature, state, profile, clock);
+                }
             } else {
                 decay(creature, state, clock);
             }
@@ -138,6 +141,49 @@ public final class TamingService {
             consumeEffects(creature, null, profile, favourite);
             return;
         }
+    }
+
+    /** Seconds of recovery left above the wake line when the hold gives its next sedative. */
+    private static final double HOLD_MARGIN_SECONDS = 5.0;
+
+    /**
+     * Sedatives deposited in the taming hold keep a claimed knock-out under (BUG-01): one dose as its torpor nears
+     * the wake line, with no damage event, so a sleep that is shorter than the feeding is no longer the end of it.
+     * The strongest dose that fits under the ceiling is given, else the weakest, so little is wasted.
+     */
+    private static void keepUnder(CreatureEntity creature, TamingState state) {
+        if (state.claimant() == null) return;
+        var torpor = TorporService.of(creature);
+        if (torpor.recoveryDelay() > 0) return;
+        double margin = Math.max(1.0, torpor.maximum() * Config.TORPOR_RECOVERY_PER_SECOND.get() * HOLD_MARGIN_SECONDS);
+        if (torpor.torpor() > torpor.wakeThreshold() + margin) return;
+        var inventory = creature.tamingInventory();
+        double room = torpor.maximum() - torpor.torpor(), resistance = TorporService.toleranceFor(creature);
+        int best = -1;
+        double bestDose = 0;
+        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
+            double dose = sedativePotency(inventory.getItem(slot)) * resistance;
+            if (dose <= 0) continue;
+            boolean fits = dose <= room, bestFits = best >= 0 && bestDose <= room;
+            if (best < 0 || fits && (!bestFits || dose > bestDose) || !fits && !bestFits && dose < bestDose) {
+                best = slot;
+                bestDose = dose;
+            }
+        }
+        if (best < 0) return;
+        ItemStack stack = inventory.getItem(best);
+        double potency = sedativePotency(stack);
+        stack.shrink(1);
+        inventory.setChanged();
+        TorporService.sedate(creature, potency, null, "hold");
+    }
+
+    /** The dose one item of the hold gives: Narcotics and berries their own, an arrow its own; anything else none. */
+    public static double sedativePotency(ItemStack stack) {
+        if (stack.isEmpty() || !stack.is(TamingTags.SEDATIVE)) return 0;
+        if (stack.getItem() instanceof SedativeItem sedative) return sedative.potency();
+        if (stack.getItem() instanceof SedativeArrowItem arrow) return arrow.potency();
+        return 0;
     }
 
     private static void advance(CreatureEntity creature, TamingState state, CreatureTamingProfile profile,
@@ -234,11 +280,14 @@ public final class TamingService {
         if (holder != null) player.getAdvancements().award(holder, "discovered");
     }
 
-    /** Damage during an attempt costs a bounded share of the progress and cancels an aerial truce. */
-    public static void onDamaged(LivingEntity entity, @Nullable Entity source) {
+    /**
+     * Damage during an attempt costs a bounded share of the progress and cancels an aerial truce. A sedative's hit
+     * (an arrow, a swing with Narcotics) is how torpor is given, so it costs no progress (BUG-01).
+     */
+    public static void onDamaged(LivingEntity entity, @Nullable Entity source, boolean sedative) {
         if (entity.level().isClientSide()) return;
         if (entity instanceof CreatureEntity creature) creature.cancelFeedingTruce(source);
-        if (!tracked(entity)) return;
+        if (sedative || !tracked(entity)) return;
         var state = of(entity);
         if (state.tamed() || state.progress() <= 0f) return;
         float before = state.progress();

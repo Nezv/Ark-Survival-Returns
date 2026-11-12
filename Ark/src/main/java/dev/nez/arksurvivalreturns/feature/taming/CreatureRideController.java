@@ -56,14 +56,33 @@ public final class CreatureRideController {
         return new Vec3(input.strafe(), threeDimensional ? input.vertical() : 0.0, input.forward());
     }
 
-    /** Speed scale for one ridden movement mode. */
-    public static float riddenSpeed(CreatureEntity creature, CreatureRideProfile profile) {
-        float base = (float) creature.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
-        return switch (profile.mode()) {
-            case FLIGHT -> base * (float) (double) Config.RIDDEN_FLIGHT_SPEED_MULTIPLIER.get();
-            case SWIM -> base * (float) (double) Config.RIDDEN_SWIM_SPEED_MULTIPLIER.get();
-            case GROUND -> base;
+    /**
+     * The pace a rider gets, in blocks a second (BUG-03): the species' own top speed, as its tuned attribute gives it
+     * to the wild routine, times the ridden factor of the mode.
+     */
+    public static double targetBlocksPerSecond(CreatureEntity creature, CreatureRideProfile.MovementMode mode) {
+        double own = dev.nez.arksurvivalreturns.feature.creature.MovementTuning.blocksPerSecond(
+                creature.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED));
+        return own * switch (mode) {
+            case FLIGHT -> Config.RIDDEN_FLIGHT_SPEED_MULTIPLIER.get();
+            case SWIM -> Config.RIDDEN_SWIM_SPEED_MULTIPLIER.get();
+            case GROUND -> Config.RIDDEN_GROUND_SPEED_MULTIPLIER.get();
         };
+    }
+
+    /**
+     * The per-tick push a ridden creature is given, in the medium its mode moves through, so that it settles on
+     * {@link #targetBlocksPerSecond}: on the ground it is the speed vanilla's ground update adds, in flight the air
+     * push of {@code travelFlying}, swimming its water push.
+     */
+    public static float riddenSpeed(CreatureEntity creature, CreatureRideProfile profile) {
+        var mode = profile.mode();
+        var medium = switch (mode) {
+            case FLIGHT -> RideKinematics.Medium.AIR;
+            case SWIM -> RideKinematics.Medium.WATER;
+            case GROUND -> RideKinematics.Medium.GROUND;
+        };
+        return (float) RideKinematics.push(targetBlocksPerSecond(creature, mode), medium);
     }
 
     /**
@@ -111,6 +130,46 @@ public final class CreatureRideController {
             if (!level.noCollision(passenger, box)) continue;
             if (!level.getFluidState(net.minecraft.core.BlockPos.containing(candidate)).isEmpty()) continue;
             return candidate;
+        }
+        return null;
+    }
+
+    /**
+     * Where a rider steps off a mount standing on land (BUG-04): beside the body, on the floor, never from the top
+     * of a box up to 42 blocks tall. The measured dismount offsets are tried first, then the four sides just clear
+     * of the body, each searched a few blocks up and down for a floor the rider fits on. Null when the mount is
+     * in the air or under water, or every side is blocked; the caller keeps the rider at the seat then.
+     */
+    public static @Nullable Vec3 groundDismount(CreatureEntity creature, net.minecraft.world.entity.LivingEntity passenger) {
+        if (!creature.onGround() || creature.isUnderWater()) return null;
+        var profile = creature.rideProfile();
+        double side = creature.getBbWidth() / 2 + passenger.getBbWidth() / 2 + 0.4;
+        double[][] offsets = {
+                {profile.groundDismountX(), profile.groundDismountZ()},
+                {profile.altDismountX(), profile.altDismountZ()},
+                {-profile.altDismountX(), profile.altDismountZ()},
+                {profile.groundDismountX(), -profile.groundDismountZ()},
+                {side, 0}, {-side, 0}, {0, -side}, {0, side},
+        };
+        var level = creature.level();
+        int base = net.minecraft.util.Mth.floor(creature.getBoundingBox().minY);
+        var at = new net.minecraft.core.BlockPos.MutableBlockPos();
+        for (double[] offset : offsets) {
+            Vec3 column = creature.position().add(localToWorld(creature, offset[0], 0, offset[1]));
+            for (int dy : new int[] {0, 1, -1, 2, -2, 3, -3, -4}) {
+                at.set(column.x, base + dy, column.z);
+                if (!level.isLoaded(at)) break;
+                double floor = level.getBlockFloorHeight(at);
+                if (!net.minecraft.world.entity.vehicle.DismountHelper.isBlockFloorValid(floor)) continue;
+                Vec3 feet = new Vec3(column.x, at.getY() + floor, column.z);
+                for (var pose : passenger.getDismountPoses()) {
+                    if (net.minecraft.world.entity.vehicle.DismountHelper.canDismountTo(level, passenger,
+                            passenger.getLocalBoundsForPose(pose).move(feet))) {
+                        passenger.setPose(pose);
+                        return feet;
+                    }
+                }
+            }
         }
         return null;
     }

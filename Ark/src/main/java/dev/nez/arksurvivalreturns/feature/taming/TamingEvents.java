@@ -20,7 +20,14 @@ public final class TamingEvents {
     @SubscribeEvent public static void damaged(LivingDamageEvent.Post event) {
         LivingEntity entity = event.getEntity();
         if (entity.level().isClientSide() || event.getInflictedDamage() <= 0f) return;
-        if (TorporService.tracked(entity)) TamingService.onDamaged(entity, event.getSource().getEntity());
+        if (TorporService.tracked(entity)) TamingService.onDamaged(entity, event.getSource().getEntity(), sedative(event.getSource()));
+    }
+
+    /** A tranquilizer arrow, or a melee blow with a sedative in hand: the hits that deliver torpor. */
+    static boolean sedative(net.minecraft.world.damagesource.DamageSource source) {
+        if (source.getDirectEntity() instanceof SedativeArrow) return true;
+        var weapon = source.getWeaponItem();
+        return source.getDirectEntity() == source.getEntity() && weapon != null && weapon.getItem() instanceof SedativeItem;
     }
 
     /** A tamed creature stops counting as wildlife but keeps its needs, sleep and threat responses. */

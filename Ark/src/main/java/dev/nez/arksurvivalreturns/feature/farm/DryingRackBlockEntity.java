@@ -4,7 +4,6 @@ import java.util.List;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.primitive.DriedMeatItem;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
-import dev.nez.arksurvivalreturns.feature.tech.TechTrigger;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -66,15 +65,12 @@ public final class DryingRackBlockEntity extends BlockEntity {
         curing = 0;
         input.shrink(1);
         if (output.isEmpty()) items.set(1, result);
-        else {
-            output.grow(1);
-            stamp(output); // The shelf carries its newest day, so aged-food checks stay conservative.
-        }
+        else output.grow(1);
         setChanged();
         return true;
     }
 
-    /** Same food and tier; the day stamp may differ, so a load that spans midnight keeps stacking. */
+    /** Same food and tier: dried food carries no day, so everything from one rack stacks. */
     private static boolean sameFood(ItemStack shelf, ItemStack dried) {
         return ItemStack.isSameItem(shelf, dried)
                 && (!shelf.is(PrimitiveContent.DRIED_MEAT.get()) || DriedMeatItem.tier(shelf) == DriedMeatItem.tier(dried));
@@ -96,24 +92,29 @@ public final class DryingRackBlockEntity extends BlockEntity {
     /** What one raw item becomes: meat and fish cure into dried meat, everything else into a ration. */
     private ItemStack driedFrom(ItemStack input) {
         if (input.is(net.minecraft.tags.ItemTags.MEAT) || input.is(net.minecraft.tags.ItemTags.FISHES)) {
-            ItemStack meat = DriedMeatItem.withTier(1);
-            stamp(meat);
-            return meat;
+            return DriedMeatItem.withTier(1);
         }
-        ItemStack ration = new ItemStack(ModContent.DRIED_RATION.get());
-        stamp(ration);
-        return ration;
+        return new ItemStack(ModContent.DRIED_RATION.get());
     }
 
     public int curing() {
         return curing;
     }
 
-    /** Dried food carries the in-game day it was made, so the aged-food objectives can verify the wait. */
-    private void stamp(ItemStack stack) {
-        long day = getLevel() instanceof ServerLevel server ? server.getGameTime() / 24000L : 0L;
-        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putLong(TechTrigger.DRIED_DAY_TAG, day));
+    /**
+     * Racks used to stamp the day into dried food, which kept batches of different days from stacking (BUG-24).
+     * The stamp is stripped from old stacks when they are picked up or taken off a rack.
+     */
+    public static void stripLegacyStamp(ItemStack stack) {
+        CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+        if (data == null || !data.copyTag().contains(LEGACY_DAY_TAG)) return;
+        var tag = data.copyTag();
+        tag.remove(LEGACY_DAY_TAG);
+        if (tag.isEmpty()) stack.remove(DataComponents.CUSTOM_DATA);
+        else stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
+
+    private static final String LEGACY_DAY_TAG = "ark_dried_day";
 
     /** Raw food into slot zero, up to the configured load; returns the amount moved. */
     public int insert(ItemStack stack) {
@@ -194,6 +195,7 @@ public final class DryingRackBlockEntity extends BlockEntity {
             items.set(0, ItemStack.EMPTY);
             items.set(1, ItemStack.EMPTY);
             ContainerHelper.loadAllItems(child, items);
+            stripLegacyStamp(items.get(1));
         });
         progress = input.getIntOr("Progress", 0);
         curing = input.getIntOr("Curing", 0);

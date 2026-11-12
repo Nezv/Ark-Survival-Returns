@@ -433,7 +433,7 @@ public final class WildlifeGoal extends WildlifeController {
         dance.advance(10, travelling());
         // One pack scan per decision is reused by the herd, alarm and regroup routines.
         packCache = world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(64),
-                c -> c != mob && c.isAlive() && c.packId().equals(mob.packId()));
+                c -> c != mob && c.isAlive() && !c.isTamed() && c.packId().equals(mob.packId()));
         boolean cycle = WildlifeSenses.hasNightCycle(mob), night = cycle && WildlifeSenses.night(mob);
         boolean quietRoutine = cycle && (mob.species().predator ? !night : night);
         corneredTicks = Math.max(0, corneredTicks - 10);

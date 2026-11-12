@@ -26,13 +26,10 @@ import com.mojang.authlib.GameProfile;
 import dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
 import dev.nez.arksurvivalreturns.feature.station.CrusherBlockEntity;
-import dev.nez.arksurvivalreturns.feature.tech.TechTrigger;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CrafterBlock;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -207,9 +204,6 @@ final class StationGameTests {
         if (!(level.getBlockEntity(h.absolutePos(rackRel)) instanceof DryingRackBlockEntity rack)) throw h.assertionException("No rack");
         rack.insert(new ItemStack(Items.BEEF, 3));
         for (int i = 0; i < 40 && rack.output().isEmpty(); i++) rack.advance();
-        // The first piece was dried "yesterday": the rest must still join the shelf.
-        CustomData.update(DataComponents.CUSTOM_DATA, rack.output(),
-                tag -> tag.putLong(TechTrigger.DRIED_DAY_TAG, tag.getLongOr(TechTrigger.DRIED_DAY_TAG, 0L) - 1));
         for (int i = 0; i < 40 && !rack.input().isEmpty(); i++) rack.advance();
         h.assertTrue(rack.input().isEmpty() && rack.output().getCount() == 3, "A drying load that spans midnight stalled");
         rack.extract();

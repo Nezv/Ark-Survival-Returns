@@ -39,12 +39,15 @@ import net.neoforged.neoforge.event.EventHooks;
  * and swooped. Far from players the laps continue with sparse collision checks and a perched bird stays put.
  */
 public final class FlyingCreatureEntity extends CreatureEntity {
-    public enum Phase { ROAM, DEFENSE_CIRCLE, SWOOP, RETURN_HOME, LAND, PERCH, TAKEOFF, SOAR }
+    /** HOVER and GROUNDED are a tame's: holding in the air, and standing on the ground with gravity (BUG-02). */
+    public enum Phase { ROAM, DEFENSE_CIRCLE, SWOOP, RETURN_HOME, LAND, PERCH, TAKEOFF, SOAR, HOVER, GROUNDED }
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(FlyingCreatureEntity.class, EntityDataSerializers.INT);
     private UUID thiefId;
     private BlockPos center, nest;
     private boolean nestLost;
     private Vec3 destination;
+    /** Where the companion routine wants a tamed bird; null while it holds. */
+    private Vec3 companionPoint;
     private long defenseUntil, nextSwoop, lastSeen;
     private int phaseTicks, nextPerch, nextDestination, nextAdoption, swoopTicks, blockedTicks;
     private double angle, orbitRadius, orbitHeight;
@@ -100,7 +103,7 @@ public final class FlyingCreatureEntity extends CreatureEntity {
                 && Math.abs(player.getY() - habitatCenter().getY()) < 64;
     }
     public void defendEgg(Player thief) {
-        if (!validThief(thief)) return;
+        if (isTamed() || !validThief(thief)) return;
         engage(thief);
         playCreatureSound(CreatureSounds.Role.WARN, 0.8f);
     }
@@ -146,14 +149,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             setNoGravity(true);
             resetFallDistance();
             destination = null;
-            if (flightPhase() == Phase.PERCH || flightPhase() == Phase.LAND) phase(Phase.TAKEOFF);
+            if (flightPhase() == Phase.PERCH || flightPhase() == Phase.LAND || flightPhase() == Phase.GROUNDED) phase(Phase.TAKEOFF);
             return;
         }
         // A tamed bird obeys its companion order; no roaming, defense or egg aggression.
         if (isTamed()) {
-            setNoGravity(true);
-            resetFallDistance();
-            if (destination != null) steer(world);
+            tickTamedFlight(world);
             return;
         }
         setNoGravity(true); resetFallDistance(); phaseTicks++;
@@ -243,6 +244,72 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         }
         steer(world);
     }
+    /**
+     * A tame's flight (BUG-02): it cruises while the companion routine sends it somewhere, takes off first when it
+     * stood on the ground, and while it holds it settles onto the ground below it, or hovers when there is none
+     * within reach. Ground under it means gravity and the ground pose; nothing of the wild laps or nest is used.
+     */
+    private void tickTamedFlight(ServerLevel world) {
+        thiefId = null;
+        phaseTicks++;
+        resetFallDistance();
+        boolean travelling = companionPoint != null && position().distanceToSqr(companionPoint) > 1;
+        var phase = flightPhase();
+        if (travelling) {
+            setNoGravity(true);
+            if (phase == Phase.GROUNDED || phase == Phase.PERCH || phase == Phase.LAND) phase(Phase.TAKEOFF);
+            else if (phase == Phase.TAKEOFF && phaseTicks > 20) phase(Phase.ROAM);
+            else if (phase != Phase.TAKEOFF && phase != Phase.ROAM) phase(Phase.ROAM);
+            destination = flightPhase() == Phase.TAKEOFF ? position().add(0, 3, 0) : companionPoint;
+            steer(world);
+            return;
+        }
+        destination = null;
+        double drop = onGround() && !isInWater() ? 0 : groundBelow(world, TAME_LANDING_REACH);
+        // On the ground, or the last stretch above it: gravity and the ground pose (a short fall costs nothing).
+        if (drop >= 0 && drop <= (phase == Phase.GROUNDED ? 3 : 1.5)) {
+            setNoGravity(false);
+            if (phase != Phase.GROUNDED) phase(Phase.GROUNDED);
+            if (onGround()) setDeltaMovement(getDeltaMovement().multiply(0.5, 1, 0.5));
+            return;
+        }
+        if (drop >= 0) {
+            // Ground within reach: glide down onto it.
+            if (phase != Phase.LAND) phase(Phase.LAND);
+            setNoGravity(true);
+            destination = position().add(0, -Math.min(drop + 0.5, 2.0), 0);
+            steer(world);
+        } else {
+            if (phase != Phase.HOVER) phase(Phase.HOVER);
+            setNoGravity(true);
+            setDeltaMovement(getDeltaMovement().scale(0.8));
+        }
+    }
+
+    private static final int TAME_LANDING_REACH = 12;
+
+    /** Blocks of clear air under the feet down to solid ground, or -1 when water or nothing lies within reach. */
+    private double groundBelow(ServerLevel world, int reach) {
+        var feet = BlockPos.containing(getX(), getY() - 0.01, getZ());
+        for (int i = 0; i <= reach; i++) {
+            var at = feet.below(i);
+            if (!world.isLoaded(at)) return -1;
+            var state = world.getBlockState(at);
+            if (!state.getFluidState().isEmpty()) return -1;
+            if (!state.getCollisionShape(world, at).isEmpty()) return Math.max(0, getY() - (at.getY() + state.getCollisionShape(world, at).max(net.minecraft.core.Direction.Axis.Y)));
+        }
+        return -1;
+    }
+
+    /** Taming hands the bird over clean: no thief, nest, lap or wild phase is kept. */
+    @Override public void onTamed(UUID owner) {
+        super.onTamed(owner);
+        thiefId = null; nest = null; nestLost = false; lap = null; destination = null; companionPoint = null;
+        orbitInitialized = false;
+        setTarget(null);
+        phase(Phase.ROAM);
+    }
+
     /**
      * Follows a point that slides along the current lap. The point only advances while the bird keeps up,
      * and the bird aims a few blocks ahead of it, so turns bank smoothly and climbs are gradual.
@@ -373,8 +440,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
         setXRot(Mth.approachDegrees(getXRot(), Math.clamp(pitch, -45, 55), 4));
     }
     /** Companion steering: a tamed bird flies to the point while its flight phase owns the pose. */
-    @Override protected void steerCompanion(Vec3 point, double speed) { destination = point; }
-    @Override protected void stopCompanion() { destination = null; setDeltaMovement(getDeltaMovement().scale(0.8)); }
+    @Override protected void steerCompanion(Vec3 point, double speed) { companionPoint = point; destination = point; }
+    @Override protected void stopCompanion() {
+        companionPoint = null;
+        if (flightPhase() != Phase.LAND) destination = null;
+        if (flightPhase() != Phase.GROUNDED) setDeltaMovement(getDeltaMovement().scale(0.8));
+    }
     /**
      * The swoop gate is checked when the strike starts ({@code doContact}); the wind-up can outlast the
      * dive, so the impact only needs the resolved target to still be in reach and sight. A wild bird
@@ -388,13 +459,20 @@ public final class FlyingCreatureEntity extends CreatureEntity {
     }
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
-            travelFlying(overloadAdjusted(input), Math.max(0.05f, CreatureRideController.riddenSpeed(this, rideProfile())));
+            // The air push settles on the ridden pace (BUG-03); water and lava keep vanilla's slow push.
+            travelFlying(overloadAdjusted(input), 0.02f, 0.02f, CreatureRideController.riddenSpeed(this, rideProfile()));
             return;
         }
         if (TorporService.restricted(this)) {
             // Plain physics while unconscious: gravity applies, no powered flight, no fall-distance reset.
             setNoGravity(false);
             super.travel(input);
+            return;
+        }
+        // A tame standing on the ground walks and falls like any body on its feet.
+        if (isTamed() && flightPhase() == Phase.GROUNDED) {
+            super.travel(input);
+            resetFallDistance();
             return;
         }
         travelFlying(Vec3.ZERO, 0);
@@ -471,9 +549,9 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             }
             if (isRidden()) return state.setAndContinue(RawAnimation.begin()
                     .thenLoop(isLocomoting() ? flyMoveClip() : hoverClip()));
-            String clip = flightPhase() == Phase.PERCH ? perchClip()
+            String clip = flightPhase() == Phase.PERCH || flightPhase() == Phase.GROUNDED ? perchClip()
                     : flightPhase() == Phase.SWOOP ? swoopLoopClip()
-                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF ? hoverClip() : airborneClip();
+                    : flightPhase() == Phase.LAND || flightPhase() == Phase.TAKEOFF || flightPhase() == Phase.HOVER ? hoverClip() : airborneClip();
             state.setControllerSpeed(individualRate());
             return state.setAndContinue(RawAnimation.begin().thenLoop(clip));
         }));

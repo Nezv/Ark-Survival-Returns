@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /** Planting: use an Ark berry on suitable ground to plant its bush. */
@@ -32,6 +33,11 @@ public final class FarmEvents {
         // The planting is done; vanilla block and item use must not run again on top of it.
         event.setUseBlock(TriState.FALSE);
         event.setUseItem(TriState.FALSE);
+    }
+
+    /** Dried food from before BUG-24 loses its day stamp when picked up, so it stacks with today's. */
+    @SubscribeEvent public static void pickup(ItemEntityPickupEvent.Pre event) {
+        if (!event.getPlayer().level().isClientSide()) DryingRackBlockEntity.stripLegacyStamp(event.getItemEntity().getItem());
     }
 
     private FarmEvents() {}

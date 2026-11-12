@@ -273,7 +273,7 @@ final class TamingGameTests {
         h.assertTrue(rival.getItemInHand(InteractionHand.MAIN_HAND).getCount() == 4, "Rival lost food to a refusal");
 
         // Damage costs progress but never ownership.
-        TamingService.onDamaged(creature, rival);
+        TamingService.onDamaged(creature, rival, false);
         h.assertTrue(state.progress() < first, "Damage did not penalise progress");
 
         // Feed to completion with separated meals.
@@ -567,7 +567,7 @@ final class TamingGameTests {
 
         // Attacking the creature ends the truce immediately and costs progress, which restores the threat.
         float before = taming.progress();
-        TamingService.onDamaged(creature, feeder);
+        TamingService.onDamaged(creature, feeder, false);
         h.assertTrue(!creature.feedingTruce(feeder), "Attacking did not cancel the truce");
         h.assertTrue(taming.progress() < before, "Attacking did not penalise progress");
         h.assertTrue(flyer.validThief(feeder), "The cancelled truce did not restore the theft check");

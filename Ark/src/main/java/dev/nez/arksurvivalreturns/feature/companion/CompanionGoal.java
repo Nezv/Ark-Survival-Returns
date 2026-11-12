@@ -2,6 +2,8 @@ package dev.nez.arksurvivalreturns.feature.companion;
 
 import java.util.EnumSet;
 import dev.nez.arksurvivalreturns.Config;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorAction;
+import dev.nez.arksurvivalreturns.feature.behavior.BehaviorState;
 import dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.spawn.SpawnRules;
@@ -24,6 +26,9 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>WANDER owns its own timer. The idle pause starts when a walk is chosen, so a completed walk still
  * pauses; an order change, a moved anchor or stopping the goal forgets the plan instead of resuming it.
+ *
+ * <p>The routine also owns the tame's presentation (BUG-02): the synced behaviour and action the clips and
+ * sounds read are set from what it does, so nothing of its last wild moment is left showing.
  */
 public final class CompanionGoal extends Goal {
     private final CreatureEntity mob;
@@ -31,6 +36,12 @@ public final class CompanionGoal extends Goal {
     private @Nullable BlockPos wanderAnchor;
     private @Nullable CompanionOrder lastOrder;
     private long nextWanderTick;
+    /** Speed modifier of the last travel order, for the walk or run clip. */
+    private double pace;
+    /** Ticks the tame has stood still; a STAY tame lies down after a minute. */
+    private int heldTicks;
+    private static final int REST_AFTER_TICKS = 1200;
+    private @Nullable BehaviorAction presented;
 
     public CompanionGoal(CreatureEntity mob) {
         this.mob = mob;
@@ -48,24 +59,52 @@ public final class CompanionGoal extends Goal {
         mob.companionHold();
         forgetWander();
         lastOrder = null;
+        heldTicks = 0;
+        presented = null;
     }
 
     @Override public void tick() {
         // A rider owns the mount; the companion routine stands aside but keeps its order.
-        if (mob.isRidden()) { mob.companionHold(); return; }
+        if (mob.isRidden()) { mob.companionHold(); heldTicks = 0; present(BehaviorState.ROAM, BehaviorAction.IDLE); return; }
         LivingEntity threat = threat();
-        if (threat != null) { fight(threat); return; }
+        if (threat != null) {
+            fight(threat);
+            heldTicks = 0;
+            present(BehaviorState.DEFEND, mob.isCompanionTraveling() ? BehaviorAction.CHASE : BehaviorAction.IDLE);
+            return;
+        }
         CompanionOrder order = CompanionService.of(mob).order();
         if (order != lastOrder) {
             // Every order anchors where it was given, so a plan from the previous order is stale.
             lastOrder = order;
             forgetWander();
+            heldTicks = 0;
         }
         switch (order) {
             case FOLLOW -> follow();
             case STAY -> stay();
             case WANDER -> wander();
         }
+        if (mob.isCompanionTraveling()) {
+            heldTicks = 0;
+            present(BehaviorState.ROAM, pace > 1.0 ? BehaviorAction.RUN : BehaviorAction.WALK);
+        } else {
+            heldTicks++;
+            boolean lie = order == CompanionOrder.STAY && heldTicks >= REST_AFTER_TICKS && !mob.species().flyer()
+                    && mob.onGround() && !mob.isInWater();
+            present(lie ? BehaviorState.REST : BehaviorState.ROAM, lie ? BehaviorAction.REST : BehaviorAction.IDLE);
+        }
+    }
+
+    /** Writes the synced presentation only when it changes. */
+    private void present(BehaviorState state, BehaviorAction action) {
+        if (mob.behavior() != state) mob.setBehavior(state);
+        if (presented != action) { presented = action; mob.setAction(action); }
+    }
+
+    private void travel(Vec3 point, double speed) {
+        pace = speed;
+        mob.companionTravel(point, speed);
     }
 
     /** The creature's attacker, or a nearby owner's attacker. Friends are never valid threats. */
@@ -78,10 +117,10 @@ public final class CompanionGoal extends Goal {
         return null;
     }
 
+    /** The owner, the owner's tribe and all their tames are never threats, whatever stray blow they dealt (BUG-06). */
     private boolean isFriend(LivingEntity entity) {
-        if (entity == mob || entity == CompanionService.owner(mob)) return true;
-        return entity instanceof CreatureEntity creature && creature.isTamed()
-                && creature.isOwnedBy(CompanionService.owner(mob));
+        return entity == mob || entity == CompanionService.owner(mob)
+                || dev.nez.arksurvivalreturns.feature.tribe.TribeAllies.allied(mob, entity);
     }
 
     private void fight(LivingEntity threat) {
@@ -91,7 +130,7 @@ public final class CompanionGoal extends Goal {
             mob.getLookControl().setLookAt(threat, 30, 30);
             mob.strike(threat);
         } else {
-            mob.companionTravel(threat.position(), 1.0);
+            travel(threat.position(), 1.0);
         }
     }
 
@@ -104,7 +143,7 @@ public final class CompanionGoal extends Goal {
             mob.getLookControl().setLookAt(owner, 10, 10);
         } else {
             // Faster the further behind it falls; there is no teleport to fall back on.
-            mob.companionTravel(owner.position(), distance > 16 ? 1.3 : 0.9);
+            travel(owner.position(), distance > 16 ? 1.3 : 0.9);
         }
     }
 
@@ -112,7 +151,7 @@ public final class CompanionGoal extends Goal {
         BlockPos anchor = CompanionService.of(mob).anchor();
         if (anchor == null) { CompanionService.setOrder(mob, CompanionOrder.STAY); return; }
         if (mob.blockPosition().distSqr(anchor) > 4) {
-            mob.companionTravel(Vec3.atBottomCenterOf(anchor), 0.8);
+            travel(Vec3.atBottomCenterOf(anchor), 0.8);
         } else {
             mob.companionHold();
             var owner = CompanionService.owner(mob);
@@ -143,7 +182,7 @@ public final class CompanionGoal extends Goal {
             mob.companionHold();
             return;
         }
-        mob.companionTravel(wanderTarget, 0.6);
+        travel(wanderTarget, 0.6);
     }
 
     /** Picks a reachable point near the anchor; flyers and swimmers stay off the terrain. */

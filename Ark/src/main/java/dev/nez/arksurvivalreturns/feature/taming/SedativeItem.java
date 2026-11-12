@@ -7,15 +7,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 /**
- * A sedative the player can eat, throw or swing.
+ * A sedative the player can give, swing, deposit in a taming hold or take.
  *
- * <p>All three routes call {@link TorporService#sedate} with a potency the server resolved from the item,
+ * <p>Every route calls {@link TorporService#sedate} with a potency the server resolved from the item,
  * so there is exactly one place where torpor changes. The item is consumed only after the dose is
- * accepted.
+ * accepted. Taking it yourself is deliberate: only while sneaking, and it takes as long as eating (BUG-11).
  */
 public class SedativeItem extends Item {
     public SedativeItem(Properties properties) {
@@ -27,13 +28,39 @@ public class SedativeItem extends Item {
         return Config.BASIC_SEDATIVE_POTENCY.get();
     }
 
-    /** Consuming the dose sedates the user; players are knocked out but can never be tamed. */
+    /** Ticks of eating before a dose a player takes lands, as long as a meal. */
+    public static final int SELF_USE_TICKS = 32;
+
+    /**
+     * A plain right-click does nothing: this is the item a player holds while taming, and one dose of Narcotics
+     * is a collapse. Sneaking starts eating it; the dose lands when the eating finishes.
+     */
     @Override public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        if (!player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (!TorporService.eligible(player)) return InteractionResult.FAIL;
-        if (TorporService.sedate(player, potency(), player, "consumed")) consume(stack, player);
-        return InteractionResult.SUCCESS_SERVER;
+        player.startUsingItem(hand);
+        return InteractionResult.CONSUME;
+    }
+
+    @Override public int getUseDuration(ItemStack stack, LivingEntity user) { return SELF_USE_TICKS; }
+
+    @Override public ItemUseAnimation getUseAnimation(ItemStack stack) { return ItemUseAnimation.EAT; }
+
+    /** The eating finished: the dose sedates the user; players are knocked out but can never be tamed. */
+    @Override public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
+        if (!level.isClientSide() && TorporService.sedate(user, potency(), user, "consumed")) consume(stack, user);
+        return stack;
+    }
+
+    /**
+     * The hand route of taming: a dose given to another creature by a right-click, with no blow struck, so it
+     * never costs taming progress. Server side; true when the dose was accepted and one item spent.
+     */
+    public boolean dose(ItemStack stack, Player giver, LivingEntity target) {
+        if (giver.level().isClientSide() || target == giver) return false;
+        if (!TorporService.sedate(target, potency(), giver, "dosed")) return false;
+        consume(stack, giver);
+        return true;
     }
 
     /** A swing delivers the dose to the target instead of the wielder. */

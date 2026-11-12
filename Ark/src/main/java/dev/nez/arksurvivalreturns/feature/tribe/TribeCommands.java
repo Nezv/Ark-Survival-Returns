@@ -39,10 +39,31 @@ public final class TribeCommands {
                                                 EntityArgument.getPlayer(context, "player"),
                                                 StringArgumentType.getString(context, "permission"),
                                                 StringArgumentType.getString(context, "value")))))));
+        // Forms a tribe with another player (BUG-07): creates the sender's party if needed and invites them through
+        // FTB Teams, whose own invitation the partner accepts.
+        root.then(Commands.literal("form")
+                .then(Commands.argument("player", EntityArgument.player())
+                        .executes(context -> form(context.getSource(), EntityArgument.getPlayer(context, "player")))));
         root.then(Commands.literal("reset")
                 .then(Commands.argument("player", EntityArgument.player())
                         .executes(context -> reset(context.getSource(), EntityArgument.getPlayer(context, "player")))));
         event.getDispatcher().register(root);
+    }
+
+    private static int form(CommandSourceStack source, ServerPlayer partner) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        var actor = source.getPlayerOrException();
+        if (actor == partner) {
+            source.sendFailure(Component.translatable("tribe.arksurvivalreturns.form_self"));
+            return 0;
+        }
+        var commands = source.getServer().getCommands();
+        var as = actor.createCommandSourceStack();
+        if (!TribePrompt.inParty(actor)) commands.performPrefixedCommand(as, "ftbteams party create");
+        if (!TribePrompt.inParty(actor)) commands.performPrefixedCommand(as, "ftbteams party create " + actor.getGameProfile().name() + "_tribe");
+        if (!TribePrompt.inParty(actor)) return 0;
+        commands.performPrefixedCommand(as, "ftbteams party invite " + partner.getGameProfile().name());
+        source.sendSuccess(() -> Component.translatable("tribe.arksurvivalreturns.form_sent", partner.getDisplayName()), false);
+        return 1;
     }
 
     private static int status(CommandSourceStack source, ServerPlayer target) throws com.mojang.brigadier.exceptions.CommandSyntaxException {

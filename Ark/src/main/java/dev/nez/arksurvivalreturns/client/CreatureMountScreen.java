@@ -86,11 +86,21 @@ public final class CreatureMountScreen extends AbstractContainerScreen<CreatureM
         super.extractTooltip(graphics, mouseX, mouseY);
         if (!isHovering(PREVIEW_X, PREVIEW_Y, PREVIEW_SIZE, PREVIEW_SIZE, mouseX, mouseY)) return;
         int progress = this.menu.rawProgress();
-        graphics.setTooltipForNextFrame(this.font, List.of(
+        var lines = new java.util.ArrayList<Component>(List.of(
                 Component.translatable("screen.arksurvivalreturns.taming", progress / 100 + "." + (progress % 100) / 10 + "%"),
                 Component.translatable("screen.arksurvivalreturns.torpor", this.menu.rawTorpor(), this.menu.rawTorporMax()),
-                Component.translatable("screen.arksurvivalreturns.cargo", this.menu.rawCargoMass(), this.menu.rawCargoMax())),
-                Optional.empty(), mouseX, mouseY);
+                Component.translatable("screen.arksurvivalreturns.cargo", this.menu.rawCargoMass(), this.menu.rawCargoMax())));
+        // What the hold will do while the animal sleeps (BUG-01): each sedative is one dose as it nears waking.
+        var creature = this.menu.creature();
+        if (creature != null && !creature.isTamed()) {
+            int doses = 0;
+            for (int slot = CreatureMountMenu.STORAGE_START; slot < CreatureMountMenu.MOUNT_SLOTS; slot++) {
+                var stack = this.menu.getSlot(slot).getItem();
+                if (dev.nez.arksurvivalreturns.feature.taming.TamingService.sedativePotency(stack) > 0) doses += stack.getCount();
+            }
+            lines.add(1, Component.translatable("screen.arksurvivalreturns.hold_sedatives", doses));
+        }
+        graphics.setTooltipForNextFrame(this.font, lines, Optional.empty(), mouseX, mouseY);
     }
 
     /** Bulk transfer buttons; disabled while the creature is not resolvable on this side. */

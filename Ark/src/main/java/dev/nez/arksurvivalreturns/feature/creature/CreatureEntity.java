@@ -45,7 +45,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-public class CreatureEntity extends PathfinderMob implements GeoEntity {
+public class CreatureEntity extends PathfinderMob implements GeoEntity, OwnableEntity {
     private static final EntityDataAccessor<Integer> LEVEL = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BEHAVIOR = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTION = SynchedEntityData.defineId(CreatureEntity.class, EntityDataSerializers.INT);
@@ -138,6 +138,17 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     public boolean isOwnedBy(@Nullable Player player) { return TamingService.ownedBy(this, player); }
 
+    /** Vanilla's and other mods' owner contract (Better Combat spares a player's own pets in a cleave). */
+    @Override public @Nullable EntityReference<LivingEntity> getOwnerReference() {
+        UUID owner = TamingService.tracked(this) ? TamingService.of(this).owner() : null;
+        return owner == null ? null : EntityReference.of(owner);
+    }
+
+    /** A tame is allied to its owner, the owner's tribe and their tames (BUG-06). */
+    @Override protected boolean considersEntityAsAlly(Entity other) {
+        return dev.nez.arksurvivalreturns.feature.tribe.TribeAllies.allied(this, other) || super.considersEntityAsAlly(other);
+    }
+
     /** Fires when the creature enters or leaves the restricted phases, on both sides. */
     public void onUnconsciousnessChanged(boolean unconscious) {
         if (unconscious) {
@@ -159,6 +170,12 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         setPersistenceRequired();
         setTarget(null);
         if (wildlife != null) wildlife.interruptSleep();
+        // A tame leaves its herd (BUG-12) and the look of its last wild moment (BUG-02): the companion routine owns it now.
+        packId = UUID.randomUUID();
+        setBehavior(BehaviorState.ROAM);
+        setAction(BehaviorAction.IDLE);
+        setNightActive(false);
+        setTrampling(false);
         applyTameState();
         dev.nez.arksurvivalreturns.feature.tech.TechEvents.onTamed(this, owner);
     }
@@ -203,6 +220,24 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (passenger instanceof LivingEntity rider) rider.yBodyRot = getYRot() + (float) rideProfile().yawOffset();
     }
 
+    /**
+     * A rider steps off beside the body, on the ground (BUG-04). In the air or the water there is no ground to step
+     * onto: the rider leaves from the seat, and the fall starts there, not at the top of the box.
+     */
+    @Override public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        Vec3 ground = CreatureRideController.groundDismount(this, passenger);
+        if (ground != null) return ground;
+        passenger.resetFallDistance();
+        Vec3 seat = seatPosition();
+        return onGround() && !isUnderWater() ? position() : seat;
+    }
+
+    /** A mount that dies sets its riders down beside it first, so they do not fall from where it stood. */
+    @Override public void die(net.minecraft.world.damagesource.DamageSource source) {
+        if (!level().isClientSide() && isVehicle()) ejectPassengers();
+        super.die(source);
+    }
+
     /** Only a conscious, tamed, saddled creature may be controlled. */
     @Override public @Nullable LivingEntity getControllingPassenger() {
         if (TorporService.restricted(this) || !isTamed() || !isSaddled()) return null;
@@ -242,7 +277,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     @Override protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         var state = TamingService.of(this);
-        if (TorporService.restricted(this)) return interactWhileUnconscious(player);
+        if (TorporService.restricted(this)) return interactWhileUnconscious(player, hand);
         if (state.tamed()) return interactWhileTamed(player, hand);
         if (player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (level().isClientSide()) {
@@ -259,7 +294,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
      * A wild creature is reachable only while unconscious, and only by the player holding the attempt; an
      * absent or expired lease is open to anyone, and opening the inventory takes that lease over.
      */
-    private InteractionResult interactWhileUnconscious(Player player) {
+    private InteractionResult interactWhileUnconscious(Player player, InteractionHand hand) {
+        // A sedative in hand is given, not swung: it keeps the animal under at no cost to the attempt (BUG-01, BUG-11).
+        ItemStack held = player.getItemInHand(hand);
+        if (held.getItem() instanceof SedativeItem sedative && !player.isSecondaryUseActive()) {
+            if (!level().isClientSide()) sedative.dose(held, player, this);
+            return InteractionResult.SUCCESS;
+        }
         if (profile().method() != TamingMethod.KNOCKOUT) {
             if (!level().isClientSide()) TamingFeedback.denied(player, this, TamingFeedback.Result.WRONG_STATE);
             return InteractionResult.SUCCESS;
@@ -439,9 +480,24 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
 
     /** The wild routine says whether it pursues something; only a large land carnivore then tramples. */
     public void setTrampling(boolean pursuing) {
-        trampling = pursuing && species.predator && species.landHabitat() && getBbWidth() >= TreeTrample.MIN_WIDTH
-                && Config.TRAMPLE_TREES.get() && level() instanceof ServerLevel world
-                && net.neoforged.neoforge.event.EventHooks.canEntityGrief(world, this);
+        trampling = pursuing && species.predator && mayTrample();
+    }
+
+    /** A land body three blocks wide or more, with trampling and mob griefing on. */
+    private boolean mayTrample() {
+        return species.landHabitat() && getBbWidth() >= TreeTrample.MIN_WIDTH && Config.TRAMPLE_TREES.get()
+                && level() instanceof ServerLevel world && net.neoforged.neoforge.event.EventHooks.canEntityGrief(world, this);
+    }
+
+    /**
+     * A large tame goes through the trees in its way while it is ridden or travels on an order, plant eaters too
+     * (BUG-09): otherwise a followed or ridden giant stops at the first trunk, and tames never teleport.
+     */
+    private void updateTameTrampling() {
+        boolean should = (isRidden() || isCompanionTraveling()) && mayTrample();
+        if (should == trampling) return;
+        trampling = should;
+        if (!isRidden()) getNavigation().stop();
     }
 
     /** True while the body stands and turns toward its next path node instead of walking. */
@@ -676,6 +732,7 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         if (strikeCooldown > 0) strikeCooldown--;
         super.tick();
         if (!level().isClientSide()) {
+            if (isTamed() && tickCount % 10 == 0) updateTameTrampling();
             if (trampling && horizontalCollision && isAlive() && level() instanceof ServerLevel world) TreeTrample.clear(world, this);
             syncMovementAction();
             resolveStrike();
@@ -730,7 +787,10 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity {
         // Preserve fluid gravity, collision and buoyancy, but calibrate horizontal propulsion to land speed.
         var horizontal = new net.minecraft.world.phys.Vec3(input.x, 0, input.z);
         if (horizontal.lengthSqr() > 1.0E-7) {
-            double speed = MovementTuning.blocksPerSecond(getSpeed()) * Config.WATER_RETENTION.get(species).get()
+            // A ridden body's speed is the ground push (BUG-03), not an attribute: its swim starts from the ridden pace.
+            double pace = isRidden() ? CreatureRideController.targetBlocksPerSecond(this, rideProfile().mode())
+                    : MovementTuning.blocksPerSecond(getSpeed());
+            double speed = pace * Config.WATER_RETENTION.get(species).get()
                     * getAttributeValue(net.neoforged.neoforge.common.NeoForgeMod.SWIM_SPEED);
             moveRelative((float)(speed / 20 * 0.2), horizontal.normalize());
         }

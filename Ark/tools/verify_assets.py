@@ -229,6 +229,9 @@ def main():
     expected = {identifier for _, identifier, *_ in SPECIES} - NO_EYE_GEOMETRY
     check(set(DESIGNS) == expected, f'Designed eyes do not match the species that have them: missing {sorted(expected - set(DESIGNS))}, '
                                     f'extra {sorted(set(DESIGNS) - expected)}')
+    # Every translation key the code names exists in en_us (the lang sweep of audit_static.py).
+    import audit_static
+    check(audit_static.sweep_lang() == 0, 'Translation keys named in code are missing from en_us (audit_static.py lang)')
     try:
         verify_camp_assets()
     except Exception as error:

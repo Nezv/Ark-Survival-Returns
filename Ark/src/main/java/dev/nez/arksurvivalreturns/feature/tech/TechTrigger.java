@@ -5,13 +5,11 @@ import java.util.Optional;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
@@ -32,7 +30,6 @@ public interface TechTrigger {
      */
     Codec<TechTrigger> CODEC = Codec.recursive("TechTrigger",
             self -> Type.CODEC.dispatch("type", TechTrigger::type, type -> type.codec(self)));
-    String DRIED_DAY_TAG = "ark_dried_day";
 
     Type type();
 
@@ -170,19 +167,13 @@ public interface TechTrigger {
     }
 
     /**
-     * Eat a matching item; a positive day count additionally requires that in-game age, stamped at creation,
-     * and a positive dryness requires at least that dried meat tier.
+     * Eat a matching item; a positive dryness requires at least that dried meat tier.
      */
-    record Consume(List<Identifier> items, int days, int dryness) implements TechTrigger {
+    record Consume(List<Identifier> items, int dryness) implements TechTrigger {
         public static final MapCodec<Consume> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Identifier.CODEC.listOf().fieldOf("items").forGetter(Consume::items),
-                Codec.INT.optionalFieldOf("days", 0).forGetter(Consume::days),
                 Codec.INT.optionalFieldOf("dryness", 0).forGetter(Consume::dryness)
         ).apply(instance, Consume::new));
-
-        public Consume(List<Identifier> items, int days) {
-            this(items, days, 0);
-        }
 
         @Override
         public Type type() {
@@ -195,7 +186,6 @@ public interface TechTrigger {
             boolean changed = false;
             for (Identifier item : items) {
                 if (!matches(event.stack(), item)) continue;
-                if (days > 0 && !aged(event.stack(), event.day(), days)) continue;
                 if (dryness > 0 && dev.nez.arksurvivalreturns.feature.primitive.DriedMeatItem.tier(event.stack()) < dryness) continue;
                 changed |= progress.mark(prefix + item);
             }
@@ -208,13 +198,6 @@ public interface TechTrigger {
                 if (progress.marked(prefix + item)) return true;
             }
             return false;
-        }
-
-        private static boolean aged(ItemStack stack, long day, int days) {
-            CustomData data = stack.get(DataComponents.CUSTOM_DATA);
-            if (data == null) return false;
-            long dried = data.copyTag().getLongOr(DRIED_DAY_TAG, Long.MIN_VALUE);
-            return dried != Long.MIN_VALUE && day - dried >= days;
         }
     }
 

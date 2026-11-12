@@ -85,18 +85,18 @@ final class FarmGameTests {
                 "One drying cycle must turn meat into Dried Meat I");
         h.assertTrue(rack.input().getCount() == 2, "One raw item is consumed per cycle");
 
-        // A result dried on another day still stacks: the day stamp used to stall the rack until emptied.
-        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, rack.output(),
-                tag -> tag.putLong(dev.nez.arksurvivalreturns.feature.tech.TechTrigger.DRIED_DAY_TAG, -5L));
+        // Dried food carries no day (BUG-24): a piece made yesterday and one made today are the same stack.
+        h.assertTrue(!rack.output().has(net.minecraft.core.component.DataComponents.CUSTOM_DATA), "Dried food must carry no day stamp");
+        var yesterday = rack.output().copy();
+        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, yesterday,
+                tag -> tag.putLong("ark_dried_day", -5L));
+        DryingRackBlockEntity.stripLegacyStamp(yesterday);
+        h.assertTrue(ItemStack.isSameItemSameComponents(yesterday, rack.output()), "An old stamped stack must lose its stamp");
         rack.insert(new ItemStack(Items.BEEF, 1));   // keeps two hanging for the art checks below
         for (int i = 0; i < Config.FARM_DRYING_BATCHES.get(); i++) {
-            h.assertTrue(rack.advance(), "A new day's result must keep drying onto yesterday's");
+            h.assertTrue(rack.advance(), "The next result must keep drying onto the shelf");
         }
-        h.assertTrue(rack.output().getCount() == 2, "Results from different days must stack");
-        long day = level.getGameTime() / 24000L;
-        h.assertTrue(rack.output().get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).copyTag()
-                .getLongOr(dev.nez.arksurvivalreturns.feature.tech.TechTrigger.DRIED_DAY_TAG, -1L) == day,
-                "The stack must carry the newest day");
+        h.assertTrue(rack.output().getCount() == 2, "Results of one rack must stack");
 
         h.assertTrue(rack.getBlockState().getValue(DryingRackBlock.HANGING) == 2
                 && rack.getBlockState().getValue(DryingRackBlock.FOOD) == DryingRackBlock.Food.MEAT

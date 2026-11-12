@@ -45,8 +45,8 @@ public final class AquaticCreatureEntity extends CreatureEntity {
     /** A ridden swimmer follows the rider; an unconscious one simply sinks and drifts. */
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
-            travelFlying(overloadAdjusted(input),
-                    Math.max(0.03f, CreatureRideController.riddenSpeed(this, rideProfile()) * 0.25f));
+            // In water vanilla uses the water push, which used to be a fixed 0.02 (2 blocks a second, BUG-03).
+            travelFlying(overloadAdjusted(input), CreatureRideController.riddenSpeed(this, rideProfile()), 0.02f, 0.02f);
             return;
         }
         if (TorporService.restricted(this)) {

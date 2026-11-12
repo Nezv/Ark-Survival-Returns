@@ -49,14 +49,12 @@ public final class Config {
     public static final ModConfigSpec.IntValue PRIMITIVE_FIRE_MAX_FUEL, FARM_DRIED_TIER_TWO, FARM_DRIED_TIER_THREE;
     public static final ModConfigSpec.DoubleValue HEALTH_GROWTH;
     public static final ModConfigSpec.DoubleValue DAMAGE_GROWTH;
-    public static final ModConfigSpec.BooleanValue HEALTH_BAR;
     public static final ModConfigSpec.BooleanValue MASS_GAUGE;
     public static final ModConfigSpec.BooleanValue NIGHTTIME;
     public static final ModConfigSpec.IntValue NIGHT_START, NIGHT_END, NIGHT_TRANSITION, SLEEP_CALM;
     public static final ModConfigSpec.DoubleValue NIGHT_HUNGER, NIGHT_VISION, DAY_SLEEP, WAKE_DISTANCE;
     public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS, TRAMPLE_TREES;
     public static final ModConfigSpec.IntValue TIER_FULL_RADIUS, TIER_AMBIENT_RADIUS, TIER_DORMANT_RADIUS, TIER_MARGIN;
-    public static final ModConfigSpec.IntValue HEALTH_BAR_RANGE;
     public static final ModConfigSpec.IntValue ARGENT_NEST_Y, NEST_WATER_RADIUS, PTERO_ROAM_RADIUS, ARGENT_ROAM_RADIUS, FLIGHT_LEASH, EGG_DEFENSE_TICKS;
     public static final ModConfigSpec.BooleanValue PERCHING;
     public static final EnumMap<DangerTier, ModConfigSpec.IntValue> MIN_LEVEL = new EnumMap<>(DangerTier.class);
@@ -80,7 +78,9 @@ public final class Config {
     public static final ModConfigSpec.IntValue PASSIVE_PROGRESS_GRACE, PASSIVE_PROGRESS_DECAY_PERIOD;
     public static final ModConfigSpec.DoubleValue PASSIVE_PROGRESS_DECAY, PLAYER_MOVEMENT_TOLERANCE;
     public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
-    public static final ModConfigSpec.DoubleValue RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
+    public static final ModConfigSpec.BooleanValue RIDING_SHIELD_RIDER;
+    public static final ModConfigSpec.DoubleValue RIDDEN_GROUND_SPEED_MULTIPLIER, RIDDEN_FLIGHT_SPEED_MULTIPLIER, RIDDEN_SWIM_SPEED_MULTIPLIER;
+    public static final ModConfigSpec.BooleanValue TRIBE_FRIENDLY_FIRE, TRIBE_AUTO_PROMPT;
     public static final ModConfigSpec.BooleanValue TRIBE_DEFAULT_RIDE, TRIBE_DEFAULT_CARGO, TRIBE_DEFAULT_COMMANDS,
             TRIBE_DEFAULT_BREEDING, TRIBE_DEFAULT_WORK;
     // ----------------------------------------------------------------------------- work
@@ -309,9 +309,8 @@ public final class Config {
                 .define("voidLethal", true);
         DOWNED_NOTIFY_TRIBE = b.comment("Tell online FTB Teams tribe members when someone goes down.")
                 .define("notifyTribe", true);
-        DOWNED_REQUIRE_TRIBE = b.comment("Only tribe members may revive with a fiber bandage. Disable to let any "
-                        + "player revive.")
-                .define("requireTribe", true);
+        DOWNED_REQUIRE_TRIBE = b.comment("Only tribe members may revive with a fiber bandage. Off: any player may revive.")
+                .define("requireTribe", false);
         b.pop().push("tribe");
         TRIBE_DEFAULT_RIDE = b.comment("Default riding permission for members of the tame owner's FTB Teams party. "
                         + "The owner always keeps every permission.")
@@ -325,6 +324,10 @@ public final class Config {
         TRIBE_DEFAULT_WORK = b.comment("Default permission for party members to supervise a teammate's tame while "
                         + "it runs a harvest job. The owner always keeps every permission.")
                 .define("defaultWork", true);
+        TRIBE_FRIENDLY_FIRE = b.comment("Whether owners and tribe members can hurt their own tames, and tames them. Off: such blows do nothing.")
+                .define("friendlyFire", false);
+        TRIBE_AUTO_PROMPT = b.comment("When a player joins while another is online and neither is in a tribe, offer both a button that forms one.")
+                .define("autoPrompt", true);
         b.pop().push("work");
         WORK_ENABLED = b.comment("Allow work orders: Triceratops forages plants, Ankylosaurus mines stone and ores.")
                 .define("enabled", true);
@@ -507,10 +510,14 @@ public final class Config {
         FEEDING_TRUCE_TICKS = b.comment("Feeder-specific truce granted by a successful aerial feeding "
                         + "(300 = 15 seconds).")
                 .defineInRange("feedingTruceTicks", 300, 0, 2400);
-        RIDDEN_FLIGHT_SPEED_MULTIPLIER = b.comment("Flight speed of a ridden flyer, as a multiple of its movement speed.")
-                .defineInRange("riddenFlightSpeedMultiplier", 2.0, 0.2, 12.0);
-        RIDDEN_SWIM_SPEED_MULTIPLIER = b.comment("Swim speed of a ridden water creature, as a multiple of its movement speed.")
-                .defineInRange("riddenSwimSpeedMultiplier", 1.0, 0.2, 12.0);
+        RIDDEN_GROUND_SPEED_MULTIPLIER = b.comment("Pace of a ridden land creature, as a multiple of its own top speed (sprintRatio x playerSprintBlocksPerSecond).")
+                .defineInRange("riddenGroundPace", 1.15, 0.2, 4.0);
+        RIDDEN_FLIGHT_SPEED_MULTIPLIER = b.comment("Pace of a ridden flyer, as a multiple of its own top speed.")
+                .defineInRange("riddenFlightPace", 1.6, 0.2, 4.0);
+        RIDDEN_SWIM_SPEED_MULTIPLIER = b.comment("Pace of a ridden water creature, as a multiple of its own top speed.")
+                .defineInRange("riddenSwimPace", 1.2, 0.2, 4.0);
+        RIDING_SHIELD_RIDER = b.comment("A melee blow aimed at the rider of a mount at least three blocks wide lands on the mount instead.")
+                .define("shieldRider", true);
         PLAYER_MOVEMENT_TOLERANCE = b.comment("Horizontal drift an unconscious player may accumulate before the "
                         + "server pulls them back to where they fell asleep, in blocks.")
                 .defineInRange("playerMovementTolerance", 0.35, 0.05, 4.0);
@@ -544,8 +551,9 @@ public final class Config {
         TIER_MARGIN = b.comment("Blocks past a radius before a creature drops to the cheaper tier, so borders do not flicker.")
                 .defineInRange("tierMargin", 8, 0, 32);
         TRAMPLE_TREES = b.comment("Wild carnivores with a body three blocks wide or more knock down the natural trees in their way "
-                        + "while they pursue prey or an intruder: trunks fall, foliage breaks, nothing drops and a rooted trunk "
-                        + "leaves its sapling. Log walls and planted hedges stand. Also needs the mob griefing game rule.")
+                        + "while they pursue prey or an intruder, and so do tames that wide while ridden or on the move: trunks fall, "
+                        + "foliage breaks, nothing drops and a rooted trunk leaves its sapling. Log walls and planted hedges stand. "
+                        + "Also needs the mob griefing game rule.")
                 .define("largeCarnivoresBreakTrees", true);
         b.pop().push("wildlife");
         for (var family : dev.nez.arksurvivalreturns.feature.land.LandFamily.values()) {
@@ -570,8 +578,6 @@ public final class Config {
         THEME_MECHANICS = b.comment("Refuse enchanting, brewing, teleportation, magical infrastructure, sculk, totems, golems, the Wither build and elytra flight in worlds that already contain them.").define("mechanics", true);
         b.pop().push("display");
         BIOME_MESSAGES = b.define("biomeEntryMessages", true);
-        HEALTH_BAR = b.define("targetHealthBar", true);
-        HEALTH_BAR_RANGE = b.defineInRange("targetRange", 32, 8, 64);
         MASS_GAUGE = b.comment("Show the carried-load gauge in the top-left of the HUD.").define("massGauge", true);
         b.pop().push("guardian");
         GUARDIAN_ENABLED = b.comment("Enable floating beacon guardians and the legacy Ancient Remnants ritual. "

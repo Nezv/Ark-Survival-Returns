@@ -203,16 +203,13 @@ public final class TorporService {
         log("awake", entity, "restrictions lifted");
     }
 
-    /** Moves every rider off an unconscious entity, including riders of an ordinary vanilla mount. */
+    /**
+     * Moves every rider off an unconscious entity, including riders of an ordinary vanilla mount. A creature's
+     * own dismount rule puts them beside the body ({@link CreatureEntity#getDismountLocationForPassenger}).
+     */
     private static void dismountRiders(LivingEntity entity) {
-        if (!(entity.level() instanceof ServerLevel level)) return;
-        for (var passenger : java.util.List.copyOf(entity.getPassengers())) {
-            passenger.stopRiding();
-            if (!(entity instanceof CreatureEntity creature)) continue;
-            if (!(passenger instanceof LivingEntity)) continue;
-            var safe = CreatureRideController.findSafePosition(level, creature, passenger);
-            if (safe != null && !passenger.isPassenger() && !passenger.onGround()) passenger.setPos(safe);
-        }
+        if (!(entity.level() instanceof ServerLevel)) return;
+        for (var passenger : java.util.List.copyOf(entity.getPassengers())) passenger.stopRiding();
     }
 
     private static int collapseTicks(LivingEntity entity) {

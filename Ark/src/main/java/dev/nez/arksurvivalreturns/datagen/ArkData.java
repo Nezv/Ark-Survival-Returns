@@ -150,6 +150,7 @@ public final class ArkData implements DataProvider {
         en.put("screen." + NS + ".taming", "Taming %s");
         en.put("screen." + NS + ".hunger", "Hunger %s");
         en.put("screen." + NS + ".torpor", "Torpor %s/%s");
+        en.put("screen." + NS + ".hold_sedatives", "Sedatives in the hold: %s doses, one given each time it is about to wake");
         en.put("chat." + NS + ".biome", "[ARK] %s | Danger %s/3 | Wild levels %s-%s");
         en.put("chat." + NS + ".biome_unrated", "[ARK] %s | Outside Overworld danger zones");
         String[] states = {"roam", "forage", "drink", "rest", "alert", "investigate", "threaten", "hunt", "defend", "flee", "return_home", "feed"};
@@ -408,11 +409,14 @@ public final class ArkData implements DataProvider {
     /** Player-facing tribe permission text. */
     private void tribeMessages(Map<String, String> en) {
         String[] keys = {"status_solo", "status_party", "flag", "permission_set", "permission_cleared",
-                "permission_denied", "unknown", "on", "off"};
-        String[] english = {"No tribe yet for %s. Create one with /ftbteams party create, then invite your partner.",
+                "permission_denied", "unknown", "on", "off", "prompt", "prompt_button", "prompt_hover", "form_self", "form_sent"};
+        String[] english = {"No tribe yet for %s. Form one with /arktribe form <player>.",
                 "Tribe %s | %s member(s)", "%s: %s", "%s for %s set to %s.",
                 "Tribe permissions for %s reset to defaults.",
-                "Only a tribe owner or a gamemaster may change tribe permissions.", "Unknown option: %s", "on", "off"};
+                "Only a tribe owner or a gamemaster may change tribe permissions.", "Unknown option: %s", "on", "off",
+                "[ARK] %s is here, and neither of you has a tribe. A tribe shares tames, revives and research. %s",
+                "[Form a tribe with %s]", "Creates your tribe and invites %s, who accepts the invitation.",
+                "You cannot form a tribe with yourself.", "Invitation sent to %s."};
         for (int i = 0; i < keys.length; i++) {
             en.put("tribe." + NS + "." + keys[i], english[i]);
         }
@@ -692,7 +696,7 @@ public final class ArkData implements DataProvider {
 
 
     private void downedMessages(Map<String, String> en) {
-        en.put("downed." + NS + ".downed", "You are down! %s seconds until you bleed out; a tribe member can revive you with a fiber bandage.");
+        en.put("downed." + NS + ".downed", "You are down! %s seconds until you bleed out; another survivor can revive you with a fiber bandage.");
         en.put("downed." + NS + ".tribe_down", "%s is down at %s, %s, %s with %s seconds left.");
         en.put("downed." + NS + ".revived", "%s pulled you back up.");
         en.put("downed." + NS + ".revived_self", "You revived %s.");

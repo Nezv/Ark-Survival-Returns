@@ -138,7 +138,7 @@ public final class AquaticGoal extends WildlifeController {
             damageStamp = mob.getLastHurtByMobTimestamp(); focus = attacker; lastKnown = attacker.position();
             if (mob.species().maxGroup > 1)
                 for (var member : world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(48),
-                        c -> c != mob && c.isAlive() && c.species() == mob.species() && c.packId().equals(mob.packId())))
+                        c -> c != mob && c.isAlive() && !c.isTamed() && c.species() == mob.species() && c.packId().equals(mob.packId())))
                     member.wildlife().receiveAlarm(attacker.position());
         }
         double scan = Math.max(32, WildlifeSenses.sightRange(mob));
@@ -199,7 +199,7 @@ public final class AquaticGoal extends WildlifeController {
                     nextAlarm = world.getGameTime() + 100;
                     if (mob.species().maxGroup > 1)
                         for (var member : world.getEntitiesOfClass(CreatureEntity.class, mob.getBoundingBox().inflate(32),
-                                c -> c != mob && c.isAlive() && c.packId().equals(mob.packId())))
+                                c -> c != mob && c.isAlive() && !c.isTamed() && c.packId().equals(mob.packId())))
                             member.wildlife().receiveAlarm(lastKnown);
                 }
             }
