@@ -3794,9 +3794,9 @@
 
 <script type="text/csv" id="dashboard-csv">Type,ID,Item,Executed by,Status
 Feature,F01,Progression Tree,Astra 6,"Implemented; unverified in client (star nodes, screen-height fit)."
-Patch,P01,Tribe and Survival Journal,Deepseek v4.1,Implemented; unverified in client.
-Patch,P02,Camp and Rescue,Deepseek v4.1,"Implemented; downed, death and respawn seen in a recorded client session."
-Patch,P03,Weight and Working Tames,Deepseek v4.1,Implemented; unverified in client.
+Patch,P01,Tribe and Survival Journal,Deepseek v4.1,"Implemented; build and GameTests pass, unverified in client."
+Patch,P02,Camp and Rescue,Deepseek v4.1,"Implemented; build and GameTests pass, the new pose, mark and give-up unverified in client."
+Patch,P03,Weight and Working Tames,Deepseek v4.1,"Implemented; build and GameTests pass, unverified in client."
 Patch,P04,Homestead Economy,Deepseek v4.1,Implemented; unverified in client.
 Patch,P05,Prehistoric boss,"Codex, Claude Opus 5.5","Implemented; unverified in client (look in real terrain and under shaders, the climb, the arrival, the fight)."
 Patch,P06,Regional Expeditions and Cartography,Not started,Under discussion.
@@ -3808,7 +3808,7 @@ Patch,P12,Graphics and Atmosphere,Claude Opus 5.5,"Implemented and run on the RT
 Analysis,P00,Behaviour Model,Claude Code,"Implemented; 18 controlled trials recorded in a real client came out as expected (B10), not yet judged by the user."
 Patch,P17,Difficulty patch,Astra 6,Implemented; unverified in client.
 Patch,P18,Creature models,Astra 6,Implemented; unverified in client (also by ear).
-Patch,P19,Taming/Riding patch,Deepseek v4.1,Implemented; unverified in client.
+Patch,P19,Taming/Riding patch,Deepseek v4.1,"Implemented; build and GameTests pass, unverified in client."
 Patch,P20,Flyer patch,Astra 6,Implemented; unverified in client.
 Patch,P21,Population density and regional ledger,Claude Opus 5.5,"Implemented; measured in recorded client runs out and back on the benchmark world (C05, F34), where the recording holds every region's animals, room and land seen: when the place was left 24 animals in 7 groups stood within 128 blocks under the bounded rules, 18 in 7 under the first. Not yet played by the user."
 Patch,P22,Farm animal removal,Claude Opus 5.5,"Implemented; seen in recorded client sessions, not yet played by the user."
@@ -3848,7 +3848,7 @@ Fix,X02,Creature eyes rework,Claude Opus 5.5; Claude Sonnet 5.5,"Implemented for
 Fix,X03,Creature texture completion (part isolation),Claude Opus 5.5,Implemented; unverified: not every generated texture was checked.
 Integration,I10,Dragon import from All-Under-Heaven,"Codex, Claude Opus 5.5",Implemented; unverified in client (artistic review of the red and white membranes).
 Integration,I11,Better Combat,Claude Opus 5.5,"Implemented; unverified in client (swings, combos, the two-handed pose while riding)."
-Integration,I12,Ancient Remnants,Not started,"To be done: find a 26.1.2 build, pin it, brand it and list it in integrations.json."
+Integration,I12,Ancient Remnants,Not started,Deprecated: the Giganotosaurus Guardian that needed it was removed (A02 BUG-15).
 Fix,X04,"Asset, recipe and GUI audit",Claude Opus 5.5,Implemented; unverified in client.
 Feature,F16,Bronze Age completion,Claude Opus 5.5,Implemented; unverified in client.
 Feature,F17,Iron Age plan (tree + sprites),Claude Opus 5.5,Planned.
@@ -3898,7 +3898,7 @@ Feature,F40,Interface screens (showcase slideshow),Claude Opus 5.5,"Implemented;
 Patch,P24,Hand-made creature models,Claude Opus 5.5,Implemented; unverified in client.
 Patch,P25,Per-species colour variants,Unknown session,Implemented; unverified in client.
 Analysis,A01,"Pack audit, phase 1: optimization plans",Claude Fable 5,Planned; no game code changed.
-Analysis,A02,"Pack audit, phase 2: bugs and bad design",Claude Fable 5,Planned; no game code changed.
+Analysis,A02,"Pack audit, phase 2: bugs and bad design",Claude Fable 5,"Implemented; 24 of 25 plans done on branch claude/audit-bugs, build and GameTests pass, nothing seen in client."
 Analysis,A03,"Pack audit, phase 3: recipes and gameplay for two players",Claude Fable 5,Planned; no game code changed.
 </script>
 <script>
