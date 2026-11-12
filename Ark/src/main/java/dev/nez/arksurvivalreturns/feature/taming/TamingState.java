@@ -131,10 +131,9 @@ public final class TamingState implements ValueIOSerializable {
         return hunger;
     }
 
+    /** Hunger is the server's: the taming screen reads it through its menu, so a change alone is not synced (BUG-19). */
     public void setHunger(double value) {
-        double clamped = Math.clamp(value, 0.0, 100.0);
-        dirty |= clamped != hunger;
-        hunger = clamped;
+        hunger = Math.clamp(value, 0.0, 100.0);
     }
 
     public boolean hungryEnough() {

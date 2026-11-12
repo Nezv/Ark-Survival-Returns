@@ -147,9 +147,10 @@ final class LevelGameTests {
             TechService.notify(player, TechEvent.obtain(player, new ItemStack(PrimitiveContent.ROCK.get())));
             h.assertTrue(total(player) == before, "Already completed tech node awarded XP again");
 
-            var boss = ModContent.GUARDIAN_GIGANOTOSAURUS.get().create(world, EntitySpawnReason.COMMAND);
+            var boss = ModContent.GUARDIAN_DRAGON.get().create(world, EntitySpawnReason.COMMAND);
             boss.setNoAi(true);
-            boss.initializeGuardian("level_test", h.absolutePos(new BlockPos(8, 2, 8)), 100, 1, 0);
+            boss.snapTo(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(8, 20, 8))));
+            boss.anchorAt(h.absolutePos(new BlockPos(8, 20, 8)));
             world.addFreshEntity(boss);
             boss.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
             h.assertTrue(total(player) - before == Config.PLAYER_XP_BOSS.get(), "Boss XP was absent or also counted as a creature kill");

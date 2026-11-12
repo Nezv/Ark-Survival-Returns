@@ -71,7 +71,8 @@ public final class CompanionWhistle {
     }
 
     private static void handle(CompanionCommandPayload packet, IPayloadContext context) {
-        if (!(context.player() instanceof ServerPlayer player) || !player.isAlive() || player.isSpectator()) return;
+        if (!(context.player() instanceof ServerPlayer player) || !player.isAlive() || player.isSpectator()
+                || dev.nez.arksurvivalreturns.feature.recovery.DownedHandler.incapacitated(player)) return;
         int now = player.level().getServer().getTickCount();
         Integer last = LAST_REQUEST.get(player.getUUID());
         if (last != null && now - last < COOLDOWN_TICKS) return;
@@ -124,9 +125,11 @@ public final class CompanionWhistle {
         if (command == CompanionCommand.PET) return;
         whistle(player, command);
         double range = range();
-        var tames = new ArrayList<>(player.level().getEntitiesOfClass(CreatureEntity.class, player.getBoundingBox().inflate(range),
+        // The search box reaches the centre of the widest body whose flank is in range.
+        var tames = new ArrayList<>(player.level().getEntitiesOfClass(CreatureEntity.class, player.getBoundingBox().inflate(range + 16),
                 creature -> creature.isAlive() && creature.isTamed() && creature.isOwnedBy(player)
-                        && !TorporService.restricted(creature) && creature.distanceTo(player) <= range));
+                        && !TorporService.restricted(creature)
+                        && dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses.bodyDistance(creature, player) <= range));
         if (tames.isEmpty()) {
             tell(player, "command.none", (int) range);
             return;

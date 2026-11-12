@@ -56,7 +56,6 @@ final class CollectionGameTests {
                 case AIR -> {
                     h.assertTrue(species.flyer() && species.flyerProfile() != null, "AIR species needs a flight policy: " + species);
                     h.assertTrue(ModContent.NESTS.get(species).get() != null, "Missing nest block: " + species);
-                    h.assertTrue(ModContent.NEST_EGGS.get(species).get() != null, "Missing nest egg: " + species);
                     h.assertFalse(species.sleeps(), "AIR species perches instead of sleeping: " + species);
                 }
                 case WATER -> {

@@ -1,6 +1,6 @@
 # Movement tuning
 
-The development server config is `run/config/arksurvivalreturns-server.toml`; the committed example is `config/arksurvivalreturns-server.toml`. Restart after editing. Damage and HP formulas are unchanged.
+The development server config is `run/config/arksurvivalreturns-server.toml`; the game writes it with every default and comment on first start. Restart after editing. Damage and HP formulas are unchanged.
 
 `movement.playerSprintBlocksPerSecond = 5.612` is the normal unbuffed player sprint benchmark. Each `[movement.<species>]` section exposes `sprintRatio`, `waterRetention` and `strideScale`. The ratio describes full pursuit/flee speed on unobstructed ordinary ground, not wandering speed or a guarantee through obstacles. Player potion buffs do not change the benchmark.
 

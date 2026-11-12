@@ -17,16 +17,7 @@
           "type": "checkmark"
         }
       ],
-      "rewards": [
-        {
-          "id": "00000000000005B1",
-          "type": "item",
-          "item": {
-            "id": "minecraft:cooked_beef",
-            "count": 4
-          }
-        }
-      ]
+      "rewards": []
     },
     {
       "id": "0000000000000502",
@@ -71,8 +62,8 @@
           "id": "00000000000005B3",
           "type": "item",
           "item": {
-            "id": "minecraft:golden_apple",
-            "count": 2
+            "id": "arksurvivalreturns:herbal_bandage",
+            "count": 4
           }
         }
       ]

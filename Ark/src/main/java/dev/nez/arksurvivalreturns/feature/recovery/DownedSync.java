@@ -10,8 +10,19 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 /** Server-to-client downed HUD sync. */
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID)
 public final class DownedSync {
+    /** The downed player gives up (held Sneak for three seconds); the server checks they are downed. */
+    public record GiveUp() implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+        public static final Type<GiveUp> TYPE = new Type<>(ArkSurvivalReturns.id("downed_give_up"));
+        public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, GiveUp> STREAM_CODEC =
+                net.minecraft.network.codec.StreamCodec.unit(new GiveUp());
+        @Override public Type<GiveUp> type() { return TYPE; }
+    }
+
     @SubscribeEvent public static void register(RegisterPayloadHandlersEvent event) {
         event.registrar("1").playToClient(DownedPayload.TYPE, DownedPayload.STREAM_CODEC);
+        event.registrar("1").playToServer(GiveUp.TYPE, GiveUp.STREAM_CODEC, (packet, context) -> {
+            if (context.player() instanceof ServerPlayer player) DownedHandler.giveUp(player);
+        });
     }
 
     public static void send(ServerPlayer player, DownedState state) {

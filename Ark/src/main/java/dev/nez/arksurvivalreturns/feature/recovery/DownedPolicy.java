@@ -13,5 +13,11 @@ public final class DownedPolicy {
         return Math.max(0, ticksLeft - (int) Math.ceil(damage * Math.max(0.0, factor)));
     }
 
+    /** Remaining rescue ticks after a hit that costs at least a share of the whole window (BUG-08). */
+    public static int bleedOut(int ticksLeft, int totalTicks, float damage, double factor, double perHit) {
+        int cost = Math.max((int) Math.ceil(damage * Math.max(0.0, factor)), (int) Math.ceil(totalTicks * Math.clamp(perHit, 0.0, 1.0)));
+        return Math.max(0, ticksLeft - cost);
+    }
+
     private DownedPolicy() {}
 }

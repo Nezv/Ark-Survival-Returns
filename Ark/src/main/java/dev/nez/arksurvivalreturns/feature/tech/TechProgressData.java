@@ -49,6 +49,18 @@ public final class TechProgressData extends SavedData {
         setDirty();
     }
 
+    /**
+     * A player's progress follows them into the party they join (BUG-14): their previous tribe's marks, counters and
+     * completions are added to the new one. The previous entry stays, so leaving again loses nothing.
+     */
+    public boolean merge(UUID from, UUID into) {
+        if (from.equals(into) || !tribes.containsKey(from)) return false;
+        TechTribeProgress target = progress(into);
+        boolean changed = target.absorb(tribes.get(from));
+        if (changed) store(into, target);
+        return changed;
+    }
+
     /** Operator reset: forget one tribe's technology state. */
     public boolean reset(UUID tribe) {
         if (tribes.remove(tribe) != null) {

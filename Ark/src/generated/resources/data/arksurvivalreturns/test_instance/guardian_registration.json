@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "arksurvivalreturns:guardian",
-  "function": "arksurvivalreturns:guardian_registration",
-  "max_ticks": 300,
-  "sky_access": true,
-  "structure": "arksurvivalreturns:test_population"
-}

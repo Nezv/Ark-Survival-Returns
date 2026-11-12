@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:game_rules",
-  "rules": {
-    "minecraft:spawn_mobs": true
-  }
-}

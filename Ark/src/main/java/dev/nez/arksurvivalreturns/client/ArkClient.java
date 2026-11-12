@@ -31,8 +31,6 @@ public final class ArkClient {
                 new CreatureRenderer(context, species)));
         event.registerEntityRenderer(ModContent.GUARDIAN_DRAGON.get(), context ->
                 new CreatureRenderer(context, dev.nez.arksurvivalreturns.feature.creature.Species.DRAGON));
-        event.registerEntityRenderer(ModContent.GUARDIAN_GIGANOTOSAURUS.get(), context ->
-                new CreatureRenderer(context, dev.nez.arksurvivalreturns.feature.creature.Species.GIGANOTOSAURUS));
     }
 
     /** Menu creatures (the title scene) reach the screen as pictures-in-picture. */

@@ -51,7 +51,12 @@ public final class TamingService {
         state.advanceTicks();
         long clock = state.ticks();
         if (!state.initialized()) state.initialize(wildHunger(entity), clock);
-        if (clock % 20 == 0) state.addHunger(Config.HUNGER_INCREASE_PER_SECOND.get());
+        // A tame grows hungry slowly and the trough feeds it; fed, it heals, starving it does not (BUG-23).
+        boolean tame = state.tamed();
+        if (clock % 20 == 0) state.addHunger(Config.HUNGER_INCREASE_PER_SECOND.get() * (tame ? Config.TAME_HUNGER_FACTOR.get() : 1.0));
+        if (tame && clock % 100 == 0 && entity.isAlive() && entity.getHealth() < entity.getMaxHealth()
+                && state.hunger() < STARVING && !TorporService.restricted(entity))
+            entity.heal((float) (entity.getMaxHealth() * Config.TAME_REGEN_PER_MINUTE.get() / 12.0));
         if (entity instanceof CreatureEntity creature && !state.tamed()) {
             var profile = creature.profile();
             if (profile.method() == TamingMethod.KNOCKOUT) {
@@ -67,6 +72,33 @@ public final class TamingService {
             tamed.applyTameState();
         }
         sync(entity, state);
+    }
+
+    /** Hunger at which a tame counts as starving and stops healing. */
+    public static final double STARVING = 90.0;
+
+    /**
+     * A meal given by hand to a sleeping knock-out animal (BUG-23): the same rules as one eaten from its taming
+     * inventory (accepted food, hungry, interval, the attempt's holder), worth {@code handMealMultiplier} more.
+     */
+    public static TamingFeedback.Result feedSleeping(CreatureEntity creature, Player player, InteractionHand hand) {
+        if (!ArkSurvivalReturns.tamingEnabled() || creature.level().isClientSide()) return TamingFeedback.Result.EXCLUDED;
+        var profile = creature.profile();
+        var state = of(creature);
+        long clock = state.ticks();
+        if (state.tamed()) return TamingFeedback.Result.ALREADY_TAMED;
+        if (profile.method() != TamingMethod.KNOCKOUT || !TorporService.feedable(creature)) return TamingFeedback.Result.WRONG_STATE;
+        var claim = claimCheck(creature, state, player);
+        if (claim != null) return claim;
+        ItemStack held = player.getItemInHand(hand);
+        if (!profile.accepts(held) || held.getCount() < Config.FOOD_UNITS_PER_MEAL.get()) return reject(creature, TamingFeedback.Result.WRONG_FOOD);
+        if (!state.hungryEnough()) return reject(creature, TamingFeedback.Result.NOT_HUNGRY);
+        if (!cooldownElapsed(state, clock)) return reject(creature, TamingFeedback.Result.COOLDOWN);
+        boolean favourite = profile.preferred(held);
+        held.consume(Config.FOOD_UNITS_PER_MEAL.get(), player);
+        if (claimantMissing(state) || state.claimExpired()) state.claim(player.getUUID(), clock);
+        advance(creature, state, profile, clock, favourite, player, Config.HAND_MEAL_MULTIPLIER.get());
+        return TamingFeedback.Result.ACCEPTED;
     }
 
     /** Rejections are logged once each with their reason, never per tick. */
@@ -114,8 +146,7 @@ public final class TamingService {
         // An expired lease is transferred to the player who resumes the attempt, so the tame is never
         // awarded to somebody who walked away two minutes ago.
         if (claimantMissing(state) || state.claimExpired()) state.claim(player.getUUID(), clock);
-        advance(creature, state, profile, clock, favourite, player);
-        consumeEffects(creature, player, profile, favourite);
+        advance(creature, state, profile, clock, favourite, player, 1.0);
         return TamingFeedback.Result.ACCEPTED;
     }
 
@@ -137,8 +168,7 @@ public final class TamingService {
             boolean favourite = profile.preferred(stack);
             stack.shrink(Config.FOOD_UNITS_PER_MEAL.get());
             inventory.setChanged();
-            advance(creature, state, profile, clock, favourite, null);
-            consumeEffects(creature, null, profile, favourite);
+            advance(creature, state, profile, clock, favourite, null, 1.0);
             return;
         }
     }
@@ -187,8 +217,8 @@ public final class TamingService {
     }
 
     private static void advance(CreatureEntity creature, TamingState state, CreatureTamingProfile profile,
-            long clock, boolean favourite, @Nullable Player feeder) {
-        double gain = profile.progressPerMeal() * (favourite ? Config.PREFERRED_FOOD_MULTIPLIER.get() : 1.0);
+            long clock, boolean favourite, @Nullable Player feeder, double multiplier) {
+        double gain = profile.progressPerMeal() * (favourite ? Config.PREFERRED_FOOD_MULTIPLIER.get() : 1.0) * multiplier;
         state.recordMeal(clock);
         state.addProgress(gain);
         state.touchProgress(clock);
@@ -212,13 +242,6 @@ public final class TamingService {
     /** True when a fresh wild creature has its attempt clock primed; used by the access rules. */
     public static long clock(LivingEntity entity) {
         return of(entity).ticks();
-    }
-    /** Aerial feeding grants a feeder-specific truce and clears that feeder's aggro. */
-    private static void consumeEffects(CreatureEntity creature, @Nullable Player feeder,
-            CreatureTamingProfile profile, boolean favourite) {
-        if (profile.method() != TamingMethod.AERIAL || feeder == null) return;
-        creature.grantFeedingTruce(feeder);
-        TamingFeedback.truce(feeder, creature);
     }
 
     private static void complete(CreatureEntity creature, TamingState state, @Nullable Player feeder) {
@@ -248,23 +271,13 @@ public final class TamingService {
         return creature.originDanger() >= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES;
     }
 
-    /**
-     * Completion side effects that do not depend on who fed the final meal: the origin-band map
-     * entitlement and the per-player discovery records.
-     */
+    /** Completion side effects that do not depend on who fed the final meal: the per-player discovery records. */
     public static void applyTameEffects(CreatureEntity creature, UUID owner) {
-        if (topZone(creature) && creature.level() instanceof ServerLevel level) {
-            // The entitlement follows the region the creature came from, not its individual level.
-            dev.nez.arksurvivalreturns.feature.map.MapUnlockData.get(level).setUnlocked(owner, true);
-        }
         if (creature.level() instanceof ServerLevel level && level.getEntity(owner) instanceof Player player) {
             TamingFeedback.completed(player, creature);
             if (player instanceof net.minecraft.server.level.ServerPlayer server) {
                 discovery(server, "journal/first_tame");
-                if (topZone(creature)) {
-                    discovery(server, "journal/top_zone_tame");
-                    dev.nez.arksurvivalreturns.feature.map.DangerMapSync.send(server);
-                }
+                if (topZone(creature)) discovery(server, "journal/top_zone_tame");
             }
         }
     }

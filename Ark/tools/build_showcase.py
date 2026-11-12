@@ -581,7 +581,7 @@ ITEM_GROUPS = [
                     'bronze_boots', 'sulphur', 'explosive_arrow']),
     ('Taming and tribe', ['tranquilizer_arrow', 'improved_tranquilizer_arrow',
                           'pack_harness', 'reinforced_harness']),
-    ('Guardian', ['allosaur_heart', 'workshop_schematic', 'guardian_trophy']),
+    ('Guardian', ['workshop_schematic', 'guardian_trophy']),
 ]
 
 

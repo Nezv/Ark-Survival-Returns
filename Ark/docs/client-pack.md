@@ -63,26 +63,13 @@ This backs up replaced files under `Ark/run/shader-backups/<timestamp>/` and pre
 
 Validation checks every configured Bliss option and its allowed values against the pinned ZIP, plus checksums and client/server dependency separation. It does not compile shaders on the GPU. Check dawn, noon, rain, a moonlit night and a cave with a torch; inspect dinosaur shadows, water edges and the DH transition. If GPU performance is insufficient, first lower `CLOUDS_QUALITY` to `0.25`, then `shadowMapResolution` to `1536` in Shader Pack Settings. No FPS target has been measured. The existing 24-chunk render / 12-chunk simulation distances remain unchanged.
 
-## Difficulty map and unlock
+## Difficulty map
 
-The **whole Xaero fullscreen map is open while `progression.mapRequiresUnlock` is `false`** (the development default). Set it to `true` and restart/rejoin to restore the progression gate; the following unlock rules apply only when that gate is enabled. Pressing its map key (normally **M**) displays the unlock condition. The milestone is **taming a creature that originated in a difficulty-5 region**, recorded when the creature first spawned — not a creature whose individual level happens to be 5.
+The Xaero fullscreen map is open to every player (the top-zone unlock was removed, A02 BUG-16).
 
-Completing the first tame whose saved origin zone is 3 grants the entitlement automatically, and the same completion awards the hidden `journal/top_zone_tame` discovery advancement. A zone-1 creature never grants the map, however it is transported later. Operators can still grant or revoke access for testing:
-
-```text
-/arkmap unlock
-/arkmap status
-/arkmap lock
-/arkmap unlock PlayerName
-```
-
-All three commands also accept a player argument; commands require vanilla gamemaster permissions. The entitlement is stored per player UUID in world SavedData and survives death, relogging and dimension changes. With the gate enabled, a new world begins locked. Revoking access closes an already-open map. A server-to-client packet synchronizes the permission and the saved difficulty origin/width; locked players receive zeroed profile fields. Client state clears on disconnect. There is no client-to-server unlock message.
-
-When map access is available, the **Difficulty: off/on** button at the top left toggles a translucent filter; it starts off each client session. Colors cover only explored terrain from Xaero's active dimension/cave-layer cache. Unknown territory stays untouched. The legend and cursor difficulty appear only while enabled, and the cursor requires explored terrain. Panning and zooming use the same server difficulty formula.
+The **Difficulty: off/on** button at the top left toggles a translucent filter; it starts off each client session. Colors cover only explored terrain from Xaero's active dimension/cave-layer cache. Unknown territory stays untouched. The legend and cursor difficulty appear only while enabled, and the cursor requires explored terrain. Panning and zooming use the same server difficulty formula.
 
 A bounded raster reads cached exploration heights without loading chunks or generating terrain. Separate GUI strata put the filter above the terrain image. The exploration mask refreshes at most every 250 ms; coarse pixels spanning unknown chunks are omitted, conservatively hiding the filter at extreme zoom. Blocking the map screen does not disable Xaero's background terrain recording.
-
-The entitlement is granted by the taming completion path through `DangerMapSync.setUnlocked`. Each creature saves the danger band of the position where it first appeared, so relocating an animal never changes its provenance, and operators can always fall back to `/arkmap`.
 
 ## Verification and playtest
 

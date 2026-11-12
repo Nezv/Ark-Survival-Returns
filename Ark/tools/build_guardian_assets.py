@@ -1,25 +1,10 @@
-"""Author the First Guardian item sprites: heart, workshop schematic and trophy."""
+"""Author the First Guardian item sprites: workshop schematic and trophy."""
 from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'src/main/resources/assets/arksurvivalreturns/textures/item'
 OUT.mkdir(parents=True, exist_ok=True)
-
-
-def heart():
-    im = Image.new('RGBA', (32, 32))
-    d = ImageDraw.Draw(im)
-    d.polygon([(16, 29), (3, 16), (3, 10), (8, 4), (13, 4), (16, 8), (19, 4), (24, 4), (29, 10), (29, 16)],
-              fill='#5b1420')
-    d.polygon([(16, 26), (5, 16), (5, 11), (9, 6), (13, 6), (16, 10), (19, 6), (23, 6), (27, 11), (27, 16)],
-              fill='#b3283a')
-    d.polygon([(16, 23), (7, 16), (7, 12), (10, 8), (13, 8), (16, 11), (19, 8), (22, 8), (25, 12), (25, 16)],
-              fill='#d84552')
-    d.ellipse((9, 8, 13, 12), fill='#ff8f9a')
-    d.point((11, 10), fill='#ffd2d7')
-    d.line([(16, 27), (16, 28)], fill='#7c1c2a')
-    im.save(OUT / 'allosaur_heart.png')
 
 
 def schematic():
@@ -54,7 +39,6 @@ def trophy():
 
 
 def main():
-    heart()
     schematic()
     trophy()
     print('Built 3 First Guardian item sprites.')

@@ -16,7 +16,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.*;
 
-/** Inert, non-ticking nest. The block state is the authoritative egg inventory. */
+/**
+ * Inert, non-ticking nest. The egg is part of the nest's look and has no item (BUG-16): breaking a nest that holds
+ * one angers the bird that owns it.
+ */
 public final class NestBlock extends Block {
     public static final MapCodec<NestBlock> CODEC = simpleCodec(NestBlock::new);
     public static final BooleanProperty EGG = BooleanProperty.create("egg");
@@ -33,26 +36,9 @@ public final class NestBlock extends Block {
             Direction direction, BlockPos neighbor, BlockState neighborState, RandomSource random) {
         return direction == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;
     }
-    @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level instanceof ServerLevel world) takeEgg(world, pos, player);
-        return InteractionResult.SUCCESS;
-    }
-    @Override protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return useWithoutItem(state, level, pos, player, hit);
-    }
-    /** Pick-block gives this species' egg: the nest has no item form. */
+    /** The nest has no item form. */
     @Override protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
-        return new ItemStack(ModContent.NEST_EGGS.get(species()).get());
-    }
-    public static boolean takeEgg(ServerLevel world, BlockPos pos, Player player) {
-        var state = world.getBlockState(pos);
-        if (!(state.getBlock() instanceof NestBlock nest) || !state.getValue(EGG) || player.isSpectator()) return false;
-        if (!world.setBlock(pos, state.setValue(EGG, false), Block.UPDATE_ALL)) return false;
-        disturb(world, pos, player);
-        var egg = new ItemStack(ModContent.NEST_EGGS.get(nest.species()).get());
-        if (!player.getInventory().add(egg)) player.drop(egg, false);
-        world.playSound(null, pos, net.minecraft.sounds.SoundEvents.TURTLE_EGG_CRACK, net.minecraft.sounds.SoundSource.BLOCKS, 0.7f, 1);
-        return true;
+        return ItemStack.EMPTY;
     }
     public static void disturb(ServerLevel world, BlockPos pos, Player thief) {
         for (var bird : world.getEntitiesOfClass(FlyingCreatureEntity.class, new AABB(pos).inflate(48),

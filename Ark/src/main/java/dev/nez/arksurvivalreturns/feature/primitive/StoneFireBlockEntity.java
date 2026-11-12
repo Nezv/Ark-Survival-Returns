@@ -117,7 +117,8 @@ public final class StoneFireBlockEntity extends BlockEntity {
     public boolean addFuel(ItemStack stack) {
         if (!isFuel(stack)) return false;
         int burn = (int) Math.round(stack.getBurnTime(RecipeType.SMELTING, level.fuelValues()) * Config.PRIMITIVE_FIRE_FUEL_FACTOR.get());
-        if (burnTicks > 0 && burnTicks + burn > Config.PRIMITIVE_FIRE_MAX_FUEL.get()) return false;
+        // Fuel that does not fit is refused, never half-burned: a coal block is no fuel for a stone fire (BUG-19).
+        if (burnTicks + burn > Config.PRIMITIVE_FIRE_MAX_FUEL.get()) return false;
         burnTicks = Math.min(Config.PRIMITIVE_FIRE_MAX_FUEL.get(), burnTicks + Math.max(1, burn));
         stack.shrink(1);
         setChanged();

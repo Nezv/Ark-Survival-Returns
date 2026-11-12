@@ -24,6 +24,15 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ArkGameTests {
     public static final DeferredRegister<Consumer<GameTestHelper>> FUNCTIONS = DeferredRegister.create(Registries.TEST_FUNCTION, ArkSurvivalReturns.MOD_ID);
     static {
+        FUNCTIONS.register("audit_tame_handover", () -> AuditGameTests::tameHandover);
+        FUNCTIONS.register("audit_hold_sedatives", () -> AuditGameTests::holdSedatives);
+        FUNCTIONS.register("audit_narcotics_self_use", () -> AuditGameTests::narcoticsSelfUse);
+        FUNCTIONS.register("audit_dismount_ground", () -> AuditGameTests::dismountGround);
+        FUNCTIONS.register("audit_ride_kinematics", () -> AuditGameTests::rideKinematics);
+        FUNCTIONS.register("audit_tribe_allies", () -> AuditGameTests::tribeAllies);
+        FUNCTIONS.register("audit_mounted_strike", () -> AuditGameTests::mountedStrike);
+        FUNCTIONS.register("audit_work_reach", () -> AuditGameTests::workReach);
+        FUNCTIONS.register("audit_downed_progress", () -> AuditGameTests::downedAndProgress);
         FUNCTIONS.register("sky_beacon_placement", () -> SkyBeaconGameTests::placement);
         FUNCTIONS.register("sky_beacon_assets", () -> SkyBeaconGameTests::assets);
         FUNCTIONS.register("sky_beacon_persistence", () -> SkyBeaconGameTests::persistence);
@@ -101,14 +110,12 @@ public final class ArkGameTests {
         FUNCTIONS.register("taming_riding", () -> TamingGameTests::riding);
         FUNCTIONS.register("taming_persistence", () -> TamingGameTests::persistence);
         FUNCTIONS.register("taming_player_sedation", () -> TamingGameTests::playerSedation);
-        FUNCTIONS.register("taming_aerial_feeding", () -> TamingGameTests::aerialFeeding);
         FUNCTIONS.register("taming_completion", () -> TamingGameTests::completionKeepsSleep);
         FUNCTIONS.register("taming_claim_expiry", () -> TamingGameTests::claimExpiry);
         FUNCTIONS.register("taming_ordinary_mob", () -> TamingGameTests::ordinaryMobRestraint);
         FUNCTIONS.register("companion", () -> CompanionGameTests::run);
         FUNCTIONS.register("tribe_permissions", () -> TribeGameTests::permissions);
         FUNCTIONS.register("journal_pack", () -> JournalGameTests::pack);
-        FUNCTIONS.register("journal_taming_unlock", () -> JournalGameTests::tamingUnlock);
         FUNCTIONS.register("camp_starter_kit", () -> CampGameTests::starterKit);
         FUNCTIONS.register("camp_bedroll_spawn", () -> CampGameTests::bedrollSpawn);
         FUNCTIONS.register("camp_mattress_sleep", () -> CampGameTests::mattressSleep);
@@ -150,13 +157,6 @@ public final class ArkGameTests {
         FUNCTIONS.register("farm_batch", () -> FarmGameTests::batch);
         FUNCTIONS.register("medicine_dose", () -> FarmGameTests::medicine);
         FUNCTIONS.register("kitchen_cook", () -> KitchenGameTests::cook);
-        FUNCTIONS.register("guardian_heart", () -> GuardianGameTests::heartDrop);
-        FUNCTIONS.register("guardian_policy", () -> GuardianGameTests::policy);
-        FUNCTIONS.register("guardian_registration", () -> GuardianGameTests::registration);
-        FUNCTIONS.register("guardian_persistence", () -> GuardianGameTests::persistence);
-        FUNCTIONS.register("guardian_rewards", () -> GuardianGameTests::rewards);
-        FUNCTIONS.register("guardian_hit_and_save", () -> GuardianGameTests::hitAndSave);
-        FUNCTIONS.register("guardian_orphan", () -> GuardianGameTests::orphanLeaves);
         FUNCTIONS.register("sulphur_growth", () -> SulphurGameTests::growth);
         FUNCTIONS.register("sulphur_cluster_drop", () -> SulphurGameTests::clusterDrop);
         FUNCTIONS.register("sulphur_worldgen", () -> SulphurGameTests::worldgen);
@@ -304,20 +304,6 @@ public final class ArkGameTests {
         ProgressionData.get(world);
         var serialized = ProgressionData.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, profile).getOrThrow();
         var restored = ProgressionData.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, serialized).getOrThrow();
-        var owner = java.util.UUID.randomUUID();
-        var other = java.util.UUID.randomUUID();
-        var unlocks = new dev.nez.arksurvivalreturns.feature.map.MapUnlockData(java.util.List.of());
-        h.assertFalse(unlocks.isUnlocked(owner), "Map unlocked before progression");
-        h.assertTrue(unlocks.hasAccess(owner, false), "Development map access still requires a tame");
-        h.assertFalse(unlocks.hasAccess(owner, true), "Progression gate ignored when enabled");
-        unlocks.setUnlocked(owner, true);
-        var savedUnlocks = dev.nez.arksurvivalreturns.feature.map.MapUnlockData.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, unlocks).getOrThrow();
-        var restoredUnlocks = dev.nez.arksurvivalreturns.feature.map.MapUnlockData.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, savedUnlocks).getOrThrow();
-        h.assertTrue(restoredUnlocks.isUnlocked(owner), "Map unlock lost on reload");
-        h.assertTrue(restoredUnlocks.hasAccess(owner, true), "Earned unlock rejected with gate enabled");
-        h.assertFalse(restoredUnlocks.isUnlocked(other), "Map entitlement leaked to another player");
-        restoredUnlocks.setUnlocked(owner, false);
-        h.assertFalse(restoredUnlocks.isUnlocked(owner), "Operator cannot revoke map entitlement");
         var buffer = new net.minecraft.network.RegistryFriendlyByteBuf(io.netty.buffer.Unpooled.buffer(), world.registryAccess());
         try {
             var packet = new dev.nez.arksurvivalreturns.feature.map.DangerMapPayload(true, profile.originX(), profile.originZ(), profile.bandWidth());

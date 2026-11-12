@@ -116,7 +116,7 @@ public final class SkyBeaconStructure extends Structure {
         Vec3 at = dragon.patrol();
         dragon.snapTo(at.x, at.y, at.z, (float)(Math.atan2(nest.getZ() + .5 - at.z, nest.getX() + .5 - at.x) * 180 / Math.PI - 90), 0);
         for (int lift = 0; lift < 16 && !level.noCollision(dragon); lift++) dragon.setPos(dragon.position().add(0, 2, 0));
-        if (!GuardianStructure.arenaLoaded(level, dragon.blockPosition(), 4) || !level.noCollision(dragon)) return Optional.empty();
+        if (!arenaLoaded(level, dragon.blockPosition(), 4) || !level.noCollision(dragon)) return Optional.empty();
         level.addFreshEntity(dragon);
         dragon.playCreatureSound(CreatureSounds.Role.WARN, 6f);
         return Optional.of(dragon);
@@ -141,5 +141,12 @@ public final class SkyBeaconStructure extends Structure {
         }
         @Override protected void handleDataMarker(String marker, BlockPos pos, ServerLevelAccessor level,
                 RandomSource random, BoundingBox box) {}
+    }
+    /** Every chunk the circle touches must already be loaded; nothing is force-loaded. */
+    public static boolean arenaLoaded(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos center, int radius) {
+        for (int chunkX = (center.getX() - radius) >> 4; chunkX <= (center.getX() + radius) >> 4; chunkX++)
+            for (int chunkZ = (center.getZ() - radius) >> 4; chunkZ <= (center.getZ() + radius) >> 4; chunkZ++)
+                if (!level.hasChunkAt(new net.minecraft.core.BlockPos(chunkX << 4, center.getY(), chunkZ << 4))) return false;
+        return true;
     }
 }

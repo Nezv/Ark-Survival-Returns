@@ -120,12 +120,9 @@ final class TamingGameTests {
                     "Ground dismount lands inside the hitbox: " + species.id);
             h.assertTrue(Math.abs(ride.altDismountX()) > species.width / 2,
                     "Side dismount lands inside the hitbox: " + species.id);
-            if (species.realm() == Species.Realm.AIR)
-                h.assertTrue(profile.method() == dev.nez.arksurvivalreturns.feature.taming.TamingMethod.AERIAL,
-                        "Flying creature must use aerial feeding: " + species.id);
-            else
-                h.assertTrue(profile.method() != dev.nez.arksurvivalreturns.feature.taming.TamingMethod.AERIAL,
-                        "Aerial feeding outside the flying realm: " + species.id);
+            if (species.realm() == Species.Realm.AIR || species.realm() == Species.Realm.WATER)
+                h.assertTrue(profile.method() == dev.nez.arksurvivalreturns.feature.taming.TamingMethod.KNOCKOUT,
+                        "Flyers and sea animals are knock-out tames: " + species.id);
         }
         tranquilizerRecipe(h);
         manifestMatchesTheTables(h);
@@ -504,85 +501,6 @@ final class TamingGameTests {
         h.assertTrue(!TorporService.restricted(player), "Player stayed unconscious after a clear");
         h.assertTrue(!TorporService.eligible(new net.minecraft.world.entity.decoration.ArmorStand(
                 net.minecraft.world.entity.EntityType.ARMOR_STAND, h.getLevel())), "Armor stands must be excluded");
-        h.succeed();
-    }
-
-    /**
-     * Aerial feeding: a hungry, aggressive flyer accepts fish on hunger rather than chance, and the truce it
-     * grants protects only the feeder, ends when that feeder attacks and never survives a reload.
-     */
-    static void aerialFeeding(GameTestHelper h) {
-        var creature = create(h, Species.DRAGON);
-        h.assertTrue(creature instanceof FlyingCreatureEntity, "The aerial test needs a flying creature");
-        var flyer = (FlyingCreatureEntity) creature;
-        var profile = CreatureProfileRegistry.of(creature.species());
-        var taming = TamingService.of(creature);
-        Player feeder = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-        Player rival = h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-        // The theft check also asks whether the player is inside the creature's habitat leash, and mock
-        // players spawn at the world origin. Put both of them on the bird, or the truce assertions below
-        // would pass for the wrong reason.
-        feeder.setPos(creature.position());
-        rival.setPos(creature.position());
-        var fish = profile.preferred().getFirst().get();
-
-        h.assertTrue(creature.species().predator, "The aerial rule needs an aggressive flyer");
-        h.assertTrue(profile.method() == TamingMethod.AERIAL, "A flyer must use aerial feeding");
-
-        // Hunger, not random chance, decides acceptance: the same sated flyer refuses the same fish.
-        taming.setHunger(0);
-        feeder.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(fish, 6));
-        h.assertTrue(TamingService.feedByHand(creature, feeder, InteractionHand.MAIN_HAND)
-                == TamingFeedback.Result.NOT_HUNGRY, "A sated flyer ate");
-        h.assertTrue(feeder.getItemInHand(InteractionHand.MAIN_HAND).getCount() == 6,
-                "A refused meal still consumed food");
-
-        // Control: while no truce is held, both players standing on the bird are valid thieves, so the
-        // assertions after the meal really do measure the truce rather than the leash check.
-        h.assertTrue(flyer.validThief(feeder), "Control: the feeder was never a valid thief");
-        h.assertTrue(flyer.validThief(rival), "Control: the rival was never a valid thief");
-
-        taming.setHunger(100);
-        h.assertTrue(TamingService.feedByHand(creature, feeder, InteractionHand.MAIN_HAND)
-                == TamingFeedback.Result.ACCEPTED, "A hungry aggressive flyer refused fish");
-        h.assertTrue(feeder.getItemInHand(InteractionHand.MAIN_HAND).getCount() == 5,
-                "One fish per meal was not honoured");
-        h.assertTrue(taming.progress() > 0, "The fish gave no progress");
-        h.assertTrue(taming.claimedBy(feeder.getUUID()), "The feeder is not the claimant");
-
-        // The truce protects the feeder only: the rival is still a valid target, so the creature's defensive
-        // behaviour is not globally disabled.
-        h.assertTrue(creature.feedingTruce(feeder), "No feeding truce was granted");
-        h.assertTrue(!creature.feedingTruce(rival), "The truce leaked to a second player");
-        h.assertTrue(feeder.getUUID().equals(taming.truceFeeder()), "Wrong truce holder");
-        h.assertTrue(!flyer.validThief(feeder), "The truce did not suppress the theft check");
-        h.assertTrue(flyer.validThief(rival), "The truce disabled the creature's defence against others");
-
-        // A truce is deliberately transient: it is not part of the saved attachment.
-        var output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, h.getLevel().registryAccess());
-        TamingService.serialize(taming, output);
-        var restored = TamingService.deserialize(TagValueInput.create(ProblemReporter.DISCARDING,
-                h.getLevel().registryAccess(), output.buildResult()));
-        h.assertTrue(!restored.truceActive(feeder.getUUID()), "The feeding truce survived a reload");
-
-        // Attacking the creature ends the truce immediately and costs progress, which restores the threat.
-        float before = taming.progress();
-        TamingService.onDamaged(creature, feeder, false);
-        h.assertTrue(!creature.feedingTruce(feeder), "Attacking did not cancel the truce");
-        h.assertTrue(taming.progress() < before, "Attacking did not penalise progress");
-        h.assertTrue(flyer.validThief(feeder), "The cancelled truce did not restore the theft check");
-
-        // The window is bounded by the entity's own attempt clock.
-        taming.setHunger(100);
-        advance(h, creature, Config.MINIMUM_FEED_INTERVAL.get() + 1);
-        feeder.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(fish, 6));
-        h.assertTrue(TamingService.feedByHand(creature, feeder, InteractionHand.MAIN_HAND)
-                == TamingFeedback.Result.ACCEPTED, "The flyer refused a later meal");
-        h.assertTrue(creature.feedingTruce(feeder), "No second truce was granted");
-        advance(h, creature, Config.FEEDING_TRUCE_TICKS.get() + 1);
-        h.assertTrue(!creature.feedingTruce(feeder), "The truce outlived its window");
-        h.assertTrue(flyer.validThief(feeder), "The expired truce did not restore the theft check");
-        creature.discard();
         h.succeed();
     }
 

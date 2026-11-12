@@ -70,6 +70,13 @@ public final class TechTribeProgress {
         return Set.copyOf(completed);
     }
 
+    /** Adds another tribe's marks, counts and completions to this one (a player bringing solo progress into a party). */
+    public boolean absorb(TechTribeProgress other) {
+        boolean changed = marks.addAll(other.marks) | completed.addAll(other.completed);
+        for (var entry : other.counters.entrySet()) changed |= addCount(entry.getKey(), entry.getValue());
+        return changed;
+    }
+
     /** FTB's current completion set replaces this cache, including admin revocations. */
     public boolean replaceCompletions(Collection<String> values) {
         Set<String> next = new LinkedHashSet<>(values);

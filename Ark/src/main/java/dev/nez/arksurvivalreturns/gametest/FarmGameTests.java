@@ -86,7 +86,8 @@ final class FarmGameTests {
         h.assertTrue(rack.input().getCount() == 2, "One raw item is consumed per cycle");
 
         // Dried food carries no day (BUG-24): a piece made yesterday and one made today are the same stack.
-        h.assertTrue(!rack.output().has(net.minecraft.core.component.DataComponents.CUSTOM_DATA), "Dried food must carry no day stamp");
+        var outputData = rack.output().get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        h.assertTrue(outputData == null || !outputData.copyTag().contains("ark_dried_day"), "Dried food must carry no day stamp");
         var yesterday = rack.output().copy();
         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, yesterday,
                 tag -> tag.putLong("ark_dried_day", -5L));

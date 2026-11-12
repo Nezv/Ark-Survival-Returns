@@ -45,7 +45,6 @@ public final class ArkModule extends MinecraftModule {
     static {
         ModContent.CREATURES.values().forEach(type -> CREATURES.add(type.get()));
         CREATURES.add(ModContent.GUARDIAN_DRAGON.get());
-        CREATURES.add(ModContent.GUARDIAN_GIGANOTOSAURUS.get());
     }
 
     private final DebugLine zone, creatures, wildlife, nearby, threads, target, mass, level, shaders;

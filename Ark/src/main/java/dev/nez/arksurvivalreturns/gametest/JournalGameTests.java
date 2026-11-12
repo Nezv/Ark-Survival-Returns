@@ -48,36 +48,16 @@ final class JournalGameTests {
                 "Chapter " + chapterId + " changed size: " + chapter.getQuests().size());
         for (var quest : chapter.getQuests()) {
             h.assertFalse(quest.getTasks().isEmpty(), "Quest has no tasks: " + quest.getCodeString());
-            h.assertFalse(quest.getRewards().isEmpty(), "Quest has no rewards: " + quest.getCodeString());
+            // A checkmark quest is an introduction: a click pays nothing (A02 BUG-19); every other quest pays.
+            boolean checkmark = quest.getTasks().stream().allMatch(task -> task.getType().getTypeId().getPath().equals("checkmark"));
+            h.assertTrue(checkmark ? quest.getRewards().isEmpty() : !quest.getRewards().isEmpty(),
+                    (checkmark ? "A checkmark quest pays a reward: " : "Quest has no rewards: ") + quest.getCodeString());
             for (var task : quest.getTasks()) {
                 if (task instanceof ItemTask itemTask) {
                     h.assertFalse(itemTask.getItemStack().isEmpty(), "Unresolved task item: " + task.getCodeString());
                 }
             }
         }
-    }
-
-    /** A tame that came from the last danger zone grants the map entitlement; other origins do not. */
-    static void tamingUnlock(GameTestHelper h) {
-        var world = h.getLevel();
-        var owner = h.makeMockPlayer(GameType.SURVIVAL);
-        world.addFreshEntity(owner);
-        var outsider = h.makeMockPlayer(GameType.SURVIVAL);
-
-        var rare = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.COMMAND);
-        rare.recordOrigin(dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES);
-        var unlocks = dev.nez.arksurvivalreturns.feature.map.MapUnlockData.get(world);
-        h.assertFalse(unlocks.isUnlocked(owner.getUUID()), "Entitlement should start locked");
-        dev.nez.arksurvivalreturns.feature.taming.TamingService.applyTameEffects(rare, owner.getUUID());
-        h.assertTrue(unlocks.isUnlocked(owner.getUUID()), "A tame from the last zone did not unlock the map");
-        rare.discard();
-
-        var ordinary = ModContent.CREATURES.get(Species.PARASAUR).get().create(world, EntitySpawnReason.COMMAND);
-        ordinary.recordOrigin(1);
-        dev.nez.arksurvivalreturns.feature.taming.TamingService.applyTameEffects(ordinary, outsider.getUUID());
-        h.assertFalse(unlocks.isUnlocked(outsider.getUUID()), "An ordinary-origin tame unlocked the map");
-        ordinary.discard();
-        h.succeed();
     }
 
     private JournalGameTests() {}

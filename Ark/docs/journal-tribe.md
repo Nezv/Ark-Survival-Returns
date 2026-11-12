@@ -40,8 +40,7 @@ members, breeding is reserved for the husbandry work and defaults off.
 ## Discovery records
 
 Advancements are the per-player record. Taming a first creature awards the hidden
-`journal/first_tame`; a tame whose saved origin zone is 3 also awards `journal/top_zone_tame` and
-grants the map entitlement. The origin band is recorded when a creature first spawns, so
+`journal/first_tame`; a tame whose saved origin zone is 3 also awards `journal/top_zone_tame`. The origin band is recorded when a creature first spawns, so
 transporting an animal later never changes its provenance. The rescue adds `journal/first_downed` and
 `journal/first_revive`; see [Camp and rescue](recovery.md) for the system.
 

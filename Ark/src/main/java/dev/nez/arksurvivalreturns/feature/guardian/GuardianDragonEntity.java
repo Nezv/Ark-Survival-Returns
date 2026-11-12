@@ -63,6 +63,14 @@ public final class GuardianDragonEntity extends CreatureEntity {
     @Override protected void registerGoals() {}
     public int beaconVariant() { return entityData.get(VARIANT); }
     public void setBeaconVariant(int variant) { entityData.set(VARIANT, Math.floorMod(variant, 3)); }
+    /** The discovery record of the first guardian a player helped bring down. */
+    public static final String ADVANCEMENT = "journal/first_guardian";
+
+    private static boolean inTribe(UUID player, UUID tribe) {
+        if (player.equals(tribe)) return true;
+        return dev.nez.arksurvivalreturns.feature.tribe.TribeService.team(player).map(team -> team.getId().equals(tribe)).orElse(false);
+    }
+
     public BlockPos beaconHome() { return beaconHome == null ? blockPosition() : beaconHome; }
     public void anchorAt(BlockPos home) {
         beaconHome = home.immutable(); setPersistenceRequired(); setNoGravity(true);
@@ -155,7 +163,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
         if (desired.lengthSqr() > 1) desired = desired.normalize().scale(speed);
         Vec3 velocity = getDeltaMovement().scale(.85).add(desired.scale(.15));
         // Test the complete moved body and only already-loaded chunks, including diagonal edge crossings.
-        if (!GuardianStructure.arenaLoaded(world, BlockPos.containing(position().add(velocity)), 4)
+        if (!SkyBeaconStructure.arenaLoaded(world, BlockPos.containing(position().add(velocity)), 4)
                 || !world.getWorldBorder().isWithinBounds(getBoundingBox().move(velocity))) {
             setDeltaMovement(Vec3.ZERO); return;
         }
@@ -208,7 +216,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
         UUID tribe = TribeService.team(creditedPlayer).map(t -> t.getId()).orElse(creditedPlayer);
         Set<UUID> participants = new HashSet<>(); participants.add(creditedPlayer);
         for (ServerPlayer p : world.players())
-            if (GuardianService.inTribe(p.getUUID(), tribe) && p.blockPosition().distSqr(beaconHome()) <= 80 * 80)
+            if (inTribe(p.getUUID(), tribe) && p.blockPosition().distSqr(beaconHome()) <= 80 * 80)
                 participants.add(p.getUUID());
         data.put(new GuardianEncounter(key, world.dimension(), beaconHome(), SkyBeaconStructure.ID, tribe,
                 GuardianState.DEFEATED, Optional.empty(), participants, Set.of(), getMaxHealth(), true, 0, 0));
@@ -221,7 +229,7 @@ public final class GuardianDragonEntity extends CreatureEntity {
         }
         for (UUID id : participants) {
             ServerPlayer p = world.getServer().getPlayerList().getPlayer(id);
-            if (p != null) TamingService.discovery(p, GuardianService.ADVANCEMENT);
+            if (p != null) TamingService.discovery(p, ADVANCEMENT);
         }
     }
     private static void drop(ServerLevel world, Vec3 p, net.minecraft.world.item.ItemStack stack) {

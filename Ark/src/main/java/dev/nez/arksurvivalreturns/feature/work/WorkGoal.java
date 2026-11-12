@@ -44,10 +44,15 @@ import org.jspecify.annotations.Nullable;
  */
 public final class WorkGoal extends Goal {
     private static final int SCAN_INTERVAL = 20;
-    private static final double REACH_SQR = 6.25;
+    /** Blocks between the worker's body and the target's faces within which it harvests (BUG-10). */
+    public static final double REACH = 1.5;
+    /** A target not reached in this many ticks is given up, and skipped for {@link #SKIP_TICKS}. */
+    private static final int GIVE_UP_TICKS = 200, SKIP_TICKS = 1200;
 
     private final CreatureEntity mob;
     private @Nullable BlockPos target;
+    private int targetTicks;
+    private final java.util.Map<BlockPos, Integer> skipped = new java.util.HashMap<>();
     private int scanCooldown;
     private int actionCooldown;
     private boolean fullMessageSent;
@@ -92,11 +97,18 @@ public final class WorkGoal extends Goal {
         if (target == null) {
             if (--scanCooldown > 0) return;
             scanCooldown = SCAN_INTERVAL;
-            target = findTarget(mob);
+            skipped.values().removeIf(until -> until <= mob.tickCount);
+            target = findTarget(mob, skipped.keySet());
+            targetTicks = 0;
             return;
         }
         if (!isTarget(mob, level, target)) { target = null; return; }
-        if (mob.distanceToSqr(Vec3.atCenterOf(target)) > REACH_SQR) {
+        if (!inReach(mob, target)) {
+            if (++targetTicks > GIVE_UP_TICKS) {
+                skipped.put(target, mob.tickCount + SKIP_TICKS);
+                pause();
+                return;
+            }
             mob.getNavigation().moveTo(target.getX() + 0.5, target.getY(), target.getZ() + 0.5, 0.9);
             return;
         }
@@ -135,8 +147,21 @@ public final class WorkGoal extends Goal {
         return MassCalculator.cargoMass(mob.tamingInventory()) >= ceiling;
     }
 
-    /** Samples loaded targets around the work anchor; never requests a chunk. */
+    /** True when the target block's faces are within {@link #REACH} of the worker's body, whatever its size. */
+    public static boolean inReach(CreatureEntity mob, BlockPos pos) {
+        var body = mob.getBoundingBox();
+        double dx = Math.max(0, Math.max(body.minX - (pos.getX() + 1), pos.getX() - body.maxX));
+        double dy = Math.max(0, Math.max(body.minY - (pos.getY() + 1), pos.getY() - body.maxY));
+        double dz = Math.max(0, Math.max(body.minZ - (pos.getZ() + 1), pos.getZ() - body.maxZ));
+        return dx * dx + dy * dy + dz * dz <= REACH * REACH;
+    }
+
     public static @Nullable BlockPos findTarget(CreatureEntity mob) {
+        return findTarget(mob, java.util.Set.of());
+    }
+
+    /** Samples loaded targets around the work anchor; never requests a chunk. */
+    public static @Nullable BlockPos findTarget(CreatureEntity mob, java.util.Set<BlockPos> skip) {
         if (!(mob.level() instanceof ServerLevel level)) return null;
         BlockPos anchor = CompanionService.of(mob).anchor();
         if (anchor == null) anchor = mob.blockPosition();
@@ -145,9 +170,16 @@ public final class WorkGoal extends Goal {
         for (int attempt = 0; attempt < Config.WORK_SCAN_ATTEMPTS.get(); attempt++) {
             BlockPos candidate = anchor.offset(random.nextInt(radius * 2 + 1) - radius,
                     random.nextInt(5) - 2, random.nextInt(radius * 2 + 1) - radius);
-            if (isTarget(mob, level, candidate)) return candidate;
+            if (!skip.contains(candidate) && isTarget(mob, level, candidate) && exposed(level, candidate)) return candidate;
         }
         return null;
+    }
+
+    /** At least one face open to the air: a block buried in a wall cannot be reached (BUG-10). */
+    private static boolean exposed(ServerLevel level, BlockPos pos) {
+        for (var direction : net.minecraft.core.Direction.values())
+            if (!level.getBlockState(pos.relative(direction)).isSolidRender()) return true;
+        return false;
     }
 
     /** Loaded, tagged, without a block entity, and never a player-placed block. */

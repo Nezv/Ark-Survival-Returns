@@ -56,7 +56,6 @@ public final class TorporService {
     public static boolean eligible(@Nullable LivingEntity entity) {
         if (entity == null || !entity.isAlive() || entity instanceof ArmorStand) return false;
         if (entity instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity) return false;
-        if (entity instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity) return false;
         if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return true;
     }

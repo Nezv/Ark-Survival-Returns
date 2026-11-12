@@ -41,7 +41,8 @@ final class CreatureNavigation extends GroundPathNavigation {
     private static final class Evaluator extends WalkNodeEvaluator {
         @Override public void prepare(PathNavigationRegion level, Mob mob) {
             super.prepare(level, mob);
-            if (mob instanceof CreatureEntity creature && creature.tramplesTrees()) currentContext = new ThroughTrees(level, mob);
+            // Leaves are no wall for a body (PassableLeavesMixin); a trampler also goes through natural trunks.
+            currentContext = mob instanceof CreatureEntity creature && creature.tramplesTrees() ? new ThroughTrees(level, mob) : new ThroughLeaves(level, mob);
         }
 
         @Override public Node getStart() {
@@ -58,6 +59,15 @@ final class CreatureNavigation extends GroundPathNavigation {
         /** The footprint corner whose node puts the body's centre at this coordinate. */
         private int corner(double center) {
             return Mth.floor(center - entityWidth / 2.0 + 0.5);
+        }
+    }
+
+    /** Sees air where leaves are; everything else as the shared path type cache has it. */
+    private static final class ThroughLeaves extends PathfindingContext {
+        private final BlockPos.MutableBlockPos probe = new BlockPos.MutableBlockPos();
+        ThroughLeaves(PathNavigationRegion level, Mob mob) { super(level, mob); }
+        @Override public PathType getPathTypeFromState(int x, int y, int z) {
+            return getBlockState(probe.set(x, y, z)).is(BlockTags.LEAVES) ? PathType.OPEN : super.getPathTypeFromState(x, y, z);
         }
     }
 

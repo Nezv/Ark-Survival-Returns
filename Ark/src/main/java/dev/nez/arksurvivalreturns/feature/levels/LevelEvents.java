@@ -3,7 +3,6 @@ package dev.nez.arksurvivalreturns.feature.levels;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.Config;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
-import dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity;
 import dev.nez.arksurvivalreturns.feature.taming.TamingService;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +23,6 @@ public final class LevelEvents {
         if (player == null) player = credit(event.getEntity().getKillCredit());
         if (player == null) return;
         if (event.getEntity() instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity
-                || event.getEntity() instanceof GuardianGiganotosaurusEntity
                 || event.getEntity() instanceof EnderDragon || event.getEntity() instanceof WitherBoss) {
             ArkLevels.addXp(player, Config.PLAYER_XP_BOSS.get(), ArkLevels.Source.BOSS);
         } else if (event.getEntity() instanceof CreatureEntity creature) {

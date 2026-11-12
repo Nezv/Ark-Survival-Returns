@@ -17,15 +17,7 @@
           "type": "checkmark"
         }
       ],
-      "rewards": [
-        {
-          "id": "00000000000001B1",
-          "type": "item",
-          "item": {
-            "id": "arksurvivalreturns:stone_fire"
-          }
-        }
-      ]
+      "rewards": []
     },
     {
       "id": "0000000000000102",
@@ -93,7 +85,7 @@
           "id": "00000000000001B3",
           "type": "item",
           "item": {
-            "id": "minecraft:cooked_beef",
+            "id": "arksurvivalreturns:cooked_herbivore_meat",
             "count": 2
           }
         }

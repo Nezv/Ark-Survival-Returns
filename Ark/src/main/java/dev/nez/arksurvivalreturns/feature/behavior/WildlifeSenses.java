@@ -36,7 +36,12 @@ public final class WildlifeSenses {
         return (world.getSeed() & 65535) / 65536.0 * Math.PI * 2 + world.getGameTime() / 48000.0;
     }
     public static boolean validTarget(LivingEntity target) {
-        return target.isAlive() && !target.isSpectator() && !(target instanceof Player p && p.isCreative());
+        // A downed player is left where they fell: a hunter moves on after the blow that downed them (BUG-08).
+        return target.isAlive() && !target.isSpectator() && !(target instanceof Player p && (p.isCreative() || downed(p)));
+    }
+    private static boolean downed(Player player) {
+        return player.hasData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED)
+                && player.getData(dev.nez.arksurvivalreturns.feature.recovery.RecoveryAttachments.DOWNED).downed();
     }
     /**
      * Whatever struck an animal is answered, a creative player included: the blow landed, so the animal runs or
@@ -74,7 +79,8 @@ public final class WildlifeSenses {
         return sight(world, observer, target, true).clear();
     }
     private static boolean ray(ServerLevel world, CreatureEntity observer, Vec3 from, Vec3 to) {
-        return world.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, observer))
+        // No entity context: leaves are passable for bodies (PassableLeavesMixin) but still block the eye.
+        return world.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()))
                 .getType() == HitResult.Type.MISS;
     }
     private static Sight sight(ServerLevel world, CreatureEntity observer, LivingEntity target, boolean alternatives) {

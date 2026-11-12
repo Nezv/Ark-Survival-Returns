@@ -58,6 +58,17 @@ public final class TribeProgressData extends SavedData {
         return false;
     }
 
+    /** Adds one tribe's flags to another (BUG-14); the source keeps its own. */
+    public boolean merge(UUID from, UUID into) {
+        var source = flags.get(from);
+        if (from.equals(into) || source == null || source.isEmpty()) return false;
+        if (flags.computeIfAbsent(into, key -> new LinkedHashSet<>()).addAll(source)) {
+            setDirty();
+            return true;
+        }
+        return false;
+    }
+
     public Set<String> flags(UUID tribe) {
         return Collections.unmodifiableSet(flags.getOrDefault(tribe, Set.of()));
     }

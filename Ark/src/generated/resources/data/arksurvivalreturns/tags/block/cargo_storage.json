@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "arksurvivalreturns:storage_crate",
+    "minecraft:chest",
+    "minecraft:trapped_chest",
+    "minecraft:barrel",
+    "#minecraft:shulker_boxes",
+    {
+      "id": "toms_storage:inventory_connector",
+      "required": false
+    },
+    {
+      "id": "toms_storage:inventory_cable_connector",
+      "required": false
+    },
+    {
+      "id": "toms_storage:inventory_proxy",
+      "required": false
+    },
+    {
+      "id": "toms_storage:filing_cabinet",
+      "required": false
+    }
+  ]
+}

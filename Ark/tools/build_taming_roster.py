@@ -67,11 +67,11 @@ def profiles():
     text = REGISTRY.read_text(encoding='utf-8')
     pattern = re.compile(
         r'add\(Species\.([A-Z_]+),\s*TamingMethod\.([A-Z]+),\s*(\d+),\s*([A-Z_]+),\s*'
-        r'(?:berry\("([a-z]+)"\)|\(\)\s*->\s*Items\.([A-Z_]+)),\s*([\d.]+)\);')
+        r'(?:berry\("([a-z]+)"\)|\(\)\s*->\s*Items\.([A-Z_]+)|meat\([\w.]*DinoMeat\.([A-Z_]+)\)),\s*([\d.]+)\);')
     found = {}
     for match in pattern.finditer(text):
-        enum, method, seconds, food, berry, item, resistance = match.groups()
-        favourite = BERRY_LABELS[berry] if berry else ITEM_LABELS[item]
+        enum, method, seconds, food, berry, item, meat, resistance = match.groups()
+        favourite = BERRY_LABELS[berry] if berry else ITEM_LABELS[item] if item else 'Raw ' + meat.title() + ' Meat'
         found[enum] = {'method': method, 'seconds': int(seconds), 'food': TAG_LABELS[food],
                        'favourite': favourite, 'resistance': float(resistance)}
     return found

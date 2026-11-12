@@ -40,14 +40,19 @@ final class DownedGameTests {
         h.assertTrue(DownedPolicy.bleedOut(100, 10f, 1.0) == 90, "Damage must shorten the rescue window");
         h.assertTrue(DownedPolicy.bleedOut(5, 100f, 1.0) == 0, "The rescue window must bottom out at zero");
 
-        // The tribe gate refuses a stranger.
+        // With the tribe gate on, a stranger is refused.
         var bandage = reviver.getItemInHand(InteractionHand.MAIN_HAND);
-        var refused = ModContent.FIBER_BANDAGE.get().interactLivingEntity(bandage, reviver, victim, InteractionHand.MAIN_HAND);
-        h.assertTrue(refused == InteractionResult.FAIL, "A stranger revived outside the tribe gate");
+        boolean requireTribe = Config.DOWNED_REQUIRE_TRIBE.get();
+        Config.DOWNED_REQUIRE_TRIBE.set(true);
+        try {
+            var refused = ModContent.FIBER_BANDAGE.get().interactLivingEntity(bandage, reviver, victim, InteractionHand.MAIN_HAND);
+            h.assertTrue(refused == InteractionResult.FAIL, "A stranger revived outside the tribe gate");
+        } finally {
+            Config.DOWNED_REQUIRE_TRIBE.set(requireTribe);
+        }
         h.assertTrue(state.downed(), "The refused revive cleared the downed state");
 
-        // With the gate relaxed the bandage revives at the configured fraction.
-        boolean requireTribe = Config.DOWNED_REQUIRE_TRIBE.get();
+        // By default any survivor revives (A02 BUG-07), at the configured fraction.
         Config.DOWNED_REQUIRE_TRIBE.set(false);
         try {
             var revived = ModContent.FIBER_BANDAGE.get().interactLivingEntity(bandage, reviver, victim, InteractionHand.MAIN_HAND);
@@ -77,7 +82,7 @@ final class DownedGameTests {
         // An ordinary hit while downed is absorbed into the rescue window.
         h.assertFalse(victim.hurtServer(world, world.damageSources().generic(), 5f), "A downed player took an ordinary hit");
         h.assertTrue(victim.getHealth() == 1.0f, "The absorbed hit still cost health");
-        int left = DownedPolicy.bleedOut(100, 5f, Config.DOWNED_BLEED_FACTOR.get());
+        int left = DownedPolicy.bleedOut(100, 100, 5f, Config.DOWNED_BLEED_FACTOR.get(), Config.DOWNED_BLEED_PER_HIT.get());
         h.assertTrue(state.downed() && state.ticksLeft() == left, "The hit did not shorten the window: " + state.ticksLeft());
 
         // The window runs out: one finishing blow, no recursion.

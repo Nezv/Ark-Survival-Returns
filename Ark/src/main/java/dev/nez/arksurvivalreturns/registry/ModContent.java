@@ -27,7 +27,6 @@ public final class ModContent {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ArkSurvivalReturns.MOD_ID);
     public static final EnumMap<Species, DeferredBlock<dev.nez.arksurvivalreturns.feature.flying.NestBlock>> NESTS = new EnumMap<>(Species.class);
-    public static final EnumMap<Species, DeferredItem<Item>> NEST_EGGS = new EnumMap<>(Species.class);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ArkSurvivalReturns.MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, ArkSurvivalReturns.MOD_ID);
@@ -51,13 +50,6 @@ public final class ModContent {
                     .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("tranquilizer_arrow"))));
     /** The encounter boss: an ordinary Giga body with the guardian contract, outside every spawn list. */
-    public static final DeferredHolder<EntityType<?>, EntityType<dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity>>
-            GUARDIAN_GIGANOTOSAURUS = ENTITIES.register("guardian_giganotosaurus", () -> EntityType.Builder
-                    .<dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity>of(
-                            dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity::new,
-                            MobCategory.MONSTER)
-                    .sized(10.5f, 15.0f).eyeHeight(12.75f).clientTrackingRange(12)
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("guardian_giganotosaurus"))));
     public static final DeferredHolder<EntityType<?>, EntityType<dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity>>
             GUARDIAN_DRAGON = ENTITIES.register("guardian_dragon", () -> EntityType.Builder
                     .<dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity>of(
@@ -65,12 +57,6 @@ public final class ModContent {
                     .sized(2.2f, 4.5f).eyeHeight(3.8f).clientTrackingRange(16)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, ArkSurvivalReturns.id("guardian_dragon"))));
     /** Allosaur Heart: the ritual key, one guaranteed drop from a player kill on a wild Allosaurus. */
-    public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> ALLOSAUR_HEART =
-            ITEMS.registerItem("allosaur_heart",
-                    p -> new dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem(
-                            p, "tooltip.arksurvivalreturns.allosaur_heart"),
-                    p -> p.stacksTo(16));
-    /** Shared workshop progression: the tribe flag is authoritative, the item is the visible memento. */
     public static final DeferredItem<dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem> WORKSHOP_SCHEMATIC =
             ITEMS.registerItem("workshop_schematic",
                     p -> new dev.nez.arksurvivalreturns.feature.guardian.GuardianLoreItem(
@@ -234,7 +220,6 @@ public final class ModContent {
                     p -> p.strength(0.4f).noOcclusion().noCollision()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
                     .sound(net.minecraft.world.level.block.SoundType.GRASS)));
-            NEST_EGGS.put(s, ITEMS.registerSimpleItem(s.id + "_egg", p -> p.stacksTo(16)));
         }
         for (String id : new String[]{"tintoberry", "amarberry"})
             BERRIES.put(id, ITEMS.registerSimpleItem(id, p -> p.stacksTo(64)));
@@ -270,7 +255,6 @@ public final class ModContent {
                     output.accept(COOKING_POT_ITEM.get());
                     output.accept(HEARTY_STEW.get());
                     output.accept(TRAIL_MIX.get());
-                    output.accept(ALLOSAUR_HEART.get());
                     output.accept(WORKSHOP_SCHEMATIC.get());
                     output.accept(GUARDIAN_TROPHY.get());
                 }).build());
@@ -280,7 +264,6 @@ public final class ModContent {
                 .icon(() -> EGGS.get(Species.TYRANNOSAURUS).get().getDefaultInstance())
                 .displayItems((parameters, output) -> {
                     EGGS.values().forEach(i -> output.accept(i.get()));
-                    NEST_EGGS.values().forEach(i -> output.accept(i.get()));
                 }).build());
     }
 
@@ -298,8 +281,6 @@ public final class ModContent {
     public static void attributes(EntityAttributeCreationEvent event) {
         CREATURES.forEach((species, type) -> event.put(type.get(), CreatureEntity.attributes(species).build()));
         event.put(GUARDIAN_DRAGON.get(), dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity.attributes().build());
-        event.put(GUARDIAN_GIGANOTOSAURUS.get(),
-                dev.nez.arksurvivalreturns.feature.guardian.GuardianGiganotosaurusEntity.attributes().build());
     }
     private ModContent() {}
 }

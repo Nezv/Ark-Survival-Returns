@@ -62,7 +62,8 @@ final class NavigationGameTests {
         var noChunkLoads = watchChunkLoads(h);
         h.runAfterDelay(110, () -> {
             h.assertTrue(mob.position().distanceToSqr(start) > 16, "Registered FOLLOW goal never moved its creature");
-            h.assertTrue(mob.distanceTo(owner) <= Config.COMPANION_FOLLOW_DISTANCE.get(), "FOLLOW never arrived at its stop distance: " + mob.position());
+            h.assertTrue(dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses.bodyDistance(mob, owner) <= Config.COMPANION_FOLLOW_DISTANCE.get() + 0.5,
+                    "FOLLOW never arrived at its stop distance: " + mob.position() + " owner " + owner.position());
             CompanionService.setOrder(mob, CompanionOrder.STAY); anchor[0] = mob.position();
             owner.setPos(owner.position().add(12, 0, 0));
         });

@@ -42,7 +42,6 @@ public final class Config {
     public static final ModConfigSpec.IntValue BAND_WIDTH;
     public static final ModConfigSpec.BooleanValue BIOME_MESSAGES;
     public static final ModConfigSpec.BooleanValue THEME_DIMENSIONS, THEME_MONSTERS, THEME_MECHANICS;
-    public static final ModConfigSpec.BooleanValue MAP_REQUIRES_UNLOCK;
     public static final ModConfigSpec.BooleanValue PRIMITIVE_LOGS_NEED_AXE, PRIMITIVE_NO_WOODEN_TOOLS, PRIMITIVE_NO_FURNACES;
     public static final ModConfigSpec.DoubleValue PRIMITIVE_LEAF_STICKS, PRIMITIVE_FIRE_STARTER_CHANCE,
             PRIMITIVE_FIRE_COOK_FACTOR, PRIMITIVE_FIRE_FUEL_FACTOR, PRIMITIVE_FORGE_SPEED;
@@ -75,6 +74,7 @@ public final class Config {
     public static final ModConfigSpec.DoubleValue HUNGER_INCREASE_PER_SECOND, HUNGER_REDUCTION_PER_MEAL;
     public static final ModConfigSpec.IntValue MINIMUM_FEED_INTERVAL, FOOD_UNITS_PER_MEAL, CLAIM_EXPIRY, FEEDING_TRUCE_TICKS;
     public static final ModConfigSpec.DoubleValue PREFERRED_FOOD_MULTIPLIER, DAMAGE_PROGRESS_PENALTY;
+    public static final ModConfigSpec.DoubleValue HAND_MEAL_MULTIPLIER, TAME_HUNGER_FACTOR, TAME_REGEN_PER_MINUTE;
     public static final ModConfigSpec.IntValue PASSIVE_PROGRESS_GRACE, PASSIVE_PROGRESS_DECAY_PERIOD;
     public static final ModConfigSpec.DoubleValue PASSIVE_PROGRESS_DECAY, PLAYER_MOVEMENT_TOLERANCE;
     public static final ModConfigSpec.IntValue PLAYER_IMPULSE_TICKS;
@@ -119,18 +119,14 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue DOWNED_ENABLED, DOWNED_NOTIFY_TRIBE, DOWNED_REQUIRE_TRIBE,
             DOWNED_LAVA_LETHAL, DOWNED_VOID_LETHAL;
     public static final ModConfigSpec.IntValue DOWNED_WINDOW;
-    public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL;
+    public static final ModConfigSpec.DoubleValue DOWNED_REVIVE_FRACTION, DOWNED_BLEED_FACTOR, DOWNED_OVERKILL, DOWNED_BLEED_PER_HIT;
     public static final ModConfigSpec.DoubleValue SOUND_RANGE_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue DROPS_ENABLED;
     public static final ModConfigSpec.IntValue DROP_INTERVAL_DAYS, DROP_LIFETIME, DROP_MIN_DISTANCE, DROP_MAX_DISTANCE, DROP_FALL_HEIGHT;
     // ------------------------------------------------------------------------- guardian
-    public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED, GUARDIAN_ANNOUNCE;
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> GUARDIAN_STRUCTURES;
-    public static final ModConfigSpec.IntValue GUARDIAN_ACTIVATION_RADIUS, GUARDIAN_ARENA_RADIUS, GUARDIAN_JOIN_RADIUS,
-            GUARDIAN_GRACE_TICKS, GUARDIAN_RESET_DELAY_TICKS, GUARDIAN_MAX_TAME_CONTRIBUTION, GUARDIAN_TAME_RADIUS,
-            GUARDIAN_BAR_RANGE, GUARDIAN_SPAWN_RADIUS;
-    public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, GUARDIAN_HEALTH_PER_PLAYER,
-            GUARDIAN_HEALTH_PER_TAME, GUARDIAN_DAMAGE_MULTIPLIER, GUARDIAN_ARMOR, GUARDIAN_TAME_DAMAGE_FACTOR;
+    public static final ModConfigSpec.BooleanValue GUARDIAN_ENABLED;
+    public static final ModConfigSpec.IntValue GUARDIAN_BAR_RANGE;
+    public static final ModConfigSpec.DoubleValue GUARDIAN_BASE_HEALTH, GUARDIAN_DAMAGE_MULTIPLIER, GUARDIAN_ARMOR;
     // ----------------------------------------------------------------------------- tech
     public static final ModConfigSpec.BooleanValue TECH_ENABLED, TECH_ANNOUNCE;
     public static final ModConfigSpec.IntValue TECH_SCAN_TICKS;
@@ -229,7 +225,6 @@ public final class Config {
                 .defineInRange("cycleDays", 7.0, 1.0, 120.0);
         b.pop();
         b.pop().push("progression");
-        MAP_REQUIRES_UNLOCK = b.comment("Require the saved map entitlement. A tame from danger zone 3 grants it; restart/rejoin after changing.").define("mapRequiresUnlock", false);
         BAND_WIDTH = b.comment("Scale of the repeating danger regions; tile period is four times this value. Saved per world. Legacy key retained for existing configs.").defineInRange("bandWidth", 256, 96, 1024);
         b.pop().push("primitive");
         PRIMITIVE_LOGS_NEED_AXE = b.comment("Logs drop nothing and break slowly without an axe; the stone hatchet is the first one.")
@@ -277,8 +272,7 @@ public final class Config {
                         + "crosshair, and the player's own tames when no tame is aimed at.")
                 .defineInRange("whistleRange", 32, 8, 96);
         b.pop().push("camp");
-        CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (bedroll, bandages, fiber and a flint knife) "
-                        + "on their first join in a world.")
+        CAMP_STARTER_KIT = b.comment("Grant each player a one-time kit (a flint knife) on their first join in a world.")
                 .define("starterKit", true);
         CAMP_BEDROLL_SETS_SPAWN = b.comment("Allow the reusable Bedroll to set the personal respawn point. "
                         + "The disposable Mattress never sets one regardless of this switch.")
@@ -301,8 +295,10 @@ public final class Config {
         DOWNED_BLEED_FACTOR = b.comment("Rescue ticks lost per point of damage taken while downed (0 disables the "
                         + "escalating pressure).")
                 .defineInRange("damageBleedFactor", 1.0, 0.0, 5.0);
+        DOWNED_BLEED_PER_HIT = b.comment("Share of the whole rescue window every hit on a downed player costs at least, so a few bites finish them.")
+                .defineInRange("bleedPerHit", 0.1, 0.0, 1.0);
         DOWNED_OVERKILL = b.comment("A single hit at or above this multiple of maximum health kills outright.")
-                .defineInRange("overkillMultiplier", 1.5, 1.0, 5.0);
+                .defineInRange("overkillMultiplier", 3.0, 1.0, 10.0);
         DOWNED_LAVA_LETHAL = b.comment("Lava and fire kill outright instead of downing the player.")
                 .define("lavaLethal", true);
         DOWNED_VOID_LETHAL = b.comment("Void damage kills outright instead of downing the player.")
@@ -493,6 +489,13 @@ public final class Config {
                 .defineInRange("minimumFeedIntervalTicks", 400, 20, 24000);
         FOOD_UNITS_PER_MEAL = b.comment("Items consumed by one successful meal.")
                 .defineInRange("foodUnitsPerMeal", 1, 1, 16);
+        HAND_MEAL_MULTIPLIER = b.comment("Taming progress multiplier for a meal a player gives a sleeping animal by hand, "
+                        + "against one it eats from its taming inventory.")
+                .defineInRange("handMealMultiplier", 1.5, 1.0, 10.0);
+        TAME_HUNGER_FACTOR = b.comment("How fast a tame grows hungry, as a share of a wild animal's rate (the trough feeds it).")
+                .defineInRange("tameHungerFactor", 0.1, 0.0, 1.0);
+        TAME_REGEN_PER_MINUTE = b.comment("Share of its health a fed tame heals each minute; a starving tame does not heal.")
+                .defineInRange("tameRegenPerMinute", 0.06, 0.0, 1.0);
         PREFERRED_FOOD_MULTIPLIER = b.comment("Taming progress multiplier for a species' favourite food.")
                 .defineInRange("preferredFoodMultiplier", 1.5, 1.0, 10.0);
         DAMAGE_PROGRESS_PENALTY = b.comment("Percentage points lost when a wild creature being tamed takes damage.")
@@ -580,48 +583,16 @@ public final class Config {
         BIOME_MESSAGES = b.define("biomeEntryMessages", true);
         MASS_GAUGE = b.comment("Show the carried-load gauge in the top-left of the HUD.").define("massGauge", true);
         b.pop().push("guardian");
-        GUARDIAN_ENABLED = b.comment("Enable floating beacon guardians and the legacy Ancient Remnants ritual. "
-                        + "Native beacon guardians do not require the Ancient Remnants mod.")
+        GUARDIAN_ENABLED = b.comment("Enable the beacon guardians (the dragons of the sky beacons).")
                 .define("enabled", true);
-        GUARDIAN_ANNOUNCE = b.comment("Tell the tribe when the Guardian awakens, resets or falls.")
-                .define("announce", true);
-        GUARDIAN_STRUCTURES = b.comment("Ancient Remnants structures whose floating monolith accepts the Allosaur Heart.")
-                .defineList("structures", List.of("ancient_remnants:sentinel_monolith"),
-                        () -> "ancient_remnants:sentinel_monolith",
-                        value -> value instanceof String text && net.minecraft.resources.Identifier.tryParse(text) != null);
-        GUARDIAN_ACTIVATION_RADIUS = b.comment("The heart must be offered on a block this close to the structure's monolith.")
-                .defineInRange("activationRadius", 16, 4, 48);
-        GUARDIAN_ARENA_RADIUS = b.comment("The Guardian returns to its lair when farther than this from the ritual anchor.")
-                .defineInRange("arenaRadius", 40, 16, 96);
-        GUARDIAN_JOIN_RADIUS = b.comment("Tribe members inside this radius become encounter participants.")
-                .defineInRange("joinRadius", 48, 16, 128);
-        GUARDIAN_GRACE_TICKS = b.comment("Ticks without a living participant in the arena before the attempt resets "
-                        + "(600 = thirty seconds).")
-                .defineInRange("graceTicks", 600, 100, 12000);
-        GUARDIAN_RESET_DELAY_TICKS = b.comment("Ticks between the retreat reset and the free retry window (200 = ten seconds).")
-                .defineInRange("resetDelayTicks", 200, 20, 6000);
-        GUARDIAN_MAX_TAME_CONTRIBUTION = b.comment("Registered combat tames that add health to the Guardian; further "
-                        + "tames are still registered but add no health.")
-                .defineInRange("maxTameContribution", 4, 0, 8);
-        GUARDIAN_TAME_RADIUS = b.comment("Radius around the ritual anchor where tribe tames are registered at activation.")
-                .defineInRange("tameRegistrationRadius", 24, 4, 64);
-        GUARDIAN_BAR_RANGE = b.comment("Players within this radius of the Guardian see the encounter bar.")
+        GUARDIAN_BAR_RANGE = b.comment("Players within this radius of a guardian see its health bar.")
                 .defineInRange("barRange", 64, 16, 128);
-        GUARDIAN_SPAWN_RADIUS = b.comment("Horizontal radius searched for clear, loaded ground when the Guardian rises.")
-                .defineInRange("spawnRadius", 16, 4, 48);
-        GUARDIAN_BASE_HEALTH = b.comment("Guardian health with one participant.")
+        GUARDIAN_BASE_HEALTH = b.comment("Guardian health.")
                 .defineInRange("baseHealth", 400.0, 20.0, 5000.0);
-        GUARDIAN_HEALTH_PER_PLAYER = b.comment("Additional health for each participant after the first.")
-                .defineInRange("healthPerExtraPlayer", 200.0, 0.0, 5000.0);
-        GUARDIAN_HEALTH_PER_TAME = b.comment("Additional health for each registered combat tame, up to the contribution cap.")
-                .defineInRange("healthPerTame", 60.0, 0.0, 2000.0);
         GUARDIAN_DAMAGE_MULTIPLIER = b.comment("Guardian attack damage as a multiple of its base species damage.")
                 .defineInRange("damageMultiplier", 1.0, 0.1, 5.0);
         GUARDIAN_ARMOR = b.comment("Guardian armor points.")
                 .defineInRange("armor", 8.0, 0.0, 30.0);
-        GUARDIAN_TAME_DAMAGE_FACTOR = b.comment("Damage dealt by tames that were not registered for the encounter "
-                        + "(0 disables their damage entirely).")
-                .defineInRange("unregisteredTameDamageFactor", 0.1, 0.0, 1.0);
         b.pop().push("tech");
         TECH_ENABLED = b.comment("Enable the technology tree and its /arktech progression.")
                 .define("enabled", true);
@@ -643,9 +614,9 @@ public final class Config {
                 .defineInRange("baseXp", 100, 1, 1000000);
         PLAYER_LEVEL_EXPONENT = b.defineInRange("exponent", 1.5, 0.0, 3.0);
         PLAYER_XP_KILL = b.comment("XP per creature level for a kill by a player or their tame.")
-                .defineInRange("killPerLevel", 5, 0, 1000000);
+                .defineInRange("killPerLevel", 50, 0, 1000000);
         PLAYER_XP_TAME = b.comment("XP per creature level when taming completes.")
-                .defineInRange("tamePerLevel", 10, 0, 1000000);
+                .defineInRange("tamePerLevel", 100, 0, 1000000);
         PLAYER_XP_FIRST_CRAFT = b.comment("XP for the first successful craft of each recipe, remembered permanently.")
                 .defineInRange("firstCraft", 10, 0, 1000000);
         PLAYER_XP_TECH_NODE = b.defineInRange("techNode", 50, 0, 1000000);

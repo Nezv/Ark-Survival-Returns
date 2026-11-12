@@ -53,15 +53,7 @@
           "type": "checkmark"
         }
       ],
-      "rewards": [
-        {
-          "id": "00000000000003B2",
-          "type": "item",
-          "item": {
-            "id": "minecraft:lead"
-          }
-        }
-      ]
+      "rewards": []
     },
     {
       "id": "0000000000000303",
@@ -76,16 +68,7 @@
           "type": "checkmark"
         }
       ],
-      "rewards": [
-        {
-          "id": "00000000000003B3",
-          "type": "item",
-          "item": {
-            "id": "arksurvivalreturns:plant_fiber",
-            "count": 8
-          }
-        }
-      ]
+      "rewards": []
     },
     {
       "id": "0000000000000304",

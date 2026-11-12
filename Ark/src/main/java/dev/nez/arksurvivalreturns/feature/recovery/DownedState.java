@@ -58,8 +58,8 @@ public final class DownedState implements ValueIOSerializable {
     }
 
     /** Incoming damage shortens the rescue window; the window can reach zero here. */
-    public void bleed(float damage, double factor) {
-        ticksLeft = DownedPolicy.bleedOut(ticksLeft, damage, factor);
+    public void bleed(float damage, double factor, double perHit) {
+        ticksLeft = DownedPolicy.bleedOut(ticksLeft, totalTicks, damage, factor, perHit);
     }
 
     public void tick() {

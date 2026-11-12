@@ -232,11 +232,23 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity, OwnableE
         return onGround() && !isUnderWater() ? position() : seat;
     }
 
-    /** A mount that dies sets its riders down beside it first, so they do not fall from where it stood. */
+    /** A mount that dies sets its riders down beside it first; a tame's death is told to its owner (BUG-19). */
     @Override public void die(net.minecraft.world.damagesource.DamageSource source) {
         if (!level().isClientSide() && isVehicle()) ejectPassengers();
+        if (!level().isClientSide() && isTamed() && level() instanceof ServerLevel world
+                && world.getServer().getPlayerList().getPlayer(TamingService.of(this).owner()) instanceof ServerPlayer owner) {
+            var pos = blockPosition();
+            owner.sendSystemMessage(getCombatTracker().getDeathMessage().copy()
+                    .append(net.minecraft.network.chat.Component.literal(" (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + ")")));
+        }
         super.die(source);
     }
+
+    /** A lead holds only a tame; a wild animal is never led away on a string (BUG-19). */
+    @Override public boolean canBeLeashed() { return isTamed() && !isRidden(); }
+
+    /** A body three blocks wide or more is not shoved about by whatever walks into it (BUG-19). */
+    @Override public boolean isPushable() { return super.isPushable() && getBbWidth() < TreeTrample.MIN_WIDTH; }
 
     /** Only a conscious, tamed, saddled creature may be controlled. */
     @Override public @Nullable LivingEntity getControllingPassenger() {
@@ -299,6 +311,13 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity, OwnableE
         ItemStack held = player.getItemInHand(hand);
         if (held.getItem() instanceof SedativeItem sedative && !player.isSecondaryUseActive()) {
             if (!level().isClientSide()) sedative.dose(held, player, this);
+            return InteractionResult.SUCCESS;
+        }
+        // Food in hand is a meal given by hand, worth more than one from the inventory (BUG-23).
+        if (profile().method() == TamingMethod.KNOCKOUT && !isTamed() && profile().accepts(held) && !player.isSecondaryUseActive()) {
+            if (level().isClientSide()) return InteractionResult.SUCCESS;
+            var result = TamingService.feedSleeping(this, player, hand);
+            if (result != TamingFeedback.Result.ACCEPTED) TamingFeedback.denied(player, this, result);
             return InteractionResult.SUCCESS;
         }
         if (profile().method() != TamingMethod.KNOCKOUT) {
@@ -640,7 +659,9 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity, OwnableE
         return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, s.health)
                 .add(Attributes.ATTACK_DAMAGE, s.damage).add(Attributes.MOVEMENT_SPEED, s.speed)
                 .add(Attributes.FOLLOW_RANGE, 24).add(Attributes.STEP_HEIGHT, Math.clamp(s.height * 0.08, 1.0, 3.0))
-                .add(Attributes.KNOCKBACK_RESISTANCE, s.solitary() ? 0.7 : 0.1);
+                .add(Attributes.KNOCKBACK_RESISTANCE, s.solitary() ? 0.7 : 0.1)
+                // A drop is measured against the body: a 13-block animal does not break its legs on a 4-block step (BUG-19).
+                .add(Attributes.SAFE_FALL_DISTANCE, Math.max(3.0, s.height * 0.5));
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);

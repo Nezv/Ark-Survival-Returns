@@ -36,6 +36,5 @@ class CreatureSizeTest {
     @Test void onlyKnockoutNeedsAnUnconsciousCreature() {
         assertTrue(TamingMethod.KNOCKOUT.requiresUnconscious());
         assertFalse(TamingMethod.PASSIVE.requiresUnconscious());
-        assertFalse(TamingMethod.AERIAL.requiresUnconscious(), "A hungry flyer can be fed while awake");
     }
 }

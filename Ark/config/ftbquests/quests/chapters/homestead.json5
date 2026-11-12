@@ -17,16 +17,7 @@
           "type": "checkmark"
         }
       ],
-      "rewards": [
-        {
-          "id": "00000000000004B1",
-          "type": "item",
-          "item": {
-            "id": "arksurvivalreturns:plant_fiber",
-            "count": 8
-          }
-        }
-      ]
+      "rewards": []
     },
     {
       "id": "0000000000000402",

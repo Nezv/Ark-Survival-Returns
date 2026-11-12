@@ -11,6 +11,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 /** Bleed-out HUD for the downed player: vignette, countdown bar and rescue hint. */
@@ -19,6 +21,9 @@ public final class DownedClient {
     private static boolean downed;
     private static int ticksLeft;
     private static int totalTicks;
+    /** Ticks Sneak has been held while downed; at {@link #GIVE_UP_TICKS} the player gives up. */
+    private static int giveUpTicks;
+    private static final int GIVE_UP_TICKS = 60;
 
     @SubscribeEvent public static void register(RegisterClientPayloadHandlersEvent event) {
         event.register(DownedPayload.TYPE, (payload, context) -> {
@@ -50,14 +55,40 @@ public final class DownedClient {
 
         String title = I18n.get("hud.downed.arksurvivalreturns.title");
         String hint = I18n.get("hud.downed.arksurvivalreturns.hint");
-        String seconds = I18n.get("hud.downed.arksurvivalreturns.seconds",
-                String.format(Locale.ROOT, "%.0f", ticksLeft / 20.0));
+        String seconds = giveUpTicks > 0
+                ? I18n.get("hud.downed.arksurvivalreturns.giving_up", String.format(Locale.ROOT, "%.1f", (GIVE_UP_TICKS - giveUpTicks) / 20.0))
+                : I18n.get("hud.downed.arksurvivalreturns.seconds", String.format(Locale.ROOT, "%.0f", ticksLeft / 20.0));
         graphics.text(font, title, (width - font.width(title)) / 2, y - 16, 0xFFFF5555);
         graphics.text(font, hint, (width - font.width(hint)) / 2, y + 12, 0xFFFFFFFF);
         graphics.text(font, seconds, (width - font.width(seconds)) / 2, y + 24, 0xFFFFAAAA);
     }
 
+    /** Downed, the player's own client neither walks nor jumps; the server holds them in place anyway (BUG-08). */
+    @SubscribeEvent public static void input(MovementInputUpdateEvent event) {
+        if (downed) event.getInput().keyPresses = net.minecraft.world.entity.player.Input.EMPTY;
+    }
+
+    /** Lying pose on the own client, horizontal drift stopped, and the hold-Sneak give-up. */
+    @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
+        var minecraft = Minecraft.getInstance();
+        var player = minecraft.player;
+        if (player == null) return;
+        if (!downed) {
+            giveUpTicks = 0;
+            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING) player.setForcedPose(null);
+            return;
+        }
+        player.setForcedPose(net.minecraft.world.entity.Pose.SWIMMING);
+        var v = player.getDeltaMovement();
+        player.setDeltaMovement(0, Math.min(v.y, 0), 0);
+        if (minecraft.screen == null && minecraft.options.keyShift.isDown()) {
+            if (++giveUpTicks == GIVE_UP_TICKS)
+                net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new dev.nez.arksurvivalreturns.feature.recovery.DownedSync.GiveUp());
+        } else giveUpTicks = 0;
+    }
+
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
+        giveUpTicks = 0;
         downed = false;
         ticksLeft = 0;
         totalTicks = 0;

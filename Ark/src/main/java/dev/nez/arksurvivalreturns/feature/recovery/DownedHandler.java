@@ -37,7 +37,7 @@ public final class DownedHandler {
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
         if (!state.downed()) return;
         event.setCanceled(true);
-        state.bleed(event.getAmount(), Config.DOWNED_BLEED_FACTOR.get());
+        state.bleed(event.getAmount(), Config.DOWNED_BLEED_FACTOR.get(), Config.DOWNED_BLEED_PER_HIT.get());
         DownedSync.send(player, state);
         // A drained window ends on the next player tick, never inside this damage event.
     }
@@ -77,11 +77,20 @@ public final class DownedHandler {
     /** One tick of the rescue window; public so the headless suite can drive it (fake players never tick). */
     public static void step(ServerPlayer player) {
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
-        if (!state.downed()) return;
-        if (player.isDeadOrDying()) {
-            state.clear();
+        if (!state.downed()) {
+            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING) player.setForcedPose(null);
             return;
         }
+        if (player.isDeadOrDying()) {
+            state.clear();
+            player.setForcedPose(null);
+            return;
+        }
+        // Lying on the ground, with a red mark above them that other players can find (BUG-08).
+        player.setForcedPose(net.minecraft.world.entity.Pose.SWIMMING);
+        if (player.tickCount % 20 == 0)
+            player.level().sendParticles(new net.minecraft.core.particles.DustParticleOptions(0xD01818, 2.0f),
+                    player.getX(), player.getY() + 1.6, player.getZ(), 4, 0.15, 0.3, 0.15, 0.0);
         state.tick();
         if (player.tickCount % 10 == 0) DownedSync.send(player, state);
         if (state.ticksLeft() <= 0) expire(player);
@@ -101,9 +110,21 @@ public final class DownedHandler {
         TamingService.discovery(reviver, "journal/first_revive");
     }
 
+    /** Downed or knocked out: such a player neither crafts nor gives orders (BUG-19). */
+    public static boolean incapacitated(net.minecraft.world.entity.player.Player player) {
+        return player.hasData(RecoveryAttachments.DOWNED) && player.getData(RecoveryAttachments.DOWNED).downed()
+                || dev.nez.arksurvivalreturns.feature.taming.TorporService.restricted(player);
+    }
+
+    /** The downed player held Sneak for three seconds: they give up and die now (BUG-08). */
+    public static void giveUp(ServerPlayer player) {
+        if (player.getData(RecoveryAttachments.DOWNED).downed()) expire(player);
+    }
+
     private static void expire(ServerPlayer player) {
         // Leave the downed state before the finishing blow, so it is an ordinary death.
         player.getData(RecoveryAttachments.DOWNED).clear();
+        player.setForcedPose(null);
         DownedSync.clear(player);
         player.hurtServer(player.level(), player.damageSources().genericKill(), Float.MAX_VALUE);
     }

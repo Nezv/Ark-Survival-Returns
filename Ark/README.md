@@ -212,7 +212,7 @@ Drops use NeoForge's additive loot modifier, preserving vanilla seeds. Edit the 
 
 The server config is generated at `<instance>/config/arksurvivalreturns-server.toml` on first world load. A file at `<world>/serverconfig/arksurvivalreturns-server.toml` overrides it for that world. The development launcher's instance is `Ark/run`.
 
-Settings cover the group target, check interval/budget, species weights, population cap, large-creature spacing, band width, tier level ranges, HP/damage growth, biome messages and target bar/range. The default example is `config/arksurvivalreturns-server.toml`. Existing values are retained when new keys are added.
+Settings cover the group target, check interval/budget, species weights, population cap, large-creature spacing, band width, tier level ranges, HP/damage growth, biome messages. Existing values are retained when new keys are added.
 
 Data-pack paths in namespace `arksurvivalreturns`:
 

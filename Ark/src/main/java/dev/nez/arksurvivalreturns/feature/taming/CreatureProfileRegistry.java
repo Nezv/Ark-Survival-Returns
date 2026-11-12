@@ -32,12 +32,12 @@ public final class CreatureProfileRegistry {
     private static final Map<Species, CreatureTamingProfile> PROFILES = new EnumMap<>(Species.class);
 
     static {
-        // ------------------------------------------------- hunger-based aerial feeding (fish)
-        add(Species.PTERANODON, TamingMethod.AERIAL, 180, FISH, () -> Items.COD, 1.0);
-        add(Species.ARGENTAVIS, TamingMethod.AERIAL, 180, FISH, () -> Items.SALMON, 0.9);
-        add(Species.ARCHAEOPTERYX, TamingMethod.AERIAL, 180, FISH, () -> Items.COD, 1.4);
-        add(Species.QUETZAL, TamingMethod.AERIAL, 180, FISH, () -> Items.SALMON, 0.85);
-        add(Species.DRAGON, TamingMethod.AERIAL, 180, FISH, () -> Items.SALMON, 0.7);
+        // ------------------------------------------------- flyers: knocked out, they glide down and are fed on the ground
+        add(Species.ARCHAEOPTERYX, TamingMethod.KNOCKOUT, 120, MEAT_AND_FISH, () -> Items.COD, 1.4);
+        add(Species.PTERANODON, TamingMethod.KNOCKOUT, 180, MEAT_AND_FISH, () -> Items.COD, 1.0);
+        add(Species.ARGENTAVIS, TamingMethod.KNOCKOUT, 210, MEAT_AND_FISH, () -> Items.SALMON, 0.9);
+        add(Species.QUETZAL, TamingMethod.KNOCKOUT, 300, MEAT_AND_FISH, () -> Items.SALMON, 0.85);
+        add(Species.DRAGON, TamingMethod.KNOCKOUT, 360, MEAT_AND_FISH, () -> Items.SALMON, 0.7);
 
         // ------------------------------------------- passive: ordinary nonpredatory animals (60 s)
         add(Species.UNICORN, TamingMethod.PASSIVE, 60, PLANTS, () -> Items.APPLE, 1.0);
@@ -135,10 +135,8 @@ public final class CreatureProfileRegistry {
             if (profile.accepted().isEmpty()) problems.add(species.id + ": no accepted food tag");
             if (profile.preferred().isEmpty()) problems.add(species.id + ": no preferred food");
             if (profile.targetSeconds() <= 0) problems.add(species.id + ": invalid target duration");
-            if (profile.method() == TamingMethod.AERIAL && species.realm() != Species.Realm.AIR)
-                problems.add(species.id + ": aerial feeding outside the flying realm");
-            if (species.realm() == Species.Realm.AIR && profile.method() != TamingMethod.AERIAL)
-                problems.add(species.id + ": flying creature must use aerial feeding");
+            if ((species.realm() == Species.Realm.AIR || species.realm() == Species.Realm.WATER) && profile.method() != TamingMethod.KNOCKOUT)
+                problems.add(species.id + ": flyers and sea animals are knock-out tames");
             if (ride(species) == null) problems.add(species.id + ": missing ride profile");
             if (CreatureTorporClips.of(species) == null) problems.add(species.id + ": missing torpor clip table");
             if (profile.sedativeResistance() <= 0) problems.add(species.id + ": invalid sedative resistance");

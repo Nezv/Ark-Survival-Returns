@@ -51,9 +51,9 @@ final class FlyingGameTests {
         var player = h.makeMockPlayer(GameType.SURVIVAL);
         player.setPos(Vec3.atBottomCenterOf(nest));
         world.addFreshEntity(player);
-        h.assertTrue(NestBlock.takeEgg(world, nest, player), "Egg not collected");
-        h.assertFalse(NestBlock.takeEgg(world, nest, player), "Empty nest duplicated egg");
-        h.assertTrue(player.getInventory().countItem(ModContent.NEST_EGGS.get(Species.PTERANODON).get()) == 1, "Wrong collectible egg inventory");
+        h.assertFalse(world.getBlockState(nest).useWithoutItem(world, player, new net.minecraft.world.phys.BlockHitResult(
+                Vec3.atCenterOf(nest), net.minecraft.core.Direction.UP, nest, false)).consumesAction(), "A nest must have no use");
+        h.assertTrue(player.getInventory().isEmpty(), "A nest handed out an item");
         bird.discard(); player.discard();
         for (int x = 16; x < 112; x++) for (int z = 16; z < 112; z++) world.removeBlock(h.absolutePos(new BlockPos(x, 2, z)), false);
         h.assertTrue(world.getChunkSource().getLoadedChunksCount() == chunks, "Ecology forced chunk loads");
@@ -95,7 +95,7 @@ final class FlyingGameTests {
         });
         h.runAfterDelay(75, () -> {
             h.assertTrue(bird.flightPhase() == FlyingCreatureEntity.Phase.PERCH, "Bird failed to land/perch: " + bird.flightPhase() + " y=" + bird.getY());
-            h.assertTrue(NestBlock.takeEgg(world, nest, player), "Theft failed");
+            NestBlock.disturb(world, nest, player);
             h.assertTrue(player.getUUID().equals(bird.eggThief()), "Wrong thief selected");
             h.assertFalse(bird.doHurtTarget(world, bystander), "Bystander accepted as attack target");
         });
@@ -155,10 +155,9 @@ final class FlyingGameTests {
         bird.setPos(bird.position().add(0, 8, 0)); world.addFreshEntity(bird);
         var thief = h.makeMockPlayer(GameType.SURVIVAL);
         thief.setPos(Vec3.atBottomCenterOf(nest.east())); world.addFreshEntity(thief);
-        h.assertTrue(world.getBlockState(nest).useWithoutItem(world, thief,
-                new net.minecraft.world.phys.BlockHitResult(Vec3.atCenterOf(nest), net.minecraft.core.Direction.UP, nest, false)).consumesAction(), "Real nest interaction failed");
-        h.assertTrue(thief.getInventory().countItem(ModContent.NEST_EGGS.get(species).get()) == 1 && thief.getUUID().equals(bird.eggThief()),
-                "Ground thief did not collect and provoke the nest's bird");
+        var nestState = world.getBlockState(nest);
+        nestState.getBlock().playerWillDestroy(world, nest, nestState, thief);
+        h.assertTrue(thief.getUUID().equals(bird.eggThief()), "Breaking a nest with an egg did not provoke the nest's bird");
         thief.setPos(Vec3.atBottomCenterOf(nest.offset(8, 0, 0)));
         var bystander = h.makeMockPlayer(GameType.SURVIVAL);
         bystander.setPos(Vec3.atBottomCenterOf(nest.offset(-8, 0, 0))); world.addFreshEntity(bystander);

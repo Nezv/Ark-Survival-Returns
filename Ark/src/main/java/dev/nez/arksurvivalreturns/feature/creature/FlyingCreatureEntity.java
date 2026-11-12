@@ -464,9 +464,12 @@ public final class FlyingCreatureEntity extends CreatureEntity {
             return;
         }
         if (TorporService.restricted(this)) {
-            // Plain physics while unconscious: gravity applies, no powered flight, no fall-distance reset.
+            // Unconscious, the bird glides down on its wings and lands unhurt, where it can be fed (BUG-17).
             setNoGravity(false);
             super.travel(input);
+            var v = getDeltaMovement();
+            if (v.y < -0.25) setDeltaMovement(v.x * 0.9, -0.25, v.z * 0.9);
+            resetFallDistance();
             return;
         }
         // A tame standing on the ground walks and falls like any body on its feet.

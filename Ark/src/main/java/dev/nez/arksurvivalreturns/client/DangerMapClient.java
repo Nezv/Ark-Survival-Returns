@@ -23,7 +23,6 @@ public final class DangerMapClient {
     @SubscribeEvent public static void register(RegisterClientPayloadHandlersEvent event) {
         event.register(DangerMapPayload.TYPE, (payload, context) -> {
             profile = payload.unlocked() && payload.bandWidth() >= 96 && payload.bandWidth() <= 1024 ? payload : null;
-            if (!unlocked() && isMap(Minecraft.getInstance().screen)) Minecraft.getInstance().setScreen(null);
         });
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {

@@ -3,6 +3,6 @@
   "minVersion": "0.8.4",
   "package": "dev.nez.arksurvivalreturns.feature.theme.mixin",
   "compatibilityLevel": "JAVA_25",
-  "mixins": ["VanillaAdvancementsMixin"],
+  "mixins": ["VanillaAdvancementsMixin", "PassableLeavesMixin"],
   "injectors": { "defaultRequire": 1 }
 }

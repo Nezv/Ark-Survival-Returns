@@ -1,7 +1,7 @@
 {
   "type": "minecraft:function",
   "environment": "arksurvivalreturns:empty",
-  "function": "arksurvivalreturns:taming_aerial_feeding",
+  "function": "arksurvivalreturns:audit_tame_handover",
   "max_ticks": 400,
   "sky_access": true,
   "structure": "arksurvivalreturns:test_population"

@@ -369,7 +369,6 @@ def sprites():
     return {
         'plant_fiber': plant_fiber(),
         'fiber_bandage': fiber_bandage(),
-        **nest_eggs(),
         'pack_harness': pack_harness(),
         'reinforced_harness': reinforced_harness(),
         'hearty_stew': hearty_stew(),

@@ -137,7 +137,8 @@ public final class CompanionGoal extends Goal {
     private void follow() {
         var owner = CompanionService.owner(mob);
         if (owner == null || owner.level() != mob.level()) { mob.companionHold(); return; }
-        double distance = mob.distanceTo(owner);
+        // Measured from the body, not its centre: a 30-block animal stops beside its owner, not on top (BUG-22).
+        double distance = WildlifeSenses.bodyDistance(mob, owner);
         if (distance <= Config.COMPANION_FOLLOW_DISTANCE.get()) {
             mob.companionHold();
             mob.getLookControl().setLookAt(owner, 10, 10);

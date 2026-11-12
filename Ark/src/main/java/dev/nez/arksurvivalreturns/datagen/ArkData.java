@@ -74,6 +74,13 @@ public final class ArkData implements DataProvider {
                 Arrays.stream(values).map(v -> v.contains(":") ? v : "minecraft:" + v).toList()));
     }
     private void tags() {
+        // Storage that a tame's bulk Load and Unload may use (BUG-19); Tom's Storage blocks only when the mod is there.
+        put("data/" + NS + "/tags/block/cargo_storage", Map.of("replace", false, "values", List.of(
+                NS + ":storage_crate", "minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "#minecraft:shulker_boxes",
+                Map.of("id", "toms_storage:inventory_connector", "required", false),
+                Map.of("id", "toms_storage:inventory_cable_connector", "required", false),
+                Map.of("id", "toms_storage:inventory_proxy", "required", false),
+                Map.of("id", "toms_storage:filing_cabinet", "required", false))));
         // One range tag per species, from its range over the shipped biomes (SpeciesRange). The game itself
         // asks the range, so a biome this list has not seen yet still gets its animals; the tag is the readable
         // copy for the showcase and the place where a data pack adds a biome.
@@ -138,8 +145,8 @@ public final class ArkData implements DataProvider {
         en.put("itemGroup." + NS, "Ark Survival Returns");
         en.put("itemGroup." + NS + ".eggs", "Ark Creature Eggs");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
-        String[] mapKeys = {"locked", "locked_short", "unlocked", "status", "legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};
-        String[] mapEn = {"[ARK] Map locked. Requires taming a creature from a danger-3 region.", "Locked", "Unlocked", "%s: map %s", "Region difficulty", "Unrated dimension", "At cursor: %s/3", "1 - Easy", "2 - Dangerous", "3 - Deadly"};
+        String[] mapKeys = {"legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};
+        String[] mapEn = {"Region difficulty", "Unrated dimension", "At cursor: %s/3", "1 - Easy", "2 - Dangerous", "3 - Deadly"};
         for (int i = 0; i < mapKeys.length; i++) {
             en.put("map." + NS + "." + mapKeys[i], mapEn[i]);
         }
@@ -229,7 +236,6 @@ public final class ArkData implements DataProvider {
         // Entities without a spawn egg still show their type name in death messages, statistics and recipe viewers.
         en.put("entity." + NS + ".guardian_dragon", "Beacon Guardian");
         en.put("container." + NS + ".loot_crate", "Loot Crate");
-        en.put("entity." + NS + ".guardian_giganotosaurus", "Guardian Giganotosaurus");
         en.put("entity." + NS + ".tranquilizer_arrow", "Tranquilizer Arrow");
         tamingMessages(en);
         tribeMessages(en);
@@ -266,9 +272,7 @@ public final class ArkData implements DataProvider {
         for (var bird : Species.values()) {
             if (!bird.flyer()) continue;
             en.put("block." + NS + "." + bird.id + "_nest", bird.displayName + " Nest");
-            en.put("item." + NS + "." + bird.id + "_egg", bird.displayName + " Egg");
         }
-        model("allosaur_heart");
         model("workshop_schematic");
         model("guardian_trophy");
         PrimitiveData.lang(en);
@@ -321,7 +325,7 @@ public final class ArkData implements DataProvider {
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
                 """);
-        // Awarded by the guardian service when the tribe wins the First Guardian encounter.
+        // Awarded when a tribe brings down a beacon guardian.
         json("data/" + NS + "/advancement/journal/first_guardian", """
                 {"criteria":{"discovered":{"trigger":"minecraft:impossible"}},
                  "requirements":[["discovered"]]}
@@ -703,7 +707,8 @@ public final class ArkData implements DataProvider {
         en.put("downed." + NS + ".not_tribe", "Only a tribe member can revive them.");
         en.put("downed." + NS + ".denied", "You cannot do that while down.");
         en.put("hud.downed." + NS + ".title", "DOWNED");
-        en.put("hud.downed." + NS + ".hint", "A tribe member must use a fiber bandage");
+        en.put("hud.downed." + NS + ".hint", "Another survivor can revive you with a fiber bandage. Hold Sneak to give up.");
+        en.put("hud.downed." + NS + ".giving_up", "Giving up in %ss");
         en.put("hud.downed." + NS + ".seconds", "%ss");
     }
 
@@ -825,58 +830,23 @@ public final class ArkData implements DataProvider {
             else full.addAll(nestEgg(8, 8, 4, species == Species.PTERANODON ? 3.5 : 2.5));
             put("assets/"+NS+"/models/block/"+id, Map.of("textures",textures,"elements",full));
             put("assets/"+NS+"/blockstates/"+id, Map.of("variants",Map.of("egg=true",Map.of("model",NS+":block/"+id),"egg=false",Map.of("model",NS+":block/"+id+"_empty"))));
-            put("assets/"+NS+"/models/item/"+species.id+"_egg",Map.of("parent","minecraft:item/generated","textures",Map.of("layer0",NS+":item/"+species.id+"_egg")));
-            put("assets/"+NS+"/items/"+species.id+"_egg",Map.of("model",Map.of("type","minecraft:model","model",NS+":item/"+species.id+"_egg")));
+            // A nest drops nothing: the egg has no item (BUG-16).
             json("data/"+NS+"/loot_table/blocks/"+id, """
-                {"type":"minecraft:block","pools":[{"rolls":1,"conditions":[
-                 {"condition":"minecraft:survives_explosion"},
-                 {"condition":"minecraft:block_state_property","block":"%s:%s","properties":{"egg":"true"}}],
-                 "entries":[{"type":"minecraft:item","name":"%s:%s_egg"}]}]}
-                """.formatted(NS,id,NS,species.id));
+                {"type":"minecraft:block","pools":[]}
+                """);
         }
     }
     /**
      * Vanilla-style biome spawn lists. The compiled weight and group size are baked here; the
      * runtime placement predicate still applies the danger/level gate.
      */
-    /** First Guardian encounter text: the item names, the bar and every activation outcome. */
+    /** Beacon guardian items. */
     private void guardianMessages(Map<String, String> en) {
-        en.put("item." + NS + ".allosaur_heart", "Allosaur Heart");
         en.put("item." + NS + ".workshop_schematic", "Workshop Schematic");
         en.put("item." + NS + ".guardian_trophy", "Guardian Trophy");
-        en.put("tooltip." + NS + ".allosaur_heart",
-                "Encounter key. Offer it at a block beneath an Ancient Remnants monolith to summon the First Guardian.");
-        en.put("tooltip." + NS + ".workshop_schematic",
-                "Proof of the First Guardian's defeat. The tribe's workshop research is already recorded; this is a memento.");
+        en.put("tooltip." + NS + ".workshop_schematic", "Proof that your tribe brought down a beacon guardian. A memento.");
         en.put("tooltip." + NS + ".guardian_trophy", "Trophy taken from a Beacon Guardian.");
-        en.put("guardian." + NS + ".name", "Guardian Giganotosaurus");
-        en.put("guardian." + NS + ".bar", "%s | %s/%s");
-        String[] keys = {"requires_mod", "no_monolith", "active", "resetting", "downed", "chunks", "no_room",
-                "failed", "awakened", "reawakened", "retreated", "victory", "status_line", "status_health",
-                "status_none", "command.reset", "command.clear", "command.grant", "claimed"};
-        String[] english = {
-                "[ARK] The First Guardian sleeps inside Ancient Remnants monoliths. Install the mod to continue this hunt.",
-                "[ARK] Offer the heart at a block directly beneath the monolith.",
-                "[ARK] A Guardian already owns this monolith.",
-                "[ARK] The monolith is still calming. The rite resumes shortly.",
-                "[ARK] You cannot perform the rite while downed.",
-                "[ARK] The arena is not fully loaded yet.",
-                "[ARK] There is no clear ground for the Guardian to rise here.",
-                "[ARK] The rite failed; your heart is untouched.",
-                "[ARK] The Allosaur Heart burns away. The Guardian awakens!",
-                "[ARK] The rite flares again. The Guardian returns!",
-                "[ARK] The Guardian loses interest and returns to its slumber. The rite remains unlocked.",
-                "[ARK] The First Guardian falls. The tribe earns the Workshop Schematic.",
-                "[ARK] Guardian %s at %s, %s, %s",
-                "| %s/%s HP",
-                "[ARK] No guardian encounter is recorded for your tribe.",
-                "[ARK] The nearest encounter was reset to a free retry.",
-                "[ARK] The nearest encounter record was removed.",
-                "[ARK] Granted the Workshop Schematic to %s.",
-                "[ARK] Another tribe paid for this rite. Only they can wake the Guardian again."};
-        for (int i = 0; i < keys.length; i++) {
-            en.put("guardian." + NS + "." + keys[i], english[i]);
-        }
+        en.put("guardian." + NS + ".victory", "[ARK] The First Guardian falls. The tribe earns the Workshop Schematic.");
     }
 
     /** Technology tree text: completion and gate announcements plus the /arktech feedback. */
@@ -957,7 +927,6 @@ public final class ArkData implements DataProvider {
         put("data/" + NS + "/test_environment/population", spawningRules);
         // Guardian tests own a small batch: the encounter spawns an oversized boss and must not
         // contend with the timing-sensitive combat suite in the shared empty batch.
-        put("data/" + NS + "/test_environment/guardian", spawningRules);
         put("data/" + NS + "/test_environment/tech", spawningRules);
         put("data/" + NS + "/test_instance/population", Map.of("type", "minecraft:function", "function", NS + ":population",
                 "environment", NS + ":population", "structure", NS + ":test_population", "max_ticks", 200, "sky_access", true));
@@ -978,10 +947,15 @@ public final class ArkData implements DataProvider {
         // Taming: the roster and rule checks are quick, the riding and feeding suites own the large plot.
         for (String name : List.of("taming_roster", "taming_torpor", "taming_passive_feeding",
                 "taming_knockout_feeding", "taming_wake_before_completion", "taming_persistence",
-                "taming_player_sedation", "taming_aerial_feeding", "taming_completion",
+                "taming_player_sedation", "taming_completion",
                 "taming_claim_expiry", "taming_ordinary_mob", "companion", "tribe_permissions", "journal_pack",
-                "journal_taming_unlock", "camp_starter_kit", "camp_bedroll_spawn", "camp_mattress_sleep",
+                "camp_starter_kit", "camp_bedroll_spawn", "camp_mattress_sleep",
                 "downed_revive", "downed_bleed_out", "downed_mitigated"))
+            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
+                    "function", NS + ":" + name, "environment", NS + ":empty",
+                    "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        // The fixes of the phase 2 audit (A02); the sedative test ticks a ten-minute sleep by hand.
+        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
@@ -1000,11 +974,6 @@ public final class ArkData implements DataProvider {
         for (String name : List.of("spawn_ledger_density", "spawn_ledger_feedback", "spawn_ranges", "spawn_sight", "spawn_register", "spawn_biome", "spawn_silent"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
-                    "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
-        for (String name : List.of("guardian_heart", "guardian_policy", "guardian_registration",
-                "guardian_persistence", "guardian_rewards", "guardian_hit_and_save", "guardian_orphan"))
-            put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
-                    "function", NS + ":" + name, "environment", NS + ":guardian",
                     "structure", NS + ":test_population", "max_ticks", 300, "sky_access", true));
         for (String name : List.of("primitive_rocks", "primitive_fire", "primitive_forge", "primitive_curing", "primitive_gates",
                 "primitive_tall_stations", "primitive_keratin", "stations", "station_guards", "recipe_decisions",

@@ -29,7 +29,7 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Shared behaviour for the mod's two sleeping props: the disposable {@link MattressBlock} (Prehistoric)
- * and the reusable {@link BedrollBlock} (Bronze Age). Every cell is a separate block instance sharing a
+ * and the reusable {@link BedrollBlock} (a level 0 craft). Every cell is a separate block instance sharing a
  * {@code FACING} property; each subclass supplies its own footprint (how many cells make up one instance,
  * and where they sit relative to the placement position) since the two use very different assets.
  *

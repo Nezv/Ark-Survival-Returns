@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.EventHooks;
 
 public final class WorkstationCrafting {
     public static boolean craft(ServerPlayer player, WorkstationPayload.Craft packet) {
+        if (dev.nez.arksurvivalreturns.feature.recovery.DownedHandler.incapacitated(player)) return false;
         // A bench's own menu, or the Ark inventory for the inventory's graph drawn inside it.
         var menu = player.containerMenu;
         boolean open = menu instanceof WorkstationMenu bench ? bench.station.equals(packet.station())

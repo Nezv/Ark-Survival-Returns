@@ -38,6 +38,9 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 public final class CargoTransferService {
     private static final int MAX_CONTAINERS = 16;
     private static final int VERTICAL_REACH = 4;
+    /** Blocks bulk Load and Unload may use. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> CARGO_STORAGE = net.minecraft.tags.TagKey.create(
+            net.minecraft.core.registries.Registries.BLOCK, dev.nez.arksurvivalreturns.ArkSurvivalReturns.id("cargo_storage"));
 
     public static int unload(ServerPlayer player, CreatureEntity creature) {
         return transfer(player, creature, false);
@@ -51,7 +54,9 @@ public final class CargoTransferService {
         if (!(creature.level() instanceof ServerLevel level) || player.level() != level) return 0;
         List<Container> containers = new ArrayList<>();
         List<ResourceHandler<ItemResource>> handlers = new ArrayList<>();
-        nearbyStorage(level, player, creature.blockPosition(), Config.CARGO_TRANSFER_RADIUS.get(), containers, handlers);
+        // The radius counts from the flank of the body, not its centre block, which a giant covers (BUG-22).
+        int reach = Config.CARGO_TRANSFER_RADIUS.get() + (int) Math.ceil(creature.getBbWidth() / 2);
+        nearbyStorage(level, player, creature.blockPosition(), reach, containers, handlers);
         if (containers.isEmpty() && handlers.isEmpty()) return 0;
         Container cargo = creature.tamingInventory();
         double ceiling = MassRules.enabled()
@@ -202,7 +207,8 @@ public final class CargoTransferService {
                             if (++visited > maxPositions) return;
                             BlockPos pos = new BlockPos(x, y, z);
                             BlockEntity entity = level.getBlockEntity(pos);
-                            if (entity == null) continue;
+                            // Only storage: never a cooking pot, a crusher or a loot crate (BUG-19).
+                            if (entity == null || !level.getBlockState(pos).is(CARGO_STORAGE)) continue;
                             if (entity instanceof Container container) {
                                 if (!usable(level, player, pos, entity) || !inSight(level, player, pos)) continue;
                                 containers.add(container);

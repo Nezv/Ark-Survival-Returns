@@ -17,7 +17,7 @@
       "predator": false,
       "realm": "air",
       "size": "medium",
-      "taming": "aerial",
+      "taming": "knockout",
       "width": 1.8
     },
     {
@@ -57,7 +57,7 @@
       "predator": false,
       "realm": "air",
       "size": "medium",
-      "taming": "aerial",
+      "taming": "knockout",
       "width": 2.4
     },
     {
@@ -777,7 +777,7 @@
       "predator": false,
       "realm": "air",
       "size": "small",
-      "taming": "aerial",
+      "taming": "knockout",
       "width": 0.4
     },
     {
@@ -797,7 +797,7 @@
       "predator": false,
       "realm": "air",
       "size": "large",
-      "taming": "aerial",
+      "taming": "knockout",
       "width": 2.4
     },
     {
@@ -817,7 +817,7 @@
       "predator": true,
       "realm": "air",
       "size": "large",
-      "taming": "aerial",
+      "taming": "knockout",
       "width": 2.2
     }
   ]

@@ -42,18 +42,30 @@ public final class AquaticCreatureEntity extends CreatureEntity {
     @Override protected WildlifeController createController() { return new AquaticGoal(this); }
     @Override public boolean canBreatheUnderwater() { return true; }
     @Override public boolean isPushedByFluid() { return false; }
-    /** A ridden swimmer follows the rider; an unconscious one simply sinks and drifts. */
+    /** A ridden swimmer follows the rider; an unconscious one floats up and lies at the surface (BUG-17). */
     @Override public void travel(Vec3 input) {
         if (isRidden()) {
+            // A knock-out clears the flag; a mount that was knocked out must not fall through the water after (BUG-18).
+            setNoGravity(true);
             // In water vanilla uses the water push, which used to be a fixed 0.02 (2 blocks a second, BUG-03).
             travelFlying(overloadAdjusted(input), CreatureRideController.riddenSpeed(this, rideProfile()), 0.02f, 0.02f);
             return;
         }
         if (TorporService.restricted(this)) {
+            if (isInWater()) {
+                // Afloat until its eyes break the surface, where a player can reach it and feed it.
+                setNoGravity(true);
+                var v = getDeltaMovement();
+                double lift = isUnderWater() ? 0.04 : -0.005;
+                setDeltaMovement(v.x * 0.8, Math.clamp(v.y * 0.8 + lift, -0.1, 0.2), v.z * 0.8);
+                move(net.minecraft.world.entity.MoverType.SELF, getDeltaMovement());
+                return;
+            }
             setNoGravity(false);
             super.travel(input);
             return;
         }
+        setNoGravity(true);
         travelFlying(Vec3.ZERO, 0);
         resetFallDistance();
     }

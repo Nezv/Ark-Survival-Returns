@@ -8,7 +8,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -147,8 +146,8 @@ public final class PrimitiveForgeBlockEntity extends BlockEntity {
             ItemStack taken = items.get(slot);
             items.set(slot, ItemStack.EMPTY);
             if (slot == INPUT) smeltTicks = 0;
-            if (slot == OUTPUT && level instanceof ServerLevel server && experience > 0) {
-                ExperienceOrb.award(server, net.minecraft.world.phys.Vec3.atCenterOf(worldPosition), (int) Math.floor(experience));
+            // Vanilla experience has no use under Ark's levels: the forge pays none (BUG-19).
+            if (slot == OUTPUT && experience > 0) {
                 experience = 0;
             }
             setChanged();
