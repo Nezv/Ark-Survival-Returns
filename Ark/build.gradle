@@ -70,6 +70,9 @@ neoForge {
             if (project.hasProperty('arkScreens')) systemProperty 'arksurvivalreturns.screens', project.property('arkScreens').toString()
             // The testing ground walked and pictured (tools/testground_tour.py): the folder the pictures go to.
             if (project.hasProperty('arkTestGround')) systemProperty 'arksurvivalreturns.testground', project.property('arkTestGround').toString()
+            // The playthrough run (tools/playthrough_run.py, F43): the folder its events go to, and the routine.
+            if (project.hasProperty('arkPlaythrough')) systemProperty 'arksurvivalreturns.playthrough', project.property('arkPlaythrough').toString()
+            if (project.hasProperty('arkRoutine')) systemProperty 'arksurvivalreturns.playthrough.routine', project.property('arkRoutine').toString()
             // The way out and back (-ParkPath=return): how far on it starts, how long it stands, how far it flies, how long it stays away and stays back.
             ['Path', 'Teleport', 'Arrive', 'Out', 'Hold', 'Home'].each { name ->
                 if (project.hasProperty("ark${name}")) systemProperty "arksurvivalreturns.benchmark.${name.toLowerCase()}", project.property("ark${name}").toString()
