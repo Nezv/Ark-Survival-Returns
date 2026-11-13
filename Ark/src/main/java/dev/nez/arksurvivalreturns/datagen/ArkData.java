@@ -145,6 +145,9 @@ public final class ArkData implements DataProvider {
         en.put("itemGroup." + NS, "Ark Survival Returns");
         en.put("itemGroup." + NS + ".eggs", "Ark Creature Eggs");
         en.put("map." + NS + ".filter_on", "Difficulty: on"); en.put("map." + NS + ".filter_off", "Difficulty: off");
+        en.put("key." + NS + ".tribe_map", "Tribe Map");
+        en.put("map." + NS + ".title", "Tribe Map");
+        en.put("map." + NS + ".hint", "Drag to pan, scroll to zoom, D: danger zones");
         String[] mapKeys = {"legend", "unrated", "cursor", "rank_1", "rank_2", "rank_3"};
         String[] mapEn = {"Region difficulty", "Unrated dimension", "At cursor: %s/3", "1 - Easy", "2 - Dangerous", "3 - Deadly"};
         for (int i = 0; i < mapKeys.length; i++) {
@@ -955,7 +958,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
         // The fixes of the phase 2 audit (A02); the sedative test ticks a ten-minute sleep by hand.
-        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress", "audit_resting_body"))
+        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress", "audit_resting_body", "audit_tribe_map"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

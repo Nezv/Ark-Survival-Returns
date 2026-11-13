@@ -27,6 +27,11 @@ public final class TribeEvents {
     public static void mergeProgress(net.minecraft.server.level.ServerLevel level, java.util.UUID from, java.util.UUID into) {
         dev.nez.arksurvivalreturns.feature.tech.TechProgressData.get(level).merge(from, into);
         dev.nez.arksurvivalreturns.feature.guardian.TribeProgressData.get(level).merge(from, into);
+        // The explored map follows too (A01 OPT-14); the party's members get it again from the start.
+        if (dev.nez.arksurvivalreturns.feature.map.TribeMapData.get(level).merge(from, into))
+            for (var member : level.getServer().getPlayerList().getPlayers())
+                if (dev.nez.arksurvivalreturns.feature.tech.TechService.tribeOf(member).equals(into))
+                    dev.nez.arksurvivalreturns.feature.map.TribeMapService.queueAll(member);
     }
 
     private TribeEvents() {}

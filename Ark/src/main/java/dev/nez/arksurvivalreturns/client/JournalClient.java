@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class JournalClient {
     /** The Ark Survival Returns category of the Controls screen; the command wheel's key sits in it too. */
-    static final KeyMapping.Category CATEGORY = new KeyMapping.Category(ArkSurvivalReturns.id("keys"));
+    public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(ArkSurvivalReturns.id("keys"));
     private static final KeyMapping OPEN_JOURNAL = new KeyMapping("key.arksurvivalreturns.journal",
             InputConstants.Type.KEYSYM, InputConstants.KEY_J, CATEGORY);
 

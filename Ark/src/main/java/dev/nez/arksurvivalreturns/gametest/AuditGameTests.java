@@ -237,5 +237,22 @@ final class AuditGameTests {
         });
     }
 
+    /** A01 OPT-14: the chunks around a player go into their tribe's map, coloured, once each. */
+    static void tribeMap(GameTestHelper h) {
+        var world = h.getLevel();
+        var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(world, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "ArkMapper"));
+        player.setPos(Vec3.atBottomCenterOf(h.absolutePos(new BlockPos(16, 3, 16))));
+        int first = dev.nez.arksurvivalreturns.feature.map.TribeMapService.record(player);
+        var data = dev.nez.arksurvivalreturns.feature.map.TribeMapData.get(world);
+        var tribe = dev.nez.arksurvivalreturns.feature.tech.TechService.tribeOf(player);
+        long here = net.minecraft.world.level.ChunkPos.pack(player.getBlockX() >> 4, player.getBlockZ() >> 4);
+        h.assertTrue(first > 0 && data.has(tribe, here), "The chunk the player stands in was not mapped");
+        byte[] colours = data.chunks(tribe).get(here);
+        boolean painted = false;
+        for (byte b : colours) painted |= b != 0;
+        h.assertTrue(colours.length == 256 && painted, "A mapped chunk has no colours");
+        h.succeed();
+    }
+
     private AuditGameTests() {}
 }
