@@ -216,5 +216,26 @@ final class AuditGameTests {
         h.succeed();
     }
 
+    /** A01 OPT-12: a resting body ticks its physics on a slower beat but still falls when its ground goes. */
+    static void restingBody(GameTestHelper h) {
+        var world = h.getLevel();
+        BlockPos floor = new BlockPos(24, 4, 24);
+        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) h.setBlock(floor.offset(x, 0, z), Blocks.STONE);
+        var creature = create(h, Species.PARASAUR, floor.above());
+        creature.setNoAi(false);
+        world.addFreshEntity(creature);
+        TorporService.sedate(creature, TorporService.of(creature).maximum() * 4, null, "test");
+        h.runAfterDelay(60, () -> {
+            h.assertTrue(TorporService.restricted(creature) && creature.onGround(), "The test animal did not lie on the floor");
+            double y = creature.getY();
+            for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) h.setBlock(floor.offset(x, 0, z), Blocks.AIR);
+            h.runAfterDelay(20, () -> {
+                h.assertTrue(creature.getY() < y - 0.5, "A resting body did not fall when its ground was removed: " + y + " -> " + creature.getY());
+                creature.discard();
+                h.succeed();
+            });
+        });
+    }
+
     private AuditGameTests() {}
 }

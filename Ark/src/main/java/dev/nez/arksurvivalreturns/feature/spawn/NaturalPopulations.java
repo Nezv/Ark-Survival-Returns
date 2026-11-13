@@ -114,6 +114,18 @@ public final class NaturalPopulations {
 
     public static boolean ledger() { return Config.POPULATION_MODEL.get() == Model.LEDGER; }
 
+    private static final Map<Integer, List<int[]>> RINGS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** The chunk offsets of a square of this reach, nearest to its centre first. */
+    static List<int[]> nearestFirst(int reach) {
+        return RINGS.computeIfAbsent(reach, r -> {
+            var offsets = new ArrayList<int[]>();
+            for (int dz = -r; dz <= r; dz++) for (int dx = -r; dx <= r; dx++) offsets.add(new int[] {dx, dz});
+            offsets.sort(java.util.Comparator.comparingInt(o -> o[0] * o[0] + o[1] * o[1]));
+            return List.copyOf(offsets);
+        });
+    }
+
     @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
         var server = event.getServer();
         if (server.getTickCount() % Config.POPULATION_INTERVAL.get() != 0) return;
@@ -124,13 +136,28 @@ public final class NaturalPopulations {
             return;
         }
         var players = level.players().stream().filter(player -> !player.isSpectator()).toList();
-        if (!players.isEmpty()) enforce(level, players);
+        if (!players.isEmpty()) enforce(level, players, true);
     }
 
     @SubscribeEvent public static void stopped(ServerStoppedEvent event) { LAST_SEEN.clear(); LAST_CHUNK.clear(); CENSUS.clear(); }
 
-    /** One budget pass; also the deterministic entry point for the headless tests. */
+    /** One full budget pass: every chunk in reach is settled at once. The deterministic entry point for the headless tests. */
     public static void enforce(ServerLevel level, List<? extends Player> players) {
+        enforce(level, players, false);
+    }
+
+    /**
+     * New chunks a budgeted pass settles at most, nearest first (A01 OPT-07). The first pass over land nobody had been to
+     * used to settle every chunk in reach in one tick (0.6 to 1 s); the rest now wait a pass or two, out of sight anyway.
+     */
+    public static final int FRESH_PER_PASS = 48;
+    /** Nanoseconds a budgeted pass spends surveying new chunks before it leaves the rest for the next pass. */
+    private static final long SURVEY_BUDGET_NANOS = 4_000_000L;
+    private static volatile boolean budgeted;
+
+    /** One budget pass; a budgeted one settles at most {@link #FRESH_PER_PASS} new chunks. */
+    public static void enforce(ServerLevel level, List<? extends Player> players, boolean budget) {
+        budgeted = budget;
         boolean ledger = ledger();
         long began = SessionRecorder.on() ? System.nanoTime() : 0;
         var wilds = loadedWildlife(level);
@@ -215,17 +242,22 @@ public final class NaturalPopulations {
             if (last != null && Math.abs(last.getMinBlockX() - here.getMinBlockX()) <= 64 && Math.abs(last.getMinBlockZ() - here.getMinBlockZ()) <= 64)
                 watchers.add(player);
         }
+        long surveyUntil = System.nanoTime() + SURVEY_BUDGET_NANOS;
+        boolean full = !budgeted;
         for (var player : players) {
             int centreX = player.getBlockX() >> 4, centreZ = player.getBlockZ() >> 4;
-            for (int dz = -reach; dz <= reach; dz++) for (int dx = -reach; dx <= reach; dx++) {
-                int chunkX = centreX + dx, chunkZ = centreZ + dz;
+            for (int[] offset : nearestFirst(reach)) {
+                int chunkX = centreX + offset[0], chunkZ = centreZ + offset[1];
                 var chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
                 if (chunk == null) continue;
                 var tile = land.tile(level, chunkX, chunkZ);
+                boolean settled = land.settled(tile, chunkX, chunkZ);
+                // Over budget, new land waits for a later pass: it is neither surveyed nor settled now.
+                if (!full && !settled && (fresh.size() >= FRESH_PER_PASS || System.nanoTime() > surveyUntil)) continue;
                 land.survey(level, tile, chunk);
                 var region = land.region(tile, chunkX, chunkZ);
                 inReach.computeIfAbsent(region, ignored -> new ArrayList<>()).add(new ChunkPos(chunkX, chunkZ));
-                if (land.settled(tile, chunkX, chunkZ)) continue;
+                if (settled) continue;
                 land.settle(tile, chunkX, chunkZ);
                 fresh.add(new Fresh(tile, region, chunkX, chunkZ));
             }

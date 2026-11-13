@@ -52,7 +52,7 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue NIGHTTIME;
     public static final ModConfigSpec.IntValue NIGHT_START, NIGHT_END, NIGHT_TRANSITION, SLEEP_CALM;
     public static final ModConfigSpec.DoubleValue NIGHT_HUNGER, NIGHT_VISION, DAY_SLEEP, WAKE_DISTANCE;
-    public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS, TRAMPLE_TREES;
+    public static final ModConfigSpec.BooleanValue BEHAVIOR_TIERS, TRAMPLE_TREES, RESTING_BODIES;
     public static final ModConfigSpec.IntValue TIER_FULL_RADIUS, TIER_AMBIENT_RADIUS, TIER_DORMANT_RADIUS, TIER_MARGIN;
     public static final ModConfigSpec.IntValue ARGENT_NEST_Y, NEST_WATER_RADIUS, PTERO_ROAM_RADIUS, ARGENT_ROAM_RADIUS, FLIGHT_LEASH, EGG_DEFENSE_TICKS;
     public static final ModConfigSpec.BooleanValue PERCHING;
@@ -544,6 +544,10 @@ public final class Config {
                         + "fleeing, timed transitions). Mid: a cheap ambient routine (walk, turn, stop, graze, sleep on schedule). "
                         + "Far: no routine. Disable to run the full behaviour for every loaded creature.")
                 .define("distanceTiers", true);
+        RESTING_BODIES = b.comment("A creature asleep, resting or far from every player, standing still on dry ground, moves and checks the "
+                        + "blocks it touches every fourth tick (every tenth when far) instead of every tick; anything that ends its rest "
+                        + "restores full ticking at once.")
+                .define("restingBodies", true);
         TIER_FULL_RADIUS = b.comment("Creatures within this many blocks of a player run the full behaviour.")
                 .defineInRange("fullRadius", 64, 16, 256);
         TIER_AMBIENT_RADIUS = b.comment("Beyond the full radius and within this one: the ambient routine.")

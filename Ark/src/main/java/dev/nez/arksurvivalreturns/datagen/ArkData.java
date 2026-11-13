@@ -955,7 +955,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
         // The fixes of the phase 2 audit (A02); the sedative test ticks a ten-minute sleep by hand.
-        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress"))
+        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress", "audit_resting_body"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

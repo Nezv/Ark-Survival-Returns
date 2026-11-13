@@ -776,6 +776,41 @@ public class CreatureEntity extends PathfinderMob implements GeoEntity, OwnableE
         double dx = getX() - xo, dy = getY() - yo, dz = getZ() - zo;
         locomotion.update(Math.sqrt(dx * dx + dy * dy + dz * dz) * 20);
     }
+    /**
+     * A body at rest (A01 OPT-12): on dry ground and still, with no path, rider, target or fresh hit, and asleep,
+     * resting or in the dormant tier; a tame only on a STAY order. Its movement and block contact are what a creature
+     * costs the server, not its mind, so they run on a slower beat while nothing can change them.
+     */
+    private boolean bodyAtRest() {
+        if (level().isClientSide() || !Config.RESTING_BODIES.get() || !isAlive()) return false;
+        if (!onGround() || isInWater() || isInLava() || isVehicle() || isPassenger() || hurtTime > 0 || getTarget() != null) return false;
+        if (getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 || !getNavigation().isDone() || pendingStrike != null) return false;
+        if (isTamed() && dev.nez.arksurvivalreturns.feature.companion.CompanionService.of(this).order()
+                != dev.nez.arksurvivalreturns.feature.companion.CompanionOrder.STAY) return false;
+        return behaviorTier == BehaviorTier.DORMANT || behavior().sleeping() || TorporService.restricted(this);
+    }
+
+    /** True on the ticks a resting body still runs its physics. */
+    private boolean bodyDue() {
+        int beat = behaviorTier == BehaviorTier.DORMANT ? 10 : 4;
+        return Math.floorMod(tickCount + getId(), beat) == 0;
+    }
+
+    @Override public void travel(Vec3 input) {
+        if (bodyAtRest() && !bodyDue()) return;
+        super.travel(input);
+    }
+
+    @Override protected void applyEffectsFromBlocks() {
+        if (bodyAtRest() && !bodyDue()) return;
+        super.applyEffectsFromBlocks();
+    }
+
+    @Override protected void pushEntities() {
+        if (bodyAtRest() && !bodyDue()) return;
+        super.pushEntities();
+    }
+
     /** Real travel with hysteresis; never GeckoLib's smoothed render-state movement flag. */
     public boolean isLocomoting() { return locomotion.moving(); }
     /** Companion steering entry point; realm classes override the hooks, never this contract. */
