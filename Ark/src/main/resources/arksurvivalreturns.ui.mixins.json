@@ -4,6 +4,6 @@
   "package": "dev.nez.arksurvivalreturns.client.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": ["StorageBackgroundMixin", "StorageLabelsMixin", "TomTerminalMixin", "TomLinkLabelsMixin",
-    "MenuColumnMixin", "CreateWorldTabsMixin"],
+    "MenuColumnMixin", "CreateWorldTabsMixin", "GrassBuildCapMixin"],
   "injectors": { "defaultRequire": 1 }
 }

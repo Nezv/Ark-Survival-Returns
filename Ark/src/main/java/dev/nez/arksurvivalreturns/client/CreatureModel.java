@@ -37,7 +37,7 @@ final class CreatureModel extends GeoModel<CreatureEntity> {
         return models[Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), models.length)];
     }
     @Override public Identifier getTextureResource(GeoRenderState state) {
-        return textures[Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), textures.length)];
+        return CreatureTextureBudget.used(textures[Math.floorMod(state.getOrDefaultGeckolibData(TEXTURE_VARIANT, 0), textures.length)]);
     }
     @Override public Identifier getAnimationResource(CreatureEntity creature) {
         int variant = creature instanceof dev.nez.arksurvivalreturns.feature.guardian.GuardianDragonEntity dragon
