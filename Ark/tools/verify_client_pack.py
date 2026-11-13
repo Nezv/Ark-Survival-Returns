@@ -18,6 +18,9 @@ INTEGRATED_STANDALONE_GLOBS = (
 )
 
 
+TUNED_CLIENT_FILES = ["DistantHorizons.toml", "sodium-options.json", "grassiergrass-client.toml", "iris.properties"]
+
+
 def verify_shader_defaults(manifest):
     """Reject misspelled options and out-of-range values against the exact pinned shader."""
     defaults = ROOT / 'config/client-defaults'
@@ -84,6 +87,10 @@ def verify():
     for entry in manifest["entries"]:
         folder = ROOT / ("run/shaderpacks" if entry["kind"] == "shader" else "client-mods")
         path = folder / entry["filename"]
+        if not path.is_file():
+            # A shader pack may be kept under its shipped name (Iris selects shaderpacks/Ark-Photon.zip): find it by hash.
+            path = next((p for p in folder.glob("*.zip") if p.stat().st_size == entry["size"]
+                         and hashlib.sha512(p.read_bytes()).hexdigest() == entry["sha512"]), path)
         content = path.read_bytes()
         assert len(content) == entry["size"], f"Wrong size: {path.name}"
         assert hashlib.sha512(content).hexdigest() == entry["sha512"], f"Checksum mismatch: {path.name}"
@@ -105,6 +112,10 @@ def verify():
         assert required in mods or required in {"minecraft", "neoforge"}, f"{owner} requires missing {required}"
     shaders = sum(1 for entry in manifest["entries"] if entry["kind"] == "shader")
     verify_shader_defaults(manifest)
+    # The tuned settings the benchmarks ran with ship with the pack (A01 OPT-15, OPT-17).
+    defaults = ROOT / "config/client-defaults/config"
+    for tuned in TUNED_CLIENT_FILES:
+        assert (defaults / tuned).is_file(), f"Tuned client file missing from config/client-defaults: {tuned}"
     print(f"Verified {len(expected)} pinned NeoForge JARs, {shaders} shader packs, checksums and required mod IDs.")
     print("Embedded XaeroLib:", mods["xaerolib"])
     print("Rendering/audio compatibility still requires the user's client playtest.")

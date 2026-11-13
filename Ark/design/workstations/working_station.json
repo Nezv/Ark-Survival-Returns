@@ -36,7 +36,8 @@
         {"group": "rest", "title": "Rest and storage", "icon": "arksurvivalreturns:mattress", "items": [
           {"item": "arksurvivalreturns:mattress", "cost": {"arksurvivalreturns:plant_fiber": 24, "minecraft:stick": 4}},
           {"item": "arksurvivalreturns:bedroll", "cost": {"arksurvivalreturns:mattress": 1, "minecraft:leather": 4, "arksurvivalreturns:plant_fiber": 8}},
-          {"item": "arksurvivalreturns:storage_crate", "cost": {"#minecraft:planks": 16, "arksurvivalreturns:plant_fiber": 6}}
+          {"item": "arksurvivalreturns:storage_crate", "cost": {"#minecraft:planks": 16, "arksurvivalreturns:plant_fiber": 6}},
+          {"item": "minecraft:string", "cost": {"arksurvivalreturns:plant_fiber": 3}}
         ]}
       ]
     },

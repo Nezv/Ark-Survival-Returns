@@ -467,6 +467,30 @@ def summarise(folder: Path) -> dict | None:
             "brought_forward": window.get("brought_forward"), "phases": phases}
 
 
+def gate(results: list[dict]) -> int:
+    """The budget of A01 OPT-01: 1 when a valid full-stack run is under a target (or a server tick over it) beyond the noise."""
+    budget = json.loads((Path(__file__).resolve().parents[1] / "design/performance/budget.json").read_text(encoding="utf-8"))
+    noise, failures = budget["noise"], []
+    for result in results:
+        if result["setup"] != "full":
+            continue
+        for phase, limits in budget["phases"].items():
+            row = result["phases"].get(phase)
+            if not row or not row.get("valid"):
+                continue
+            for key, target in limits.items():
+                value = row.get(key)
+                if value is None:
+                    continue
+                over = key.endswith("_ms")
+                if (value > target * (1 + noise)) if over else (value < target * (1 - noise)):
+                    failures.append(f"{phase} {key} {value} against {target}")
+    for failure in failures:
+        print("BUDGET:", failure)
+    print("Budget met." if not failures else f"{len(failures)} budget line(s) missed.")
+    return 1 if failures else 0
+
+
 def table(results: list[dict]):
     print(f"\n{'setup':<10}{'phase':<8}{'fps':>7}{'1% low':>8}{'p50 ms':>8}{'p99 ms':>8}{'max ms':>8}{'>50ms':>6}{'card %':>7}"
           f"{'VRAM':>6}{'render':>7}{'server':>7}{'others':>7}{'GC ms':>7}{'mobs':>6}{'ours':>6}{'far':>5}  limit / valid")
@@ -538,12 +562,14 @@ def main() -> int:
                         help="a value of Ark's server configuration for the played copy alone, as toml: spawning.silentRoundDays=0.05")
     parser.add_argument("--timeout", type=int, help="seconds before a client is closed by force (default 600, 900 on the way out and back; none with --pregen)")
     parser.add_argument("--summarise", help="only print the table of an earlier run's folder under run/diagnostics/bench")
+    parser.add_argument("--gate", action="store_true",
+                        help="exit non-zero when a valid 'full' run misses design/performance/budget.json by more than its noise")
     arguments = parser.parse_args()
 
     if arguments.summarise:
         results = [result for folder in sorted((BENCH / arguments.summarise).iterdir()) if folder.is_dir() and (result := summarise(folder))]
         table(results)
-        return 0
+        return gate(results) if arguments.gate else 0
     if run.clients():
         sys.exit("a dev client is already running; close it first")
     if (arguments.biome or arguments.pregen) and not arguments.prepare:
@@ -641,6 +667,7 @@ def main() -> int:
             run.drop_copy()
     (stamp / "summary.json").write_text(json.dumps(results, indent=1), encoding="utf-8")
     table(results)
+    if arguments.gate and gate(results): return 1
     return 0 if len(results) == len(names) * arguments.repeat else 1
 
 

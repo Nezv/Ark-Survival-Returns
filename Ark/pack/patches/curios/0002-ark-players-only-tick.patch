@@ -1,0 +1,16 @@
+diff --git a/src/main/java/top/theillusivec4/curios/common/CuriosCommonEvents.java b/src/main/java/top/theillusivec4/curios/common/CuriosCommonEvents.java
+index 0530d67..d775b93 100644
+--- a/src/main/java/top/theillusivec4/curios/common/CuriosCommonEvents.java
++++ b/src/main/java/top/theillusivec4/curios/common/CuriosCommonEvents.java
+@@ -470,6 +470,11 @@ public class CuriosCommonEvents {
+   @SubscribeEvent
+   public void tick(EntityTickEvent.Post evt) {
+     Entity entity = evt.getEntity();
++
++    // Ark: only players wear curios in this pack; every other entity skips the per-tick inventory lookup.
++    if (!(entity instanceof Player)) {
++      return;
++    }
+     MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+ 
+     if (server != null && !server.isDedicatedServer()) {

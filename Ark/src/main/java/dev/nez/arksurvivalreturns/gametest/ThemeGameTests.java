@@ -129,7 +129,7 @@ final class ThemeGameTests {
             h.assertTrue(set != null, "Unknown structure set " + id);
             h.assertTrue(set.structures().isEmpty(), "Structure set still places " + id);
         }
-        for (String id : List.of("villages", "mineshafts", "ocean_ruins", "shipwrecks")) {
+        for (String id : List.of("mineshafts", "ocean_ruins", "shipwrecks")) {
             var set = sets.getValue(Identifier.parse("minecraft:" + id));
             h.assertTrue(set != null && !set.structures().isEmpty(), "Ordinary structure set was emptied: " + id);
         }

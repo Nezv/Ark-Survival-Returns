@@ -1,0 +1,8 @@
+{
+  "about": "Performance budget of the laptop (RTX 3050 6 GB, 1920x1080, full stack) chosen by the user (A01 OPT-01): 60 fps standing (the pan phase), 40 flying, 30 at the 1% low in flight. session_bench.py --gate fails a full-setup run below these by more than the noise.",
+  "noise": 0.05,
+  "phases": {
+    "pan": {"fps": 60, "fps_low_1pc": 30, "server_tick_ms": 25},
+    "flight": {"fps": 40, "fps_low_1pc": 30, "server_tick_ms": 25}
+  }
+}

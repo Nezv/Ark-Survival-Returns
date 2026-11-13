@@ -8,8 +8,9 @@ import net.neoforged.fml.ModList;
 
 /**
  * What a player is wearing, for every system that reacts to an accessory. Curios is optional: without it
- * nothing is ever worn. The set is read from Curios at most once per tick per player, on each side, so hot
- * paths (climbing checks, wildlife senses) cost a field read.
+ * nothing is ever worn. The set is kept until an item is put on or taken off ({@link #invalidate}, called on
+ * Curios's change event), with a fresh read once a second as a safety net (A01 OPT-06), so hot paths (climbing
+ * checks, wildlife senses) cost a field read.
  */
 public final class Worn {
     public static final boolean CURIOS = ModList.get() != null && ModList.get().isLoaded("curios");
@@ -26,6 +27,8 @@ public final class Worn {
         public int glideTicks;
     }
 
+    private static final int REFRESH_TICKS = 20;
+
     public static boolean has(LivingEntity entity, Accessory accessory) {
         if (!CURIOS || !(entity instanceof Player player)) return false;
         return state(player).worn.contains(accessory);
@@ -33,7 +36,8 @@ public final class Worn {
 
     public static State state(Player player) {
         State state = player.getData(AccessoryContent.WORN);
-        if (state.stamp != player.tickCount) {
+        // A stamp is set when the set is read; invalidate() clears it, and a read older than a second is redone.
+        if (state.stamp == Integer.MIN_VALUE || player.tickCount - state.stamp >= REFRESH_TICKS || player.tickCount < state.stamp) {
             state.stamp = player.tickCount;
             state.worn.clear();
             if (CURIOS) CuriosBridge.collect(player, state.worn);

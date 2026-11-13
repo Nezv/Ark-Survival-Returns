@@ -1,0 +1,79 @@
+diff --git a/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/InventoryConnectorBlockEntity.java b/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/InventoryConnectorBlockEntity.java
+index a7d0524..ec9c649 100644
+--- a/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/InventoryConnectorBlockEntity.java
++++ b/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/InventoryConnectorBlockEntity.java
+@@ -44,14 +44,30 @@ public class InventoryConnectorBlockEntity extends PlatformBlockEntity implement
+ 		super(Content.connectorBE.get(), p_155229_, p_155230_);
+ 	}
+ 
++	// Ark: the last flood fill's blocks and their states; the network is rebuilt only when one of them changed, when
++	// the cable network's connectors changed, or every ten seconds as a safety net.
++	private java.util.Map<BlockPos, net.minecraft.world.level.block.state.BlockState> topology = java.util.Map.of();
++	private long lastRebuild = Long.MIN_VALUE / 2;
++
+ 	@Override
+ 	public void updateServer() {
+ 		long time = level.getGameTime();
+ 		if(time % 20 == Math.abs(worldPosition.hashCode()) % 20) {
+-			detectTouchingInventories();
++			Set<IInventoryConnector> before = new HashSet<>(linkedConnectors);
+ 			detectCableNetwork();
+-			handler.build(this, linkedConnectors);
++			if (time - lastRebuild >= 200 || !before.equals(linkedConnectors) || topologyChanged()) {
++				detectTouchingInventories();
++				handler.build(this, linkedConnectors);
++				lastRebuild = time;
++			}
++		}
++	}
++
++	private boolean topologyChanged() {
++		for (var e : topology.entrySet()) {
++			if (!level.isLoaded(e.getKey()) || level.getBlockState(e.getKey()) != e.getValue()) return true;
+ 		}
++		return false;
+ 	}
+ 
+ 	private void detectCableNetwork() {
+@@ -117,6 +133,9 @@ public class InventoryConnectorBlockEntity extends PlatformBlockEntity implement
+ 		}
+ 
+ 		blockFilters.forEach(f -> f.getConnectedBlocks().forEach(connected::remove));
++		java.util.Map<BlockPos, net.minecraft.world.level.block.state.BlockState> seen = new HashMap<>();
++		for (BlockPos p : checkedBlocks) if (level.isLoaded(p)) seen.put(p, level.getBlockState(p));
++		topology = seen;
+ 
+ 		Map<BlockFace, BlockInventoryAccess> invA = new HashMap<>();
+ 		connected.forEach((p, d) -> {
+diff --git a/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/StorageTerminalBlockEntity.java b/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/StorageTerminalBlockEntity.java
+index 84d07b1..0913e96 100644
+--- a/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/StorageTerminalBlockEntity.java
++++ b/NeoForge/src/platform-shared/java/com/tom/storagemod/block/entity/StorageTerminalBlockEntity.java
+@@ -48,7 +48,8 @@ public class StorageTerminalBlockEntity extends PlatformBlockEntity implements M
+ 	private String lastSearch = "";
+ 	private boolean updateItems;
+ 	private int changeCount;
+-	private int beaconLevel;
++	// Ark: beacons do not exist in this pack, so the level is always none and the 17-block scan is gone.
++	private int beaconLevel = -1;
+ 	private long changeTracker;
+ 	private int slotCount, freeCount;
+ 
+@@ -145,17 +146,6 @@ public class StorageTerminalBlockEntity extends PlatformBlockEntity implements M
+ 			}
+ 			updateItems = false;
+ 		}
+-		if(level.getGameTime() % 40 == Math.abs(worldPosition.hashCode()) % 40) {
+-			beaconLevel = BlockPos.betweenClosedStream(new AABB(worldPosition).inflate(8)).mapToInt(p -> {
+-				if(level.isLoaded(p)) {
+-					BlockState st = level.getBlockState(p);
+-					if(st.is(Blocks.BEACON)) {
+-						return BeaconLevelCalc.calcBeaconLevel(level, p.getX(), p.getY(), p.getZ());
+-					}
+-				}
+-				return -1;
+-			}).max().orElse(-1);
+-		}
+ 	}
+ 
+ 	public boolean canInteractWith(Player player, boolean menuCheck) {

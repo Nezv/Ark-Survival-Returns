@@ -229,6 +229,18 @@ def main():
     expected = {identifier for _, identifier, *_ in SPECIES} - NO_EYE_GEOMETRY
     check(set(DESIGNS) == expected, f'Designed eyes do not match the species that have them: missing {sorted(expected - set(DESIGNS))}, '
                                     f'extra {sorted(set(DESIGNS) - expected)}')
+    # Every ambient recording that ships is one the audio catalog or the title screen plays (A01 OPT-20).
+    import re as _re
+    ambient = ROOT / 'src/main/resources/assets/ambientsounds'
+    ambient_events = json.loads((ambient / 'sounds.json').read_text(encoding='utf-8'))
+    named = set()
+    for source in list((ROOT / 'src/main').rglob('*.java')) + list((ROOT / 'src/main/resources/assets/arksurvivalreturns').rglob('*.json')):
+        named |= set(_re.findall(r'ambientsounds:([a-z0-9_.\-/]+)', source.read_text(encoding='utf-8', errors='ignore')))
+    played = {(s if isinstance(s, str) else s['name']).split(':', 1)[-1]
+              for event, entry in ambient_events.items() if event in named for s in entry['sounds']}
+    shipped = {p.relative_to(ambient / 'sounds').as_posix()[:-4] for p in (ambient / 'sounds').rglob('*.ogg')}
+    check(shipped <= played, f'Ambient recordings no catalog plays: {sorted(shipped - played)[:5]}')
+    check(played <= shipped, f'Ambient recordings the catalog plays are missing: {sorted(played - shipped)[:5]}')
     # Every translation key the code names exists in en_us (the lang sweep of audit_static.py).
     import audit_static
     check(audit_static.sweep_lang() == 0, 'Translation keys named in code are missing from en_us (audit_static.py lang)')

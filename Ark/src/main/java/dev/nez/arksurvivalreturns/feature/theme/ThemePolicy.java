@@ -76,8 +76,11 @@ public final class ThemePolicy {
             "creaking",
             // Silverfish only exist to guard infested blocks and monster rooms.
             "silverfish",
-            // Cave spiders are the separate dungeon variant; ordinary spiders stay.
-            "cave_spider",
+            // Spiders and bats (A01 OPT-04): the spider was the only hostile left, so the monster cap filled with
+            // them under the player, and bats do nothing here. String is made from plant fiber.
+            "spider", "cave_spider", "bat",
+            // Villages are gone (A01 OPT-04): their villagers and the traders that wander in after them.
+            "villager", "wandering_trader", "trader_llama",
             // Constructed living servants.
             "iron_golem", "snow_golem", "copper_golem",
             "wither",
@@ -134,13 +137,17 @@ public final class ThemePolicy {
             "strongholds", "ruined_portals", "end_cities", "nether_complexes", "nether_fossils",
             // Underground challenges and fantasy structures.
             "ancient_cities", "trial_chambers", "woodland_mansions", "pillager_outposts",
-            "swamp_huts", "ocean_monuments");
+            "swamp_huts", "ocean_monuments",
+            // Villages (A01 OPT-04): a quarter of the server tick went to villagers' path finding.
+            "villages");
 
     /** Structures referenced by the disabled sets, kept for map and loot filtering. */
     public static final Set<String> DISABLED_STRUCTURES = Set.of(
             "minecraft:stronghold", "minecraft:monument", "minecraft:mansion", "minecraft:ancient_city",
             "minecraft:trial_chambers", "minecraft:pillager_outpost", "minecraft:swamp_hut",
-            "minecraft:end_city", "minecraft:fortress", "minecraft:bastion_remnant", "minecraft:nether_fossil");
+            "minecraft:end_city", "minecraft:fortress", "minecraft:bastion_remnant", "minecraft:nether_fossil",
+            "minecraft:village_plains", "minecraft:village_desert", "minecraft:village_savanna", "minecraft:village_snowy",
+            "minecraft:village_taiga");
 
     /** Placed features removed from every biome: monster rooms, infested ore and sculk. */
     public static final List<String> REMOVED_FEATURES = List.of(

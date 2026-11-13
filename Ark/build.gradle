@@ -181,8 +181,16 @@ tasks.register('generateWorkstationData', Exec) {
     outputs.dir workstationBuild
     commandLine 'python', 'tools/build_workstation_data.py', workstationBuild.get().asFile.absolutePath
 }
+// Grassier Grass's two tiny block sprites, scaled up from its pinned jar so the block atlas keeps four mip levels (A01 OPT-02).
+def grassMipBuild = layout.buildDirectory.dir('grass-mips')
+tasks.register('generateGrassMips', Exec) {
+    inputs.files 'tools/build_grass_mips.py', 'config/client-mods.lock.json'
+    outputs.dir grassMipBuild
+    commandLine 'python', 'tools/build_grass_mips.py', grassMipBuild.get().asFile.absolutePath
+}
 tasks.named('processResources') {
-    dependsOn 'generateWorkstationData'
+    dependsOn 'generateWorkstationData', 'generateGrassMips'
+    from(grassMipBuild.map { it.dir('resources') })
     from('design/workstations') {
         include phaseABenches.collect { it + '.json' }
         into 'data/arksurvivalreturns/workstation'

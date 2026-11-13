@@ -86,7 +86,8 @@ class CreatureEyesTest {
     @Test void modelsCarryDesignedEyesWhereTheSpeciesHasThem() throws Exception {
         int designed = 0;
         for (Species species : Species.values()) {
-            String model = Files.readString(MODELS.resolve(species.id + ".geo.json"));
+            // The dragon ships only as its three wyverns (A01 OPT-10); the red one stands for the species.
+            String model = Files.readString(MODELS.resolve((species == Species.DRAGON ? "dragon_red" : species.id) + ".geo.json"));
             boolean has = model.contains("\"name\":\"ark_eye_l\"");
             assertEquals(species.designedEyes(), has, species.id + ": designed eyes in the model and in Species disagree");
             if (has) {
