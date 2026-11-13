@@ -80,10 +80,20 @@ public final class SessionRecorderClient {
     /** A new survival world with the game's defaults, as the Create New World screen makes it; the seed is optional. */
     private static void createWorld(Minecraft mc) {
         long seed = WorldOptions.parseSeed(System.getProperty("arksurvivalreturns.record.seed", "")).orElse(WorldOptions.randomSeed());
+        String type = System.getProperty("arksurvivalreturns.record.worldType", "");
+        ArkSurvivalReturns.LOGGER.info("Session recorder: creating the world {} with seed {}", FRESH_WORLD, seed);
+        if ("testing_ground".equals(type)) {
+            // The Ark Testing Ground as Create World makes it: its world type, Creative, commands on.
+            var preset = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.WORLD_PRESET, ArkSurvivalReturns.id("testing_ground"));
+            mc.createWorldOpenFlows().createFreshLevel(FRESH_WORLD, new LevelSettings(FRESH_WORLD, GameType.CREATIVE,
+                            LevelSettings.DifficultySettings.DEFAULT, true, WorldDataConfiguration.DEFAULT), new WorldOptions(seed, false, false),
+                    registries -> registries.lookupOrThrow(net.minecraft.core.registries.Registries.WORLD_PRESET).getOrThrow(preset).value().createWorldDimensions(),
+                    mc.screen);
+            return;
+        }
         var settings = new LevelSettings(FRESH_WORLD, GameType.SURVIVAL, LevelSettings.DifficultySettings.DEFAULT, false,
                 WorldDataConfiguration.DEFAULT);
-        ArkSurvivalReturns.LOGGER.info("Session recorder: creating the world {} with seed {}", FRESH_WORLD, seed);
-        boolean flat = "flat".equals(System.getProperty("arksurvivalreturns.record.worldType", ""));
+        boolean flat = "flat".equals(type);
         mc.createWorldOpenFlows().createFreshLevel(FRESH_WORLD, settings, new WorldOptions(seed, !flat, false),
                 flat ? SessionRecorderClient::flatPlains : WorldPresets::createNormalWorldDimensions, mc.screen);
     }

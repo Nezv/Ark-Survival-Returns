@@ -74,8 +74,10 @@ public final class TestGround {
         var data = Data.get(overworld);
         if (data.built) return;
         quiet(overworld);
+        long started = System.nanoTime();
         var builder = new TestGroundBuilder(overworld, overworld.getRespawnData().pos());
         var line = builder.buildAll();
+        ArkSurvivalReturns.LOGGER.info("Testing ground: built in {} ms. {}", (System.nanoTime() - started) / 1_000_000, line.getString());
         data.built = true;
         data.setDirty();
         player.sendSystemMessage(line);

@@ -47,9 +47,13 @@ public final class SpecimenPayload {
             var modes = SpecimenPostBlockEntity.Mode.values();
             var actions = SpecimenPostBlockEntity.Action.values();
             if (species == null || packet.mode() < 0 || packet.mode() >= modes.length || packet.action() < 0 || packet.action() >= actions.length) return;
-            post.configure(species, packet.variant(), packet.level(), modes[packet.mode()], packet.hunger(), packet.respawn(),
-                    actions[packet.action()] != SpecimenPostBlockEntity.Action.SPAWN);
-            post.act(actions[packet.action()], player);
+            var action = actions[packet.action()];
+            // Only Spawn and Apply change the body. Any other button acts on the specimen that is out: a species picked
+            // in the list and not yet spawned must not replace it on the way to a Kill or a Tame.
+            boolean body = action == SpecimenPostBlockEntity.Action.SPAWN || action == SpecimenPostBlockEntity.Action.APPLY || !post.hasSpecimen();
+            post.configure(body ? species : post.species(), body ? packet.variant() : post.variant(), body ? packet.level() : post.creatureLevel(),
+                    modes[packet.mode()], packet.hunger(), packet.respawn(), action != SpecimenPostBlockEntity.Action.SPAWN);
+            post.act(action, player);
         });
     }
 

@@ -69,10 +69,39 @@ final class TestGroundGameTests {
                         h.assertTrue(post.reports().stream().anyMatch(line -> line.contains("death animation")),
                                 "The post did not time the body's removal: " + post.reports());
                         h.assertTrue(!post.hasSpecimen(), "The post still holds a dead specimen");
-                        h.succeed();
+                        h.setBlock(local, Blocks.AIR);
+                        fight(h, owner);
                     });
                 });
             });
+        });
+    }
+
+    /** Fight sets two rooted specimens of one kind, which would never hunt each other, on each other: one is hurt. */
+    private static void fight(GameTestHelper h, net.minecraft.world.entity.player.Player owner) {
+        var world = h.getLevel();
+        BlockPos[] spots = {new BlockPos(11, 3, 16), new BlockPos(21, 3, 16)};
+        for (int x = 7; x <= 25; x++) for (int z = 11; z <= 21; z++) h.setBlock(new BlockPos(x, 2, z), Blocks.STONE);
+        var posts = new SpecimenPostBlockEntity[2];
+        for (int i = 0; i < 2; i++) {
+            h.setBlock(spots[i], TestGroundContent.SPECIMEN_POST.get());
+            if (!(world.getBlockEntity(h.absolutePos(spots[i])) instanceof SpecimenPostBlockEntity post)) { h.fail("No post block entity"); return; }
+            post.configure(Species.VELOCIRAPTOR, i, 1, Mode.ROOTED, 30, false);
+            post.act(Action.SPAWN, owner);
+            posts[i] = post;
+        }
+        var fighters = new CreatureEntity[] {specimen(h, h.absolutePos(spots[0])), specimen(h, h.absolutePos(spots[1]))};
+        h.assertTrue(fighters[0] != null && fighters[1] != null && fighters[0] != fighters[1], "The two posts did not put out two specimens");
+        h.runAfterDelay(20, () -> {
+            for (int i = 0; i < 2; i++)
+                h.assertTrue(fighters[i].position().distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(h.absolutePos(spots[i]).above())) < 0.5,
+                        "A rooted specimen left its post");
+            h.assertTrue(fighters[0].getHealth() == fighters[0].getMaxHealth() && fighters[1].getHealth() == fighters[1].getMaxHealth(),
+                    "Rooted specimens fought before Fight");
+            posts[0].act(Action.FIGHT, owner);
+            h.assertTrue(posts[0].mode() == Mode.FREE && posts[1].mode() == Mode.FREE, "Fight did not let both specimens go");
+            h.succeedWhen(() -> h.assertTrue(fighters[0].getHealth() < fighters[0].getMaxHealth() || fighters[1].getHealth() < fighters[1].getMaxHealth()
+                    || !fighters[0].isAlive() || !fighters[1].isAlive(), "Fight: neither specimen was hurt"));
         });
     }
 

@@ -71,8 +71,15 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
     private double offsetX, offsetY = 1, offsetZ;
 
     private @Nullable UUID specimen;
+    /** Where the specimen last was, so a body in land that is not loaded is not taken for a lost one. */
+    private @Nullable BlockPos seen;
     private int absentTicks;
     private long respawnAt = -1;
+    /** A fight this post started: the other specimen, until when it is pressed, and both healths at its start. */
+    private @Nullable UUID rival;
+    private long fightUntil = -1;
+    private float fightHealth;
+    private static final int FIGHT_PRESS_TICKS = 600;
     private boolean powered;
     /** Stopwatch, in game ticks; -1 when it has not happened yet. */
     private long spawnedAt = -1, firstHitAt = -1, downedAt = -1, firstMealAt = -1, tamedAt = -1, diedAt = -1;
@@ -139,7 +146,10 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
     public void setYaw(float yaw) { this.yaw = yaw; changed(); }
 
     /** The specimen comes out on the post's first tick: when a player is near enough for the land to tick. */
-    public void arm() { respawnAt = 0; setChanged(); }
+    public void arm() {
+        // A post that already has its specimen (the ground built again over itself) keeps it.
+        if (specimen == null) { respawnAt = 0; setChanged(); }
+    }
 
     private Vec3 anchor() { return Vec3.atBottomCenterOf(worldPosition).add(offsetX, offsetY, offsetZ); }
 
@@ -179,6 +189,12 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
     /** Replaces the specimen with a new one of the set species, colour and level, and restarts the stopwatch. */
     public void spawn() {
         if (!(level instanceof ServerLevel world)) return;
+        Vec3 at = anchor();
+        // Its place may be chunks from the post (a giant's lane): the body goes out once that land ticks entities.
+        if (!world.isPositionEntityTicking(BlockPos.containing(at))) {
+            if (specimen == null) { if (respawnAt < 0) respawnAt = 0; status("Waiting for its place to load"); }
+            return;
+        }
         discard();
         Species kind = species();
         var creature = ModContent.CREATURES.get(kind).get().create(world, EntitySpawnReason.COMMAND);
@@ -189,7 +205,6 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         for (int i = 0; i < 512 && CreatureVariants.pick(kind, id) != wanted; i++) id = UUID.randomUUID();
         creature.setUUID(id);
         creature.initializeLevel(creatureLevel);
-        Vec3 at = anchor();
         creature.snapTo(at.x, at.y, at.z, yaw, 0);
         creature.yBodyRot = yaw; creature.yHeadRot = yaw;
         creature.setPersistenceRequired();
@@ -201,6 +216,7 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         applyHunger(creature);
         if (!world.addFreshEntity(creature)) { report("The world refused the " + kind.displayName); return; }
         specimen = creature.getUUID();
+        seen = creature.blockPosition();
         long now = world.getGameTime();
         spawnedAt = now; firstHitAt = downedAt = firstMealAt = tamedAt = diedAt = -1; respawnAt = -1;
         hits = meals = 0; damage = 0; lastHealth = creature.getHealth(); absentTicks = 0;
@@ -218,6 +234,7 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         var creature = creature();
         if (creature != null) creature.discard();
         specimen = null;
+        rival = null;
     }
 
     private void fight(ServerLevel world, @Nullable CreatureEntity creature, @Nullable Player player) {
@@ -236,12 +253,35 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         if (world.getBlockEntity(BlockPos.of(rival.getPersistentData().getLongOr(POST_KEY, 0))) instanceof SpecimenPostBlockEntity post) {
             post.mode = Mode.FREE; post.applyMode(rival); post.changed();
         } else rival.setNoAi(false);
-        // Each is struck by the other as far as its mind knows: it answers, or a timid one runs until cornered.
-        creature.setLastHurtByMob(rival);
-        rival.setLastHurtByMob(creature);
-        creature.setTarget(rival);
-        rival.setTarget(creature);
+        this.rival = rival.getUUID();
+        fightUntil = world.getGameTime() + FIGHT_PRESS_TICKS;
+        fightHealth = creature.getHealth() + rival.getHealth();
+        provoke(creature, rival);
         report(creature.species().displayName + " set on " + rival.species().displayName);
+    }
+
+    /** Each is struck by the other as far as its mind knows: it answers, or a timid one runs until cornered. */
+    private static void provoke(CreatureEntity one, CreatureEntity other) {
+        one.setLastHurtByMob(other);
+        other.setLastHurtByMob(one);
+        one.setTarget(other);
+        other.setTarget(one);
+    }
+
+    /**
+     * Until first blood (thirty seconds at most) the two are kept at each other: one blow in the mind fades, and beyond
+     * sight it is not answered at all, so they are struck again every half second and walked together while apart.
+     */
+    private void press(ServerLevel world, CreatureEntity creature, long now) {
+        var other = world.getEntity(rival) instanceof CreatureEntity found ? found : null;
+        if (other == null || !other.isAlive() || !creature.isAlive() || now > fightUntil
+                || creature.getHealth() + other.getHealth() < fightHealth - 1.0E-3f) { rival = null; return; }
+        if (now % 10 != 0 || creature.torpor().restricted() || other.torpor().restricted()) return;
+        provoke(creature, other);
+        if (dev.nez.arksurvivalreturns.feature.behavior.WildlifeSenses.bodyDistance(creature, other) > 4) {
+            creature.getNavigation().moveTo(other, 1.2);
+            other.getNavigation().moveTo(creature, 1.2);
+        }
     }
 
     private void applyMode(CreatureEntity creature) {
@@ -275,17 +315,27 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
                 specimen = null;
                 if (respawn) respawnAt = now + RESPAWN_DELAY;
                 changed();
+            } else if (!world.isPositionEntityTicking(seen != null ? seen : BlockPos.containing(anchor()))) {
+                // Out of sight in land that is not loaded, not gone: it is there again when the land is.
+                absentTicks = 0;
             } else if (++absentTicks > ABSENT_LIMIT) {
                 specimen = null;
-                status("Specimen lost (unloaded or removed)");
+                status("Specimen lost (removed)");
             }
             return;
         }
         absentTicks = 0;
+        if (seen == null || !creature.blockPosition().equals(seen)) {
+            // Saved when it changes chunk; within one, the place it was last saved at loads with it.
+            boolean moved = seen == null || (seen.getX() >> 4) != (creature.blockPosition().getX() >> 4) || (seen.getZ() >> 4) != (creature.blockPosition().getZ() >> 4);
+            seen = creature.blockPosition();
+            if (moved) setChanged();
+        }
         if (creature.isAlive()) {
             if (mode == Mode.FROZEN && !creature.isNoAi()) creature.setNoAi(true);
             if (mode == Mode.ROOTED) pin(creature);
         }
+        if (rival != null) press(world, creature, now);
         float health = creature.getHealth();
         if (lastHealth >= 0 && health < lastHealth - 1.0E-3f) {
             if (firstHitAt < 0) firstHitAt = now;
@@ -401,6 +451,7 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         out.putDouble("OffsetX", offsetX); out.putDouble("OffsetY", offsetY); out.putDouble("OffsetZ", offsetZ);
         out.putBoolean("Powered", powered);
         if (specimen != null) out.store("Specimen", UUIDUtil.CODEC, specimen);
+        if (seen != null) out.putLong("Seen", seen.asLong());
         out.putLong("SpawnedAt", spawnedAt); out.putLong("FirstHitAt", firstHitAt); out.putLong("DownedAt", downedAt);
         out.putLong("FirstMealAt", firstMealAt); out.putLong("TamedAt", tamedAt); out.putLong("DiedAt", diedAt);
         out.putLong("RespawnAt", respawnAt);
@@ -421,6 +472,7 @@ public final class SpecimenPostBlockEntity extends BlockEntity {
         offsetX = in.getDoubleOr("OffsetX", 0); offsetY = in.getDoubleOr("OffsetY", 1); offsetZ = in.getDoubleOr("OffsetZ", 0);
         powered = in.getBooleanOr("Powered", false);
         specimen = in.read("Specimen", UUIDUtil.CODEC).orElse(null);
+        seen = in.getLong("Seen").map(BlockPos::of).orElse(null);
         spawnedAt = in.getLongOr("SpawnedAt", -1); firstHitAt = in.getLongOr("FirstHitAt", -1); downedAt = in.getLongOr("DownedAt", -1);
         firstMealAt = in.getLongOr("FirstMealAt", -1); tamedAt = in.getLongOr("TamedAt", -1); diedAt = in.getLongOr("DiedAt", -1);
         respawnAt = in.getLongOr("RespawnAt", -1);

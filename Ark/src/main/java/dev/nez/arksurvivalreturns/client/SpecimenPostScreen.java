@@ -132,6 +132,8 @@ public final class SpecimenPostScreen extends Screen {
     }
 
     private void send(Action action) {
+        // Fight lets both specimens go; the screen follows, or its next button would root this one again.
+        if (action == Action.FIGHT) { mode = Mode.FREE; refresh(); }
         ClientPacketDistributor.sendToServer(new SpecimenPayload.Command(pos, species.id, variant, level, mode.ordinal(), hunger, respawn, action.ordinal()));
     }
 
@@ -165,8 +167,10 @@ public final class SpecimenPostScreen extends Screen {
         if (shown.size() > rows)
             g.text(font, Component.literal((scroll + 1) + "-" + Math.min(shown.size(), scroll + rows) + " of " + shown.size()), left + 8, top + H - 9, MUTED, false);
         var post = post();
-        int y = top + 176;
-        g.text(font, font.plainSubstrByWidth(post == null ? "The post is gone" : post.status(), rw), rx, y - 10, TITLE, false);
+        int y = top + 186;
+        // The status runs to two lines for a long name; the reports below take what is left.
+        var status = font.getSplitter().splitLines(post == null ? "The post is gone" : post.status(), rw, net.minecraft.network.chat.Style.EMPTY);
+        for (int i = 0; i < Math.min(2, status.size()); i++) g.text(font, Component.literal(status.get(i).getString()), rx, top + 166 + i * 10, TITLE, false);
         if (post != null && post.hasSpecimen() && post.spawnedAt() >= 0 && Minecraft.getInstance().level != null) {
             long now = Minecraft.getInstance().level.getGameTime();
             String timers = "Out " + seconds(now - post.spawnedAt())
@@ -178,7 +182,7 @@ public final class SpecimenPostScreen extends Screen {
             var lines = new ArrayList<String>();
             for (String report : post.reports()) lines.addAll(font.getSplitter().splitLines(report, rw, net.minecraft.network.chat.Style.EMPTY)
                     .stream().map(line -> line.getString()).toList());
-            for (int i = 0; i < Math.min(4, lines.size()); i++) g.text(font, Component.literal(lines.get(i)), rx, y + 12 + i * 10, REPORT, false);
+            for (int i = 0; i < Math.min(3, lines.size()); i++) g.text(font, Component.literal(lines.get(i)), rx, y + 12 + i * 10, REPORT, false);
         }
     }
 
