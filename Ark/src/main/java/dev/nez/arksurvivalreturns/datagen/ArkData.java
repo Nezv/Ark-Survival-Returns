@@ -31,6 +31,7 @@ public final class ArkData implements DataProvider {
         DropData.generate(this::put);
         StationData.itemModels(this::put);
         SulphurData.generate(this::put);
+        TestGroundData.generate(this::put);
         var saves = new ArrayList<CompletableFuture<?>>();
         files.forEach((path, json) -> saves.add(DataProvider.saveStable(cache, json, output.getOutputFolder().resolve(path))));
         // Showcase facts live beside the design sources (Ark/design/showcase), never in the shipped resources.
@@ -282,6 +283,7 @@ public final class ArkData implements DataProvider {
         BronzeData.lang(en);
         AccessoryData.lang(en);
         SulphurData.lang(en);
+        TestGroundData.lang(en);
         put("assets/" + NS + "/lang/en_us", en);
     }
     private void model(String id) {
@@ -958,7 +960,7 @@ public final class ArkData implements DataProvider {
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
         // The fixes of the phase 2 audit (A02); the sedative test ticks a ten-minute sleep by hand.
-        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress", "audit_resting_body", "audit_tribe_map"))
+        for (String name : List.of("audit_tame_handover", "audit_hold_sedatives", "audit_narcotics_self_use", "audit_dismount_ground", "audit_ride_kinematics", "audit_tribe_allies", "audit_mounted_strike", "audit_work_reach", "audit_downed_progress", "audit_resting_body", "audit_tribe_map", "testground_post"))
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

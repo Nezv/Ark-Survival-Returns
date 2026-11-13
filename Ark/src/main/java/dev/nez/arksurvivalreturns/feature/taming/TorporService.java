@@ -123,6 +123,9 @@ public final class TorporService {
         var state = of(target);
         state.setMaximum(maximumFor(target));
         state.setTorpor(value);
+        // Without a delay the next tick's recovery runs before the knock-out check, so a meter set to its
+        // maximum never knocked anything out.
+        state.setRecoveryDelay(Math.max(state.recoveryDelay(), 1));
         installSuppression(target);
         log("command", target, "torpor set to " + round(state.torpor()));
         return true;

@@ -244,6 +244,14 @@ public final class TamingService {
         return of(entity).ticks();
     }
 
+    /** Tames at once for this owner, through the same completion as a last meal: the testing ground's Tame action. */
+    public static void tameNow(CreatureEntity creature, Player owner) {
+        var state = of(creature);
+        if (state.tamed() || creature.level().isClientSide()) return;
+        state.claim(owner.getUUID(), state.ticks());
+        complete(creature, state, owner);
+    }
+
     private static void complete(CreatureEntity creature, TamingState state, @Nullable Player feeder) {
         // The claimant owns the tame; a stale lease cannot be stolen by the final meal because hand feeding
         // re-claims an expired attempt before awarding progress. Automatic inventory feeding has no feeder,
