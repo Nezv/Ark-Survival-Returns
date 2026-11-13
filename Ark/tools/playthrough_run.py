@@ -23,8 +23,31 @@ import ui_screens as screens  # noqa: E402
 
 BARE = {"iris": {"enableShaders": "false"}, "grass": bench.GRASS_OFF, "dh": {"rendererMode": '"DISABLED"'}}
 OPTIONS = {"pauseOnLostFocus": "false", "fullscreen": "false", "soundCategory_master": "0.0", "renderDistance": "8",
-           "simulationDistance": "8", "enableVsync": "false", "maxFps": "120", "inactivityFpsLimit": '"minimized"',
+           "simulationDistance": "8", "enableVsync": "false", "maxFps": "30", "inactivityFpsLimit": '"minimized"',
            "overrideWidth": "1280", "overrideHeight": "720"}
+
+
+CPU_SHARE = 0.3  # of the logical cores the game may use, at below-normal priority: the user's machine overheats
+
+
+def throttle():
+    """Waits for the game's Java process and keeps it on a share of the cores at below-normal priority."""
+    import os
+    import subprocess
+    import threading
+    if os.name != "nt":
+        return
+    cores = max(1, int((os.cpu_count() or 4) * CPU_SHARE))
+    script = ("$mask = [IntPtr][int64](" + str((1 << cores) - 1) + "); "
+              "Get-Process java -ErrorAction SilentlyContinue | ForEach-Object { try { $_.PriorityClass = 'BelowNormal'; "
+              "$_.ProcessorAffinity = $mask } catch {} }")
+
+    def keep():
+        for _ in range(240):  # every 15 s for an hour: the Gradle and game JVMs start at different times
+            subprocess.run(["powershell", "-NoProfile", "-Command", script], capture_output=True)
+            time.sleep(15)
+    threading.Thread(target=keep, daemon=True).start()
+    print(f"throttled to {cores} of {os.cpu_count()} cores, below-normal priority, 30 fps", flush=True)
 
 
 def main() -> int:
@@ -43,6 +66,7 @@ def main() -> int:
         bench.apply(BARE, None)
         run.lines_set(run.RUN / "options.txt", ":", OPTIONS)
         print(f"playthrough {arguments.routine} -> {folder}", flush=True)
+        throttle()
         screens.launch(folder, [f"-ParkFreshWorld={run.COPY}", "-ParkWorldType=testing_ground",
                                 f"-ParkPlaythrough={folder.as_posix()}", f"-ParkRoutine={arguments.routine}"])
     finally:

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:function",
+  "environment": "arksurvivalreturns:empty",
+  "function": "arksurvivalreturns:playthrough_economy",
+  "max_ticks": 120000,
+  "sky_access": true,
+  "structure": "arksurvivalreturns:test_empty"
+}

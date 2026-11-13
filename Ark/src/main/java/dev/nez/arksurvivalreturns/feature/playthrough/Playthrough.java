@@ -40,6 +40,9 @@ public final class Playthrough {
 
     private static volatile String request, clientScreen = "";
 
+    /** No client to ask for pictures or screens (the GameTest server): those steps are written down as skipped. */
+    public static volatile boolean headless;
+
     public static PlayRun current() { return run; }
 
     /**
@@ -56,7 +59,10 @@ public final class Playthrough {
 
     static void watch(CombatSteps.Fight fight) { watched = fight; }
 
-    public static String start(ServerPlayer player, String routine, Path folder) {
+    public static String start(ServerPlayer player, String routine, Path folder) { return start(player, routine, folder, null); }
+
+    /** Starts a routine around {@code at} (by default the world's spawn, on the ground). */
+    public static String start(ServerPlayer player, String routine, Path folder, BlockPos at) {
         if (run != null && !run.finished()) return "A playthrough is already running: " + run.progress();
         var steps = Routines.get(routine);
         if (steps == null) return "No routine '" + routine + "'; known: " + String.join(", ", Routines.NAMES);
@@ -65,7 +71,8 @@ public final class Playthrough {
         int ground = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawn.getX(), spawn.getZ()) - 1;
         if (folder == null) folder = level.getServer().getServerDirectory().resolve("diagnostics/playthrough")
                 .resolve(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")));
-        try { run = new PlayRun(level.getServer(), player, new BlockPos(spawn.getX(), ground, spawn.getZ()), folder, routine, steps); }
+        var origin = at != null ? at : new BlockPos(spawn.getX(), ground, spawn.getZ());
+        try { run = new PlayRun(level.getServer(), player, origin, folder, routine, steps); }
         catch (IOException e) { return "Could not open " + folder + ": " + e.getMessage(); }
         ArkSurvivalReturns.LOGGER.info("Playthrough: started {} with {} steps, writing to {}", routine, steps.size(), folder);
         return "Playthrough " + routine + " started (" + steps.size() + " steps), writing to " + folder;

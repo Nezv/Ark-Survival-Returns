@@ -9,15 +9,16 @@ import dev.nez.arksurvivalreturns.feature.drop.SupplyTier;
 /**
  * The routines the director can run. The stages follow the tech tree's lanes, Prehistoric to Bronze: each one has the
  * player earn what its nodes ask ({@link Gathering#obtain}: break, hunt, process, craft), and the stages that bring a
- * new weapon or armour end with a kill streak and a damage test. Then the sweeps: every weapon, armour set, recipe,
- * block, screen and supply-drop tier once. {@code smoke} is the same with the three smallest species and few loot
+ * new weapon or armour end with a kill streak and a damage test. Then the sweeps: every weapon, armour set and
+ * recipe earned, every block, screen and supply-drop tier once. Nothing is given and no level is set: the player starts
+ * as a fresh survival player and everything comes from blocks, creatures, stations and supply drops. {@code smoke} is the same with the three smallest species and few loot
  * rolls, to check the run itself.
  */
 public final class Routines {
-    public static final List<String> NAMES = List.of("standard", "smoke", "stages", "sweeps");
+    public static final List<String> NAMES = List.of("standard", "smoke", "stages", "sweeps", "economy");
     private static final String NS = "arksurvivalreturns:";
-    /** Measurement segments run faster than real time; game ticks are what is recorded, so the numbers hold. */
-    private static final int FAST_RATE = 60;
+    /** The measurements run at the normal rate: the machine's heat comes first (the user, 2026-11-13). */
+    private static final int FAST_RATE = 20;
 
     static List<Step> get(String name) {
         return switch (name) {
@@ -25,6 +26,8 @@ public final class Routines {
             case "smoke" -> build(3, 5, true, true);
             case "stages" -> build(Integer.MAX_VALUE, 0, true, false);
             case "sweeps" -> build(Integer.MAX_VALUE, 50, false, true);
+            // The stages and the recipe sweep with no measurements: the GameTest's run.
+            case "economy" -> economy();
             default -> null;
         };
     }
@@ -32,11 +35,20 @@ public final class Routines {
     private static List<Step> build(int species, int lootRolls, boolean stages, boolean sweeps) {
         var steps = new ArrayList<Step>();
         steps.add(Verbs.command("gamemode survival @a"));
-        steps.add(Verbs.command("clear @a"));
-        steps.add(Verbs.command("arklevel set @a 1"));
         steps.add(Verbs.checkpoint("start"));
         if (stages) stages(steps, species);
         if (sweeps) sweeps(steps, lootRolls);
+        steps.add(Sweeps.tech("end"));
+        steps.add(Verbs.checkpoint("end"));
+        return steps;
+    }
+
+    private static List<Step> economy() {
+        var steps = new ArrayList<Step>();
+        steps.add(Verbs.checkpoint("start"));
+        stages(steps, 0);
+        steps.add(Verbs.stage("RECIPES"));
+        steps.add(Sweeps.recipes());
         steps.add(Sweeps.tech("end"));
         steps.add(Verbs.checkpoint("end"));
         return steps;
@@ -76,6 +88,7 @@ public final class Routines {
     }
 
     private static void sweeps(List<Step> steps, int lootRolls) {
+        // Everything here is earned too; what the stages left is used first.
         steps.add(Verbs.stage("WEAPONS"));
         steps.add(Verbs.command("tick rate " + FAST_RATE));
         steps.add(Sweeps.weapons());
@@ -110,6 +123,7 @@ public final class Routines {
 
     /** The stage's kill streak and damage test, sped up, with creatures of the stage's level. */
     private static void measure(List<Step> steps, String stage, String weapon, String[] armour, int creatureLevel, int species) {
+        if (species <= 0) return;
         steps.add(Verbs.wield(weapon));
         steps.add(Verbs.unequip());
         steps.add(Verbs.equip(armour));

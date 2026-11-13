@@ -71,23 +71,15 @@ public final class Sweeps {
 
     // ------------------------------------------------------------------ recipes
 
-    /** Every workstation craft once, its cost given: does each recipe craft at all, at the level it asks. */
+    /** Every item a workstation makes, earned once through the economy like any other goal; kept in the crates. */
     public static Step recipes() {
         return sequence("recipe sweep", run -> {
             var steps = new ArrayList<Step>();
-            steps.add(Verbs.command("arklevel set " + run.player().getScoreboardName() + " 100"));
-            int n = 0;
+            var items = new java.util.LinkedHashSet<String>();
             for (var station : WorkstationCatalog.all().values())
-                for (var craft : station.crafts()) {
-                    if (craft.variant().apply()) continue;
-                    if (n++ % 8 == 0) steps.add(Verbs.command("clear " + run.player().getScoreboardName()));
-                    for (var cost : craft.variant().cost().entrySet()) {
-                        String item = Gathering.resolve(run.player(), cost.getKey());
-                        if (item != null) steps.add(Gathering.give(item + " " + cost.getValue(), "recipe_sweep"));
-                    }
-                    steps.add(Verbs.craft(craft.variant().item(), 1));
-                }
-            steps.add(Verbs.command("clear " + run.player().getScoreboardName()));
+                for (var craft : station.crafts())
+                    if (!craft.variant().apply() && !craft.entry().planned()) items.add(craft.variant().item());
+            for (String item : items) steps.add(Gathering.obtain(item, 1));
             return steps;
         });
     }
@@ -101,13 +93,15 @@ public final class Sweeps {
         return out;
     }
 
-    /** Every Ark block put on a wall, pictured from above and from the front, then broken with the right bronze tool. */
+    /**
+     * Every Ark block put on a wall, pictured from above and from the front, then broken with the bronze tools earned
+     * in the stages. The wall is the test's, not the player's: its drops are written down and taken out of the bags.
+     */
     public static Step blocks() {
         return sequence("block sweep", run -> {
             var steps = new ArrayList<Step>();
             var blocks = arkBlocks();
-            for (String tool : List.of("bronze_pickaxe", "bronze_axe", "bronze_shovel"))
-                steps.add(Gathering.give(NS + ":" + tool + " 1", "block_sweep"));
+            for (String tool : List.of("bronze_pickaxe", "bronze_axe", "bronze_shovel")) steps.add(Gathering.obtain(NS + ":" + tool, 1));
             steps.add(Step.of("place the wall", run2 -> {
                 for (int i = 0; i < blocks.size(); i++) {
                     var pos = wall(run2, i);
@@ -154,8 +148,12 @@ public final class Sweeps {
                         if (ticks < 8) return false;
                         var event = run2.event("block_drops");
                         event.addProperty("block", Verbs.id(blocks.get(index)));
-                        event.add("gained", Verbs.difference(before, Verbs.counts(player)));
+                        var gained = Verbs.difference(before, Verbs.counts(player));
+                        event.add("gained", gained);
                         run2.write(event);
+                        // The wall was put there by the test, not earned: what it dropped leaves the bags again.
+                        for (var entry : gained.entrySet()) if (entry.getValue().getAsInt() > 0)
+                            player.getInventory().clearOrCountMatchingItems(stack -> stack.is(Verbs.item(entry.getKey())), entry.getValue().getAsInt(), player.inventoryMenu.getCraftSlots());
                         return true;
                     }
                 });
@@ -172,7 +170,6 @@ public final class Sweeps {
     public static Step screens() {
         return sequence("screen sweep", run -> {
             var steps = new ArrayList<Step>();
-            steps.add(Verbs.command("gamemode creative " + run.player().getScoreboardName()));
             for (var block : arkBlocks()) {
                 if (!opens(run, block)) continue;
                 String id = BuiltInRegistries.BLOCK.getKey(block).getPath();
@@ -198,7 +195,6 @@ public final class Sweeps {
                 steps.add(Verbs.shot("screen_" + screen, 15));
                 steps.add(Verbs.client("screen:close", 2));
             }
-            steps.add(Verbs.command("gamemode survival " + run.player().getScoreboardName()));
             return steps;
         });
     }
@@ -230,13 +226,14 @@ public final class Sweeps {
         return sets;
     }
 
-    /** Each set worn and pictured from the front in third person; its armour points written down. */
+    /** Each set earned, worn and pictured from the front in third person; its armour points written down. */
     public static Step armour() {
         return sequence("armour sweep", run -> {
             var steps = new ArrayList<Step>();
             steps.add(Verbs.teleport(-40, 0, 100, 180, 0));
             steps.add(Verbs.client("camera:third", 5));
             for (var set : armourSets().entrySet()) {
+                for (String piece : set.getValue()) steps.add(Gathering.obtain(piece, 1));
                 steps.add(Verbs.unequip());
                 steps.add(Verbs.equip(set.getValue().toArray(String[]::new)));
                 steps.add(Verbs.shot("armour_" + set.getKey(), 30));
@@ -262,12 +259,13 @@ public final class Sweeps {
         return out;
     }
 
-    /** Every weapon against the same frozen Triceratops: one row of time to kill per weapon. */
+    /** Every weapon earned, then swung at the same frozen Triceratops: one row of time to kill per weapon. */
     public static Step weapons() {
         return sequence("weapon sweep", run -> {
             var steps = new ArrayList<Step>();
             steps.add(Verbs.unequip());
             for (String weapon : weapons(run)) {
+                steps.add(Gathering.obtain(weapon, 1));
                 steps.add(Verbs.wield(weapon));
                 steps.add(CombatSteps.killStreak("weapon sweep " + weapon.substring(weapon.indexOf(':') + 1), Species.TRICERATOPS, 1));
             }
@@ -359,6 +357,7 @@ public final class Sweeps {
                 if (ticks < 400) return false;
                 var event = run.event("tame");
                 event.addProperty("species", species.id);
+                event.addProperty("assisted", "Specimen Post knock-out (a dart volley's torpor), then the taming service");
                 event.addProperty("status", post.status());
                 event.add("reports", Verbs.json(post.reports()));
                 run.write(event);

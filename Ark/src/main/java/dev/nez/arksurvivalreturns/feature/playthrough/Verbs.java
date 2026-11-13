@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.nez.arksurvivalreturns.feature.drop.SupplyTier;
 import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
+import dev.nez.arksurvivalreturns.feature.station.InventoryCrafting;
 import dev.nez.arksurvivalreturns.feature.station.StationBlock;
 import dev.nez.arksurvivalreturns.feature.station.WorkstationCatalog;
 import dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting;
@@ -35,8 +36,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * The playthrough's verbs: each goes through the game's own code (block breaking with loot tables and tools, a
- * workstation's menu and craft packet, the equipment slots), and anything the run had to hand the player instead of
- * earning it is written down as given.
+ * workstation's menu and craft packet, the equipment slots); nothing is ever handed to the player.
  */
 public final class Verbs {
     // ------------------------------------------------------------------ run control
@@ -62,9 +62,7 @@ public final class Verbs {
 
     static void tp(PlayRun run, double dx, double dy, double dz, float yaw, float pitch) {
         var o = run.origin;
-        run.server.getCommands().performPrefixedCommand(run.server.createCommandSourceStack().withSuppressedOutput(),
-                "execute in minecraft:overworld run tp " + run.player().getScoreboardName() + " " + (o.getX() + 0.5 + dx) + " "
-                        + (o.getY() + 1 + dy) + " " + (o.getZ() + 0.5 + dz) + " " + yaw + " " + pitch);
+        run.player().teleportTo(run.level(), o.getX() + 0.5 + dx, o.getY() + 1 + dy, o.getZ() + 0.5 + dz, java.util.Set.of(), yaw, pitch, true);
     }
 
     /** Asks the client for a picture after the view has settled ({@code settle} ticks), into the run's screenshots. */
@@ -76,6 +74,13 @@ public final class Verbs {
             @Override public String name() { return "client " + what; }
             @Override public int timeout() { return settle + 200; }
             @Override public boolean tick(PlayRun run, int ticks) {
+                if (Playthrough.headless) {
+                    var event = run.event("client");
+                    event.addProperty("request", what);
+                    event.addProperty("skipped", "headless");
+                    run.write(event);
+                    return true;
+                }
                 if (ticks == settle) Playthrough.request(what);
                 if (ticks <= settle || Playthrough.pendingRequest() != null) return false;
                 var event = run.event("client");
@@ -166,52 +171,56 @@ public final class Verbs {
             event.add("cost", json(found.craft().variant().cost()));
             int menu = open(run, player, station.station());
             if (menu < 0) { event.addProperty("result", "no_menu"); run.write(event); return; }
-            if (!ArkLevels.requires(player, found.craft().level())) {
-                event.addProperty("gate", ArkLevels.get(player).level());
-                ArkLevels.setLevel(player, found.craft().level());
-                event.addProperty("forced", true);
-            }
+            if (!ArkLevels.requires(player, found.craft().level())) event.addProperty("gate", ArkLevels.get(player).level());
             var before = counts(player);
             boolean ok = WorkstationCrafting.craft(player, new WorkstationPayload.Craft(station.station(), item, times, found.key(), found.index(), menu));
             event.addProperty("result", ok ? "crafted" : "refused");
             event.add("changed", difference(before, counts(player)));
             player.closeContainer();
-            if (!"inventory".equals(station.station())) run.level().removeBlock(BENCH.apply(run), false);
             run.write(event);
         });
     }
 
-    /** Where a workstation is put down to craft at: beside the yard, clear of the spot blocks are broken on. */
-    static final java.util.function.Function<PlayRun, BlockPos> BENCH = run -> run.at(Gathering.YARD_X + 6, 1, Gathering.YARD_Z + 6);
-
-    record Found(WorkstationDefinition station, WorkstationDefinition.Craft craft, String key, int index) {}
-
-    static Found find(String item) {
-        for (var station : WorkstationCatalog.all().values())
-            for (var craft : station.crafts()) {
-                if (!craft.variant().item().equals(item) || craft.variant().apply()) continue;
-                String key = "i:" + craft.category().id() + "/" + (craft.group() == null ? "" : craft.group().group() + "/") + craft.entry().family();
-                return new Found(station, craft, key, craft.entry().variants().indexOf(craft.variant()));
-            }
+    /** The block id of the workstation with this station id, or null. */
+    static String benchBlock(String station) {
+        for (var candidate : BuiltInRegistries.BLOCK)
+            if (candidate instanceof StationBlock bench && station.equals(bench.stationId())) return id(candidate);
         return null;
     }
 
-    /** Opens a station's menu the way a click does; the inventory's own graph needs no block. Returns the menu id. */
+    record Found(WorkstationDefinition station, WorkstationDefinition.Craft craft, String key, int index) {}
+
+    /** Where an item is crafted: the inventory's own graph when it can be, else the lowest-level workstation. */
+    static Found find(String item) {
+        Found best = null;
+        for (var station : WorkstationCatalog.all().values())
+            for (var craft : station.crafts()) {
+                if (!craft.variant().item().equals(item) || craft.variant().apply() || craft.entry().planned()) continue;
+                String key = "i:" + craft.category().id() + "/" + (craft.group() == null ? "" : craft.group().group() + "/") + craft.entry().family();
+                var found = new Found(station, craft, key, craft.entry().variants().indexOf(craft.variant()));
+                if (InventoryCrafting.STATION.equals(station.station())) return found;
+                if (best == null || craft.level() < best.craft().level()) best = found;
+            }
+        return best;
+    }
+
+    /** Opens a station's menu the way a click does, standing beside it in the camp. Returns the menu id, or -1. */
     static int open(PlayRun run, ServerPlayer player, String station) {
         player.closeContainer();
-        if ("inventory".equals(station)) return player.containerMenu.containerId;
-        Block block = null;
-        for (var candidate : BuiltInRegistries.BLOCK) if (candidate instanceof StationBlock bench && station.equals(bench.stationId())) { block = candidate; break; }
-        if (block == null) return -1;
-        var pos = BENCH.apply(run);
-        run.level().setBlockAndUpdate(pos, block.defaultBlockState());
-        run.level().getBlockState(pos).useWithoutItem(run.level(), player, new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false));
+        if (InventoryCrafting.STATION.equals(station)) InventoryCrafting.open(player);
+        else {
+            String block = benchBlock(station);
+            var pos = block == null ? null : run.camp.get(block);
+            if (pos == null) return -1;
+            Gathering.standAt(run, pos);
+            run.level().getBlockState(pos).useWithoutItem(run.level(), player, new BlockHitResult(Vec3.atCenterOf(pos), Direction.SOUTH, pos, false));
+        }
         return player.containerMenu instanceof WorkstationMenu bench && bench.station.equals(station) ? bench.containerId : -1;
     }
 
     // ------------------------------------------------------------------ gear
 
-    /** Puts on an armour set from the inventory; pieces not in it are given and written down as such. */
+    /** Puts on an armour set from the bags; pieces not in them are written down as missing and left off. */
     public static Step equip(String... pieces) {
         return Step.of("equip " + String.join(",", pieces), run -> {
             var player = run.player();
@@ -219,14 +228,14 @@ public final class Verbs {
             var given = new JsonArray();
             for (String piece : pieces) {
                 var stack = take(player, item(piece));
-                if (stack.isEmpty()) { stack = new ItemStack(item(piece)); given.add(piece); }
+                if (stack.isEmpty()) { given.add(piece); continue; }
                 var slot = player.getEquipmentSlotForItem(stack);
                 var old = player.getItemBySlot(slot);
                 if (!old.isEmpty()) player.getInventory().add(old);
                 player.setItemSlot(slot, stack);
             }
             event.add("pieces", json(List.of(pieces)));
-            event.add("given", given);
+            event.add("missing", given);
             event.addProperty("armor", player.getAttributeValue(Attributes.ARMOR));
             event.addProperty("toughness", player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
             run.write(event);
@@ -243,14 +252,19 @@ public final class Verbs {
         });
     }
 
-    /** Takes a weapon in the main hand, from the inventory if it is there, else given. */
+    /** Takes a weapon from the bags in the main hand; one not in them is written down as missing. */
     public static Step wield(String weapon) {
         return Step.of("wield " + weapon, run -> {
             var player = run.player();
             var event = run.event("wield");
             event.addProperty("item", weapon);
             var stack = weapon.isEmpty() ? ItemStack.EMPTY : take(player, item(weapon));
-            if (!weapon.isEmpty() && stack.isEmpty()) { stack = new ItemStack(item(weapon)); event.addProperty("given", true); }
+            if (!weapon.isEmpty() && stack.isEmpty()) {
+                event.addProperty("missing", true);
+                event.addProperty("damage", player.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                run.write(event);
+                return;
+            }
             var old = player.getMainHandItem();
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stack);
             if (!old.isEmpty()) player.getInventory().add(old);

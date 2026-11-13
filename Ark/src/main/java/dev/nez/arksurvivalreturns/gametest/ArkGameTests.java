@@ -36,6 +36,7 @@ public final class ArkGameTests {
         FUNCTIONS.register("audit_resting_body", () -> AuditGameTests::restingBody);
         FUNCTIONS.register("audit_tribe_map", () -> AuditGameTests::tribeMap);
         FUNCTIONS.register("testground_post", () -> TestGroundGameTests::post);
+        FUNCTIONS.register("playthrough_economy", () -> PlaythroughGameTests::economy);
         FUNCTIONS.register("sky_beacon_placement", () -> SkyBeaconGameTests::placement);
         FUNCTIONS.register("sky_beacon_assets", () -> SkyBeaconGameTests::assets);
         FUNCTIONS.register("sky_beacon_persistence", () -> SkyBeaconGameTests::persistence);

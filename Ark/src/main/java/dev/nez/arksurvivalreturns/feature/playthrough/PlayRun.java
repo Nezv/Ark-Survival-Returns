@@ -26,6 +26,10 @@ public final class PlayRun {
     final BlockPos origin;
     final Path folder;
     public Path folder() { return folder; }
+    /** The camp: every station the player has put down (block id to where it stands), in the order placed. */
+    final java.util.Map<String, BlockPos> camp = new java.util.LinkedHashMap<>();
+    /** Storage crates the player has put down for what the bags cannot hold. */
+    final List<BlockPos> crates = new java.util.ArrayList<>();
     private final List<Step> steps;
     private final BufferedWriter out;
     private int index, ticks;

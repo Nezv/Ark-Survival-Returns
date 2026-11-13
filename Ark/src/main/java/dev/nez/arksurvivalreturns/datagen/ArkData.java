@@ -964,6 +964,10 @@ public final class ArkData implements DataProvider {
             put("data/" + NS + "/test_instance/" + name, Map.of("type", "minecraft:function",
                     "function", NS + ":" + name, "environment", NS + ":empty",
                     "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));
+        // The playthrough's economy (F43): every stage and workstation item earned by a ticking survival player, sprinting.
+        put("data/" + NS + "/test_instance/playthrough_economy", Map.of("type", "minecraft:function",
+                "function", NS + ":playthrough_economy", "environment", NS + ":empty",
+                "structure", NS + ":test_empty", "max_ticks", 120000, "sky_access", true));
         put("data/" + NS + "/test_instance/taming_riding", Map.of("type", "minecraft:function",
                 "function", NS + ":taming_riding", "environment", NS + ":empty",
                 "structure", NS + ":test_population", "max_ticks", 400, "sky_access", true));

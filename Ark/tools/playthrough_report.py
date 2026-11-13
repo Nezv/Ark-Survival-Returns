@@ -73,8 +73,8 @@ def summarise(events: list[dict]) -> dict:
         until = marks[i + 1]["wall"] if i + 1 < len(marks) else end["wall"]
         inside = [e for e in events if e["stage"] == mark["stage"]]
         stages.append({"stage": mark["stage"], "minutes": round((until - mark["wall"]) / 60000, 1),
-                       "given": sum(1 for e in inside if e["type"] == "given" and e.get("why") not in ("recipe_sweep", "block_sweep")),
-                       "forced": sum(1 for e in inside if e["type"] == "craft" and e.get("forced")),
+                       "blocked": sum(1 for e in inside if e["type"] == "blocked"),
+                       "grind_kills": sum(e["kills"] for e in inside if e["type"] == "grind"),
                        "refused": sum(1 for e in inside if e["type"] == "craft" and e.get("result") != "crafted"),
                        "errors": sum(1 for e in inside if e["type"] in ("step_error", "step_timeout"))})
     kills = defaultdict(list)
@@ -90,8 +90,10 @@ def summarise(events: list[dict]) -> dict:
         "stages": stages,
         "kill_seconds_median": {k: round(statistics.median(v), 1) for k, v in kills.items()},
         "blows_to_three_lives_median": {k: statistics.median(v) for k, v in taken.items()},
-        "given": len([e for e in by["given"] if e.get("why") not in ("recipe_sweep", "block_sweep")]),
-        "recipes": Counter(e["result"] for e in by["craft"] if e["stage"] == "RECIPES"),
+        "blocked": len(by["blocked"]),
+        "blocked_goals": sorted({e["goal"] for e in by["blocked"]}),
+        "recipes_obtained": len([e for e in by["obtained"] if e["stage"] == "RECIPES"]),
+        "recipes_blocked": len([e for e in by["blocked"] if e["stage"] == "RECIPES"]),
         "errors": len(by["step_error"]) + len(by["step_timeout"]),
     }
 
@@ -104,22 +106,28 @@ def report(folder: Path) -> Path:
     summary = summarise(events)
     (folder / "summary.json").write_text(json.dumps(summary, indent=2, default=dict), encoding="utf-8")
     parts = [f"<h1>Playthrough {esc(summary['routine'])}: {esc(folder.name)}</h1>",
-             f"<p>{summary['minutes']} minutes, ended: {esc(summary['end'])}; {summary['given']} items given during play; "
+             f"<p>{summary['minutes']} minutes, ended: {esc(summary['end'])}; nothing given, {summary['blocked']} goals blocked; "
              f"{summary['errors']} step errors or timeouts.</p>"]
 
-    parts.append("<h2>Stages</h2>" + table(["stage", "minutes", "given", "forced level", "refused crafts", "errors"],
-                                           [[s["stage"], s["minutes"], s["given"], s["forced"], s["refused"], s["errors"]] for s in summary["stages"]]))
+    parts.append("<h2>Stages</h2>" + table(["stage", "minutes", "goals blocked", "kills for experience", "refused crafts", "errors"],
+                                           [[s["stage"], s["minutes"], s["blocked"], s["grind_kills"], s["refused"], s["errors"]] for s in summary["stages"]]))
 
-    play = [e for e in events if e["stage"].startswith("R")]
+    play = [e for e in events if e["stage"].startswith("R") or e["stage"] in ("RECIPES", "WEAPONS", "ARMOUR")]
     parts.append("<h2>What the economy gave</h2>")
     parts.append(table(["stage", "how", "item", "wanted", "tries / kills", "made", "short", "tool", "game s"],
                        [[e["stage"], e["type"], e["item"], e["wanted"], e.get("tries", e.get("kills", "")), e.get("made", ""),
                          e.get("short", ""), e.get("tool", e.get("weapon", e.get("station", ""))), round(e.get("ticks", 0) / 20, 1)]
                         for e in play if e["type"] in ("harvest", "hunt", "process")]))
-    parts.append("<h2>Gaps: given instead of earned</h2>")
-    parts.append(table(["stage", "item", "count", "why"], [[e["stage"], e["item"], e["count"], e["why"]] for e in play if e["type"] == "given"], "warn"))
+    parts.append("<h2>The experience wall: hunting to reach a craft's level</h2>")
+    parts.append(table(["stage", "for", "from level", "to level", "wanted", "kills", "weapon", "game s"],
+                       [[e["stage"], e["step"], e["from_level"], e["to_level"], e["wanted_level"], e["kills"], e["weapon"], round(e["ticks"] / 20, 1)]
+                        for e in by["grind"]]))
+    parts.append("<h2>Gaps: goals that could not be earned</h2>")
+    parts.append(table(["stage", "goal", "stuck on", "count", "why"], [[e["stage"], e["goal"], e["item"], e["count"], e["why"]] for e in by["blocked"]], "warn"))
+    parts.append("<h2>The camp</h2>")
+    parts.append(table(["stage", "station", "at"], [[e["stage"], e["block"], e["at"]] for e in by["placed"]]))
     parts.append("<h2>Crafts during play</h2>")
-    parts.append(table(["stage", "item", "station", "level", "result", "level gate forced from"],
+    parts.append(table(["stage", "item", "station", "level", "result", "player level when gated"],
                        [[e["stage"], e["item"], e.get("station", ""), e.get("level", ""), e["result"], e.get("gate", "")]
                         for e in play if e["type"] == "craft"]))
 
@@ -137,14 +145,15 @@ def report(folder: Path) -> Path:
 
     parts.append("<h2>Weapons against a level 1 Triceratops</h2>")
     wields = {e["item"]: e for e in by["wield"] if e["stage"] == "WEAPONS"}
-    parts.append(table(["weapon", "damage", "attack speed", "given", "end", "hits", "game s", "durability left"],
+    parts.append(table(["weapon", "damage", "attack speed", "missing", "end", "hits", "game s", "durability left"],
                        [[e["weapon"], wields.get(e["weapon"], {}).get("damage", ""), wields.get(e["weapon"], {}).get("speed", ""),
-                         wields.get(e["weapon"], {}).get("given", False), e["end"], e["hits"], round(e["ticks"] / 20, 1), e.get("durability_left", "")]
+                         wields.get(e["weapon"], {}).get("missing", False), e["end"], e["hits"], round(e["ticks"] / 20, 1), e.get("durability_left", "")]
                         for e in by["kill_streak"] if e["label"].startswith("weapon sweep")]))
 
     parts.append("<h2>Armour sets</h2>")
-    parts.append(table(["stage", "pieces", "armour", "toughness", "given"],
-                       [[e["stage"], ", ".join(p.split(":")[-1] for p in e["pieces"]), e["armor"], e["toughness"], len(e["given"])] for e in by["equip"]]))
+    parts.append(table(["stage", "pieces", "armour", "toughness", "missing"],
+                       [[e["stage"], ", ".join(p.split(":")[-1] for p in e["pieces"]), e["armor"], e["toughness"],
+                         ", ".join(p.split(":")[-1] for p in e.get("missing", []))] for e in by["equip"]]))
 
     parts.append("<h2>Supply drop tiers</h2>")
     rows = []
@@ -166,14 +175,14 @@ def report(folder: Path) -> Path:
                         for e in by["drop"]]))
 
     parts.append("<h2>Coverage</h2>")
-    recipe = Counter(e["result"] for e in by["craft"] if e["stage"] == "RECIPES")
+    recipe_goals = [e for e in events if e["stage"] == "RECIPES" and e["type"] in ("obtained", "blocked")]
     blocks = [e for e in by["block_drops"]]
     wall = by["block_wall"][0] if by["block_wall"] else {"blocks": 0, "did_not_stay": []}
     screens = by["screen_open"]
     shots = {e["request"][5:]: e["screen"] for e in by["client"] if e["request"].startswith("shot:")}
     coverage = [
-        ["recipes", f"{recipe.get('crafted', 0)} crafted of {sum(recipe.values())}",
-         ", ".join(e["item"].split(":")[-1] + " (" + e["result"] + ")" for e in by["craft"] if e["stage"] == "RECIPES" and e["result"] != "crafted")],
+        ["recipes", f"{sum(1 for e in recipe_goals if e['type'] == 'obtained')} earned of {len(recipe_goals)}",
+         ", ".join(e["goal"].split(":")[-1] for e in recipe_goals if e["type"] == "blocked")],
         ["blocks", f"{wall['blocks']} placed, {len(wall['did_not_stay'])} did not stay, {sum(1 for e in blocks if not e['gained'])} dropped nothing",
          ", ".join(x.split(":")[-1] for x in wall["did_not_stay"]) + " | nothing: " + ", ".join(e["block"].split(":")[-1] for e in blocks if not e["gained"])],
         ["screens", f"{sum(1 for e in screens if shots.get('screen_' + e['block']))} of {len(screens)} showed a screen",
