@@ -38,14 +38,19 @@ public final class Playthrough {
     private static CombatSteps.Fight watched;
     private static boolean autostarted;
 
-    private static volatile String shot;
+    private static volatile String request, clientScreen = "";
 
     public static PlayRun current() { return run; }
 
-    /** A picture the client is asked to take into the run's screenshots folder; the client clears it once taken. */
-    public static String pendingShot() { return shot; }
-    public static void shotTaken() { shot = null; }
-    static void requestShot(String name) { shot = name; }
+    /**
+     * What the client is asked to do next: "shot:<name>" (a picture into the run's screenshots), "camera:third" or
+     * "camera:first", "screen:tech", "screen:inventory" or "screen:close". The client clears it once done and says
+     * which screen was open.
+     */
+    public static String pendingRequest() { return request; }
+    public static void requestDone(String screen) { clientScreen = screen; request = null; }
+    static void request(String what) { request = what; }
+    static String clientScreen() { return clientScreen; }
     /** Whether a run was launched by tools/playthrough_run.py, which wants the client closed at its end. */
     public static boolean launched() { return !FOLDER.isEmpty(); }
 

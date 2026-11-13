@@ -3,88 +3,128 @@ package dev.nez.arksurvivalreturns.feature.playthrough;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.drop.SupplyTier;
-import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveContent;
-import net.minecraft.world.level.block.Blocks;
 
 /**
- * The routines the director can run. Each stage gathers and crafts what the tech tree asks at that point, then ends
- * with a kill streak (the stage's weapon) and a damage test (the stage's armour). {@code smoke} is the same with the
- * three smallest species only, to check the run itself in a few minutes.
- *
- * <p>Hand-written for now; tools/build_playthrough.py is to generate the gather and craft lists from the tech tree and
- * the workstation catalogue (F43, build order step 2).
+ * The routines the director can run. The stages follow the tech tree's lanes, Prehistoric to Bronze: each one has the
+ * player earn what its nodes ask ({@link Gathering#obtain}: break, hunt, process, craft), and the stages that bring a
+ * new weapon or armour end with a kill streak and a damage test. Then the sweeps: every weapon, armour set, recipe,
+ * block, screen and supply-drop tier once. {@code smoke} is the same with the three smallest species and few loot
+ * rolls, to check the run itself.
  */
 public final class Routines {
-    public static final List<String> NAMES = List.of("standard", "smoke");
+    public static final List<String> NAMES = List.of("standard", "smoke", "stages", "sweeps");
     private static final String NS = "arksurvivalreturns:";
     /** Measurement segments run faster than real time; game ticks are what is recorded, so the numbers hold. */
     private static final int FAST_RATE = 60;
 
     static List<Step> get(String name) {
         return switch (name) {
-            case "standard" -> build(Integer.MAX_VALUE);
-            case "smoke" -> build(3);
+            case "standard" -> build(Integer.MAX_VALUE, 50, true, true);
+            case "smoke" -> build(3, 5, true, true);
+            case "stages" -> build(Integer.MAX_VALUE, 0, true, false);
+            case "sweeps" -> build(Integer.MAX_VALUE, 50, false, true);
             default -> null;
         };
     }
 
-    private static List<Step> build(int species) {
+    private static List<Step> build(int species, int lootRolls, boolean stages, boolean sweeps) {
         var steps = new ArrayList<Step>();
         steps.add(Verbs.command("gamemode survival @a"));
         steps.add(Verbs.command("clear @a"));
         steps.add(Verbs.command("arklevel set @a 1"));
         steps.add(Verbs.checkpoint("start"));
-
-        // R01: rock and wood, the first tools.
-        steps.add(Verbs.stage("R01"));
-        steps.add(Verbs.breakBlock(PrimitiveContent.LOOSE_ROCK.get(), 4, 4, 16));
-        steps.add(Verbs.breakBlock(Blocks.OAK_LOG, 6, 4, 8));
-        steps.add(Verbs.breakBlock(Blocks.SHORT_GRASS, 8, 4, 24));
-        steps.add(Verbs.craft("minecraft:oak_planks", 4));
-        steps.add(Verbs.craft(NS + "stone_hatchet", 1));
-        steps.add(Verbs.craft(NS + "rock_pickaxe", 1));
-        steps.add(Verbs.craft(NS + "rock_sword", 1));
-        steps.add(Verbs.craft(NS + "flint_knife", 1));
-        steps.add(Verbs.checkpoint("R01 crafted"));
-        measure(steps, "R01", NS + "rock_sword", new String[0], species);
-
-        // R02: keratin arms and armour.
-        steps.add(Verbs.stage("R02"));
-        steps.add(Verbs.craft(NS + "keratin_spear", 1));
-        for (String piece : keratin()) steps.add(Verbs.craft(piece, 1));
-        steps.add(Verbs.checkpoint("R02 crafted"));
-        measure(steps, "R02", NS + "keratin_spear", keratin(), species);
-
-        // R03: bronze arms and armour.
-        steps.add(Verbs.stage("R03"));
-        steps.add(Verbs.craft(NS + "bronze_longsword", 1));
-        for (String piece : bronze()) steps.add(Verbs.craft(piece, 1));
-        steps.add(Verbs.checkpoint("R03 crafted"));
-        measure(steps, "R03", NS + "bronze_longsword", bronze(), species);
-
-        // Supply drops: every tier's table rolled, the contents written for the report to rate.
-        steps.add(Verbs.stage("LOOT"));
-        for (var tier : SupplyTier.values()) steps.add(Verbs.lootRolls(tier, species == Integer.MAX_VALUE ? 50 : 5));
+        if (stages) stages(steps, species);
+        if (sweeps) sweeps(steps, lootRolls);
+        steps.add(Sweeps.tech("end"));
         steps.add(Verbs.checkpoint("end"));
         return steps;
     }
 
-    /** The stage's kill streak and damage test, sped up. */
-    private static void measure(List<Step> steps, String stage, String weapon, String[] armour, int species) {
+    private static void stages(List<Step> steps, int species) {
+        // R01, Prehistoric: rock, berries, rock tools; hide from the first hunts.
+        stage(steps, "R01", "rock 4", "stone_hatchet", "tintoberry 3", "rock_pickaxe", "rock_sword", "rock_shovel", "dried_meat 1",
+                "minecraft:leather_helmet", "minecraft:leather_chestplate", "minecraft:leather_leggings", "minecraft:leather_boots");
+        measure(steps, "R01", NS + "rock_sword", hide(), 1, species);
+
+        // R02: flint, keratin, the spear and the keratin set.
+        stage(steps, "R02", "flint_knife", "keratin 3", "keratin_spear", "keratin_helmet", "keratin_chestplate", "keratin_leggings", "keratin_boots");
+        measure(steps, "R02", NS + "keratin_spear", set("keratin"), 5, species);
+
+        // R03: camp and companions: saddlery, mattress, a fire, dishes, narcotics, the first tame.
+        stage(steps, "R03", "saddlery", "mattress", "stone_fire", "hearty_stew", "trail_mix", "narcotics");
+        steps.add(Sweeps.tame(Species.PARASAUR));
+
+        // R04: the Prehistoric finale.
+        stage(steps, "R04", "primitive_forge");
+        steps.add(Sweeps.tech("R04"));
+
+        // R05, Bronze: ingots, tools, longsword, hammer and the bronze set.
+        stage(steps, "R05", "bronze_ingot 4", "bronze_pickaxe", "bronze_axe", "bronze_shovel", "bronze_longsword", "bronze_hammer",
+                "bronze_helmet", "bronze_chestplate", "bronze_leggings", "bronze_boots");
+        measure(steps, "R05", NS + "bronze_longsword", set("bronze"), 15, species);
+
+        // R06: hearth, minerals, field medicine; the Therizinosaurus tame.
+        stage(steps, "R06", "bedroll", "minecraft:coal 2", "minecraft:iron_ingot 2", "sulphur 2", "minecraft:gunpowder 2",
+                "minecraft:glass 2", "medicine_bench", "herbal_bandage", "vitamins");
+        steps.add(Sweeps.tame(Species.THERIZINOSAURUS));
+
+        // R07: the Bronze finale.
+        stage(steps, "R07", "explosive_arrow");
+        steps.add(Sweeps.tech("R07"));
+    }
+
+    private static void sweeps(List<Step> steps, int lootRolls) {
+        steps.add(Verbs.stage("WEAPONS"));
+        steps.add(Verbs.command("tick rate " + FAST_RATE));
+        steps.add(Sweeps.weapons());
+        steps.add(Verbs.command("tick rate 20"));
+        steps.add(Verbs.stage("ARMOUR"));
+        steps.add(Sweeps.armour());
+        steps.add(Verbs.stage("RECIPES"));
+        steps.add(Sweeps.recipes());
+        steps.add(Verbs.stage("BLOCKS"));
+        steps.add(Sweeps.blocks());
+        steps.add(Verbs.stage("SCREENS"));
+        steps.add(Sweeps.screens());
+        steps.add(Verbs.stage("DROPS"));
+        steps.add(Verbs.command("tick rate " + FAST_RATE));
+        steps.add(Sweeps.drops());
+        steps.add(Verbs.command("tick rate 20"));
+        steps.add(Verbs.stage("LOOT"));
+        for (var tier : SupplyTier.values()) steps.add(Verbs.lootRolls(tier, lootRolls));
+    }
+
+    /** A stage: each goal earned in order ("item" or "item count"; ids without a namespace are Ark's), then a snapshot. */
+    private static void stage(List<Step> steps, String name, String... goals) {
+        steps.add(Verbs.stage(name));
+        for (String goal : goals) {
+            var parts = goal.split(" ");
+            String item = parts[0].contains(":") ? parts[0] : NS + parts[0];
+            steps.add(Gathering.obtain(item, parts.length > 1 ? Integer.parseInt(parts[1]) : 1));
+        }
+        steps.add(Verbs.checkpoint(name));
+        steps.add(Sweeps.tech(name));
+    }
+
+    /** The stage's kill streak and damage test, sped up, with creatures of the stage's level. */
+    private static void measure(List<Step> steps, String stage, String weapon, String[] armour, int creatureLevel, int species) {
         steps.add(Verbs.wield(weapon));
         steps.add(Verbs.unequip());
-        if (armour.length > 0) steps.add(Verbs.equip(armour));
+        steps.add(Verbs.equip(armour));
         steps.add(Verbs.teleport(CombatSteps.LANE_X, 0, CombatSteps.LANE_Z + 8, 180, 10));
         steps.add(Verbs.shot(stage + "_lane", 40));
         steps.add(Verbs.command("tick rate " + FAST_RATE));
-        steps.add(CombatSteps.all(stage + " " + weapon.substring(weapon.indexOf(':') + 1), 1, true, species));
-        steps.add(CombatSteps.all(stage + " " + (armour.length == 0 ? "no armour" : armour[0].substring(armour[0].indexOf(':') + 1)), 1, false, species));
+        steps.add(CombatSteps.all(stage + " " + weapon.substring(weapon.indexOf(':') + 1), creatureLevel, true, species));
+        steps.add(CombatSteps.all(stage + " " + armour[0].substring(armour[0].indexOf(':') + 1).replaceAll("_[a-z]+$", ""), creatureLevel, false, species));
         steps.add(Verbs.command("tick rate 20"));
     }
 
-    private static String[] keratin() { return set("keratin"); }
-    private static String[] bronze() { return set("bronze"); }
+    private static String[] hide() {
+        return new String[]{"minecraft:leather_helmet", "minecraft:leather_chestplate", "minecraft:leather_leggings", "minecraft:leather_boots"};
+    }
+
     private static String[] set(String material) {
         return new String[]{NS + material + "_helmet", NS + material + "_chestplate", NS + material + "_leggings", NS + material + "_boots"};
     }

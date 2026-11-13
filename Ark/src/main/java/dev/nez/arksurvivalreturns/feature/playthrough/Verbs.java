@@ -68,15 +68,19 @@ public final class Verbs {
     }
 
     /** Asks the client for a picture after the view has settled ({@code settle} ticks), into the run's screenshots. */
-    public static Step shot(String name, int settle) {
+    public static Step shot(String name, int settle) { return client("shot:" + name, settle); }
+
+    /** Asks the client for something (see {@link Playthrough#pendingRequest}) and writes which screen was open. */
+    public static Step client(String what, int settle) {
         return new Step() {
-            @Override public String name() { return "shot " + name; }
+            @Override public String name() { return "client " + what; }
             @Override public int timeout() { return settle + 200; }
             @Override public boolean tick(PlayRun run, int ticks) {
-                if (ticks == settle) Playthrough.requestShot(name);
-                if (ticks <= settle || Playthrough.pendingShot() != null) return false;
-                var event = run.event("shot");
-                event.addProperty("name", name);
+                if (ticks == settle) Playthrough.request(what);
+                if (ticks <= settle || Playthrough.pendingRequest() != null) return false;
+                var event = run.event("client");
+                event.addProperty("request", what);
+                event.addProperty("screen", Playthrough.clientScreen());
                 run.write(event);
                 return true;
             }
@@ -172,9 +176,13 @@ public final class Verbs {
             event.addProperty("result", ok ? "crafted" : "refused");
             event.add("changed", difference(before, counts(player)));
             player.closeContainer();
+            if (!"inventory".equals(station.station())) run.level().removeBlock(BENCH.apply(run), false);
             run.write(event);
         });
     }
+
+    /** Where a workstation is put down to craft at: beside the yard, clear of the spot blocks are broken on. */
+    static final java.util.function.Function<PlayRun, BlockPos> BENCH = run -> run.at(Gathering.YARD_X + 6, 1, Gathering.YARD_Z + 6);
 
     record Found(WorkstationDefinition station, WorkstationDefinition.Craft craft, String key, int index) {}
 
@@ -195,7 +203,7 @@ public final class Verbs {
         Block block = null;
         for (var candidate : BuiltInRegistries.BLOCK) if (candidate instanceof StationBlock bench && station.equals(bench.stationId())) { block = candidate; break; }
         if (block == null) return -1;
-        var pos = BlockPos.containing(player.position()).relative(player.getDirection(), 2);
+        var pos = BENCH.apply(run);
         run.level().setBlockAndUpdate(pos, block.defaultBlockState());
         run.level().getBlockState(pos).useWithoutItem(run.level(), player, new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false));
         return player.containerMenu instanceof WorkstationMenu bench && bench.station.equals(station) ? bench.containerId : -1;

@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import session_bench as bench  # noqa: E402
 import session_run as run  # noqa: E402
+import playthrough_report as report  # noqa: E402
 import ui_screens as screens  # noqa: E402
 
 BARE = {"iris": {"enableShaders": "false"}, "grass": bench.GRASS_OFF, "dh": {"rendererMode": '"DISABLED"'}}
@@ -28,7 +29,7 @@ OPTIONS = {"pauseOnLostFocus": "false", "fullscreen": "false", "soundCategory_ma
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--routine", default="standard")
+    parser.add_argument("--routine", default="standard", help="standard, smoke (three species), stages or sweeps")
     parser.add_argument("--hours", type=float, default=2.5, help="close the client after this long whatever happens")
     arguments = parser.parse_args()
     if run.clients():
@@ -49,11 +50,17 @@ def main() -> int:
         played = run.SAVES / run.COPY
         if played.is_dir() and not (played / run.MARKER).is_file():
             (played / run.MARKER).write_text("Created by tools/playthrough_run.py for one run; safe to delete.\n", encoding="utf-8")
+    log = run.RUN / "logs" / "latest.log"
+    if log.is_file():
+        lines = log.read_text(encoding="utf-8", errors="replace").splitlines()
+        errors = [line for line in lines if "/ERROR]" in line or "Exception" in line or "Playthrough:" in line]
+        (folder / "errors.log").write_text("".join(line + "\n" for line in errors), encoding="utf-8")
     events = folder / "events.jsonl"
     lines = events.read_text(encoding="utf-8").splitlines() if events.is_file() else []
     print(f"{len(lines)} events in {events}", flush=True)
     if lines:
         print(lines[-1], flush=True)
+        print(f"report: {report.report(folder)}", flush=True)
     return 0 if lines and '"run_end"' in lines[-1] else 1
 
 

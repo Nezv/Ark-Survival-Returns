@@ -59,6 +59,7 @@ public final class PlayRun {
     public JsonObject event(String type) {
         var event = new JsonObject();
         event.addProperty("t", server.overworld().getGameTime());
+        event.addProperty("wall", System.currentTimeMillis());
         event.addProperty("stage", stage);
         event.addProperty("step", index < steps.size() ? steps.get(index).name() : "");
         event.addProperty("type", type);
