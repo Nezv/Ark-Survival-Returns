@@ -44,11 +44,20 @@ public final class PlayRun {
     long suppliedXp;
     /** A fight is under way: upkeep waits, so the hand and the stand are the fight's. */
     boolean busy;
+    /**
+     * Between two actions (a goal choosing what to do next, a sweep between its steps): only here does the run stop to
+     * eat or to earn food, so a harvest, a hunt or a station being worked is never cut into.
+     */
+    boolean safe = true;
+    /** The tamed companion kept for the tame's-life steps (work, a kill, the trough), or null. */
+    dev.nez.arksurvivalreturns.feature.creature.CreatureEntity companion;
     private final List<Step> steps;
     private final BufferedWriter out;
     private int index, ticks;
     private Step upkeep;
     private int upkeepTicks, life;
+    /** Meals in a row that did not go down: after three the run stops trying for the stage (written as hungry). */
+    int eatFails;
     private String stage = "-", hungerStage = "";
     private volatile boolean finished;
 
@@ -72,7 +81,7 @@ public final class PlayRun {
     public ServerLevel level() { return server.overworld(); }
     public BlockPos at(int dx, int dy, int dz) { return origin.offset(dx, dy, dz); }
     public String stage() { return stage; }
-    void stage(String name) { stage = name; }
+    void stage(String name) { stage = name; eatFails = 0; }
     public boolean finished() { return finished; }
     public String progress() { return finished ? "finished" : (index + 1) + "/" + steps.size() + " " + (index < steps.size() ? steps.get(index).name() : ""); }
 
@@ -105,16 +114,23 @@ public final class PlayRun {
             if (Step.drive(this, upkeep, upkeepTicks++)) upkeep = null;
             return;
         }
-        if (!busy && life++ % 100 == 99 && player.getFoodData().getFoodLevel() <= 12) {
-            upkeep = Verbs.eat();
+        if (!busy && safe && life++ % 20 == 19 && player.getFoodData().getFoodLevel() <= 12 && eatFails < 3) {
             upkeepTicks = 0;
-            if (!Verbs.hasFood(player)) {
-                upkeep = null;
-                if (!stage.equals(hungerStage)) { hungerStage = stage; write(event("hungry")); }
+            if (Verbs.hasFood(player)) upkeep = Verbs.eat();
+            else if (!stage.equals(hungerStage)) {
+                // No meal in the bags: the player goes and earns one, once a stage (a second failure is just written down).
+                hungerStage = stage;
+                var event = event("hungry");
+                String meal = Gathering.provision(this);
+                event.addProperty("earning", meal);
+                write(event);
+                upkeep = Gathering.obtain(meal, 4, false);
             }
+            if (upkeep != null) return;
         }
         var step = steps.get(index);
-        if (Step.drive(this, step, ticks++)) { index++; ticks = 0; }
+        safe = false;
+        if (Step.drive(this, step, ticks++)) { index++; ticks = 0; safe = true; }
     }
 
     /** A player down or dead is written down and put back on their feet; true while that takes this tick. */
@@ -127,7 +143,7 @@ public final class PlayRun {
         event.addProperty("food", player.getFoodData().getFoodLevel());
         write(event);
         if (downed) DownedHandler.revive(player, player);
-        else server.getPlayerList().respawn(player, true, Entity.RemovalReason.KILLED);
+        else server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);   // alive again; keepInventory keeps the bags
         return true;
     }
 
@@ -136,6 +152,7 @@ public final class PlayRun {
         finished = true;
         busy = false;
         Playthrough.watch(null);
+        Playthrough.useHeld(false);
         var end = event("run_end");
         end.addProperty("why", why);
         var player = player();

@@ -9,7 +9,11 @@ import java.util.function.Function;
 import com.google.gson.JsonArray;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.companion.CompanionCommand;
+import dev.nez.arksurvivalreturns.feature.companion.CompanionService;
+import dev.nez.arksurvivalreturns.feature.companion.CompanionWhistle;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.farm.TroughBlockEntity;
 import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
 import dev.nez.arksurvivalreturns.feature.taming.TamingMethod;
 import dev.nez.arksurvivalreturns.feature.taming.TamingService;
@@ -54,12 +58,16 @@ public final class Sweeps {
         return new Step() {
             List<Step> steps;
             int at, ticks;
+            boolean between = true;
             @Override public String name() { return name; }
             @Override public int timeout() { return Integer.MAX_VALUE; }
             @Override public boolean tick(PlayRun run, int outer) {
                 if (steps == null) steps = plan.apply(run);
                 if (at >= steps.size()) return true;
-                if (Step.drive(run, steps.get(at), ticks++)) { at++; ticks = 0; }
+                // One idle tick between steps: the run may eat here, never in the middle of one.
+                if (between) { between = false; run.safe = true; return false; }
+                run.safe = false;
+                if (Step.drive(run, steps.get(at), ticks++)) { at++; ticks = 0; between = true; }
                 return false;
             }
             @Override public void abandon(PlayRun run) { if (steps != null && at < steps.size()) steps.get(at).abandon(run); }
@@ -72,14 +80,17 @@ public final class Sweeps {
      * Every Ark item a workstation makes, and the Armoury's gear, earned once through the economy like any other goal;
      * the crates keep them. Vanilla's decoration blocks are left out: the recipe tree is Ark's.
      */
-    public static Step recipes() {
+    public static Step recipes() { return recipes(false); }
+
+    /** {@code all}: every item any bench makes, vanilla's too (the whole recipe tree; what has no way in ends blocked). */
+    public static Step recipes(boolean all) {
         return sequence("recipe sweep", run -> {
             var steps = new ArrayList<Step>();
             var items = new java.util.LinkedHashSet<String>();
             for (var station : WorkstationCatalog.all().values())
                 for (var craft : station.crafts())
                     if (!craft.variant().apply() && BuiltInRegistries.ITEM.containsKey(net.minecraft.resources.Identifier.parse(craft.variant().item()))
-                            && (craft.variant().item().startsWith(NS + ":") || station.station().endsWith(":armoury"))) items.add(craft.variant().item());
+                            && (all || craft.variant().item().startsWith(NS + ":") || station.station().endsWith(":armoury"))) items.add(craft.variant().item());
             for (String item : items) steps.add(Gathering.obtain(item, 1));
             return steps;
         });
@@ -366,7 +377,29 @@ public final class Sweeps {
      * Narcotics (each blow a dose), then fed by hand while it sleeps and dosed by hand when it starts to wake; a passive
      * one fed by hand while awake. It is rooted in place, out of its reach, so the player is never struck.
      */
-    public static Step tame(Species species, int creatureLevel, String food, String sedative) {
+    public static Step tame(Species species, int creatureLevel, String food, String sedative) { return tame(species, creatureLevel, food, sedative, false); }
+
+    /**
+     * A tame with what it takes earned first: food for the meals, and for a knock-out species twice the doses its torpor
+     * holds (to put it under and keep it there), worked out from the species' profile and the sedative's own potency.
+     */
+    public static Step tamed(Species species, int creatureLevel, String food, String sedative, boolean keep) {
+        return sequence("tamed " + species.id, run -> {
+            var steps = new ArrayList<Step>();
+            var profile = dev.nez.arksurvivalreturns.feature.taming.CreatureProfileRegistry.of(species);
+            if (profile.method() == TamingMethod.KNOCKOUT) {
+                double dose = TamingService.sedativePotency(new ItemStack(Verbs.item(sedative))) * profile.sedativeResistance();
+                int doses = dose <= 0 ? 16 : (int) Math.ceil(profile.size().maxTorpor() / dose) * 2 + 4;
+                steps.add(Gathering.obtain(sedative, Math.min(doses, 128)));
+            }
+            steps.add(Gathering.obtain(food, 24));
+            steps.add(tame(species, creatureLevel, food, sedative, keep));
+            return steps;
+        });
+    }
+
+    /** {@code keep}: the tamed creature stays as the run's companion ({@link PlayRun#companion}) for {@link #companion}. */
+    public static Step tame(Species species, int creatureLevel, String food, String sedative, boolean keep) {
         return new Step() {
             CreatureEntity creature;
             Vec3 spot;
@@ -432,10 +465,201 @@ public final class Sweeps {
                 }
                 event.addProperty("xp", ArkLevels.totalXp(ArkLevels.get(run.player())) - xpBefore);
                 run.write(event);
-                if (creature != null && !creature.isRemoved()) creature.discard();
+                if (keep && end.equals("tamed")) run.companion = creature;
+                else if (creature != null && !creature.isRemoved()) creature.discard();
                 return true;
             }
         };
+    }
+
+    // ------------------------------------------------------------------ a tame's life, the camp's small things
+
+    /**
+     * What a tamed worker does for its owner, each tried once and written down: the WORK order whistled (it forages
+     * ripe bushes put beside it), a wild Dilophosaur set on it (it fights back; the kill is the tame's), a Trough the
+     * player earned, placed and filled by a click (it eats when hungry enough). The companion is let go at the end.
+     */
+    public static Step companion() {
+        return sequence("companion", run -> {
+            var steps = new ArrayList<Step>();
+            if (run.companion == null || !run.companion.isAlive()) {
+                steps.add(Step.of("no companion", run2 -> { var event = run2.event("companion"); event.addProperty("what", "none"); event.addProperty("end", "no_tame"); run2.write(event); }));
+                return steps;
+            }
+            var tame = run.companion;
+            var home = tame.blockPosition();
+            steps.add(new Step() {
+                BlockPos bush;
+                @Override public String name() { return "companion work"; }
+                @Override public int timeout() { return 20 * 60; }
+                @Override public boolean tick(PlayRun run2, int ticks) {
+                    var level = run2.level();
+                    if (ticks == 0) {
+                        bush = home.offset(3, 0, 0);
+                        var ripe = Gathering.ripe(BuiltInRegistries.BLOCK.getValue(net.minecraft.resources.Identifier.parse(NS + ":tintoberry_bush")));
+                        for (int i = 0; i < 3; i++) level.setBlockAndUpdate(bush.offset(0, 0, i - 1), ripe);
+                        Verbs.tp(run2, home.getX() - run2.origin.getX(), 0, home.getZ() - run2.origin.getZ() + 6, 180, 10);
+                        CompanionWhistle.whistleAll(run2.player(), CompanionCommand.WORK);
+                        return false;
+                    }
+                    boolean worked = false;
+                    for (int i = 0; i < 3; i++) worked |= !level.getBlockState(bush.offset(0, 0, i - 1)).equals(
+                            Gathering.ripe(BuiltInRegistries.BLOCK.getValue(net.minecraft.resources.Identifier.parse(NS + ":tintoberry_bush"))));
+                    if (!worked && ticks < 20 * 50) return false;
+                    return done(run2, worked ? "worked" : "no_work", ticks);
+                }
+                @Override public void abandon(PlayRun run2) { done(run2, "timeout", timeout()); }
+                private boolean done(PlayRun run2, String end, int ticks) {
+                    var event = run2.event("companion");
+                    event.addProperty("what", "work");
+                    event.addProperty("species", tame.species().id);
+                    event.addProperty("end", end);
+                    event.addProperty("ticks", ticks);
+                    event.addProperty("order", CompanionService.of(tame).order().name());
+                    event.addProperty("supplied", "berry bushes");
+                    run2.write(event);
+                    for (int i = 0; i < 3; i++) run2.level().removeBlock(bush.offset(0, 0, i - 1), false);
+                    CompanionWhistle.whistleAll(run2.player(), CompanionCommand.STAY);
+                    return true;
+                }
+            });
+            steps.add(new Step() {
+                CreatureEntity wild;
+                @Override public String name() { return "companion kill"; }
+                @Override public int timeout() { return 20 * 90; }
+                @Override public boolean tick(PlayRun run2, int ticks) {
+                    if (ticks == 0) {
+                        wild = CombatSteps.spawn(run2, Species.DILOPHOSAUR, 1, tame.position().add(4, 0, 0), true);
+                        return wild == null && done(run2, "not_created", 0);
+                    }
+                    if (!tame.isAlive()) return done(run2, "tame_died", ticks);
+                    if (!wild.isAlive()) return done(run2, "killed", ticks);
+                    if (ticks % 20 == 0) { wild.setTarget(tame); wild.getNavigation().moveTo(tame, 1.2); }
+                    return ticks > 20 * 80 && done(run2, "no_kill", ticks);
+                }
+                @Override public void abandon(PlayRun run2) { done(run2, "timeout", timeout()); }
+                private boolean done(PlayRun run2, String end, int ticks) {
+                    var event = run2.event("companion");
+                    event.addProperty("what", "kill");
+                    event.addProperty("species", tame.species().id);
+                    event.addProperty("end", end);
+                    event.addProperty("ticks", ticks);
+                    event.addProperty("tame_health", tame.getHealth() / tame.getMaxHealth());
+                    event.addProperty("supplied", "wild dilophosaur");
+                    run2.write(event);
+                    if (wild != null && !wild.isRemoved()) wild.discard();
+                    return true;
+                }
+            });
+            String trough = NS + ":trough";
+            steps.add(Gathering.obtain(trough, 1));
+            steps.add(Gathering.obtain(NS + ":tintoberry", 16));
+            steps.add(new Step() {
+                BlockPos pos;
+                int stocked;
+                @Override public String name() { return "companion trough"; }
+                @Override public int timeout() { return 20 * 100; }
+                @Override public boolean tick(PlayRun run2, int ticks) {
+                    var level = run2.level();
+                    if (ticks == 0) {
+                        pos = tame.blockPosition().offset(-3, 0, 0);
+                        Gathering.floor(run2, pos);
+                        if (!Verbs.placeItem(run2, trough, trough, pos)) return done(run2, "not_placed", 0);
+                        Verbs.use(run2, pos, NS + ":tintoberry");
+                        stocked = level.getBlockEntity(pos) instanceof TroughBlockEntity filled ? filled.stored().getCount() : 0;
+                        return stocked == 0 && done(run2, "not_filled", 0);
+                    }
+                    if (!(level.getBlockEntity(pos) instanceof TroughBlockEntity filled)) return done(run2, "gone", ticks);
+                    if (filled.stored().getCount() < stocked) return done(run2, "fed", ticks);
+                    return ticks > 20 * 90 && done(run2, "not_hungry", ticks);
+                }
+                @Override public void abandon(PlayRun run2) { done(run2, "timeout", timeout()); }
+                private boolean done(PlayRun run2, String end, int ticks) {
+                    var event = run2.event("companion");
+                    event.addProperty("what", "trough");
+                    event.addProperty("species", tame.species().id);
+                    event.addProperty("end", end);
+                    event.addProperty("ticks", ticks);
+                    event.addProperty("hunger", TamingService.of(tame).hunger());
+                    event.addProperty("fed_at_hunger", dev.nez.arksurvivalreturns.Config.FARM_TROUGH_HUNGER.get());
+                    run2.write(event);
+                    return true;
+                }
+            });
+            steps.add(Step.of("release companion", run2 -> {
+                if (run2.companion != null && !run2.companion.isRemoved()) run2.companion.discard();
+                run2.companion = null;
+            }));
+            return steps;
+        });
+    }
+
+    /** A stick clicked on the lit camp fire: a torch (the light_torch event). */
+    public static Step torch() {
+        return sequence("torch", run -> {
+            var steps = new ArrayList<Step>();
+            steps.add(Gathering.obtain("minecraft:stick", 1));
+            steps.add(Step.of("light a torch", run2 -> {
+                var player = run2.player();
+                var fire = run2.camp.get(Gathering.FIRE);
+                var event = run2.event("torch");
+                int before = Gathering.count(player, "minecraft:torch");
+                if (fire == null) event.addProperty("end", "no_fire");
+                else {
+                    Gathering.standAt(run2, fire);
+                    Verbs.use(run2, fire, Direction.SOUTH, new Vec3(fire.getX() + 0.5, fire.getY() + 0.2, fire.getZ() + 1.0), "minecraft:stick");
+                    boolean lit = run2.level().getBlockEntity(fire) instanceof dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlockEntity hearth && hearth.isLit();
+                    event.addProperty("end", Gathering.count(player, "minecraft:torch") > before ? "torch" : lit ? "no_torch" : "fire_out");
+                }
+                run2.write(event);
+            }));
+            return steps;
+        });
+    }
+
+    /**
+     * A night in an earned bed: the bed put down by its item, dusk called (the Testing Ground's clock stands still), the
+     * bed clicked, the player left to sleep until the game wakes them, then noon again.
+     */
+    public static Step sleep(String bed) {
+        return sequence("sleep " + bed, run -> {
+            var steps = new ArrayList<Step>();
+            steps.add(Gathering.obtain(bed, 1));
+            steps.add(new Step() {
+                BlockPos pos;
+                boolean slept;
+                @Override public String name() { return "sleep in " + bed; }
+                @Override public int timeout() { return 20 * 30; }
+                @Override public boolean tick(PlayRun run2, int ticks) {
+                    var player = run2.player();
+                    if (ticks == 0) {
+                        pos = run2.at(Gathering.CAMP_X - 6, 1, Gathering.CAMP_Z + (bed.endsWith("bedroll") ? 4 : 0));
+                        Gathering.floor(run2, pos);
+                        if (!Verbs.placeItem(run2, bed, bed, pos)) return done(run2, "not_placed", 0);
+                        run2.server.getCommands().performPrefixedCommand(run2.server.createCommandSourceStack().withSuppressedOutput(), "time set 14000");
+                        return false;
+                    }
+                    if (ticks == 5) { Gathering.standAt(run2, pos); Verbs.use(run2, pos, null); return false; }
+                    if (ticks < 10) return false;
+                    if (player.isSleeping()) { slept = true; return false; }
+                    return done(run2, slept ? "woke" : ticks > 40 ? "refused" : null, ticks);
+                }
+                @Override public void abandon(PlayRun run2) { if (run2.player().isSleeping()) run2.player().stopSleepInBed(true, true); done(run2, slept ? "still_asleep" : "timeout", timeout()); }
+                private boolean done(PlayRun run2, String end, int ticks) {
+                    if (end == null) return false;
+                    var event = run2.event("sleep");
+                    event.addProperty("bed", bed);
+                    event.addProperty("end", end);
+                    event.addProperty("ticks", ticks);
+                    var respawn = run2.player().getRespawnConfig();
+                    event.addProperty("respawn_set", respawn != null);
+                    run2.write(event);
+                    run2.server.getCommands().performPrefixedCommand(run2.server.createCommandSourceStack().withSuppressedOutput(), "time set 6000");
+                    return true;
+                }
+            });
+            return steps;
+        });
     }
 
     /** Which tech nodes the player's tribe has completed so far, and which not. */
@@ -448,9 +672,14 @@ public final class Sweeps {
             var progress = TechProgressData.get(run.level()).progress(TechService.tribeOf(run.player()));
             var done = new JsonArray();
             var open = new JsonArray();
-            for (var node : tree.nodes()) (progress.completed(node.id()) ? done : open).add(node.age() + "/" + node.id());
+            var future = new JsonArray();
+            for (var node : tree.nodes()) {
+                (progress.completed(node.id()) ? done : open).add(node.age() + "/" + node.id());
+                if (node.trigger() instanceof dev.nez.arksurvivalreturns.feature.tech.TechTrigger.Future) future.add(node.age() + "/" + node.id());
+            }
             event.add("completed", done);
             event.add("open", open);
+            event.add("future", future);
             run.write(event);
         });
     }

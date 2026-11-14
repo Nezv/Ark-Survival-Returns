@@ -16,7 +16,8 @@ import recipe_tree as rt
 
 NS = 'arksurvivalreturns:'
 src = open('src/main/java/dev/nez/arksurvivalreturns/feature/playthrough/Gathering.java', encoding='utf-8').read()
-CONST = {'FORGE': NS + 'primitive_forge', 'CRUSHER': NS + 'crusher', 'RACK': NS + 'drying_rack', 'STONECUTTER': 'minecraft:stonecutter'}
+CONST = {'FORGE': NS + 'primitive_forge', 'CRUSHER': NS + 'crusher', 'RACK': NS + 'drying_rack', 'STONECUTTER': 'minecraft:stonecutter',
+         'FIRE': NS + 'stone_fire'}
 
 
 def val(tok):
@@ -36,6 +37,8 @@ for w in ['spruce', 'birch', 'jungle', 'acacia', 'dark_oak', 'mangrove', 'cherry
     SOURCES['minecraft:' + w + '_log'] = ('breaks', ['minecraft:' + w + '_log'])
 SOURCES.pop('"minecraft:" + wood + "_log"', None)
 SOURCES['minecraft:water_bottle'] = ('fills', ['minecraft:glass_bottle'])
+# The crusher's two-ingredient recipe (Gathering: new Processes(CRUSHER, coal, sulphur)).
+SOURCES['minecraft:gunpowder'] = ('processes', [NS + 'crusher', 'minecraft:coal', NS + 'sulphur'])
 HELD = {'minecraft:short_grass': 'minecraft:shears'}
 for b in ['tintoberry', 'amarberry', 'azulberry', 'narcoberry']:
     SOURCES[NS + b] = ('breaks', [NS + b + '_bush'])
@@ -113,7 +116,11 @@ def why(item, stack=()):
         elif kind == 'breaks' and item in HELD:
             r = why(HELD[item], stack)
         elif kind == 'processes':
-            r = why(a[0], stack) or why(a[1], stack) or (why('minecraft:oak_log', stack) if a[0].endswith('forge') else None)
+            r = why(a[0], stack) or why(a[1], stack) or (why(a[2], stack) if len(a) > 2 else None)
+            if not r and a[0].endswith('forge'):   # a clicked log goes in as input: the forge is fuelled with planks
+                r = why('minecraft:oak_planks', stack)
+            if not r and a[0].endswith('stone_fire'):
+                r = why(NS + 'fire_starter', stack) or why('minecraft:oak_log', stack)
         elif kind == 'cooks':
             for need in [NS + 'stone_fire', NS + 'cooking_pot', NS + 'fire_starter', *a]:
                 r = r or why(need, stack)
@@ -149,7 +156,9 @@ if __name__ == '__main__':
              'medicine_bench', 'herbal_bandage', 'vitamins', 'explosive_arrow', 'storage_crate', 'azulberry', 'minecraft:bow',
              'tranquilizer_arrow', 'minecraft:carrot', 'minecraft:oak_planks', 'minecraft:gold_ingot', 'minecraft:golden_sword',
              'minecraft:golden_chestplate', 'minecraft:diamond', 'minecraft:diamond_sword', 'minecraft:diamond_chestplate',
-             'minecraft:crossbow', 'improved_tranquilizer_arrow', 'minecraft:arrow']
+             'minecraft:crossbow', 'improved_tranquilizer_arrow', 'minecraft:arrow', 'amarberry', 'narcoberry',
+             'cooked_herbivore_meat', 'cooked_carnivore_meat', 'cooked_bird_meat', 'dried_ration', 'trough', 'minecraft:stick',
+             'minecraft:bone_meal', 'minecraft:sugar', 'minecraft:red_dye', 'minecraft:yellow_dye']
     print('\nstage goals:')
     for g in goals:
         g = g if ':' in g else NS + g

@@ -100,6 +100,7 @@ def summarise(events: list[dict]) -> dict:
         "level_end": end.get("level"), "earned_xp": end.get("earned_xp"), "supplied_xp": end.get("supplied_xp"),
         "level_lifts": len(lifts), "provenance_failures": len(provenance(events)),
         "downs": len(by["player_down"]) + len(by["player_dead"]),
+        "tech_missed": sorted(set(by["tech"][-1].get("open", [])) - set(by["tech"][-1].get("future", []))) if by["tech"] else [],
     }
 
 
@@ -155,6 +156,7 @@ def report(folder: Path) -> Path:
     parts.append(table(["stage", "event", "cause / item", "food"],
                        [[e["stage"], e["type"], e.get("cause", e.get("item", "")), e.get("food", e.get("food_after", ""))]
                         for e in events if e["type"] in ("player_down", "player_dead", "hungry", "ate", "no_crate")]))
+    parts.append("<p>" + esc(", ".join(f"{k} {v}" for k, v in Counter(e.get("end", "") for e in by["ate"]).items())) + "</p>")
     parts.append("<h2>Gaps: goals that could not be earned</h2>")
     parts.append(table(["stage", "goal", "stuck on", "count", "why"], [[e["stage"], e["goal"], e["item"], e["count"], e["why"]] for e in by["blocked"]], "warn"))
     parts.append("<h2>The camp</h2>")
@@ -193,6 +195,13 @@ def report(folder: Path) -> Path:
     parts.append(table(["species", "method", "end", "game s", "sedating blows", "doses", "meals", "progress", "XP"],
                        [[e["species"], e.get("method", ""), e["end"], round(e["ticks"] / 20, 1), e["sedating_blows"], e["doses"], e.get("meals", ""),
                          e.get("progress", ""), e["xp"]] for e in by["tame"]]))
+    parts.append("<h2>A tame's life, the bed and the torch</h2>")
+    parts.append(table(["stage", "what", "with", "end", "game s", "note"],
+                       [[e["stage"], e.get("what", e["type"]), e.get("species", e.get("bed", "")).split(":")[-1], e["end"],
+                         round(e.get("ticks", 0) / 20, 1),
+                         f"hunger {e['hunger']:.0f}, fed at {e['fed_at_hunger']:.0f}" if "hunger" in e else
+                         f"respawn set: {e['respawn_set']}" if "respawn_set" in e else e.get("order", "")]
+                        for e in events if e["type"] in ("companion", "sleep", "torch")]))
     parts.append("<h2>Creature against creature (level 15, the next bigger body)</h2>")
     parts.append(table(["a", "b", "winner", "end", "game s", "a health left", "b health left", "a dealt", "b dealt"],
                        [[e["a"], e["b"], e.get("winner", ""), e["end"], round(e["ticks"] / 20, 1), f"{e.get('a_left', 0):.0%}", f"{e.get('b_left', 0):.0%}",
@@ -244,8 +253,11 @@ def report(folder: Path) -> Path:
     parts.append(table(["what", "result", "missing or failed"], coverage))
     tech = by["tech"][-1] if by["tech"] else None
     if tech and "completed" in tech:
+        future = set(tech.get("future", []))
+        missed = [n for n in tech["open"] if n not in future]
         parts.append(f"<h2>Tech tree at the end</h2><p>{len(tech['completed'])} completed: {esc(', '.join(tech['completed']))}</p>"
-                     f"<p>Open: {esc(', '.join(tech['open']))}</p>")
+                     f"<p class='{'bad' if missed else ''}'>Not completed though the game has them ({len(missed)}): {esc(', '.join(missed)) or 'none'}</p>"
+                     f"<p>Not in the game yet ({len(future)}): {esc(', '.join(sorted(future)))}</p>")
 
     problems = [e for e in events if e["type"] in ("step_error", "step_timeout")]
     parts.append("<h2>Step errors and timeouts</h2>" + table(["stage", "step", "type", "error"],

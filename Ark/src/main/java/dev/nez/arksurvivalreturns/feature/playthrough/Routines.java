@@ -16,7 +16,7 @@ import dev.nez.arksurvivalreturns.feature.drop.SupplyTier;
  * {@code smoke} is the same with the three smallest species and few loot rolls, to check the run itself.
  */
 public final class Routines {
-    public static final List<String> NAMES = List.of("standard", "smoke", "stages", "sweeps", "fights", "economy");
+    public static final List<String> NAMES = List.of("standard", "smoke", "stages", "sweeps", "fights", "recipes", "economy");
     private static final String NS = "arksurvivalreturns:";
 
     static List<Step> get(String name) {
@@ -26,6 +26,8 @@ public final class Routines {
             case "stages" -> build(Integer.MAX_VALUE, 0, true, false, false);
             case "sweeps" -> build(Integer.MAX_VALUE, 50, false, true, false);
             case "fights" -> fightsOnly();
+            // The whole recipe tree: every item any bench makes, vanilla's too; long.
+            case "recipes" -> recipesOnly();
             // The stages and the recipe sweep with no measurements: the GameTest's run.
             case "economy" -> economy();
             default -> null;
@@ -59,6 +61,16 @@ public final class Routines {
         return steps;
     }
 
+    private static List<Step> recipesOnly() {
+        var steps = start();
+        stages(steps, 0);
+        steps.add(Verbs.stage("RECIPES"));
+        steps.add(Sweeps.recipes(true));
+        steps.add(Sweeps.tech("end"));
+        steps.add(Verbs.checkpoint("end"));
+        return steps;
+    }
+
     private static List<Step> economy() {
         var steps = new ArrayList<Step>();
         steps.add(Verbs.checkpoint("start"));
@@ -72,8 +84,10 @@ public final class Routines {
 
     private static void stages(List<Step> steps, int species) {
         // R01, Prehistoric: rock, berries, rock tools; hide from the first hunts.
-        stage(steps, "R01", "rock 4", "stone_hatchet", "tintoberry 3", "rock_pickaxe", "rock_sword", "rock_shovel", "dried_meat 1",
-                "minecraft:leather_helmet", "minecraft:leather_chestplate", "minecraft:leather_leggings", "minecraft:leather_boots");
+        stage(steps, "R01", "rock 4", "stone_hatchet", "tintoberry 3", "amarberry 1", "azulberry 1", "narcoberry 1", "rock_pickaxe",
+                "rock_sword", "rock_shovel", "dried_meat 3", "minecraft:leather_helmet", "minecraft:leather_chestplate", "minecraft:leather_leggings", "minecraft:leather_boots");
+        // The first preserved meal, eaten (Dried Meat III, which a tech node asks for, takes three game days on the rack).
+        steps.add(Verbs.eat(NS + "dried_meat"));
         measure(steps, "R01", NS + "rock_sword", hide(), 1, species);
 
         // R02: flint, keratin, the spear and the keratin set.
@@ -81,8 +95,17 @@ public final class Routines {
         measure(steps, "R02", NS + "keratin_spear", set("keratin"), 5, species);
 
         // R03: camp and companions: saddlery, mattress, a fire, dishes, narcotics, the first tame (passive, fed by hand).
-        stage(steps, "R03", "saddlery", "mattress", "stone_fire", "hearty_stew", "trail_mix", "narcotics 12", "azulberry 24");
-        steps.add(Sweeps.tame(Species.PARASAUR, 5, NS + "azulberry", NS + "narcotics"));
+        // The fire's spit cooks each meat before the pot is seated on it for the dishes.
+        stage(steps, "R03", "saddlery", "mattress", "stone_fire", "cooked_herbivore_meat 2", "cooked_carnivore_meat 1", "cooked_bird_meat 1",
+                "hearty_stew", "trail_mix");
+        // While the fire still burns under the pot: a stick lit on it.
+        steps.add(Sweeps.torch());
+        goals(steps, "dried_ration 1", "narcotics 1");
+        steps.add(Sweeps.sleep(NS + "mattress"));
+        steps.add(Sweeps.tamed(Species.PARASAUR, 5, NS + "azulberry", NS + "narcotics", false));
+        // A worker: a Triceratops knocked out with the player's narcotics, kept for a tame's life (work, a kill, the trough).
+        steps.add(Sweeps.tamed(Species.TRICERATOPS, 5, "minecraft:carrot", NS + "narcotics", true));
+        steps.add(Sweeps.companion());
 
         // R04: the Prehistoric finale; the bow and the first tranquilizer arrows.
         stage(steps, "R04", "primitive_forge", "minecraft:bow", "tranquilizer_arrow 8");
@@ -95,8 +118,9 @@ public final class Routines {
 
         // R06: hearth, minerals, field medicine; the Therizinosaurus tame (knocked out with the player's narcotics).
         stage(steps, "R06", "bedroll", "minecraft:coal 2", "minecraft:iron_ingot 2", "sulphur 2", "minecraft:gunpowder 2",
-                "minecraft:glass 2", "medicine_bench", "herbal_bandage", "vitamins", "narcotics 24", "minecraft:carrot 24");
-        steps.add(Sweeps.tame(Species.THERIZINOSAURUS, 5, "minecraft:carrot", NS + "narcotics"));
+                "minecraft:glass 2", "medicine_bench", "herbal_bandage", "vitamins");
+        steps.add(Sweeps.sleep(NS + "bedroll"));
+        steps.add(Sweeps.tamed(Species.THERIZINOSAURUS, 5, "minecraft:carrot", NS + "narcotics", false));
 
         // R07: the Bronze finale.
         stage(steps, "R07", "explosive_arrow");
@@ -121,6 +145,9 @@ public final class Routines {
         steps.add(Sweeps.armour());
         steps.add(Verbs.stage("RECIPES"));
         steps.add(Sweeps.recipes());
+        // What the crusher grinds besides gunpowder, once each.
+        steps.add(Verbs.stage("STATIONS"));
+        for (String ground : List.of("minecraft:bone_meal", "minecraft:sugar", "minecraft:red_dye", "minecraft:yellow_dye")) steps.add(Gathering.obtain(ground, 1));
         steps.add(Verbs.stage("BLOCKS"));
         steps.add(Sweeps.blocks());
         steps.add(Verbs.stage("SCREENS"));
@@ -134,13 +161,17 @@ public final class Routines {
     /** A stage: each goal earned in order ("item" or "item count"; ids without a namespace are Ark's), then a snapshot. */
     private static void stage(List<Step> steps, String name, String... goals) {
         steps.add(Verbs.stage(name));
+        goals(steps, goals);
+        steps.add(Verbs.checkpoint(name));
+        steps.add(Sweeps.tech(name));
+    }
+
+    private static void goals(List<Step> steps, String... goals) {
         for (String goal : goals) {
             var parts = goal.split(" ");
             String item = parts[0].contains(":") ? parts[0] : NS + parts[0];
             steps.add(Gathering.obtain(item, parts.length > 1 ? Integer.parseInt(parts[1]) : 1));
         }
-        steps.add(Verbs.checkpoint(name));
-        steps.add(Sweeps.tech(name));
     }
 
     /** The stage's kill streak and damage test, with creatures of the stage's level, at the normal tick rate. */

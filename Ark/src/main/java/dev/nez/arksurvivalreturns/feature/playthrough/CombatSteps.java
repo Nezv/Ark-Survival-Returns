@@ -277,9 +277,9 @@ public final class CombatSteps {
             CreatureEntity creature;
             Vec3 spot, stand;
             long started;
-            int shots, drawn;
+            int shots, drawn, timer;
             float healthBefore;
-            boolean done;
+            boolean done, held, wasCharged;
             @Override public String name() { return "shoot " + species.id + " with " + weapon + " and " + ammo; }
             @Override public int timeout() { return KILL_SAMPLE * 2 + 100; }
             @Override public boolean tick(PlayRun run, int ticks) {
@@ -301,18 +301,29 @@ public final class CombatSteps {
                 if (creature.isRemoved() || creature.isDeadOrDying()) return finish(run, "dead");
                 hold(run, stand, creature.position().add(0, creature.getBbHeight() * 0.6, 0));
                 if (level.getGameTime() - started > KILL_SAMPLE * 2) return finish(run, shots == 0 ? "no_shot" : "projected");
-                if (player.getOffhandItem().isEmpty() && !offHand(player, ammo)) return finish(run, "out_of_ammo");
-                var held = player.getMainHandItem();
-                if (held.getItem() instanceof CrossbowItem && CrossbowItem.isCharged(held)) {
-                    player.gameMode.useItem(player, level, held, InteractionHand.MAIN_HAND);
-                    shots++;
+                var weaponStack = player.getMainHandItem();
+                boolean crossbow = weaponStack.getItem() instanceof CrossbowItem;
+                timer++;
+                if (!held) {
+                    if (timer < 4) return false;   // the key stays up long enough for the client to see it
+                    if (player.getOffhandItem().isEmpty() && !(crossbow && CrossbowItem.isCharged(weaponStack)) && !offHand(player, ammo)) return finish(run, "out_of_ammo");
+                    // The use key goes down: a bow starts to draw, a crossbow to charge, a charged crossbow fires.
+                    wasCharged = crossbow && CrossbowItem.isCharged(weaponStack);
+                    Verbs.useKey(run, true);
+                    held = true;
+                    drawn = timer = 0;
                     return false;
                 }
-                if (!player.isUsingItem()) { player.gameMode.useItem(player, level, held, InteractionHand.MAIN_HAND); drawn = 0; return false; }
-                int need = held.getItem() instanceof CrossbowItem ? CrossbowItem.getChargeDuration(held, player) + 2 : 22;
-                if (++drawn >= need) {
-                    player.releaseUsingItem();
-                    if (!(held.getItem() instanceof CrossbowItem)) shots++;
+                boolean using = player.isUsingItem(), release;
+                if (wasCharged) release = !CrossbowItem.isCharged(weaponStack) || timer > 40;
+                else if (crossbow) release = using && ++drawn >= CrossbowItem.getChargeDuration(weaponStack, player) + 3 || timer > 120;
+                else release = using && ++drawn >= 22 || timer > 80;
+                if (release) {
+                    // Let go: the bow looses its arrow; the crossbow keeps its charge for the next press, or has just fired.
+                    if (wasCharged ? !CrossbowItem.isCharged(weaponStack) : !crossbow && using && drawn >= 22) shots++;
+                    Verbs.useKey(run, false);
+                    held = false;
+                    timer = 0;
                 }
                 return false;
             }
@@ -322,6 +333,7 @@ public final class CombatSteps {
                 done = true;
                 run.busy = false;
                 var player = run.player();
+                if (held) Verbs.useKey(run, false);
                 player.stopUsingItem();
                 long ticks = run.level().getGameTime() - started;
                 var event = run.event("ranged");

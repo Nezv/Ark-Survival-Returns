@@ -59,6 +59,20 @@ public final class Playthrough {
 
     static void watch(CombatSteps.Fight fight) { watched = fight; }
 
+    private static volatile boolean useHeld;
+
+    /**
+     * Whether the client is to hold its use key down: it mirrors this every tick, so the client itself eats, draws a
+     * bow or charges a crossbow (a use the server started alone is let go by the client at once, its key being up).
+     */
+    public static boolean useHeld() { return useHeld && run != null && !run.finished(); }
+    static void useHeld(boolean down) { useHeld = down; }
+
+    /** True while a damage test is measuring blows on this player (they are recorded and cancelled, never lethal). */
+    public static boolean measuring(ServerPlayer player) {
+        return watched != null && run != null && !run.finished() && player.getUUID().equals(run.playerId);
+    }
+
     public static String start(ServerPlayer player, String routine, Path folder) { return start(player, routine, folder, null); }
 
     /** Starts a routine around {@code at} (by default the world's spawn, on the ground). */

@@ -20,6 +20,8 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class PlaythroughClient {
     private static int closing = -1;
+    /** The use key as the run last wanted it: kept down every tick while held (a screen or a mouse grab resets keys). */
+    private static boolean holdingUse;
 
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
         var run = Playthrough.current();
@@ -50,6 +52,12 @@ public final class PlaythroughClient {
             }
             Playthrough.requestDone(mc.screen == null ? "" : mc.screen.getClass().getSimpleName());
         }
+        boolean hold = Playthrough.useHeld() && mc.player != null;
+        if (hold != holdingUse) {
+            holdingUse = hold;
+            if (hold && mc.screen != null) mc.setScreen(null);
+            mc.options.keyUse.setDown(hold);
+        } else if (hold) mc.options.keyUse.setDown(true);
         if (run.finished() && Playthrough.launched() && closing < 0) closing = 40;
         if (closing > 0 && --closing == 0) mc.stop();
     }

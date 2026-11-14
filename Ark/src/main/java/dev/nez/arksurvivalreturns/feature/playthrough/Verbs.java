@@ -452,31 +452,66 @@ public final class Verbs {
 
     static boolean hasFood(ServerPlayer player) { return food(player) != null; }
 
-    /** Eats one earned meal by its own use (held down until eaten), and writes what and how full the player got. */
-    public static Step eat() {
+    /** A meal the run eats: kept in the bags when they are emptied into crates. */
+    static boolean isMeal(ItemStack stack) {
+        if (stack.get(DataComponents.FOOD) == null || TamingService.sedativePotency(stack) > 0) return false;
+        String id = id(stack.getItem());
+        return !id.contains("raw_") && !id.equals("minecraft:rotten_flesh");
+    }
+
+    /**
+     * The use key, held down or let go. With a client it is the client's own key (a use the server starts by itself is
+     * let go by the client on its next tick, the key not being down), so the client right-clicks and the use packet
+     * does the rest, a tick or a few later. Headless, the server side of the same packets is called at once.
+     */
+    static void useKey(PlayRun run, boolean down) {
+        var player = run.player();
+        if (!Playthrough.headless) { Playthrough.useHeld(down); return; }
+        if (down) player.gameMode.useItem(player, run.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND);
+        else player.releaseUsingItem();
+    }
+
+    /** Eats the best earned meal in the bags (see {@link #eat(String)}). */
+    public static Step eat() { return eat(null); }
+
+    /**
+     * Eats one earned meal the way a player does: picked on the hotbar, the use key held, looking at the sky so no
+     * block or creature takes the click, until the stack is one smaller. Writes what was eaten and how full the player got.
+     */
+    public static Step eat(String wanted) {
         return new Step() {
             String item;
-            int before;
-            @Override public String name() { return "eat"; }
-            @Override public int timeout() { return 20 * 6; }
+            int before, had;
+            @Override public String name() { return "eat" + (wanted == null ? "" : " " + wanted); }
+            @Override public int timeout() { return 20 * 8; }
             @Override public boolean tick(PlayRun run, int ticks) {
                 var player = run.player();
                 if (ticks == 0) {
-                    item = food(player);
-                    if (item == null) return true;
+                    item = wanted != null ? wanted : food(player);
+                    player.closeContainer();
+                    if (item == null || !select(player, item)) return done(run, "none");
                     before = player.getFoodData().getFoodLevel();
-                    useItem(player, item);
+                    had = Gathering.count(player, item);
+                    player.teleportTo(run.level(), player.getX(), player.getY(), player.getZ(), java.util.Set.of(), player.getYRot(), -90, true);
+                    useKey(run, true);
                     return false;
                 }
-                if (player.isUsingItem() && ticks < 80) return false;
+                if (Gathering.count(player, item) >= had && ticks < 100) return false;
+                useKey(run, false);
+                return done(run, Gathering.count(player, item) < had ? "eaten" : "not_eaten");
+            }
+            private boolean done(PlayRun run, String end) {
+                var player = run.player();
+                run.eatFails = end.equals("eaten") ? 0 : run.eatFails + 1;
                 var event = run.event("ate");
-                event.addProperty("item", item);
+                event.addProperty("item", String.valueOf(item));
+                event.addProperty("end", end);
                 event.addProperty("food_before", before);
                 event.addProperty("food_after", player.getFoodData().getFoodLevel());
                 run.write(event);
                 return true;
             }
-            @Override public void abandon(PlayRun run) { run.player().stopUsingItem(); }
+            @Override public void abandon(PlayRun run) { useKey(run, false); done(run, "timeout"); }
         };
     }
 

@@ -50,6 +50,8 @@ public final class DownedHandler {
     public static void mitigated(LivingDamageEvent.Pre event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!Config.DOWNED_ENABLED.get()) return;
+        // A playthrough damage test measures this blow and cancels it itself; the player must not go down first.
+        if (dev.nez.arksurvivalreturns.feature.playthrough.Playthrough.measuring(player)) return;
         var source = event.getSource();
         if (source.is(DamageTypes.GENERIC_KILL)) return;
         DownedState state = player.getData(RecoveryAttachments.DOWNED);

@@ -62,8 +62,11 @@ public final class Gathering {
     sealed interface Source permits Breaks, Hunts, Processes, Cooks, Fills {}
     record Breaks(String block) implements Source {}
     record Hunts(Species species) implements Source {}
-    /** Station block: forge, crusher, drying rack or stonecutter; the cutter uses its own recipes. */
-    record Processes(String station, String input) implements Source {}
+    /**
+     * Station block: forge, crusher, drying rack, the Stone Fire's spit or stonecutter (which uses its own recipes).
+     * {@code second} is the crusher's second slot for a two-ingredient recipe (gunpowder: coal and sulphur), else null.
+     */
+    record Processes(String station, String input, String second) implements Source {}
     /** A Cooking Pot meal: one of each input in its four slots, the pot standing on a lit Stone Fire. */
     record Cooks(List<String> inputs) implements Source {}
     /** A container filled at a water source the player stands over (the glass bottle's own use). */
@@ -104,7 +107,33 @@ public final class Gathering {
         processes("minecraft:copper_ingot", FORGE, "minecraft:raw_copper");
         processes("minecraft:glass", FORGE, "minecraft:sand");
         processes("minecraft:charcoal", FORGE, "minecraft:oak_log");
-        processes("minecraft:gunpowder", CRUSHER, NS + "sulphur");
+        // Gunpowder is the crusher's two-ingredient recipe: two coal in the hopper, two sulphur in the second slot, two out.
+        SOURCES.put("minecraft:gunpowder", new Processes(CRUSHER, "minecraft:coal", NS + "sulphur"));
+        processes("minecraft:bone_meal", CRUSHER, "minecraft:bone");
+        processes("minecraft:sugar", CRUSHER, "minecraft:sugar_cane");
+        processes("minecraft:red_dye", CRUSHER, "minecraft:poppy");
+        processes("minecraft:yellow_dye", CRUSHER, "minecraft:dandelion");
+        // The Stone Fire's spit, before a pot stands on it: each meat the hunts give, cooked.
+        processes(NS + "cooked_herbivore_meat", FIRE, NS + "raw_herbivore_meat");
+        processes(NS + "cooked_carnivore_meat", FIRE, NS + "raw_carnivore_meat");
+        processes(NS + "cooked_bird_meat", FIRE, NS + "raw_bird_meat");
+        // A berry dried on the rack is a ration.
+        processes(NS + "dried_ration", RACK, NS + "tintoberry");
+        // What else the wild grows and the benches ask for.
+        breaks("minecraft:dandelion", "minecraft:dandelion");
+        breaks("minecraft:cactus", "minecraft:cactus");
+        breaks("minecraft:pumpkin", "minecraft:pumpkin");
+        breaks("minecraft:brown_mushroom", "minecraft:brown_mushroom");
+        breaks("minecraft:moss_block", "minecraft:moss_block");
+        breaks("minecraft:mud", "minecraft:mud");
+        breaks("minecraft:snowball", "minecraft:snow_block");
+        breaks("minecraft:amethyst_shard", "minecraft:amethyst_cluster");
+        breaks("minecraft:red_mushroom", "minecraft:red_mushroom");
+        breaks("minecraft:dirt", "minecraft:dirt");
+        breaks("minecraft:diorite", "minecraft:diorite");
+        breaks("minecraft:pointed_dripstone", "minecraft:pointed_dripstone");
+        processes("minecraft:brick", FORGE, "minecraft:clay_ball");
+        processes("minecraft:smooth_stone_slab", STONECUTTER, "minecraft:smooth_stone");
         processes(NS + "dried_meat", RACK, NS + "raw_herbivore_meat");
         processes("minecraft:stone", FORGE, "minecraft:cobblestone");
         processes("minecraft:smooth_stone", FORGE, "minecraft:stone");
@@ -143,7 +172,7 @@ public final class Gathering {
     }
     private static void breaks(String item, String block) { SOURCES.put(item, new Breaks(block)); }
     private static void hunts(String item, Species species) { SOURCES.put(item, new Hunts(species)); }
-    private static void processes(String item, String station, String input) { SOURCES.put(item, new Processes(station, input)); }
+    private static void processes(String item, String station, String input) { SOURCES.put(item, new Processes(station, input, null)); }
     /** Best first: the weapon taken in hand to hunt. */
     static final String[] WEAPONS = {"minecraft:diamond_sword", NS + "bronze_longsword", NS + "bronze_hammer", NS + "keratin_spear",
             "minecraft:golden_sword", NS + "rock_sword", NS + "flint_knife", NS + "stone_hatchet"};
@@ -185,9 +214,11 @@ public final class Gathering {
             @Override public int timeout() { return 20 * 60 * 30; }
             @Override public boolean tick(PlayRun run, int ticks) {
                 if (current != null) {
+                    run.safe = false;
                     if (Step.drive(run, current, currentTicks++)) current = null;
                     return false;
                 }
+                run.safe = true;
                 var player = run.player();
                 pullDrops(run, player.blockPosition(), 6);
                 if (mayStash && freeSlots(player) < FREE_SLOTS && !run.noCrate) {
@@ -258,11 +289,21 @@ public final class Gathering {
             if (station != null) return station;
             var input = next(run, player, process.input(), missing, depth + 1);
             if (input != null) return input;
+            if (process.second() != null) {
+                var second = next(run, player, process.second(), missing, depth + 1);
+                if (second != null) return second;
+            }
             if (process.station().equals(FORGE)) {
                 var fuel = fuel(run, player, missing, depth);
                 if (fuel != null) return fuel;
             }
-            return process(item, missing, process.station(), process.input());
+            if (process.station().equals(FIRE)) {
+                for (var need : Map.of(FIRE_STARTER, 1, "minecraft:oak_log", 2).entrySet()) {
+                    var step = next(run, player, need.getKey(), need.getValue(), depth + 1);
+                    if (step != null) return step;
+                }
+            }
+            return process(item, missing, process.station(), process.input(), process.second());
         }
         if (source instanceof Cooks cooks) {
             for (String station : List.of(FIRE, POT)) {
@@ -353,9 +394,11 @@ public final class Gathering {
             int i = run.camp.size();
             // The pot cooks only standing on the fire: it is put on the fire's top.
             var pos = block.equals(POT) && fire != null ? fire.above() : run.at(CAMP_X + (i % 8) * 3, 1, CAMP_Z + (i / 8) * 3);
+            boolean floored = floor(run, pos);
             boolean placed = Verbs.placeItem(run, block, item, pos);
             if (placed) run.camp.put(block, pos);
             var event = run.event("placed");
+            if (floored) event.addProperty("supplied", "floor");
             event.addProperty("block", block);
             event.addProperty("item", item);
             event.addProperty("at", pos.subtract(run.origin).toShortString());
@@ -364,6 +407,16 @@ public final class Gathering {
             run.write(event);
         });
     }
+
+    /** A world with no ground there (the GameTest's void) is given a floor block to place on; true when it was. */
+    static boolean floor(PlayRun run, BlockPos pos) {
+        if (!run.level().getBlockState(pos.below()).isAir()) return false;
+        run.level().setBlockAndUpdate(pos.below(), Blocks.GRASS_BLOCK.defaultBlockState());
+        return true;
+    }
+
+    /** The meal a hungry player with empty bags goes and earns: dried meat once a rack stands in the camp, else berries. */
+    static String provision(PlayRun run) { return run.camp.containsKey(RACK) ? NS + "dried_meat" : NS + "tintoberry"; }
 
     /** Stands the player beside a camp station, facing it, well inside its reach. */
     static void standAt(PlayRun run, BlockPos pos) {
@@ -589,7 +642,7 @@ public final class Gathering {
      * clicked into the forge, the output taken with an empty hand once there is some, what is left of the input taken
      * back at the end. The stonecutter is worked through its screen.
      */
-    static Step process(String item, int missing, String station, String input) {
+    static Step process(String item, int missing, String station, String input, String second) {
         return new Step() {
             int start, clicks;
             long started;
@@ -613,6 +666,8 @@ public final class Gathering {
                             return false;
                         }
                         if (!forge.output().isEmpty()) { Verbs.use(run, pos, null); clicks++; }
+                        // Something else left in the input (an earlier smelt cut short) is taken out first.
+                        else if (!forge.input().isEmpty() && !forge.input().is(Verbs.item(input))) { Verbs.use(run, pos, null); clicks++; }
                         else if (forge.input().isEmpty()) {
                             if (count(player, input) == 0) return finish(run, "short_of " + input);
                             Verbs.use(run, pos, input); clicks++;
@@ -630,6 +685,27 @@ public final class Gathering {
                         else if (crusher.getItem(CrusherBlockEntity.INPUT).isEmpty()) {
                             if (count(player, input) == 0) return finish(run, "short_of " + input);
                             Verbs.use(run, pos, input); clicks++;
+                        }
+                        else if (second != null && crusher.getItem(CrusherBlockEntity.INPUT_B).isEmpty()) {
+                            if (count(player, second) == 0) return finish(run, "short_of " + second);
+                            Verbs.use(run, pos, second); clicks++;
+                        }
+                    }
+                    case StoneFireBlockEntity fire -> {
+                        // The spit: fed and lit like any fire, raw food clicked on, the cooked taken with an empty hand.
+                        if (fire.getBlockState().getValue(dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlock.POT)) return finish(run, "pot_on_fire");
+                        var side = new Vec3(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 1.0);
+                        if (!fire.cooked().isEmpty()) { Verbs.use(run, pos, Direction.SOUTH, side, null); clicks++; }
+                        else if (made >= missing) return finish(run, "made");
+                        else if (fire.burnTicks() < 200 && count(player, "minecraft:oak_log") > 0) { Verbs.use(run, pos, Direction.SOUTH, side, "minecraft:oak_log"); clicks++; }
+                        else if (!fire.isLit()) {
+                            if (count(player, FIRE_STARTER) == 0) return finish(run, "no_fire_starter");
+                            Verbs.use(run, pos, Direction.SOUTH, side, FIRE_STARTER);
+                            if (++clicks > 200) return finish(run, "not_lit");
+                        }
+                        else if (fire.spit().isEmpty()) {
+                            if (count(player, input) == 0) return finish(run, "short_of " + input);
+                            Verbs.use(run, pos, Direction.SOUTH, side, input); clicks++;
                         }
                     }
                     case DryingRackBlockEntity rack -> {
@@ -862,7 +938,7 @@ public final class Gathering {
         int moved = 0;
         for (int i = 0; i < 36; i++) {
             var stack = inventory.getItem(i);
-            if (stack.isEmpty() || i == inventory.getSelectedSlot() || KEEP.contains(Verbs.id(stack.getItem()))) continue;
+            if (stack.isEmpty() || i == inventory.getSelectedSlot() || KEEP.contains(Verbs.id(stack.getItem())) || Verbs.isMeal(stack)) continue;
             Verbs.quickMove(player, Verbs.slotFor(player, inventory, i));
             if (inventory.getItem(i).isEmpty()) moved++;
         }
