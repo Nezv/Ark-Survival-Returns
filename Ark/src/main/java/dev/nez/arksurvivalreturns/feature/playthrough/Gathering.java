@@ -490,17 +490,30 @@ public final class Gathering {
         return state;
     }
 
-    /** The bag item that breaks this block fastest, picked on the hotbar. */
+    /**
+     * The bag item that breaks this block fastest, picked on the hotbar. A blade is never a tool: a sword cuts grass
+     * and leaves faster than a hand and would be worn out on them before the first hunt, so the blades are passed
+     * over, and one found in the hand is put away for an empty hand.
+     */
     static String bestTool(ServerPlayer player, BlockState state) {
         var inventory = player.getInventory();
-        float speed = player.getMainHandItem().getDestroySpeed(state);
+        boolean blade = blade(player.getMainHandItem());
+        float speed = blade ? 1.0f : player.getMainHandItem().getDestroySpeed(state);
         ItemStack best = null;
         for (int i = 0; i < 36; i++) {
             var stack = inventory.getItem(i);
-            if (stack.getDestroySpeed(state) > speed) { speed = stack.getDestroySpeed(state); best = stack; }
+            if (!blade(stack) && stack.getDestroySpeed(state) > speed) { speed = stack.getDestroySpeed(state); best = stack; }
         }
         if (best != null) Verbs.select(player, best.getItem());
+        else if (blade) Verbs.emptyHand(player);
         return Verbs.id(player.getMainHandItem().getItem());
+    }
+
+    /** A weapon kept for the hunts: every one of {@link #WEAPONS} but the hatchet, which is the axe as well. */
+    static boolean blade(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        String id = Verbs.id(stack.getItem());
+        return !id.equals(NS + "stone_hatchet") && List.of(WEAPONS).contains(id);
     }
 
     /** The best weapon in the bags, picked on the hotbar. */
@@ -569,7 +582,7 @@ public final class Gathering {
     }
 
     /** Kills of one species-and-item pair after which its drop rate counts as measured ({@link #hunt}). */
-    static final int VALIDATED_KILLS = 3;
+    static final int VALIDATED_KILLS = 2;
 
     /**
      * Hunts the species, frozen in the yard, with the best weapon carried, until its carcasses gave enough. Each hunt
@@ -580,8 +593,9 @@ public final class Gathering {
     static Step hunt(String item, int missing, Species species) {
         return new Killing("hunt " + item + " " + missing, "hunt", species, 1, 8) {
             final String key = species.id + "|" + item;
-            int target, start;
-            @Override void begin(PlayRun run) { start = count(run.player(), item); target = start + missing; }
+            int target;
+            Map<String, Integer> before = Map.of();
+            @Override void begin(PlayRun run) { before = bags(run.player()); target = count(run.player(), item) + missing; }
             @Override boolean enough(PlayRun run) { return count(run.player(), item) >= target; }
             @Override boolean needsWeapon() { return true; }
             @Override boolean filled(PlayRun run) {
@@ -615,14 +629,31 @@ public final class Gathering {
                 event.addProperty("wanted", missing);
                 event.addProperty("short", Math.max(0, target - count(run.player(), item)));
                 if (kills <= 0) return;
-                var pair = run.huntDrops.computeIfAbsent(key, ignored -> new int[2]);
-                pair[0] += kills;
-                pair[1] += Math.max(0, count(run.player(), item) - start);
+                // Everything these carcasses gave is measured, not only what the hunt was for: the hide of an animal
+                // killed for its meat is validated by the same kills. The item hunted counts even when it gave none.
+                var after = bags(run.player());
+                after.putIfAbsent(Verbs.id(Verbs.item(item)), 0);
+                for (var held : after.entrySet()) {
+                    int gained = held.getValue() - before.getOrDefault(held.getKey(), 0);
+                    if (gained <= 0 && !held.getKey().equals(Verbs.id(Verbs.item(item)))) continue;
+                    var pair = run.huntDrops.computeIfAbsent(species.id + "|" + held.getKey(), ignored -> new int[2]);
+                    pair[0] += kills;
+                    pair[1] += Math.max(0, gained);
+                }
                 var xp = run.hunted.computeIfAbsent(species.id, ignored -> new long[2]);
                 xp[0] += kills;
                 xp[1] += Math.max(0, xpEarned);
             }
         };
+    }
+
+    /** What the bags hold, by item id. */
+    static Map<String, Integer> bags(ServerPlayer player) {
+        var held = new HashMap<String, Integer>();
+        var inventory = player.getInventory();
+        for (int i = 0; i < inventory.getContainerSize(); i++)
+            if (!inventory.getItem(i).isEmpty()) held.merge(Verbs.id(inventory.getItem(i).getItem()), inventory.getItem(i).getCount(), Integer::sum);
+        return held;
     }
 
     /** Fills the bags with a validated item, stack by stack; what does not fit lands at the player's feet. */
@@ -727,6 +758,7 @@ public final class Gathering {
         return new Step() {
             int start, clicks;
             long started;
+            boolean hurried;
             @Override public String name() { return "process " + item + " " + missing; }
             @Override public int timeout() { return 20 * 60 * 6; }
             @Override public boolean tick(PlayRun run, int ticks) {
@@ -790,6 +822,9 @@ public final class Gathering {
                         }
                     }
                     case DryingRackBlockEntity rack -> {
+                        // The drying time is not waited for: the rack is worked by clicks as a player does, and its
+                        // batches are advanced at once (written down as hurried).
+                        for (int i = 0; i < 64 && rack.output().isEmpty() && !rack.input().isEmpty(); i++) { rack.advance(); hurried = true; }
                         if (!rack.output().isEmpty()) { Verbs.use(run, pos, null); clicks++; }
                         else if (made >= missing) return finish(run, "made");
                         else if (rack.input().isEmpty()) {
@@ -814,6 +849,7 @@ public final class Gathering {
                 event.addProperty("clicks", clicks);
                 event.addProperty("end", end);
                 event.addProperty("ticks", run.level().getGameTime() - started);
+                if (hurried) event.addProperty("supplied", "drying time");
                 run.write(event);
                 return true;
             }
