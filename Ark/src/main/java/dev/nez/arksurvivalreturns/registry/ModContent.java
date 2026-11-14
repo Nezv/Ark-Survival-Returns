@@ -160,6 +160,11 @@ public final class ModContent {
                     p -> new dev.nez.arksurvivalreturns.feature.farm.BerryBushBlock(() -> BERRIES.get("narcoberry").get(), p),
                     p -> p.noCollision().instabreak().randomTicks()
                             .sound(net.minecraft.world.level.block.SoundType.SWEET_BERRY_BUSH));
+    /** Ripe carrot plants growing wild in clumps on plains and meadows: the world's source of carrots (no block item). */
+    public static final DeferredBlock<dev.nez.arksurvivalreturns.feature.farm.WildCarrotsBlock> WILD_CARROTS =
+            BLOCKS.registerBlock("wild_carrots", dev.nez.arksurvivalreturns.feature.farm.WildCarrotsBlock::new,
+                    p -> p.noCollision().instabreak().pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                            .sound(net.minecraft.world.level.block.SoundType.CROP));
     public static final DeferredHolder<net.minecraft.world.level.block.entity.BlockEntityType<?>,
             net.minecraft.world.level.block.entity.BlockEntityType<dev.nez.arksurvivalreturns.feature.farm.TroughBlockEntity>>
             TROUGH_BLOCK_ENTITY = BLOCK_ENTITIES.register("trough",

@@ -9,14 +9,17 @@ import com.google.gson.JsonObject;
 import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
 import dev.nez.arksurvivalreturns.feature.farm.DryingRackBlockEntity;
+import dev.nez.arksurvivalreturns.feature.kitchen.CookingPotBlockEntity;
 import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
 import dev.nez.arksurvivalreturns.feature.primitive.PrimitiveForgeBlockEntity;
+import dev.nez.arksurvivalreturns.feature.primitive.StoneFireBlockEntity;
 import dev.nez.arksurvivalreturns.feature.station.CrusherBlockEntity;
 import dev.nez.arksurvivalreturns.feature.station.InventoryCrafting;
 import dev.nez.arksurvivalreturns.feature.station.StorageCrateBlockEntity;
 import dev.nez.arksurvivalreturns.feature.testground.TestGroundBuilder;
 import dev.nez.arksurvivalreturns.registry.ModContent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -27,11 +30,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * How the playthrough earns an item the way a survival player does, and nothing else: nothing is ever given and no
@@ -46,14 +52,20 @@ import net.minecraft.world.phys.AABB;
  * ends the goal as blocked, with the reason, so the report shows each gap in the economy.
  */
 public final class Gathering {
-    sealed interface Source permits Breaks, Hunts, Processes {}
+    sealed interface Source permits Breaks, Hunts, Processes, Cooks, Fills {}
     record Breaks(String block) implements Source {}
     record Hunts(Species species) implements Source {}
-    /** Station block: forge, crusher or drying rack; the input is used one for one; the forge burns logs. */
+    /** Station block: forge, crusher, drying rack or stonecutter; the forge burns logs; the cutter uses its own recipes. */
     record Processes(String station, String input) implements Source {}
+    /** A Cooking Pot meal: one of each input in its four slots, the pot standing on a lit Stone Fire. */
+    record Cooks(List<String> inputs) implements Source {}
+    /** A container filled at a water source the player stands over (the glass bottle's own use). */
+    record Fills(String container) implements Source {}
 
     static final String NS = "arksurvivalreturns:";
-    static final String FORGE = NS + "primitive_forge", CRUSHER = NS + "crusher", RACK = NS + "drying_rack", CRATE = NS + "storage_crate";
+    static final String FORGE = NS + "primitive_forge", CRUSHER = NS + "crusher", RACK = NS + "drying_rack", CRATE = NS + "storage_crate",
+            FIRE = NS + "stone_fire", POT = NS + "cooking_pot", FIRE_STARTER = NS + "fire_starter", STONECUTTER = "minecraft:stonecutter",
+            WATER_BOTTLE = "minecraft:water_bottle";
     static final Map<String, Source> SOURCES = new HashMap<>();
     static {
         breaks(NS + "rock", NS + "loose_rock");
@@ -87,6 +99,40 @@ public final class Gathering {
         processes("minecraft:charcoal", FORGE, "minecraft:oak_log");
         processes("minecraft:gunpowder", CRUSHER, NS + "sulphur");
         processes(NS + "dried_meat", RACK, NS + "raw_herbivore_meat");
+        processes("minecraft:stone", FORGE, "minecraft:cobblestone");
+        processes("minecraft:smooth_stone", FORGE, "minecraft:stone");
+        processes("minecraft:stone_slab", STONECUTTER, "minecraft:stone");
+        // Every wood the world grows, and the leaves the ghillie wants.
+        for (String wood : List.of("spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak"))
+            breaks("minecraft:" + wood + "_log", "minecraft:" + wood + "_log");
+        breaks("minecraft:bamboo", "minecraft:bamboo");
+        breaks("minecraft:jungle_leaves", "minecraft:jungle_leaves");
+        breaks("minecraft:poppy", "minecraft:poppy");
+        breaks("minecraft:obsidian", "minecraft:obsidian");
+        breaks("minecraft:raw_gold", "minecraft:gold_ore");
+        breaks("minecraft:diamond", "minecraft:diamond_ore");
+        breaks("minecraft:carrot", NS + "wild_carrots");
+        processes("minecraft:gold_ingot", FORGE, "minecraft:raw_gold");
+        breaks("minecraft:short_grass", "minecraft:short_grass");   // the tuft itself: only shears cut it (HELD)
+        SOURCES.put(WATER_BOTTLE, new Fills("minecraft:glass_bottle"));
+        breaks(NS + "amber", "minecraft:gravel");   // 1.5% of gravel and clay broken by a player (TrophyDrops)
+        // Trophies, from the species whose carcass gives them (TrophyDrops.TABLE).
+        hunts(NS + "sickle_claw", Species.VELOCIRAPTOR);
+        hunts(NS + "scythe_claw", Species.THERIZINOSAURUS);
+        hunts(NS + "fang", Species.SABERTOOTH);
+        hunts(NS + "thick_pelt", Species.MAMMOTH);
+        hunts(NS + "giant_antler", Species.MEGALOCERUS);
+        hunts(NS + "wing_membrane", Species.QUETZAL);
+        hunts(NS + "quetzal_feather", Species.QUETZAL);
+        hunts(NS + "croc_scute", Species.DEINOSUCHUS);
+        hunts(NS + "marine_flipper", Species.MOSASAURUS);
+        hunts(NS + "megalodon_tooth", Species.MEGALODON);
+        hunts(NS + "unicorn_horn", Species.UNICORN);
+        hunts(NS + "venom_fang", Species.TITANOBOA);
+        hunts(NS + "tyrant_tooth", Species.TYRANNOSAURUS);
+        hunts(NS + "argentavis_talon", Species.ARGENTAVIS);
+        SOURCES.put(NS + "hearty_stew", new Cooks(List.of(NS + "dried_meat", NS + "dried_meat", NS + "raw_herbivore_meat", "minecraft:carrot")));
+        SOURCES.put(NS + "trail_mix", new Cooks(List.of(NS + "dried_meat", NS + "dried_meat", NS + "tintoberry", NS + "tintoberry")));
     }
     private static void breaks(String item, String block) { SOURCES.put(item, new Breaks(block)); }
     private static void hunts(String item, Species species) { SOURCES.put(item, new Hunts(species)); }
@@ -95,15 +141,18 @@ public final class Gathering {
     /** Best first: the weapon taken in hand to hunt. */
     static final String[] WEAPONS = {NS + "bronze_longsword", NS + "bronze_hammer", NS + "keratin_spear", NS + "rock_sword",
             NS + "flint_knife", NS + "stone_hatchet"};
-    /** The first tool of each kind, earned for a block that needs one. */
-    static final Map<TagKey<Block>, String> TOOLS = Map.of(
-            BlockTags.MINEABLE_WITH_AXE, NS + "stone_hatchet",
-            BlockTags.MINEABLE_WITH_PICKAXE, NS + "rock_pickaxe",
-            BlockTags.MINEABLE_WITH_SHOVEL, NS + "rock_shovel");
+    /** Each kind of tool by tier, lowest first: the first one not yet carried is earned for a block that needs it. */
+    static final Map<TagKey<Block>, List<String>> TOOLS = Map.of(
+            BlockTags.MINEABLE_WITH_AXE, List.of(NS + "stone_hatchet", NS + "bronze_axe", "minecraft:iron_axe"),
+            BlockTags.MINEABLE_WITH_PICKAXE, List.of(NS + "rock_pickaxe", NS + "bronze_pickaxe", "minecraft:iron_pickaxe", "minecraft:diamond_pickaxe"),
+            BlockTags.MINEABLE_WITH_SHOVEL, List.of(NS + "rock_shovel", NS + "bronze_shovel", "minecraft:iron_shovel"));
+    /** Items whose block gives them only to this tool in hand (the grass tuft to shears). */
+    static final Map<String, String> HELD = Map.of("minecraft:short_grass", "minecraft:shears");
     /** Kept in the bags when they are emptied into crates: the tools and weapons the run works with. */
     static final Set<String> KEEP = Set.of(NS + "bronze_longsword", NS + "bronze_hammer", NS + "keratin_spear", NS + "rock_sword",
             NS + "flint_knife", NS + "stone_hatchet", NS + "bronze_axe", NS + "bronze_pickaxe", NS + "bronze_shovel",
-            NS + "rock_pickaxe", NS + "rock_shovel");
+            NS + "rock_pickaxe", NS + "rock_shovel", "minecraft:shears", "minecraft:iron_pickaxe", "minecraft:iron_axe",
+            "minecraft:iron_shovel", "minecraft:diamond_pickaxe");
     private static final int MAX_DEPTH = 12, STUCK = 2, FREE_SLOTS = 6, GRIND_LEVEL = 5, GRIND_CAP = 40;
     /** The yard (blocks broken, creatures hunted), the camp (stations) and the crates, from the run's origin. */
     static final int YARD_X = 30, YARD_Z = 140, CAMP_X = 40, CAMP_Z = 160, CRATE_X = 20, CRATE_Z = 160;
@@ -180,14 +229,20 @@ public final class Gathering {
         var source = SOURCES.get(item);
         if (source instanceof Breaks breaks) {
             var state = ripe(BuiltInRegistries.BLOCK.getValue(Identifier.parse(breaks.block())));
-            if (!canHarvest(player, state)) {
-                String tool = toolFor(state);
-                if (tool == null || tool.equals(item) || count(player, tool) > 0) return new Blocked(item, missing, "no_tool_for " + breaks.block());
+            String held = HELD.get(item);
+            if (held != null && count(player, held) == 0) return next(run, player, held, 1, depth + 1);
+            if (held == null && !canHarvest(player, state)) {
+                String tool = toolFor(player, state);
+                if (tool == null || tool.equals(item)) return new Blocked(item, missing, "no_tool_for " + breaks.block());
                 return next(run, player, tool, 1, depth + 1);
             }
             return harvest(item, missing, breaks.block());
         }
         if (source instanceof Hunts hunts) return hunt(item, missing, hunts.species());
+        if (source instanceof Fills fills) {
+            var bottles = next(run, player, fills.container(), missing, depth + 1);
+            return bottles != null ? bottles : fill(item, missing, fills.container());
+        }
         if (source instanceof Processes process) {
             var station = station(run, player, process.station(), depth);
             if (station != null) return station;
@@ -199,6 +254,21 @@ public final class Gathering {
                 if (logs != null) return logs;
             }
             return process(item, missing, process.station(), process.input(), fuel);
+        }
+        if (source instanceof Cooks cooks) {
+            for (String station : List.of(FIRE, POT)) {
+                var step = station(run, player, station, depth);
+                if (step != null) return step;
+            }
+            var needed = new java.util.LinkedHashMap<String, Integer>();
+            for (String input : cooks.inputs()) needed.merge(input, missing, Integer::sum);
+            needed.merge(FIRE_STARTER, 1, Math::max);
+            needed.merge("minecraft:oak_log", 2, Math::max);
+            for (var entry : needed.entrySet()) {
+                var step = next(run, player, entry.getKey(), entry.getValue(), depth + 1);
+                if (step != null) return step;
+            }
+            return cook(item, missing, cooks.inputs());
         }
         var found = Verbs.find(item);
         if (found != null) {
@@ -239,8 +309,10 @@ public final class Gathering {
             var player = run.player();
             if (Verbs.take(player, Verbs.item(item)).isEmpty()) return;
             int i = run.camp.size();
-            var pos = run.at(CAMP_X + (i % 8) * 3, 1, CAMP_Z + (i / 8) * 3);
-            run.level().setBlockAndUpdate(pos.below(), Blocks.GRASS_BLOCK.defaultBlockState());
+            var fire = run.camp.get(FIRE);
+            // The pot cooks only standing on the fire.
+            var pos = block.equals(POT) && fire != null ? fire.above() : run.at(CAMP_X + (i % 8) * 3, 1, CAMP_Z + (i / 8) * 3);
+            if (!block.equals(POT)) run.level().setBlockAndUpdate(pos.below(), Blocks.GRASS_BLOCK.defaultBlockState());
             run.level().setBlockAndUpdate(pos, BuiltInRegistries.BLOCK.getValue(Identifier.parse(block)).defaultBlockState());
             run.camp.put(block, pos);
             var event = run.event("placed");
@@ -255,26 +327,37 @@ public final class Gathering {
         Verbs.tp(run, pos.getX() - run.origin.getX(), pos.getY() - run.origin.getY() - 1, pos.getZ() - run.origin.getZ() + 1.6, 180, 35);
     }
 
-    /** An item for a cost key: the item itself, or for a tag the member held, else one with a source, else the first. */
+    /** An item for a cost key: the item itself, or for a tag the member held, else one gathered, else one crafted. */
     static String resolve(ServerPlayer player, String key) {
         if (!key.startsWith("#")) return BuiltInRegistries.ITEM.containsKey(Identifier.parse(key)) ? key : null;
         var tag = TagKey.create(Registries.ITEM, Identifier.parse(key.substring(1)));
-        String held = null, sourced = null, first = null;
+        // What the bags hold, else what the world gives, else what can be crafted: never a crafted form of a gathered
+        // thing (any log is an oak log, not dark oak wood made from logs the yard does not grow).
+        String held = null, gathered = null, crafted = null, first = null;
         for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
             String id = Verbs.id(holder.value());
             if (first == null) first = id;
-            if (sourced == null && (SOURCES.containsKey(id) || Verbs.find(id) != null)) sourced = id;
             if (held == null && count(player, id) > 0) held = id;
+            if (gathered == null && SOURCES.containsKey(id)) gathered = id;
+            if (crafted == null && Verbs.find(id) != null) crafted = id;
         }
-        return held != null ? held : sourced != null ? sourced : first;
+        return held != null ? held : gathered != null ? gathered : crafted != null ? crafted : first;
     }
 
+    /** How many the bags hold, matched the way a bench matches its costs (so a water bottle is a potion of water). */
     static int count(ServerPlayer player, String item) {
-        var wanted = Verbs.item(item);
         int total = 0;
         var inventory = player.getInventory();
-        for (int i = 0; i < inventory.getContainerSize(); i++) if (inventory.getItem(i).is(wanted)) total += inventory.getItem(i).getCount();
+        for (int i = 0; i < inventory.getContainerSize(); i++)
+            if (dev.nez.arksurvivalreturns.feature.station.WorkstationInventory.matches(inventory.getItem(i), item)) total += inventory.getItem(i).getCount();
         return total;
+    }
+
+    /** Takes an item from the bags in hand; returns what is in hand. */
+    static String hold(ServerPlayer player, String item) {
+        if (!player.getMainHandItem().is(Verbs.item(item)))
+            for (int i = 0; i < 36; i++) if (player.getInventory().getItem(i).is(Verbs.item(item))) { swapIntoHand(player, i); break; }
+        return Verbs.id(player.getMainHandItem().getItem());
     }
 
     static int freeSlots(ServerPlayer player) {
@@ -291,9 +374,11 @@ public final class Gathering {
         return player.hasCorrectToolForDrops(state);
     }
 
-    /** The tool to earn for a block that needs one, or null when none is known. */
-    static String toolFor(BlockState state) {
-        for (var entry : TOOLS.entrySet()) if (state.is(entry.getKey())) return entry.getValue();
+    /** The next tool to earn for a block the carried ones cannot harvest: the lowest tier not carried, or null. */
+    static String toolFor(ServerPlayer player, BlockState state) {
+        for (var entry : TOOLS.entrySet())
+            if (state.is(entry.getKey()))
+                for (String tool : entry.getValue()) if (count(player, tool) == 0) return tool;
         return null;
     }
 
@@ -353,9 +438,9 @@ public final class Gathering {
                 var block = BuiltInRegistries.BLOCK.getValue(Identifier.parse(blockId));
                 if (ticks == 0) {
                     target = count(player, item) + missing;
-                    cap = Math.max(32, missing * 10);
+                    cap = Math.max(64, missing * 100);   // rare drops (amber: 1.5%) need their tries
                     Verbs.tp(run, YARD_X + 1.5, 0, YARD_Z, 90, 30);
-                    tool = bestTool(player, ripe(block));
+                    tool = HELD.containsKey(item) ? hold(player, HELD.get(item)) : bestTool(player, ripe(block));
                     return false;
                 }
                 pullDrops(run, pos, 4);
@@ -483,6 +568,16 @@ public final class Gathering {
                 var pos = run.camp.get(station);
                 if (pos == null) return finish(run, "no_station");
                 if (ticks == 0) { standAt(run, pos); started = level.getGameTime(); return false; }
+                if (station.equals(STONECUTTER)) {
+                    // The vanilla cutter's own recipes: one input block per cut, its count of pieces out.
+                    var one = Verbs.take(player, Verbs.item(input));
+                    if (one.isEmpty()) return finish(run, "short_of " + input);
+                    var cut = cut(level, one, item);
+                    if (cut.isEmpty()) { player.getInventory().placeItemBackInInventory(one); return finish(run, "no_cut"); }
+                    made += cut.getCount();
+                    player.getInventory().placeItemBackInInventory(cut);
+                    return made >= missing && finish(run, "made");
+                }
                 ItemStack out = ItemStack.EMPTY;
                 switch (level.getBlockEntity(pos)) {
                     case PrimitiveForgeBlockEntity forge -> {
@@ -520,6 +615,108 @@ public final class Gathering {
                 return true;
             }
         };
+    }
+
+    /** Fills bottles at a water source in the yard, standing over it and using the bottle the way a click does. */
+    static Step fill(String item, int missing, String container) {
+        return new Step() {
+            int target, uses;
+            @Override public String name() { return "fill " + item + " " + missing; }
+            @Override public boolean tick(PlayRun run, int ticks) {
+                var player = run.player();
+                var water = run.at(YARD_X - 4, 0, YARD_Z);
+                if (ticks == 0) {
+                    target = count(player, item) + missing;
+                    run.level().setBlockAndUpdate(water, Blocks.WATER.defaultBlockState());
+                    Verbs.tp(run, YARD_X - 4, 0.2, YARD_Z, 0, 90);
+                    return false;
+                }
+                if (count(player, item) >= target || uses >= missing * 3) {
+                    var event = run.event("fill");
+                    event.addProperty("item", item);
+                    event.addProperty("wanted", missing);
+                    event.addProperty("uses", uses);
+                    event.addProperty("short", Math.max(0, target - count(player, item)));
+                    run.write(event);
+                    return true;
+                }
+                if (ticks % 5 != 0) return false;
+                hold(player, container);
+                if (!player.getMainHandItem().is(Verbs.item(container))) return false;
+                player.getMainHandItem().use(run.level(), player, InteractionHand.MAIN_HAND);
+                uses++;
+                return false;
+            }
+        };
+    }
+
+    /**
+     * Cooks a meal: the fire fed with logs and lit with the Fire Starter (the item's own use, which can fail and is
+     * tried again), one of each input put in the pot's four slots, the meal taken out once done.
+     */
+    static Step cook(String item, int missing, List<String> inputs) {
+        return new Step() {
+            int made, strikes;
+            long started;
+            @Override public String name() { return "cook " + item + " " + missing; }
+            @Override public int timeout() { return 20 * 60 * 6; }
+            @Override public boolean tick(PlayRun run, int ticks) {
+                var player = run.player();
+                var level = run.level();
+                var fire = run.camp.get(FIRE);
+                if (fire == null || !(level.getBlockEntity(fire) instanceof StoneFireBlockEntity hearth)
+                        || !(level.getBlockEntity(fire.above()) instanceof CookingPotBlockEntity pot)) return finish(run, "no_station");
+                if (ticks == 0) { standAt(run, fire); started = level.getGameTime(); return false; }
+                if (hearth.burnTicks() < 400) {
+                    var log = Verbs.take(player, Verbs.item("minecraft:oak_log"));
+                    if (!log.isEmpty() && !hearth.addFuel(log)) player.getInventory().placeItemBackInInventory(log);
+                }
+                if (!hearth.isLit() && ticks % 10 == 0) {
+                    var inventory = player.getInventory();
+                    for (int i = 0; i < 36; i++) if (inventory.getItem(i).is(Verbs.item(FIRE_STARTER))) { swapIntoHand(player, i); break; }
+                    if (!player.getMainHandItem().is(Verbs.item(FIRE_STARTER))) return finish(run, "no_fire_starter");
+                    player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+                            new BlockHitResult(Vec3.atCenterOf(fire), Direction.UP, fire, false)));
+                    if (++strikes > 60) return finish(run, "not_lit");
+                }
+                var out = pot.getItem(CookingPotBlockEntity.OUTPUT_SLOT);
+                if (!out.isEmpty()) {
+                    var taken = pot.removeItem(CookingPotBlockEntity.OUTPUT_SLOT, 64);
+                    if (taken.is(Verbs.item(item))) made += taken.getCount();
+                    player.getInventory().placeItemBackInInventory(taken);
+                    if (made >= missing) return finish(run, "made");
+                }
+                for (int slot = 0; slot < inputs.size(); slot++) {
+                    if (!pot.getItem(slot).isEmpty()) continue;
+                    var one = Verbs.take(player, Verbs.item(inputs.get(slot)));
+                    if (one.isEmpty()) return finish(run, made > 0 ? "made" : "short_of " + inputs.get(slot));
+                    pot.setItem(slot, one);
+                }
+                return false;
+            }
+            private boolean finish(PlayRun run, String end) {
+                var event = run.event("cook");
+                event.addProperty("item", item);
+                event.addProperty("wanted", missing);
+                event.addProperty("made", made);
+                event.addProperty("strikes", strikes);
+                event.addProperty("end", end);
+                event.addProperty("ticks", run.level().getGameTime() - started);
+                run.write(event);
+                return true;
+            }
+        };
+    }
+
+    /** What the stonecutter's recipes make of one input block, if one of them makes the wanted item. */
+    static ItemStack cut(net.minecraft.server.level.ServerLevel level, ItemStack input, String wanted) {
+        var single = new net.minecraft.world.item.crafting.SingleRecipeInput(input);
+        for (var holder : level.getServer().getRecipeManager().getRecipes())
+            if (holder.value() instanceof net.minecraft.world.item.crafting.StonecutterRecipe recipe && recipe.input().test(input)) {
+                var out = recipe.assemble(single);
+                if (out.is(Verbs.item(wanted))) return out;
+            }
+        return ItemStack.EMPTY;
     }
 
     /** Hands a station one stack of an item from the bags; what it does not take stays. */

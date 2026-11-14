@@ -616,6 +616,33 @@ public final class ArkData implements DataProvider {
                 "sweet_berries", "#minecraft:meat", "#minecraft:fishes");
         tag("block/farm/plantable_on", "dirt", "grass_block", "farmland", "coarse_dirt", "rooted_dirt", "podzol",
                 "mycelium", "moss_block");
+        // Wild Carrots: the ripe vanilla carrot art, one to three carrots a plant, in clumps on open grassland only
+        // (plains, sunflower plains, meadows, flower forests), the way pumpkins are scattered: a rare patch of many.
+        put("assets/" + NS + "/models/block/wild_carrots", Map.of("parent", "minecraft:block/crop",
+                "textures", Map.of("crop", "minecraft:block/carrots_stage3")));
+        put("assets/" + NS + "/blockstates/wild_carrots", Map.of("variants", Map.of("", Map.of("model", NS + ":block/wild_carrots"))));
+        json("data/" + NS + "/loot_table/blocks/wild_carrots", """
+            {"type":"minecraft:block","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"minecraft:carrot"}],
+             "functions":[{"function":"minecraft:set_count","count":{"type":"minecraft:uniform","min":1,"max":3}},
+              {"function":"minecraft:explosion_decay"}]}]}
+            """);
+        put("data/" + NS + "/worldgen/configured_feature/wild_carrots", Map.of("type", "minecraft:simple_block",
+                "config", Map.of("to_place", Map.of("type", "minecraft:simple_state_provider", "state", Map.of("Name", NS + ":wild_carrots")))));
+        put("data/" + NS + "/worldgen/placed_feature/wild_carrots", Map.of("feature", NS + ":wild_carrots", "placement", List.of(
+                Map.of("type", "minecraft:rarity_filter", "chance", 24),
+                Map.of("type", "minecraft:in_square"),
+                Map.of("type", "minecraft:heightmap", "heightmap", "MOTION_BLOCKING"),
+                Map.of("type", "minecraft:biome"),
+                Map.of("type", "minecraft:count", "count", 40),
+                Map.of("type", "minecraft:random_offset",
+                        "xz_spread", Map.of("type", "minecraft:trapezoid", "min", -4, "max", 4, "plateau", 0),
+                        "y_spread", Map.of("type", "minecraft:trapezoid", "min", -2, "max", 2, "plateau", 0)),
+                Map.of("type", "minecraft:block_predicate_filter", "predicate", Map.of("type", "minecraft:all_of", "predicates", List.of(
+                        Map.of("type", "minecraft:matching_block_tag", "tag", "minecraft:air"),
+                        Map.of("type", "minecraft:matching_blocks", "blocks", "minecraft:grass_block", "offset", List.of(0, -1, 0))))))));
+        put("data/" + NS + "/neoforge/biome_modifier/wild_carrots", Map.of("type", "neoforge:add_features",
+                "biomes", List.of("minecraft:plains", "minecraft:sunflower_plains", "minecraft:meadow", "minecraft:flower_forest"),
+                "features", NS + ":wild_carrots", "step", "vegetal_decoration"));
         // The four bushes share vanilla stage art; the berry field on the block decides what they yield.
         for (String id : List.of("tintoberry", "amarberry", "azulberry", "narcoberry")) {
             for (int age = 0; age < 4; age++) {
@@ -758,6 +785,7 @@ public final class ArkData implements DataProvider {
         en.put("item." + NS + ".drying_rack", "Drying Rack");
         en.put("item." + NS + ".dried_ration", "Dried Ration");
         en.put("block." + NS + ".tintoberry_bush", "Redberry Bush");
+        en.put("block." + NS + ".wild_carrots", "Wild Carrots");
         en.put("block." + NS + ".amarberry_bush", "Yellowberry Bush");
         en.put("block." + NS + ".azulberry_bush", "Blueberry Bush");
         en.put("block." + NS + ".narcoberry_bush", "Blackberry Bush");

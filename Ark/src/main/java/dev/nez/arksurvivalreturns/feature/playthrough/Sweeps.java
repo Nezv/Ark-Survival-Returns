@@ -71,14 +71,18 @@ public final class Sweeps {
 
     // ------------------------------------------------------------------ recipes
 
-    /** Every item a workstation makes, earned once through the economy like any other goal; kept in the crates. */
+    /**
+     * Every Ark item a workstation makes, and the Armoury's gear, earned once through the economy like any other goal;
+     * the crates keep them. Vanilla's decoration blocks are left out: the recipe tree is Ark's.
+     */
     public static Step recipes() {
         return sequence("recipe sweep", run -> {
             var steps = new ArrayList<Step>();
             var items = new java.util.LinkedHashSet<String>();
             for (var station : WorkstationCatalog.all().values())
                 for (var craft : station.crafts())
-                    if (!craft.variant().apply() && !craft.entry().planned()) items.add(craft.variant().item());
+                    if (!craft.variant().apply() && BuiltInRegistries.ITEM.containsKey(net.minecraft.resources.Identifier.parse(craft.variant().item()))
+                            && (craft.variant().item().startsWith(NS + ":") || station.station().endsWith(":armoury"))) items.add(craft.variant().item());
             for (String item : items) steps.add(Gathering.obtain(item, 1));
             return steps;
         });

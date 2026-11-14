@@ -190,18 +190,48 @@ public final class Verbs {
 
     record Found(WorkstationDefinition station, WorkstationDefinition.Craft craft, String key, int index) {}
 
-    /** Where an item is crafted: the inventory's own graph when it can be, else the lowest-level workstation. */
+    /**
+     * Where an item is crafted: of its recipes, one whose every input has a known way in (gathered, hunted, processed or
+     * crafted) first, then the inventory's own graph, then the lowest level.
+     */
     static Found find(String item) {
         Found best = null;
+        int bestScore = Integer.MIN_VALUE;
         for (var station : WorkstationCatalog.all().values())
             for (var craft : station.crafts()) {
-                if (!craft.variant().item().equals(item) || craft.variant().apply() || craft.entry().planned()) continue;
+                if (!craft.variant().item().equals(item) || craft.variant().apply()) continue;
                 String key = "i:" + craft.category().id() + "/" + (craft.group() == null ? "" : craft.group().group() + "/") + craft.entry().family();
-                var found = new Found(station, craft, key, craft.entry().variants().indexOf(craft.variant()));
-                if (InventoryCrafting.STATION.equals(station.station())) return found;
-                if (best == null || craft.level() < best.craft().level()) best = found;
+                int score = (inputsKnown(craft) ? 10000 : 0) + (InventoryCrafting.STATION.equals(station.station()) ? 1000 : 0) - craft.level();
+                if (score > bestScore) { bestScore = score; best = new Found(station, craft, key, craft.entry().variants().indexOf(craft.variant())); }
             }
         return best;
+    }
+
+    private static boolean inputsKnown(WorkstationDefinition.Craft craft) {
+        for (String key : craft.variant().cost().keySet()) if (!known(key)) return false;
+        return true;
+    }
+
+    /** Whether a cost key has a way in: a source, or some bench makes it (one level deep, no recursion). */
+    private static boolean known(String key) {
+        if (!key.startsWith("#")) return Gathering.SOURCES.containsKey(key) || made().contains(key);
+        var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.parse(key.substring(1)));
+        for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) if (known(id(holder.value()))) return true;
+        return false;
+    }
+
+    private static java.util.Set<String> made;
+    private static Object madeFrom;
+
+    private static java.util.Set<String> made() {
+        var all = WorkstationCatalog.all();
+        if (made == null || madeFrom != all) {
+            var out = new java.util.HashSet<String>();
+            for (var station : all.values()) for (var craft : station.crafts()) out.add(craft.variant().item());
+            made = out;
+            madeFrom = all;
+        }
+        return made;
     }
 
     /** Opens a station's menu the way a click does, standing beside it in the camp. Returns the menu id, or -1. */
