@@ -26,7 +26,7 @@ public final class LevelEvents {
                 || event.getEntity() instanceof EnderDragon || event.getEntity() instanceof WitherBoss) {
             ArkLevels.addXp(player, Config.PLAYER_XP_BOSS.get(), ArkLevels.Source.BOSS);
         } else if (event.getEntity() instanceof CreatureEntity creature) {
-            ArkLevels.addXp(player, (long) Config.PLAYER_XP_KILL.get() * creature.creatureLevel(), ArkLevels.Source.KILL);
+            ArkLevels.addXp(player, ArkLevels.killXp(creature), ArkLevels.Source.KILL);
         }
     }
 

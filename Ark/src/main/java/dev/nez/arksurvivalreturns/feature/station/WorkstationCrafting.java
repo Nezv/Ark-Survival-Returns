@@ -78,7 +78,7 @@ public final class WorkstationCrafting {
             if (!output.isEmpty()) player.drop(output, false);
             EventHooks.firePlayerCraftingEvent(player, eventStack, ingredients);
         }
-        ArkLevels.crafted(player, recipe);
+        ArkLevels.crafted(player, recipe, chosen.level());
         if (player.connection != null && player.connection.hasChannel(WorkstationPayload.Result.TYPE)) {
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,
                     new WorkstationPayload.Result(menu.containerId, variant.item(), times * variant.count(), variant.apply()));

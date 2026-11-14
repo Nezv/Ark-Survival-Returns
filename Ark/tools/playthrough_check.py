@@ -146,7 +146,10 @@ if __name__ == '__main__':
              'flint_knife', 'keratin', 'keratin_spear', 'keratin_helmet', 'saddlery', 'mattress', 'stone_fire', 'hearty_stew', 'trail_mix',
              'narcotics', 'primitive_forge', 'bronze_ingot', 'bronze_pickaxe', 'bronze_axe', 'bronze_shovel', 'bronze_longsword', 'bronze_hammer',
              'bronze_helmet', 'bedroll', 'minecraft:coal', 'minecraft:iron_ingot', 'sulphur', 'minecraft:gunpowder', 'minecraft:glass',
-             'medicine_bench', 'herbal_bandage', 'vitamins', 'explosive_arrow', 'storage_crate']
+             'medicine_bench', 'herbal_bandage', 'vitamins', 'explosive_arrow', 'storage_crate', 'azulberry', 'minecraft:bow',
+             'tranquilizer_arrow', 'minecraft:carrot', 'minecraft:oak_planks', 'minecraft:gold_ingot', 'minecraft:golden_sword',
+             'minecraft:golden_chestplate', 'minecraft:diamond', 'minecraft:diamond_sword', 'minecraft:diamond_chestplate',
+             'minecraft:crossbow', 'improved_tranquilizer_arrow', 'minecraft:arrow']
     print('\nstage goals:')
     for g in goals:
         g = g if ':' in g else NS + g

@@ -100,13 +100,15 @@ public final class Playthrough {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void incoming(LivingIncomingDamageEvent event) {
-        if (watched != null && run != null && event.getEntity().getUUID().equals(run.playerId)) watched.incoming(event.getAmount());
+        if (watched != null && run != null && event.getEntity().getUUID().equals(run.playerId) && watched.from(event.getSource().getEntity()))
+            watched.incoming(event.getAmount());
     }
 
     /** What is left after armour is the measure; the blow itself is then cancelled so the test can go on. */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void damage(LivingDamageEvent.Pre event) {
-        if (watched == null || run == null || !event.getEntity().getUUID().equals(run.playerId)) return;
+        // Only the test's creature counts: hunger, a fall or anything else is not its blow.
+        if (watched == null || run == null || !event.getEntity().getUUID().equals(run.playerId) || !watched.from(event.getSource().getEntity())) return;
         watched.struck(run, event.getNewDamage());
         event.setNewDamage(0);
     }

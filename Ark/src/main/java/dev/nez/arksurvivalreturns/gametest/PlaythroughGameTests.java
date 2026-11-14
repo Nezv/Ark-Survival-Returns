@@ -22,6 +22,12 @@ import net.minecraft.world.level.GameType;
  */
 final class PlaythroughGameTests {
     static void economy(GameTestHelper h) {
+        // Long (the whole economy at the normal tick rate): it runs only when asked, gradlew runGameTestServer -ParkEconomy.
+        if (!Boolean.getBoolean("arksurvivalreturns.playthroughEconomy")) {
+            ArkSurvivalReturns.LOGGER.info("Playthrough GameTest: skipped (run with -ParkEconomy)");
+            h.succeed();
+            return;
+        }
         var level = h.getLevel();
         var server = level.getServer();
         var cookie = CommonListenerCookie.createInitial(new GameProfile(UUID.randomUUID(), "ArkPlaythrough"), false);

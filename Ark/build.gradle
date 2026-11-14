@@ -94,6 +94,7 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             systemProperty 'arksurvivalreturns.benchmarkNighttime', providers.gradleProperty('nighttimeBenchmark').getOrElse('false')
             systemProperty 'arksurvivalreturns.testPack', project.hasProperty('arkPack').toString()
+            systemProperty 'arksurvivalreturns.playthroughEconomy', project.hasProperty('arkEconomy').toString()
         }
         data {
             clientData()

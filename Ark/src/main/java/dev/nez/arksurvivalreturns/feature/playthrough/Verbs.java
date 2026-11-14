@@ -3,6 +3,7 @@ package dev.nez.arksurvivalreturns.feature.playthrough;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -15,28 +16,34 @@ import dev.nez.arksurvivalreturns.feature.station.WorkstationCrafting;
 import dev.nez.arksurvivalreturns.feature.station.WorkstationDefinition;
 import dev.nez.arksurvivalreturns.feature.station.WorkstationMenu;
 import dev.nez.arksurvivalreturns.feature.station.WorkstationPayload;
+import dev.nez.arksurvivalreturns.feature.taming.TamingService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * The playthrough's verbs: each goes through the game's own code (block breaking with loot tables and tools, a
- * workstation's menu and craft packet, the equipment slots); nothing is ever handed to the player.
+ * The playthrough's verbs. Each goes through the path a real client's packet takes on the server: a block broken by
+ * the game mode, a right-click on a block or with an item ({@code ServerPlayerGameMode.useItemOn / useItem}), a click
+ * in an open menu ({@code AbstractContainerMenu.clicked}, as the container-click packet does), a hotbar change, a
+ * workstation's craft packet. Nothing is ever handed to the player and no block is set for them.
  */
 public final class Verbs {
     // ------------------------------------------------------------------ run control
@@ -62,7 +69,36 @@ public final class Verbs {
 
     static void tp(PlayRun run, double dx, double dy, double dz, float yaw, float pitch) {
         var o = run.origin;
-        run.player().teleportTo(run.level(), o.getX() + 0.5 + dx, o.getY() + 1 + dy, o.getZ() + 0.5 + dz, java.util.Set.of(), yaw, pitch, true);
+        var player = run.player();
+        player.teleportTo(run.level(), o.getX() + 0.5 + dx, o.getY() + 1 + dy, o.getZ() + 0.5 + dz, java.util.Set.of(), yaw, pitch, true);
+        player.setDeltaMovement(Vec3.ZERO);
+        player.fallDistance = 0;
+    }
+
+    /**
+     * Holds the player in the air for a picture from above, flying, so nothing falls; {@link #land} puts them back on
+     * the ground with flight off. (A survival player sent 30 blocks up without this fell to their death.)
+     */
+    public static Step hover(double dx, double dy, double dz, float yaw, float pitch) {
+        return Step.of("hover " + dx + " " + dy + " " + dz, run -> {
+            var player = run.player();
+            player.getAbilities().mayfly = true;
+            player.getAbilities().flying = true;
+            player.onUpdateAbilities();
+            tp(run, dx, dy, dz, yaw, pitch);
+        });
+    }
+
+    public static Step land(double dx, double dz) {
+        return Step.of("land", run -> {
+            tp(run, dx, 0, dz, 180, 10);
+            var player = run.player();
+            if (!Playthrough.headless) {
+                player.getAbilities().flying = false;
+                player.getAbilities().mayfly = false;
+                player.onUpdateAbilities();
+            }
+        });
     }
 
     /** Asks the client for a picture after the view has settled ({@code settle} ticks), into the run's screenshots. */
@@ -92,7 +128,7 @@ public final class Verbs {
         };
     }
 
-    /** Inventory, level and what the player wears: a snapshot for the report. */
+    /** Inventory, level (earned and lifted XP), food and what the player wears: a snapshot for the report. */
     public static Step checkpoint(String label) {
         return Step.of("checkpoint " + label, run -> {
             var player = run.player();
@@ -100,6 +136,9 @@ public final class Verbs {
             event.addProperty("label", label);
             var progress = ArkLevels.get(player);
             event.addProperty("level", progress.level());
+            event.addProperty("earned_xp", run.earnedXp(player));
+            event.addProperty("supplied_xp", run.suppliedXp);
+            event.addProperty("food", player.getFoodData().getFoodLevel());
             event.addProperty("armor", player.getAttributeValue(Attributes.ARMOR));
             event.addProperty("toughness", player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
             event.addProperty("health", player.getMaxHealth());
@@ -108,54 +147,145 @@ public final class Verbs {
         });
     }
 
-    // ------------------------------------------------------------------ the world
+    // ------------------------------------------------------------------ the hand and the hotbar
 
-    /** Breaks a block of this kind {@code times} times at one spot with whatever is in hand, then picks the drops up. */
-    public static Step breakBlock(Block block, int dx, int dz, int times) {
-        String name = "break " + id(block) + " x" + times;
-        return new Step() {
-            Map<String, Integer> before;
-            int broken;
-            float progress;
-            @Override public String name() { return name; }
-            @Override public boolean tick(PlayRun run, int ticks) {
-                var player = run.player();
-                var pos = run.at(dx, 1, dz);
-                if (ticks == 0) {
-                    before = counts(player);
-                    tp(run, dx + 1.5, 0, dz, 90, 30);
-                    return false;
-                }
-                if (broken < times) {
-                    run.level().setBlockAndUpdate(pos.below(), Blocks.GRASS_BLOCK.defaultBlockState());
-                    run.level().setBlockAndUpdate(pos, block.defaultBlockState());
-                    progress = run.level().getBlockState(pos).getDestroyProgress(player, run.level(), pos);
-                    player.gameMode.destroyBlock(pos);
-                    broken++;
-                    return false;
-                }
-                // The drops are walked to the player so the game's own pickup gives them (and their collect triggers).
-                for (var item : run.level().getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(3))) {
-                    item.setNoPickUpDelay();
-                    item.setPos(player.position());
-                }
-                if (ticks < times + 10) return false;
-                var event = run.event("break");
-                event.addProperty("block", id(block));
-                event.addProperty("times", times);
-                event.addProperty("tool", id(player.getMainHandItem().getItem()));
-                event.addProperty("hand_ticks", progress <= 0 ? -1 : (int) Math.ceil(1 / progress));
-                event.add("gained", difference(before, counts(player)));
-                run.write(event);
-                return true;
+    /**
+     * Brings an item into the main hand the way a player does: picked on the hotbar if it is there, else swapped onto
+     * the selected hotbar slot from the bags with the inventory screen's number-key swap. False when the bags hold none.
+     */
+    static boolean select(ServerPlayer player, Item item) {
+        if (player.getMainHandItem().is(item)) return true;
+        var inventory = player.getInventory();
+        for (int slot = 0; slot < 9; slot++) if (inventory.getItem(slot).is(item)) { pick(player, slot); return true; }
+        for (int slot = 9; slot < 36; slot++)
+            if (inventory.getItem(slot).is(item)) {
+                player.closeContainer();
+                player.inventoryMenu.clicked(slot, inventory.getSelectedSlot(), ContainerInput.SWAP, player);
+                player.inventoryMenu.broadcastChanges();
+                return player.getMainHandItem().is(item);
             }
-        };
+        return false;
+    }
+
+    static boolean select(ServerPlayer player, String item) { return select(player, item(item)); }
+
+    /** A hotbar slot picked, as the held-item packet does; the client is told, the way the server tells it on a join. */
+    static void pick(ServerPlayer player, int slot) {
+        if (player.getInventory().getSelectedSlot() == slot) return;
+        player.getInventory().setSelectedSlot(slot);
+        if (player.connection != null) player.connection.send(new net.minecraft.network.protocol.game.ClientboundSetHeldSlotPacket(slot));
+    }
+
+    /** An empty hand: an empty hotbar slot picked, else the held stack swapped into an empty slot of the bags. */
+    static boolean emptyHand(ServerPlayer player) {
+        if (player.getMainHandItem().isEmpty()) return true;
+        var inventory = player.getInventory();
+        for (int slot = 0; slot < 9; slot++) if (inventory.getItem(slot).isEmpty()) { pick(player, slot); return true; }
+        for (int slot = 9; slot < 36; slot++)
+            if (inventory.getItem(slot).isEmpty()) {
+                player.closeContainer();
+                player.inventoryMenu.clicked(slot, inventory.getSelectedSlot(), ContainerInput.SWAP, player);
+                player.inventoryMenu.broadcastChanges();
+                return player.getMainHandItem().isEmpty();
+            }
+        return false;
+    }
+
+    /** A right-click on a block's face, with this item in hand (null: an empty hand), through the game mode. */
+    static InteractionResult use(PlayRun run, BlockPos pos, Direction face, Vec3 at, String item) {
+        var player = run.player();
+        if (item == null ? !emptyHand(player) : !select(player, item)) return InteractionResult.FAIL;
+        var result = player.gameMode.useItemOn(player, run.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND,
+                new BlockHitResult(at, face, pos, false));
+        player.inventoryMenu.broadcastChanges();
+        return result;
+    }
+
+    /** A right-click on the middle of a block's south face (the side the player stands on). */
+    static InteractionResult use(PlayRun run, BlockPos pos, String item) {
+        return use(run, pos, Direction.SOUTH, new Vec3(pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 1.0), item);
+    }
+
+    /** A right-click in the air with an item: eating, drinking, putting armour on, drawing a bow. */
+    static InteractionResult useItem(ServerPlayer player, String item) {
+        if (!select(player, item)) return InteractionResult.FAIL;
+        return player.gameMode.useItem(player, player.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND);
     }
 
     /**
-     * Crafts an item at whichever workstation makes it: the station is put down beside the player, opened through its
-     * block, and the craft goes through the same packet handler as a click. A level gate is written down and, so the run
-     * goes on, the level is raised to what the craft asks ({@code forced}).
+     * Puts a block item down where a player would: standing south of the spot, facing it, right-clicking the top of
+     * the block under it (so placement rules, the block's own {@code setPlacedBy} and the place event all run).
+     * Returns whether the block now stands there.
+     */
+    static boolean placeItem(PlayRun run, String blockId, String item, BlockPos pos) {
+        var player = run.player();
+        player.closeContainer();
+        var block = BuiltInRegistries.BLOCK.getValue(Identifier.parse(blockId));
+        tp(run, pos.getX() - run.origin.getX(), pos.getY() - run.origin.getY() - 1, pos.getZ() - run.origin.getZ() + 2.5, 180, 40);
+        var ground = pos.below();
+        use(run, ground, Direction.UP, new Vec3(ground.getX() + 0.5, ground.getY() + 1.0, ground.getZ() + 0.5), item);
+        return run.level().getBlockState(pos).is(block);
+    }
+
+    // ------------------------------------------------------------------ menus
+
+    /** The slot of the open menu that shows this container's index, or -1. */
+    static int slotFor(ServerPlayer player, Container container, int index) {
+        var menu = player.containerMenu;
+        for (int i = 0; i < menu.slots.size(); i++) {
+            var slot = menu.slots.get(i);
+            if (slot.container == container && slot.getContainerSlot() == index) return i;
+        }
+        return -1;
+    }
+
+    /** The first slot of the open menu over this container holding a matching stack, or -1. */
+    static int slotWith(ServerPlayer player, Container container, Predicate<ItemStack> wanted) {
+        var menu = player.containerMenu;
+        for (int i = 0; i < menu.slots.size(); i++) {
+            var slot = menu.slots.get(i);
+            if (slot.container == container && !slot.getItem().isEmpty() && wanted.test(slot.getItem())) return i;
+        }
+        return -1;
+    }
+
+    /** A shift-click on a slot of the open menu. */
+    static void quickMove(ServerPlayer player, int slot) {
+        if (slot < 0) return;
+        player.containerMenu.clicked(slot, 0, ContainerInput.QUICK_MOVE, player);
+        player.containerMenu.broadcastChanges();
+    }
+
+    /** One item from one slot into another: pick the stack up, right-click one onto the target, put the rest back. */
+    static void placeOne(ServerPlayer player, int from, int to) {
+        if (from < 0 || to < 0) return;
+        var menu = player.containerMenu;
+        menu.clicked(from, 0, ContainerInput.PICKUP, player);
+        menu.clicked(to, 1, ContainerInput.PICKUP, player);
+        menu.clicked(from, 0, ContainerInput.PICKUP, player);
+        if (!menu.getCarried().isEmpty()) {
+            var carried = menu.getCarried();
+            menu.setCarried(ItemStack.EMPTY);
+            player.getInventory().placeItemBackInInventory(carried);
+        }
+        menu.broadcastChanges();
+    }
+
+    /** Opens a block's screen with an empty hand, standing beside it; true when a menu other than the bags opened. */
+    static boolean openAt(PlayRun run, BlockPos pos) {
+        var player = run.player();
+        player.closeContainer();
+        Gathering.standAt(run, pos);
+        use(run, pos, null);
+        return player.containerMenu != player.inventoryMenu;
+    }
+
+    // ------------------------------------------------------------------ crafting
+
+    /**
+     * Crafts an item at whichever workstation makes it: its screen is opened by a click on the station the player put
+     * down in the camp, and the craft goes through the same packet handler as the screen's button. The station's place
+     * is written down, so the report can check it is one the player earned and placed.
      */
     public static Step craft(String item, int times) {
         return Step.of("craft " + item + " x" + times, run -> {
@@ -170,6 +300,10 @@ public final class Verbs {
             event.addProperty("level", found.craft().level());
             event.add("cost", json(found.craft().variant().cost()));
             int menu = open(run, player, station.station());
+            if (!InventoryCrafting.STATION.equals(station.station())) {
+                var pos = run.camp.get(benchBlock(station.station()));
+                if (pos != null) event.addProperty("at", pos.subtract(run.origin).toShortString());
+            }
             if (menu < 0) { event.addProperty("result", "no_menu"); run.write(event); return; }
             if (!ArkLevels.requires(player, found.craft().level())) event.addProperty("gate", ArkLevels.get(player).level());
             var before = counts(player);
@@ -242,66 +376,108 @@ public final class Verbs {
             String block = benchBlock(station);
             var pos = block == null ? null : run.camp.get(block);
             if (pos == null) return -1;
-            Gathering.standAt(run, pos);
-            run.level().getBlockState(pos).useWithoutItem(run.level(), player, new BlockHitResult(Vec3.atCenterOf(pos), Direction.SOUTH, pos, false));
+            openAt(run, pos);
         }
         return player.containerMenu instanceof WorkstationMenu bench && bench.station.equals(station) ? bench.containerId : -1;
     }
 
     // ------------------------------------------------------------------ gear
 
-    /** Puts on an armour set from the bags; pieces not in them are written down as missing and left off. */
+    static final List<EquipmentSlot> ARMOUR = List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+
+    /** Puts on an armour set from the bags, each piece by its own right-click; pieces not in the bags are written down. */
     public static Step equip(String... pieces) {
         return Step.of("equip " + String.join(",", pieces), run -> {
             var player = run.player();
             var event = run.event("equip");
-            var given = new JsonArray();
+            var missing = new JsonArray();
             for (String piece : pieces) {
-                var stack = take(player, item(piece));
-                if (stack.isEmpty()) { given.add(piece); continue; }
-                var slot = player.getEquipmentSlotForItem(stack);
-                var old = player.getItemBySlot(slot);
-                if (!old.isEmpty()) player.getInventory().add(old);
-                player.setItemSlot(slot, stack);
+                var wanted = item(piece);
+                useItem(player, piece);
+                boolean worn = false;
+                for (var slot : ARMOUR) worn |= player.getItemBySlot(slot).is(wanted);
+                if (!worn) missing.add(piece);
             }
             event.add("pieces", json(List.of(pieces)));
-            event.add("missing", given);
+            event.add("missing", missing);
             event.addProperty("armor", player.getAttributeValue(Attributes.ARMOR));
             event.addProperty("toughness", player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
             run.write(event);
         });
     }
 
+    /** Takes the armour off by shift-clicking each worn piece in the inventory screen. */
     public static Step unequip() {
         return Step.of("unequip", run -> {
             var player = run.player();
-            for (var slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
-                var old = player.getItemBySlot(slot);
-                if (!old.isEmpty()) { player.getInventory().add(old.copy()); player.setItemSlot(slot, ItemStack.EMPTY); }
-            }
+            player.closeContainer();
+            for (int slot = InventoryMenu.ARMOR_SLOT_START; slot < InventoryMenu.ARMOR_SLOT_END; slot++)
+                if (player.inventoryMenu.getSlot(slot).hasItem()) player.inventoryMenu.clicked(slot, 0, ContainerInput.QUICK_MOVE, player);
+            player.inventoryMenu.broadcastChanges();
         });
     }
 
-    /** Takes a weapon from the bags in the main hand; one not in them is written down as missing. */
+    /** Takes a weapon from the bags in the main hand (the hotbar); one not in them is written down as missing. */
     public static Step wield(String weapon) {
         return Step.of("wield " + weapon, run -> {
             var player = run.player();
             var event = run.event("wield");
             event.addProperty("item", weapon);
-            var stack = weapon.isEmpty() ? ItemStack.EMPTY : take(player, item(weapon));
-            if (!weapon.isEmpty() && stack.isEmpty()) {
-                event.addProperty("missing", true);
-                event.addProperty("damage", player.getAttributeValue(Attributes.ATTACK_DAMAGE));
-                run.write(event);
-                return;
-            }
-            var old = player.getMainHandItem();
-            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stack);
-            if (!old.isEmpty()) player.getInventory().add(old);
+            boolean held = weapon.isEmpty() ? emptyHand(player) : select(player, weapon);
+            if (!held) event.addProperty("missing", true);
             event.addProperty("damage", player.getAttributeValue(Attributes.ATTACK_DAMAGE));
             event.addProperty("speed", player.getAttributeValue(Attributes.ATTACK_SPEED));
             run.write(event);
         });
+    }
+
+    // ------------------------------------------------------------------ eating
+
+    /** Food worth eating from the bags: no sedatives (a narcoberry knocks the eater out), cooked or dried first. */
+    static String food(ServerPlayer player) {
+        String best = null;
+        int bestScore = Integer.MIN_VALUE;
+        var inventory = player.getInventory();
+        for (int slot = 0; slot < 36; slot++) {
+            var stack = inventory.getItem(slot);
+            var food = stack.get(DataComponents.FOOD);
+            if (food == null || TamingService.sedativePotency(stack) > 0) continue;
+            String id = id(stack.getItem());
+            if (id.contains("raw_") || id.equals("minecraft:rotten_flesh")) continue;
+            int score = food.nutrition() * 10 + (int) (food.saturation() * 10);
+            if (score > bestScore) { bestScore = score; best = id; }
+        }
+        return best;
+    }
+
+    static boolean hasFood(ServerPlayer player) { return food(player) != null; }
+
+    /** Eats one earned meal by its own use (held down until eaten), and writes what and how full the player got. */
+    public static Step eat() {
+        return new Step() {
+            String item;
+            int before;
+            @Override public String name() { return "eat"; }
+            @Override public int timeout() { return 20 * 6; }
+            @Override public boolean tick(PlayRun run, int ticks) {
+                var player = run.player();
+                if (ticks == 0) {
+                    item = food(player);
+                    if (item == null) return true;
+                    before = player.getFoodData().getFoodLevel();
+                    useItem(player, item);
+                    return false;
+                }
+                if (player.isUsingItem() && ticks < 80) return false;
+                var event = run.event("ate");
+                event.addProperty("item", item);
+                event.addProperty("food_before", before);
+                event.addProperty("food_after", player.getFoodData().getFoodLevel());
+                run.write(event);
+                return true;
+            }
+            @Override public void abandon(PlayRun run) { run.player().stopUsingItem(); }
+        };
     }
 
     // ------------------------------------------------------------------ supply drops
@@ -328,13 +504,6 @@ public final class Verbs {
     static Item item(String id) { return BuiltInRegistries.ITEM.getValue(Identifier.parse(id)); }
     static String id(Item item) { return BuiltInRegistries.ITEM.getKey(item).toString(); }
     static String id(Block block) { return BuiltInRegistries.BLOCK.getKey(block).toString(); }
-
-    static ItemStack take(ServerPlayer player, Item item) {
-        var inventory = player.getInventory();
-        for (int i = 0; i < inventory.getContainerSize(); i++)
-            if (inventory.getItem(i).is(item)) return inventory.removeItem(i, 1);
-        return ItemStack.EMPTY;
-    }
 
     static Map<String, Integer> counts(ServerPlayer player) {
         var counts = new LinkedHashMap<String, Integer>();

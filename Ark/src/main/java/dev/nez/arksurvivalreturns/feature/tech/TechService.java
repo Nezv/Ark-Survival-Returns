@@ -74,7 +74,7 @@ public final class TechService {
                 progress.complete(node.id());
                 TechFtbBridge.complete(tribe, actor, node.id());
                 if (player != null) {
-                    ArkLevels.addXp(player, Config.PLAYER_XP_TECH_NODE.get(), ArkLevels.Source.TECH_NODE);
+                    ArkLevels.addXp(player, ArkLevels.techNodeXp(node.age()), ArkLevels.Source.TECH_NODE);
                 }
                 changed = true;
                 any = true;

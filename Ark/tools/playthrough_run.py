@@ -31,29 +31,37 @@ CPU_SHARE = 0.3  # of the logical cores the game may use, at below-normal priori
 
 
 def throttle():
-    """Waits for the game's Java process and keeps it on a share of the cores at below-normal priority."""
+    """Keeps the game's own Java process (the dev client, found by its run arguments) on a share of the cores at
+    below-normal priority. Gradle and anything else the user has open are left alone; the game's process ends with the
+    run, so nothing needs putting back."""
     import os
     import subprocess
     import threading
     if os.name != "nt":
         return
     cores = max(1, int((os.cpu_count() or 4) * CPU_SHARE))
-    script = ("$mask = [IntPtr][int64](" + str((1 << cores) - 1) + "); "
-              "Get-Process java -ErrorAction SilentlyContinue | ForEach-Object { try { $_.PriorityClass = 'BelowNormal'; "
-              "$_.ProcessorAffinity = $mask } catch {} }")
 
     def keep():
-        for _ in range(240):  # every 15 s for an hour: the Gradle and game JVMs start at different times
-            subprocess.run(["powershell", "-NoProfile", "-Command", script], capture_output=True)
-            time.sleep(15)
+        done = set()
+        for _ in range(720):  # every 5 s until the client is found (it starts a minute or two after Gradle)
+            for pid in run.clients():
+                if pid in done:
+                    continue
+                script = (f" = Get-Process -Id {pid} -ErrorAction SilentlyContinue; if () {{ .PriorityClass = 'BelowNormal'; "
+                          f".ProcessorAffinity = [IntPtr][int64]({(1 << cores) - 1}) }}")
+                subprocess.run(["powershell", "-NoProfile", "-Command", script], capture_output=True)
+                done.add(pid)
+                print(f"throttled the client (pid {pid}) to {cores} of {os.cpu_count()} cores, below-normal priority", flush=True)
+            if done:
+                return
+            time.sleep(5)
     threading.Thread(target=keep, daemon=True).start()
-    print(f"throttled to {cores} of {os.cpu_count()} cores, below-normal priority, 30 fps", flush=True)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--routine", default="standard", help="standard, smoke (three species), stages or sweeps")
-    parser.add_argument("--hours", type=float, default=2.5, help="close the client after this long whatever happens")
+    parser.add_argument("--routine", default="standard", help="standard, smoke (three species), stages, sweeps or fights")
+    parser.add_argument("--hours", type=float, default=2.0, help="close the client after this long whatever happens")
     arguments = parser.parse_args()
     if run.clients():
         sys.exit("a dev client is already running; close it first")
@@ -68,7 +76,7 @@ def main() -> int:
         print(f"playthrough {arguments.routine} -> {folder}", flush=True)
         throttle()
         screens.launch(folder, [f"-ParkFreshWorld={run.COPY}", "-ParkWorldType=testing_ground",
-                                f"-ParkPlaythrough={folder.as_posix()}", f"-ParkRoutine={arguments.routine}"])
+                                f"-ParkPlaythrough={folder.as_posix()}", f"-ParkRoutine={arguments.routine}"], keep_front=False)
     finally:
         run.give_back()
         played = run.SAVES / run.COPY

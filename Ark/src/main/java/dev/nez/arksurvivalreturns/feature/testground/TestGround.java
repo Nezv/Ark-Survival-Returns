@@ -74,6 +74,13 @@ public final class TestGround {
         var data = Data.get(overworld);
         if (data.built) return;
         quiet(overworld);
+        if (dev.nez.arksurvivalreturns.feature.playthrough.Playthrough.launched()) {
+            // A playthrough plays on bare ground: no workshop, gallery, arena or bays, so the only stations are earned.
+            data.built = true;
+            data.setDirty();
+            ArkSurvivalReturns.LOGGER.info("Testing ground: bare for a playthrough");
+            return;
+        }
         long started = System.nanoTime();
         var builder = new TestGroundBuilder(overworld, overworld.getRespawnData().pos());
         var line = builder.buildAll();

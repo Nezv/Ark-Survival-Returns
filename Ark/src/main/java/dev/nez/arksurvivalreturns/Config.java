@@ -14,7 +14,8 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue WORKSTATION_LEVEL_GATE;
     public static final ModConfigSpec.IntValue PLAYER_LEVEL_CAP, PLAYER_LEVEL_BASE_XP;
     public static final ModConfigSpec.DoubleValue PLAYER_LEVEL_EXPONENT, PLAYER_XP_TRIBE_SHARE, PLAYER_XP_TRIBE_RADIUS;
-    public static final ModConfigSpec.IntValue PLAYER_XP_KILL, PLAYER_XP_TAME, PLAYER_XP_FIRST_CRAFT, PLAYER_XP_TECH_NODE, PLAYER_XP_BOSS;
+    public static final ModConfigSpec.IntValue PLAYER_XP_KILL, PLAYER_XP_TAME, PLAYER_XP_FIRST_CRAFT, PLAYER_XP_FIRST_CRAFT_LEVEL, PLAYER_XP_TECH_NODE, PLAYER_XP_BOSS;
+    public static final ModConfigSpec.DoubleValue PLAYER_XP_CARNIVORE;
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_ROAM = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_LEASH = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.land.LandFamily, ModConfigSpec.IntValue> LAND_WATER_MAX = new EnumMap<>(dev.nez.arksurvivalreturns.feature.land.LandFamily.class);
@@ -614,17 +615,24 @@ public final class Config {
         b.push("playerLevels");
         PLAYER_LEVEL_CAP = b.comment("Maximum permanent Ark player level. New players start at level 0.")
                 .defineInRange("cap", 50, 1, 10000);
-        PLAYER_LEVEL_BASE_XP = b.comment("XP to advance = ceil(baseXp * (current level + 1)^exponent).")
-                .defineInRange("baseXp", 100, 1, 1000000);
-        PLAYER_LEVEL_EXPONENT = b.defineInRange("exponent", 1.5, 0.0, 3.0);
-        PLAYER_XP_KILL = b.comment("XP per creature level for a kill by a player or their tame.")
-                .defineInRange("killPerLevel", 50, 0, 1000000);
-        PLAYER_XP_TAME = b.comment("XP per creature level when taming completes.")
-                .defineInRange("tamePerLevel", 100, 0, 1000000);
-        PLAYER_XP_FIRST_CRAFT = b.comment("XP for the first successful craft of each recipe, remembered permanently.")
+        PLAYER_LEVEL_BASE_XP = b.comment("XP to advance = ceil(baseXp * (current level + 1)^exponent): 20 * (L + 1)^2 makes level 5 "
+                        + "about 1,100 XP in all, level 15 about 25,000, level 33 about 250,000 and level 50 about 860,000.")
+                .defineInRange("baseXp", 20, 1, 1000000);
+        PLAYER_LEVEL_EXPONENT = b.defineInRange("exponent", 2.0, 0.0, 3.0);
+        PLAYER_XP_KILL = b.comment("XP for a kill by a player or their tame = killPerLevel * creature level * body, times "
+                        + "carnivoreMultiplier for a carnivore; body is the species' base health / 50, between 0.25 and 4.")
+                .defineInRange("killPerLevel", 10, 0, 1000000);
+        PLAYER_XP_CARNIVORE = b.comment("How many times more a carnivore's kill is worth than a plant eater's of the same body and level.")
+                .defineInRange("carnivoreMultiplier", 10.0, 1.0, 1000.0);
+        PLAYER_XP_TAME = b.comment("XP when taming completes = tamePerLevel * creature level * body.")
+                .defineInRange("tamePerLevel", 40, 0, 1000000);
+        PLAYER_XP_FIRST_CRAFT = b.comment("XP for the first successful craft of each recipe, remembered permanently, plus "
+                        + "firstCraftPerLevel for each level the recipe asks.")
                 .defineInRange("firstCraft", 10, 0, 1000000);
-        PLAYER_XP_TECH_NODE = b.defineInRange("techNode", 50, 0, 1000000);
-        PLAYER_XP_BOSS = b.defineInRange("boss", 500, 0, 1000000);
+        PLAYER_XP_FIRST_CRAFT_LEVEL = b.defineInRange("firstCraftPerLevel", 10, 0, 1000000);
+        PLAYER_XP_TECH_NODE = b.comment("XP for a tech node of the Prehistoric age; a Bronze node gives twice that, an Iron one three times.")
+                .defineInRange("techNode", 100, 0, 1000000);
+        PLAYER_XP_BOSS = b.defineInRange("boss", 30000, 0, 10000000);
         PLAYER_XP_TRIBE_SHARE = b.comment("Bonus fraction awarded to each nearby FTB Teams party member; never shares recursively.")
                 .defineInRange("tribeShare", 0.25, 0.0, 1.0);
         PLAYER_XP_TRIBE_RADIUS = b.comment("Sharing distance in blocks, in the same dimension.")

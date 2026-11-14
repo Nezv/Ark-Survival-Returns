@@ -74,17 +74,19 @@ def summarise(events: list[dict]) -> dict:
         inside = [e for e in events if e["stage"] == mark["stage"]]
         stages.append({"stage": mark["stage"], "minutes": round((until - mark["wall"]) / 60000, 1),
                        "blocked": sum(1 for e in inside if e["type"] == "blocked"),
-                       "grind_kills": sum(e["kills"] for e in inside if e["type"] == "grind"),
+                       "lifted_xp": sum(e["supplied_xp"] for e in inside if e["type"] == "level_lift"),
                        "refused": sum(1 for e in inside if e["type"] == "craft" and e.get("result") != "crafted"),
                        "errors": sum(1 for e in inside if e["type"] in ("step_error", "step_timeout"))})
     kills = defaultdict(list)
     for e in by["kill_streak"]:
-        if e["end"] == "dead":
-            kills[e["label"]].append(e["ticks"] / 20)
+        if "seconds_to_kill" in e:
+            kills[e["label"]].append(e["seconds_to_kill"])
     taken = defaultdict(list)
     for e in by["damage_test"]:
-        if e["blows"]:
-            taken[e["label"]].append(e["blows"])
+        # Only measured or projected tests: one cut short (window, timeout, no blow) says nothing about three lives.
+        if e["end"] in ("taken", "projected") and "blows_to_three_lives" in e:
+            taken[e["label"]].append(e["blows_to_three_lives"])
+    lifts = by["level_lift"]
     return {
         "routine": start.get("routine"), "minutes": round((end["wall"] - start["wall"]) / 60000, 1), "end": end.get("why"),
         "stages": stages,
@@ -95,7 +97,29 @@ def summarise(events: list[dict]) -> dict:
         "recipes_obtained": len([e for e in by["obtained"] if e["stage"] == "RECIPES"]),
         "recipes_blocked": len([e for e in by["blocked"] if e["stage"] == "RECIPES"]),
         "errors": len(by["step_error"]) + len(by["step_timeout"]),
+        "level_end": end.get("level"), "earned_xp": end.get("earned_xp"), "supplied_xp": end.get("supplied_xp"),
+        "level_lifts": len(lifts), "provenance_failures": len(provenance(events)),
+        "downs": len(by["player_down"]) + len(by["player_dead"]),
     }
+
+
+def provenance(events: list[dict]) -> list[list]:
+    """Each craft, process or cook at a station must name a spot where the player put that station down, from an item
+    the bags held (crafted, or earned); anything else is listed."""
+    placed, made, bad = {}, set(), []
+    for e in events:
+        if e["type"] == "craft" and e.get("result") == "crafted":
+            made.add(e["item"])
+        elif e["type"] in ("obtained", "withdrawn"):
+            made.add(e["item"])
+        elif e["type"] == "placed" and e.get("result") == "placed":
+            placed[e["at"]] = e
+            if e.get("item") not in made:
+                bad.append([e["stage"], "placed", e["block"], e["at"], "its item was never crafted or earned"])
+        elif e["type"] in ("craft", "process", "cook") and "at" in e:
+            if e["at"] not in placed:
+                bad.append([e["stage"], e["type"], e.get("item", ""), e["at"], "no station the player placed stands there"])
+    return bad
 
 
 def report(folder: Path) -> Path:
@@ -109,8 +133,11 @@ def report(folder: Path) -> Path:
              f"<p>{summary['minutes']} minutes, ended: {esc(summary['end'])}; nothing given, {summary['blocked']} goals blocked; "
              f"{summary['errors']} step errors or timeouts.</p>"]
 
-    parts.append("<h2>Stages</h2>" + table(["stage", "minutes", "goals blocked", "kills for experience", "refused crafts", "errors"],
-                                           [[s["stage"], s["minutes"], s["blocked"], s["grind_kills"], s["refused"], s["errors"]] for s in summary["stages"]]))
+    parts.append("<h2>Stages</h2>" + table(["stage", "minutes", "goals blocked", "XP lifted", "refused crafts", "errors"],
+                                           [[s["stage"], s["minutes"], s["blocked"], s["lifted_xp"], s["refused"], s["errors"]] for s in summary["stages"]]))
+    parts.append(f"<p>Level at the end {esc(summary['level_end'])}: {esc(summary['earned_xp'])} XP earned by play, "
+                 f"{esc(summary['supplied_xp'])} lifted to meet gates. Supplied by the run, by design: the yard's blocks, the "
+                 "hunted and measured creatures, the test wall and screen blocks, and the lifted levels.</p>")
 
     play = [e for e in events if e["stage"].startswith("R") or e["stage"] in ("RECIPES", "WEAPONS", "ARMOUR")]
     parts.append("<h2>What the economy gave</h2>")
@@ -118,10 +145,16 @@ def report(folder: Path) -> Path:
                        [[e["stage"], e["type"], e["item"], e["wanted"], e.get("tries", e.get("kills", "")), e.get("made", ""),
                          e.get("short", ""), e.get("tool", e.get("weapon", e.get("station", ""))), round(e.get("ticks", 0) / 20, 1)]
                         for e in play if e["type"] in ("harvest", "hunt", "process")]))
-    parts.append("<h2>The experience wall: hunting to reach a craft's level</h2>")
-    parts.append(table(["stage", "for", "from level", "to level", "wanted", "kills", "weapon", "game s"],
-                       [[e["stage"], e["step"], e["from_level"], e["to_level"], e["wanted_level"], e["kills"], e["weapon"], round(e["ticks"] / 20, 1)]
-                        for e in by["grind"]]))
+    parts.append("<h2>The XP curve: gates the play had not reached</h2><p>Each row is a craft whose level the XP earned "
+                 "so far did not reach; the run lifted the player instead of grinding. Few, small rows mean the curve fits the play.</p>")
+    parts.append(table(["stage", "for", "from level", "gate", "XP earned so far", "XP lifted"],
+                       [[e["stage"], e["step"], e["from_level"], e["wanted_level"], e["earned_xp"], e["supplied_xp"]] for e in by["level_lift"]]))
+    parts.append("<h2>Provenance: every station used was earned and placed</h2>")
+    parts.append(table(["stage", "event", "item", "at", "problem"], provenance(events), "warn"))
+    parts.append("<h2>The player's own state</h2>")
+    parts.append(table(["stage", "event", "cause / item", "food"],
+                       [[e["stage"], e["type"], e.get("cause", e.get("item", "")), e.get("food", e.get("food_after", ""))]
+                        for e in events if e["type"] in ("player_down", "player_dead", "hungry", "ate", "no_crate")]))
     parts.append("<h2>Gaps: goals that could not be earned</h2>")
     parts.append(table(["stage", "goal", "stuck on", "count", "why"], [[e["stage"], e["goal"], e["item"], e["count"], e["why"]] for e in by["blocked"]], "warn"))
     parts.append("<h2>The camp</h2>")
@@ -131,25 +164,39 @@ def report(folder: Path) -> Path:
                        [[e["stage"], e["item"], e.get("station", ""), e.get("level", ""), e["result"], e.get("gate", "")]
                         for e in play if e["type"] == "craft"]))
 
-    parts.append("<h2>Kill streak: game seconds to kill (hits)</h2><p>Red: not dead at the cap (health left).</p>")
+    parts.append("<h2>Kill streak: game seconds to kill (hits)</h2><p>*: projected from the hits of the sample. "
+                 "Red: no hit landed, or over a minute.</p>")
     kills = [e for e in by["kill_streak"] if not e["label"].startswith("weapon sweep")]
-    headers, rows = matrix(kills, lambda e: f"{e['ticks'] / 20:.1f} ({e['hits']})" if e["end"] == "dead"
-                           else f"{e['end']} {e.get('health_left', 0):.0f}/{e.get('creature_health', 0):.0f}", lambda e: e["end"] != "dead")
+    headers, rows = matrix(kills, lambda e: f"{e['seconds_to_kill']:.1f}{'' if e['end'] == 'dead' else '*'} ({e['hits_to_kill']})"
+                           if "seconds_to_kill" in e else e["end"], lambda e: "seconds_to_kill" not in e or e["seconds_to_kill"] > 60)
     parts.append(table(headers, rows, "matrix"))
 
-    parts.append("<h2>Damage test: blows to take three times the player's health (damage per blow after armour)</h2>"
-                 "<p>Red: the creature never reached three lives (no_blow: it never struck).</p>")
-    headers, rows = matrix(by["damage_test"], lambda e: f"{e['blows']} ({e['taken'] / max(1, e['blows']):.1f}, -{100 * (1 - e['taken'] / e['raw']):.0f}%)"
-                           if e["blows"] and e["raw"] else e["end"], lambda e: e["end"] != "taken")
+    parts.append("<h2>Damage test: blows to take three times the player's health (damage per blow after armour, armour's cut)</h2>"
+                 "<p>Projected from the sampled blows. Red: cut short (no_blow: it never struck; window or timeout).</p>")
+    headers, rows = matrix(by["damage_test"], lambda e: f"{e['blows_to_three_lives']} ({e['taken'] / max(1, e['blows']):.1f}, -{100 * (1 - e['taken'] / e['raw']):.0f}%)"
+                           if e.get("blows_to_three_lives") and e["raw"] else e["end"], lambda e: e["end"] not in ("taken", "projected"))
     parts.append(table(headers, rows, "matrix"))
 
     parts.append("<h2>Weapons against a level 1 Triceratops</h2>")
     wields = {e["item"]: e for e in by["wield"] if e["stage"] == "WEAPONS"}
     parts.append(table(["weapon", "damage", "attack speed", "missing", "end", "hits", "game s", "durability left"],
                        [[e["weapon"], wields.get(e["weapon"], {}).get("damage", ""), wields.get(e["weapon"], {}).get("speed", ""),
-                         wields.get(e["weapon"], {}).get("missing", False), e["end"], e["hits"], round(e["ticks"] / 20, 1), e.get("durability_left", "")]
+                         wields.get(e["weapon"], {}).get("missing", False), e["end"], e.get("hits_to_kill", e["hits"]),
+                         round(e.get("seconds_to_kill", e["ticks"] / 20), 1), e.get("durability_left", "")]
                         for e in by["kill_streak"] if e["label"].startswith("weapon sweep")]))
 
+    parts.append("<h2>Bows and crossbows against a level 1 Triceratops</h2>")
+    parts.append(table(["weapon", "ammo", "end", "shots", "dealt", "shots to kill", "torpor", "knocked out"],
+                       [[e["weapon"].split(":")[-1], e["ammo"].split(":")[-1], e["end"], e["shots"], round(e.get("dealt", 0), 1),
+                         e.get("shots_to_kill", ""), f"{e.get('torpor', 0):.0f}/{e.get('torpor_max', 0):.0f}", e.get("knocked_out", "")] for e in by["ranged"]]))
+    parts.append("<h2>Tames</h2>")
+    parts.append(table(["species", "method", "end", "game s", "sedating blows", "doses", "meals", "progress", "XP"],
+                       [[e["species"], e.get("method", ""), e["end"], round(e["ticks"] / 20, 1), e["sedating_blows"], e["doses"], e.get("meals", ""),
+                         e.get("progress", ""), e["xp"]] for e in by["tame"]]))
+    parts.append("<h2>Creature against creature (level 15, the next bigger body)</h2>")
+    parts.append(table(["a", "b", "winner", "end", "game s", "a health left", "b health left", "a dealt", "b dealt"],
+                       [[e["a"], e["b"], e.get("winner", ""), e["end"], round(e["ticks"] / 20, 1), f"{e.get('a_left', 0):.0%}", f"{e.get('b_left', 0):.0%}",
+                         round(e.get("a_dealt", 0)), round(e.get("b_dealt", 0))] for e in by["fight"]]))
     parts.append("<h2>Armour sets</h2>")
     parts.append(table(["stage", "pieces", "armour", "toughness", "missing"],
                        [[e["stage"], ", ".join(p.split(":")[-1] for p in e["pieces"]), e["armor"], e["toughness"],
@@ -191,7 +238,7 @@ def report(folder: Path) -> Path:
         ["weapons", f"{sum(1 for e in by['kill_streak'] if e['label'].startswith('weapon sweep'))} swung", ""],
         ["creatures", f"{len({e['species'] for e in by['kill_streak']})} killed, {len({e['species'] for e in by['damage_test'] if e['blows']})} struck back",
          ", ".join(sorted({e["species"] for e in by["damage_test"] if not e["blows"]}))],
-        ["tames", f"{len(by['tame'])} tried", " | ".join(f"{e['species']}: {e['status']}" for e in by["tame"])],
+        ["tames", f"{len(by['tame'])} tried", " | ".join(f"{e['species']}: {e.get('end', e.get('status'))}" for e in by["tame"])],
         ["supply drops", f"{len(by['drop'])} of 4 real drops landed and opened", ""],
     ]
     parts.append(table(["what", "result", "missing or failed"], coverage))

@@ -9,6 +9,14 @@ import java.util.function.Function;
 import com.google.gson.JsonArray;
 import dev.nez.arksurvivalreturns.ArkSurvivalReturns;
 import dev.nez.arksurvivalreturns.feature.creature.Species;
+import dev.nez.arksurvivalreturns.feature.creature.CreatureEntity;
+import dev.nez.arksurvivalreturns.feature.levels.ArkLevels;
+import dev.nez.arksurvivalreturns.feature.taming.TamingMethod;
+import dev.nez.arksurvivalreturns.feature.taming.TamingService;
+import dev.nez.arksurvivalreturns.feature.taming.TorporService;
+import dev.nez.arksurvivalreturns.feature.testground.TestGroundBuilder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import dev.nez.arksurvivalreturns.feature.drop.LootCrateBlockEntity;
 import dev.nez.arksurvivalreturns.feature.drop.SupplyTier;
 import dev.nez.arksurvivalreturns.feature.station.StationBlock;
@@ -18,7 +26,6 @@ import dev.nez.arksurvivalreturns.feature.tech.TechService;
 import dev.nez.arksurvivalreturns.feature.tech.TechTree;
 import dev.nez.arksurvivalreturns.feature.testground.SpecimenPostBlock;
 import dev.nez.arksurvivalreturns.feature.testground.SpecimenPostBlockEntity;
-import dev.nez.arksurvivalreturns.feature.testground.TestGroundContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -52,20 +59,10 @@ public final class Sweeps {
             @Override public boolean tick(PlayRun run, int outer) {
                 if (steps == null) steps = plan.apply(run);
                 if (at >= steps.size()) return true;
-                var step = steps.get(at);
-                boolean done;
-                try { done = step.tick(run, ticks++); }
-                catch (RuntimeException e) {
-                    ArkSurvivalReturns.LOGGER.error("Playthrough: step {} failed", step.name(), e);
-                    var failed = run.event("step_error");
-                    failed.addProperty("inner", step.name());
-                    failed.addProperty("error", String.valueOf(e));
-                    run.write(failed);
-                    done = true;
-                }
-                if (done || ticks > step.timeout()) { at++; ticks = 0; }
+                if (Step.drive(run, steps.get(at), ticks++)) { at++; ticks = 0; }
                 return false;
             }
+            @Override public void abandon(PlayRun run) { if (steps != null && at < steps.size()) steps.get(at).abandon(run); }
         };
     }
 
@@ -120,12 +117,15 @@ public final class Sweeps {
                 var event = run2.event("block_wall");
                 event.addProperty("blocks", blocks.size());
                 event.add("did_not_stay", fell);
+                event.addProperty("supplied", "test wall");
                 run2.write(event);
             }));
             int rows = (blocks.size() + WALL_ROW - 1) / WALL_ROW;
-            steps.add(Verbs.teleport(WALL_X + WALL_ROW * 1.5, 30, WALL_Z + rows * 1.5, 180, 90));
+            // From above the player flies (a survival player sent up without it fell to their death), then lands.
+            steps.add(Verbs.hover(WALL_X + WALL_ROW * 1.5, 30, WALL_Z + rows * 1.5, 180, 90));
             steps.add(Verbs.shot("blocks_above", 60));
-            steps.add(Verbs.teleport(WALL_X + WALL_ROW * 1.5, 4, WALL_Z - 10, 0, 15));
+            steps.add(Verbs.land(WALL_X + WALL_ROW * 1.5, WALL_Z - 10));
+            steps.add(Verbs.teleport(WALL_X + WALL_ROW * 1.5, 0, WALL_Z - 10, 0, 15));
             steps.add(Verbs.shot("blocks_front", 60));
             for (int i = 0; i < blocks.size(); i++) {
                 int index = i;
@@ -248,22 +248,38 @@ public final class Sweeps {
         });
     }
 
-    /** Ark items that hit harder than a fist. */
+    /** Ark items, and the Armoury's, that hit harder than a fist. */
     static List<String> weapons(PlayRun run) {
         var out = new ArrayList<String>();
         var player = run.player();
         var held = player.getMainHandItem().copy();
+        var armoury = armoury();
         for (var item : BuiltInRegistries.ITEM) {
             var key = BuiltInRegistries.ITEM.getKey(item);
-            if (!key.getNamespace().equals(NS)) continue;
-            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(item));
+            if (!key.getNamespace().equals(NS) && !armoury.contains(key.toString())) continue;
+            if (item instanceof ProjectileWeaponItem) continue;
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(item));
             if (player.getAttributeValue(Attributes.ATTACK_DAMAGE) > 1.5) out.add(key.toString());
         }
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, held);
+        player.setItemInHand(InteractionHand.MAIN_HAND, held);
         return out;
     }
 
-    /** Every weapon earned, then swung at the same frozen Triceratops: one row of time to kill per weapon. */
+    static java.util.Set<String> armoury() {
+        var out = new java.util.HashSet<String>();
+        for (var station : WorkstationCatalog.all().values())
+            if (station.station().endsWith(":armoury")) for (var craft : station.crafts()) out.add(craft.variant().item());
+        return out;
+    }
+
+    /** The Armoury's bows and crossbows, and its arrows. */
+    static final List<String> RANGED = List.of("minecraft:bow", "minecraft:crossbow");
+    static final List<String> AMMO = List.of("minecraft:arrow", NS + ":tranquilizer_arrow", NS + ":improved_tranquilizer_arrow", NS + ":explosive_arrow");
+
+    /**
+     * Every melee weapon earned and swung at the same frozen Triceratops (one row of time to kill each), then every bow
+     * and crossbow earned and shot with each arrow: damage and torpor per shot.
+     */
     public static Step weapons() {
         return sequence("weapon sweep", run -> {
             var steps = new ArrayList<Step>();
@@ -272,6 +288,13 @@ public final class Sweeps {
                 steps.add(Gathering.obtain(weapon, 1));
                 steps.add(Verbs.wield(weapon));
                 steps.add(CombatSteps.killStreak("weapon sweep " + weapon.substring(weapon.indexOf(':') + 1), Species.TRICERATOPS, 1));
+            }
+            for (String bow : RANGED) {
+                steps.add(Gathering.obtain(bow, 1));
+                for (String ammo : AMMO) {
+                    steps.add(Gathering.obtain(ammo, 16));
+                    steps.add(CombatSteps.shoot("weapon sweep", bow, ammo, Species.TRICERATOPS, 1));
+                }
             }
             return steps;
         });
@@ -338,35 +361,78 @@ public final class Sweeps {
 
     // ------------------------------------------------------------------ taming and the tech tree
 
-    /** A creature knocked out and tamed through a Specimen Post's own services (torpor, then taming). */
-    public static Step tame(Species species) {
+    /**
+     * A wild creature tamed the way a player tames it: a knock-out species sedated by swinging the player's own
+     * Narcotics (each blow a dose), then fed by hand while it sleeps and dosed by hand when it starts to wake; a passive
+     * one fed by hand while awake. It is rooted in place, out of its reach, so the player is never struck.
+     */
+    public static Step tame(Species species, int creatureLevel, String food, String sedative) {
         return new Step() {
-            BlockPos pos;
+            CreatureEntity creature;
+            Vec3 spot;
+            long started, xpBefore;
+            int blows, doses, offers;
+            boolean done;
             @Override public String name() { return "tame " + species.id; }
-            @Override public int timeout() { return 20 * 90; }
+            @Override public int timeout() { return 20 * 60 * 10; }
             @Override public boolean tick(PlayRun run, int ticks) {
                 var player = run.player();
+                var level = run.level();
                 if (ticks == 0) {
-                    pos = run.at(-40, 1, 140);
-                    run.level().setBlockAndUpdate(pos, TestGroundContent.SPECIMEN_POST.get().defaultBlockState());
-                    if (!(run.level().getBlockEntity(pos) instanceof SpecimenPostBlockEntity post)) return true;
-                    post.configure(species, 0, 1, SpecimenPostBlockEntity.Mode.ROOTED, 50, false);
-                    post.act(SpecimenPostBlockEntity.Action.SPAWN, player);
-                    Verbs.tp(run, -40, 0, 146, 180, 15);
+                    var body = TestGroundBuilder.extent(TestGroundBuilder.extents(level), species);
+                    spot = Vec3.atBottomCenterOf(run.at(-40, 1, 140));
+                    creature = CombatSteps.spawn(run, species, creatureLevel, spot, true);
+                    if (creature == null) return finish(run, "not_created");
+                    Verbs.tp(run, -40, 0, 140 + body.front() + 4, 180, 10);
+                    started = level.getGameTime();
+                    xpBefore = ArkLevels.totalXp(ArkLevels.get(player));
                     return false;
                 }
-                if (!(run.level().getBlockEntity(pos) instanceof SpecimenPostBlockEntity post)) return true;
-                if (ticks == 20) post.act(SpecimenPostBlockEntity.Action.KNOCK_OUT, player);
-                if (ticks == 200) post.act(SpecimenPostBlockEntity.Action.TAME, player);
-                if (ticks < 400) return false;
+                if (!creature.isAlive()) return finish(run, "died");
+                var state = TamingService.of(creature);
+                if (state.tamed()) return finish(run, "tamed");
+                creature.setPos(spot.x, creature.getY(), spot.z);
+                creature.getNavigation().stop();
+                boolean knockout = creature.profile().method() == TamingMethod.KNOCKOUT;
+                var torpor = TorporService.of(creature);
+                if (knockout && !torpor.restricted()) {
+                    if (player.getAttackStrengthScale(0.5f) < 1f) return false;
+                    if (!Verbs.select(player, sedative)) return finish(run, "no_sedative");
+                    player.attack(creature);
+                    player.swing(InteractionHand.MAIN_HAND, true);
+                    blows++;
+                    return false;
+                }
+                if (ticks % 20 != 0) return false;
+                boolean dose = knockout && torpor.ratio() < 0.5;
+                String held = dose ? sedative : food;
+                if (!Verbs.select(player, held)) return finish(run, dose ? "no_sedative" : "no_food");
+                player.interactOn(creature, InteractionHand.MAIN_HAND, creature.position());
+                if (dose) doses++; else offers++;
+                return false;
+            }
+            @Override public void abandon(PlayRun run) { finish(run, "timeout"); }
+            private boolean finish(PlayRun run, String end) {
+                if (done) return true;
+                done = true;
                 var event = run.event("tame");
                 event.addProperty("species", species.id);
-                event.addProperty("assisted", "Specimen Post knock-out (a dart volley's torpor), then the taming service");
-                event.addProperty("status", post.status());
-                event.add("reports", Verbs.json(post.reports()));
+                event.addProperty("creature_level", creatureLevel);
+                event.addProperty("end", end);
+                event.addProperty("status", end);
+                event.addProperty("ticks", run.level().getGameTime() - started);
+                event.addProperty("sedating_blows", blows);
+                event.addProperty("doses", doses);
+                event.addProperty("food_offers", offers);
+                if (creature != null) {
+                    var state = TamingService.of(creature);
+                    event.addProperty("method", creature.profile().method().name());
+                    event.addProperty("meals", state.meals());
+                    event.addProperty("progress", state.progress());
+                }
+                event.addProperty("xp", ArkLevels.totalXp(ArkLevels.get(run.player())) - xpBefore);
                 run.write(event);
-                post.act(SpecimenPostBlockEntity.Action.CLEAR, player);
-                run.level().removeBlock(pos, false);
+                if (creature != null && !creature.isRemoved()) creature.discard();
                 return true;
             }
         };

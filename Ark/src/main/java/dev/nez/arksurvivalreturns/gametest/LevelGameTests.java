@@ -104,9 +104,22 @@ final class LevelGameTests {
             victim.initializeLevel(3);
             victim.setPos(Vec3.atCenterOf(h.absolutePos(new BlockPos(5, 2, 5))));
             world.addFreshEntity(victim);
+            long plantEater = ArkLevels.killXp(victim);
             victim.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
-            h.assertTrue(total(player) == 3L * Config.PLAYER_XP_KILL.get(), "Creature kill did not award level-scaled XP");
+            h.assertTrue(plantEater > 0 && total(player) == plantEater, "Creature kill did not award level-scaled XP");
             victim.discard();
+
+            // A carnivore of the same level is worth the carnivore multiple of a plant eater of its body.
+            var hunter = ModContent.CREATURES.get(Species.DILOPHOSAUR).get().create(world, EntitySpawnReason.COMMAND);
+            hunter.setNoAi(true);
+            hunter.initializeLevel(3);
+            hunter.setPos(Vec3.atCenterOf(h.absolutePos(new BlockPos(5, 2, 5))));
+            world.addFreshEntity(hunter);
+            long beforeHunter = total(player);
+            hunter.hurtServer(world, world.damageSources().playerAttack(player), Float.MAX_VALUE);
+            long expected = Math.round(Config.PLAYER_XP_KILL.get() * 3 * ArkLevels.body(Species.DILOPHOSAUR) * Config.PLAYER_XP_CARNIVORE.get());
+            h.assertTrue(total(player) - beforeHunter == expected && expected > plantEater, "Carnivore kill did not award the carnivore multiple");
+            hunter.discard();
 
             var tame = ModContent.CREATURES.get(Species.LYSTROSAURUS).get().create(world, EntitySpawnReason.COMMAND);
             tame.setNoAi(true);
@@ -119,7 +132,7 @@ final class LevelGameTests {
             long before = total(player);
             h.assertTrue(TamingService.feedByHand(tame, player, InteractionHand.MAIN_HAND) == TamingFeedback.Result.ACCEPTED
                     && state.tamed(), "Test tame did not complete");
-            h.assertTrue(total(player) - before == 3L * Config.PLAYER_XP_TAME.get(), "Tame did not award 10 XP per level");
+            h.assertTrue(total(player) - before == ArkLevels.tameXp(tame) && ArkLevels.tameXp(tame) > 0, "Tame did not award its level and body XP");
             before = total(player);
             TamingService.feedByHand(tame, player, InteractionHand.MAIN_HAND);
             h.assertTrue(total(player) == before, "Feeding a finished tame awarded XP twice");
@@ -141,7 +154,7 @@ final class LevelGameTests {
             int completed = progress.completedCount();
             TechService.notify(player, TechEvent.obtain(player, new ItemStack(PrimitiveContent.ROCK.get())));
             int added = TechProgressData.get(world).progress(TechService.tribeOf(player)).completedCount() - completed;
-            h.assertTrue(added > 0 && total(player) - before == (long) added * Config.PLAYER_XP_TECH_NODE.get(),
+            h.assertTrue(added > 0 && total(player) - before == added * ArkLevels.techNodeXp("prehistoric"),
                     "New tech completions did not award configured XP");
             before = total(player);
             TechService.notify(player, TechEvent.obtain(player, new ItemStack(PrimitiveContent.ROCK.get())));

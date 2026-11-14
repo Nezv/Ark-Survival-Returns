@@ -30,8 +30,9 @@ OUT = run.ARK / "design" / "ui-rework" / "screens"
 TIMEOUT = 600
 
 
-def launch(folder: Path, arguments: list[str]) -> int | None:
-    """Runs the client until the tour closes it, keeping its window in front. Returns gradle's exit code."""
+def launch(folder: Path, arguments: list[str], keep_front: bool = True) -> int | None:
+    """Runs the client until the tour closes it, keeping its window in front (or, keep_front False, bringing it forward
+    once). Returns gradle's exit code."""
     environment = dict(os.environ)
     jdk = Path.home() / ".jbang" / "cache" / "jdks" / "25"
     if not Path(environment.get("JAVA_HOME", "")).joinpath("bin").is_dir() and jdk.is_dir():
@@ -42,13 +43,15 @@ def launch(folder: Path, arguments: list[str]) -> int | None:
         process = subprocess.Popen(gradle + ["runClient", *arguments, "--console=plain"], cwd=run.ARK, env=environment,
                                    stdout=output, stderr=subprocess.STDOUT)
         pids = []
+        fronted = False
         while process.poll() is None:
             time.sleep(1)
-            if bench.user32 is not None:
+            if bench.user32 is not None and (keep_front or not fronted):
                 pids = pids or run.clients()
                 game = bench.game_window(pids) if pids else None
                 if game and not bench.in_front(game):
                     bench.bring_forward(game)
+                fronted = fronted or game is not None
             if time.monotonic() - started > TIMEOUT:
                 print(f"no end after {TIMEOUT} s; closing the client", flush=True)
                 for pid in run.clients():
