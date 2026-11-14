@@ -328,9 +328,6 @@
               ],
               "SEEK_WATER": [
                 "thirsty, or watering time, no water in reach"
-              ],
-              "THREATEN": [
-                "intruder or prey in sight: warn first"
               ]
             },
             "DRINK": {
@@ -1132,6 +1129,9 @@
               "DRINK": [
                 "thirsty, or watering time, with water at hand"
               ],
+              "FEED": [
+                "a kill or a shared meal"
+              ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -1228,7 +1228,8 @@
             "FEED": {
               "ALERT": [
                 "something sensed, awareness still building",
-                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
+                "the alarm is over: watch a while before going back to the routine"
               ],
               "DEFEND": [
                 "attacked: retaliate"
@@ -1354,9 +1355,6 @@
               "RETURN_HOME": [
                 "left its home range or gave up a chase"
               ],
-              "ROAM": [
-                "nothing pressing"
-              ],
               "SEARCH": [
                 "hungry carnivore at night"
               ],
@@ -1458,6 +1456,7 @@
               ],
               "DEFEND": [
                 "attacked: retaliate",
+                "intruder stayed close through the warning",
                 "nowhere to run, or the attacker keeps up: turn and fight"
               ],
               "DRINK": [
@@ -3414,9 +3413,6 @@
                 "attacked: retaliate",
                 "nowhere to run, or the attacker keeps up: turn and fight"
               ],
-              "FEED": [
-                "a kill or a shared meal"
-              ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance",
                 "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
@@ -3471,8 +3467,7 @@
             "FEED": {
               "ALERT": [
                 "something sensed, awareness still building",
-                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)",
-                "the alarm is over: watch a while before going back to the routine"
+                "stimulus out of sight: investigate (timid animals watch, or keep fleeing)"
               ],
               "DEFEND": [
                 "attacked: retaliate",
@@ -3665,7 +3660,9 @@
                 "something sensed, awareness still building"
               ],
               "DEFEND": [
-                "attacked: retaliate"
+                "attacked: retaliate",
+                "intruder stayed close through the warning",
+                "nowhere to run, or the attacker keeps up: turn and fight"
               ],
               "FLEE": [
                 "critical health, a bigger predator, or a timid animal with a threat inside its flight distance"

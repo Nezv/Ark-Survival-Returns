@@ -316,7 +316,8 @@ public final class BoundedLife {
                 double hunger = life.hunger();
                 if (random.nextDouble() < meal)
                     hunger = random.nextDouble() < now.found[role] ? Math.max(0.0, hunger - MEAL) : Math.min(1.0, hunger + MEAL);
-                if (hunger >= 1.0 && random.nextDouble() < starve) {
+                // Carnivores go hungry but never die of it: a lean predator waits for prey instead of vanishing.
+                if (hunger >= 1.0 && !herd.species.predator && random.nextDouble() < starve) {
                     herd.members.remove(i);
                     register.end(level, life, SilentLife.STARVED);
                     starved++;

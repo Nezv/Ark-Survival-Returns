@@ -80,7 +80,9 @@ public final class DownedHandler {
     public static void step(ServerPlayer player) {
         DownedState state = player.getData(RecoveryAttachments.DOWNED);
         if (!state.downed()) {
-            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING) player.setForcedPose(null);
+            // A sedated player lies down through the same forced pose; only clear it when neither state holds.
+            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING
+                    && !dev.nez.arksurvivalreturns.feature.taming.TorporService.restricted(player)) player.setForcedPose(null);
             return;
         }
         if (player.isDeadOrDying()) {

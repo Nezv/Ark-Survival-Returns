@@ -407,6 +407,20 @@ public final class WorkstationView {
             default -> {}
         }
     }
+    /**
+     * A selected family lands on the variant the player can pay for: birch logs in hand select birch planks
+     * without scrolling (BUG: only oak seemed to make planks). The scroll and arrows still browse all of them.
+     */
+    private void autoVariant(Node node) {
+        if (node.entry.variants().size() < 2 || max(node) > 0) return;
+        for (int i = 0; i < node.entry.variants().size(); i++) {
+            if (WorkstationInventory.read(minecraft.player, node.entry.variants().get(i).cost()).maxCrafts() > 0) {
+                graph.setVariant(node, i);
+                return;
+            }
+        }
+    }
+
     /** x, y in design units; the drag threshold is in the same units. */
     public boolean mouseClicked(double x, double y, int button) {
         if (graph == null || button != 0) return false;
@@ -426,7 +440,7 @@ public final class WorkstationView {
         else {
             if (pressed != null && graph.nodeAt(x, y) == pressed) {
                 String result = graph.click(pressed);
-                if (result.equals("select")) { amount = 1; note = null; }
+                if (result.equals("select")) { amount = 1; note = null; autoVariant(pressed); }
                 if (result.equals("craft")) craft(shift);
             } else if (pressedWidget != null) {
                 Widget next = widgetAt(x, y);

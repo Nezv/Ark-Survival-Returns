@@ -39,6 +39,7 @@ public final class PlayerUnconsciousHandler {
         var state = TorporService.of(player);
         if (!TorporService.restricted(player)) {
             if (state.hasAnchor()) state.clearAnchor();
+            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING) player.setForcedPose(null);
             return;
         }
         hold(player, state);
@@ -46,6 +47,8 @@ public final class PlayerUnconsciousHandler {
 
     /** Clears intent, refuses mounts, and clamps voluntary movement while leaving physics alone. */
     private static void hold(ServerPlayer player, TorporState state) {
+        // Lying on the ground like a downed player, instead of standing asleep.
+        player.setForcedPose(net.minecraft.world.entity.Pose.SWIMMING);
         Input input = player.getLastClientInput();
         boolean intent = input.forward() || input.backward() || input.left() || input.right();
         player.setLastClientInput(Input.EMPTY);

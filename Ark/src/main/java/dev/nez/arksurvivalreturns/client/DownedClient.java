@@ -19,6 +19,8 @@ import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlers
 @EventBusSubscriber(modid = ArkSurvivalReturns.MOD_ID, value = Dist.CLIENT)
 public final class DownedClient {
     private static boolean downed;
+    /** Read by {@link TorporClient} so neither handler clears the other's lying pose. */
+    static boolean downed() { return downed; }
     private static int ticksLeft;
     private static int totalTicks;
     /** Ticks Sneak has been held while downed; at {@link #GIVE_UP_TICKS} the player gives up. */
@@ -75,7 +77,11 @@ public final class DownedClient {
         if (player == null) return;
         if (!downed) {
             giveUpTicks = 0;
-            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING) player.setForcedPose(null);
+            // A sedated player lies through the same forced pose (TorporClient); leave it to that handler.
+            if (player.getForcedPose() == net.minecraft.world.entity.Pose.SWIMMING
+                    && !(player.hasData(dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.TORPOR)
+                            && player.getData(dev.nez.arksurvivalreturns.feature.taming.TamingAttachments.TORPOR).restricted()))
+                player.setForcedPose(null);
             return;
         }
         player.setForcedPose(net.minecraft.world.entity.Pose.SWIMMING);

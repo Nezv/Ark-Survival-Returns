@@ -133,7 +133,9 @@ public final class WildlifeMind {
     }
     public BehaviorState step(Observation o, int ticks, Routine routine, GroupRoutine group) {
         age += ticks;
-        hunger = group == null ? clamp(hunger + ticks / 24000.0 * (routine.enabled && predator && routine.night ? routine.hungerMultiplier : 1)) : clamp(group.hunger);
+        // A carnivore's appetite builds twice as fast as a grazer's, so it spends most of its hours past the
+        // hunting threshold; starvation never kills it (BoundedLife/SilentLife skip predators).
+        hunger = group == null ? clamp(hunger + ticks / (predator ? 12000.0 : 24000.0) * (routine.enabled && predator && routine.night ? routine.hungerMultiplier : 1)) : clamp(group.hunger);
         thirst = clamp(thirst + ticks / 18000.0);
         fatigue = clamp(fatigue + ticks / (state.combat() || state == BehaviorState.FLEE ? 1200.0 : 30000.0));
         provoked = Math.max(0, provoked - ticks);
@@ -187,8 +189,10 @@ public final class WildlifeMind {
                     ? BehaviorState.FLEE : BehaviorState.ALERT; why = Reason.LOST_SIGHT; }
             else if (awareness < 0.55) { next = BehaviorState.ALERT; why = Reason.NOTICED; }
             else if (provoked > 0) { next = BehaviorState.DEFEND; why = Reason.PROVOKED; }
-            else if (canHunt && o.prey && hunger >= 0.4 && warning >= 40) { next = BehaviorState.HUNT; why = Reason.HUNT_READY; }
-            else if (o.intruding && warning >= 60) { next = BehaviorState.DEFEND; why = Reason.INTRUDER; }
+            // A chase already running never drops back to the stare: the warning is given once, before the
+            // first lunge, and a predator that momentarily loses the warning count keeps coming.
+            else if (canHunt && o.prey && hunger >= 0.4 && (warning >= 40 || state == BehaviorState.HUNT)) { next = BehaviorState.HUNT; why = Reason.HUNT_READY; }
+            else if (o.intruding && (warning >= 60 || state == BehaviorState.DEFEND)) { next = BehaviorState.DEFEND; why = Reason.INTRUDER; }
             else {
                 next = o.intruding || (canHunt && o.prey && hunger >= 0.4) ? BehaviorState.THREATEN : BehaviorState.ALERT;
                 why = next == BehaviorState.THREATEN ? Reason.WARNING : Reason.NOTICED;

@@ -226,8 +226,10 @@ public final class ModContent {
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
                     .sound(net.minecraft.world.level.block.SoundType.GRASS)));
         }
+        // Every berry is edible: a hunger point a bite, like the azulberry below.
         for (String id : new String[]{"tintoberry", "amarberry"})
-            BERRIES.put(id, ITEMS.registerSimpleItem(id, p -> p.stacksTo(64)));
+            BERRIES.put(id, ITEMS.registerSimpleItem(id, p -> p.stacksTo(64)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.1f).alwaysEdible().build())));
         // Blueberry (azulberry): one hunger point, and it regenerates a tame it is fed to (CreatureEntity).
         BERRIES.put("azulberry", ITEMS.registerSimpleItem("azulberry", p -> p.stacksTo(64)
                 .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.1f).alwaysEdible().build())));

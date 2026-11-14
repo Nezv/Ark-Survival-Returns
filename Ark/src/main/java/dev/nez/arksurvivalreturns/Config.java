@@ -62,7 +62,7 @@ public final class Config {
     // ------------------------------------------------------------------------------- taming
     public static final ModConfigSpec.BooleanValue TAMING_ENABLED;
     public static final ModConfigSpec.BooleanValue TAMING_DEBUG_LOG;
-    public static final ModConfigSpec.IntValue PLAYER_MAX_TORPOR;
+    public static final ModConfigSpec.IntValue PLAYER_MAX_TORPOR, PLAYER_UNCONSCIOUS_MAX_TICKS;
     public static final ModConfigSpec.DoubleValue PLAYER_TORPOR_RESISTANCE;
     public static final EnumMap<dev.nez.arksurvivalreturns.feature.taming.CreatureSize, ModConfigSpec.IntValue> MAX_TORPOR =
             new EnumMap<>(dev.nez.arksurvivalreturns.feature.taming.CreatureSize.class);
@@ -186,9 +186,9 @@ public final class Config {
                         "a life only beyond the loaded land.")
                 .defineInRange("wildLifespanDays", 60.0, 1.0, 10000.0);
         POPULATION_GROUPS = b.comment("LEDGER: wild groups (a herd, a pack, a pair or a lone animal) kept within populationRadius of each",
-                        "player while the ledger is balanced; the ledger swings it a quarter either way. 10 within 128 blocks is a",
-                        "group every 70 blocks or so, about 23 animals: what vanilla livestock amounts to on open ground.")
-                .defineInRange("wildGroupsPerPlayer", 10, 1, 48);
+                        "player while the ledger is balanced; the ledger swings it a quarter either way. Also the density anchor of",
+                        "the BIOME model. 15 within 128 blocks is a group every 57 blocks or so, about 34 animals.")
+                .defineInRange("wildGroupsPerPlayer", 15, 1, 48);
         POPULATION_GROUPS_PER_PASS = b.comment("LEDGER: groups the budget may add around one player in one check while below its target.")
                 .defineInRange("populationGroupsPerPass", 4, 1, 16);
         POPULATION_CULL_FRACTION = b.comment("LEDGER: share above the target tolerated before the farthest spare groups are removed,",
@@ -202,7 +202,7 @@ public final class Config {
                 "another size eats (HP / 50) ^ 0.75 of it. tools/existence_check.py lives a region through with other values",
                 "without the game.").push("boundedLife");
         BOUNDED_SUPPLY = b.comment("Appetites a chunk of the richest land feeds a day; poorer biomes feed a share of it.")
-                .defineInRange("supply", 0.24, 0.01, 5.0);
+                .defineInRange("supply", 0.36, 0.01, 5.0);
         BOUNDED_DRY = b.comment("What is left of the supply in a region with no water at the surface.").defineInRange("dry", 0.5, 0.0, 1.0);
         BOUNDED_FECUNDITY = b.comment("Young a fed animal with a mate in its region and all the room would have over its species' span.")
                 .defineInRange("fecundity", 4.0, 0.0, 40.0);
@@ -439,6 +439,9 @@ public final class Config {
                 .defineInRange("playerMaxTorpor", 100, 1, 10000);
         PLAYER_TORPOR_RESISTANCE = b.comment("Incoming sedative potency multiplier for players; lower is more resistant.")
                 .defineInRange("playerSedativeResistance", 1.0, 0.05, 10.0);
+        PLAYER_UNCONSCIOUS_MAX_TICKS = b.comment("Most ticks a knocked-out player stays under before waking regardless "
+                        + "of the meter (600 = 30 seconds). Creatures are unaffected.")
+                .defineInRange("playerUnconsciousMaxTicks", 600, 20, 72000);
         for (var size : dev.nez.arksurvivalreturns.feature.taming.CreatureSize.values()) {
             int fallback = switch (size) {
                 case SMALL -> 60;

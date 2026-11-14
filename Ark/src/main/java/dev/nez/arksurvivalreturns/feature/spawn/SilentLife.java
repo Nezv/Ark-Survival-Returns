@@ -233,7 +233,7 @@ public final class SilentLife {
     /**
      * A hungry pack is matched against one group of its region, taken by the odds it has against each: its strength
      * over the strength of both. It wins, the weakest of the prey dies and the pack is fed; or it loses, and prey
-     * that stands its ground may kill one of the pack. A pack that goes on starving loses a member to hunger.
+     * that stands its ground may kill one of the pack. Hunger never kills a pack member: it only drives the hunt.
      */
     private static void hunt(ServerLevel level, WildlifeRegister register, Herd pack, List<Herd> herds) {
         var random = level.getRandom();
@@ -258,7 +258,7 @@ public final class SilentLife {
             } else if (!herd.species.timid() && random.nextDouble() < STRIKES_BACK * (1.0 - odds.get(pick)))
                 register.end(level, weakest(pack), herd.species.id);
         }
-        if (pack.hunger >= 1.0 && !pack.members.isEmpty() && random.nextDouble() < STARVES) register.end(level, weakest(pack), STARVED);
+        // Carnivore packs never lose a member to hunger: a starving pack keeps hunting until prey comes.
     }
 
     /** What a hunter hunts beyond the loaded land: the plant eaters of its realm that keep to the ground or the water, and a giant among hunters the lesser hunters too. */

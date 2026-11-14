@@ -159,6 +159,12 @@ public final class TorporService {
         TamingService.tick(living);
         var state = of(living);
         state.setMaximum(maximumFor(living));
+        // A player's stay under is capped by the timer: past it the dose clears and the wake clip starts.
+        if (living instanceof Player && state.torpid()
+                && state.phaseTicks() >= Config.PLAYER_UNCONSCIOUS_MAX_TICKS.get()) {
+            state.setTorpor(0.0);
+            state.setRecoveryDelay(0);
+        }
         // A goal selector is rebuilt on reload, so the restraint is re-installed while any phase holds.
         if (state.restricted()) installSuppression(living);
         var transition = state.tick();

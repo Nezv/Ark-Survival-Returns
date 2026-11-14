@@ -742,6 +742,8 @@ public final class ArkData implements DataProvider {
         en.put("hud.downed." + NS + ".hint", "Another survivor can revive you with a fiber bandage. Hold Sneak to give up.");
         en.put("hud.downed." + NS + ".giving_up", "Giving up in %ss");
         en.put("hud.downed." + NS + ".seconds", "%ss");
+        en.put("hud.unconscious." + NS + ".title", "UNCONSCIOUS");
+        en.put("hud.unconscious." + NS + ".hint", "The sedative is wearing off...");
     }
 
     /** Carried-mass gauge and the warning/overload messages; the warning band itself has no penalty. */

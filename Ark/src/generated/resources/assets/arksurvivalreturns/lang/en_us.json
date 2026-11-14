@@ -294,6 +294,8 @@
   "hud.downed.arksurvivalreturns.hint": "Another survivor can revive you with a fiber bandage. Hold Sneak to give up.",
   "hud.downed.arksurvivalreturns.seconds": "%ss",
   "hud.downed.arksurvivalreturns.title": "DOWNED",
+  "hud.unconscious.arksurvivalreturns.hint": "The sedative is wearing off...",
+  "hud.unconscious.arksurvivalreturns.title": "UNCONSCIOUS",
   "item.arksurvivalreturns.acacia_trough": "Acacia Feeding Trough",
   "item.arksurvivalreturns.acrocanthosaurus_saddle": "Acrocanthosaurus Saddle",
   "item.arksurvivalreturns.acrocanthosaurus_spawn_egg": "Acrocanthosaurus Spawn Egg",

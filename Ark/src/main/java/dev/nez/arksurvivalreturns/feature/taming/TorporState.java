@@ -242,6 +242,8 @@ public final class TorporState implements ValueIOSerializable {
                 }
             }
             case TORPID -> {
+                // Counts the unconscious time, so a player's stay can be capped (TorporService.tickEntity).
+                phaseTicks++;
                 if (torpor < wakeThreshold()) return Event.WAKE_REQUESTED;
             }
             case WAKING_TAMED, WAKING_WILD -> {
