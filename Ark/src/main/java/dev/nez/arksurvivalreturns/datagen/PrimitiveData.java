@@ -228,28 +228,39 @@ final class PrimitiveData {
         }
     }
 
-    /** Dinosaur carcasses: meat by body plan, prime cuts from big creatures, hide, feathers and bone. */
+    /**
+     * Dinosaur carcasses, in proportion to the body (base health stands for its mass; 50 HP is about a ton): a ton
+     * gives 7-10 meat, 3-5 hide and 2-3 bones, a Tyrannosaurus 18-26 meat and 7-13 hide, a Pegomastax 3-4 meat. Prime
+     * cuts come from big creatures, feathers from birds by their size too.
+     */
     private void creatureLoot() {
         for (Species species : Species.values()) {
             DinoMeat meat = DinoMeat.of(species);
             var pools = new ArrayList<Object>();
             if (meat != null) {
-                int max = Math.clamp(Math.round(species.health / 20.0), 1, 10);
-                int min = Math.max(1, max / 2);
+                int max = (int) Math.max(2, Math.round(species.health / 5.0));
+                int min = (int) Math.max(1, Math.round(max * 0.7));
                 pools.add(pool(NS + ":" + meat.rawId(), min, max, List.of(
                         Map.of("function", "minecraft:furnace_smelt", "conditions", List.of(Map.of(
                                 "condition", "minecraft:entity_properties", "entity", "this",
                                 "predicate", Map.of("flags", Map.of("is_on_fire", true))))))));
                 if (species.health >= DinoMeat.PRIME_HEALTH) {
-                    var prime = new LinkedHashMap<>(pool(NS + ":" + DinoMeat.PRIME.rawId(), 1, Math.max(1, (int) (species.health / 60)), List.of()));
+                    var prime = new LinkedHashMap<>(pool(NS + ":" + DinoMeat.PRIME.rawId(), 1, Math.max(1, (int) (species.health / 30)), List.of()));
                     prime.put("conditions", List.of(Map.of("condition", "minecraft:random_chance", "chance", 0.6)));
                     pools.add(prime);
                 }
-                if (DinoMeat.hide(species)) pools.add(pool("minecraft:leather", 0, Math.clamp(Math.round(species.health / 40.0), 1, 6), List.of()));
+                if (DinoMeat.hide(species)) {
+                    int hide = (int) Math.max(1, Math.round(species.health / 10.0));
+                    pools.add(pool("minecraft:leather", Math.max(1, (hide + 1) / 2), hide, List.of()));
+                }
                 int keratin = DinoMeat.keratin(species);
                 if (keratin > 0) pools.add(keratinPool(keratin / 2, keratin));
-                if (meat == DinoMeat.BIRD) pools.add(pool("minecraft:feather", 1, 3, List.of()));
-                pools.add(pool("minecraft:bone", 0, 2, List.of()));
+                if (meat == DinoMeat.BIRD) {
+                    int feathers = (int) Math.max(3, Math.round(species.health / 5.0));
+                    pools.add(pool("minecraft:feather", Math.max(1, feathers / 2), feathers, List.of()));
+                }
+                int bones = (int) Math.max(1, Math.round(species.health / 16.0));
+                pools.add(pool("minecraft:bone", Math.max(1, bones / 2), bones, List.of()));
             }
             put.accept(DATA + "loot_table/entities/" + species.id, Map.of("type", "minecraft:entity", "pools", pools));
         }

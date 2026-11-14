@@ -40,7 +40,7 @@ public final class SpawnRules {
     }
     public static boolean speciesAllowed(Species species, Holder<Biome> biome, int danger) {
         // Displayed local danger is authoritative; a distant plains region can also be level 5.
-        return danger >= species.minimumDanger();
+        return species.livesAt(danger);
     }
     /**
      * Loaded-chunk check that also works inside the world-generation region. On the server an

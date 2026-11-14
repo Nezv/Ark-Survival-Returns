@@ -267,7 +267,20 @@ public enum Species {
     public int groupRadius() { return this == ARGENTAVIS ? 26 : herd() ? 22 : 7; }
     public int groupHeightRange() { return flyer() ? 24 : herd() ? 8 : 3; }
     public double cohesionDistance() { return this == ARGENTAVIS ? 30 : herd() ? 20 : 6 + width; }
-    public int minimumDanger() {
+    /**
+     * The lowest danger zone the species lives in. The bar was raised a zone: what used to need the second zone
+     * lives in the first, and the giants of the third in the second, so the first zone already holds Carnotaurus,
+     * Allosaurus and the raptors. The third zone is the predators' alone ({@link #livesAt}).
+     */
+    public int minimumDanger() { return Math.max(1, authoredDanger() - 1); }
+
+    /** Whether the species appears in a place of this danger: from its own zone up, and in the third only what hunts. */
+    public boolean livesAt(int danger) { return danger >= minimumDanger() && (danger < 3 || deadly()); }
+
+    /** The third zone's roster: every hunter with a body worth fearing (the big carnivores, the raptors, the packs, the sea's and the sky's). */
+    public boolean deadly() { return predator && health >= 30; }
+
+    private int authoredDanger() {
         if (profile!=null) return profile.danger;
         if (flyerProfile != null) return flyerProfile.danger();
         return switch (this) {

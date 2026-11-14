@@ -470,6 +470,9 @@ public final class Gathering {
     /** Whether the best tool carried gets this block's drops (the game's own check, Ark's log rule included). */
     static boolean canHarvest(ServerPlayer player, BlockState state) {
         bestTool(player, state);
+        // Ark's log rule is not in the game's own check: a log gives nothing without an axe in the hand, so a
+        // hatchet that broke has to be earned again.
+        if (state.is(BlockTags.LOGS) && Config.PRIMITIVE_LOGS_NEED_AXE.get() && !player.getMainHandItem().is(net.minecraft.tags.ItemTags.AXES)) return false;
         return player.hasCorrectToolForDrops(state);
     }
 
@@ -550,6 +553,8 @@ public final class Gathering {
                     return false;
                 }
                 pullDrops(run, pos, 4);
+                // The tool broke in the hand: the harvest ends here, and the goal earns the next one.
+                if (tries > 0 && !tool.isEmpty() && !tool.equals("minecraft:air") && !Verbs.id(player.getMainHandItem().getItem()).equals(tool)) return finish(run);
                 if (count(player, item) >= target || tries >= cap) {
                     if (count(player, item) < target && ticks < tries + 12) return false;
                     return finish(run);
@@ -605,7 +610,8 @@ public final class Gathering {
                 int[] pair = run.huntDrops.get(key);
                 if (pair == null || pair[0] < VALIDATED_KILLS || pair[1] <= 0) return false;
                 double rate = pair[1] / (double) pair[0];
-                int equivalent = (int) Math.ceil(missingNow / rate);
+                // Never more kills' worth of XP than one hunt may make: a rare drop must not lift the player by levels.
+                int equivalent = Math.min(cap, (int) Math.ceil(missingNow / rate));
                 long[] xp = run.hunted.get(species.id);
                 long grant = xp != null && xp[0] > 0 ? Math.round(equivalent * (xp[1] / (double) xp[0])) : 0;
                 give(player, item, missingNow);
@@ -811,6 +817,8 @@ public final class Gathering {
                         if (!fire.cooked().isEmpty()) { Verbs.use(run, pos, Direction.SOUTH, side, null); clicks++; }
                         else if (made >= missing) return finish(run, "made");
                         else if (fire.burnTicks() < 200 && count(player, "minecraft:oak_log") > 0) { Verbs.use(run, pos, Direction.SOUTH, side, "minecraft:oak_log"); clicks++; }
+                        // Burnt out with no log left: the goal fetches wood, instead of striking a starter at cold stones.
+                        else if (fire.burnTicks() <= 0 && !fire.isLit()) return finish(run, "no_fuel");
                         else if (!fire.isLit()) {
                             if (count(player, FIRE_STARTER) == 0) return finish(run, "no_fire_starter");
                             Verbs.use(run, pos, Direction.SOUTH, side, FIRE_STARTER);

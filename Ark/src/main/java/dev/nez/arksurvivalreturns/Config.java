@@ -426,8 +426,8 @@ public final class Config {
         DAMAGE_GROWTH = b.comment("Damage = base damage * (1 + growth * sqrt(level - 1)). Applies on spawn.").defineInRange("damageGrowth", 0.14, 0.0, 0.5);
         for (var tier : DangerTier.values()) {
             b.push(tier.id);
-            MIN_LEVEL.put(tier, b.defineInRange("min", tier.minLevel, 1, 100));
-            MAX_LEVEL.put(tier, b.comment("Reversed endpoints are sorted automatically.").defineInRange("max", tier.maxLevel, 1, 100));
+            MIN_LEVEL.put(tier, b.defineInRange("min", tier.minLevel, 1, 500));
+            MAX_LEVEL.put(tier, b.comment("Reversed endpoints are sorted automatically.").defineInRange("max", tier.maxLevel, 1, 500));
             b.pop();
         }
         b.pop().push("taming");

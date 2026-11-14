@@ -322,7 +322,7 @@ public final class ArkGameTests {
         for (var biome : biomes.listElements().toList()) {
             h.assertTrue(SpawnRules.speciesAllowed(Species.PTERANODON, biome, 1), "Biome has no starter wildlife: " + biome);
             for (var species : Species.values()) for (int danger = 1; danger <= dev.nez.arksurvivalreturns.feature.spawn.DangerBands.ZONES; danger++) {
-                h.assertTrue(SpawnRules.speciesAllowed(species, biome, danger) == (danger >= species.minimumDanger()), "Displayed danger and eligibility disagree: " + species);
+                h.assertTrue(SpawnRules.speciesAllowed(species, biome, danger) == species.livesAt(danger), "Displayed danger and eligibility disagree: " + species);
             }
         }
         var visit = new BiomeAnnouncements.Visit();

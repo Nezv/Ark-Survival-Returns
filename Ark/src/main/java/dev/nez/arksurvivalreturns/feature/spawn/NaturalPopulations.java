@@ -357,7 +357,8 @@ public final class NaturalPopulations {
                 if (site == null) continue;
             }
             if (seen(level, watchers, site.getX() + 0.5, site.getY(), site.getZ() + 0.5, species.width, species.height)) continue;
-            int most = fed == null ? species.maxGroup : fed.fed(species, species.maxGroup);
+            // The third zone's hunters are not held to what the land feeds: there is nothing there but them.
+            int most = fed == null || ProgressionData.dangerAt(level, site) >= 3 ? species.maxGroup : fed.fed(species, species.maxGroup);
             if (most == 0) continue;
             int placed = spawnGroup(level, watchers, species, site, water, most);
             if (placed == 0) continue;
@@ -375,13 +376,15 @@ public final class NaturalPopulations {
     private static @Nullable Species pickOfClass(ServerLevel level, BlockPos pos, WildClass kind, List<Group> groups) {
         int danger = ProgressionData.dangerAt(level, pos);
         if (danger < 1) return null;
+        // The third zone has no plant eaters: their share of its groups goes to the hunters.
+        if (danger >= 3 && kind == WildClass.GRAZER) kind = WildClass.HUNTER;
         var biome = level.getBiome(pos);
         var profile = SurfaceBiomes.profile(biome);
         double x = pos.getX() + 0.5, z = pos.getZ() + 0.5, total = 0;
         boolean crowded = nearestGroupSqr(groups, x, z, null) < PREDATOR_SPACING * PREDATOR_SPACING;
         var eligible = new ArrayList<Species>();
         for (var species : Species.values()) {
-            if (species.weight <= 0 || WildClass.of(species) != kind || danger < species.minimumDanger()) continue;
+            if (species.weight <= 0 || WildClass.of(species) != kind || !species.livesAt(danger)) continue;
             if (!biome.is(species.biomes) && !SpeciesRange.lives(species, profile)) continue;
             if (nearestGroupSqr(groups, x, z, species) < SPECIES_SPACING * SPECIES_SPACING || species.predator && crowded) continue;
             eligible.add(species);
@@ -467,7 +470,7 @@ public final class NaturalPopulations {
         int danger = ProgressionData.dangerAt(level, at);
         var biome = level.getBiome(at);
         for (var species : REGIONAL_LARGE)
-            if (danger >= species.minimumDanger() && SpeciesRange.lives(species, biome))
+            if (species.livesAt(danger) && SpeciesRange.lives(species, biome))
                 missing.add(species);
         return missing.isEmpty() ? null : missing.get(level.getRandom().nextInt(missing.size()));
     }
@@ -660,7 +663,7 @@ public final class NaturalPopulations {
         // The second group around a player is a hunter's, then the sixth and the tenth.
         boolean hunterTurn = predators < Math.min(predatorCap, Math.round((counted + 1) * PREDATOR_GROUPS));
         for (var species : Species.values()) {
-            if (species.weight <= 0 || danger < species.minimumDanger() || species.aquatic() != water) continue;
+            if (species.weight <= 0 || !species.livesAt(danger) || species.aquatic() != water) continue;
             if (only != null && !only.contains(species)) continue;
             if (!biome.is(species.biomes) && !SpeciesRange.lives(species, profile)) continue;
             if (nearestGroupSqr(groups, x, z, species) < SPECIES_SPACING * SPECIES_SPACING) continue;

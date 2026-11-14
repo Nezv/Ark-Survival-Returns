@@ -418,7 +418,9 @@ public final class BoundedLife {
         int x = chunk.getMinBlockX() + random.nextInt(16), z = chunk.getMinBlockZ() + random.nextInt(16), y = height(region);
         Species species = pick(level, land, region, kind, x, y, z);
         if (species == null) return 0;
-        int size = now.fed(species, species.minGroup + random.nextInt(1 + species.maxGroup - species.minGroup));
+        int size = species.minGroup + random.nextInt(1 + species.maxGroup - species.minGroup);
+        // The third zone's hunters are not held to what the land feeds: there is nothing there but them.
+        if (ProgressionData.dangerAt(level, new BlockPos(x, y, z)) < 3) size = now.fed(species, size);
         if (size == 0) return 0;
         UUID pack = UUID.randomUUID();
         var herd = new SilentLife.Herd(species);
@@ -440,10 +442,12 @@ public final class BoundedLife {
     private static @Nullable Species pick(ServerLevel level, LandRegister land, LandRegister.Region region, WildClass kind, int x, int y, int z) {
         int danger = ProgressionData.dangerAt(level, new BlockPos(x, y, z));
         if (danger < 1) return null;
+        // The third zone has no plant eaters: their share of its groups goes to the hunters.
+        if (danger >= 3 && kind == WildClass.GRAZER) kind = WildClass.HUNTER;
         List<Species> eligible = new ArrayList<>();
         double total = 0;
         for (Species species : Species.values()) {
-            if (species.weight <= 0 || WildClass.of(species) != kind || danger < species.minimumDanger() || !land.lives(level, region, species)) continue;
+            if (species.weight <= 0 || WildClass.of(species) != kind || !species.livesAt(danger) || !land.lives(level, region, species)) continue;
             eligible.add(species);
             total += species.weight;
         }

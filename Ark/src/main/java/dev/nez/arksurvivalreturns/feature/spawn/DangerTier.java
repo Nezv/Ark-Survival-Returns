@@ -4,12 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 
 /**
- * The three area danger zones of the repeating zone map, with their default wild level ranges. Danger comes
+ * The three area danger zones of the repeating zone map, with their default wild level ranges: the first zone is
+ * as hard as the last one used to be (levels 32-80 then), the third is meant to be unplayable on foot. Danger comes
  * only from the area (ProgressionData / DangerBands): biomes decide where a species can live, never how
  * dangerous it is.
  */
 public enum DangerTier {
-    EASY("easy", 1, 12), DANGEROUS("dangerous", 8, 50), DEADLY("deadly", 32, 80);
+    EASY("easy", 30, 70), DANGEROUS("dangerous", 70, 120), DEADLY("deadly", 120, 200);
     public final String id;
     public final int minLevel, maxLevel;
     DangerTier(String id, int min, int max) {
