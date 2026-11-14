@@ -3,6 +3,7 @@
 Inputs
   config/integrations.json          which mods, their Ark names, build mode (release | source | shader | embedded | blocked)
   config/*-mods.lock.json           pinned upstream files and SHA-512 hashes (downloaded by Install-Ark-Extras)
+  config/pack-mods.lock.json        mods a dev run gets from Gradle (GeckoLib): read from the Gradle cache, or downloaded
   pack/src/<project>                git clones for build = source (branch from the manifest)
   pack/patches/<project>/*.patch    Ark changes applied to a clone before it is built
   pack/overlays/<project>/          binary files (textures) copied into the clone before it is built
@@ -13,7 +14,9 @@ Outputs (pack/out, not committed)
 
 Branding rewrites only metadata: displayName, logo (ark_icon.png), and a credit line in the description.
 The original mod id, version, license field and license files are kept, so dependencies and credits
-still resolve. Release jars are otherwise byte-identical to upstream.
+still resolve. Release jars are otherwise byte-identical to upstream. A mod with "brand": false ships untouched
+under its own file name (FancyMenu refuses a renamed jar; GeckoLib is a plain dependency): the launcher downloads it
+from its publisher when the pin's host is one the .mrpack format allows, else the file goes in as it is.
 
 Run from Ark after ./gradlew build: python tools/build_pack.py [--rebuild-sources]
 """
@@ -139,7 +142,28 @@ def source_jar(mod, rebuild):
     return max(jars, key=lambda j: j.stat().st_mtime).read_bytes(), 'source ' + mod['branch']
 
 
+def gradle_file(lock_entry):
+    """A mod Gradle resolves for the dev run (maven.modrinth:<project>:<versionId>): from its cache, else downloaded."""
+    cache = Path.home() / '.gradle/caches/modules-2/files-2.1/maven.modrinth' / lock_entry['project'] / lock_entry['versionId']
+    for path in cache.glob('*/*.jar'):
+        data = path.read_bytes()
+        if hashlib.sha512(data).hexdigest() == lock_entry['sha512']:
+            return data
+    import urllib.request
+    request = urllib.request.Request(lock_entry['url'], headers={'User-Agent': 'ark-pack-builder'})
+    data = urllib.request.urlopen(request, timeout=120).read()
+    if hashlib.sha512(data).hexdigest() != lock_entry['sha512']:
+        raise SystemExit(f"{lock_entry['filename']}: hash mismatch against config/pack-mods.lock.json")
+    return data
+
+
+# Hosts a .mrpack may name in its downloads (the Modrinth pack format's allow list).
+MRPACK_HOSTS = ('https://cdn.modrinth.com/', 'https://github.com/', 'https://raw.githubusercontent.com/', 'https://gitlab.com/')
+
+
 def pinned_file(lock_entry):
+    if lock_entry['kind'] == 'gradle':
+        return gradle_file(lock_entry)
     folder = {'shader': 'run/shaderpacks', 'shared': 'shared-mods'}.get(lock_entry['kind'], 'client-mods')
     path = ARK / folder / lock_entry['filename']
     if not path.exists():
@@ -165,7 +189,7 @@ def main():
     args = parser.parse_args()
     manifest = load(ARK / 'config/integrations.json')
     locks = {}
-    for name in ('client-mods.lock.json', 'shared-mods.lock.json'):
+    for name in ('client-mods.lock.json', 'shared-mods.lock.json', 'pack-mods.lock.json'):
         for entry in load(ARK / 'config' / name)['entries']:
             locks[entry['project']] = entry
     gradle = props(ARK / 'gradle.properties')
@@ -190,6 +214,20 @@ def main():
                     'sha1': hashlib.sha1(pinned_file(lock)).hexdigest(), 'sha512': lock['sha512']},
                     'env': {'client': 'required', 'server': 'unsupported'}, 'downloads': [lock['url']], 'fileSize': lock['size']})
                 report.append((integration['id'], mod['arkName'], 'shader (unmodified)', lock['version']))
+                continue
+            if mod.get('brand') is False:
+                # Untouched, under its own name: the launcher downloads it where the format allows, else it goes in whole.
+                data = pinned_file(lock)
+                folder = 'client-mods' if client_only else 'mods'
+                (OUT / folder / lock['filename']).write_bytes(data)
+                if lock['url'].startswith(MRPACK_HOSTS):
+                    index_files.append({'path': f"mods/{lock['filename']}", 'hashes': {
+                        'sha1': hashlib.sha1(data).hexdigest(), 'sha512': lock['sha512']},
+                        'env': {'client': 'required', 'server': 'unsupported' if client_only else 'required'},
+                        'downloads': [lock['url']], 'fileSize': lock['size']})
+                else:
+                    overrides[f"{'client-overrides' if client_only else 'overrides'}/mods/{lock['filename']}"] = data
+                report.append((integration['id'], mod['arkName'], 'release ' + lock['version'] + ' (unmodified)', lock['filename']))
                 continue
             if mode == 'source':
                 data, origin = source_jar(mod, args.rebuild_sources)

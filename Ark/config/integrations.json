@@ -126,10 +126,11 @@
       "mods": [
         {
           "project": "fancymenu",
-          "arkName": "Ark - FancyMenu",
+          "arkName": "FancyMenu",
           "license": "DSMSLv3.1",
           "source": "https://github.com/Keksuccino/FancyMenu",
-          "build": "release"
+          "build": "release",
+          "brand": false
         },
         {
           "project": "konkrete",
@@ -147,7 +148,7 @@
         }
       ],
       "uses": "The title screen: a rainy night at a primitive camp (two log barracks around a campfire) drawn live by FancyMenu's GLSL background and a full-screen GLSL element, with Ark's own layout element between them (Ark Creature: the T-Rex model idling and looking around, lit by the scene's lightning). Buttons in a column on the left, the Ark logo, rain from the embedded AmbientSounds recordings. The vanilla logo, splash and Realms button are hidden.",
-      "changed": "Ark ships the layout (config/fancymenu/customization/ark_title_screen.txt, written by tools/build_title_scene.py) and the scene masks, and registers the Ark Creature element through FancyMenu's element API (client/title/fancymenu; compile-only, loaded only when FancyMenu is). Jars are only rebranded.",
+      "changed": "Ark ships the layout (config/fancymenu/customization/ark_title_screen.txt, written by tools/build_title_scene.py) and the scene masks, and registers the Ark Creature element through FancyMenu's element API (client/title/fancymenu; compile-only, loaded only when FancyMenu is). Konkrete and Melody are only rebranded; FancyMenu ships untouched under its own name (brand: false), because it checks its display name and covers the title screen with a red \"modified jar\" warning when it is renamed.",
       "next": "In-client check of the night scene (draw order of the creature between the shader layers, placement, thunder). Later: pause menu and loading screen in the same style."
     },
     {
@@ -349,6 +350,25 @@
       "uses": "The F3 screen as coloured, named modules that can be reordered, recoloured and switched off line by line. Ark adds a module of its own: danger zone, creatures drawn and loaded, the wildlife budget's count, render and server thread load, the creature aimed at, carried load, Ark level and shader pack. Cloth Config, already in the pack for Better Combat, is its settings screen.",
       "changed": "Official 26.1 release, rebranded only. BetterF3 draws its own modules in place of the vanilla debug entries, so Ark registers its module with it (client/betterf3/ArkModule.java; compile-only, loaded only when BetterF3 is). The wildlife budget keeps its last count per player for the module, shown in single-player.",
       "next": "In-client check: start-up beside Sodium, Iris and FancyMenu, the Ark module's lines in a world, its entry in BetterF3's module list. On a server the wildlife count would need a payload."
+    },
+    {
+      "id": "I15",
+      "title": "Creature models and animation",
+      "status": "integrated",
+      "side": "both",
+      "mods": [
+        {
+          "project": "geckolib",
+          "arkName": "GeckoLib",
+          "license": "MIT",
+          "source": "https://github.com/bernie-g/geckolib",
+          "build": "release",
+          "brand": false
+        }
+      ],
+      "uses": "Every Ark creature is a GeckoLib model with GeckoLib animations: Ark does not start without it, on a client or a server.",
+      "changed": "Nothing: GeckoLib 5.5.2 ships untouched under its own name (brand: false). A dev run gets it from Gradle (gradle.properties geckolib_version), so it is pinned for the pack alone in config/pack-mods.lock.json.",
+      "next": "Keep the pin in step with geckolib_version when GeckoLib is updated."
     }
   ]
 }
