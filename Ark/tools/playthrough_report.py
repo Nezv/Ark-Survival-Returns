@@ -98,7 +98,8 @@ def summarise(events: list[dict]) -> dict:
         "recipes_blocked": len([e for e in by["blocked"] if e["stage"] == "RECIPES"]),
         "errors": len(by["step_error"]) + len(by["step_timeout"]),
         "level_end": end.get("level"), "earned_xp": end.get("earned_xp"), "supplied_xp": end.get("supplied_xp"),
-        "level_lifts": len(lifts), "provenance_failures": len(provenance(events)),
+        "level_lifts": len(lifts), "hunt_fills": len(by["hunt_fill"]),
+        "filled_xp": sum(e.get("xp", 0) for e in by["hunt_fill"]), "provenance_failures": len(provenance(events)),
         "downs": len(by["player_down"]) + len(by["player_dead"]),
         "tech_missed": sorted(set(by["tech"][-1].get("open", [])) - set(by["tech"][-1].get("future", []))) if by["tech"] else [],
     }
@@ -111,7 +112,7 @@ def provenance(events: list[dict]) -> list[list]:
     for e in events:
         if e["type"] == "craft" and e.get("result") == "crafted":
             made.add(e["item"])
-        elif e["type"] in ("obtained", "withdrawn"):
+        elif e["type"] in ("obtained", "withdrawn", "hunt_fill"):
             made.add(e["item"])
         elif e["type"] == "placed" and e.get("result") == "placed":
             placed[e["at"]] = e
@@ -137,15 +138,18 @@ def report(folder: Path) -> Path:
     parts.append("<h2>Stages</h2>" + table(["stage", "minutes", "goals blocked", "XP lifted", "refused crafts", "errors"],
                                            [[s["stage"], s["minutes"], s["blocked"], s["lifted_xp"], s["refused"], s["errors"]] for s in summary["stages"]]))
     parts.append(f"<p>Level at the end {esc(summary['level_end'])}: {esc(summary['earned_xp'])} XP earned by play, "
-                 f"{esc(summary['supplied_xp'])} lifted to meet gates. Supplied by the run, by design: the yard's blocks, the "
-                 "hunted and measured creatures, the test wall and screen blocks, and the lifted levels.</p>")
+                 f"{esc(summary['supplied_xp'])} lifted to meet gates or filled from validated carcasses "
+                 f"({summary['hunt_fills']} fills, {esc(summary['filled_xp'])} XP). Supplied by the run, by design: the yard's "
+                 "blocks, the hunted and measured creatures (each kill validated once, then filled at the measured rate), "
+                 "the test wall and screen blocks, and the lifted levels.</p>")
 
     play = [e for e in events if e["stage"].startswith("R") or e["stage"] in ("RECIPES", "WEAPONS", "ARMOUR")]
     parts.append("<h2>What the economy gave</h2>")
     parts.append(table(["stage", "how", "item", "wanted", "tries / kills", "made", "short", "tool", "game s"],
-                       [[e["stage"], e["type"], e["item"], e["wanted"], e.get("tries", e.get("kills", "")), e.get("made", ""),
+                       [[e["stage"], e["type"], e["item"], e.get("wanted", e.get("count", "")),
+                         e.get("tries", e.get("kills", e.get("kills_equivalent", ""))), e.get("made", ""),
                          e.get("short", ""), e.get("tool", e.get("weapon", e.get("station", ""))), round(e.get("ticks", 0) / 20, 1)]
-                        for e in play if e["type"] in ("harvest", "hunt", "process")]))
+                        for e in play if e["type"] in ("harvest", "hunt", "hunt_fill", "process")]))
     parts.append("<h2>The XP curve: gates the play had not reached</h2><p>Each row is a craft whose level the XP earned "
                  "so far did not reach; the run lifted the player instead of grinding. Few, small rows mean the curve fits the play.</p>")
     parts.append(table(["stage", "for", "from level", "gate", "XP earned so far", "XP lifted"],

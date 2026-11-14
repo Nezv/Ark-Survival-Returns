@@ -54,9 +54,12 @@ import net.minecraft.world.phys.Vec3;
  * works it. Bags that fill up are emptied into Storage Crates the player earned, through the crate's screen. What
  * cannot be earned ends the goal as blocked, with the reason, so the report shows each gap in the economy.
  *
- * <p>Two things are supplied, and written down as such: the yard's blocks and hunted creatures (the "infinite
- * blocks"), and a level the play so far did not reach ({@link #lift}): the run does not grind for experience, it
- * records how far short the earned XP fell and lifts the player to the gate.
+ * <p>Three things are supplied, and written down as such: the yard's blocks and hunted creatures (the "infinite
+ * blocks"); a level the play so far did not reach ({@link #lift}): the run does not grind for experience, it
+ * records how far short the earned XP fell and lifts the player to the gate; and a drop whose hunt this run has
+ * already validated ({@link #VALIDATED_KILLS} measured kills of the species for that item): the rest comes at the
+ * measured rate with the measured XP instead of repeating the same grind, so each kill is validated once and the
+ * run's minutes go to what is not yet validated.
  */
 public final class Gathering {
     sealed interface Source permits Breaks, Hunts, Processes, Cooks, Fills {}
@@ -279,7 +282,14 @@ public final class Gathering {
             }
             return harvest(item, missing, breaks.block());
         }
-        if (source instanceof Hunts hunts) return hunt(item, missing, hunts.species());
+        if (source instanceof Hunts hunts) {
+            // Armed first: a hunt with bare hands or a broken sword is hundreds of hits, not a measurement.
+            if (!carriesWeapon(player)) {
+                var arm = next(run, player, NS + "rock_sword", 1, depth + 1);
+                if (arm != null) return arm;
+            }
+            return hunt(item, missing, hunts.species());
+        }
         if (source instanceof Fills fills) {
             var bottles = next(run, player, fills.container(), missing, depth + 1);
             return bottles != null ? bottles : fill(item, missing, fills.container());
@@ -499,6 +509,12 @@ public final class Gathering {
         return Verbs.id(player.getMainHandItem().getItem());
     }
 
+    /** Whether any of the run's weapons is still in the bags (they break: a hunt re-arms before it starts). */
+    static boolean carriesWeapon(ServerPlayer player) {
+        for (String weapon : WEAPONS) if (count(player, weapon) > 0) return true;
+        return false;
+    }
+
     // ------------------------------------------------------------------ the actions
 
     /** Breaks the block the item comes from on one spot, put back after each break, until the bags hold enough. */
@@ -552,18 +568,73 @@ public final class Gathering {
         };
     }
 
-    /** Hunts the species, frozen in the yard, with the best weapon carried, until its carcasses gave enough. */
+    /** Kills of one species-and-item pair after which its drop rate counts as measured ({@link #hunt}). */
+    static final int VALIDATED_KILLS = 3;
+
+    /**
+     * Hunts the species, frozen in the yard, with the best weapon carried, until its carcasses gave enough. Each hunt
+     * records what the carcasses gave and what the kills earned; once a pair of species and item has
+     * {@link #VALIDATED_KILLS} measured kills behind it in this run, a later need is filled at the measured rate with
+     * the matching XP instead of grinding the same validated kill again, and written down as supplied.
+     */
     static Step hunt(String item, int missing, Species species) {
         return new Killing("hunt " + item + " " + missing, "hunt", species, 1, 8) {
-            int target;
-            @Override void begin(PlayRun run) { target = count(run.player(), item) + missing; }
+            final String key = species.id + "|" + item;
+            int target, start;
+            @Override void begin(PlayRun run) { start = count(run.player(), item); target = start + missing; }
             @Override boolean enough(PlayRun run) { return count(run.player(), item) >= target; }
+            @Override boolean needsWeapon() { return true; }
+            @Override boolean filled(PlayRun run) {
+                var player = run.player();
+                int missingNow = target - count(player, item);
+                if (missingNow <= 0) return false;
+                int[] pair = run.huntDrops.get(key);
+                if (pair == null || pair[0] < VALIDATED_KILLS || pair[1] <= 0) return false;
+                double rate = pair[1] / (double) pair[0];
+                int equivalent = (int) Math.ceil(missingNow / rate);
+                long[] xp = run.hunted.get(species.id);
+                long grant = xp != null && xp[0] > 0 ? Math.round(equivalent * (xp[1] / (double) xp[0])) : 0;
+                give(player, item, missingNow);
+                if (grant > 0) {
+                    run.suppliedXp += grant;
+                    ArkLevels.addXp(player, grant, ArkLevels.Source.COMMAND);
+                }
+                var event = run.event("hunt_fill");
+                event.addProperty("species", species.id);
+                event.addProperty("item", item);
+                event.addProperty("count", missingNow);
+                event.addProperty("rate", Math.round(rate * 100) / 100.0);
+                event.addProperty("kills_equivalent", equivalent);
+                event.addProperty("xp", grant);
+                event.addProperty("supplied", "validated carcass");
+                run.write(event);
+                return true;
+            }
             @Override void end(PlayRun run, JsonObject event) {
                 event.addProperty("item", item);
                 event.addProperty("wanted", missing);
                 event.addProperty("short", Math.max(0, target - count(run.player(), item)));
+                if (kills <= 0) return;
+                var pair = run.huntDrops.computeIfAbsent(key, ignored -> new int[2]);
+                pair[0] += kills;
+                pair[1] += Math.max(0, count(run.player(), item) - start);
+                var xp = run.hunted.computeIfAbsent(species.id, ignored -> new long[2]);
+                xp[0] += kills;
+                xp[1] += Math.max(0, xpEarned);
             }
         };
+    }
+
+    /** Fills the bags with a validated item, stack by stack; what does not fit lands at the player's feet. */
+    static void give(ServerPlayer player, String item, int count) {
+        var kind = Verbs.item(item);
+        int left = count;
+        while (left > 0) {
+            int portion = Math.min(new ItemStack(kind).getMaxStackSize(), left);
+            var stack = new ItemStack(kind, portion);
+            if (!player.getInventory().add(stack) && !stack.isEmpty()) player.drop(stack, false);
+            left -= portion;
+        }
     }
 
     /** Kills one frozen creature after another in the yard, picking up what they drop, until enough or the cap. */
@@ -572,7 +643,7 @@ public final class Gathering {
         final Species species;
         final int creatureLevel, cap;
         int kills, hits;
-        long started, xpBefore;
+        long started, xpBefore, xpEarned;
         CreatureEntity creature;
         String weapon = "";
 
@@ -583,6 +654,10 @@ public final class Gathering {
         abstract void begin(PlayRun run);
         abstract boolean enough(PlayRun run);
         abstract void end(PlayRun run, JsonObject event);
+        /** True when the rest of the need was filled from validated carcasses and the hunt may end (the hunts only). */
+        boolean filled(PlayRun run) { return false; }
+        /** Hunts need a real weapon; a measurement wields its own and is never cut short here. */
+        boolean needsWeapon() { return false; }
 
         @Override public String name() { return name; }
         @Override public int timeout() { return 20 * 60 * 15; }
@@ -594,6 +669,11 @@ public final class Gathering {
             pullDrops(run, spot, 16);
             if (creature == null || creature.isRemoved()) {
                 if (enough(run) || kills >= cap) return finish(run, kills >= cap && !enough(run) ? "cap" : "enough");
+                if (filled(run)) return finish(run, "validated_fill");
+                // The weapon is picked again for every carcass: a sword that broke falls to the next one carried,
+                // and a hunt left bare-handed ends to re-arm instead of punching with what is in the hand.
+                weapon = bestWeapon(player);
+                if (needsWeapon() && !List.of(WEAPONS).contains(weapon)) return finish(run, "no_weapon");
                 creature = ModContent.CREATURES.get(species).get().create(level, EntitySpawnReason.COMMAND);
                 if (creature == null) return finish(run, "not_created");
                 creature.initializeLevel(creatureLevel);
@@ -614,6 +694,7 @@ public final class Gathering {
 
         private boolean finish(PlayRun run, String why) {
             var player = run.player();
+            xpEarned = ArkLevels.totalXp(ArkLevels.get(player)) - xpBefore;
             var event = run.event(type);
             event.addProperty("species", species.id);
             event.addProperty("creature_level", creatureLevel);
@@ -622,7 +703,7 @@ public final class Gathering {
             event.addProperty("weapon", weapon);
             event.addProperty("end", why);
             event.addProperty("ticks", run.level().getGameTime() - started);
-            event.addProperty("xp", ArkLevels.totalXp(ArkLevels.get(player)) - xpBefore);
+            event.addProperty("xp", xpEarned);
             event.addProperty("supplied", "yard creature");
             end(run, event);
             run.write(event);

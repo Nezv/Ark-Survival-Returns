@@ -42,6 +42,14 @@ public final class PlayRun {
     boolean noCrate;
     /** XP the run lifted the player by to meet a level gate it had not earned (written as level_lift events). */
     long suppliedXp;
+    /**
+     * What the run's hunts have measured, so a validated grind is never repeated: by "species|item" the kills made and
+     * the items those carcasses gave, and by species the kills and the XP they earned. Once a pair has enough kills
+     * behind it, a later need is filled from the measured rate, with the matching XP, and written down as supplied
+     * ({@link Gathering.Killing}).
+     */
+    final java.util.Map<String, int[]> huntDrops = new java.util.HashMap<>();
+    final java.util.Map<String, long[]> hunted = new java.util.HashMap<>();
     /** A fight is under way: upkeep waits, so the hand and the stand are the fight's. */
     boolean busy;
     /**
